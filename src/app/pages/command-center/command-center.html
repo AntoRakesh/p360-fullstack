@@ -1,0 +1,585 @@
+<div class="page-head">
+  <div>
+    <h1>Enterprise Overview Dashboard</h1>
+    <nav class="crumbs">
+      <a routerLink="/command-center">Command Center &amp; Dashboards</a>
+      <app-icon name="chevron-right" [size]="14" />
+      <span>Enterprise Overview Dashboard</span>
+      @if (state.site().factor !== 1) {
+        <em class="chip">{{ state.site().name }}</em>
+      }
+      @if (!state.isToday()) {
+        <em class="chip grey">History · {{ state.date() | date: 'd MMM y' }}</em>
+      }
+    </nav>
+  </div>
+  <div class="head-btns" (click)="$event.stopPropagation()">
+    <button class="btn-primary" (click)="customizeOpen.set(true)">
+      <app-icon name="settings" [size]="17" />Customize Dashboard
+    </button>
+    <div class="menu-wrap">
+      <button class="btn-icon" aria-label="More actions" (click)="moreOpen.set(!moreOpen())">
+        <app-icon name="more" [size]="18" [stroke]="3" />
+      </button>
+      @if (moreOpen()) {
+        <div class="dropdown">
+          <button class="dd-item" (click)="refresh()"><app-icon name="refresh" [size]="16" />Refresh data</button>
+          <button class="dd-item" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export CSV</button>
+          <button class="dd-item" (click)="print()"><app-icon name="file-text" [size]="16" />Print / PDF</button>
+          <button class="dd-item" (click)="fullscreen()"><app-icon name="maximize" [size]="16" />Full screen</button>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- KPI cards -->
+@if (show('kpis')) {
+  <section class="kpis">
+    @for (k of kpis(); track k.key) {
+      <a class="card kpi" [routerLink]="k.link">
+        <span class="kpi-icon" [style.background]="k.color"><app-icon [name]="k.icon" [size]="24" /></span>
+        <div class="kpi-body">
+          <div class="kpi-label">{{ k.label }}</div>
+          <div class="kpi-value">{{ k.value }}</div>
+          <div class="kpi-change">
+            <span [class.good]="k.good" [class.bad]="!k.good">
+              <app-icon [name]="k.up ? 'arrow-up' : 'arrow-down'" [size]="13" [stroke]="2.6" />{{ k.change }}
+            </span>
+            vs. yesterday
+          </div>
+        </div>
+      </a>
+    }
+  </section>
+}
+
+<!-- Row 2 -->
+<section class="row">
+  @if (show('distribution')) {
+    <div class="card w-dist" [class.expanded]="expanded() === 'distribution'">
+      <div class="card-head">
+        <h3>People Distribution</h3>
+        <button class="mini-btn" aria-label="Expand" (click)="toggleExpand('distribution')">
+          <app-icon name="maximize" [size]="16" />
+        </button>
+      </div>
+      <div class="tabs">
+        @for (t of distTabs; track t) {
+          <button [class.on]="distTab() === t" (click)="distTab.set(t)">{{ t }}</button>
+        }
+      </div>
+      <div class="presence">
+        <div class="donut">
+          <svg viewBox="0 0 160 160">
+            <circle cx="80" cy="80" [attr.r]="donutR" fill="none" stroke="#f1f2f7" stroke-width="26" />
+            @for (s of distribution().segs; track s.label) {
+              <circle
+                cx="80"
+                cy="80"
+                [attr.r]="donutR"
+                fill="none"
+                [attr.stroke]="s.color"
+                [attr.stroke-width]="hoverSeg() === s.label ? 32 : 26"
+                [attr.stroke-dasharray]="s.dash"
+                [attr.stroke-dashoffset]="s.offset"
+                [attr.opacity]="hoverSeg() && hoverSeg() !== s.label ? 0.35 : 1"
+                transform="rotate(-90 80 80)"
+                (mouseenter)="hoverSeg.set(s.label)"
+                (mouseleave)="hoverSeg.set(null)"
+              />
+            }
+          </svg>
+          <div class="donut-center">
+            @if (hoverSeg(); as h) {
+              @for (s of distribution().segs; track s.label) {
+                @if (s.label === h) {
+                  <b>{{ s.value | number }}</b><span>{{ s.label }}</span>
+                }
+              }
+            } @else {
+              <b>{{ distribution().total | number }}</b><span>People on Site</span>
+            }
+          </div>
+        </div>
+        <ul class="legend-list">
+          @for (s of distribution().segs; track s.label) {
+            <li (mouseenter)="hoverSeg.set(s.label)" (mouseleave)="hoverSeg.set(null)" [class.dim]="hoverSeg() && hoverSeg() !== s.label">
+              <i [style.background]="s.color"></i>
+              <span>{{ s.label }}</span>
+              <b>{{ s.value | number }}</b>
+              <em>{{ s.pct }}%</em>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  }
+
+  @if (show('occupancy')) {
+    <div class="card w-occ">
+      <div class="card-head">
+        <h3>Site Occupancy</h3>
+        <a class="mini-btn" routerLink="/workplace-facility-services/space-utilization" title="Open Space Utilization">
+          <app-icon name="more" [size]="16" [stroke]="3" />
+        </a>
+      </div>
+      <div class="tabs">
+        @for (t of occTabs; track t) {
+          <button [class.on]="occTab() === t" (click)="occTab.set(t)">{{ t }}</button>
+        }
+      </div>
+      <ul class="bars">
+        @for (o of occupancy(); track o.label; let i = $index) {
+          <li [title]="o.label + ': ' + o.pct + '%'">
+            <span>{{ o.label }}</span>
+            <div class="bar"><i [style.width.%]="o.pct" [class.alt]="i % 2 === 1"></i></div>
+            <b>
+              {{ o.pct }}%
+              @if (o.delta !== undefined) {
+                <small [class.good]="o.delta > 0" [class.bad]="o.delta < 0">{{ o.delta > 0 ? '▲' : '▼' }}{{ o.delta > 0 ? o.delta : -o.delta }}</small>
+              }
+            </b>
+          </li>
+        }
+      </ul>
+      @if (occTab() === 'Trend') {
+        <p class="note">7-day average vs. previous week</p>
+      }
+    </div>
+  }
+
+  @if (show('trend')) {
+    <div class="card w-trend" [class.expanded]="expanded() === 'trend'">
+      <div class="card-head">
+        <h3>People Trend</h3>
+        <select class="select" [value]="range().label" (change)="range.set(ranges[$any($event.target).selectedIndex])">
+          @for (r of ranges; track r.label) {
+            <option [value]="r.label">{{ r.label }}</option>
+          }
+        </select>
+      </div>
+      <div class="trend-legend">
+        <span><i class="p"></i>People on Site</span>
+        <span><i class="v"></i>Visitors</span>
+      </div>
+      <div class="trend-wrap" (mouseleave)="hoverPoint.set(null)">
+        <svg class="trend" viewBox="0 0 380 182">
+          <defs>
+            <linearGradient id="trendFill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
+              <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.03" />
+            </linearGradient>
+          </defs>
+          @for (tk of trend().ticks; track $index) {
+            <line [attr.x1]="t.l" [attr.x2]="t.r" [attr.y1]="tk.y" [attr.y2]="tk.y" class="grid" />
+            <text [attr.x]="t.l - 8" [attr.y]="tk.y + 4" text-anchor="end" class="axis">{{ tk.label }}</text>
+          }
+          @for (lb of trend().labels; track $index) {
+            @if (lb.show) {
+              <text [attr.x]="lb.x" [attr.y]="t.b + 20" text-anchor="middle" class="axis">{{ lb.l }}</text>
+            }
+          }
+          <path [attr.d]="trend().area" fill="url(#trendFill)" />
+          <path [attr.d]="trend().visitorLine" fill="none" stroke="#38bdf8" stroke-width="2" />
+          <path [attr.d]="trend().peopleLine" fill="none" stroke="#7c3aed" stroke-width="2.5" />
+          @if (hoverPoint() !== null) {
+            <line class="cursor" [attr.x1]="trend().people[hoverPoint()!].x" [attr.x2]="trend().people[hoverPoint()!].x" [attr.y1]="t.t" [attr.y2]="t.b" />
+          }
+          @for (p of trend().visitors; track $index) {
+            @if (trend().dots || hoverPoint() === $index) {
+              <circle [attr.cx]="p.x" [attr.cy]="p.y" r="3.5" fill="#fff" stroke="#38bdf8" stroke-width="2" />
+            }
+          }
+          @for (p of trend().people; track $index) {
+            @if (trend().dots || hoverPoint() === $index) {
+              <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="hoverPoint() === $index ? 6 : 4.5" fill="#fff" stroke="#7c3aed" stroke-width="2.5" />
+            }
+          }
+          @for (p of trend().people; track $index) {
+            <rect class="hit" [attr.x]="p.x - trend().step / 2" [attr.y]="t.t" [attr.width]="trend().step" [attr.height]="t.b - t.t" (mouseenter)="hoverPoint.set($index)" />
+          }
+        </svg>
+        @if (hoverPoint() !== null) {
+          <div class="chart-tip" [style.left.%]="(trend().people[hoverPoint()!].x / 380) * 100">
+            <b>{{ trend().raw.labels[hoverPoint()!] }}</b>
+            <span><i class="p"></i>People {{ trend().raw.people[hoverPoint()!] | number }}</span>
+            <span><i class="v"></i>Visitors {{ trend().raw.visitors[hoverPoint()!] | number }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>
+
+<!-- Row 3 -->
+<section class="row">
+  @if (show('location')) {
+    <div class="card w-loc" [class.expanded]="expanded() === 'location'">
+      <div class="card-head">
+        <h3>Live Location &amp; Digital Twin</h3>
+        <div class="head-actions">
+          <button class="btn-outline" [class.on]="view3d()" (click)="view3d.set(!view3d())">
+            <app-icon name="box" [size]="16" />{{ view3d() ? 'View in 2D' : 'View in 3D' }}
+          </button>
+          <button class="mini-btn" aria-label="Expand" (click)="toggleExpand('location')">
+            <app-icon name="maximize" [size]="16" />
+          </button>
+        </div>
+      </div>
+      <div class="filters">
+        <select class="select" [value]="state.site().name" (change)="state.site.set(state.sites[$any($event.target).selectedIndex])">
+          @for (s of state.sites; track s.name) {
+            <option [value]="s.name">{{ s.name }}</option>
+          }
+        </select>
+        <select class="select" [value]="floor()" (change)="selectFloor($any($event.target).value)">
+          <option value="All">All Floors</option>
+          @for (f of floors; track f) {
+            <option [value]="f">Floor {{ f }}</option>
+          }
+        </select>
+        <select class="select" [value]="typeFilter()" (change)="typeFilter.set($any($event.target).value)">
+          <option value="All">All People Types</option>
+          @for (p of personTypes; track p) {
+            <option [value]="p">{{ p }}</option>
+          }
+        </select>
+        <span class="map-count">{{ mapStats().total }} people · <b>{{ mapStats().alerts }} alerts</b></span>
+      </div>
+      <div class="map-wrap">
+        <div class="floor-ctl">
+          <button class="floor-btn" [class.on]="floor() === 'All'" (click)="selectFloor('All')">All</button>
+          @for (f of floors; track f) {
+            <button class="floor-btn" [class.on]="floor() === f" (click)="selectFloor(f)">{{ f }}</button>
+          }
+        </div>
+        <div class="map" (click)="selectedId.set(null)">
+          <div class="map-inner" [class.is3d]="view3d()" [style.--z]="zoom()">
+            <svg viewBox="0 0 610 270">
+              <rect width="610" height="270" fill="#f1f2f6" />
+              <g class="walls">
+                <rect x="6" y="6" width="598" height="258" />
+                <path d="M6 78h600M6 186h600" />
+                <path d="M70 6v72M140 6v72M200 6v72M270 6v72M330 6v72M400 6v72M470 6v72M540 6v72" />
+                <path d="M80 186v78M150 186v78M230 186v78M300 186v78M380 186v78M450 186v78M520 186v78" />
+                <path d="M6 132h70v54M120 110h90v50h-90zM260 104h110v62H260zM420 110h70v50h-70zM530 104h74M530 104v82" />
+              </g>
+              <g class="furniture">
+                @for (x of deskTop; track x) {
+                  <rect [attr.x]="x" y="22" width="34" height="18" rx="2" />
+                  <rect [attr.x]="x" y="48" width="34" height="14" rx="2" />
+                }
+                @for (x of deskBottom; track x) {
+                  <rect [attr.x]="x" y="204" width="40" height="18" rx="2" />
+                  <rect [attr.x]="x" y="232" width="40" height="16" rx="2" />
+                }
+                <circle cx="300" cy="135" r="16" />
+                <circle cx="455" cy="135" r="12" />
+                <rect x="132" y="120" width="66" height="30" rx="4" />
+              </g>
+              @for (d of dots(); track d.id) {
+                @if (d.type === 'Alert') {
+                  <circle [attr.cx]="d.x" [attr.cy]="d.y" r="16" fill="#ef4444" class="pulse" [style.transform-origin]="d.x + 'px ' + d.y + 'px'" />
+                }
+                <circle
+                  class="dot"
+                  [class.sel]="selectedId() === d.id"
+                  [attr.cx]="d.x"
+                  [attr.cy]="d.y"
+                  [attr.r]="d.type === 'Alert' ? 9 : 6"
+                  [attr.fill]="colors[d.type]"
+                  (click)="selectPerson(d.id, $event)"
+                >
+                  <title>{{ d.name }} · {{ d.type }}</title>
+                </circle>
+              }
+            </svg>
+            @if (selected(); as p) {
+              <div class="person-tip" [style.left.%]="(p.x / 610) * 100" [style.top.%]="(p.y / 270) * 100" (click)="$event.stopPropagation()">
+                <span class="tip-avatar" [style.background]="colors[p.type]"><app-icon [name]="p.type === 'Alert' ? 'triangle-alert' : 'user'" [size]="15" /></span>
+                <div>
+                  <b>{{ p.name }}</b>
+                  <span>{{ p.type === 'Alert' ? 'Security Alert' : p.type }}</span>
+                  <small>{{ p.time }} • {{ state.site().factor === 1 ? 'Head Office' : state.site().name }} - {{ p.floor }}</small>
+                </div>
+              </div>
+            }
+          </div>
+          <div class="map-tools" (click)="$event.stopPropagation()">
+            <button (click)="setZoom(0.25)" aria-label="Zoom in"><app-icon name="plus" [size]="15" /></button>
+            <button (click)="setZoom(-0.25)" aria-label="Zoom out"><app-icon name="minus" [size]="15" /></button>
+            <button (click)="fitMap()" aria-label="Fit to screen"><app-icon name="maximize" [size]="14" /></button>
+          </div>
+        </div>
+      </div>
+      <div class="map-legend">
+        @for (p of personTypes; track p) {
+          <button [class.off]="typeFilter() !== 'All' && typeFilter() !== p" (click)="typeFilter.set(typeFilter() === p ? 'All' : p)">
+            <i [style.background]="colors[p]"></i>{{ p }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  @if (show('events')) {
+    <div class="card w-events">
+      <div class="card-head">
+        <h3>Recent Events</h3>
+        <button class="link" (click)="eventsModal.set(true)">View All</button>
+      </div>
+      <div class="tabs compact">
+        @for (t of eventTabs; track t) {
+          <button [class.on]="eventTab() === t" (click)="eventTab.set(t)">{{ t }}</button>
+        }
+      </div>
+      <ul class="events">
+        @for (e of events().slice(0, 5); track e.id) {
+          <li class="ev-row">
+            <span class="ev-icon" [style.background]="e.color"><app-icon [name]="e.icon" [size]="18" /></span>
+            <span class="ev-avatar" [style.background]="e.avatar">
+              @if (e.initials) {
+                {{ e.initials }}
+              } @else {
+                <app-icon name="user" [size]="20" />
+              }
+            </span>
+            <div class="ev-body">
+              <b [class.danger]="e.color === '#ef4444'">{{ e.title }}</b>
+              <span>{{ e.person }}</span>
+              <small><app-icon name="map-pin" [size]="12" />{{ e.location }}</small>
+            </div>
+            <time>{{ e.time }}</time>
+          </li>
+        } @empty {
+          <li class="ev-empty">No events</li>
+        }
+      </ul>
+    </div>
+  }
+
+  @if (show('camera')) {
+    <div class="card w-cam">
+      <div class="card-head">
+        <h3>Camera Snapshot</h3>
+        <a class="mini-btn" routerLink="/physical-access-control/door-monitoring" title="Open door monitoring">
+          <app-icon name="chevron-right" [size]="18" />
+        </a>
+      </div>
+      <div class="cam-name"><app-icon name="map-pin" [size]="14" />{{ camera().name }}</div>
+      <div class="camera">
+        <svg viewBox="0 0 260 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="camSky" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" [attr.stop-color]="camera().tint" />
+              <stop offset="100%" stop-color="#e9edf2" />
+            </linearGradient>
+            <linearGradient id="camFloor" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#cfd5dc" />
+              <stop offset="100%" stop-color="#8d96a3" />
+            </linearGradient>
+          </defs>
+          <rect width="260" height="300" fill="url(#camSky)" />
+          <rect width="260" height="28" fill="#4b5563" />
+          <g stroke="#56606d" stroke-width="4">
+            <path d="M20 28v150M75 28v150M130 28v150M185 28v150M240 28v150M0 100h260" />
+          </g>
+          <path d="M0 178h260v122H0z" fill="url(#camFloor)" />
+          <path d="M0 300 100 178h60l100 122" fill="#b7bec7" opacity="0.5" />
+          <g fill="#3f7d4a">
+            <ellipse cx="8" cy="120" rx="26" ry="70" />
+            <ellipse cx="252" cy="110" rx="24" ry="74" />
+          </g>
+          <g fill="#9ca3af">
+            <rect x="150" y="200" width="70" height="16" rx="3" />
+            <rect x="150" y="235" width="80" height="18" rx="3" />
+          </g>
+          <g fill="#1f2937" [attr.transform]="'translate(' + (state.live() ? (now().getSeconds() % 6) - 3 : 0) + ' 0)'">
+            <circle cx="105" cy="135" r="7" /><rect x="96" y="143" width="18" height="40" rx="7" />
+            <circle cx="152" cy="132" r="7" /><rect x="143" y="140" width="18" height="42" rx="7" />
+            <circle cx="60" cy="150" r="10" /><rect x="47" y="161" width="26" height="62" rx="10" />
+            <circle cx="200" cy="148" r="11" /><rect x="186" y="160" width="28" height="68" rx="11" />
+            <circle cx="128" cy="160" r="15" /><rect x="108" y="176" width="40" height="124" rx="16" />
+          </g>
+        </svg>
+        @if (state.live()) {
+          <span class="cam-live"><i></i>Live</span>
+        }
+        <button class="cam-nav left" (click)="nextCam(-1)" aria-label="Previous camera"><app-icon name="chevron-left" [size]="16" [stroke]="2.6" /></button>
+        <button class="cam-nav right" (click)="nextCam(1)" aria-label="Next camera"><app-icon name="chevron-right" [size]="16" [stroke]="2.6" /></button>
+        <div class="cam-caption">
+          {{ state.date() | date: 'd MMM y' }} {{ (state.isToday() ? now() : state.date()) | date: 'HH:mm:ss' }}
+        </div>
+        <div class="cam-dots">
+          @for (c of cameras; track c.name; let i = $index) {
+            <button [class.on]="i === camIndex()" (click)="camIndex.set(i)" [attr.aria-label]="c.name"></button>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</section>
+
+<!-- Row 4 -->
+<section class="row">
+  @if (show('emergency')) {
+    <a class="card w-em emergency" routerLink="/emergency-mustering">
+      <div class="em-main">
+        <h3>Emergency Status</h3>
+        <div class="em-status">
+          <span class="em-icon"><app-icon name="shield-check" [size]="26" /></span>
+          <div>
+            <b>Normal</b>
+            <span>No active emergency</span>
+          </div>
+        </div>
+      </div>
+      <div class="em-tile">
+        <span class="tile-label">Muster Points</span>
+        <div class="tile-body">
+          <span class="tile-icon blue"><app-icon name="users" [size]="22" /></span>
+          <div><b>6 / 6</b><small>Operational</small></div>
+        </div>
+      </div>
+      <div class="em-tile">
+        <span class="tile-label">Wardens</span>
+        <div class="tile-body">
+          <span class="tile-icon green"><app-icon name="shield-check" [size]="22" /></span>
+          <div><b>24</b><small>On duty</small></div>
+        </div>
+      </div>
+      <div class="em-tile">
+        <span class="tile-label">Emergency Devices</span>
+        <div class="tile-body">
+          <span class="tile-icon red"><app-icon name="siren" [size]="22" /></span>
+          <div><b class="ok">Operational</b><small>100% online</small></div>
+        </div>
+      </div>
+    </a>
+  }
+
+  @if (show('health')) {
+    <div class="card w-health">
+      <div class="card-head">
+        <h3>System Health</h3>
+        <button class="link" (click)="healthModal.set(true)">View All</button>
+      </div>
+      <ul class="health">
+        @for (h of health.slice(0, 4); track h.label) {
+          <li><i></i><span>{{ h.label }}</span><b>{{ h.status }}</b></li>
+        }
+      </ul>
+    </div>
+  }
+
+  @if (show('tasks')) {
+    <a class="card w-tasks tasks" routerLink="/workflow-automation/my-tasks-approvals">
+      <span class="tasks-icon"><app-icon name="user-check" [size]="24" /></span>
+      <div>
+        <span>Open Tasks &amp; Approvals</span>
+        <b>{{ openTasks() }}</b>
+      </div>
+      <app-icon name="chevron-right" [size]="18" />
+    </a>
+  }
+</section>
+
+@if (hidden().size === widgets.length) {
+  <div class="card all-hidden">
+    <p>All widgets are hidden.</p>
+    <button class="btn-primary" (click)="resetWidgets()">Show all widgets</button>
+  </div>
+}
+
+<!-- Overlays -->
+@if (expanded()) {
+  <div class="overlay" (click)="expanded.set(null)"></div>
+}
+
+@if (customizeOpen()) {
+  <div class="overlay" (click)="customizeOpen.set(false)"></div>
+  <aside class="drawer">
+    <div class="drawer-head">
+      <h3>Customize Dashboard</h3>
+      <button class="mini-btn close" (click)="customizeOpen.set(false)" aria-label="Close"><app-icon name="plus" [size]="18" /></button>
+    </div>
+    <p class="muted">Choose which widgets appear. Saved in this browser.</p>
+    <ul class="widget-list">
+      @for (w of widgets; track w.id) {
+        <li>
+          <label>
+            <input type="checkbox" [checked]="show(w.id)" (change)="toggleWidget(w.id)" />
+            <span class="switch"></span>
+            {{ w.label }}
+          </label>
+        </li>
+      }
+    </ul>
+    <div class="drawer-foot">
+      <button class="btn-outline" (click)="resetWidgets()">Reset to default</button>
+      <button class="btn-primary" (click)="customizeOpen.set(false)">Done</button>
+    </div>
+  </aside>
+}
+
+@if (eventsModal()) {
+  <div class="overlay" (click)="eventsModal.set(false)"></div>
+  <div class="modal">
+    <div class="drawer-head">
+      <h3>All Events</h3>
+      <button class="mini-btn close" (click)="eventsModal.set(false)" aria-label="Close"><app-icon name="plus" [size]="18" /></button>
+    </div>
+    <div class="modal-tools">
+      <div class="tabs compact">
+        @for (t of eventTabs; track t) {
+          <button [class.on]="eventTab() === t" (click)="eventTab.set(t)">{{ t }}</button>
+        }
+      </div>
+      <label class="search-box">
+        <app-icon name="search" [size]="15" />
+        <input type="text" placeholder="Search events..." [value]="eventQuery()" (input)="eventQuery.set($any($event.target).value)" />
+      </label>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>Time</th><th>Event</th><th>Person</th><th>Location</th><th>Category</th></tr>
+        </thead>
+        <tbody>
+          @for (e of modalEvents(); track e.id) {
+            <tr>
+              <td>{{ e.time }}</td>
+              <td><span class="dot-sm" [style.background]="e.color"></span>{{ e.title }}</td>
+              <td>{{ e.person }}</td>
+              <td>{{ e.location }}</td>
+              <td><span class="tag">{{ e.category }}</span></td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="muted center">No matching events</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+}
+
+@if (healthModal()) {
+  <div class="overlay" (click)="healthModal.set(false)"></div>
+  <div class="modal small">
+    <div class="drawer-head">
+      <h3>System Health</h3>
+      <button class="mini-btn close" (click)="healthModal.set(false)" aria-label="Close"><app-icon name="plus" [size]="18" /></button>
+    </div>
+    <ul class="health full">
+      @for (h of health; track h.label) {
+        <li [class.warn]="h.status !== 'Online'"><i></i><span>{{ h.label }}</span><b>{{ h.status }}</b></li>
+      }
+    </ul>
+    <a class="link" routerLink="/device-edge-management/device-health-monitoring" (click)="healthModal.set(false)">Open Device Health &amp; Monitoring →</a>
+  </div>
+}
+
+@if (toast()) {
+  <div class="toast"><app-icon name="shield-check" [size]="16" />{{ toast() }}</div>
+}

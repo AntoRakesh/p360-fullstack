@@ -1,0 +1,202 @@
+<div class="shell" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="#a78bfa" stroke-width="3" />
+          <path d="M14 30c2-9 6-14 11-14s9 4 9 9-4 8-8 8h-3" fill="none" stroke="#c4b5fd" stroke-width="3" stroke-linecap="round" />
+          <circle cx="27" cy="25" r="2.5" fill="#c4b5fd" />
+        </svg>
+        <span class="brand-name">Purple <b>IQ</b></span>
+      </div>
+      <button class="icon-btn ghost" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        <app-icon name="panel-close" [size]="20" />
+      </button>
+    </div>
+
+    <div class="product">
+      <span>People<b>360</b></span>
+      <app-icon name="menu" [size]="18" />
+    </div>
+
+    <label class="menu-search">
+      <app-icon name="search" [size]="16" />
+      <input
+        type="text"
+        placeholder="Search menu..."
+        [value]="menuQuery()"
+        (input)="menuQuery.set($any($event.target).value)"
+      />
+    </label>
+
+    <nav class="nav">
+      @for (m of modules(); track m.path) {
+        @if (m.children?.length) {
+          <button
+            class="nav-item"
+            [class.parent-active]="isActive(m)"
+            [class.expanded]="isOpen(m)"
+            [title]="m.title"
+            [attr.aria-expanded]="isOpen(m)"
+            (click)="toggle(m)"
+          >
+            <span class="nav-no">{{ pad(m.no) }}</span>
+            <app-icon [name]="m.icon" [size]="19" />
+            <span class="nav-label">{{ m.title }}</span>
+            <app-icon class="nav-chev" name="chevron-right" [size]="15" />
+          </button>
+          @if (isOpen(m)) {
+            <div class="sub-nav">
+              @for (c of m.children; track c.path) {
+                <a class="sub-item" [routerLink]="'/' + m.path + '/' + c.path" routerLinkActive="active" [title]="c.title">
+                  <app-icon [name]="c.icon" [size]="16" />
+                  <span>{{ c.title }}</span>
+                </a>
+              }
+            </div>
+          }
+        } @else {
+          <a class="nav-item" [routerLink]="'/' + m.path" routerLinkActive="active" [title]="m.title">
+            <span class="nav-no">{{ pad(m.no) }}</span>
+            <app-icon [name]="m.icon" [size]="19" />
+            <span class="nav-label">{{ m.title }}</span>
+            <app-icon class="nav-chev" name="chevron-right" [size]="15" />
+          </a>
+        }
+      } @empty {
+        <p class="nav-empty">No module found</p>
+      }
+    </nav>
+  </aside>
+
+  <div class="backdrop" (click)="mobileOpen.set(false)"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn mobile-only" (click)="toggleSidebar()" aria-label="Open menu">
+        <app-icon name="menu" [size]="20" />
+      </button>
+      <a class="top-logo" routerLink="/command-center">
+        <svg viewBox="0 0 48 48" width="38" height="38" aria-hidden="true">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="#6d28d9" stroke-width="3" />
+          <path d="M14 30c2-9 6-14 11-14s9 4 9 9-4 8-8 8h-3" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" />
+          <circle cx="27" cy="25" r="2.5" fill="#7c3aed" />
+        </svg>
+        <span>People<b>360</b></span>
+      </a>
+
+      <label class="global-search">
+        <app-icon name="search" [size]="18" />
+        <input id="global-search" type="text" placeholder="Search people, visitor, access events, zones, devices..." />
+        <kbd>Ctrl + K</kbd>
+      </label>
+
+      <div class="top-actions" (click)="$event.stopPropagation()">
+        <div class="menu-wrap">
+          <button class="site-select" (click)="toggleMenu('site')">
+            <app-icon name="building" [size]="18" />
+            <span>{{ state.site().name }}</span>
+            <app-icon name="chevron-down" [size]="16" />
+          </button>
+          @if (menu() === 'site') {
+            <div class="dropdown">
+              @for (s of state.sites; track s.name) {
+                <button class="dd-item" [class.on]="state.site() === s" (click)="state.site.set(s); menu.set(null)">
+                  <app-icon [name]="s.factor === 1 ? 'grid' : 'building'" [size]="16" />{{ s.name }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <button class="site-select date-btn" (click)="openDatePicker(dateInput)">
+          <app-icon name="calendar-days" [size]="17" />
+          <span>{{ state.date() | date: 'EEE, d MMM y' }}</span>
+          <app-icon name="chevron-down" [size]="16" />
+          <input
+            #dateInput
+            type="date"
+            class="date-input"
+            [value]="state.date() | date: 'yyyy-MM-dd'"
+            (change)="state.setDate($any($event.target).value)"
+          />
+        </button>
+
+        <button
+          class="live-pill"
+          [class.off]="!state.live()"
+          (click)="toggleLive()"
+          [title]="state.isToday() ? 'Pause / resume live updates' : 'Back to today (live)'"
+        >
+          <i></i>{{ state.live() ? 'Live' : state.isToday() ? 'Paused' : 'History' }}
+        </button>
+
+        <div class="menu-wrap">
+          <button class="icon-btn" aria-label="Notifications" (click)="toggleMenu('notif')">
+            <app-icon name="bell" [size]="21" />
+            @if (state.unread()) {
+              <span class="badge">{{ state.unread() }}</span>
+            }
+          </button>
+          @if (menu() === 'notif') {
+            <div class="dropdown notif">
+              <div class="dd-head">
+                <b>Notifications</b>
+                <button class="dd-link" (click)="state.markAllRead()">Mark all read</button>
+              </div>
+              @for (n of state.notifications(); track n.id) {
+                <div class="notif-item" [class.unread]="!n.read">
+                  <span class="notif-icon" [style.background]="n.color"><app-icon [name]="n.icon" [size]="15" /></span>
+                  <div>
+                    <b>{{ n.title }}</b>
+                    <span>{{ n.text }}</span>
+                  </div>
+                  <time>{{ n.time }}</time>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="menu-wrap">
+          <button class="icon-btn" aria-label="Apps" (click)="toggleMenu('apps')">
+            <app-icon name="grid" [size]="21" [stroke]="2.6" />
+          </button>
+          @if (menu() === 'apps') {
+            <div class="dropdown apps">
+              @for (a of quickApps; track a.path) {
+                <a class="app-tile" [routerLink]="a.path" (click)="menu.set(null)">
+                  <app-icon [name]="a.icon" [size]="20" /><span>{{ a.title }}</span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="menu-wrap">
+          <button class="profile" (click)="toggleMenu('profile')">
+            <span class="avatar">DL</span>
+            <span class="profile-text">
+              <b>Demo login</b>
+              <small>Administrator</small>
+            </span>
+            <app-icon name="chevron-down" [size]="16" />
+          </button>
+          @if (menu() === 'profile') {
+            <div class="dropdown">
+              <button class="dd-item" (click)="menu.set(null)"><app-icon name="user" [size]="16" />My Profile</button>
+              <a class="dd-item" routerLink="/administration-configuration/system-settings" (click)="menu.set(null)">
+                <app-icon name="settings" [size]="16" />Settings
+              </a>
+              <button class="dd-item" (click)="menu.set(null)"><app-icon name="door-open" [size]="16" />Sign out</button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
