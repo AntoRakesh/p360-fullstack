@@ -1,4 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-@Component({ selector: 'app-vm-find-visit', changeDetection: ChangeDetectionStrategy.OnPush, template: '<p>Building find-your-visit…</p>' })
+@Component({ selector: 'app-vm-find-visit', changeDetection: ChangeDetectionStrategy.OnPush, template: '<p>Coming soon</p>' })
 export class FindYourVisit {}
