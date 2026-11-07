@@ -260,7 +260,7 @@ const PAGES: Record<string, () => Promise<any>> = {
 };
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'command-center' },
+  { path: '', pathMatch: 'full', redirectTo: 'command-center/enterprise-overview-dashboard' },
   ...MODULES.flatMap((m): Routes =>
     m.children?.length
       ? [
@@ -274,5 +274,5 @@ export const routes: Routes = [
         ]
       : [{ path: m.path, title: `${m.title} · People360`, data: { module: m }, loadComponent: modulePage }],
   ),
-  { path: '**', redirectTo: 'command-center' },
+  { path: '**', redirectTo: 'command-center/enterprise-overview-dashboard' },
 ];
