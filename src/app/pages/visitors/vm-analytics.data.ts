@@ -15,18 +15,18 @@ export const RANGES: RangeDef[] = [
 ];
 
 export const TYPES: Seg[] = [
-  { label: 'Pre-Registered', n: 674, color: '#8b3dff' },
-  { label: 'Walk-in', n: 300, color: '#22a447' },
-  { label: 'Invited by Employee', n: 187, color: '#f97316' },
-  { label: 'Contractor Portal', n: 87, color: '#3b82f6' },
+  { label: 'Pre-Registered', n: 674, color: 'var(--ka-8b3dff)' },
+  { label: 'Walk-in', n: 300, color: 'var(--ka-22a447)' },
+  { label: 'Invited by Employee', n: 187, color: 'var(--ka-f97316)' },
+  { label: 'Contractor Portal', n: 87, color: 'var(--ka-3b82f6)' },
 ];
 export const PURPOSES: Seg[] = [
-  { label: 'Business Meeting', n: 38, color: '#7c3aed' },
-  { label: 'Delivery', n: 18, color: '#22a447' },
-  { label: 'Interview', n: 15, color: '#f97316' },
-  { label: 'Site Visit', n: 12, color: '#3b82f6' },
-  { label: 'Maintenance', n: 9, color: '#b67cf5' },
-  { label: 'Other', n: 8, color: '#c4c4cc' },
+  { label: 'Business Meeting', n: 38, color: 'var(--ka-7c3aed)' },
+  { label: 'Delivery', n: 18, color: 'var(--ka-22a447)' },
+  { label: 'Interview', n: 15, color: 'var(--ka-f97316)' },
+  { label: 'Site Visit', n: 12, color: 'var(--ka-3b82f6)' },
+  { label: 'Maintenance', n: 9, color: 'var(--ka-b67cf5)' },
+  { label: 'Other', n: 8, color: 'var(--ka-c4c4cc)' },
 ];
 export const PURPOSE_DUR: Record<string, [number, string]> = {
   'Business Meeting': [118, 'Main Campus – Tower A'], Delivery: [22, 'Main Campus – Tower B'], Interview: [96, 'Main Campus – Tower A'],

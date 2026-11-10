@@ -60,7 +60,7 @@ const COMPANIES: Record<PersonType, string[]> = {
 };
 const EMAIL_DOMAIN: Record<PersonType, string> = { Employee: 'company.com', Contractor: 'vendor.com', Visitor: 'visitor.com', Temporary: 'agency.com', Other: 'partner.com' };
 const PREFIX: Record<PersonType, string> = { Employee: 'EMP', Contractor: 'CON', Visitor: 'VIS', Temporary: 'TMP', Other: 'OTH' };
-const COLORS = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#475569', '#16a34a', '#ea580c', '#9333ea', '#0891b2'];
+const COLORS = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-475569)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-9333ea)', 'var(--ka-0891b2)'];
 
 const initialsOf = (n: string) => n.split(' ').filter(Boolean).map((p) => p[0]).join('').slice(0, 2).toUpperCase();
 const colorOf = (n: string) => COLORS[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % COLORS.length];

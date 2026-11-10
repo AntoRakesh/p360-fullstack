@@ -142,34 +142,34 @@ const BASE = '/administration-configuration/';
               @let t = store.tenant();
               <div class="tgrid">
                 <div class="tset">
-                  <span class="si" style="background:#7c3aed"><app-icon name="admin-office" [size]="22" /></span>
+                  <span class="si" style="background:var(--kb-7c3aed)"><app-icon name="admin-office" [size]="22" /></span>
                   <div><b>Enable Multi-Site</b><small>Manage multiple sites and locations under this tenant.</small></div>
                   <span class="tg"><app-admin-switch [on]="t.multiSite" (toggled)="toggle('multiSite', $event, 'Enable Multi-Site')" /><em [class.off]="!t.multiSite">{{ t.multiSite ? 'Enabled' : 'Disabled' }}</em></span>
                 </div>
                 <div class="tset">
-                  <span class="si" style="background:#2563eb"><app-icon name="admin-sitemap" [size]="22" /></span>
+                  <span class="si" style="background:var(--kb-2563eb)"><app-icon name="admin-sitemap" [size]="22" /></span>
                   <div><b>Allow Sub-Tenants</b><small>Create and manage sub-tenants for divisions or regions.</small></div>
                   <span class="tg"><app-admin-switch [on]="t.subTenants" (toggled)="toggle('subTenants', $event, 'Allow Sub-Tenants')" /><em [class.off]="!t.subTenants">{{ t.subTenants ? 'Enabled' : 'Disabled' }}</em></span>
                 </div>
                 <div class="tset">
-                  <span class="si" style="background:#10b981"><app-icon name="shield-check" [size]="22" /></span>
+                  <span class="si" style="background:var(--kb-10b981)"><app-icon name="shield-check" [size]="22" /></span>
                   <div><b>Enable SSO<br />(SAML/OIDC)</b><small>Allow single sign-on for users.</small></div>
                   <span class="tg"><app-admin-switch [on]="t.sso" (toggled)="toggle('sso', $event, 'Enable SSO (SAML/OIDC)')" /><em [class.off]="!t.sso">{{ t.sso ? 'Enabled' : 'Disabled' }}</em></span>
                 </div>
                 <div class="tset">
-                  <span class="si" style="background:#f59e0b"><app-icon name="admin-lock" [size]="22" /></span>
+                  <span class="si" style="background:var(--kb-f59e0b)"><app-icon name="admin-lock" [size]="22" /></span>
                   <div><b>Role Based Access<br />Control</b><small>Enable RBAC for modules and features.</small></div>
                   <span class="tg"><app-admin-switch [on]="t.rbac" (toggled)="toggle('rbac', $event, 'Role Based Access Control')" /><em [class.off]="!t.rbac">{{ t.rbac ? 'Enabled' : 'Disabled' }}</em></span>
                 </div>
                 <div class="tset ret">
-                  <span class="si" style="background:#f43f5e"><app-icon name="admin-database" [size]="22" /></span>
+                  <span class="si" style="background:var(--kb-f43f5e)"><app-icon name="admin-database" [size]="22" /></span>
                   <div><b>Data Retention (Days)</b><small>Set default data retention period for logs and records.</small></div>
                   <select class="select sm" [value]="t.retentionDays" (change)="store.setTenant('retentionDays', +val($event), 'Data Retention (Days)'); store.toast('Default retention set to ' + val($event) + ' days')">
                     @for (r of retention; track r) {<option [value]="r">{{ r }}</option>}
                   </select>
                 </div>
                 <div class="tset cur">
-                  <span class="si" style="background:#7c3aed"><app-icon name="admin-database" [size]="22" /></span>
+                  <span class="si" style="background:var(--kb-7c3aed)"><app-icon name="admin-database" [size]="22" /></span>
                   <div><b>Default Currency</b>
                     <select class="select sm" [value]="t.currency" (change)="store.setTenant('currency', val($event), 'Default Currency'); store.toast('Default currency set to ' + val($event))">
                       @for (c of currencies; track c) {<option>{{ c }}</option>}
@@ -188,8 +188,8 @@ const BASE = '/administration-configuration/';
               <div class="hb2">
                 <div class="ring">
                   <svg viewBox="0 0 120 120">
-                    <defs><linearGradient id="adm-ring" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#14b8a6" /><stop offset="55%" stop-color="#22c55e" /><stop offset="100%" stop-color="#2563eb" /></linearGradient></defs>
-                    <circle cx="60" cy="60" r="50" fill="none" stroke="#e8ebf3" stroke-width="12" />
+                    <defs><linearGradient id="adm-ring" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="var(--ka-14b8a6)" /><stop offset="55%" stop-color="var(--ka-22c55e)" /><stop offset="100%" stop-color="var(--ka-2563eb)" /></linearGradient></defs>
+                    <circle cx="60" cy="60" r="50" fill="none" stroke="var(--kl-e8ebf3)" stroke-width="12" />
                     <circle cx="60" cy="60" r="50" fill="none" stroke="url(#adm-ring)" stroke-width="12" [attr.stroke-dasharray]="(h.pct / 100) * 314.16 + ' 314.16'" transform="rotate(-90 60 60)" />
                   </svg>
                   <div><b>{{ h.pct }}%</b><span>Configuration<br />Complete</span></div>
@@ -219,10 +219,10 @@ const BASE = '/administration-configuration/';
             <div class="card qa">
               <h3 class="ct">Quick Actions</h3>
               <div class="qgrid">
-                <button (click)="modal.set({ kind: 'bu' })"><app-icon name="admin-sitemap" [size]="22" style="color:#2563eb" />Add Business Unit</button>
-                <button (click)="modal.set({ kind: 'dept', parent: selSite() ?? 's-hq' })"><app-icon name="users" [size]="22" style="color:#16a34a" />Add Department</button>
-                <button (click)="modal.set({ kind: 'site', parent: selBu() ?? 'bu-uae' })"><app-icon name="map-pin" [size]="22" style="color:#f97316" />Add Site / Location</button>
-                <button (click)="go('user-group-management')"><app-icon name="users" [size]="22" style="color:#e11d48" />Manage Users</button>
+                <button (click)="modal.set({ kind: 'bu' })"><app-icon name="admin-sitemap" [size]="22" style="color:var(--kf-2563eb)" />Add Business Unit</button>
+                <button (click)="modal.set({ kind: 'dept', parent: selSite() ?? 's-hq' })"><app-icon name="users" [size]="22" style="color:var(--kf-16a34a)" />Add Department</button>
+                <button (click)="modal.set({ kind: 'site', parent: selBu() ?? 'bu-uae' })"><app-icon name="map-pin" [size]="22" style="color:var(--kf-f97316)" />Add Site / Location</button>
+                <button (click)="go('user-group-management')"><app-icon name="users" [size]="22" style="color:var(--kf-e11d48)" />Manage Users</button>
               </div>
             </div>
           </div>
@@ -271,7 +271,7 @@ const BASE = '/administration-configuration/';
           <div class="card">
             <h3 class="ct">Brand</h3>
             <div class="brand-prev" [style.--p]="b().primary"><app-admin-logo [src]="store.org().logo === 'none' ? null : store.org().logo" [size]="34" [color]="b().primary" /><span class="pill-p">Primary button</span></div>
-            <dl class="kv"><dt>Primary colour</dt><dd><i class="sw" [style.background]="b().primary"></i>{{ b().primary }}</dd><dt>Accent colour</dt><dd><i class="sw" [style.background]="b().accent"></i>{{ b().accent }}</dd><dt>Sidebar style</dt><dd>{{ b().sidebar }}</dd><dt>Font</dt><dd>{{ b().font }}</dd></dl>
+            <dl class="kv"><dt>Primary colour</dt><dd><i class="sw" [style.background]="b().primary"></i>{{ (b().primary.startsWith('#') ? b().primary : '#' + b().primary.slice(-7, -1)).toUpperCase() }}</dd><dt>Accent colour</dt><dd><i class="sw" [style.background]="b().accent"></i>{{ b().accent }}</dd><dt>Sidebar style</dt><dd>{{ b().sidebar }}</dd><dt>Font</dt><dd>{{ b().font }}</dd></dl>
             <button class="btn-outline" (click)="go('branding-localization')">Open Branding &amp; Localization</button>
           </div>
           <div class="card">
@@ -391,12 +391,12 @@ const BASE = '/administration-configuration/';
     /* KPIs */
     .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .kpi { display: flex; align-items: center; gap: 22px; padding: 12px 14px; text-align: left; cursor: pointer; font: inherit; color: inherit; }
-    .kpi:hover { border-color: #c4b5fd; }
-    .ki { width: 64px; height: 64px; border-radius: 10px; color: #fff; display: grid; place-items: center; flex-shrink: 0; }
-    .kpi div { display: flex; flex-direction: column; min-width: 0; } .kl { font-size: 13.5px; color: #3b3f5c; } .kpi b { font-size: 22px; margin: 2px 0; } .kpi small { font-size: 13px; color: #6b7a8c; }
+    .kpi:hover { border-color: var(--kl-c4b5fd); }
+    .ki { width: 64px; height: 64px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; flex-shrink: 0; }
+    .kpi div { display: flex; flex-direction: column; min-width: 0; } .kl { font-size: 13.5px; color: var(--kf-3b3f5c); } .kpi b { font-size: 22px; margin: 2px 0; } .kpi small { font-size: 13px; color: var(--kf-6b7a8c); }
     /* Tabs */
     .tabbar { display: flex; padding: 0; margin-bottom: 12px; overflow-x: auto; }
-    .tabbar button { flex: 1 1 auto; border: 0; border-right: 1px solid var(--border); background: none; padding: 12px 14px 11px; font-size: 13px; color: #3b3f5c; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; }
+    .tabbar button { flex: 1 1 auto; border: 0; border-right: 1px solid var(--border); background: none; padding: 12px 14px 11px; font-size: 13px; color: var(--kf-3b3f5c); cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; }
     .tabbar button:last-child { border-right: 0; } .tabbar button.on { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; } .tabbar button:hover { color: var(--primary); }
     /* Layout */
     .main { display: grid; grid-template-columns: minmax(0, 415fr) minmax(0, 512fr) minmax(0, 292fr); gap: 12px; align-items: stretch; }
@@ -408,21 +408,21 @@ const BASE = '/administration-configuration/';
     .htools { display: flex; gap: 6px; margin-bottom: 12px; }
     .hsearch { flex: 1; display: flex; align-items: center; gap: 8px; padding: 0 10px; height: 34px; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); min-width: 0; }
     .hsearch input { border: 0; outline: 0; font: inherit; font-size: 11.5px; flex: 1; min-width: 0; }
-    .tb { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 7px; background: #fff; display: grid; place-items: center; cursor: pointer; color: #3b3f5c; } .tb.act { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+    .tb { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 7px; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; color: var(--kf-3b3f5c); } .tb.act { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
     .addb { height: 34px; padding: 0 16px; }
     .fdrop { padding: 8px; } .fdrop small { display: block; padding: 2px 10px 6px; }
     .tree { flex: 1; overflow: auto; max-height: 640px; min-height: 300px; padding-right: 4px; }
     .row { position: relative; display: flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 6px; border-radius: 7px; cursor: pointer; font-size: 13.5px; }
-    .row:hover { background: #f7f5ff; } .row.sel { background: #f1ecff; } .row.root { background: #efeafd; min-height: 36px; font-weight: 600; font-size: 14px; }
+    .row:hover { background: var(--kb-f7f5ff); } .row.sel { background: var(--kb-f1ecff); } .row.root { background: var(--kb-efeafd); min-height: 36px; font-weight: 600; font-size: 14px; }
     .row.k-bu { min-height: 37px; font-weight: 500; font-size: 13.5px; } .row.k-site .nl { font-weight: 400; } .row.k-dept { font-size: 13px; min-height: 31px; }
-    .chev { width: 18px; height: 18px; border: 0; background: none; padding: 0; display: grid; place-items: center; cursor: pointer; color: #3b3f5c; transform: rotate(-90deg); transition: transform 0.15s; flex-shrink: 0; }
+    .chev { width: 18px; height: 18px; border: 0; background: none; padding: 0; display: grid; place-items: center; cursor: pointer; color: var(--kf-3b3f5c); transform: rotate(-90deg); transition: transform 0.15s; flex-shrink: 0; }
     .chev.open { transform: none; } span.chev { cursor: default; }
     .row.k-dept span.chev { width: 6px; }
     .ni { display: grid; place-items: center; width: 22px; } .nl { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .cnt { font-size: 11px; color: var(--muted); background: #f1f2f7; border-radius: 10px; padding: 1px 7px; }
-    .ndots { border: 0; background: none; color: #4b4f6b; cursor: pointer; padding: 2px 6px; border-radius: 5px; visibility: hidden; display: grid; place-items: center; } .ndots.show, .row:hover .ndots { visibility: visible; } .ndots:hover { background: #e9e5fb; }
-    .kids { border-left: 1px solid #dcdfea; margin-left: 15px; padding-left: 4px; }
-    .kids > .row::before { content: ''; position: absolute; left: -5px; top: 50%; width: 10px; border-top: 1px solid #dcdfea; }
+    .cnt { font-size: 11px; color: var(--muted); background: var(--kb-f1f2f7); border-radius: 10px; padding: 1px 7px; }
+    .ndots { border: 0; background: none; color: var(--kf-4b4f6b); cursor: pointer; padding: 2px 6px; border-radius: 5px; visibility: hidden; display: grid; place-items: center; } .ndots.show, .row:hover .ndots { visibility: visible; } .ndots:hover { background: var(--kb-e9e5fb); }
+    .kids { border-left: 1px solid var(--kl-dcdfea); margin-left: 15px; padding-left: 4px; }
+    .kids > .row::before { content: ''; position: absolute; left: -5px; top: 50%; width: 10px; border-top: 1px solid var(--kl-dcdfea); }
     /* Org info */
     .info { padding: 14px 14px 16px; }
     .ch .toolbar .btn-primary, .ch .toolbar .btn-ghost { height: 34px; padding: 0 22px; font-weight: 500; }
@@ -431,9 +431,9 @@ const BASE = '/administration-configuration/';
     .logo-prev { height: 50px; display: flex; align-items: center; } .nologo { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
     .logo-box small { font-size: 9.5px; color: var(--muted); line-height: 1.4; }
     .lbtns { display: flex; gap: 4px; } .chipbtn { display: inline-flex; align-items: center; gap: 3px; border: 0; border-radius: 5px; padding: 4px 5px; white-space: nowrap; font-size: 10px; cursor: pointer; font-family: inherit; }
-    .chipbtn.pur { background: #ede9fe; color: #5b21b6; } .chipbtn.red { background: #fee2e2; color: #b91c1c; }
+    .chipbtn.pur { background: var(--kb-ede9fe); color: var(--kf-5b21b6); } .chipbtn.red { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 10px; align-content: start; } .f3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 10px; }
-    .f2 label, .f3 label { display: flex; flex-direction: column; gap: 5px; font-size: 11.5px; color: #3b3f5c; min-width: 0; } .f2 i, .f3 i { color: var(--red); font-style: normal; }
+    .f2 label, .f3 label { display: flex; flex-direction: column; gap: 5px; font-size: 11.5px; color: var(--kf-3b3f5c); min-width: 0; } .f2 i, .f3 i { color: var(--red); font-style: normal; }
     .full { grid-column: 1 / -1; }
     .f2 .input, .f2 .select, .f3 .input, .f3 .select { height: 32px; font-size: 11px; padding-left: 9px; font-weight: 400; padding-top: 0; padding-bottom: 0; min-width: 0; width: 100%; }
     .bad-in { border-color: var(--red) !important; }
@@ -441,48 +441,48 @@ const BASE = '/administration-configuration/';
     .ts { padding: 14px; }
     .tgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .tset { position: relative; display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; border: 1px solid var(--border); border-radius: 8px; padding: 10px; min-height: 66px; }
-    .si { width: 36px; height: 36px; border-radius: 8px; color: #fff; display: grid; place-items: center; }
+    .si { width: 36px; height: 36px; border-radius: 8px; color: var(--kf-ffffff); display: grid; place-items: center; }
     .tset b { display: block; font-size: 10.5px; font-weight: 600; } .tset small { display: block; font-size: 10.5px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
-    .tg { position: absolute; top: 9px; right: 8px; display: flex; align-items: center; gap: 4px; } .tset > div > b { padding-right: 82px; } .tset > .select { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 70px; } .tset.ret > div { padding-right: 76px; } .tset.ret > div > b { padding-right: 0; } .tg em { font-style: normal; font-size: 10px; color: #16a34a; } .tg em.off { color: var(--muted); }
+    .tg { position: absolute; top: 9px; right: 8px; display: flex; align-items: center; gap: 4px; } .tset > div > b { padding-right: 82px; } .tset > .select { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 70px; } .tset.ret > div { padding-right: 76px; } .tset.ret > div > b { padding-right: 0; } .tg em { font-style: normal; font-size: 10px; color: var(--kf-16a34a); } .tg em.off { color: var(--muted); }
     .select.sm { height: 30px; font-size: 11.5px; padding-top: 0; padding-bottom: 0; align-self: center; }
     .tset.cur > div > b { padding-right: 0; } .tset.cur .select { margin-top: 6px; width: 100%; }
     /* Health */
-    .health { padding: 14px; } .hp { display: inline-flex; align-items: center; gap: 5px; background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 6px; } .hp.warn { background: #fef3c7; color: #b45309; }
+    .health { padding: 14px; } .hp { display: inline-flex; align-items: center; gap: 5px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 6px; } .hp.warn { background: var(--kb-fef3c7); color: var(--kf-b45309); }
     .hb2 { display: flex; align-items: center; gap: 10px; }
     .ring { position: relative; width: 106px; height: 106px; flex-shrink: 0; } .ring svg { width: 100%; height: 100%; }
-    .ring div { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; } .ring b { font-size: 19px; } .ring span { font-size: 10px; color: #3b3f5c; line-height: 1.3; }
+    .ring div { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; } .ring b { font-size: 19px; } .ring span { font-size: 10px; color: var(--kf-3b3f5c); line-height: 1.3; }
     .checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-    .checks button { display: flex; align-items: center; gap: 8px; border: 0; background: none; font: inherit; font-size: 11px; padding: 2px 0; cursor: pointer; color: #3b3f5c; text-align: left; white-space: nowrap; } .checks button:hover { color: var(--primary); }
-    .ck { width: 15px; height: 15px; border-radius: 50%; background: #22c55e; color: #fff; display: grid; place-items: center; flex-shrink: 0; } .ck.no { background: #9ca3af; }
+    .checks button { display: flex; align-items: center; gap: 8px; border: 0; background: none; font: inherit; font-size: 11px; padding: 2px 0; cursor: pointer; color: var(--kf-3b3f5c); text-align: left; white-space: nowrap; } .checks button:hover { color: var(--primary); }
+    .ck { width: 15px; height: 15px; border-radius: 50%; background: var(--kb-22c55e); color: var(--kf-ffffff); display: grid; place-items: center; flex-shrink: 0; } .ck.no { background: var(--kb-9ca3af); }
     /* Recent */
     .recent { padding: 14px 12px; } .recent ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
     .recent li button { width: 100%; display: grid; grid-template-columns: 34px 1fr 32px; gap: 8px; align-items: center; border: 0; background: none; padding: 3px 2px; text-align: left; cursor: pointer; border-radius: 7px; font: inherit; color: inherit; }
-    .recent li button:hover { background: #f7f5ff; }
-    .ri { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; } .ri.big { width: 44px; height: 44px; background: #f3f0ff; }
-    .recent li div { display: flex; flex-direction: column; min-width: 0; } .recent b { font-size: 11.5px; font-weight: 600; } .recent small { font-size: 10px; color: #4b4f6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .av { width: 32px; height: 32px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 600; display: grid; place-items: center; }
+    .recent li button:hover { background: var(--kb-f7f5ff); }
+    .ri { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; } .ri.big { width: 44px; height: 44px; background: var(--kb-f3f0ff); }
+    .recent li div { display: flex; flex-direction: column; min-width: 0; } .recent b { font-size: 11.5px; font-weight: 600; } .recent small { font-size: 10px; color: var(--kf-4b4f6b); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .av { width: 32px; height: 32px; border-radius: 50%; color: var(--kf-ffffff); font-size: 11px; font-weight: 600; display: grid; place-items: center; }
     /* Quick actions */
     .qa { padding: 14px 10px; } .qgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .qgrid button { display: flex; align-items: center; gap: 7px; height: 46px; padding: 0 8px; white-space: nowrap; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: inherit; font-size: 10.5px; cursor: pointer; text-align: left; }
-    .qgrid button:hover { border-color: #c4b5fd; background: #faf8ff; }
+    .qgrid button { display: flex; align-items: center; gap: 7px; height: 46px; padding: 0 8px; white-space: nowrap; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); font: inherit; font-size: 10.5px; cursor: pointer; text-align: left; }
+    .qgrid button:hover { border-color: var(--kl-c4b5fd); background: var(--kb-faf8ff); }
     /* Other tabs */
     .bus { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
     .bu { border: 1px solid var(--border); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
     .buh { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .buh div { display: flex; flex-direction: column; } .buh small { color: var(--muted); font-size: 11.5px; } .flag { font-size: 28px; }
-    .bun { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .bun div { background: #f7f7fb; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; } .bun b { font-size: 17px; } .bun small { font-size: 11px; color: var(--muted); }
+    .bun { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .bun div { background: var(--kb-f7f7fb); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; } .bun b { font-size: 17px; } .bun small { font-size: 11px; color: var(--muted); }
     .sth { margin: 16px 0 8px; } .stl { list-style: none; padding: 0; margin: 0; } .stl li { display: flex; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; color: var(--primary); } .stl b { color: var(--text); }
     .sum { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .kv { display: grid; grid-template-columns: 150px 1fr; gap: 9px 12px; font-size: 12.5px; margin: 0 0 14px; } .kv dt { color: var(--muted); } .kv dd { margin: 0; display: flex; align-items: center; gap: 6px; }
     .sw { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
     .brand-prev { display: flex; align-items: center; justify-content: space-between; padding: 14px; border: 1px dashed var(--border); border-radius: 10px; margin-bottom: 14px; }
-    .pill-p { background: var(--p); color: #fff; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; }
-    .warnline, .okline { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: #b45309; } .okline { color: #15803d; }
-    .pol { list-style: none; margin: 0; padding: 0; } .pol li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f1f6; } .pol div { display: flex; flex-direction: column; font-size: 12.5px; } .pol small { color: var(--muted); }
-    .seatbar { height: 8px; border-radius: 6px; background: #eef0f6; margin-bottom: 14px; overflow: hidden; } .seatbar i { display: block; height: 100%; background: linear-gradient(90deg, #7c3aed, #2563eb); }
+    .pill-p { background: var(--p); color: var(--kf-ffffff); padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; }
+    .warnline, .okline { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kf-b45309); } .okline { color: var(--kf-15803d); }
+    .pol { list-style: none; margin: 0; padding: 0; } .pol li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .pol div { display: flex; flex-direction: column; font-size: 12.5px; } .pol small { color: var(--muted); }
+    .seatbar { height: 8px; border-radius: 6px; background: var(--kb-eef0f6); margin-bottom: 14px; overflow: hidden; } .seatbar i { display: block; height: 100%; background: linear-gradient(90deg, var(--kb-7c3aed), var(--kb-2563eb)); }
     /* drawer */
     .dh { display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; margin-bottom: 14px; } .dh div { display: flex; flex-direction: column; }
-    .dstats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; } .dstats div { background: #f7f5ff; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; } .dstats b { font-size: 20px; } .dstats small { color: var(--muted); }
-    h4 { font-size: 13px; margin: 6px 0 8px; } .dl { list-style: none; padding: 0; margin: 0; } .dl button { width: 100%; display: flex; gap: 8px; align-items: center; padding: 7px 4px; border: 0; border-bottom: 1px solid #f0f1f6; background: none; font: inherit; font-size: 12.5px; cursor: pointer; text-align: left; } .dl .muted { margin-left: auto; font-size: 11.5px; }
+    .dstats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; } .dstats div { background: var(--kb-f7f5ff); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; } .dstats b { font-size: 20px; } .dstats small { color: var(--muted); }
+    h4 { font-size: 13px; margin: 6px 0 8px; } .dl { list-style: none; padding: 0; margin: 0; } .dl button { width: 100%; display: flex; gap: 8px; align-items: center; padding: 7px 4px; border: 0; border-bottom: 1px solid var(--kl-f0f1f6); background: none; font: inherit; font-size: 12.5px; cursor: pointer; text-align: left; } .dl .muted { margin-left: auto; font-size: 11.5px; }
     @media (max-width: 1350px) { .main { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } .right { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); } .kpis { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 900px) { .main, .sum { grid-template-columns: 1fr; } .right { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr 1fr; } .f3, .tgrid { grid-template-columns: 1fr; } .info-top { grid-template-columns: 1fr; } }
   `,
@@ -521,11 +521,11 @@ export class OrganizationTenantSetup {
   protected readonly kpis = computed(() => {
     const s = this.store;
     return [
-      { label: 'Organization', value: String(1 + s.subTenants().length), sub: s.subTenants().length ? `Active Tenant + ${s.subTenants().length} sub` : 'Active Tenant', icon: 'admin-office', color: '#7c3aed' },
-      { label: 'Business Units', value: String(s.bus().length), sub: s.bus().every((b) => b.status === 'Active') ? 'Active' : `${s.bus().filter((b) => b.status === 'Active').length} Active`, icon: 'admin-sitemap', color: '#2563eb' },
-      { label: 'Departments', value: String(s.depts().length), sub: 'Active', icon: 'users', color: '#10b981' },
-      { label: 'Sites & Locations', value: String(s.sites().length), sub: 'Active', icon: 'map-pin', color: '#f59e0b' },
-      { label: 'Users', value: fmtN(s.users().length), sub: 'Total Users', icon: 'users', color: '#f43f5e' },
+      { label: 'Organization', value: String(1 + s.subTenants().length), sub: s.subTenants().length ? `Active Tenant + ${s.subTenants().length} sub` : 'Active Tenant', icon: 'admin-office', color: 'var(--ka-7c3aed)' },
+      { label: 'Business Units', value: String(s.bus().length), sub: s.bus().every((b) => b.status === 'Active') ? 'Active' : `${s.bus().filter((b) => b.status === 'Active').length} Active`, icon: 'admin-sitemap', color: 'var(--ka-2563eb)' },
+      { label: 'Departments', value: String(s.depts().length), sub: 'Active', icon: 'users', color: 'var(--ka-10b981)' },
+      { label: 'Sites & Locations', value: String(s.sites().length), sub: 'Active', icon: 'map-pin', color: 'var(--ka-f59e0b)' },
+      { label: 'Users', value: fmtN(s.users().length), sub: 'Total Users', icon: 'users', color: 'var(--ka-f43f5e)' },
     ];
   });
 
@@ -535,13 +535,13 @@ export class OrganizationTenantSetup {
     const byDept = s.usersByDept();
     const bus = s.bus().map<Node>((b) => {
       const sites = s.sites().filter((x) => x.buId === b.id).map<Node>((site) => {
-        const depts = s.depts().filter((d) => d.siteId === site.id).map<Node>((d) => ({ key: `dept:${d.id}`, kind: 'dept', id: d.id, label: d.name, icon: 'users', color: '#2563eb', users: byDept.get(d.id) ?? 0, children: [] }));
-        return { key: `site:${site.id}`, kind: 'site', id: site.id, label: site.name, icon: site.type === 'Head Office' ? 'home' : 'admin-office', color: '#2563eb', users: depts.reduce((a, d) => a + d.users, 0), children: depts };
+        const depts = s.depts().filter((d) => d.siteId === site.id).map<Node>((d) => ({ key: `dept:${d.id}`, kind: 'dept', id: d.id, label: d.name, icon: 'users', color: 'var(--ka-2563eb)', users: byDept.get(d.id) ?? 0, children: [] }));
+        return { key: `site:${site.id}`, kind: 'site', id: site.id, label: site.name, icon: site.type === 'Head Office' ? 'home' : 'admin-office', color: 'var(--ka-2563eb)', users: depts.reduce((a, d) => a + d.users, 0), children: depts };
       });
-      return { key: `bu:${b.id}`, kind: 'bu', id: b.id, label: b.name, icon: 'admin-bu', color: '#2563eb', users: sites.reduce((a, x) => a + x.users, 0), children: sites };
+      return { key: `bu:${b.id}`, kind: 'bu', id: b.id, label: b.name, icon: 'admin-bu', color: 'var(--ka-2563eb)', users: sites.reduce((a, x) => a + x.users, 0), children: sites };
     });
-    const subs = s.subTenants().map<Node>((t) => ({ key: `sub:${t.id}`, kind: 'sub', id: t.id, label: `${t.name} (Sub-Tenant)`, icon: 'admin-sitemap', color: '#7c3aed', users: 0, children: [] }));
-    return { key: 'tenant', kind: 'tenant', id: 'tenant', label: `${s.org().name} (Tenant)`, icon: 'admin-office', color: '#7c3aed', users: s.users().length, children: [...bus, ...subs] };
+    const subs = s.subTenants().map<Node>((t) => ({ key: `sub:${t.id}`, kind: 'sub', id: t.id, label: `${t.name} (Sub-Tenant)`, icon: 'admin-sitemap', color: 'var(--ka-7c3aed)', users: 0, children: [] }));
+    return { key: 'tenant', kind: 'tenant', id: 'tenant', label: `${s.org().name} (Tenant)`, icon: 'admin-office', color: 'var(--ka-7c3aed)', users: s.users().length, children: [...bus, ...subs] };
   });
   protected readonly tree = computed<Node>(() => {
     const q = this.q().trim().toLowerCase();
@@ -730,9 +730,9 @@ export class OrganizationTenantSetup {
     const lic = this.store.moduleAccess().filter((m) => this.store.licensed(m.path)).length;
     const en = this.store.moduleAccess().filter((m) => m.enabled && this.store.licensed(m.path)).length;
     return [
-      { label: 'Licensed modules', value: lic, display: `${lic} / ${total}`, color: '#7c3aed' },
-      { label: 'Enabled modules', value: en, display: `${en} / ${total}`, color: '#22c55e' },
-      { label: 'Add-ons available', value: total - lic, display: String(total - lic), color: '#f59e0b' },
+      { label: 'Licensed modules', value: lic, display: `${lic} / ${total}`, color: 'var(--ka-7c3aed)' },
+      { label: 'Enabled modules', value: en, display: `${en} / ${total}`, color: 'var(--ka-22c55e)' },
+      { label: 'Add-ons available', value: total - lic, display: String(total - lic), color: 'var(--ka-f59e0b)' },
     ];
   });
   protected readonly auditRows = computed(() => this.store.audit().filter((a) => a.category !== 'Authentication').map((a) => ({ ...a, when: fmtStamp(a.at), what: `${a.entity} ${a.action}` })));
@@ -782,7 +782,7 @@ export class OrganizationTenantSetup {
       const lines = String(r.result).split(/\r?\n/).slice(1).filter((l) => l.trim());
       lines.forEach((l) => {
         const [name, country, head] = l.split(',').map((x) => x.trim());
-        if (name) this.store.saveBU({ id: '', name, code: 'BU-' + name.replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase(), country: country || 'United Arab Emirates', flag: '🏳️', head: head || '', status: 'Active', created: new Date().toISOString().slice(0, 10), color: '#0891b2' });
+        if (name) this.store.saveBU({ id: '', name, code: 'BU-' + name.replace(/[^A-Za-z]/g, '').slice(0, 3).toUpperCase(), country: country || 'United Arab Emirates', flag: '🏳️', head: head || '', status: 'Active', created: new Date().toISOString().slice(0, 10), color: 'var(--ka-0891b2)' });
       });
       this.store.toast(`${lines.length} business units imported`);
     };

@@ -66,7 +66,7 @@ const DUPS: Dup[] = (() => {
     return {
       id: k, score, status: 'Open',
       a: { id: a.id, name: a.name, initials: a.initials, avatar: a.avatar },
-      b: { id: PEOPLE[j].id, name: b.name, initials: a.initials, avatar: '#64748b' },
+      b: { id: PEOPLE[j].id, name: b.name, initials: a.initials, avatar: 'var(--ka-64748b)' },
       fields: [
         { label: 'Name', a: a.name, b: b.name },
         { label: 'Email', a: a.email, b: k % 3 ? a.email : b.email },
@@ -86,11 +86,11 @@ const DUPS: Dup[] = (() => {
   template: `
     <app-page-head title="Identity Verification &amp; Deduplication" parent="People &amp; Identity Management" parentLink="/people-identity" subtitle="Verify documents and liveness, screen watchlists and merge duplicate profiles." />
     <section class="kpi-row">
-      <app-kpi label="Verified Identities" value="97.2%" icon="shield-check" color="#22c55e" change="0.6%" sub="of all profiles" />
-      <app-kpi label="Pending Verification" [value]="cnt('Pending')" icon="clock" color="#f59e0b" sub="in queue" />
-      <app-kpi label="Possible Duplicates" [value]="openDups()" icon="users" color="#8b5cf6" sub="to review" />
-      <app-kpi label="Rejected (30 days)" [value]="cnt('Rejected')" icon="ban" color="#ef4444" />
-      <app-kpi label="Avg. Verification Time" value="42 s" icon="activity" color="#3b82f6" sub="automated checks" />
+      <app-kpi label="Verified Identities" value="97.2%" icon="shield-check" color="var(--ka-22c55e)" change="0.6%" sub="of all profiles" />
+      <app-kpi label="Pending Verification" [value]="cnt('Pending')" icon="clock" color="var(--ka-f59e0b)" sub="in queue" />
+      <app-kpi label="Possible Duplicates" [value]="openDups()" icon="users" color="var(--ka-8b5cf6)" sub="to review" />
+      <app-kpi label="Rejected (30 days)" [value]="cnt('Rejected')" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Avg. Verification Time" value="42 s" icon="activity" color="var(--ka-3b82f6)" sub="automated checks" />
     </section>
 
     <div class="tabs page-tabs">
@@ -145,14 +145,14 @@ const DUPS: Dup[] = (() => {
     .dup-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 12px; }
     .dup { display: flex; flex-direction: column; gap: 10px; } .dup.closed { opacity: 0.6; }
     .dup-head { display: flex; justify-content: space-between; }
-    .score { font-weight: 700; color: #d97706; } .score.hi { color: #dc2626; }
+    .score { font-weight: 700; color: var(--kf-d97706); } .score.hi { color: var(--kf-dc2626); }
     .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .who { display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 12.5px; }
-    .who.keep, .who:has(input:checked) { border-color: var(--primary); background: #faf8ff; }
+    .who.keep, .who:has(input:checked) { border-color: var(--primary); background: var(--kb-faf8ff); }
     .who div { display: flex; flex-direction: column; } .who small { color: var(--muted); }
     .cmp { width: 100%; border-collapse: collapse; font-size: 12px; }
     .cmp th { text-align: left; color: var(--muted); font-weight: 500; width: 100px; padding: 4px 0; }
-    .cmp td { padding: 4px 6px; } .cmp tr.diff td { background: #fff7ed; color: #b45309; }
+    .cmp td { padding: 4px 6px; } .cmp tr.diff td { background: var(--kb-fff7ed); color: var(--kf-b45309); }
   `,
 })
 export class Verification {
@@ -261,11 +261,11 @@ const DOCS: Doc[] = (() => {
       <button class="btn-outline" (click)="remindAll()"><app-icon name="bell" [size]="16" />Remind all expiring</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Documents on File" [value]="list().length.toLocaleString()" icon="file-text" color="#8b5cf6" />
-      <app-kpi label="Valid" [value]="cnt('Valid')" icon="file-check" color="#22c55e" />
-      <app-kpi label="Expiring ≤ 30 days" [value]="cnt('Expiring')" icon="clock" color="#f59e0b" />
-      <app-kpi label="Expired" [value]="cnt('Expired')" icon="ban" color="#ef4444" sub="access may be blocked" />
-      <app-kpi label="Pending Review" [value]="cnt('Pending Review')" icon="list-checks" color="#3b82f6" />
+      <app-kpi label="Documents on File" [value]="list().length.toLocaleString()" icon="file-text" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Valid" [value]="cnt('Valid')" icon="file-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Expiring ≤ 30 days" [value]="cnt('Expiring')" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Expired" [value]="cnt('Expired')" icon="ban" color="var(--ka-ef4444)" sub="access may be blocked" />
+      <app-kpi label="Pending Review" [value]="cnt('Pending Review')" icon="list-checks" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -312,11 +312,11 @@ export class Documents {
   protected readonly bulk: RowAction[] = [{ id: 'remind', label: 'Send reminders' }, { id: 'approve', label: 'Approve' }];
   protected readonly expiries = computed(() => {
     const cats = ['Identity', 'Permit', 'Certification', 'Licence'];
-    const colors = ['#7c3aed', '#f97316', '#22c55e', '#3b82f6'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-f97316)', 'var(--ka-22c55e)', 'var(--ka-3b82f6)'];
     return cats.map((c, ci) => ({ name: c, color: colors[ci], values: [0, 1, 2, 3, 4, 5].map((m) => this.list().filter((d) => d.category === c && d.daysLeft >= m * 30 && d.daysLeft < (m + 1) * 30).length) }));
   });
   protected readonly byCat = computed(() =>
-    ['Identity', 'Permit', 'Certification', 'Licence'].map((c, i) => ({ label: c, value: this.list().filter((d) => d.category === c).length, color: ['#7c3aed', '#f97316', '#22c55e', '#3b82f6'][i] })),
+    ['Identity', 'Permit', 'Certification', 'Licence'].map((c, i) => ({ label: c, value: this.list().filter((d) => d.category === c).length, color: ['var(--ka-7c3aed)', 'var(--ka-f97316)', 'var(--ka-22c55e)', 'var(--ka-3b82f6)'][i] })),
   );
 
   protected cnt(s: string) {

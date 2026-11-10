@@ -24,11 +24,11 @@ const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Contractor Companies" [value]="list().length" icon="building" color="#8b5cf6" change="9%" sub="vs. last quarter" />
-      <app-kpi label="Active Contractors" [value]="fmt(activeWorkers())" icon="users" color="#22c55e" change="6%" sub="vs. last month" />
-      <app-kpi label="Expiring Documents" value="72" icon="id-card" color="#f97316" change="18%" [up]="false" sub="within 30 days" />
-      <app-kpi label="Non-Compliant" [value]="nonCompliant()" icon="shield" color="#ef4444" change="33%" [good]="false" sub="vs. last month" />
-      <app-kpi label="On-Site Today" [value]="fmt(onSite())" icon="shield-check" color="#3b82f6" [sub]="onSitePct() + '% of total'" />
+      <app-kpi label="Total Contractor Companies" [value]="list().length" icon="building" color="var(--ka-8b5cf6)" change="9%" sub="vs. last quarter" />
+      <app-kpi label="Active Contractors" [value]="fmt(activeWorkers())" icon="users" color="var(--ka-22c55e)" change="6%" sub="vs. last month" />
+      <app-kpi label="Expiring Documents" value="72" icon="id-card" color="var(--ka-f97316)" change="18%" [up]="false" sub="within 30 days" />
+      <app-kpi label="Non-Compliant" [value]="nonCompliant()" icon="shield" color="var(--ka-ef4444)" change="33%" [good]="false" sub="vs. last month" />
+      <app-kpi label="On-Site Today" [value]="fmt(onSite())" icon="shield-check" color="var(--ka-3b82f6)" [sub]="onSitePct() + '% of total'" />
     </section>
 
     <section class="cc" [class.with-detail]="!!sel()">
@@ -46,7 +46,7 @@ const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
             <div class="cards">
               @for (c of list(); track c.id) {
                 <button class="co" [class.on]="selId() === c.id" (click)="selId.set(c.id)">
-                  <span class="logo" [style.background]="c.color + '1a'" [style.color]="c.color"><app-icon [name]="c.icon" [size]="20" /></span>
+                  <span class="logo" [style.background]="'color-mix(in srgb, ' + c.color + ' 10%, transparent)'" [style.color]="c.color"><app-icon [name]="c.icon" [size]="20" /></span>
                   <div><b>{{ c.name }}</b><small>{{ c.code }} · {{ c.trade }}</small></div>
                   <div class="co-foot"><span>{{ c.workers }} workers</span><span [class]="statusTag(c.status)">{{ c.status }}</span><span [style.color]="compColor(c.compliance)">● {{ c.compliance }}%</span></div>
                 </button>
@@ -75,7 +75,7 @@ const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
       @if (sel(); as c) {
         <aside class="card detail">
           <div class="d-head">
-            <span class="big-logo" [style.background]="c.color + '1a'" [style.color]="c.color"><app-icon [name]="c.icon" [size]="28" /></span>
+            <span class="big-logo" [style.background]="'color-mix(in srgb, ' + c.color + ' 10%, transparent)'" [style.color]="c.color"><app-icon [name]="c.icon" [size]="28" /></span>
             <div><h2>{{ c.name }}</h2><span class="muted">{{ c.code }} | {{ c.trade }}</span></div>
             <span class="pill" [class]="'pill ' + pillCls(c.status)"><i></i>{{ c.status }}</span>
             <button class="close-btn" (click)="selId.set(null)">×</button>
@@ -115,12 +115,12 @@ const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
                 <div>
                   <h4>Key Metrics</h4>
                   <div class="km">
-                    <div><span class="ki" style="background:#dbeafe;color:#2563eb"><app-icon name="users" [size]="16" /></span><b>{{ c.workers }}</b><small>Total Contractors</small></div>
-                    <div><span class="ki" style="background:#dcfce7;color:#16a34a"><app-icon name="user-check" [size]="16" /></span><b>{{ c.active }}</b><small>Active</small></div>
-                    <div><span class="ki" style="background:#fee2e2;color:#dc2626"><app-icon name="user" [size]="16" /></span><b>{{ c.workers - c.active }}</b><small>Inactive</small></div>
-                    <div><span class="ki" style="background:#ede9fe;color:#7c3aed"><app-icon name="shield-check" [size]="16" /></span><b>{{ c.compliance }}%</b><small>Compliance</small></div>
-                    <div><span class="ki" style="background:#ffedd5;color:#ea580c"><app-icon name="map-pin" [size]="16" /></span><b>{{ c.sites.length }}</b><small>Assigned Sites</small></div>
-                    <div><span class="ki" style="background:#fee2e2;color:#dc2626"><app-icon name="bell" [size]="16" /></span><b>{{ c.issues }}</b><small>Open Issues</small></div>
+                    <div><span class="ki" style="background:var(--kb-dbeafe);color:var(--kf-2563eb)"><app-icon name="users" [size]="16" /></span><b>{{ c.workers }}</b><small>Total Contractors</small></div>
+                    <div><span class="ki" style="background:var(--kb-dcfce7);color:var(--kf-16a34a)"><app-icon name="user-check" [size]="16" /></span><b>{{ c.active }}</b><small>Active</small></div>
+                    <div><span class="ki" style="background:var(--kb-fee2e2);color:var(--kf-dc2626)"><app-icon name="user" [size]="16" /></span><b>{{ c.workers - c.active }}</b><small>Inactive</small></div>
+                    <div><span class="ki" style="background:var(--kb-ede9fe);color:var(--kf-7c3aed)"><app-icon name="shield-check" [size]="16" /></span><b>{{ c.compliance }}%</b><small>Compliance</small></div>
+                    <div><span class="ki" style="background:var(--kb-ffedd5);color:var(--kf-ea580c)"><app-icon name="map-pin" [size]="16" /></span><b>{{ c.sites.length }}</b><small>Assigned Sites</small></div>
+                    <div><span class="ki" style="background:var(--kb-fee2e2);color:var(--kf-dc2626)"><app-icon name="bell" [size]="16" /></span><b>{{ c.issues }}</b><small>Open Issues</small></div>
                   </div>
                 </div>
               </div>
@@ -196,10 +196,10 @@ const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
     .up { transform: rotate(180deg); } .danger { color: var(--red); }
     .cc { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .cc.with-detail { grid-template-columns: minmax(0, 1.5fr) minmax(420px, 1fr); }
     .vt { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .vt button { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border: 0; background: #fff; font-size: 12.5px; cursor: pointer; } .vt button + button { border-left: 1px solid var(--border); }
-    .vt button.on { background: var(--primary); color: #fff; }
+    .vt button { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border: 0; background: var(--kb-ffffff); font-size: 12.5px; cursor: pointer; } .vt button + button { border-left: 1px solid var(--border); }
+    .vt button.on { background: var(--primary); color: var(--kf-ffffff); }
     .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
-    .co { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; text-align: left; cursor: pointer; }
+    .co { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); text-align: left; cursor: pointer; }
     .co.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .co div { display: flex; flex-direction: column; font-size: 12.5px; } .co small { color: var(--muted); }
     .co-foot { flex-direction: row !important; justify-content: space-between; align-items: center; font-size: 11.5px; }
     .logo, .big-logo { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; } .big-logo { width: 54px; height: 54px; }
@@ -208,16 +208,16 @@ const MONTHS = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
     .detail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     .d-head { display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center; } .d-head h2 { margin: 0; font-size: 19px; } .d-head div { display: flex; flex-direction: column; }
     .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 20px; font-size: 12px; } .pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    .pill.green { background: #dcfce7; color: #15803d; } .pill.amber { background: #fef3c7; color: #b45309; } .pill.grey { background: #f3f4f6; color: #6b7280; } .pill.red { background: #fee2e2; color: #b91c1c; }
+    .pill.green { background: var(--kb-dcfce7); color: var(--kf-15803d); } .pill.amber { background: var(--kb-fef3c7); color: var(--kf-b45309); } .pill.grey { background: var(--kb-f3f4f6); color: var(--kf-6b7280); } .pill.red { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .d-tabs { display: flex; gap: 16px; border-bottom: 1px solid var(--border); overflow-x: auto; }
-    .d-tabs button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: #4b4f6b; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; } .d-tabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
+    .d-tabs button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: var(--kf-4b4f6b); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; } .d-tabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
     h4 { margin: 0 0 8px; font-size: 13px; }
     .ov { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
-    .facts { display: grid; grid-template-columns: auto 1fr; gap: 7px 10px; margin: 0; font-size: 11.5px; } .facts dt { display: flex; gap: 5px; align-items: center; color: #4b4f6b; white-space: nowrap; } .facts dd { margin: 0; overflow-wrap: break-word; min-width: 0; }
+    .facts { display: grid; grid-template-columns: auto 1fr; gap: 7px 10px; margin: 0; font-size: 11.5px; } .facts dt { display: flex; gap: 5px; align-items: center; color: var(--kf-4b4f6b); white-space: nowrap; } .facts dd { margin: 0; overflow-wrap: break-word; min-width: 0; }
     .km { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .km div { display: grid; grid-template-columns: 30px 1fr; gap: 0 8px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; align-items: center; }
     .ki { grid-row: span 2; width: 30px; height: 30px; border-radius: 7px; display: grid; place-items: center; } .km b { font-size: 15px; } .km small { font-size: 10.5px; color: var(--muted); }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .mini-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; } .mh { display: flex; justify-content: space-between; }
-    .docs, .wk { list-style: none; margin: 0; padding: 0; } .docs li, .wk li { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .docs, .wk { list-style: none; margin: 0; padding: 0; } .docs li, .wk li { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .wk li { grid-template-columns: 32px 1fr auto; } .docs div, .wk div { display: flex; flex-direction: column; } .docs small, .wk small { color: var(--muted); } .docs app-icon { color: var(--primary); }
     @media (max-width: 1250px) { .cc.with-detail { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
   `,
@@ -282,18 +282,18 @@ export class ContractorCompanies {
     return s === 'Active' ? 'green' : s === 'Under Review' ? 'amber' : s === 'Suspended' ? 'red' : 'grey';
   }
   protected compColor(v: number) {
-    return v >= 88 ? '#16a34a' : v >= 80 ? '#f59e0b' : '#ef4444';
+    return v >= 88 ? 'var(--ka-16a34a)' : v >= 80 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)';
   }
   protected trend(c: Company) {
     const base = c.workers;
-    return [{ name: 'Workers', color: '#7c3aed', values: [0.83, 0.86, 0.9, 0.93, 0.97, 1].map((f, i) => Math.round(base * f * (1 + (i % 2 ? 0.01 : -0.01)))), area: true }];
+    return [{ name: 'Workers', color: 'var(--ka-7c3aed)', values: [0.83, 0.86, 0.9, 0.93, 0.97, 1].map((f, i) => Math.round(base * f * (1 + (i % 2 ? 0.01 : -0.01)))), area: true }];
   }
   protected compSegs(c: Company) {
     const exp = c.compliance ? Math.min(100 - c.compliance, 6) : 0;
     return [
-      { label: 'Compliant', value: c.compliance, color: '#22c55e' },
-      { label: 'Expiring', value: exp, color: '#f59e0b' },
-      { label: 'Non-Compliant', value: Math.max(0, 100 - c.compliance - exp), color: '#ef4444' },
+      { label: 'Compliant', value: c.compliance, color: 'var(--ka-22c55e)' },
+      { label: 'Expiring', value: exp, color: 'var(--ka-f59e0b)' },
+      { label: 'Non-Compliant', value: Math.max(0, 100 - c.compliance - exp), color: 'var(--ka-ef4444)' },
     ];
   }
   protected docs(c: Company) {
@@ -356,7 +356,7 @@ export class ContractorCompanies {
     if (f.id) this.patch(f.id, f);
     else {
       const n = this.list().length + 1;
-      const c: Company = { ...f, id: `C${n + 100}`, code: `CMP-${String(n).padStart(3, '0')}`, initials: f.name.slice(0, 2).toUpperCase(), color: '#64748b', icon: 'building', address: `${f.country}` };
+      const c: Company = { ...f, id: `C${n + 100}`, code: `CMP-${String(n).padStart(3, '0')}`, initials: f.name.slice(0, 2).toUpperCase(), color: 'var(--ka-64748b)', icon: 'building', address: `${f.country}` };
       this.list.update((l) => [c, ...l]);
       this.selId.set(c.id);
     }

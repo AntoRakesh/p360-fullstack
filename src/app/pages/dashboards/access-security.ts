@@ -4,7 +4,7 @@ import { UI } from '../../shared/ui';
 import { fmt, HOURS, NAMES, rng, SITE_NAMES } from './demo-data';
 
 type DoorState = 'Closed' | 'Open' | 'Forced' | 'Held Open' | 'Offline';
-const DOOR_COLORS: Record<DoorState, string> = { Closed: '#22c55e', Open: '#3b82f6', Forced: '#ef4444', 'Held Open': '#f59e0b', Offline: '#9ca3af' };
+const DOOR_COLORS: Record<DoorState, string> = { Closed: 'var(--ka-22c55e)', Open: 'var(--ka-3b82f6)', Forced: 'var(--ka-ef4444)', 'Held Open': 'var(--ka-f59e0b)', Offline: 'var(--ka-9ca3af)' };
 const DOOR_NAMES = ['Main Entrance', 'Lobby Turnstile 1', 'Lobby Turnstile 2', 'Server Room', 'Lab A', 'Lab B', 'Finance', 'HR Office', 'Store Room', 'Loading Bay', 'Gate 1', 'Gate 2', 'Roof Access', 'Parking P1', 'Parking P2', 'Canteen', 'Data Hall', 'Exec Floor', 'Fire Exit N', 'Fire Exit S', 'Warehouse A', 'Warehouse B', 'Control Room', 'Mail Room'];
 
 interface Door {
@@ -40,12 +40,12 @@ interface AccessEvent {
     }
 
     <section class="kpi-row">
-      <app-kpi label="Access Events (Today)" [value]="k().events" icon="door-open" color="#a855f7" change="8%" />
-      <app-kpi label="Granted" [value]="k().granted" icon="shield-check" color="#22c55e" change="7%" />
-      <app-kpi label="Denied" [value]="k().denied" icon="ban" color="#ef4444" change="3%" [up]="false" />
-      <app-kpi label="Door Alarms" [value]="alarms()" icon="bell" color="#f97316" sub="open now" />
-      <app-kpi label="Doors Online" [value]="online()" icon="wifi" color="#3b82f6" sub="readers & controllers" />
-      <app-kpi label="Tailgating Detected" [value]="k().tail" icon="users" color="#8b5cf6" change="2" [up]="false" />
+      <app-kpi label="Access Events (Today)" [value]="k().events" icon="door-open" color="var(--ka-a855f7)" change="8%" />
+      <app-kpi label="Granted" [value]="k().granted" icon="shield-check" color="var(--ka-22c55e)" change="7%" />
+      <app-kpi label="Denied" [value]="k().denied" icon="ban" color="var(--ka-ef4444)" change="3%" [up]="false" />
+      <app-kpi label="Door Alarms" [value]="alarms()" icon="bell" color="var(--ka-f97316)" sub="open now" />
+      <app-kpi label="Doors Online" [value]="online()" icon="wifi" color="var(--ka-3b82f6)" sub="readers & controllers" />
+      <app-kpi label="Tailgating Detected" [value]="k().tail" icon="users" color="var(--ka-8b5cf6)" change="2" [up]="false" />
     </section>
 
     <section class="dash">
@@ -87,7 +87,7 @@ interface AccessEvent {
           </div>
           <dl class="kv">
             <dt>Site</dt><dd>{{ d.site }}</dd>
-            <dt>Status</dt><dd><span class="tag" [style.background]="doorColors[d.state] + '22'" [style.color]="doorColors[d.state]">{{ d.state }}</span></dd>
+            <dt>Status</dt><dd><span class="tag" [style.background]="'color-mix(in srgb, ' + doorColors[d.state] + ' 13%, transparent)'" [style.color]="doorColors[d.state]">{{ d.state }}</span></dd>
             <dt>Reader</dt><dd>{{ d.reader }}</dd>
             <dt>Events today</dt><dd>{{ d.events }}</dd>
           </dl>
@@ -135,19 +135,19 @@ interface AccessEvent {
   `,
   styles: `
     .banner { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; }
-    .banner.red { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
-    .legend-btn { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; font-size: 11.5px; color: #3b3f5c; cursor: pointer; }
+    .banner.red { background: var(--kb-fef2f2); border-color: var(--kl-fecaca); color: var(--kf-991b1b); }
+    .legend-btn { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; font-size: 11.5px; color: var(--kf-3b3f5c); cursor: pointer; }
     .legend-btn.off { opacity: 0.35; }
     .legend-btn i { width: 9px; height: 9px; border-radius: 50%; }
     .door-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
-    .door { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 10px; border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; background: #fff; cursor: pointer; text-align: left; }
-    .door:hover, .door.sel { background: #faf8ff; border-color: #c4b5fd; }
+    .door { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 10px; border: 1px solid var(--border); border-left: 4px solid; border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; text-align: left; }
+    .door:hover, .door.sel { background: var(--kb-faf8ff); border-color: var(--kl-c4b5fd); }
     .door b { font-size: 12px; } .door span { font-size: 11px; color: var(--muted); } .door em { font-style: normal; font-size: 11px; font-weight: 600; }
     .kv { display: grid; grid-template-columns: 110px 1fr; gap: 10px; font-size: 13px; margin: 0 0 16px; }
     .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     .feed { max-height: 330px; }
     .row-in { animation: rowin 0.5s ease; }
-    @keyframes rowin { from { background: #f3efff; } }
+    @keyframes rowin { from { background: var(--kb-f3efff); } }
   `,
 })
 export class AccessSecurity {
@@ -194,24 +194,24 @@ export class AccessSecurity {
     const f = this.state.factor();
     const g = [900, 3200, 7400, 6100, 4300, 3600, 5200, 4100, 3500, 3000, 3900, 4600, 2600, 1200, 600];
     return [
-      { name: 'Granted', color: '#8b5cf6', values: g.map((v) => Math.round(v * f)) },
-      { name: 'Denied', color: '#ef4444', values: g.map((v, i) => Math.round(v * f * (0.015 + (i % 4) * 0.006))) },
+      { name: 'Granted', color: 'var(--ka-8b5cf6)', values: g.map((v) => Math.round(v * f)) },
+      { name: 'Denied', color: 'var(--ka-ef4444)', values: g.map((v, i) => Math.round(v * f * (0.015 + (i % 4) * 0.006))) },
     ];
   });
   protected readonly reasons = computed(() =>
     [
-      ['Invalid credential', 412, '#ef4444'],
-      ['Expired badge', 268, '#f97316'],
-      ['Outside schedule', 221, '#f59e0b'],
-      ['Anti-passback', 134, '#8b5cf6'],
-      ['Unknown card', 82, '#9ca3af'],
+      ['Invalid credential', 412, 'var(--ka-ef4444)'],
+      ['Expired badge', 268, 'var(--ka-f97316)'],
+      ['Outside schedule', 221, 'var(--ka-f59e0b)'],
+      ['Anti-passback', 134, 'var(--ka-8b5cf6)'],
+      ['Unknown card', 82, 'var(--ka-9ca3af)'],
     ].map(([label, v, color]) => ({ label: label as string, value: this.state.scale(v as number), color: color as string })),
   );
   protected readonly topDenied = computed(() =>
     [['Server Room', 96], ['Lab A', 74], ['Data Hall', 61], ['Exec Floor', 44], ['Finance', 38], ['Roof Access', 21]].map(([label, v]) => ({
       label: label as string,
       value: this.state.scale(v as number),
-      color: '#ef4444',
+      color: 'var(--ka-ef4444)',
     })),
   );
   protected readonly doorsShown = computed(() => {

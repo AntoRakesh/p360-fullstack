@@ -68,7 +68,7 @@ const BASE: Omit<Scorecard, 'trend'>[] = [
           <div class="card score" [style.border-left-color]="ragColor[c.rag]">
             <div class="score-top">
               <span>{{ c.name }}</span>
-              <span class="tag" [style.background]="ragColor[c.rag] + '1f'" [style.color]="ragColor[c.rag]">{{ c.rag }}</span>
+              <span class="tag" [style.background]="'color-mix(in srgb, ' + ragColor[c.rag] + ' 12%, transparent)'" [style.color]="ragColor[c.rag]">{{ c.rag }}</span>
             </div>
             <div class="score-mid">
               <b>{{ c.actual }}{{ c.unit === '%' ? '%' : ' ' + c.unit }}</b>
@@ -86,14 +86,14 @@ const BASE: Omit<Scorecard, 'trend'>[] = [
     .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 18px; }
     .rag { display: flex; flex-direction: column; gap: 2px; border-top: 4px solid; text-align: left; cursor: pointer; font-family: inherit; }
     .rag.on { box-shadow: 0 0 0 2px var(--primary-soft); border-color: var(--primary); }
-    .rag span { font-size: 12.5px; color: #4b4f6b; } .rag b { font-size: 28px; } .rag small { font-size: 11.5px; color: var(--muted); }
+    .rag span { font-size: 12.5px; color: var(--kf-4b4f6b); } .rag b { font-size: 28px; } .rag small { font-size: 11.5px; color: var(--muted); }
     .overall { border-top-color: var(--primary); cursor: default; } .overall b { color: var(--primary); }
-    .group-title { margin: 6px 0 10px; font-size: 15px; color: #4b4f6b; }
+    .group-title { margin: 6px 0 10px; font-size: 15px; color: var(--kf-4b4f6b); }
     .score-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 16px; }
     .score { display: flex; flex-direction: column; gap: 8px; border-left: 4px solid; }
     .score-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; font-weight: 600; }
     .score-mid { display: flex; align-items: baseline; gap: 10px; } .score-mid b { font-size: 24px; }
-    .ach { height: 6px; border-radius: 3px; background: #eef0f6; overflow: hidden; }
+    .ach { height: 6px; border-radius: 3px; background: var(--kb-eef0f6); overflow: hidden; }
     .ach i { display: block; height: 100%; transition: width 0.4s; }
     .score-foot { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); }
   `,
@@ -103,7 +103,7 @@ export class KpiScorecards {
   protected readonly periods = ['Month', 'Quarter', 'Year'];
   protected readonly period = signal('Month');
   protected readonly rags: Rag[] = ['On Track', 'At Risk', 'Off Track'];
-  protected readonly ragColor: Record<Rag, string> = { 'On Track': '#16a34a', 'At Risk': '#d97706', 'Off Track': '#dc2626' };
+  protected readonly ragColor: Record<Rag, string> = { 'On Track': 'var(--ka-16a34a)', 'At Risk': 'var(--ka-d97706)', 'Off Track': 'var(--ka-dc2626)' };
   protected readonly rag = signal<Rag | null>(null);
   protected readonly min = Math.min;
 

@@ -63,9 +63,9 @@ const DEF2D = { rot: 0, elev: 90, k: 0.97 };
     <div class="iso" [class.grab]="drag()" [class.measuring]="measure()" [style.aspect-ratio]="aspect()">
       <svg [attr.viewBox]="'0 0 ' + vw + ' ' + vh" (pointerdown)="down($event)" (pointermove)="move($event)" (pointerup)="up($event)" (pointerleave)="up($event)" (wheel)="wheel($event)">
         <defs>
-          <radialGradient id="iso-glow"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.75" /><stop offset="60%" stop-color="#ef4444" stop-opacity="0.35" /><stop offset="100%" stop-color="#ef4444" stop-opacity="0" /></radialGradient>
-          <radialGradient id="iso-heat"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.85" /><stop offset="35%" stop-color="#f59e0b" stop-opacity="0.6" /><stop offset="70%" stop-color="#22c55e" stop-opacity="0.3" /><stop offset="100%" stop-color="#3b82f6" stop-opacity="0" /></radialGradient>
-          <linearGradient id="iso-bg" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" [attr.stop-color]="outdoor() ? '#cfe3c8' : '#9aa6b6'" /><stop offset="100%" [attr.stop-color]="outdoor() ? '#b9d5ae' : '#6f7b8d'" /></linearGradient>
+          <radialGradient id="iso-glow"><stop offset="0%" stop-color="var(--ka-ef4444)" stop-opacity="0.75" /><stop offset="60%" stop-color="var(--ka-ef4444)" stop-opacity="0.35" /><stop offset="100%" stop-color="var(--ka-ef4444)" stop-opacity="0" /></radialGradient>
+          <radialGradient id="iso-heat"><stop offset="0%" stop-color="var(--ka-ef4444)" stop-opacity="0.85" /><stop offset="35%" stop-color="var(--ka-f59e0b)" stop-opacity="0.6" /><stop offset="70%" stop-color="var(--ka-22c55e)" stop-opacity="0.3" /><stop offset="100%" stop-color="var(--ka-3b82f6)" stop-opacity="0" /></radialGradient>
+          <linearGradient id="iso-bg" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" [attr.stop-color]="outdoor() ? 'var(--ka-cfe3c8)' : 'var(--ka-9aa6b6)'" /><stop offset="100%" [attr.stop-color]="outdoor() ? 'var(--ka-b9d5ae)' : 'var(--ka-6f7b8d)'" /></linearGradient>
         </defs>
         <rect x="-10" y="-10" [attr.width]="vw + 20" [attr.height]="vh + 20" fill="url(#iso-bg)" />
         <!-- slab / lower floors -->
@@ -73,16 +73,16 @@ const DEF2D = { rot: 0, elev: 90, k: 0.97 };
         @for (d of drawn(); track $index) {
           @switch (d.t) {
             @case ('poly') {<path [attr.d]="d.d" [attr.fill]="d.fill" [attr.opacity]="d.op ?? 1" [attr.stroke]="d.stroke ?? null" [attr.stroke-width]="d.sw ?? 0.5" [class.zf]="!!d.ref" (click)="d.ref && pickZone(d.ref)" />}
-            @case ('ball') {<ellipse [attr.cx]="d.x" [attr.cy]="d.y" [attr.rx]="d.r" [attr.ry]="d.r! * 0.85" [attr.fill]="d.fill" stroke="#3e7f3e" stroke-width="0.8" /><ellipse [attr.cx]="d.x! - d.r! * 0.3" [attr.cy]="d.y! - d.r! * 0.3" [attr.rx]="d.r! * 0.45" [attr.ry]="d.r! * 0.35" fill="#7cc27a" />}
+            @case ('ball') {<ellipse [attr.cx]="d.x" [attr.cy]="d.y" [attr.rx]="d.r" [attr.ry]="d.r! * 0.85" [attr.fill]="d.fill" stroke="var(--kl-3e7f3e)" stroke-width="0.8" /><ellipse [attr.cx]="d.x! - d.r! * 0.3" [attr.cy]="d.y! - d.r! * 0.3" [attr.rx]="d.r! * 0.45" [attr.ry]="d.r! * 0.35" fill="var(--ka-7cc27a)" />}
             @case ('person') {
               @if (d.ry! > 0.2) {
                 <g [attr.transform]="'translate(' + d.x + ',' + d.y + ') scale(' + d.s + ')'" class="fig">
-                  <ellipse cx="0" cy="0" rx="4" ry="1.6" fill="#000" opacity="0.18" />
+                  <ellipse cx="0" cy="0" rx="4" ry="1.6" fill="var(--ka-000000)" opacity="0.18" />
                   <path [attr.d]="'M-3 0 L-3 ' + (-9 * d.ry!) + ' Q0 ' + (-12 * d.ry!) + ' 3 ' + (-9 * d.ry!) + ' L3 0Z'" [attr.fill]="d.fill" />
-                  <circle cx="0" [attr.cy]="-13 * d.ry! - 1" r="2.6" fill="#f2c9a0" />
+                  <circle cx="0" [attr.cy]="-13 * d.ry! - 1" r="2.6" fill="var(--ka-f2c9a0)" />
                 </g>
               } @else {
-                <circle [attr.cx]="d.x" [attr.cy]="d.y" [attr.r]="3.4 * d.s!" [attr.fill]="d.fill" stroke="#fff" stroke-width="1" />
+                <circle [attr.cx]="d.x" [attr.cy]="d.y" [attr.r]="3.4 * d.s!" [attr.fill]="d.fill" stroke="var(--kl-ffffff)" stroke-width="1" />
               }
             }
           }
@@ -90,16 +90,16 @@ const DEF2D = { rot: 0, elev: 90, k: 0.97 };
         <!-- overlays drawn on top of the scene -->
         @if (!exploded() && !outdoor()) {
           @for (h of heatPolys(); track $index) {<path [attr.d]="h.d" fill="url(#iso-heat)" [attr.opacity]="h.op" class="np" />}
-          @for (g of glowPolys(); track $index) {<path [attr.d]="g.d" fill="url(#iso-glow)" class="np" /><path [attr.d]="g.ring" fill="none" stroke="#ef4444" stroke-width="2" class="pulse np" />}
-          @for (g of fencePolys(); track $index) {<path [attr.d]="g" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="7 5" class="np" />}
+          @for (g of glowPolys(); track $index) {<path [attr.d]="g.d" fill="url(#iso-glow)" class="np" /><path [attr.d]="g.ring" fill="none" stroke="var(--kl-ef4444)" stroke-width="2" class="pulse np" />}
+          @for (g of fencePolys(); track $index) {<path [attr.d]="g" fill="none" stroke="var(--kl-ef4444)" stroke-width="2" stroke-dasharray="7 5" class="np" />}
           @for (p of pathLines(); track $index) {
-            <path [attr.d]="p.d" fill="none" stroke="#fff" stroke-width="6" stroke-linejoin="round" opacity="0.7" class="np" />
+            <path [attr.d]="p.d" fill="none" stroke="var(--kl-ffffff)" stroke-width="6" stroke-linejoin="round" opacity="0.7" class="np" />
             <path [attr.d]="p.d" fill="none" [attr.stroke]="p.color" stroke-width="3" stroke-linejoin="round" [attr.stroke-dasharray]="p.dashed ? '2 7' : null" stroke-linecap="round" class="np" />
-            @if (p.dots) {@for (q of p.pts; track $index) {<circle [attr.cx]="q[0]" [attr.cy]="q[1]" r="4" fill="#fff" [attr.stroke]="p.color" stroke-width="2.4" class="np" />}}
+            @if (p.dots) {@for (q of p.pts; track $index) {<circle [attr.cx]="q[0]" [attr.cy]="q[1]" r="4" fill="var(--ka-ffffff)" [attr.stroke]="p.color" stroke-width="2.4" class="np" />}}
           }
           @if (mLine(); as m) {
-            <path [attr.d]="m.d" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="6 4" fill="none" />
-            @for (q of m.pts; track $index) {<circle [attr.cx]="q[0]" [attr.cy]="q[1]" r="5" fill="#7c3aed" stroke="#fff" stroke-width="2" />}
+            <path [attr.d]="m.d" stroke="var(--kl-7c3aed)" stroke-width="2.5" stroke-dasharray="6 4" fill="none" />
+            @for (q of m.pts; track $index) {<circle [attr.cx]="q[0]" [attr.cy]="q[1]" r="5" fill="var(--ka-7c3aed)" stroke="var(--kl-ffffff)" stroke-width="2" />}
           }
         }
         @if (exploded()) {
@@ -163,7 +163,7 @@ const DEF2D = { rot: 0, elev: 90, k: 0.97 };
   `,
   styles: `
     :host { display: block; position: relative; }
-    .iso { position: relative; width: 100%; border-radius: 10px; overflow: hidden; background: #8794a6; user-select: none; cursor: grab; }
+    .iso { position: relative; width: 100%; border-radius: 10px; overflow: hidden; background: var(--kb-8794a6); user-select: none; cursor: grab; }
     .iso.grab { cursor: grabbing; } .iso.measuring { cursor: crosshair; }
     .iso:fullscreen { border-radius: 0; aspect-ratio: auto !important; }
     svg { display: block; width: 100%; height: 100%; touch-action: none; }
@@ -172,39 +172,39 @@ const DEF2D = { rot: 0, elev: 90, k: 0.97 };
     .np { pointer-events: none; }
     .pulse { animation: iso-pulse 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
     @keyframes iso-pulse { from { opacity: 0.9; transform: scale(0.6); } to { opacity: 0; transform: scale(1.25); } }
-    .fhit { fill: transparent; stroke: transparent; stroke-width: 2; cursor: pointer; pointer-events: all; } .fhit:hover { fill: rgba(124, 58, 237, 0.12); stroke: #7c3aed; } .fhit.on { stroke: #7c3aed; stroke-width: 3; }
-    .zl { position: absolute; transform: translate(-50%, -50%); background: #fff; border: 0; border-radius: 6px; padding: 5px 10px; font-size: 11.5px; font-weight: 600; color: #12142b; box-shadow: 0 2px 8px rgba(15, 20, 40, 0.25); cursor: pointer; white-space: nowrap; z-index: 2; }
-    .zl.sel { background: var(--primary); color: #fff; } .zl:hover { box-shadow: 0 0 0 2px var(--primary), 0 2px 8px rgba(15, 20, 40, 0.25); }
+    .fhit { fill: transparent; stroke: transparent; stroke-width: 2; cursor: pointer; pointer-events: all; } .fhit:hover { fill: rgba(124, 58, 237, 0.12); stroke: var(--kl-7c3aed); } .fhit.on { stroke: var(--kl-7c3aed); stroke-width: 3; }
+    .zl { position: absolute; transform: translate(-50%, -50%); background: var(--kb-ffffff); border: 0; border-radius: 6px; padding: 5px 10px; font-size: 11.5px; font-weight: 600; color: var(--kf-12142b); box-shadow: 0 2px 8px rgba(15, 20, 40, 0.25); cursor: pointer; white-space: nowrap; z-index: 2; }
+    .zl.sel { background: var(--primary); color: var(--kf-ffffff); } .zl:hover { box-shadow: 0 0 0 2px var(--primary), 0 2px 8px rgba(15, 20, 40, 0.25); }
     .zl.out { font-size: 12px; padding: 6px 12px; }
-    .mk { position: absolute; border: 0; background: none; padding: 0; cursor: pointer; z-index: 3; color: #fff; transition: left 1.2s linear, top 1.2s linear; }
+    .mk { position: absolute; border: 0; background: none; padding: 0; cursor: pointer; z-index: 3; color: var(--kf-ffffff); transition: left 1.2s linear, top 1.2s linear; }
     .mk.dim { opacity: 0.35; }
     .mk.pin { transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; }
-    .pin-c { width: 30px; height: 30px; border-radius: 50%; background: var(--c); border: 3px solid #fff; display: grid; place-items: center; box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 30%, transparent), 0 3px 8px rgba(0, 0, 0, 0.3); }
-    .stem { width: 2px; height: 12px; background: #fff; box-shadow: 0 0 2px rgba(0,0,0,.4); } .shadow { width: 12px; height: 4px; border-radius: 50%; background: rgba(0, 0, 0, 0.35); margin-top: -2px; }
-    .mk.pin.sel .pin-c { box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 45%, transparent), 0 0 0 9px #fff, 0 3px 8px rgba(0, 0, 0, 0.3); }
-    .mk.chip, .mk.sensor { transform: translate(-50%, -50%); width: 18px; height: 18px; border-radius: 50%; background: var(--c); border: 2px solid #fff; display: grid; place-items: center; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); }
+    .pin-c { width: 30px; height: 30px; border-radius: 50%; background: var(--c); border: 3px solid var(--kl-ffffff); display: grid; place-items: center; box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 30%, transparent), 0 3px 8px rgba(0, 0, 0, 0.3); }
+    .stem { width: 2px; height: 12px; background: var(--kb-ffffff); box-shadow: 0 0 2px rgba(0,0,0,.4); } .shadow { width: 12px; height: 4px; border-radius: 50%; background: rgba(0, 0, 0, 0.35); margin-top: -2px; }
+    .mk.pin.sel .pin-c { box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 45%, transparent), 0 0 0 9px var(--kb-ffffff), 0 3px 8px rgba(0, 0, 0, 0.3); }
+    .mk.chip, .mk.sensor { transform: translate(-50%, -50%); width: 18px; height: 18px; border-radius: 50%; background: var(--c); border: 2px solid var(--kl-ffffff); display: grid; place-items: center; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); }
     .mk.sensor { border-radius: 5px; width: 20px; height: 20px; }
     .mk.chip.sel, .mk.sensor.sel { box-shadow: 0 0 0 3px var(--primary); }
     .mk.alert { transform: translate(-50%, -50%); }
-    .al-c { width: 52px; height: 52px; border-radius: 50%; background: #ef4444; border: 3px solid #fff; display: grid; place-items: center; box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.35), 0 4px 12px rgba(0, 0, 0, 0.3); animation: al 1.4s ease-in-out infinite; }
+    .al-c { width: 52px; height: 52px; border-radius: 50%; background: var(--kb-ef4444); border: 3px solid var(--kl-ffffff); display: grid; place-items: center; box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.35), 0 4px 12px rgba(0, 0, 0, 0.3); animation: al 1.4s ease-in-out infinite; }
     @keyframes al { 50% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3); } }
-    .mk.value { transform: translate(-50%, -50%); } .val { display: block; background: var(--c); color: #fff; font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 10px; border: 1.5px solid #fff; white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
-    .co { position: absolute; transform: translate(26px, -50%); display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 8px; padding: 9px 10px; min-width: 180px; box-shadow: 0 6px 18px rgba(15, 20, 40, 0.28); z-index: 4; cursor: pointer; color: #12142b; }
+    .mk.value { transform: translate(-50%, -50%); } .val { display: block; background: var(--c); color: var(--kf-ffffff); font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 10px; border: 1.5px solid var(--kl-ffffff); white-space: nowrap; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+    .co { position: absolute; transform: translate(26px, -50%); display: flex; align-items: center; gap: 10px; background: var(--kb-ffffff); border-radius: 8px; padding: 9px 10px; min-width: 180px; box-shadow: 0 6px 18px rgba(15, 20, 40, 0.28); z-index: 4; cursor: pointer; color: var(--kf-12142b); }
     .co.left { transform: translate(calc(-100% - 26px), -50%); }
     .co.above { transform: translate(-12%, -100%); } .co.below { transform: translate(14px, 0); }
     .co:hover { box-shadow: 0 0 0 2px var(--primary), 0 6px 18px rgba(15, 20, 40, 0.28); }
-    .co-ic { width: 36px; height: 36px; border-radius: 7px; color: #fff; display: grid; place-items: center; flex-shrink: 0; align-self: flex-start; }
-    .co div { display: flex; flex-direction: column; flex: 1; min-width: 0; } .co b { font-size: 12.5px; } .co small { font-size: 11px; color: #4b4f6b; line-height: 1.35; white-space: nowrap; }
-    .mlabel { position: absolute; transform: translate(-50%, -150%); background: #7c3aed; color: #fff; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; z-index: 5; }
-    .hint { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(18, 20, 43, 0.85); color: #fff; font-size: 12px; padding: 6px 12px; border-radius: 20px; z-index: 6; }
-    .fl-tag { position: absolute; transform: translate(10px, -50%); display: flex; flex-direction: column; align-items: flex-start; background: #fff; border: 0; border-left: 3px solid #94a3b8; border-radius: 6px; padding: 4px 9px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); z-index: 3; }
-    .fl-tag b { font-size: 12px; } .fl-tag small { font-size: 10.5px; color: var(--muted); } .fl-tag.on { border-left-color: var(--primary); background: #f5f0ff; }
+    .co-ic { width: 36px; height: 36px; border-radius: 7px; color: var(--kf-ffffff); display: grid; place-items: center; flex-shrink: 0; align-self: flex-start; }
+    .co div { display: flex; flex-direction: column; flex: 1; min-width: 0; } .co b { font-size: 12.5px; } .co small { font-size: 11px; color: var(--kf-4b4f6b); line-height: 1.35; white-space: nowrap; }
+    .mlabel { position: absolute; transform: translate(-50%, -150%); background: var(--kb-7c3aed); color: var(--kf-ffffff); font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; z-index: 5; }
+    .hint { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(18, 20, 43, 0.85); color: var(--kf-ffffff); font-size: 12px; padding: 6px 12px; border-radius: 20px; z-index: 6; }
+    .fl-tag { position: absolute; transform: translate(10px, -50%); display: flex; flex-direction: column; align-items: flex-start; background: var(--kb-ffffff); border: 0; border-left: 3px solid var(--kl-94a3b8); border-radius: 6px; padding: 4px 9px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); z-index: 3; }
+    .fl-tag b { font-size: 12px; } .fl-tag small { font-size: 10.5px; color: var(--muted); } .fl-tag.on { border-left-color: var(--primary); background: var(--kb-f5f0ff); }
     .tools { position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 9px; z-index: 6; }
-    .tools > button, .grp { width: 40px; border-radius: 8px; border: 0; background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); color: #1f2433; }
+    .tools > button, .grp { width: 40px; border-radius: 8px; border: 0; background: var(--kb-ffffff); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); color: var(--kf-1f2433); }
     .tools > button { height: 40px; display: grid; place-items: center; cursor: pointer; font-weight: 700; font-size: 13px; }
-    .grp { display: flex; flex-direction: column; overflow: hidden; } .grp button { height: 38px; border: 0; background: #fff; display: grid; place-items: center; cursor: pointer; color: #1f2433; } .grp button + button { border-top: 1px solid #eceef4; }
-    .tools > button.dark { background: #1e1b4b; color: #fff; } .tools > button.on { background: var(--primary); color: #fff; }
-    .tools button:hover:not(.dark):not(.on) { background: #f5f0ff; }
+    .grp { display: flex; flex-direction: column; overflow: hidden; } .grp button { height: 38px; border: 0; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; color: var(--kf-1f2433); } .grp button + button { border-top: 1px solid var(--kl-eceef4); }
+    .tools > button.dark { background: var(--kb-1e1b4b); color: var(--kf-ffffff); } .tools > button.on { background: var(--primary); color: var(--kf-ffffff); }
+    .tools button:hover:not(.dark):not(.on) { background: var(--kb-f5f0ff); }
   `,
 })
 export class IsoView {
@@ -222,7 +222,7 @@ export class IsoView {
   readonly fences = input<{ x: number; y: number; r: number }[]>([]);
   readonly heat = input<IsoHeat[]>([]);
   /** Shirt colours for the decor people figures; empty hides them. */
-  readonly shirts = input<string[]>(['#2563eb', '#2563eb', '#2563eb', '#f59e0b', '#16a34a']);
+  readonly shirts = input<string[]>(['var(--ka-2563eb)', 'var(--ka-2563eb)', 'var(--ka-2563eb)', 'var(--ka-f59e0b)', 'var(--ka-16a34a)']);
   /** Zone ids to tint (zone layer) with their group colour. */
   readonly tint = input<string[]>([]);
   readonly labelIds = input<string[] | null>(null);
@@ -272,15 +272,15 @@ export class IsoView {
     const s = furnish(zs, zs.length * 31 + (this.floor().charCodeAt(0) || 1), this.shirts());
     for (const z of zs) if (tint.has(z.id)) s.push({ pts: [[z.x + 3, z.y + 3], [z.x + z.w - 3, z.y + 3], [z.x + z.w - 3, z.y + z.h - 3], [z.x + 3, z.y + z.h - 3]], z0: 0.6, h: 0, top: ZONE_COLOR[ZONE_GROUP[z.type]], side: '', op: 0.16, flat: true, stroke: ZONE_COLOR[ZONE_GROUP[z.type]] });
     const sel = zs.find((z) => z.id === this.selectedZone());
-    if (sel) s.push({ pts: [[sel.x + 2, sel.y + 2], [sel.x + sel.w - 2, sel.y + 2], [sel.x + sel.w - 2, sel.y + sel.h - 2], [sel.x + 2, sel.y + sel.h - 2]], z0: 0.8, h: 0, top: '#7c3aed', side: '', op: 0.22, flat: true, stroke: '#7c3aed' });
+    if (sel) s.push({ pts: [[sel.x + 2, sel.y + 2], [sel.x + sel.w - 2, sel.y + 2], [sel.x + sel.w - 2, sel.y + sel.h - 2], [sel.x + 2, sel.y + sel.h - 2]], z0: 0.8, h: 0, top: 'var(--ka-7c3aed)', side: '', op: 0.22, flat: true, stroke: 'var(--ka-7c3aed)' });
     return s;
   });
 
   /** Floor slab + hint of the floors below (3D only). */
   protected readonly base = computed<Drawn[]>(() => {
     if (this.exploded() || this.outdoor()) return [];
-    const slab: Solid[] = [{ pts: [[20, 20], [980, 20], [980, 540], [20, 540]], z0: -14, h: 14, top: '#f6f7f9', side: '#8e9aab' }];
-    if (this.elev() < 85) for (let i = 1; i <= 2; i++) slab.unshift({ pts: [[20, 20], [980, 20], [980, 540], [20, 540]], z0: -14 - i * 46, h: 46, top: '#d9e2ec', side: i % 2 ? '#7f93ab' : '#8aa0b8', op: 0.9 });
+    const slab: Solid[] = [{ pts: [[20, 20], [980, 20], [980, 540], [20, 540]], z0: -14, h: 14, top: 'var(--ka-f6f7f9)', side: 'var(--ka-8e9aab)' }];
+    if (this.elev() < 85) for (let i = 1; i <= 2; i++) slab.unshift({ pts: [[20, 20], [980, 20], [980, 540], [20, 540]], z0: -14 - i * 46, h: 46, top: 'var(--ka-d9e2ec)', side: i % 2 ? 'var(--ka-7f93ab)' : 'var(--ka-8aa0b8)', op: 0.9 });
     return render(slab, this.view());
   });
 
@@ -294,7 +294,7 @@ export class IsoView {
       order.forEach((f, i) => {
         const zl = (i - 3) * 150;
         const on = f.id === this.floor();
-        out.push(...render([{ pts: [[20, 20], [980, 20], [980, 540], [20, 540]], z0: zl - 10, h: 10, top: on ? '#ede9fe' : '#f1f3f7', side: on ? '#7c3aed' : '#9aa6b8' }], v));
+        out.push(...render([{ pts: [[20, 20], [980, 20], [980, 540], [20, 540]], z0: zl - 10, h: 10, top: on ? 'var(--ka-ede9fe)' : 'var(--ka-f1f3f7)', side: on ? 'var(--ka-7c3aed)' : 'var(--ka-9aa6b8)' }], v));
         out.push(...render(all.filter((z) => z.floor === f.id).map((z) => ({ pts: [[z.x + 4, z.y + 4], [z.x + z.w - 4, z.y + 4], [z.x + z.w - 4, z.y + z.h - 4], [z.x + 4, z.y + z.h - 4]] as [number, number][], z0: zl + 0.5, h: 0, top: ZONE_COLOR[ZONE_GROUP[z.type]], side: '', op: on ? 0.55 : 0.28, flat: true })), v));
       });
       return out;
@@ -473,25 +473,25 @@ function siteScene(): Solid[] {
   if (SITE) return SITE;
   const r = (x: number, y: number, w: number, h: number): [number, number][] => [[x, y], [x + w, y], [x + w, y + h], [x, y + h]];
   const s: Solid[] = [
-    { pts: r(-900, -500, 2900, 1700), z0: -1, h: 0, top: '#bcd9ae', side: '', flat: true },
-    { pts: r(-900, 640, 2900, 90), z0: -0.5, h: 0, top: '#9aa3ae', side: '', flat: true },
-    { pts: r(1120, -500, 80, 1700), z0: -0.5, h: 0, top: '#9aa3ae', side: '', flat: true },
-    { pts: r(80, 760, 860, 260), z0: -0.4, h: 0, top: '#cfd4da', side: '', flat: true },
-    { pts: r(-20, -20, 1040, 600), z0: -0.3, h: 0, top: '#e5e7eb', side: '', flat: true },
+    { pts: r(-900, -500, 2900, 1700), z0: -1, h: 0, top: 'var(--ka-bcd9ae)', side: '', flat: true },
+    { pts: r(-900, 640, 2900, 90), z0: -0.5, h: 0, top: 'var(--ka-9aa3ae)', side: '', flat: true },
+    { pts: r(1120, -500, 80, 1700), z0: -0.5, h: 0, top: 'var(--ka-9aa3ae)', side: '', flat: true },
+    { pts: r(80, 760, 860, 260), z0: -0.4, h: 0, top: 'var(--ka-cfd4da)', side: '', flat: true },
+    { pts: r(-20, -20, 1040, 600), z0: -0.3, h: 0, top: 'var(--ka-e5e7eb)', side: '', flat: true },
   ];
   // Building A: 7 levels
   for (let i = 0; i < 7; i++) {
-    s.push({ pts: r(20, 20, 960, 520), z0: i * 40, h: 34, top: i === 6 ? '#cbd5e1' : '#e2e8f0', side: '#7aa0c4', op: 1 });
-    if (i < 6) s.push({ pts: r(20, 20, 960, 520), z0: i * 40 + 34, h: 6, top: '#e2e8f0', side: '#e5e7eb' });
+    s.push({ pts: r(20, 20, 960, 520), z0: i * 40, h: 34, top: i === 6 ? 'var(--ka-cbd5e1)' : 'var(--ka-e2e8f0)', side: 'var(--ka-7aa0c4)', op: 1 });
+    if (i < 6) s.push({ pts: r(20, 20, 960, 520), z0: i * 40 + 34, h: 6, top: 'var(--ka-e2e8f0)', side: 'var(--ka-e5e7eb)' });
   }
-  for (let i = 0; i < 3; i++) s.push({ pts: r(1280, 80, 380, 420), z0: i * 40, h: 36, top: '#e2e8f0', side: '#86a8c8' });
-  s.push({ pts: r(-620, 120, 520, 440), z0: 0, h: 80, top: '#d6d3cd', side: '#b8b1a6' });
+  for (let i = 0; i < 3; i++) s.push({ pts: r(1280, 80, 380, 420), z0: i * 40, h: 36, top: 'var(--ka-e2e8f0)', side: 'var(--ka-86a8c8)' });
+  s.push({ pts: r(-620, 120, 520, 440), z0: 0, h: 80, top: 'var(--ka-d6d3cd)', side: 'var(--ka-b8b1a6)' });
   // parked cars
   for (let i = 0; i < 12; i++)
-    for (let j = 0; j < 2; j++) if ((i + j * 3) % 4) s.push({ pts: r(110 + i * 68, 790 + j * 130, 40, 70), z0: 0, h: 14, top: ['#e2e8f0', '#1e293b', '#b91c1c', '#2563eb', '#94a3b8'][(i + j) % 5], side: '#475569' });
+    for (let j = 0; j < 2; j++) if ((i + j * 3) % 4) s.push({ pts: r(110 + i * 68, 790 + j * 130, 40, 70), z0: 0, h: 14, top: ['var(--ka-e2e8f0)', 'var(--ka-1e293b)', 'var(--ka-b91c1c)', 'var(--ka-2563eb)', 'var(--ka-94a3b8)'][(i + j) % 5], side: 'var(--ka-475569)' });
   // trees
   const tr: [number, number][] = [[-120, -200], [100, -260], [400, -240], [760, -220], [1020, -180], [1380, -200], [1700, 650], [1500, 900], [-300, 820], [-600, 700], [-750, 0], [1700, 200], [1000, 900], [60, 1080], [700, 1100]];
-  for (const [x, y] of tr) s.push({ pts: [[x - 6, y - 6], [x + 6, y - 6], [x + 6, y + 6], [x - 6, y + 6]], z0: 0, h: 20, top: '#7c5a3a', side: '#5b4029' }, { pts: [[x, y]], z0: 46, h: 0, top: '#4f9d4f', side: '', ball: { r: 34 } });
+  for (const [x, y] of tr) s.push({ pts: [[x - 6, y - 6], [x + 6, y - 6], [x + 6, y + 6], [x - 6, y + 6]], z0: 0, h: 20, top: 'var(--ka-7c5a3a)', side: 'var(--ka-5b4029)' }, { pts: [[x, y]], z0: 46, h: 0, top: 'var(--ka-4f9d4f)', side: '', ball: { r: 34 } });
   SITE = s;
   return s;
 }

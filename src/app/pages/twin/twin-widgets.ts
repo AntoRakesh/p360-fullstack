@@ -32,7 +32,7 @@ export interface UtilRow {
   `,
   styles: `
     .ud { display: flex; align-items: center; gap: 22px; } svg { flex-shrink: 0; } circle { transition: stroke-width 0.15s; cursor: pointer; }
-    .big { font-size: 21px; font-weight: 700; fill: #12142b; } .sm { font-size: 11px; fill: #3b3f5c; }
+    .big { font-size: 21px; font-weight: 700; fill: var(--ka-12142b); } .sm { font-size: 11px; fill: var(--ka-3b3f5c); }
     ul { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; gap: 9px; }
     li { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; font-size: 12px; cursor: default; } li.dim { opacity: 0.45; }
     li i { width: 11px; height: 11px; border-radius: 50%; } li b { font-weight: 600; }
@@ -65,8 +65,8 @@ export class UtilDonut {
     <div class="fh" [style.height.px]="height()">
       <svg [attr.viewBox]="'0 0 ' + w + ' ' + h" preserveAspectRatio="xMidYMid meet" (click)="pick.emit()">
         <defs><filter [attr.id]="uid" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="22" /></filter></defs>
-        <rect x="14" y="14" width="972" height="532" fill="#f4f6fa" stroke="#4b5563" stroke-width="5" />
-        @for (d of plan(); track $index) {<path [attr.d]="d.d" [attr.fill]="d.fill" stroke="#9aa3b2" stroke-width="0.8" [attr.opacity]="d.op ?? 1" />}
+        <rect x="14" y="14" width="972" height="532" fill="var(--ka-f4f6fa)" stroke="var(--kl-4b5563)" stroke-width="5" />
+        @for (d of plan(); track $index) {<path [attr.d]="d.d" [attr.fill]="d.fill" stroke="var(--kl-9aa3b2)" stroke-width="0.8" [attr.opacity]="d.op ?? 1" />}
         <g [attr.filter]="'url(#' + uid + ')'" opacity="0.82">
           @for (c of cells(); track $index) {<circle [attr.cx]="c.x" [attr.cy]="c.y" [attr.r]="c.r" [attr.fill]="c.color" />}
         </g>
@@ -78,8 +78,8 @@ export class UtilDonut {
   `,
   styles: `
     .fh { display: flex; gap: 10px; align-items: stretch; } svg { flex: 1; min-width: 0; height: 100%; cursor: pointer; display: block; }
-    .lg { display: grid; grid-template-columns: 6px auto; grid-template-rows: auto 1fr auto; column-gap: 8px; font-size: 11px; color: #3b3f5c; padding: 6px 0; }
-    .lg i { grid-column: 1; grid-row: 1 / 4; width: 6px; border-radius: 3px; background: linear-gradient(#ef4444, #f59e0b, #facc15, #22c55e, #06b6d4, #3b82f6, #6d28d9); }
+    .lg { display: grid; grid-template-columns: 6px auto; grid-template-rows: auto 1fr auto; column-gap: 8px; font-size: 11px; color: var(--kf-3b3f5c); padding: 6px 0; }
+    .lg i { grid-column: 1; grid-row: 1 / 4; width: 6px; border-radius: 3px; background: linear-gradient(var(--kb-ef4444), var(--kb-f59e0b), var(--kb-facc15), var(--kb-22c55e), var(--kb-06b6d4), var(--kb-3b82f6), var(--kb-6d28d9)); }
     .lg span:first-child { grid-column: 2; grid-row: 1; } .lg span:last-child { grid-column: 2; grid-row: 3; }
   `,
 })
@@ -94,7 +94,7 @@ export class FloorHeat {
   readonly legend = input(true);
   readonly pick = output<void>();
   protected readonly plan = computed(() =>
-    render(furnish(this.zones(), 3, []).filter((s) => !s.person && !s.ball), { rot: 0, elev: 90, k: 1, panX: 0, panY: 0, cx: PLAN_W / 2, cy: PLAN_H / 2, ox: PLAN_W / 2, oy: PLAN_H / 2 }).map((d) => ({ ...d, fill: d.fill.startsWith('rgb') ? '#e5e7eb' : d.fill === '#1f2433' ? '#9ca3af' : d.fill })),
+    render(furnish(this.zones(), 3, []).filter((s) => !s.person && !s.ball), { rot: 0, elev: 90, k: 1, panX: 0, panY: 0, cx: PLAN_W / 2, cy: PLAN_H / 2, ox: PLAN_W / 2, oy: PLAN_H / 2 }).map((d) => ({ ...d, fill: /^(rgb|color-mix)/.test(d.fill) ? 'var(--ka-e5e7eb)' : d.fill === 'var(--ka-1f2433)' ? 'var(--ka-9ca3af)' : d.fill })),
   );
   /** Aggregates points into a 20×11 grid and colours each cell by intensity. */
   protected readonly cells = computed(() => {

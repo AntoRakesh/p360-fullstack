@@ -28,17 +28,17 @@ export interface SchedVisit {
 
 /** Colour + icon per visit purpose (calendar blocks, table purpose column). */
 export const PURPOSE_STYLE: Record<string, { c: string; icon: string }> = {
-  'Business Meeting': { c: '#7c3aed', icon: 'w-calendar' },
-  'Site Visit': { c: '#16a34a', icon: 'map-pin' },
-  Delivery: { c: '#ea580c', icon: 'truck' },
-  Interview: { c: '#2563eb', icon: 'users' },
-  Maintenance: { c: '#dc2626', icon: 'tasks-wrench' },
-  'Project Discussion': { c: '#0d9488', icon: 'message' },
-  'Executive Meeting': { c: '#9333ea', icon: 'star' },
-  Training: { c: '#ca8a04', icon: 'graduation-cap' },
-  Audit: { c: '#475569', icon: 'file-check' },
+  'Business Meeting': { c: 'var(--ka-7c3aed)', icon: 'w-calendar' },
+  'Site Visit': { c: 'var(--ka-16a34a)', icon: 'map-pin' },
+  Delivery: { c: 'var(--ka-ea580c)', icon: 'truck' },
+  Interview: { c: 'var(--ka-2563eb)', icon: 'users' },
+  Maintenance: { c: 'var(--ka-dc2626)', icon: 'tasks-wrench' },
+  'Project Discussion': { c: 'var(--ka-0d9488)', icon: 'message' },
+  'Executive Meeting': { c: 'var(--ka-9333ea)', icon: 'star' },
+  Training: { c: 'var(--ka-ca8a04)', icon: 'graduation-cap' },
+  Audit: { c: 'var(--ka-475569)', icon: 'file-check' },
 };
-export const purposeStyle = (p: string) => PURPOSE_STYLE[p] ?? { c: '#7c3aed', icon: 'w-calendar' };
+export const purposeStyle = (p: string) => PURPOSE_STYLE[p] ?? { c: 'var(--ka-7c3aed)', icon: 'w-calendar' };
 
 const pad = (n: number) => String(n).padStart(2, '0');
 export const isoDate = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;

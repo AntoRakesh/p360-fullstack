@@ -82,16 +82,16 @@ const CALENDARS = [
   `,
   styles: `
     .cals { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-bottom: 12px; }
-    .cal { display: flex; flex-direction: column; gap: 4px; text-align: left; cursor: pointer; font-family: inherit; } .cal small { color: #4b4f6b; } .cal.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .cal { display: flex; flex-direction: column; gap: 4px; text-align: left; cursor: pointer; font-family: inherit; } .cal small { color: var(--kf-4b4f6b); } .cal.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .hl { list-style: none; margin: 0; padding: 0; max-height: 560px; overflow: auto; }
-    .hl li { display: grid; grid-template-columns: 46px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .hl li { display: grid; grid-template-columns: 46px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .hl li div { display: flex; flex-direction: column; } .hl small { color: var(--muted); }
     .date { display: flex; flex-direction: column; align-items: center; padding: 4px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); } .date b { font-size: 16px; }
     .danger { color: var(--red); }
     .year { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .month b { font-size: 12px; } .mgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-top: 4px; }
-    .mgrid span { font-size: 9.5px; text-align: center; padding: 3px 0; border-radius: 3px; } .mgrid .we { background: #f3f4f6; color: #9ca3af; }
-    .mgrid .hol { background: var(--primary); color: #fff; font-weight: 700; } .mgrid .blank { background: none; }
+    .mgrid span { font-size: 9.5px; text-align: center; padding: 3px 0; border-radius: 3px; } .mgrid .we { background: var(--kb-f3f4f6); color: var(--kf-9ca3af); }
+    .mgrid .hol { background: var(--primary); color: var(--kf-ffffff); font-weight: 700; } .mgrid .blank { background: none; }
     @media (max-width: 900px) { .year { grid-template-columns: repeat(2, 1fr); } }
   `,
 })
@@ -207,17 +207,17 @@ export class HolidayCalendars {
   styles: `
     .legend { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-size: 12px; margin-bottom: 12px; }
     .legend span { display: flex; align-items: center; gap: 5px; } .legend i { width: 14px; height: 10px; border-radius: 3px; }
-    .pend { background: repeating-linear-gradient(45deg, #f59e0b, #f59e0b 3px, #fde68a 3px, #fde68a 6px) !important; }
+    .pend { background: repeating-linear-gradient(45deg, var(--kb-f59e0b), var(--kb-f59e0b) 3px, var(--kb-fde68a) 3px, var(--kb-fde68a) 6px) !important; }
     .thr { margin-left: auto; display: flex; align-items: center; gap: 6px; } .n { width: 56px; padding: 4px 6px; }
     .cal-wrap { overflow: auto; }
     .gantt { border-collapse: collapse; font-size: 11px; width: 100%; }
-    .gantt th { position: sticky; top: 0; background: #fafafe; padding: 4px 1px; min-width: 26px; color: #4b4f6b; z-index: 1; }
+    .gantt th { position: sticky; top: 0; background: var(--kb-fafafe); padding: 4px 1px; min-width: 26px; color: var(--kf-4b4f6b); z-index: 1; }
     .gantt th small { display: block; font-weight: 400; color: var(--muted); font-size: 9px; }
-    .gantt th.we { color: #9ca3af; } .gantt th.hol { color: var(--primary); }
-    .count th { top: 38px; } .count span { display: inline-block; min-width: 18px; padding: 1px 3px; border-radius: 8px; background: #eef0f6; } .count span.over { background: #fee2e2; color: #b91c1c; font-weight: 700; }
-    .gantt .who { position: sticky; left: 0; background: #fff; text-align: left; min-width: 170px; z-index: 2; padding: 4px 8px 4px 0; white-space: nowrap; }
+    .gantt th.we { color: var(--kf-9ca3af); } .gantt th.hol { color: var(--primary); }
+    .count th { top: 38px; } .count span { display: inline-block; min-width: 18px; padding: 1px 3px; border-radius: 8px; background: var(--kb-eef0f6); } .count span.over { background: var(--kb-fee2e2); color: var(--kf-b91c1c); font-weight: 700; }
+    .gantt .who { position: sticky; left: 0; background: var(--kb-ffffff); text-align: left; min-width: 170px; z-index: 2; padding: 4px 8px 4px 0; white-space: nowrap; }
     .gantt td.who .dt-av { width: 22px; height: 22px; font-size: 9px; display: inline-grid; margin-right: 6px; vertical-align: middle; }
-    .gantt td { border-bottom: 1px solid #f0f1f6; padding: 3px 0; } .gantt td.we { background: #fafafa; }
+    .gantt td { border-bottom: 1px solid var(--kl-f0f1f6); padding: 3px 0; } .gantt td.we { background: var(--kb-fafafa); }
     .bar { display: block; height: 14px; }
   `,
 })
@@ -256,7 +256,7 @@ export class LeaveCalendar {
     return this.apps().filter((a) => a.from <= iso && a.to >= iso).length;
   }
   protected color(code: string) {
-    return typeByCode(code)?.color ?? '#7c3aed';
+    return typeByCode(code)?.color ?? 'var(--ka-7c3aed)';
   }
 }
 
@@ -336,8 +336,8 @@ interface EncReq {
   `,
   styles: `
     .rt .n { width: 64px; padding: 4px 6px; text-align: right; } .rt .select { padding: 5px 24px 5px 8px; } .rt tr.off td { opacity: .45; }
-    .calc { display: flex; flex-direction: column; gap: 4px; margin: 12px 0; padding: 12px; border-radius: 10px; background: #f0fdf4; font-size: 12.5px; }
-    .calc.bad-box { background: #fef2f2; color: #b91c1c; } .amt { font-size: 22px; color: #15803d; }
+    .calc { display: flex; flex-direction: column; gap: 4px; margin: 12px 0; padding: 12px; border-radius: 10px; background: var(--kb-f0fdf4); font-size: 12.5px; }
+    .calc.bad-box { background: var(--kb-fef2f2); color: var(--kf-b91c1c); } .amt { font-size: 22px; color: var(--kf-15803d); }
   `,
 })
 export class Encashment {

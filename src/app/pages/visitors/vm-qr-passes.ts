@@ -55,10 +55,10 @@ const BULK_SAMPLE = 'Rahul Nair, rahul.nair@vertex.com, Vertex Systems\nSara Ahm
       </div>
 
       <section class="vm-kpis">
-        <vm-kpi label="Active Passes" [value]="st.kpi().active" icon="vm-a-pass" color="#7c3aed" [clickable]="true" [active]="top() === 'Active'" (pick)="top.set('Active')" />
-        <vm-kpi label="QR Invitations Sent" [value]="st.kpi().sent" icon="vm-c-mail" color="#ea7a1a" [clickable]="true" [active]="sub() === 'Sent'" (pick)="sub.set('Sent'); top.set('All Passes')" />
-        <vm-kpi label="Used Today" [value]="st.kpi().used" icon="vm-c-check-circle" color="#16a34a" [clickable]="true" [active]="sub() === 'Scanned'" (pick)="sub.set('Scanned'); top.set('All Passes')" />
-        <vm-kpi label="Expiring Soon" [value]="st.kpi().expiring" icon="clock" color="#dc2626" [clickable]="true" [active]="validF() === 'today'" (pick)="validF.set('today'); top.set('Active')" />
+        <vm-kpi label="Active Passes" [value]="st.kpi().active" icon="vm-a-pass" color="var(--ka-7c3aed)" [clickable]="true" [active]="top() === 'Active'" (pick)="top.set('Active')" />
+        <vm-kpi label="QR Invitations Sent" [value]="st.kpi().sent" icon="vm-c-mail" color="var(--ka-ea7a1a)" [clickable]="true" [active]="sub() === 'Sent'" (pick)="sub.set('Sent'); top.set('All Passes')" />
+        <vm-kpi label="Used Today" [value]="st.kpi().used" icon="vm-c-check-circle" color="var(--ka-16a34a)" [clickable]="true" [active]="sub() === 'Scanned'" (pick)="sub.set('Scanned'); top.set('All Passes')" />
+        <vm-kpi label="Expiring Soon" [value]="st.kpi().expiring" icon="clock" color="var(--ka-dc2626)" [clickable]="true" [active]="validF() === 'today'" (pick)="validF.set('today'); top.set('Active')" />
       </section>
 
       <div class="vm-bar bar">
@@ -130,7 +130,7 @@ const BULK_SAMPLE = 'Rahul Nair, rahul.nair@vertex.com, Vertex Systems\nSara Ahm
           <div class="phone">
             <div class="scr">
               <div class="sb"><b>10:24</b><span class="notch"></span>
-                <svg width="44" height="11" viewBox="0 0 44 11" fill="#fff"><rect x="0" y="7" width="2.5" height="4" rx=".5"/><rect x="4" y="5" width="2.5" height="6" rx=".5"/><rect x="8" y="2.5" width="2.5" height="8.5" rx=".5"/><path d="M16 4.2a7 7 0 0 1 9.4 0l-1.2 1.3a5.2 5.2 0 0 0-7 0zM18.2 6.6a3.8 3.8 0 0 1 5 0l-2.5 2.8z"/><rect x="29" y="1.5" width="13" height="8" rx="2" fill="none" stroke="#fff" stroke-width="1.1"/><rect x="30.6" y="3" width="9.8" height="5" rx="1"/></svg>
+                <svg width="44" height="11" viewBox="0 0 44 11" fill="var(--ka-ffffff)"><rect x="0" y="7" width="2.5" height="4" rx=".5"/><rect x="4" y="5" width="2.5" height="6" rx=".5"/><rect x="8" y="2.5" width="2.5" height="8.5" rx=".5"/><path d="M16 4.2a7 7 0 0 1 9.4 0l-1.2 1.3a5.2 5.2 0 0 0-7 0zM18.2 6.6a3.8 3.8 0 0 1 5 0l-2.5 2.8z"/><rect x="29" y="1.5" width="13" height="8" rx="2" fill="none" stroke="var(--kl-ffffff)" stroke-width="1.1"/><rect x="30.6" y="3" width="9.8" height="5" rx="1"/></svg>
               </div>
               <div class="logo"><span class="lg"><app-icon name="users" [size]="17" [stroke]="2" /></span>People360</div>
               <ng-container [ngTemplateOutlet]="passCard" [ngTemplateOutletContext]="{ $implicit: pv() }" />
@@ -287,8 +287,8 @@ const BULK_SAMPLE = 'Rahul Nair, rahul.nair@vertex.com, Vertex Systems\nSara Ahm
     @if (toast.msg()) {<div class="g-toast">{{ toast.msg() }}</div>}
   `,
   styles: `
-    .crumb { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #475569; margin-bottom: 2px; }
-    .crumb a { color: #475569; text-decoration: none; display: inline-flex; } .crumb a:hover { color: var(--primary); } .crumb b { font-weight: 500; color: var(--text); }
+    .crumb { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--kf-475569); margin-bottom: 2px; }
+    .crumb a { color: var(--kf-475569); text-decoration: none; display: inline-flex; } .crumb a:hover { color: var(--primary); } .crumb b { font-weight: 500; color: var(--text); }
     .vm-head h1 { font-size: 30px; }
     .hb { height: 38px; padding: 0 15px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
     .vm-icon-btn.tall { height: 38px; width: 38px; }
@@ -309,67 +309,67 @@ const BULK_SAMPLE = 'Rahul Nair, rahul.nair@vertex.com, Vertex Systems\nSara Ahm
     .spin app-icon { animation: sp .7s linear; } @keyframes sp { to { transform: rotate(360deg); } }
     .qg { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 14px; align-items: stretch; }
     .ch { margin-bottom: 10px; gap: 8px; } .ch h2 { font-size: 19px; }
-    .form { padding: 12px 18px 14px; } .form.editing { outline: 2px solid #c4b5fd; }
-    .fgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 26px; padding-bottom: 12px; border-bottom: 1px solid #eef0f6; }
+    .form { padding: 12px 18px 14px; } .form.editing { outline: 2px solid var(--kl-c4b5fd); }
+    .fgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 26px; padding-bottom: 12px; border-bottom: 1px solid var(--kl-eef0f6); }
     .fr { display: grid; grid-template-columns: 146px minmax(0, 1fr); align-items: center; gap: 8px; margin-bottom: 9px; }
     .fr > label, .svl { font-size: 12px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
-    .fr > label b, .svl b, .vm-field > label b { color: #dc2626; }
+    .fr > label b, .svl b, .vm-field > label b { color: var(--kf-dc2626); }
     .vm-field > label { font-weight: 600; }
     .vm-input { height: 34px; padding: 0 9px; gap: 7px; }
     .vm-input input, .vm-input select { font-size: 12.5px; }
     .vm-input select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 20px; text-overflow: ellipsis; }
-    .vm-input .chev { margin-left: -24px; pointer-events: none; color: #334155; }
-    .vm-input > app-icon { color: #475569; flex: none; }
+    .vm-input .chev { margin-left: -24px; pointer-events: none; color: var(--kf-334155); }
+    .vm-input > app-icon { color: var(--kf-475569); flex: none; }
     .rc { display: flex; flex-direction: column; gap: 7px; }
     .two { display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; }
     :host ::ng-deep vm-areas .box { min-height: 34px; padding: 3px 8px; }
     .sl { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: end; }
     .tgl { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12.5px; font-weight: 600; height: 34px; }
-    .tgl span { display: inline-flex; align-items: center; gap: 6px; } .tgl app-icon { color: #475569; }
+    .tgl span { display: inline-flex; align-items: center; gap: 6px; } .tgl app-icon { color: var(--kf-475569); }
     .tgl.id { justify-content: flex-start; } .tgl.id .vm-switch { margin-left: 70px; }
-    .et { color: #dc2626; font-size: 11.5px; margin: -5px 0 6px; }
+    .et { color: var(--kf-dc2626); font-size: 11.5px; margin: -5px 0 6px; }
     .rc .et { margin: 3px 0 0; }
     .sv { display: flex; align-items: center; gap: 14px; padding-top: 12px; }
     .svl { width: 80px; }
     .vm-radio { width: 188px; gap: 12px; font: inherit; font-size: 13px; font-weight: 600; color: var(--text); }
-    .vm-radio app-icon { color: #334155; }
+    .vm-radio app-icon { color: var(--kf-334155); }
     .fa { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
     .fb { height: 38px; display: inline-flex; align-items: center; gap: 8px; padding: 0 18px; font-size: 13.5px; }
     .pv { display: flex; flex-direction: column; padding: 12px 16px 12px; }
-    .phone { width: 296px; margin: 0 auto; border-radius: 42px; padding: 9px; background: linear-gradient(145deg, #4c1d95, #1e1b4b 40%, #312e81); box-shadow: 0 10px 30px rgba(76, 29, 149, .35), inset 0 0 0 2px #7c3aed55; }
-    .scr { border-radius: 34px; overflow: hidden; background: linear-gradient(170deg, #6d28d9, #7c3aed 30%, #a78bfa 100%); padding: 0 10px 12px; }
-    .sb { display: flex; align-items: center; justify-content: space-between; color: #fff; font-size: 12.5px; padding: 9px 12px 0 14px; position: relative; height: 26px; }
-    .notch { position: absolute; left: 50%; top: 7px; width: 82px; height: 21px; border-radius: 14px; background: #111; transform: translateX(-50%); }
-    .logo { display: flex; align-items: center; justify-content: center; gap: 7px; color: #fff; font-weight: 800; font-size: 20px; padding: 6px 0 9px; }
-    .lg { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff; display: grid; place-items: center; }
-    .pc { background: #fff; border-radius: 14px; padding: 11px 12px 14px; position: relative; }
-    .pch { display: flex; align-items: center; gap: 7px; } .pch b { flex: 1; font-size: 14.5px; } .pch app-icon { color: #334155; }
+    .phone { width: 296px; margin: 0 auto; border-radius: 42px; padding: 9px; background: linear-gradient(145deg, var(--kb-4c1d95), var(--kb-1e1b4b) 40%, var(--kb-312e81)); box-shadow: 0 10px 30px rgba(76, 29, 149, .35), inset 0 0 0 2px #7c3aed55; }
+    .scr { border-radius: 34px; overflow: hidden; background: linear-gradient(170deg, var(--kb-6d28d9), var(--kb-7c3aed) 30%, var(--kb-a78bfa) 100%); padding: 0 10px 12px; }
+    .sb { display: flex; align-items: center; justify-content: space-between; color: var(--kf-ffffff); font-size: 12.5px; padding: 9px 12px 0 14px; position: relative; height: 26px; }
+    .notch { position: absolute; left: 50%; top: 7px; width: 82px; height: 21px; border-radius: 14px; background: var(--kb-111111); transform: translateX(-50%); }
+    .logo { display: flex; align-items: center; justify-content: center; gap: 7px; color: var(--kf-ffffff); font-weight: 800; font-size: 20px; padding: 6px 0 9px; }
+    .lg { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--kl-ffffff); display: grid; place-items: center; }
+    .pc { background: var(--kb-ffffff); border-radius: 14px; padding: 11px 12px 14px; position: relative; }
+    .pch { display: flex; align-items: center; gap: 7px; } .pch b { flex: 1; font-size: 14.5px; } .pch app-icon { color: var(--kf-334155); }
     .pch vm-status { font-size: 11px; padding: 2px 7px; gap: 4px; }
     .pq { display: flex !important; margin: 6px auto 8px; }
     .pkv { display: grid; grid-template-columns: 14px 54px 6px minmax(0, 1fr); gap: 3px 6px; font-size: 10.5px; align-items: center; }
-    .pkv app-icon { color: #334155; } .pkv span { color: #334155; } .pkv i { font-style: normal; }
+    .pkv app-icon { color: var(--kf-334155); } .pkv span { color: var(--kf-334155); } .pkv i { font-style: normal; }
     .pkv b { font-weight: 500; overflow-wrap: anywhere; line-height: 1.3; }
     .pkv .ac2 { align-self: start; margin-top: 3px; }
-    .pa { display: flex; flex-wrap: wrap; gap: 3px; margin: 2px 0; } .pa span { background: #ede9fe; color: #4c1d95; border-radius: 5px; padding: 2px 5px; font-size: 9px; }
-    .perf { position: absolute; left: 6px; right: 6px; bottom: -5px; height: 10px; background: radial-gradient(circle at 5px 5px, #c4b5fd 4px, transparent 4.5px) 0 0 / 12px 10px repeat-x; }
+    .pa { display: flex; flex-wrap: wrap; gap: 3px; margin: 2px 0; } .pa span { background: var(--kb-ede9fe); color: var(--kf-4c1d95); border-radius: 5px; padding: 2px 5px; font-size: 9px; }
+    .perf { position: absolute; left: 6px; right: 6px; bottom: -5px; height: 10px; background: radial-gradient(circle at 5px 5px, var(--kb-c4b5fd) 4px, transparent 4.5px) 0 0 / 12px 10px repeat-x; }
     .dl { margin-top: 12px; }
-    .dlb { width: 100%; height: 34px; border: 0; border-radius: 8px; background: #f3f0ff; color: var(--primary); font: inherit; font-weight: 600; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
-    .dlb:hover { background: #ede9fe; }
+    .dlb { width: 100%; height: 34px; border: 0; border-radius: 8px; background: var(--kb-f3f0ff); color: var(--primary); font: inherit; font-weight: 600; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+    .dlb:hover { background: var(--kb-ede9fe); }
     .tc { padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 10px; } .tc .ch { margin-bottom: 0; }
     .selc { font-size: 12.5px; color: var(--muted); }
     .tw { max-height: 420px; overflow-y: auto; }
-    .vm-table th { background: #f3f0ff; position: sticky; top: 0; z-index: 1; padding: 8px 8px; }
+    .vm-table th { background: var(--kb-f3f0ff); position: sticky; top: 0; z-index: 1; padding: 8px 8px; }
     .vm-table td { padding: 7px 8px; font-size: 12.5px; white-space: nowrap; }
-    .vm-table th .si { color: #94a3b8; vertical-align: -2px; margin-left: 4px; }
+    .vm-table th .si { color: var(--kf-94a3b8); vertical-align: -2px; margin-left: 4px; }
     .vm-table vm-status { font-size: 12px; padding: 2px 9px; min-width: 76px; }
     .cb { width: 26px; } .cb input { width: 15px; height: 15px; accent-color: var(--primary); cursor: pointer; }
     .ac { text-align: center; }
     .nm { font-size: 13px; }
     .vm-acts { gap: 4px; justify-content: center; } .vm-acts .ia { padding: 3px; } .vm-acts .ia[disabled] { opacity: .35; cursor: default; }
-    tr.flash td { animation: fl 2.4s ease; } @keyframes fl { 0%, 40% { background: #ede9fe; } }
+    tr.flash td { animation: fl 2.4s ease; } @keyframes fl { 0%, 40% { background: var(--kb-ede9fe); } }
     .foot { font-size: 12px; color: var(--muted); padding: 0 4px 4px; }
     .muted { color: var(--muted); font-size: 13px; }
-    .pmb { background: linear-gradient(170deg, #6d28d9, #a78bfa); padding: 14px; border-radius: 14px; margin-bottom: 10px; }
+    .pmb { background: linear-gradient(170deg, var(--kb-6d28d9), var(--kb-a78bfa)); padding: 14px; border-radius: 14px; margin-bottom: 10px; }
     .pm { width: min(380px, calc(100vw - 32px)); }
     .pm .pkv { font-size: 11.5px; grid-template-columns: 16px 70px 8px minmax(0, 1fr); }
     .vmod { width: min(640px, calc(100vw - 32px)); }
@@ -378,8 +378,8 @@ const BULK_SAMPLE = 'Rahul Nair, rahul.nair@vertex.com, Vertex Systems\nSara Ahm
     .g-modal.sm { width: min(440px, calc(100vw - 32px)); }
     .lbl { display: flex; flex-direction: column; gap: 4px; font-size: 13px; margin-top: 8px; }
     .ta2 { height: auto; width: 100%; padding: 8px 10px; font: inherit; font-size: 13px; resize: vertical; margin-bottom: 10px; box-sizing: border-box; }
-    .btn-red { height: 38px; padding: 0 18px; border: 0; border-radius: 8px; background: #dc2626; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
-    code { background: #f3f0ff; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+    .btn-red { height: 38px; padding: 0 18px; border: 0; border-radius: 8px; background: var(--kb-dc2626); color: var(--kf-ffffff); font: inherit; font-weight: 600; cursor: pointer; }
+    code { background: var(--kb-f3f0ff); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
     @media (max-width: 1250px) { .qg { grid-template-columns: minmax(0, 1fr); } .bar { flex-wrap: wrap; } }
   `,
 })
@@ -601,7 +601,7 @@ export class QrDigitalPasses {
     this.menu.set(null);
     const p = this.pv();
     const svg = document.querySelector('.qp .pv vm-qr svg')?.outerHTML ?? '';
-    const out = `<svg xmlns="http://www.w3.org/2000/svg" width="420" height="560" viewBox="0 0 420 560"><rect width="420" height="560" rx="24" fill="#7c3aed"/><rect x="20" y="70" width="380" height="470" rx="18" fill="#fff"/><text x="210" y="46" fill="#fff" font-family="Arial" font-size="26" font-weight="700" text-anchor="middle">People360</text><text x="40" y="110" font-family="Arial" font-size="20" font-weight="700">Visitor Pass</text><g transform="translate(110,130) scale(1)">${svg.replace('<svg', '<svg width="200" height="200"')}</g><text x="40" y="380" font-family="Arial" font-size="15">${p.visitor} · ${p.company}</text><text x="40" y="410" font-family="Arial" font-size="15">Host: ${p.host}</text><text x="40" y="440" font-family="Arial" font-size="15">${p.site}</text><text x="40" y="470" font-family="Arial" font-size="15">${validityLong(p)}</text><text x="40" y="510" font-family="Arial" font-size="16" font-weight="700">Pass ID: ${p.id}</text></svg>`;
+    const out = `<svg xmlns="http://www.w3.org/2000/svg" width="420" height="560" viewBox="0 0 420 560"><rect width="420" height="560" rx="24" fill="var(--ka-7c3aed)"/><rect x="20" y="70" width="380" height="470" rx="18" fill="var(--ka-ffffff)"/><text x="210" y="46" fill="var(--ka-ffffff)" font-family="Arial" font-size="26" font-weight="700" text-anchor="middle">People360</text><text x="40" y="110" font-family="Arial" font-size="20" font-weight="700">Visitor Pass</text><g transform="translate(110,130) scale(1)">${svg.replace('<svg', '<svg width="200" height="200"')}</g><text x="40" y="380" font-family="Arial" font-size="15">${p.visitor} · ${p.company}</text><text x="40" y="410" font-family="Arial" font-size="15">Host: ${p.host}</text><text x="40" y="440" font-family="Arial" font-size="15">${p.site}</text><text x="40" y="470" font-family="Arial" font-size="15">${validityLong(p)}</text><text x="40" y="510" font-family="Arial" font-size="16" font-weight="700">Pass ID: ${p.id}</text></svg>`;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([out], { type: 'image/svg+xml' }));
     a.download = `${p.id}-digital-pass.svg`;

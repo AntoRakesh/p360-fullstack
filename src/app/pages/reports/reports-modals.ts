@@ -87,8 +87,8 @@ export class ScheduleModal {
     </form>
   `,
   styles: `
-    .kinds { display: flex; gap: 6px; margin-bottom: 14px; } .kinds button { border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 6px 14px; font-size: 12.5px; cursor: pointer; }
-    .kinds button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .kinds { display: flex; gap: 6px; margin-bottom: 14px; } .kinds button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 8px; padding: 6px 14px; font-size: 12.5px; cursor: pointer; }
+    .kinds button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .lnk { display: flex; gap: 6px; } .lnk input { flex: 1; }
   `,
 })

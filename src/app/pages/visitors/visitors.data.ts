@@ -31,18 +31,18 @@ export interface Visit {
 
 export const TYPES = ['Business Meeting', 'Contractor', 'Delivery', 'Interview', 'Service & Maintenance', 'Others'];
 export const TYPE_COUNTS = [68, 28, 20, 14, 12, 10];
-export const TYPE_COLORS = ['#7c3aed', '#3b82f6', '#f59e0b', '#22c55e', '#f97316', '#ef4444'];
+export const TYPE_COLORS = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-f59e0b)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ef4444)'];
 export const PURPOSES = ['Business Meeting', 'Delivery', 'Interview', 'Service & Maintenance', 'Training', 'Event', 'Site Visit', 'Others'];
 export const METHODS = ['Pre-Registered', 'Walk-in', 'Invited by Employee', 'Contractor Portal'];
 export const METHOD_COUNTS = [82, 38, 24, 8];
-export const METHOD_COLORS = ['#8b5cf6', '#3b82f6', '#f59e0b', '#ef4444'];
+export const METHOD_COLORS = ['var(--ka-8b5cf6)', 'var(--ka-3b82f6)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)'];
 export const COMPANIES = ['Tech Solutions', 'Gulf Logistics', 'ABC Contractors', 'Global IT', 'Facility Services', 'SecureTech', 'EduTech', 'DHL', 'Aramex', 'Acme Corp', 'Globex', 'Initech', 'Stark Industries', 'Emirates NBD', 'PwC', 'Siemens'];
 export const HOSTS = ['Priya Sharma', 'Ahmed Hassan', 'Ramesh Kumar', 'Li Wei', 'Fatima Ali', 'Mohammed Ali', 'Arjun Mehta', 'David Lee', 'Sophie Martin', 'Chen Wei', 'Omar Khalid', 'Grace Park'];
 const HOST_DEPT: Record<string, string> = { 'Priya Sharma': 'HR', 'Ahmed Hassan': 'Logistics', 'Ramesh Kumar': 'Facilities', 'Li Wei': 'R&D', 'Fatima Ali': 'Operations', 'Mohammed Ali': 'Operations', 'Arjun Mehta': 'IT', 'David Lee': 'Sales', 'Sophie Martin': 'Marketing', 'Chen Wei': 'R&D', 'Omar Khalid': 'Executive', 'Grace Park': 'Facilities' };
 export const hostDept = (h: string) => HOST_DEPT[h] ?? 'General';
 const LOCATIONS = ['Main Building - Floor 3', 'Main Building - Floor 1', 'Reception', 'Warehouse - Dock 2', 'HR Department', 'Meeting Room 5A', 'Training Center', 'Plant - Gate 2'];
 
-const AV = ['#a16207', '#be185d', '#475569', '#9333ea', '#0d9488', '#b45309', '#7c3aed', '#2563eb'];
+const AV = ['var(--ka-a16207)', 'var(--ka-be185d)', 'var(--ka-475569)', 'var(--ka-9333ea)', 'var(--ka-0d9488)', 'var(--ka-b45309)', 'var(--ka-7c3aed)', 'var(--ka-2563eb)'];
 const ini = (n: string) => n.split(' ').map((x) => x[0]).join('').slice(0, 2).toUpperCase();
 const plate = (r: () => number) => `${'ABCDEFGHJKLMNP'[Math.floor(r() * 14)]}${r() < 0.4 ? 'ABKM'[Math.floor(r() * 4)] : ''} ${10000 + Math.floor(r() * 89999)}`;
 

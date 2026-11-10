@@ -11,7 +11,7 @@ import { Integ, IntegrationStore, SITE_NAMES } from './integrations.data';
   template: `<span class="lg" [style.width.px]="size()" [style.height.px]="size()" [style.background]="it().color" [style.font-size.px]="fs()">{{ it().ini }}</span>`,
   styles: `
     :host { display: inline-flex; flex-shrink: 0; }
-    .lg { display: grid; place-items: center; border-radius: 9px; color: #fff; font-weight: 800; letter-spacing: -0.3px; font-family: 'Inter', sans-serif; box-shadow: inset 0 -3px 0 rgba(0,0,0,.12); }
+    .lg { display: grid; place-items: center; border-radius: 9px; color: var(--kf-ffffff); font-weight: 800; letter-spacing: -0.3px; font-family: 'Inter', sans-serif; box-shadow: inset 0 -3px 0 rgba(0,0,0,.12); }
   `,
 })
 export class IntLogo {
@@ -141,25 +141,25 @@ const STEPS = ['Authenticate', 'Configure', 'Data & Mapping', 'Test & Activate']
     .wiz { width: min(760px, calc(100vw - 32px)); }
     .wh { display: flex; gap: 12px; align-items: center; } .wh h3 { margin: 0; } .wh small { color: var(--muted); }
     .steps { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 18px; counter-reset: s; }
-    .steps li { flex: 1; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); padding: 8px 10px; border-radius: 8px; background: #f6f6fb; }
-    .steps li span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #e4e6ef; font-size: 11px; font-weight: 700; color: #4b4f6b; }
-    .steps li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; } .steps li.on span { background: var(--primary); color: #fff; }
-    .steps li.done span { background: #22c55e; color: #fff; }
+    .steps li { flex: 1; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); padding: 8px 10px; border-radius: 8px; background: var(--kb-f6f6fb); }
+    .steps li span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--kb-e4e6ef); font-size: 11px; font-weight: 700; color: var(--kf-4b4f6b); }
+    .steps li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; } .steps li.on span { background: var(--primary); color: var(--kf-ffffff); }
+    .steps li.done span { background: var(--kb-22c55e); color: var(--kf-ffffff); }
     .hint { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); margin: 12px 0 0; }
     h4 { margin: 0 0 8px; font-size: 13px; } h4 .muted { font-weight: 400; font-size: 11.5px; }
     .cfg { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .checks { display: flex; flex-direction: column; gap: 7px; font-size: 13px; margin-bottom: 14px; } .checks.row { flex-direction: row; flex-wrap: wrap; gap: 8px 16px; }
     .checks label { display: flex; gap: 7px; align-items: center; }
     .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
-    .seg button { border: 0; background: #fff; padding: 7px 14px; font-size: 12.5px; cursor: pointer; } .seg button.on { background: var(--primary); color: #fff; }
-    .lbl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; margin-bottom: 10px; }
-    code { font-size: 12px; background: #f3f3f8; padding: 1px 5px; border-radius: 4px; }
-    .tests { list-style: none; padding: 0; margin: 0 0 12px; } .tests li { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; color: var(--muted); }
-    .tests li small { margin-left: auto; color: var(--muted); } .tests li.ok { color: var(--text); } .tests li.ok .ti { background: #22c55e; color: #fff; }
-    .ti { width: 20px; height: 20px; border-radius: 50%; background: #eef0f5; display: grid; place-items: center; font-size: 11px; }
+    .seg button { border: 0; background: var(--kb-ffffff); padding: 7px 14px; font-size: 12.5px; cursor: pointer; } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
+    .lbl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); margin-bottom: 10px; }
+    code { font-size: 12px; background: var(--kb-f3f3f8); padding: 1px 5px; border-radius: 4px; }
+    .tests { list-style: none; padding: 0; margin: 0 0 12px; } .tests li { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; color: var(--muted); }
+    .tests li small { margin-left: auto; color: var(--muted); } .tests li.ok { color: var(--text); } .tests li.ok .ti { background: var(--kb-22c55e); color: var(--kf-ffffff); }
+    .ti { width: 20px; height: 20px; border-radius: 50%; background: var(--kb-eef0f5); display: grid; place-items: center; font-size: 11px; }
     .tests li.run .ti { border: 2px solid var(--primary); border-top-color: transparent; animation: spin .8s linear infinite; background: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .ok-box { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-radius: 8px; background: #dcfce7; color: #15803d; font-size: 13px; }
+    .ok-box { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-radius: 8px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 13px; }
     .bad { margin: 10px 0 0; font-size: 12.5px; }
   `,
 })
@@ -238,8 +238,8 @@ export class ConnectWizard {
   template: `@if (kind() === 'Popular') {<span class="b pop">★ Popular</span>} @else {<span class="b cert"><i></i>Certified</span>}`,
   styles: `
     .b { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 500; white-space: nowrap; }
-    .cert { background: #e8f8ee; color: #15803d; } .cert i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
-    .pop { background: #f1ebff; color: #6d28d9; }
+    .cert { background: var(--kb-e8f8ee); color: var(--kf-15803d); } .cert i { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); }
+    .pop { background: var(--kb-f1ebff); color: var(--kf-6d28d9); }
   `,
 })
 export class IntBadge {

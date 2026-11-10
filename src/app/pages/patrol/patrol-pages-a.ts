@@ -33,11 +33,11 @@ const guardPos = (g: Guard) => {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Scheduled Shifts (Week)" [value]="scheduled().toLocaleString()" icon="calendar-days" color="#8b5cf6" change="4%" sub="vs. last week" />
-      <app-kpi label="Posts Fully Covered" [value]="covered() + ' / ' + posts.length" icon="shield-check" color="#22c55e" [sub]="pctCovered() + '% coverage today'" />
-      <app-kpi label="Open Shifts" [value]="openCount()" icon="triangle-alert" color="#f97316" sub="need a guard" [subColor]="openCount() ? '#ea580c' : '#16a34a'" />
-      <app-kpi label="Swap Requests" [value]="pendingSwaps()" icon="refresh" color="#3b82f6" sub="awaiting approval" />
-      <app-kpi label="Overtime Hours" value="146" icon="clock" color="#ef4444" change="9%" [good]="false" sub="vs. last week" />
+      <app-kpi label="Scheduled Shifts (Week)" [value]="scheduled().toLocaleString()" icon="calendar-days" color="var(--ka-8b5cf6)" change="4%" sub="vs. last week" />
+      <app-kpi label="Posts Fully Covered" [value]="covered() + ' / ' + posts.length" icon="shield-check" color="var(--ka-22c55e)" [sub]="pctCovered() + '% coverage today'" />
+      <app-kpi label="Open Shifts" [value]="openCount()" icon="triangle-alert" color="var(--ka-f97316)" sub="need a guard" [subColor]="openCount() ? 'var(--ka-ea580c)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Swap Requests" [value]="pendingSwaps()" icon="refresh" color="var(--ka-3b82f6)" sub="awaiting approval" />
+      <app-kpi label="Overtime Hours" value="146" icon="clock" color="var(--ka-ef4444)" change="9%" [good]="false" sub="vs. last week" />
     </section>
     <div class="lay">
       <section class="card">
@@ -125,19 +125,19 @@ const guardPos = (g: Guard) => {
     ${PATROL_CSS}
     .lay { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; align-items: start; }
     .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; } .bar .search-box { width: 220px; }
-    .wk { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; } .wk button:not(.link) { border: 1px solid var(--border); background: #fff; border-radius: 7px; width: 30px; height: 30px; display: grid; place-items: center; cursor: pointer; }
+    .wk { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 13px; } .wk button:not(.link) { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; width: 30px; height: 30px; display: grid; place-items: center; cursor: pointer; }
     .tw { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
     .rt { width: 100%; border-collapse: collapse; font-size: 12px; } .rt th { text-align: left; padding: 10px 8px; font-size: 11.5px; border-bottom: 1px solid var(--border); white-space: nowrap; }
-    .rt td { padding: 5px 8px; border-bottom: 1px solid #f0f1f6; white-space: nowrap; } .c { text-align: center !important; } .today { background: #faf7ff; }
+    .rt td { padding: 5px 8px; border-bottom: 1px solid var(--kl-f0f1f6); white-space: nowrap; } .c { text-align: center !important; } .today { background: var(--kb-faf7ff); }
     .gx b { font-size: 12.5px; }
     .code { border: 0; border-radius: 6px; width: 44px; height: 26px; font-weight: 700; font-size: 11.5px; cursor: pointer; } .code:hover { outline: 2px solid var(--primary); }
     .pick { min-width: 160px; left: 50%; transform: translateX(-50%); } .pick i, .legend i { display: inline-grid; place-items: center; width: 26px; height: 18px; border-radius: 4px; font-style: normal; font-weight: 700; font-size: 10px; margin-right: 8px; }
-    .cov td { background: #fafafe; } .cov small { color: var(--muted); }
+    .cov td { background: var(--kb-fafafe); } .cov small { color: var(--muted); }
     .pgs { display: flex; gap: 6px; }
-    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 11.5px; color: #4b4f6b; } .legend span { display: inline-flex; align-items: center; }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 11.5px; color: var(--kf-4b4f6b); } .legend span { display: inline-flex; align-items: center; }
     .side { display: flex; flex-direction: column; gap: 12px; }
-    .os, .sw { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
-    .os div:first-child, .sw div { display: flex; flex-direction: column; } .os small, .sw small { font-size: 11.5px; color: #4b4f6b; } .os.done { opacity: 0.7; }
+    .os, .sw { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
+    .os div:first-child, .sw div { display: flex; flex-direction: column; } .os small, .sw small { font-size: 11.5px; color: var(--kf-4b4f6b); } .os.done { opacity: 0.7; }
     .acts { display: flex; gap: 4px; } .right { right: 0; left: auto; } .sug { width: 240px; max-height: 260px; overflow: auto; padding: 6px; } .sug small { display: block; padding: 2px 6px; }
     .tp { display: grid; grid-template-columns: 10px 1fr auto auto; gap: 8px; align-items: center; font-size: 12.5px; padding: 6px 0; } .tp i { width: 10px; height: 10px; border-radius: 3px; } .tp span:last-child { font-weight: 600; }
     @media (max-width: 1300px) { .lay { grid-template-columns: 1fr; } }
@@ -265,11 +265,11 @@ export class GuardShifts {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Active Routes" [value]="activeRoutes()" icon="p-route" color="#8b5cf6" [sub]="store.routes().length + ' configured'" />
-      <app-kpi label="Checkpoints" [value]="store.checkpoints().length" icon="map-pin" color="#3b82f6" [sub]="tagMix()" />
-      <app-kpi label="Avg Route Compliance" [value]="avgComp() + '%'" icon="shield-check" color="#22c55e" change="1.8%" sub="vs. last week" />
-      <app-kpi label="Scans Today" [value]="store.scansToday().toLocaleString()" icon="fingerprint" color="#06b6d4" sub="live" subColor="#0891b2" />
-      <app-kpi label="Low Battery Tags" [value]="lowBat().length" icon="battery" color="#ef4444" sub="below 20%" [subColor]="lowBat().length ? '#dc2626' : undefined" />
+      <app-kpi label="Active Routes" [value]="activeRoutes()" icon="p-route" color="var(--ka-8b5cf6)" [sub]="store.routes().length + ' configured'" />
+      <app-kpi label="Checkpoints" [value]="store.checkpoints().length" icon="map-pin" color="var(--ka-3b82f6)" [sub]="tagMix()" />
+      <app-kpi label="Avg Route Compliance" [value]="avgComp() + '%'" icon="shield-check" color="var(--ka-22c55e)" change="1.8%" sub="vs. last week" />
+      <app-kpi label="Scans Today" [value]="store.scansToday().toLocaleString()" icon="fingerprint" color="var(--ka-06b6d4)" sub="live" subColor="var(--ka-0891b2)" />
+      <app-kpi label="Low Battery Tags" [value]="lowBat().length" icon="battery" color="var(--ka-ef4444)" sub="below 20%" [subColor]="lowBat().length ? 'var(--ka-dc2626)' : undefined" />
     </section>
     <div class="lay">
       <aside class="card rl">
@@ -278,7 +278,7 @@ export class GuardShifts {
           <button class="ri" [class.on]="r.id === selId()" (click)="selId.set(r.id); cpSel.set(null)">
             <i [style.background]="r.color"></i>
             <div><b>{{ r.name }}</b><small>{{ r.id }} · {{ r.site }}</small><small>{{ r.checkpoints.length }} checkpoints · {{ r.frequency }} · {{ r.duration }} min</small></div>
-            <span class="rc">@if (r.active) {<b [style.color]="r.compliance >= 95 ? '#16a34a' : r.compliance >= 90 ? '#d97706' : '#dc2626'">{{ r.compliance }}%</b>} @else {<span class="tag grey">Inactive</span>}</span>
+            <span class="rc">@if (r.active) {<b [style.color]="r.compliance >= 95 ? 'var(--ka-16a34a)' : r.compliance >= 90 ? 'var(--ka-d97706)' : 'var(--ka-dc2626)'">{{ r.compliance }}%</b>} @else {<span class="tag grey">Inactive</span>}</span>
           </button>
         }
       </aside>
@@ -357,17 +357,17 @@ export class GuardShifts {
     ${PATROL_CSS}
     .lay { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 12px; align-items: start; }
     .rl { display: flex; flex-direction: column; gap: 6px; }
-    .ri { display: grid; grid-template-columns: 6px 1fr auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: #fff; text-align: left; cursor: pointer; font: inherit; }
+    .ri { display: grid; grid-template-columns: 6px 1fr auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); text-align: left; cursor: pointer; font: inherit; }
     .ri.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .ri i { width: 6px; align-self: stretch; border-radius: 3px; }
     .ri div { display: flex; flex-direction: column; font-size: 12.5px; } .ri small { color: var(--muted); font-size: 11.5px; } .rc b { font-size: 14px; }
     .sw { display: inline-flex; gap: 6px; align-items: center; font-size: 12.5px; } .danger { color: var(--red) !important; }
     h3 .muted { font-weight: 400; font-size: 12.5px; }
-    .cp { margin-top: 12px; } .cp tr { cursor: pointer; } .cp tr.on td { background: #f7f3ff; } .cp small { font-size: 11px; }
-    .num-b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 11px; }
-    .ra { white-space: nowrap; } .ib { border: 1px solid var(--border); background: #fff; border-radius: 6px; width: 24px; height: 24px; cursor: pointer; margin-left: 2px; } .ib:disabled { opacity: 0.35; }
+    .cp { margin-top: 12px; } .cp tr { cursor: pointer; } .cp tr.on td { background: var(--kb-f7f3ff); } .cp small { font-size: 11px; }
+    .num-b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: var(--kf-ffffff); font-weight: 700; font-size: 11px; }
+    .ra { white-space: nowrap; } .ib { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; width: 24px; height: 24px; cursor: pointer; margin-left: 2px; } .ib:disabled { opacity: 0.35; }
     .add { display: flex; gap: 8px; margin-top: 10px; align-items: center; } .add .select { width: 280px; }
     .cps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 10px; max-height: 220px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; padding: 8px; }
-    .ck { flex-direction: row !important; align-items: center; gap: 6px !important; font-size: 11.5px !important; } .ck em { font-style: normal; background: var(--primary); color: #fff; border-radius: 10px; padding: 0 6px; font-size: 10px; }
+    .ck { flex-direction: row !important; align-items: center; gap: 6px !important; font-size: 11.5px !important; } .ck em { font-style: normal; background: var(--primary); color: var(--kf-ffffff); border-radius: 10px; padding: 0 6px; font-size: 10px; }
     @media (max-width: 1200px) { .lay { grid-template-columns: 1fr; } }
   `,
 })
@@ -406,8 +406,8 @@ export class PatrolRoutes {
     const order = this.sel()?.checkpoints ?? [];
     return this.store.checkpoints().map((c) =>
       inR.has(c.id)
-        ? { id: c.id, x: c.x, y: c.y, kind: 'avatar', color: c.battery < 20 ? '#ef4444' : this.sel()!.color, label: String(order.indexOf(c.id) + 1), size: 12, alert: c.battery < 20, title: `${c.id} ${c.name}` }
-        : { id: c.id, x: c.x, y: c.y, kind: 'dot', color: '#94a3b8', size: 5, title: `${c.id} ${c.name}` },
+        ? { id: c.id, x: c.x, y: c.y, kind: 'avatar', color: c.battery < 20 ? 'var(--ka-ef4444)' : this.sel()!.color, label: String(order.indexOf(c.id) + 1), size: 12, alert: c.battery < 20, title: `${c.id} ${c.name}` }
+        : { id: c.id, x: c.x, y: c.y, kind: 'dot', color: 'var(--ka-94a3b8)', size: 5, title: `${c.id} ${c.name}` },
     );
   });
   protected readonly callout = computed<MapCallout | null>(() => {
@@ -458,7 +458,7 @@ export class PatrolRoutes {
   }
   protected openRoute(r?: PatrolRoute) {
     this.err.set('');
-    this.rf.set(r ? { ...r, checkpoints: [...r.checkpoints] } : { id: '', name: '', site: 'Head Office', checkpoints: [], frequency: 'Hourly', duration: 20, shift: 'All', color: '#7c3aed', active: true, compliance: 100 });
+    this.rf.set(r ? { ...r, checkpoints: [...r.checkpoints] } : { id: '', name: '', site: 'Head Office', checkpoints: [], frequency: 'Hourly', duration: 20, shift: 'All', color: 'var(--ka-7c3aed)', active: true, compliance: 100 });
   }
   protected rfSet<K extends keyof PatrolRoute>(k: K, v: PatrolRoute[K]) {
     this.rf.update((f) => (f ? { ...f, [k]: v } : f));
@@ -471,7 +471,7 @@ export class PatrolRoutes {
     if (!f.name.trim() || f.checkpoints.length < 2) return this.err.set('Enter a name and pick at least 2 checkpoints.');
     if (f.id) this.patch(f.id, f);
     else {
-      const colors = ['#7c3aed', '#3b82f6', '#ef4444', '#f59e0b', '#14b8a6', '#ea580c', '#db2777'];
+      const colors = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-ef4444)', 'var(--ka-f59e0b)', 'var(--ka-14b8a6)', 'var(--ka-ea580c)', 'var(--ka-db2777)'];
       const id = `RT-${String(this.store.routes().length + 1).padStart(2, '0')}`;
       this.store.routes.update((l) => [...l, { ...f, id, color: colors[l.length % colors.length] }]);
       this.selId.set(id);
@@ -511,11 +511,11 @@ export class PatrolRoutes {
       <button class="btn-ghost" (click)="go('incidents-reports')"><app-icon name="file-chart" [size]="16" />Incidents</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Guards On Duty" [value]="store.counts().on" icon="user-check" color="#22c55e" [sub]="postsManned() + ' posts manned'" />
-      <app-kpi label="Active Patrols" [value]="store.runs().length" icon="p-route" color="#8b5cf6" [sub]="avgProg() + '% avg progress'" />
-      <app-kpi label="Checkpoints Scanned" [value]="store.scansToday().toLocaleString()" icon="fingerprint" color="#3b82f6" sub="today · live" subColor="#2563eb" />
-      <app-kpi label="Missed Checkpoints" [value]="missedCount()" icon="triangle-alert" color="#f97316" sub="today" [subColor]="missedCount() ? '#ea580c' : undefined" />
-      <app-kpi label="Open Alerts" [value]="openAlerts().length" icon="bell-ring" color="#ef4444" [sub]="critical() + ' high / critical'" [subColor]="critical() ? '#dc2626' : undefined" />
+      <app-kpi label="Guards On Duty" [value]="store.counts().on" icon="user-check" color="var(--ka-22c55e)" [sub]="postsManned() + ' posts manned'" />
+      <app-kpi label="Active Patrols" [value]="store.runs().length" icon="p-route" color="var(--ka-8b5cf6)" [sub]="avgProg() + '% avg progress'" />
+      <app-kpi label="Checkpoints Scanned" [value]="store.scansToday().toLocaleString()" icon="fingerprint" color="var(--ka-3b82f6)" sub="today · live" subColor="var(--ka-2563eb)" />
+      <app-kpi label="Missed Checkpoints" [value]="missedCount()" icon="triangle-alert" color="var(--ka-f97316)" sub="today" [subColor]="missedCount() ? 'var(--ka-ea580c)' : undefined" />
+      <app-kpi label="Open Alerts" [value]="openAlerts().length" icon="bell-ring" color="var(--ka-ef4444)" [sub]="critical() + ' high / critical'" [subColor]="critical() ? 'var(--ka-dc2626)' : undefined" />
     </section>
     <div class="lay">
       <section class="card mapc">
@@ -593,23 +593,23 @@ export class PatrolRoutes {
     ${PATROL_CSS}
     .lay { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 12px; align-items: start; }
     .ck { display: inline-flex; gap: 5px; align-items: center; font-size: 12.5px; } h3 .muted { font-weight: 400; font-size: 12.5px; }
-    .stream { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 11.5px; color: #3b3f5c; align-items: center; } .stream span { display: inline-flex; align-items: center; gap: 5px; }
-    .stream i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; } .stream i.no { background: #ef4444; }
+    .stream { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 11.5px; color: var(--kf-3b3f5c); align-items: center; } .stream span { display: inline-flex; align-items: center; gap: 5px; }
+    .stream i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-22c55e); } .stream i.no { background: var(--kb-ef4444); }
     .side { display: flex; flex-direction: column; gap: 12px; }
     .gh { display: grid; grid-template-columns: 48px 1fr auto auto; gap: 10px; align-items: center; } .gh div { display: flex; flex-direction: column; font-size: 12.5px; } .gh small { color: var(--muted); font-size: 11.5px; }
     .prog { margin-top: 10px; font-size: 12px; display: flex; flex-direction: column; gap: 4px; } .prog small { color: var(--muted); }
-    .bar { height: 6px; background: #eef0f5; border-radius: 4px; overflow: hidden; margin-top: 3px; } .bar i { display: block; height: 100%; border-radius: 4px; transition: width 1s; }
+    .bar { height: 6px; background: var(--kb-eef0f5); border-radius: 4px; overflow: hidden; margin-top: 3px; } .bar i { display: block; height: 100%; border-radius: 4px; transition: width 1s; }
     .row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; } .sm { font-size: 12px; margin: 8px 0 0; }
     .tb { display: flex; gap: 18px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
     .tb button { border: 0; background: none; padding: 6px 0; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; display: inline-flex; gap: 6px; align-items: center; } .tb button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
-    .tb em { font-style: normal; background: #ef4444; color: #fff; border-radius: 10px; padding: 0 6px; font-size: 10.5px; }
+    .tb em { font-style: normal; background: var(--kb-ef4444); color: var(--kf-ffffff); border-radius: 10px; padding: 0 6px; font-size: 10.5px; }
     .list { max-height: 560px; overflow: auto; display: flex; flex-direction: column; }
-    .al { display: grid; grid-template-columns: 30px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; align-items: start; font-size: 12.5px; } .al.ack { opacity: 0.55; }
+    .al { display: grid; grid-template-columns: 30px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); align-items: start; font-size: 12.5px; } .al.ack { opacity: 0.55; }
     .al div:nth-child(2) { display: flex; flex-direction: column; } .al small { font-size: 11.5px; }
-    .ai { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; } .ai.Critical, .ai.High { background: #fee2e2; color: #dc2626; } .ai.Medium { background: #fef3c7; color: #b45309; } .ai.Low { background: #e0f2fe; color: #0369a1; }
+    .ai { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; } .ai.Critical, .ai.High { background: var(--kb-fee2e2); color: var(--kf-dc2626); } .ai.Medium { background: var(--kb-fef3c7); color: var(--kf-b45309); } .ai.Low { background: var(--kb-e0f2fe); color: var(--kf-0369a1); }
     .aa { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
-    .pr { display: grid; grid-template-columns: 6px 1fr auto; gap: 10px; align-items: center; border: 0; border-bottom: 1px solid #f0f1f6; background: none; text-align: left; padding: 8px 4px; cursor: pointer; font: inherit; }
-    .pr.on { background: #f7f3ff; } .pr > i { width: 6px; align-self: stretch; border-radius: 3px; } .pr div { display: flex; flex-direction: column; font-size: 12.5px; } .pr small { color: var(--muted); font-size: 11.5px; } .pr span { font-weight: 600; font-size: 12.5px; }
+    .pr { display: grid; grid-template-columns: 6px 1fr auto; gap: 10px; align-items: center; border: 0; border-bottom: 1px solid var(--kl-f0f1f6); background: none; text-align: left; padding: 8px 4px; cursor: pointer; font: inherit; }
+    .pr.on { background: var(--kb-f7f3ff); } .pr > i { width: 6px; align-self: stretch; border-radius: 3px; } .pr div { display: flex; flex-direction: column; font-size: 12.5px; } .pr small { color: var(--muted); font-size: 11.5px; } .pr span { font-weight: 600; font-size: 12.5px; }
     @media (max-width: 1250px) { .lay { grid-template-columns: 1fr; } }
   `,
 })
@@ -678,11 +678,11 @@ export class LivePatrol {
   protected readonly markers = computed<MapMarker[]>(() => {
     const alertG = new Set(this.openAlerts().map((a) => a.guardId));
     const out: MapMarker[] = [];
-    if (this.showRoutes()) for (const c of CHECKPOINTS) out.push({ id: 'cp:' + c.id, x: c.x, y: c.y, kind: 'dot', color: '#a78bfa', size: 4, title: `${c.id} ${c.name}` });
+    if (this.showRoutes()) for (const c of CHECKPOINTS) out.push({ id: 'cp:' + c.id, x: c.x, y: c.y, kind: 'dot', color: 'var(--ka-a78bfa)', size: 4, title: `${c.id} ${c.name}` });
     for (const g of this.visible()) {
       const st = this.runByGuard().get(g.id);
       if (st) out.push({ id: g.id, x: st.x, y: st.y, color: st.route.color, label: initials(g.name), size: 14, alert: alertG.has(g.id), title: `${g.name} · ${st.route.name}` });
-      else { const p = guardPos(g); out.push({ id: g.id, x: p.x, y: p.y, kind: g.id === this.selG() ? 'avatar' : 'dot', label: initials(g.name), color: alertG.has(g.id) ? '#ef4444' : '#16a34a', size: g.id === this.selG() ? 13 : 5.5, alert: alertG.has(g.id), title: `${g.name} · ${g.location}` }); }
+      else { const p = guardPos(g); out.push({ id: g.id, x: p.x, y: p.y, kind: g.id === this.selG() ? 'avatar' : 'dot', label: initials(g.name), color: alertG.has(g.id) ? 'var(--ka-ef4444)' : 'var(--ka-16a34a)', size: g.id === this.selG() ? 13 : 5.5, alert: alertG.has(g.id), title: `${g.name} · ${g.location}` }); }
     }
     return out;
   });
@@ -691,7 +691,7 @@ export class LivePatrol {
     const pos = g && this.posOf(g.id);
     if (!g || !pos) return null;
     const st = this.runByGuard().get(g.id);
-    return { x: pos.x, y: pos.y, title: g.name, lines: st ? [`${st.route.name}`, `${st.done}/${st.total} checkpoints`] : [g.post, `Since ${g.since}`], initials: initials(g.name), color: st?.route.color ?? '#16a34a' };
+    return { x: pos.x, y: pos.y, title: g.name, lines: st ? [`${st.route.name}`, `${st.done}/${st.total} checkpoints`] : [g.post, `Since ${g.since}`], initials: initials(g.name), color: st?.route.color ?? 'var(--ka-16a34a)' };
   });
 
   protected alertIcon(t: string) {
@@ -747,11 +747,11 @@ export class LivePatrol {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Incidents (This Month)" [value]="month().length" icon="file-chart" color="#8b5cf6" change="8%" [good]="false" sub="vs. last month" />
-      <app-kpi label="Open / In Progress" [value]="store.openIncidents().length" icon="triangle-alert" color="#f97316" sub="needs action" />
-      <app-kpi label="High &amp; Critical" [value]="highOpen()" icon="siren" color="#ef4444" sub="open now" [subColor]="highOpen() ? '#dc2626' : undefined" />
-      <app-kpi label="Avg Response Time" value="6.4 min" icon="clock" color="#3b82f6" change="12%" [up]="false" sub="vs. last month" />
-      <app-kpi label="Resolution Rate" [value]="resRate() + '%'" icon="shield-check" color="#22c55e" sub="resolved or closed" />
+      <app-kpi label="Incidents (This Month)" [value]="month().length" icon="file-chart" color="var(--ka-8b5cf6)" change="8%" [good]="false" sub="vs. last month" />
+      <app-kpi label="Open / In Progress" [value]="store.openIncidents().length" icon="triangle-alert" color="var(--ka-f97316)" sub="needs action" />
+      <app-kpi label="High &amp; Critical" [value]="highOpen()" icon="siren" color="var(--ka-ef4444)" sub="open now" [subColor]="highOpen() ? 'var(--ka-dc2626)' : undefined" />
+      <app-kpi label="Avg Response Time" value="6.4 min" icon="clock" color="var(--ka-3b82f6)" change="12%" [up]="false" sub="vs. last month" />
+      <app-kpi label="Resolution Rate" [value]="resRate() + '%'" icon="shield-check" color="var(--ka-22c55e)" sub="resolved or closed" />
     </section>
     <section class="charts">
       <div class="card"><div class="card-head"><h3>Incidents – Last 14 Days</h3></div><app-column-chart [labels]="trend().labels" [series]="trend().series" [height]="200" [stacked]="true" /></div>
@@ -806,9 +806,9 @@ export class LivePatrol {
     .charts { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
     .dr { width: min(560px, 100vw) !important; } .dr h3 { margin: 0 0 6px; }
     .kv { display: grid; grid-template-columns: 120px 1fr; gap: 8px; font-size: 13px; margin: 8px 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; } .kv .select { width: 220px; }
-    h4 { margin: 14px 0 6px; font-size: 13px; } .desc { font-size: 13px; margin: 0; color: #3b3f5c; }
-    .tl { list-style: none; margin: 0; padding: 0 0 0 6px; border-left: 2px solid #ede9fe; } .tl li { display: grid; grid-template-columns: 12px 50px 1fr; gap: 6px; align-items: center; padding: 5px 0; font-size: 12.5px; margin-left: -12px; }
-    .tl i { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid #fff; }
+    h4 { margin: 14px 0 6px; font-size: 13px; } .desc { font-size: 13px; margin: 0; color: var(--kf-3b3f5c); }
+    .tl { list-style: none; margin: 0; padding: 0 0 0 6px; border-left: 2px solid var(--kl-ede9fe); } .tl li { display: grid; grid-template-columns: 12px 50px 1fr; gap: 6px; align-items: center; padding: 5px 0; font-size: 12.5px; margin-left: -12px; }
+    .tl i { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--kl-ffffff); }
     .note { display: flex; gap: 8px; margin-top: 10px; } .note .input { flex: 1; }
     .ta { height: auto; padding: 8px; font: inherit; } .ckl { flex-direction: row !important; align-items: center; gap: 6px !important; }
     @media (max-width: 1200px) { .charts { grid-template-columns: 1fr; } }
@@ -857,15 +857,15 @@ export class PatrolIncidents {
   protected readonly resRate = computed(() => Math.round((this.store.incidents().filter((i) => i.status === 'Resolved' || i.status === 'Closed').length / this.store.incidents().length) * 100));
   protected readonly sevSegs = computed(() => {
     const c = (s: string) => this.store.incidents().filter((i) => i.sev === s).length;
-    return [{ label: 'Critical', value: c('Critical'), color: '#ef4444' }, { label: 'High', value: c('High'), color: '#f97316' }, { label: 'Medium', value: c('Medium'), color: '#f59e0b' }, { label: 'Low', value: c('Low'), color: '#3b82f6' }];
+    return [{ label: 'Critical', value: c('Critical'), color: 'var(--ka-ef4444)' }, { label: 'High', value: c('High'), color: 'var(--ka-f97316)' }, { label: 'Medium', value: c('Medium'), color: 'var(--ka-f59e0b)' }, { label: 'Low', value: c('Low'), color: 'var(--ka-3b82f6)' }];
   });
-  protected readonly byType = computed(() => INC_TYPES.map((t) => ({ label: t, value: this.store.incidents().filter((i) => i.type === t).length, color: '#7c3aed' })).sort((a, b) => b.value - a.value).slice(0, 7));
+  protected readonly byType = computed(() => INC_TYPES.map((t) => ({ label: t, value: this.store.incidents().filter((i) => i.type === t).length, color: 'var(--ka-7c3aed)' })).sort((a, b) => b.value - a.value).slice(0, 7));
   protected readonly maxType = computed(() => Math.max(...this.byType().map((r) => r.value), 1));
   protected readonly trend = computed(() => {
     const days = Array.from({ length: 14 }, (_, k) => { const d = new Date(2026, 9, 1 + k); return d.toISOString().slice(0, 10); });
     const labels = days.map((d) => d.slice(8));
     const cnt = (d: string, s: string[]) => this.store.incidents().filter((i) => i.date === d && s.includes(i.sev)).length;
-    return { labels, series: [{ name: 'High / Critical', color: '#ef4444', values: days.map((d) => cnt(d, ['High', 'Critical'])) }, { name: 'Medium / Low', color: '#a78bfa', values: days.map((d) => cnt(d, ['Medium', 'Low'])) }] };
+    return { labels, series: [{ name: 'High / Critical', color: 'var(--ka-ef4444)', values: days.map((d) => cnt(d, ['High', 'Critical'])) }, { name: 'Medium / Low', color: 'var(--ka-a78bfa)', values: days.map((d) => cnt(d, ['Medium', 'Low'])) }] };
   });
 
   protected stTag(s: string) {
@@ -936,11 +936,11 @@ const MONTHS = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Avg Patrol Compliance" [value]="avg('compliance') + '%'" icon="shield-check" color="#22c55e" change="2.1%" sub="vs. last month" />
-      <app-kpi label="Checkpoint Scan Rate" [value]="scanRate() + '%'" icon="fingerprint" color="#8b5cf6" change="1.4%" sub="vs. last month" />
-      <app-kpi label="Avg Response Time" [value]="avg('response') + ' min'" icon="clock" color="#3b82f6" change="8%" [up]="false" sub="faster" />
-      <app-kpi label="Attendance" [value]="avg('attendance') + '%'" icon="user-check" color="#f59e0b" sub="on-time shift starts" />
-      <app-kpi label="Avg Rating" [value]="avg('rating') + ' / 5'" icon="star" color="#ef4444" [sub]="coaching().length + ' flagged for coaching'" />
+      <app-kpi label="Avg Patrol Compliance" [value]="avg('compliance') + '%'" icon="shield-check" color="var(--ka-22c55e)" change="2.1%" sub="vs. last month" />
+      <app-kpi label="Checkpoint Scan Rate" [value]="scanRate() + '%'" icon="fingerprint" color="var(--ka-8b5cf6)" change="1.4%" sub="vs. last month" />
+      <app-kpi label="Avg Response Time" [value]="avg('response') + ' min'" icon="clock" color="var(--ka-3b82f6)" change="8%" [up]="false" sub="faster" />
+      <app-kpi label="Attendance" [value]="avg('attendance') + '%'" icon="user-check" color="var(--ka-f59e0b)" sub="on-time shift starts" />
+      <app-kpi label="Avg Rating" [value]="avg('rating') + ' / 5'" icon="star" color="var(--ka-ef4444)" [sub]="coaching().length + ' flagged for coaching'" />
     </section>
     <section class="charts">
       <div class="card"><div class="card-head"><h3>Patrol Compliance Trend</h3><span class="muted">by company · target 95%</span></div><app-line-chart [labels]="months" [series]="trend()" [height]="220" [min]="80" [max]="100" suffix="%" /></div>
@@ -965,7 +965,7 @@ const MONTHS = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
                 <tr [class.on]="r.g.id === selId()" (click)="selId.set(r.g.id)">
                   <td><span class="rk" [class.top]="i < 3">{{ i + 1 }}</span></td>
                   <td><span class="gx"><app-guard-avatar [g]="r.g" [size]="30" /><div><b>{{ r.g.name }}@if (recognized().has(r.g.id)) { 🏅}</b><small>{{ r.g.id }} · {{ r.g.company }}</small></div></span></td>
-                  <td><div class="cb"><div class="mini-progress"><i [style.width.%]="r.g.compliance" [style.background]="r.g.compliance >= 95 ? '#22c55e' : r.g.compliance >= 88 ? '#f59e0b' : '#ef4444'"></i></div>{{ r.g.compliance }}%</div></td>
+                  <td><div class="cb"><div class="mini-progress"><i [style.width.%]="r.g.compliance" [style.background]="r.g.compliance >= 95 ? 'var(--ka-22c55e)' : r.g.compliance >= 88 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></div>{{ r.g.compliance }}%</div></td>
                   <td class="num">{{ r.g.scans }}</td><td class="num">{{ r.g.response }} min</td><td class="num">{{ r.g.attendance }}%</td><td class="num">{{ r.g.incidents }}</td>
                   <td><span class="stars">{{ stars(r.g.rating) }}</span> {{ r.g.rating }}</td>
                   <td class="num"><b>{{ r.score }}</b></td>
@@ -979,14 +979,14 @@ const MONTHS = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
       @if (sel(); as r) {
         <aside class="card det">
           <div class="dh"><app-guard-avatar [g]="r.g" [size]="56" /><div><h3>{{ r.g.name }}</h3><small>{{ r.g.id }} · {{ r.g.company }} · {{ r.g.location }}</small></div><button class="close-btn" (click)="selId.set(null)">×</button></div>
-          <div class="ringrow"><app-ring [value]="r.score" [color]="r.score >= 90 ? '#22c55e' : r.score >= 80 ? '#f59e0b' : '#ef4444'" [size]="90" /><div><b>Overall score {{ r.score }}</b><small>Rank {{ rank(r.g.id) }} of {{ all().length }}</small><small>{{ period() }}</small></div></div>
+          <div class="ringrow"><app-ring [value]="r.score" [color]="r.score >= 90 ? 'var(--ka-22c55e)' : r.score >= 80 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'" [size]="90" /><div><b>Overall score {{ r.score }}</b><small>Rank {{ rank(r.g.id) }} of {{ all().length }}</small><small>{{ period() }}</small></div></div>
           <div class="mx">
             <div><small>Patrol compliance</small><b>{{ r.g.compliance }}%</b></div><div><small>Checkpoints scanned</small><b>{{ r.g.scans }}</b></div>
             <div><small>Avg response</small><b>{{ r.g.response }} min</b></div><div><small>Attendance</small><b>{{ r.g.attendance }}%</b></div>
             <div><small>Incidents reported</small><b>{{ r.g.incidents }}</b></div><div><small>Supervisor rating</small><b>{{ r.g.rating }} / 5</b></div>
           </div>
           <h4>Compliance – last 6 months</h4>
-          <app-sparkline [values]="spark(r.g)" color="#7c3aed" />
+          <app-sparkline [values]="spark(r.g)" color="var(--ka-7c3aed)" />
           <div class="row">
             <button class="btn-primary btn-sm" (click)="recognize(r.g)"><app-icon name="p-award" [size]="14" />Give Recognition</button>
             <button class="btn-ghost btn-sm" (click)="coach(r.g)">{{ coaching().includes(r.g.id) ? 'Remove coaching flag' : 'Flag for Coaching' }}</button>
@@ -1008,10 +1008,10 @@ const MONTHS = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
     .charts { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; margin-bottom: 12px; } .sc { margin-top: 10px; font-size: 12px; } .sc td, .sc th { padding: 5px 6px; }
     .lay { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; } .lay.with { grid-template-columns: minmax(0, 1fr) 360px; }
     .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; } .bar .search-box { width: 220px; } .sm { font-size: 12px; margin-left: auto; }
-    .tw { overflow-x: auto; } .pt tr { cursor: pointer; } .pt tr.on td { background: #f7f3ff; } .s { cursor: pointer; } .s:hover { color: var(--primary); }
-    .rk { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #eef0f5; font-size: 11.5px; font-weight: 700; } .rk.top { background: #fef3c7; color: #b45309; }
+    .tw { overflow-x: auto; } .pt tr { cursor: pointer; } .pt tr.on td { background: var(--kb-f7f3ff); } .s { cursor: pointer; } .s:hover { color: var(--primary); }
+    .rk { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--kb-eef0f5); font-size: 11.5px; font-weight: 700; } .rk.top { background: var(--kb-fef3c7); color: var(--kf-b45309); }
     .cb { display: flex; align-items: center; gap: 8px; } .cb .mini-progress { width: 70px; }
-    .stars { color: #f59e0b; letter-spacing: 1px; }
+    .stars { color: var(--kf-f59e0b); letter-spacing: 1px; }
     .det { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .dh { display: grid; grid-template-columns: 56px 1fr auto; gap: 10px; align-items: center; } .dh h3 { margin: 0; } .dh small { color: var(--muted); }
     .ringrow { display: flex; gap: 14px; align-items: center; } .ringrow div { display: flex; flex-direction: column; font-size: 13px; } .ringrow small { color: var(--muted); }
@@ -1063,7 +1063,7 @@ export class GuardPerformance {
     const cs = this.store.companies();
     return [
       ...cs.slice(0, 4).map((c, i) => ({ name: c.name, color: c.color, values: MONTHS.map((_, m) => Math.round((c.sla - 4 + m * 0.7 + Math.sin(m + i) * 1.2) * 10) / 10) })),
-      { name: 'Target', color: '#94a3b8', values: MONTHS.map(() => 95), dashed: true },
+      { name: 'Target', color: 'var(--ka-94a3b8)', values: MONTHS.map(() => 95), dashed: true },
     ];
   });
   protected readonly byCompany = computed(() => this.store.companies().map((c) => {

@@ -48,11 +48,11 @@ const UNPLANNED: Unplanned[] = (() => {
   template: `
     <app-page-head title="Unplanned Absence Tracking" parent="Leave &amp; Absence Management" parentLink="/leave-absence" subtitle="Today’s unplanned absences, reasons, patterns and Bradford scores." />
     <section class="kpi-row">
-      <app-kpi label="Unplanned Today" [value]="rows().length" icon="calendar-x" color="#ef4444" sub="no approved leave" />
-      <app-kpi label="Not Reported" [value]="notReported()" icon="bell" color="#f97316" sub="need follow-up" />
-      <app-kpi label="Absence Rate" value="3.7%" icon="activity" color="#8b5cf6" change="0.3%" [up]="false" />
-      <app-kpi label="Bradford ≥ 250" [value]="highRisk()" icon="triangle-alert" color="#dc2626" sub="review triggered" />
-      <app-kpi label="Monday / Friday Share" value="46%" icon="calendar-days" color="#3b82f6" sub="of unplanned days" />
+      <app-kpi label="Unplanned Today" [value]="rows().length" icon="calendar-x" color="var(--ka-ef4444)" sub="no approved leave" />
+      <app-kpi label="Not Reported" [value]="notReported()" icon="bell" color="var(--ka-f97316)" sub="need follow-up" />
+      <app-kpi label="Absence Rate" value="3.7%" icon="activity" color="var(--ka-8b5cf6)" change="0.3%" [up]="false" />
+      <app-kpi label="Bradford ≥ 250" [value]="highRisk()" icon="triangle-alert" color="var(--ka-dc2626)" sub="review triggered" />
+      <app-kpi label="Monday / Friday Share" value="46%" icon="calendar-days" color="var(--ka-3b82f6)" sub="of unplanned days" />
     </section>
     <section class="dash">
       <div class="card span-6">
@@ -82,7 +82,7 @@ const UNPLANNED: Unplanned[] = (() => {
 export class UnplannedAbsence {
   private readonly state = inject(AppState);
   protected readonly reasons = REASONS;
-  protected readonly weekday = [{ name: 'Days', color: '#ef4444', values: [412, 248, 231, 262, 389] }];
+  protected readonly weekday = [{ name: 'Days', color: 'var(--ka-ef4444)', values: [412, 248, 231, 262, 389] }];
   protected readonly list = signal<Unplanned[]>(UNPLANNED);
   protected readonly reasonFor = signal<string[] | null>(null);
   protected readonly toast = signal<string | null>(null);
@@ -113,7 +113,7 @@ export class UnplannedAbsence {
   protected readonly byDept = computed(() => {
     const m = new Map<string, number>();
     this.rows().forEach((u) => m.set(u.dept, (m.get(u.dept) ?? 0) + 1));
-    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value, display: String(value), color: '#ef4444' }));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value, display: String(value), color: 'var(--ka-ef4444)' }));
   });
 
   protected act(a: string, ids: string[]) {
@@ -173,10 +173,10 @@ const RTWS: Rtw[] = (() => {
   template: `
     <app-page-head title="Return-to-Work Tracking" parent="Leave &amp; Absence Management" parentLink="/leave-absence" subtitle="Safe, documented returns after sickness, injury, maternity and long leave." />
     <section class="kpi-row">
-      <app-kpi label="Returning in 7 days" [value]="cnt('Due') + cnt('Scheduled')" icon="calendar-days" color="#8b5cf6" />
-      <app-kpi label="Overdue Steps" [value]="cnt('Overdue')" icon="triangle-alert" color="#ef4444" sub="back but checklist open" />
-      <app-kpi label="Phased Returns" [value]="phased()" icon="trending-up" color="#3b82f6" />
-      <app-kpi label="Completed (30 days)" [value]="cnt('Completed') + 14" icon="shield-check" color="#22c55e" />
+      <app-kpi label="Returning in 7 days" [value]="cnt('Due') + cnt('Scheduled')" icon="calendar-days" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Overdue Steps" [value]="cnt('Overdue')" icon="triangle-alert" color="var(--ka-ef4444)" sub="back but checklist open" />
+      <app-kpi label="Phased Returns" [value]="phased()" icon="trending-up" color="var(--ka-3b82f6)" />
+      <app-kpi label="Completed (30 days)" [value]="cnt('Completed') + 14" icon="shield-check" color="var(--ka-22c55e)" />
     </section>
     <section class="rtw" [class.with-detail]="!!sel()">
       <div class="card">
@@ -204,9 +204,9 @@ const RTWS: Rtw[] = (() => {
   styles: `
     .rtw { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .rtw.with-detail { grid-template-columns: minmax(0, 1fr) 340px; }
     .detail { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; } .detail p { margin: 0; } .detail > .tag { align-self: flex-start; }
-    .plan { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; }
-    .prog { height: 8px; border-radius: 4px; background: #eef0f6; overflow: hidden; } .prog i { display: block; height: 100%; background: var(--primary); transition: width .3s; }
-    .tasks { list-style: none; margin: 0; padding: 0; font-size: 13px; } .tasks li { padding: 7px 0; border-bottom: 1px solid #f0f1f6; }
+    .plan { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); }
+    .prog { height: 8px; border-radius: 4px; background: var(--kb-eef0f6); overflow: hidden; } .prog i { display: block; height: 100%; background: var(--primary); transition: width .3s; }
+    .tasks { list-style: none; margin: 0; padding: 0; font-size: 13px; } .tasks li { padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .tasks label { display: flex; gap: 8px; align-items: center; cursor: pointer; } .tasks li.done { color: var(--muted); text-decoration: line-through; } .tasks input { accent-color: var(--primary); }
     @media (max-width: 1100px) { .rtw.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,
@@ -263,10 +263,10 @@ const REPORTS = [
   template: `
     <app-page-head title="Leave Reports &amp; Analytics" parent="Leave &amp; Absence Management" parentLink="/leave-absence" subtitle="Trends, utilization and liability across leave types and departments." />
     <section class="kpi-row">
-      <app-kpi label="Leave Days Taken (YTD)" value="68,412" icon="calendar-x" color="#8b5cf6" change="4%" />
-      <app-kpi label="Avg. Utilization" value="62.4%" icon="activity" color="#22c55e" change="5%" [up]="false" sub="vs. last year" />
-      <app-kpi label="Absence Rate" value="3.7%" icon="trending-up" color="#ef4444" change="0.3%" [up]="false" />
-      <app-kpi label="Leave Liability" value="AED 61.2M" icon="briefcase" color="#3b82f6" sub="unused annual leave" />
+      <app-kpi label="Leave Days Taken (YTD)" value="68,412" icon="calendar-x" color="var(--ka-8b5cf6)" change="4%" />
+      <app-kpi label="Avg. Utilization" value="62.4%" icon="activity" color="var(--ka-22c55e)" change="5%" [up]="false" sub="vs. last year" />
+      <app-kpi label="Absence Rate" value="3.7%" icon="trending-up" color="var(--ka-ef4444)" change="0.3%" [up]="false" />
+      <app-kpi label="Leave Liability" value="AED 61.2M" icon="briefcase" color="var(--ka-3b82f6)" sub="unused annual leave" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -313,12 +313,12 @@ export class LeaveReports {
   protected readonly reports = REPORTS;
   protected readonly months = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
   protected readonly weeks = Array.from({ length: 12 }, (_, i) => `W${34 + i}`);
-  protected readonly absence = [{ name: 'Absence %', color: '#ef4444', values: series(12, 3.7, 0.8, 5), area: true }];
+  protected readonly absence = [{ name: 'Absence %', color: 'var(--ka-ef4444)', values: series(12, 3.7, 0.8, 5), area: true }];
   protected readonly byMonth = ['AL', 'SL', 'CL'].map((c, i) => ({ name: typeByCode(c).name, color: typeByCode(c).color, values: series(12, [4200, 1100, 650][i], [1500, 400, 200][i], i * 3 + 1).map((v, m) => Math.round(c === 'AL' && (m === 1 || m === 7 || m === 8) ? v * 1.6 : v)) }));
   protected readonly mix = LEAVE_TYPES.filter((t) => t.days).slice(0, 7).map((t) => ({ label: t.name, value: Math.round(t.utilization * (t.days || 5) * 30), color: t.color }));
   protected readonly utilByDept = DEPTS.filter((d) => d !== '—').map((d, i) => {
     const v = [58, 61, 66, 52, 70, 64, 49, 63, 57, 68, 55][i];
-    return { label: d, value: v, display: `${v}%`, color: v < 55 ? '#f59e0b' : '#16a34a' };
+    return { label: d, value: v, display: `${v}%`, color: v < 55 ? 'var(--ka-f59e0b)' : 'var(--ka-16a34a)' };
   });
   protected readonly active = signal<string | null>('taken');
   protected readonly activeName = computed(() => REPORTS.find((r) => r.id === this.active())?.name ?? '');

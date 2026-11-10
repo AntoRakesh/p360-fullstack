@@ -51,10 +51,10 @@ const ONSITE = (v: VmVisitor) => v.status === 'Checked In' || v.status === 'Over
       </div>
 
       <div class="vm-kpis">
-        <vm-kpi label="Expected Today" [value]="kpi().expected" icon="calendar-days" color="#7c3aed" [clickable]="true" [active]="tab() === 'Expected'" (pick)="tab.set('Expected')" />
-        <vm-kpi label="Checked In" [value]="kpi().checkedIn" icon="vm-c-check-circle" color="#16a34a" [clickable]="true" [active]="tab() === 'Checked In'" (pick)="tab.set('Checked In')" />
-        <vm-kpi label="Currently On-Site" [value]="kpi().onSite" icon="users" color="#2563eb" [clickable]="true" (pick)="scrollOnSite()" />
-        <vm-kpi label="Overdue Check-Out" [value]="kpi().overdue" icon="triangle-alert" color="#dc2626" [clickable]="true" [active]="tab() === 'Overdue'" (pick)="tab.set('Overdue')" />
+        <vm-kpi label="Expected Today" [value]="kpi().expected" icon="calendar-days" color="var(--ka-7c3aed)" [clickable]="true" [active]="tab() === 'Expected'" (pick)="tab.set('Expected')" />
+        <vm-kpi label="Checked In" [value]="kpi().checkedIn" icon="vm-c-check-circle" color="var(--ka-16a34a)" [clickable]="true" [active]="tab() === 'Checked In'" (pick)="tab.set('Checked In')" />
+        <vm-kpi label="Currently On-Site" [value]="kpi().onSite" icon="users" color="var(--ka-2563eb)" [clickable]="true" (pick)="scrollOnSite()" />
+        <vm-kpi label="Overdue Check-Out" [value]="kpi().overdue" icon="triangle-alert" color="var(--ka-dc2626)" [clickable]="true" [active]="tab() === 'Overdue'" (pick)="tab.set('Overdue')" />
       </div>
 
       <div class="vm-bar">
@@ -388,7 +388,7 @@ const ONSITE = (v: VmVisitor) => v.status === 'Checked In' || v.status === 'Over
     .vm-bar .vm-search { min-width: 170px; }
     .vm-bar .vm-filter select { field-sizing: content; max-width: 190px; }
     .vm-bar { flex-wrap: nowrap; } .vm-bar vm-tabs { flex-wrap: nowrap; }
-    :host ::ng-deep vm-avatar rect:not([fill]) { fill: #e9e3ff; }
+    :host ::ng-deep vm-avatar rect:not([fill]) { fill: var(--ka-e9e3ff); }
     .grid { display: grid; grid-template-columns: minmax(0, 1fr) 395px; gap: 14px; align-items: stretch; }
     .live { display: flex; flex-direction: column; padding-bottom: 8px; }
     .tw { flex: 1 1 0; min-height: 300px; contain: size; overflow: auto; scrollbar-width: thin; margin: 0 -4px; padding: 0 4px; }
@@ -400,14 +400,14 @@ const ONSITE = (v: VmVisitor) => v.status === 'Checked In' || v.status === 'Over
     .tw .vm-table th { font-size: 12px; padding: 9px 3px; }
     .vm-table th { padding: 9px 4px; white-space: normal; }
     .vm-acts { gap: 4px; } .vm-acts .vm-mini { padding: 3px 6px; font-size: 11.5px; }
-    .vm-table th app-icon { vertical-align: -2px; color: #64748b; }
+    .vm-table th app-icon { vertical-align: -2px; color: var(--kf-64748b); }
     .cb { width: 26px; } .cb input { width: 16px; height: 16px; accent-color: var(--primary); }
     .nm { white-space: normal; font-size: 12.5px; line-height: 1.2; min-width: 84px; max-width: 96px; gap: 7px; }
     .w2 { max-width: 74px; }
     .ic { display: flex; align-items: center; gap: 5px; max-width: 100px; }
     .ic.site { min-width: 92px; } .ic.pu { max-width: 92px; }
     .ic app-icon { width: 15px; }
-    .ic app-icon { color: #475569; }
+    .ic app-icon { color: var(--kf-475569); }
     .nw { white-space: nowrap; }
     vm-status.two { white-space: normal; max-width: 92px; line-height: 1.15; text-align: center; }
     .ac { text-align: center; }
@@ -421,43 +421,43 @@ const ONSITE = (v: VmVisitor) => v.status === 'Checked In' || v.status === 'Over
     .sv-id { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
     .sv-nm { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .sv-nm b { font-size: 21px; font-weight: 700; }
-    .co { font-size: 14px; color: #334155; }
+    .co { font-size: 14px; color: var(--kf-334155); }
     .sv-row { display: flex; align-items: center; gap: 8px; justify-content: space-between; flex-wrap: wrap; }
-    .vtype { display: inline-flex; align-items: center; gap: 6px; background: #f1edff; color: #3b2a6b; border-radius: 6px; padding: 6px 9px; font-size: 12.5px; white-space: nowrap; }
-    .dur-box { display: flex; align-items: center; gap: 6px; border: 1.5px solid #c4b5fd; border-radius: 10px; padding: 4px 8px; background: #faf8ff; color: var(--primary); }
+    .vtype { display: inline-flex; align-items: center; gap: 6px; background: var(--kb-f1edff); color: var(--kf-3b2a6b); border-radius: 6px; padding: 6px 9px; font-size: 12.5px; white-space: nowrap; }
+    .dur-box { display: flex; align-items: center; gap: 6px; border: 1.5px solid var(--kl-c4b5fd); border-radius: 10px; padding: 4px 8px; background: var(--kb-faf8ff); color: var(--primary); }
     .dur-box div { display: flex; flex-direction: column; line-height: 1.1; }
     .dur-box small { color: var(--text); font-size: 11.5px; }
     .dur-box b { font-size: 20px; white-space: nowrap; font-weight: 800; color: var(--primary); }
-    .dur-box em { font-style: normal; font-size: 11px; font-weight: 600; color: #a78bfa; margin-left: 3px; }
-    .dur-box.off { border-color: var(--border); color: #64748b; } .dur-box.off b { color: var(--text); font-size: 17px; }
+    .dur-box em { font-style: normal; font-size: 11px; font-weight: 600; color: var(--kf-a78bfa); margin-left: 3px; }
+    .dur-box.off { border-color: var(--border); color: var(--kf-64748b); } .dur-box.off b { color: var(--text); font-size: 17px; }
     .sv-kv { display: grid; grid-template-columns: 150px 1fr; font-size: 13.5px; }
-    .sv-kv > span, .sv-kv > b { padding: 6px 0; border-bottom: 1px solid #f0f0f6; }
+    .sv-kv > span, .sv-kv > b { padding: 6px 0; border-bottom: 1px solid var(--kl-f0f0f6); }
     .sv-kv > span { display: flex; align-items: center; gap: 10px; font-weight: 600; padding-left: 4px; }
-    .sv-kv > span app-icon { color: #475569; }
+    .sv-kv > span app-icon { color: var(--kf-475569); }
     .sv-kv > span.top { align-items: flex-start; border-bottom: 0; }
     .sv-kv > b { font-weight: 500; }
     .sv-kv > b.chips { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 0; }
-    .area { border: 1px solid #c4b5fd; color: #4c1d95; background: #f5f0ff; border-radius: 14px; padding: 3px 11px; font-size: 12px; font-weight: 500; }
+    .area { border: 1px solid var(--kl-c4b5fd); color: var(--kf-4c1d95); background: var(--kb-f5f0ff); border-radius: 14px; padding: 3px 11px; font-size: 12px; font-weight: 500; }
     .vm-btn-big { margin-top: 2px; }
     .two-btn { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .two-btn button { justify-content: center; height: 38px; font-size: 14.5px; }
     button:disabled { opacity: .5; cursor: default; }
     .onsite .vm-card-head { margin-bottom: 10px; }
-    .count { background: #ede9fe; color: var(--primary); font-weight: 700; font-size: 12px; border-radius: 10px; padding: 2px 9px; }
+    .count { background: var(--kb-ede9fe); color: var(--primary); font-weight: 700; font-size: 12px; border-radius: 10px; padding: 2px 9px; }
     .pager { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
     .vm-icon-btn.sm { width: 28px; height: 28px; }
     .er { height: 36px; font-size: 14.5px; padding: 0 16px; }
     .os-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
     .os-card { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: box-shadow .15s, border-color .15s; }
     .os-card:hover { box-shadow: 0 4px 14px rgba(80, 40, 160, .1); }
-    .os-card.sel { border-color: #a78bfa; background: #fdfcff; }
+    .os-card.sel { border-color: var(--kl-a78bfa); background: var(--kb-fdfcff); }
     .os-top { display: flex; align-items: center; gap: 12px; }
     .os-nm { flex: 1; min-width: 0; display: flex; flex-direction: column; }
     .os-nm b { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .os-nm span { font-size: 13px; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .os-nm span { font-size: 13px; color: var(--kf-334155); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .os-kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin-top: 10px; font-size: 13px; }
     .os-kv span { display: flex; align-items: center; gap: 8px; color: var(--text); }
-    .os-kv span app-icon { color: #475569; }
+    .os-kv span app-icon { color: var(--kf-475569); }
     .os-kv b { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .veil { position: fixed; inset: 0; z-index: 55; }
     .dropdown.fixed { position: fixed; right: auto; z-index: 56; }
@@ -465,21 +465,21 @@ const ONSITE = (v: VmVisitor) => v.status === 'Checked In' || v.status === 'Over
     .modal-head h3 app-icon { color: var(--primary); }
     .g-modal.narrow { width: min(520px, calc(100vw - 32px)); }
     .mt { margin-top: 12px; }
-    .input { height: 36px; border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; font: inherit; font-size: 13px; color: var(--text); background: #fff; }
-    .input.err { border-color: #f87171; }
+    .input { height: 36px; border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; font: inherit; font-size: 13px; color: var(--text); background: var(--kb-ffffff); }
+    .input.err { border-color: var(--kl-f87171); }
     .pick-list { list-style: none; margin: 10px 0 0; padding: 0; max-height: 360px; overflow: auto; }
-    .pick-list li { display: flex; align-items: center; gap: 10px; padding: 8px 4px; border-bottom: 1px solid #f0f0f6; }
+    .pick-list li { display: flex; align-items: center; gap: 10px; padding: 8px 4px; border-bottom: 1px solid var(--kl-f0f0f6); }
     .pick-list li > div { flex: 1; min-width: 0; display: flex; flex-direction: column; }
     .pick-list small { color: var(--muted); }
     .scanner { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 0; color: var(--muted); }
-    .frame { position: relative; width: 180px; height: 140px; border-radius: 14px; border: 2px dashed #a78bfa; display: grid; place-items: center; color: #7c3aed; overflow: hidden; background: #faf8ff; }
-    .line { position: absolute; left: 8px; right: 8px; height: 3px; background: #22c55e; box-shadow: 0 0 12px #22c55e; animation: sweep 1.1s ease-in-out infinite alternate; }
+    .frame { position: relative; width: 180px; height: 140px; border-radius: 14px; border: 2px dashed var(--kl-a78bfa); display: grid; place-items: center; color: var(--kf-7c3aed); overflow: hidden; background: var(--kb-faf8ff); }
+    .line { position: absolute; left: 8px; right: 8px; height: 3px; background: var(--kb-22c55e); box-shadow: 0 0 12px var(--kb-22c55e); animation: sweep 1.1s ease-in-out infinite alternate; }
     @keyframes sweep { from { top: 10px; } to { top: calc(100% - 13px); } }
-    .scan-res { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 12px; background: #f5f0ff; }
+    .scan-res { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 12px; background: var(--kb-f5f0ff); }
     .scan-res > div { flex: 1; display: flex; flex-direction: column; }
     .scan-res b { font-size: 17px; } .scan-res small { color: var(--muted); }
     .manual { display: flex; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
-    .note { font-size: 13px; color: #475569; margin: 0 0 10px; }
+    .note { font-size: 13px; color: var(--kf-475569); margin: 0 0 10px; }
     .radios { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
     .radios.four { grid-template-columns: repeat(4, 1fr); }
     .chk { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 6px 0; }
@@ -492,7 +492,7 @@ const ONSITE = (v: VmVisitor) => v.status === 'Checked In' || v.status === 'Over
     .vm-kv.dv > b { overflow-wrap: anywhere; }
     h4 { margin: 18px 0 8px; }
     .tl { list-style: none; margin: 0; padding: 0; font-size: 13px; }
-    .tl li { padding: 6px 0 6px 14px; border-left: 2px solid #ddd6fe; position: relative; }
+    .tl li { padding: 6px 0 6px 14px; border-left: 2px solid var(--kl-ddd6fe); position: relative; }
     .tl li::before { content: ''; position: absolute; left: -5px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
     .tl time { font-weight: 700; margin-right: 8px; color: var(--primary); }
     .g-toast { display: flex; align-items: center; gap: 8px; }
@@ -789,7 +789,7 @@ export class CheckInOut {
     const rows = this.onSiteList().map((v, i) => `<tr><td>${i + 1}</td><td>${v.name}</td><td>${v.company}</td><td>${v.host}</td><td>${v.site}</td><td>${v.location}</td><td>${v.badge}</td><td>${hm(v.checkIn)}</td><td>☐</td></tr>`).join('');
     const w = window.open('', '_blank', 'width=1000,height=800');
     if (!w) { this.say('Allow pop-ups to print the roster'); return; }
-    w.document.write(`<html><head><title>Emergency Visitor Roster</title><style>body{font:13px system-ui;padding:24px}h1{font-size:20px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:6px;text-align:left}th{background:#f3f0ff}</style></head><body><h1>Emergency Visitor Roster — ${this.onSiteList().length} on site</h1><p>Generated ${hm(this.store.now())}</p><table><tr><th>#</th><th>Visitor</th><th>Company</th><th>Host</th><th>Site</th><th>Location</th><th>Badge</th><th>Checked in</th><th>Accounted</th></tr>${rows}</table></body></html>`);
+    w.document.write(`<html><head><title>Emergency Visitor Roster</title><style>body{font:13px system-ui;padding:24px}h1{font-size:20px}table{border-collapse:collapse;width:100%}td,th{border:1px solid var(--kl-cccccc);padding:6px;text-align:left}th{background:var(--kb-f3f0ff)}</style></head><body><h1>Emergency Visitor Roster — ${this.onSiteList().length} on site</h1><p>Generated ${hm(this.store.now())}</p><table><tr><th>#</th><th>Visitor</th><th>Company</th><th>Host</th><th>Site</th><th>Location</th><th>Badge</th><th>Checked in</th><th>Accounted</th></tr>${rows}</table></body></html>`);
     w.document.close();
     w.focus();
     w.print();

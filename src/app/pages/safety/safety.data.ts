@@ -10,17 +10,17 @@ export const I_STATUSES: IStatus[] = ['Open', 'In Progress', 'Responding', 'Medi
 export const SEVS: Sev[] = ['Critical', 'High', 'Medium', 'Low'];
 
 export const I_TYPES: Record<string, { icon: string; color: string }> = {
-  'Fire Alarm': { icon: 'flame', color: '#ef4444' },
-  'Gas Leak': { icon: 's-gas', color: '#ef4444' },
-  'Person Fall': { icon: 's-fall', color: '#ef4444' },
-  'PPE Violation': { icon: 'hard-hat', color: '#f59e0b' },
-  'First Aid Case': { icon: 's-first-aid', color: '#22c55e' },
-  'Near Miss': { icon: 'triangle-alert', color: '#f59e0b' },
-  'Slip / Trip': { icon: 's-slip', color: '#f97316' },
-  'Chemical Spill': { icon: 's-flask', color: '#3b82f6' },
-  'Electrical Fault': { icon: 's-zap', color: '#3b82f6' },
-  'Equipment Damage': { icon: 's-cog', color: '#64748b' },
-  'Vehicle Incident': { icon: 'truck', color: '#7c3aed' },
+  'Fire Alarm': { icon: 'flame', color: 'var(--ka-ef4444)' },
+  'Gas Leak': { icon: 's-gas', color: 'var(--ka-ef4444)' },
+  'Person Fall': { icon: 's-fall', color: 'var(--ka-ef4444)' },
+  'PPE Violation': { icon: 'hard-hat', color: 'var(--ka-f59e0b)' },
+  'First Aid Case': { icon: 's-first-aid', color: 'var(--ka-22c55e)' },
+  'Near Miss': { icon: 'triangle-alert', color: 'var(--ka-f59e0b)' },
+  'Slip / Trip': { icon: 's-slip', color: 'var(--ka-f97316)' },
+  'Chemical Spill': { icon: 's-flask', color: 'var(--ka-3b82f6)' },
+  'Electrical Fault': { icon: 's-zap', color: 'var(--ka-3b82f6)' },
+  'Equipment Damage': { icon: 's-cog', color: 'var(--ka-64748b)' },
+  'Vehicle Incident': { icon: 'truck', color: 'var(--ka-7c3aed)' },
 };
 export const SITES = ['Head Office', 'Manufacturing Plant', 'Central Warehouse', 'Logistics Hub'];
 export const FLOORS = ['Roof', 'Floor 5', 'Floor 4', 'Floor 3', 'Floor 2', 'Floor 1', 'Ground Floor', 'Basement'];
@@ -31,7 +31,7 @@ export const PEOPLE = [
 ];
 export const OFFICERS = ['Rex Kumar', 'Sarah Johnson', 'David Chen', 'Nadia Hussein', 'Ibrahim Musa'];
 export const DEPTS = ['Production', 'Maintenance', 'Warehouse', 'Construction', 'Administration', 'IT', 'Logistics', 'Facilities'];
-const PAL = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#16a34a', '#ea580c', '#475569'];
+const PAL = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-475569)'];
 export const initials = (n: string) => n.split(' ').map((x) => x[0]).join('').slice(0, 2).toUpperCase();
 export const avatarColor = (n: string) => PAL[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % PAL.length];
 
@@ -138,7 +138,7 @@ export const MONTHLY = { Total: [38, 45, 41, 36, 44, 42], High: [6, 8, 7, 5, 7, 
 
 /* ---------------- Hazards ---------------- */
 export const H_CATS = ['Slips, Trips & Falls', 'PPE Non-Compliance', 'Machinery & Equipment', 'Chemical & Gas', 'Electrical', 'Fire Safety', 'Others'];
-export const H_CAT_COLOR = ['#ef4444', '#f59e0b', '#f59e0b', '#3b82f6', '#3b82f6', '#22c55e', '#9ca3af'];
+export const H_CAT_COLOR = ['var(--ka-ef4444)', 'var(--ka-f59e0b)', 'var(--ka-f59e0b)', 'var(--ka-3b82f6)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-9ca3af)'];
 export const H_CAT_ICON = ['s-slip', 'hard-hat', 's-cog', 's-flask', 's-zap', 'flame', 'triangle-alert'];
 export interface Hazard {
   id: string;
@@ -302,11 +302,11 @@ export const W_ALERTS: WAlert[] = [
 /* ---------------- Environment ---------------- */
 export interface EnvSensor { key: string; label: string; icon: string; unit: string; base: number; amp: number; dp: number; ok: (v: number) => string; color: string }
 export const ENV: EnvSensor[] = [
-  { key: 'temp', label: 'Temperature', icon: 's-thermo', unit: '°C', base: 24.5, amp: 0.3, dp: 1, ok: (v) => (v > 30 ? 'High' : 'Normal'), color: '#3b82f6' },
-  { key: 'hum', label: 'Humidity', icon: 's-droplet', unit: '%', base: 56, amp: 2, dp: 0, ok: (v) => (v > 70 ? 'High' : 'Normal'), color: '#2563eb' },
-  { key: 'aqi', label: 'Air Quality (AQI)', icon: 's-wind', unit: '', base: 42, amp: 3, dp: 0, ok: (v) => (v > 100 ? 'Poor' : v > 50 ? 'Moderate' : 'Good'), color: '#3b82f6' },
-  { key: 'noise', label: 'Noise Level', icon: 's-volume', unit: 'dB', base: 68, amp: 2, dp: 0, ok: (v) => (v > 85 ? 'High' : 'Normal'), color: '#7c3aed' },
-  { key: 'co', label: 'Gas (CO)', icon: 's-cloud', unit: 'ppm', base: 0, amp: 0, dp: 0, ok: (v) => (v > 25 ? 'High' : 'Normal'), color: '#7c3aed' },
+  { key: 'temp', label: 'Temperature', icon: 's-thermo', unit: '°C', base: 24.5, amp: 0.3, dp: 1, ok: (v) => (v > 30 ? 'High' : 'Normal'), color: 'var(--ka-3b82f6)' },
+  { key: 'hum', label: 'Humidity', icon: 's-droplet', unit: '%', base: 56, amp: 2, dp: 0, ok: (v) => (v > 70 ? 'High' : 'Normal'), color: 'var(--ka-2563eb)' },
+  { key: 'aqi', label: 'Air Quality (AQI)', icon: 's-wind', unit: '', base: 42, amp: 3, dp: 0, ok: (v) => (v > 100 ? 'Poor' : v > 50 ? 'Moderate' : 'Good'), color: 'var(--ka-3b82f6)' },
+  { key: 'noise', label: 'Noise Level', icon: 's-volume', unit: 'dB', base: 68, amp: 2, dp: 0, ok: (v) => (v > 85 ? 'High' : 'Normal'), color: 'var(--ka-7c3aed)' },
+  { key: 'co', label: 'Gas (CO)', icon: 's-cloud', unit: 'ppm', base: 0, amp: 0, dp: 0, ok: (v) => (v > 25 ? 'High' : 'Normal'), color: 'var(--ka-7c3aed)' },
 ];
 export const ENV_ALERTS = [
   { id: 'EA-1', text: 'CO₂ 1,250 ppm – Server Room', icon: 's-cloud', time: '10:20 AM', zone: 'Server Room' },

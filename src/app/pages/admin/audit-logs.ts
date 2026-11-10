@@ -22,11 +22,11 @@ type Range = keyof typeof RANGES;
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Events in Range" [value]="fmt(inRange().length)" icon="list-checks" color="#7c3aed" [sub]="'since ' + since()" />
-      <app-kpi label="Configuration Changes" [value]="fmt(changes())" icon="sliders" color="#2563eb" sub="excl. authentication" />
-      <app-kpi label="Warnings" [value]="sev('Warning')" icon="triangle-alert" color="#f59e0b" sub="policy & permission changes" />
-      <app-kpi label="Critical" [value]="sev('Critical')" icon="siren" color="#ef4444" sub="deletions & revocations" />
-      <app-kpi label="Failed Sign-ins" [value]="failed()" icon="admin-lock" color="#0891b2" sub="password / MFA failures" />
+      <app-kpi label="Events in Range" [value]="fmt(inRange().length)" icon="list-checks" color="var(--ka-7c3aed)" [sub]="'since ' + since()" />
+      <app-kpi label="Configuration Changes" [value]="fmt(changes())" icon="sliders" color="var(--ka-2563eb)" sub="excl. authentication" />
+      <app-kpi label="Warnings" [value]="sev('Warning')" icon="triangle-alert" color="var(--ka-f59e0b)" sub="policy & permission changes" />
+      <app-kpi label="Critical" [value]="sev('Critical')" icon="siren" color="var(--ka-ef4444)" sub="deletions & revocations" />
+      <app-kpi label="Failed Sign-ins" [value]="failed()" icon="admin-lock" color="var(--ka-0891b2)" sub="password / MFA failures" />
     </section>
 
     <section class="grid2 charts">
@@ -41,7 +41,7 @@ type Range = keyof typeof RANGES;
     <app-admin-toast />
   `,
   styles: [ADMIN_CSS, `
-    .live { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: g-blink 1.6s infinite; } .live.off { background: #9ca3af; animation: none; }
+    .live { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); animation: g-blink 1.6s infinite; } .live.off { background: var(--kb-9ca3af); animation: none; }
     .charts { grid-template-columns: 1.6fr 1fr; }
   `],
 })
@@ -91,7 +91,7 @@ export class AuditLogs {
     { key: 'action', label: 'Action', options: [...new Set(this.store.audit().map((a) => a.action))].sort() },
   ]);
   protected readonly cats = computed(() => {
-    const colors: Record<string, string> = { Organization: '#7c3aed', 'Users & Roles': '#2563eb', Security: '#ef4444', Branding: '#db2777', 'Data & Privacy': '#0891b2', Subscription: '#16a34a', System: '#f59e0b', Authentication: '#94a3b8' };
+    const colors: Record<string, string> = { Organization: 'var(--ka-7c3aed)', 'Users & Roles': 'var(--ka-2563eb)', Security: 'var(--ka-ef4444)', Branding: 'var(--ka-db2777)', 'Data & Privacy': 'var(--ka-0891b2)', Subscription: 'var(--ka-16a34a)', System: 'var(--ka-f59e0b)', Authentication: 'var(--ka-94a3b8)' };
     const m = new Map<string, number>();
     this.inRange().forEach((a) => m.set(a.category, (m.get(a.category) ?? 0) + 1));
     return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value, color: colors[label] }));
@@ -112,7 +112,7 @@ export class AuditLogs {
       auth.push(day.filter((a) => a.category === 'Authentication').length);
       cfg.push(day.length - auth.at(-1)!);
     }
-    return { labels, series: [{ name: 'Configuration', color: '#7c3aed', values: cfg }, { name: 'Authentication', color: '#94a3b8', values: auth }] };
+    return { labels, series: [{ name: 'Configuration', color: 'var(--ka-7c3aed)', values: cfg }, { name: 'Authentication', color: 'var(--ka-94a3b8)', values: auth }] };
   });
   protected exportCsv() {
     downloadCsv('audit-log.csv', [['ID', 'Date', 'Entity', 'Action', 'Target', 'Detail', 'User', 'Category', 'Severity', 'IP'], ...this.inRange().map((a) => [a.id, fmtStamp(a.at), a.entity, a.action, a.target, a.detail, a.actor, a.category, a.severity, a.ip])]);

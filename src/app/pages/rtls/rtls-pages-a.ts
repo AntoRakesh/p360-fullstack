@@ -32,10 +32,10 @@ const LINK = '/real-time-location';
       </div>
     </div>
     <section class="kpi-row">
-      <app-kpi label="First Seen" [value]="time(visits()[0].from)" icon="clock" color="#7c3aed" sub="Entrance · Ground Floor" />
-      <app-kpi label="Time On Site" [value]="onSite()" icon="calendar-days" color="#22c55e" />
-      <app-kpi label="Zones Visited" [value]="zonesCount()" icon="map-floor" color="#f59e0b" />
-      <app-kpi label="Distance Walked" [value]="distance() + ' m'" icon="activity" color="#3b82f6" />
+      <app-kpi label="First Seen" [value]="time(visits()[0].from)" icon="clock" color="var(--ka-7c3aed)" sub="Entrance · Ground Floor" />
+      <app-kpi label="Time On Site" [value]="onSite()" icon="calendar-days" color="var(--ka-22c55e)" />
+      <app-kpi label="Zones Visited" [value]="zonesCount()" icon="map-floor" color="var(--ka-f59e0b)" />
+      <app-kpi label="Distance Walked" [value]="distance() + ' m'" icon="activity" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -56,7 +56,7 @@ const LINK = '/real-time-location';
     .bar-row { display: flex; gap: 14px; align-items: flex-end; margin-bottom: 14px; flex-wrap: wrap; } .bar-row label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); } .bar-row .input { min-width: 240px; }
     .play { flex: 1; display: flex; gap: 12px; align-items: center; min-width: 300px; } .play input { flex: 1; accent-color: var(--primary); } .play span { font-size: 13px; font-weight: 600; min-width: 190px; } .icon { padding: 0 12px; }
     .tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--border); max-height: 420px; overflow: auto; font-size: 12.5px; }
-    .tl li { position: relative; padding: 4px 6px 10px 10px; display: flex; flex-direction: column; cursor: pointer; border-radius: 6px; } .tl li::before { content: ''; position: absolute; left: -20px; top: 7px; width: 10px; height: 10px; border-radius: 50%; background: #c4c7d4; }
+    .tl li { position: relative; padding: 4px 6px 10px 10px; display: flex; flex-direction: column; cursor: pointer; border-radius: 6px; } .tl li::before { content: ''; position: absolute; left: -20px; top: 7px; width: 10px; height: 10px; border-radius: 50%; background: var(--kb-c4c7d4); }
     .tl li.on { background: var(--primary-soft); } .tl li.on::before { background: var(--primary); } .tl small { color: var(--muted); }
   `,
 })
@@ -79,11 +79,11 @@ export class LocationHistory {
   }
   protected readonly path = computed(() => {
     const pts = this.visits().slice(0, this.idx() + 1).filter((v) => v.floor === this.cur().floor).map((v) => this.center(v.zoneId));
-    return pts.length > 1 ? [{ points: pts, color: '#7c3aed', dashed: true, arrow: true }] : [];
+    return pts.length > 1 ? [{ points: pts, color: 'var(--ka-7c3aed)', dashed: true, arrow: true }] : [];
   });
   protected readonly marker = computed<MapMarker[]>(() => {
     const [x, y] = this.center(this.cur().zoneId);
-    return [{ id: 'me', x, y, color: '#7c3aed', label: this.person().initials, pulse: true }];
+    return [{ id: 'me', x, y, color: 'var(--ka-7c3aed)', label: this.person().initials, pulse: true }];
   });
   protected readonly onSite = computed(() => fmtDur(Math.round((Date.now() - this.visits()[0].from.getTime()) / 60000)));
   protected readonly zonesCount = computed(() => new Set(this.visits().map((v) => v.zoneId)).size);
@@ -139,7 +139,7 @@ export class LocationHistory {
 
 /* ======================= Geofences & Zones ======================= */
 const KINDS: NonNullable<RZone['kind']>[] = ['safe', 'restricted', 'hazard', 'transit', 'open'];
-const KIND_COLOR: Record<string, string> = { safe: '#22c55e', restricted: '#ef4444', hazard: '#f97316', transit: '#64748b', open: '#94a3b8' };
+const KIND_COLOR: Record<string, string> = { safe: 'var(--ka-22c55e)', restricted: 'var(--ka-ef4444)', hazard: 'var(--ka-f97316)', transit: 'var(--ka-64748b)', open: 'var(--ka-94a3b8)' };
 
 @Component({
   selector: 'app-geofences',
@@ -151,10 +151,10 @@ const KIND_COLOR: Record<string, string> = { safe: '#22c55e', restricted: '#ef44
       <button class="btn-primary" [class.on]="draw()" (click)="draw.set(!draw())"><app-icon name="plus" [size]="16" />{{ draw() ? 'Drag on the map…' : 'Draw New Zone' }}</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Zones (all floors)" [value]="store.zones().length" icon="map-floor" color="#7c3aed" />
-      <app-kpi label="Restricted Zones" [value]="count('restricted')" icon="ban" color="#ef4444" />
-      <app-kpi label="Hazard Zones" [value]="count('hazard')" icon="triangle-alert" color="#f97316" />
-      <app-kpi label="Zones With Entry Alerts" [value]="alerting()" icon="bell" color="#3b82f6" />
+      <app-kpi label="Zones (all floors)" [value]="store.zones().length" icon="map-floor" color="var(--ka-7c3aed)" />
+      <app-kpi label="Restricted Zones" [value]="count('restricted')" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Hazard Zones" [value]="count('hazard')" icon="triangle-alert" color="var(--ka-f97316)" />
+      <app-kpi label="Zones With Entry Alerts" [value]="alerting()" icon="bell" color="var(--ka-3b82f6)" />
     </section>
     <section class="gz" [class.with-detail]="!!sel()">
       <div class="card">
@@ -184,7 +184,7 @@ const KIND_COLOR: Record<string, string> = { safe: '#22c55e', restricted: '#ef44
   `,
   styles: `
     .gz { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; align-items: start; } .gz.with-detail { grid-template-columns: minmax(0, 1fr) 340px; }
-    .hint { margin: 8px 0 0; font-size: 12px; } .btn-primary.on { background: #5b21b6; }
+    .hint { margin: 8px 0 0; font-size: 12px; } .btn-primary.on { background: var(--kb-5b21b6); }
     .ed { display: flex; flex-direction: column; gap: 10px; } .ed label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
     .ed .chk { flex-direction: row; align-items: center; gap: 8px; color: inherit; } .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .danger { color: var(--red); }
     @media (max-width: 1100px) { .gz.with-detail { grid-template-columns: 1fr; } }
@@ -251,10 +251,10 @@ export class Geofences {
   template: `
     <app-page-head title="Alerts &amp; Notifications" [parent]="parent" [parentLink]="link" subtitle="Location alerts raised by zone rules, wearables and tags — and who gets notified." />
     <section class="kpi-row">
-      <app-kpi label="Open Critical" [value]="n('Critical', 'Open')" icon="siren" color="#ef4444" />
-      <app-kpi label="Open Warnings" [value]="n('Warning', 'Open')" icon="triangle-alert" color="#f59e0b" />
-      <app-kpi label="Acknowledged" [value]="byStatus('Acknowledged')" icon="user-check" color="#3b82f6" />
-      <app-kpi label="Resolved Today" [value]="byStatus('Resolved')" icon="shield-check" color="#22c55e" />
+      <app-kpi label="Open Critical" [value]="n('Critical', 'Open')" icon="siren" color="var(--ka-ef4444)" />
+      <app-kpi label="Open Warnings" [value]="n('Warning', 'Open')" icon="triangle-alert" color="var(--ka-f59e0b)" />
+      <app-kpi label="Acknowledged" [value]="byStatus('Acknowledged')" icon="user-check" color="var(--ka-3b82f6)" />
+      <app-kpi label="Resolved Today" [value]="byStatus('Resolved')" icon="shield-check" color="var(--ka-22c55e)" />
     </section>
     <div class="tabs-row"><button [class.on]="tab() === 'a'" (click)="tab.set('a')">Alerts</button><button [class.on]="tab() === 'r'" (click)="tab.set('r')">Alert Rules</button></div>
     @if (tab() === 'a') {
@@ -277,11 +277,11 @@ export class Geofences {
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .tabs-row { display: flex; gap: 6px; margin-bottom: 12px; } .tabs-row button { padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font: inherit; }
-    .tabs-row button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .rule { display: flex; gap: 14px; align-items: center; padding: 12px 4px; border-bottom: 1px solid #f0f1f6; font-size: 13px; } .rt { flex: 1; display: flex; flex-direction: column; } .rt small { color: var(--muted); }
+    .tabs-row { display: flex; gap: 6px; margin-bottom: 12px; } .tabs-row button { padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font: inherit; }
+    .tabs-row button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
+    .rule { display: flex; gap: 14px; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; } .rt { flex: 1; display: flex; flex-direction: column; } .rt small { color: var(--muted); }
     .ch { display: flex; gap: 10px; font-size: 12px; } .ch label { display: flex; gap: 4px; align-items: center; } .ch input { accent-color: var(--primary); }
-    .sw { width: 38px; height: 22px; border-radius: 11px; border: 0; background: #d5d7e0; position: relative; cursor: pointer; flex: none; } .sw i { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left 0.15s; }
+    .sw { width: 38px; height: 22px; border-radius: 11px; border: 0; background: var(--kb-d5d7e0); position: relative; cursor: pointer; flex: none; } .sw i { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: left 0.15s; }
     .sw.on { background: var(--primary); } .sw.on i { left: 19px; }
   `,
 })
@@ -337,11 +337,11 @@ export class RtlsAlerts {
   template: `
     <app-page-head title="RTLS Devices &amp; Tags" [parent]="parent" [parentLink]="link" subtitle="UWB anchors, BLE gateways and the wearable tags people carry." />
     <section class="kpi-row">
-      <app-kpi label="Anchors Online" [value]="online('UWB Anchor')" icon="router" color="#7c3aed" />
-      <app-kpi label="Gateways Online" [value]="online('BLE Gateway')" icon="wifi" color="#3b82f6" />
-      <app-kpi label="Tags In Use" [value]="inUse()" icon="id-card" color="#22c55e" [sub]="spare() + ' spare in stock'" />
-      <app-kpi label="Low Battery Tags" [value]="low()" icon="battery" color="#f59e0b" />
-      <app-kpi label="Offline Devices" [value]="offline()" icon="ban" color="#ef4444" />
+      <app-kpi label="Anchors Online" [value]="online('UWB Anchor')" icon="router" color="var(--ka-7c3aed)" />
+      <app-kpi label="Gateways Online" [value]="online('BLE Gateway')" icon="wifi" color="var(--ka-3b82f6)" />
+      <app-kpi label="Tags In Use" [value]="inUse()" icon="id-card" color="var(--ka-22c55e)" [sub]="spare() + ' spare in stock'" />
+      <app-kpi label="Low Battery Tags" [value]="low()" icon="battery" color="var(--ka-f59e0b)" />
+      <app-kpi label="Offline Devices" [value]="offline()" icon="ban" color="var(--ka-ef4444)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -394,8 +394,8 @@ export class RtlsDevices {
     { id: 'unassign', label: 'Unassign', icon: 'ban', danger: true, when: (r) => r.assigned !== 'Unassigned' && r.assigned !== '—' },
     { id: 'reboot', label: 'Reboot', icon: 'refresh', when: (r) => r.type === 'UWB Anchor' || r.type === 'BLE Gateway' },
   ];
-  protected readonly battery = computed(() => [{ name: 'Tags', color: '#7c3aed', values: [0, 20, 40, 60, 80].map((b) => this.list().filter((d) => !d.type.includes('Anchor') && !d.type.includes('Gateway') && d.battery >= b && (d.battery < b + 20 || (b === 80 && d.battery <= 100))).length) }]);
-  protected readonly types = computed(() => ['UWB Anchor', 'BLE Gateway', 'Badge Tag', 'Wristband', 'Helmet Tag', 'Asset Tag'].map((t, i) => ({ label: t, value: this.list().filter((d) => d.type === t).length, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#f97316', '#64748b'][i] })));
+  protected readonly battery = computed(() => [{ name: 'Tags', color: 'var(--ka-7c3aed)', values: [0, 20, 40, 60, 80].map((b) => this.list().filter((d) => !d.type.includes('Anchor') && !d.type.includes('Gateway') && d.battery >= b && (d.battery < b + 20 || (b === 80 && d.battery <= 100))).length) }]);
+  protected readonly types = computed(() => ['UWB Anchor', 'BLE Gateway', 'Badge Tag', 'Wristband', 'Helmet Tag', 'Asset Tag'].map((t, i) => ({ label: t, value: this.list().filter((d) => d.type === t).length, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-f97316)', 'var(--ka-64748b)'][i] })));
   protected readonly inUse = computed(() => this.list().filter((d) => d.assigned.includes('(')).length);
   protected readonly spare = computed(() => this.list().filter((d) => d.assigned === 'Unassigned').length);
   protected readonly low = computed(() => this.list().filter((d) => d.status === 'Low Battery').length);

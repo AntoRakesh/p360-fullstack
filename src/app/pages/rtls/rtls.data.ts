@@ -15,14 +15,14 @@ export interface RZone extends MapZone {
 
 /* Slot layout shared by all floors (Floor 1 matches the reference image). */
 const SLOTS: [number, number, number, number, string, RZone['kind'], number?][] = [
-  [40, 40, 200, 160, '#3b82f6', 'safe'],
-  [440, 40, 180, 110, '#60a5fa', 'safe'],
-  [720, 40, 250, 220, '#f59e0b', 'safe'],
-  [260, 170, 440, 200, '#94a3b8', 'open', 0.05],
-  [40, 230, 210, 290, '#22c55e', 'safe'],
-  [400, 390, 220, 130, '#8b5cf6', 'safe'],
-  [740, 290, 220, 230, '#ef4444', 'restricted'],
-  [260, 390, 130, 130, '#64748b', 'transit', 0.06],
+  [40, 40, 200, 160, 'var(--ka-3b82f6)', 'safe'],
+  [440, 40, 180, 110, 'var(--ka-60a5fa)', 'safe'],
+  [720, 40, 250, 220, 'var(--ka-f59e0b)', 'safe'],
+  [260, 170, 440, 200, 'var(--ka-94a3b8)', 'open', 0.05],
+  [40, 230, 210, 290, 'var(--ka-22c55e)', 'safe'],
+  [400, 390, 220, 130, 'var(--ka-8b5cf6)', 'safe'],
+  [740, 290, 220, 230, 'var(--ka-ef4444)', 'restricted'],
+  [260, 390, 130, 130, 'var(--ka-64748b)', 'transit', 0.06],
 ];
 const NAMES_BY_FLOOR: Record<string, string[]> = {
   Roof: ['Plant Deck', 'Water Tanks', 'Helipad', 'Roof Garden', 'Chiller Plant', 'Solar Array', 'BMU Store', 'Stair Core'],
@@ -68,7 +68,7 @@ export interface RPerson {
 const FIRST = ['Rahul', 'Sara', 'Omar', 'Grace', 'Daniel', 'Nadia', 'Vikram', 'Aisha', 'Kenji', 'Layla', 'Tom', 'Hannah', 'Yusuf', 'Meera', 'Lucas', 'Zara', 'Noah', 'Sofia', 'Ibrahim', 'Chloe', 'Ravi', 'Emma', 'Ali', 'Mei'];
 const LAST = ['Verma', 'Khan', 'Khalid', 'Park', 'Kim', 'Hussein', 'Rao', 'Bello', 'Sato', 'Haddad', 'Baker', 'Lee', 'Rahman', 'Iyer', 'Silva', 'Ahmed', 'Brown', 'Rossi', 'Musa', 'Martin'];
 const DEPTS = ['IT', 'HR', 'Operations', 'Finance', 'Facilities', 'Production', 'Sales', 'Security'];
-const PAL = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#16a34a', '#ea580c', '#475569'];
+const PAL = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-475569)'];
 const ini = (n: string) => n.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
 
 /** Zone headcounts: Floor 1 per the reference image, the rest of the 386 spread over other floors. */
@@ -122,8 +122,8 @@ export const PEOPLE: RPerson[] = (() => {
   const arjun = out.find((p) => p.id === 'EMP-00123')!;
   arjun.walker = [[470, 262], [410, 232], [330, 196], [250, 160], [180, 130]];
   arjun.since = 6;
-  arjun.color = '#7c3aed';
-  out.find((p) => p.id === 'EMP-00131')!.color = '#ef4444';
+  arjun.color = 'var(--ka-7c3aed)';
+  out.find((p) => p.id === 'EMP-00131')!.color = 'var(--ka-ef4444)';
   // Average dwell 2h 18m
   const avg = out.reduce((a, p) => a + p.since, 0) / out.length;
   out.forEach((p) => p.id !== 'EMP-00123' && (p.since = Math.max(4, Math.round((p.since * 138) / avg))));

@@ -16,11 +16,11 @@ const STEPS: Dsar['status'][] = ['New', 'Verifying', 'In Progress', 'Completed']
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Open Data Requests" [value]="open()" icon="shield" color="#7c3aed" [sub]="overdue() ? overdue() + ' overdue' : 'all within 30-day SLA'" [subColor]="overdue() ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Retention Policies" [value]="store.retention().length" icon="admin-database" color="#f43f5e" [sub]="'default ' + store.tenant().retentionDays + ' days'" />
-      <app-kpi label="Records Under Policy" [value]="short(records())" icon="list-checks" color="#2563eb" [sub]="holds() + ' on legal hold'" />
-      <app-kpi label="Biometric Consent" [value]="pct(1104) + '%'" icon="fingerprint" color="#10b981" [sub]="'1,104 of ' + fmt(store.users().length) + ' users'" />
-      <app-kpi label="Masked PII Fields" [value]="masked() + ' / ' + store.pii().length" icon="admin-eye-off" color="#f59e0b" sub="role-based reveal" />
+      <app-kpi label="Open Data Requests" [value]="open()" icon="shield" color="var(--ka-7c3aed)" [sub]="overdue() ? overdue() + ' overdue' : 'all within 30-day SLA'" [subColor]="overdue() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Retention Policies" [value]="store.retention().length" icon="admin-database" color="var(--ka-f43f5e)" [sub]="'default ' + store.tenant().retentionDays + ' days'" />
+      <app-kpi label="Records Under Policy" [value]="short(records())" icon="list-checks" color="var(--ka-2563eb)" [sub]="holds() + ' on legal hold'" />
+      <app-kpi label="Biometric Consent" [value]="pct(1104) + '%'" icon="fingerprint" color="var(--ka-10b981)" [sub]="'1,104 of ' + fmt(store.users().length) + ' users'" />
+      <app-kpi label="Masked PII Fields" [value]="masked() + ' / ' + store.pii().length" icon="admin-eye-off" color="var(--ka-f59e0b)" sub="role-based reveal" />
     </section>
 
     <section class="split">
@@ -72,7 +72,7 @@ const STEPS: Dsar['status'][] = ['New', 'Verifying', 'In Progress', 'Completed']
       </div>
       @if (dsar(); as d) {
         <aside class="card">
-          <div class="dh"><span class="ri" style="background:#cffafe;color:#0891b2"><app-icon name="shield" [size]="18" /></span><div><h3>{{ d.id }} · {{ d.type }}</h3><small class="muted">{{ d.requester }} · {{ d.email }}</small></div></div>
+          <div class="dh"><span class="ri" style="background:var(--kb-cffafe);color:var(--kf-0891b2)"><app-icon name="shield" [size]="18" /></span><div><h3>{{ d.id }} · {{ d.type }}</h3><small class="muted">{{ d.requester }} · {{ d.email }}</small></div></div>
           <ol class="steps">@for (s of steps; track s; let i = $index) {<li [class.done]="stepIdx(d) >= i" [class.rej]="d.status === 'Rejected'">{{ s }}</li>}</ol>
           <p class="d">{{ d.note }}</p>
           <dl class="kv"><dt>Systems</dt><dd>{{ d.systems.join(', ') }}</dd><dt>Assignee</dt><dd>{{ d.assignee }}</dd><dt>Due</dt><dd>{{ fmtDay(d.due) }} ({{ daysLeft(d) }})</dd></dl>
@@ -114,8 +114,8 @@ const STEPS: Dsar['status'][] = ['New', 'Verifying', 'In Progress', 'Completed']
   styles: [ADMIN_CSS, `
     .select.sm { padding-top: 4px; padding-bottom: 4px; font-size: 12px; }
     .cons { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; } .cons li { display: grid; grid-template-columns: 1fr auto; gap: 4px; font-size: 12.5px; } .cons .bar { grid-column: 1 / -1; }
-    .steps { display: flex; list-style: none; padding: 0; margin: 0 0 12px; gap: 4px; } .steps li { flex: 1; text-align: center; font-size: 11px; padding: 6px 2px; border-radius: 6px; background: #f1f2f6; color: var(--muted); }
-    .steps li.done { background: #ede9fe; color: var(--primary); font-weight: 600; } .steps li.rej { background: #fee2e2; color: #b91c1c; }
+    .steps { display: flex; list-style: none; padding: 0; margin: 0 0 12px; gap: 4px; } .steps li { flex: 1; text-align: center; font-size: 11px; padding: 6px 2px; border-radius: 6px; background: var(--kb-f1f2f6); color: var(--muted); }
+    .steps li.done { background: var(--kb-ede9fe); color: var(--primary); font-weight: 600; } .steps li.rej { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .d { font-size: 12.5px; } td.bad { color: var(--red); font-weight: 600; } .mono { font-family: ui-monospace, monospace; }
   `],
 })

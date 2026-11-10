@@ -107,7 +107,7 @@ const POLICIES: Policy[] = [
             <label>Check-out<input class="input" type="time" [value]="simOut()" (input)="simOut.set($any($event.target).value)" /></label>
           </div>
           @let r = result();
-          <div class="verdict" [style.background]="r.color + '18'" [style.border-color]="r.color">
+          <div class="verdict" [style.background]="'color-mix(in srgb, ' + r.color + ' 9%, transparent)'" [style.border-color]="r.color">
             <b [style.color]="r.color">{{ r.status }}</b>
             <span>{{ r.note }}</span>
           </div>
@@ -126,12 +126,12 @@ const POLICIES: Policy[] = [
     .pol-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr) 300px; gap: 12px; align-items: start; }
     .pol-list { display: flex; flex-direction: column; gap: 6px; padding: 10px; }
     .pol { display: flex; flex-direction: column; gap: 2px; padding: 10px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
-    .pol small { color: #4b4f6b; } .pol:hover { background: #faf8ff; } .pol.on { border-color: var(--primary); background: #f5f3ff; }
-    h4 { margin: 16px 0 8px; font-size: 13px; color: #4b4f6b; }
+    .pol small { color: var(--kf-4b4f6b); } .pol:hover { background: var(--kb-faf8ff); } .pol.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
+    h4 { margin: 16px 0 8px; font-size: 13px; color: var(--kf-4b4f6b); }
     .three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .span2 { grid-column: span 2; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
-    .chip-btn { padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: #fff; font-size: 12px; cursor: pointer; }
-    .chip-btn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .chip-btn { padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--kb-ffffff); font-size: 12px; cursor: pointer; }
+    .chip-btn.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); }
     .geo { display: flex; align-items: center; gap: 6px; font-size: 12.5px; margin-left: 8px; }
     .verdict { display: flex; flex-direction: column; gap: 3px; padding: 12px; border: 1px solid; border-radius: 10px; margin: 14px 0; font-size: 12.5px; }
     .verdict b { font-size: 18px; }
@@ -163,11 +163,11 @@ export class AttendancePolicies {
     const worked = Math.max(0, Math.round(((outM - inM - p.breakMin) / 60) * 10) / 10);
     const ot = Math.min(p.maxOtWeek, Math.max(0, Math.round((worked - p.otAfter + p.breakMin / 60) * 10) / 10));
     let status = 'Present';
-    let color = '#16a34a';
+    let color = 'var(--ka-16a34a)';
     let note = 'On time and full day.';
-    if (late > p.halfDayAfter || worked < p.minFullDay / 2) [status, color, note] = ['Half Day', '#7c3aed', `Late by more than ${p.halfDayAfter} min or under half the required hours.`];
-    else if (late > p.grace) [status, color, note] = ['Late', '#d97706', `Arrived ${late} min after shift start (grace ${p.grace} min).`];
-    else if (worked < p.minFullDay) [status, color, note] = ['Short Hours', '#dc2626', `Worked ${worked} h, policy needs ${p.minFullDay} h.`];
+    if (late > p.halfDayAfter || worked < p.minFullDay / 2) [status, color, note] = ['Half Day', 'var(--ka-7c3aed)', `Late by more than ${p.halfDayAfter} min or under half the required hours.`];
+    else if (late > p.grace) [status, color, note] = ['Late', 'var(--ka-d97706)', `Arrived ${late} min after shift start (grace ${p.grace} min).`];
+    else if (worked < p.minFullDay) [status, color, note] = ['Short Hours', 'var(--ka-dc2626)', `Worked ${worked} h, policy needs ${p.minFullDay} h.`];
     if (ot > 0 && status === 'Present') note = `Full day with ${ot} h overtime.`;
     return { status, color, note, late, worked, ot, otPaid: Math.round(ot * p.otRate * 100) / 100, inR: hhmm(inM), outR: hhmm(outM % 1440) };
   });
@@ -235,11 +235,11 @@ const OT: OtReq[] = (() => {
   template: `
     <app-page-head title="Break &amp; Overtime Management" parent="Time &amp; Attendance" parentLink="/time-attendance" subtitle="Live break monitoring, overtime requests, approvals and cost." />
     <section class="kpi-row">
-      <app-kpi label="On Break Now" [value]="breaks().length" icon="coffee" color="#8b5cf6" sub="across sites" />
-      <app-kpi label="Break Overruns" [value]="overruns()" icon="triangle-alert" color="#ef4444" sub="over 60 min" />
-      <app-kpi label="OT Hours (week)" [value]="otHours()" icon="clock" color="#f97316" change="5%" [good]="false" />
-      <app-kpi label="OT Cost (week)" [value]="'AED ' + otCost()" icon="trending-up" color="#3b82f6" />
-      <app-kpi label="Pending OT Approvals" [value]="count('Pending')" icon="file-check" color="#f59e0b" />
+      <app-kpi label="On Break Now" [value]="breaks().length" icon="coffee" color="var(--ka-8b5cf6)" sub="across sites" />
+      <app-kpi label="Break Overruns" [value]="overruns()" icon="triangle-alert" color="var(--ka-ef4444)" sub="over 60 min" />
+      <app-kpi label="OT Hours (week)" [value]="otHours()" icon="clock" color="var(--ka-f97316)" change="5%" [good]="false" />
+      <app-kpi label="OT Cost (week)" [value]="'AED ' + otCost()" icon="trending-up" color="var(--ka-3b82f6)" />
+      <app-kpi label="Pending OT Approvals" [value]="count('Pending')" icon="file-check" color="var(--ka-f59e0b)" />
     </section>
     <section class="dash">
       <div class="card span-5">
@@ -269,9 +269,9 @@ const OT: OtReq[] = (() => {
   `,
   styles: `
     .breaks { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; }
-    .breaks li { display: grid; grid-template-columns: 32px 1fr auto auto; gap: 10px; align-items: center; padding: 7px 4px; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .breaks li { display: grid; grid-template-columns: 32px 1fr auto auto; gap: 10px; align-items: center; padding: 7px 4px; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .breaks li div { display: flex; flex-direction: column; } .breaks small { color: var(--muted); }
-    .mins { font-weight: 600; font-variant-numeric: tabular-nums; } .over { background: #fff5f5; } .over .mins { color: var(--red); }
+    .mins { font-weight: 600; font-variant-numeric: tabular-nums; } .over { background: var(--kb-fff5f5); } .over .mins { color: var(--red); }
   `,
 })
 export class BreakOvertime {
@@ -306,7 +306,7 @@ export class BreakOvertime {
   protected readonly otHours = computed(() => this.list().filter((o) => o.status !== 'Rejected').reduce((a, o) => a + o.hours, 0).toLocaleString());
   protected readonly otCost = computed(() => `${(this.list().filter((o) => o.status === 'Approved').reduce((a, o) => a + o.cost, 0) / 1000).toFixed(1)}K`);
   protected readonly otByDept = computed(() => [
-    { name: 'OT hours', color: '#f97316', values: DEPTS.filter((d) => d !== '—').map((d) => this.list().filter((o) => o.dept === d && o.status !== 'Rejected').reduce((a, o) => a + o.hours, 0)) },
+    { name: 'OT hours', color: 'var(--ka-f97316)', values: DEPTS.filter((d) => d !== '—').map((d) => this.list().filter((o) => o.dept === d && o.status !== 'Rejected').reduce((a, o) => a + o.hours, 0)) },
   ]);
 
   protected count(s: string) {

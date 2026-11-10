@@ -60,24 +60,24 @@ import { catMeta, hhmm, isOpen, prioCls, statusCls, TaskStore, workerById, WORKE
         <h4>Activity</h4>
         <ul class="act">
           @for (e of log(); track $index) {<li><app-icon [name]="e.icon" [size]="13" [style.color]="e.color" /><span>{{ e.text }}<small>{{ e.who }} · {{ hhmm(e.at) }}</small></span></li>}
-          <li><app-icon name="plus" [size]="13" style="color:#7c3aed" /><span>Task created from template<small>{{ t.source }} · {{ hhmm(t.start - 30) }}</small></span></li>
+          <li><app-icon name="plus" [size]="13" style="color:var(--kf-7c3aed)" /><span>Task created from template<small>{{ t.source }} · {{ hhmm(t.start - 30) }}</small></span></li>
         </ul>
       </aside>
     }
   `,
   styles: `
     .hd { display: grid; grid-template-columns: 42px 1fr auto; gap: 12px; align-items: center; } .hd h3 { font-size: 17px; } .hd small { color: var(--muted); font-size: 12px; }
-    .ci { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; color: #fff; }
+    .ci { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
     dl { display: grid; grid-template-columns: 100px 1fr; gap: 8px; font-size: 12.5px; margin: 0 0 6px; align-items: center; } dt { color: var(--muted); } dd { margin: 0; } dd .select { width: 100%; }
     h4 { margin: 16px 0 8px; font-size: 13px; display: flex; justify-content: space-between; } h4 small { color: var(--muted); font-weight: 500; }
-    .bar { height: 6px; border-radius: 4px; background: #eef0f5; overflow: hidden; margin-bottom: 8px; } .bar i { display: block; height: 100%; background: linear-gradient(90deg, #7c3aed, #3b82f6); transition: width 0.3s; }
-    .cl { list-style: none; margin: 0; padding: 0; } .cl li { display: flex; align-items: center; gap: 9px; padding: 6px 0; font-size: 12.5px; border-bottom: 1px dashed #eef0f5; }
-    .cl button { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid #c9cdd8; background: #fff; display: grid; place-items: center; cursor: pointer; color: transparent; padding: 0; }
-    .cl li.done button { background: #22c55e; border-color: #22c55e; color: #fff; } .cl li.done { color: var(--muted); text-decoration: line-through; } .ph { color: var(--primary); margin-left: auto; }
+    .bar { height: 6px; border-radius: 4px; background: var(--kb-eef0f5); overflow: hidden; margin-bottom: 8px; } .bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--kb-7c3aed), var(--kb-3b82f6)); transition: width 0.3s; }
+    .cl { list-style: none; margin: 0; padding: 0; } .cl li { display: flex; align-items: center; gap: 9px; padding: 6px 0; font-size: 12.5px; border-bottom: 1px dashed var(--kl-eef0f5); }
+    .cl button { width: 20px; height: 20px; border-radius: 5px; border: 1.5px solid var(--kl-c9cdd8); background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; color: transparent; padding: 0; }
+    .cl li.done button { background: var(--kb-22c55e); border-color: var(--kl-22c55e); color: var(--kf-ffffff); } .cl li.done { color: var(--muted); text-decoration: line-through; } .ph { color: var(--primary); margin-left: auto; }
     .ev { display: flex; gap: 8px; flex-wrap: wrap; }
-    .pic { width: 70px; height: 56px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #fff; border: 0; } .pic small { font-size: 9.5px; opacity: 0.9; }
-    .pic.add { background: #fff; border: 1.5px dashed #c4b5fd; color: var(--primary); cursor: pointer; }
+    .pic { width: 70px; height: 56px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: var(--kf-ffffff); border: 0; } .pic small { font-size: 9.5px; opacity: 0.9; }
+    .pic.add { background: var(--kb-ffffff); border: 1.5px dashed var(--kl-c4b5fd); color: var(--primary); cursor: pointer; }
     .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
     .act { list-style: none; margin: 0; padding: 0; } .act li { display: flex; gap: 8px; padding: 6px 0; font-size: 12px; } .act span { display: flex; flex-direction: column; } .act small { color: var(--muted); font-size: 11px; }
   `,
@@ -93,7 +93,7 @@ export class TaskDrawer {
   protected readonly prioCls = prioCls;
   protected readonly isOpen = isOpen;
   protected readonly workers = WORKERS;
-  protected readonly pal = ['linear-gradient(135deg,#64748b,#94a3b8)', 'linear-gradient(135deg,#0d9488,#5eead4)', 'linear-gradient(135deg,#7c3aed,#c4b5fd)', 'linear-gradient(135deg,#b45309,#fcd34d)'];
+  protected readonly pal = ['linear-gradient(135deg,var(--ka-64748b),var(--ka-94a3b8))', 'linear-gradient(135deg,var(--ka-0d9488),var(--ka-5eead4))', 'linear-gradient(135deg,var(--ka-7c3aed),var(--ka-c4b5fd))', 'linear-gradient(135deg,var(--ka-b45309),var(--ka-fcd34d))'];
   protected readonly task = computed(() => this.store.tasks().find((t) => t.id === this.taskId()) ?? null);
   protected readonly steps = computed(() => this.store.templates().find((t) => t.id === this.task()?.templateId)?.steps ?? []);
   protected readonly overdue = computed(() => {
@@ -117,7 +117,7 @@ export class TaskDrawer {
   protected addPhoto() {
     const t = this.task()!;
     this.store.patchTask(t.id, { photos: t.photos + 1 });
-    this.store.log(`${t.title} · photo evidence uploaded`, this.who(), 'tasks-camera', '#7c3aed');
+    this.store.log(`${t.title} · photo evidence uploaded`, this.who(), 'tasks-camera', 'var(--ka-7c3aed)');
   }
   protected reassign(id: string) {
     this.store.assign(this.taskId(), id);

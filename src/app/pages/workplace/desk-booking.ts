@@ -51,11 +51,11 @@ const PLANTS: [number, number][] = [[196, 26], [350, 26], [372, 24], [186, 132],
     </app-page-head>
 
     <section class="kpis">
-      <app-wkpi label="Total Desks" [value]="counts().total" icon="w-desk" color="#2563eb" sub="Across 3 sites" [clickable]="true" (click)="clearFilters()" />
-      <app-wkpi label="Available Now" [value]="counts().available" icon="w-check-circle" color="#16c26b" [strong]="pct(counts().available)" sub="availability" [clickable]="true" (click)="onlyStatus('available')" />
-      <app-wkpi label="Occupied" [value]="counts().occupied" icon="users" color="#7c3aed" [strong]="pct(counts().occupied)" strongColor="#7c3aed" [clickable]="true" (click)="onlyStatus('occupied')" />
-      <app-wkpi label="My Bookings Today" [value]="store.myToday().length" icon="w-calendar" color="#f5a524" [sub]="todaySub()" [clickable]="true" (click)="drawer.set(true)" />
-      <app-wkpi label="Utilization Rate" value="76%" icon="w-bars" color="#ef3b4f" strong="8%" arrow="up" sub="vs. last week" [clickable]="true" (click)="go('space-utilization')" />
+      <app-wkpi label="Total Desks" [value]="counts().total" icon="w-desk" color="var(--ka-2563eb)" sub="Across 3 sites" [clickable]="true" (click)="clearFilters()" />
+      <app-wkpi label="Available Now" [value]="counts().available" icon="w-check-circle" color="var(--ka-16c26b)" [strong]="pct(counts().available)" sub="availability" [clickable]="true" (click)="onlyStatus('available')" />
+      <app-wkpi label="Occupied" [value]="counts().occupied" icon="users" color="var(--ka-7c3aed)" [strong]="pct(counts().occupied)" strongColor="var(--ka-7c3aed)" [clickable]="true" (click)="onlyStatus('occupied')" />
+      <app-wkpi label="My Bookings Today" [value]="store.myToday().length" icon="w-calendar" color="var(--ka-f5a524)" [sub]="todaySub()" [clickable]="true" (click)="drawer.set(true)" />
+      <app-wkpi label="Utilization Rate" value="76%" icon="w-bars" color="var(--ka-ef3b4f)" strong="8%" arrow="up" sub="vs. last week" [clickable]="true" (click)="go('space-utilization')" />
     </section>
 
     <section class="layout">
@@ -80,79 +80,79 @@ const PLANTS: [number, number][] = [[196, 26], [350, 26], [372, 24], [186, 132],
               <div class="stage" [style.transform]="'translate(' + pan()[0] + 'px,' + pan()[1] + 'px) scale(' + zoom() + ')'">
                 <svg viewBox="0 0 600 372" class="plan">
                   <defs>
-                    <pattern id="wp-tile" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="#e2e4ea" stroke-width="0.5" /></pattern>
-                    <pattern id="wp-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V5" stroke="#a1a1aa" stroke-width="0.8" /></pattern>
+                    <pattern id="wp-tile" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="var(--kl-e2e4ea)" stroke-width="0.5" /></pattern>
+                    <pattern id="wp-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V5" stroke="var(--kl-a1a1aa)" stroke-width="0.8" /></pattern>
                   </defs>
-                  <rect x="4" y="4" width="592" height="364" fill="#f1f2f5" />
+                  <rect x="4" y="4" width="592" height="364" fill="var(--ka-f1f2f5)" />
                   <rect x="4" y="4" width="592" height="364" fill="url(#wp-tile)" />
                   @if (floorHasDesks()) {
                     @for (z of visibleZones(); track z.key) {
                       <rect [attr.x]="z.x" [attr.y]="z.y" [attr.width]="z.w" [attr.height]="z.h" [attr.fill]="heat() ? heatFill(z.key) : z.fill" [attr.stroke]="z.stroke" stroke-width="1" />
                     }
                     <!-- interior walls -->
-                    <path d="M182 10V150M362 10V160M10 150H150M10 206H300V362M300 248H590M184 114H360" stroke="#52525b" stroke-width="2.2" fill="none" />
+                    <path d="M182 10V150M362 10V160M10 150H150M10 206H300V362M300 248H590M184 114H360" stroke="var(--kl-52525b)" stroke-width="2.2" fill="none" />
                     <!-- core: lifts, stairs, restrooms -->
-                    <rect x="214" y="132" width="40" height="34" fill="#fff" stroke="#52525b" stroke-width="1.4" /><path d="M214 132l40 34M254 132l-40 34" stroke="#71717a" stroke-width="1" />
-                    <rect x="258" y="132" width="40" height="34" fill="#fff" stroke="#52525b" stroke-width="1.4" /><path d="M258 132l40 34M298 132l-40 34" stroke="#71717a" stroke-width="1" />
-                    <rect x="304" y="132" width="40" height="70" fill="url(#wp-hatch)" stroke="#52525b" stroke-width="1.4" />
-                    <rect x="214" y="172" width="84" height="30" fill="#fafafa" stroke="#52525b" stroke-width="1.2" /><path d="M256 172v30" stroke="#52525b" stroke-width="1" />
+                    <rect x="214" y="132" width="40" height="34" fill="var(--ka-ffffff)" stroke="var(--kl-52525b)" stroke-width="1.4" /><path d="M214 132l40 34M254 132l-40 34" stroke="var(--kl-71717a)" stroke-width="1" />
+                    <rect x="258" y="132" width="40" height="34" fill="var(--ka-ffffff)" stroke="var(--kl-52525b)" stroke-width="1.4" /><path d="M258 132l40 34M298 132l-40 34" stroke="var(--kl-71717a)" stroke-width="1" />
+                    <rect x="304" y="132" width="40" height="70" fill="url(#wp-hatch)" stroke="var(--kl-52525b)" stroke-width="1.4" />
+                    <rect x="214" y="172" width="84" height="30" fill="var(--ka-fafafa)" stroke="var(--kl-52525b)" stroke-width="1.2" /><path d="M256 172v30" stroke="var(--kl-52525b)" stroke-width="1" />
                     <text x="235" y="191" class="core-t">WC</text><text x="277" y="191" class="core-t">WC</text>
-                    <rect x="160" y="160" width="20" height="44" fill="#fff" stroke="#52525b" stroke-width="1.2" /><path d="M160 182h20" stroke="#71717a" />
-                    <rect x="572" y="162" width="18" height="40" fill="#fff" stroke="#52525b" stroke-width="1.2" />
+                    <rect x="160" y="160" width="20" height="44" fill="var(--ka-ffffff)" stroke="var(--kl-52525b)" stroke-width="1.2" /><path d="M160 182h20" stroke="var(--kl-71717a)" />
+                    <rect x="572" y="162" width="18" height="40" fill="var(--ka-ffffff)" stroke="var(--kl-52525b)" stroke-width="1.2" />
                     @if (zoneLabels()) {
                       @for (z of visibleZones(); track z.key) {
                         <g [attr.transform]="'translate(' + (z.x + z.w / 2) + ',' + (z.y + 18) + ')'" class="zl" (click)="zoneClick(z.key)">
-                          <rect [attr.x]="-z.name.length * 3.1 - 9" y="-9" [attr.width]="z.name.length * 6.2 + 18" height="17" rx="4" fill="#fff" stroke="#d4d4d8" stroke-width="0.6" />
+                          <rect [attr.x]="-z.name.length * 3.1 - 9" y="-9" [attr.width]="z.name.length * 6.2 + 18" height="17" rx="4" fill="var(--ka-ffffff)" stroke="var(--kl-d4d4d8)" stroke-width="0.6" />
                           <text y="3.5" text-anchor="middle">{{ z.name }}{{ heat() ? ' · ' + zoneUtil(z.key) + '%' : '' }}</text>
                         </g>
                       }
                     }
                     @for (p of plants; track $index) {
-                      <g [attr.transform]="'translate(' + p[0] + ',' + p[1] + ')'"><circle r="7" fill="#4ade80" /><circle r="4.2" cx="-2" cy="-2" fill="#16a34a" opacity="0.6" /><circle r="2.4" cx="2.5" cy="2" fill="#15803d" opacity="0.7" /></g>
+                      <g [attr.transform]="'translate(' + p[0] + ',' + p[1] + ')'"><circle r="7" fill="var(--ka-4ade80)" /><circle r="4.2" cx="-2" cy="-2" fill="var(--ka-16a34a)" opacity="0.6" /><circle r="2.4" cx="2.5" cy="2" fill="var(--ka-15803d)" opacity="0.7" /></g>
                     }
                     @for (d of floorDesks(); track d.id) {
                       <g class="desk" [attr.transform]="'translate(' + d.x + ',' + d.y + ')'" [attr.opacity]="dim(d) ? 0.22 : 1" (click)="pick(d, $event)">
                         @switch (d.shape) {
                           @case ('cubicle') {
-                            <rect x="-26" y="-24" width="52" height="48" fill="#fff" stroke="#71717a" stroke-width="1.2" />
-                            <path d="M-26 -10H8V24" fill="none" stroke="#a1a1aa" stroke-width="1" />
+                            <rect x="-26" y="-24" width="52" height="48" fill="var(--ka-ffffff)" stroke="var(--kl-71717a)" stroke-width="1.2" />
+                            <path d="M-26 -10H8V24" fill="none" stroke="var(--kl-a1a1aa)" stroke-width="1" />
                           }
                           @case ('table') {
-                            <rect x="-9" y="-19" width="7" height="5" rx="1.5" fill="#d4d4d8" /><rect x="3" y="-19" width="7" height="5" rx="1.5" fill="#d4d4d8" />
-                            <rect x="-9" y="14" width="7" height="5" rx="1.5" fill="#d4d4d8" /><rect x="3" y="14" width="7" height="5" rx="1.5" fill="#d4d4d8" />
-                            <rect x="-17" y="-13" width="34" height="26" rx="2" fill="#fff" stroke="#71717a" stroke-width="1.2" />
+                            <rect x="-9" y="-19" width="7" height="5" rx="1.5" fill="var(--ka-d4d4d8)" /><rect x="3" y="-19" width="7" height="5" rx="1.5" fill="var(--ka-d4d4d8)" />
+                            <rect x="-9" y="14" width="7" height="5" rx="1.5" fill="var(--ka-d4d4d8)" /><rect x="3" y="14" width="7" height="5" rx="1.5" fill="var(--ka-d4d4d8)" />
+                            <rect x="-17" y="-13" width="34" height="26" rx="2" fill="var(--ka-ffffff)" stroke="var(--kl-71717a)" stroke-width="1.2" />
                           }
                           @case ('round') {
-                            @for (a of [0, 60, 120, 180, 240, 300]; track a) {<rect x="-3.5" y="-25" width="7" height="6" rx="1.5" fill="#a1a1aa" [attr.transform]="'rotate(' + a + ')'" />}
-                            <circle r="17" fill="#8b8b93" stroke="#52525b" stroke-width="1" />
+                            @for (a of [0, 60, 120, 180, 240, 300]; track a) {<rect x="-3.5" y="-25" width="7" height="6" rx="1.5" fill="var(--ka-a1a1aa)" [attr.transform]="'rotate(' + a + ')'" />}
+                            <circle r="17" fill="var(--ka-8b8b93)" stroke="var(--kl-52525b)" stroke-width="1" />
                           }
                           @default {
-                            <rect x="-15" y="-15" width="30" height="30" rx="2" fill="#fff" stroke="#71717a" stroke-width="1.1" />
-                            <rect x="-9" y="-14" width="18" height="3" rx="1" fill="#a1a1aa" />
+                            <rect x="-15" y="-15" width="30" height="30" rx="2" fill="var(--ka-ffffff)" stroke="var(--kl-71717a)" stroke-width="1.1" />
+                            <rect x="-9" y="-14" width="18" height="3" rx="1" fill="var(--ka-a1a1aa)" />
                           }
                         }
                         @if (hl().has(d.id)) {<circle r="17" class="pulse" />}
-                        @if (sel()?.id === d.id) {<rect x="-13" y="-13" width="26" height="26" rx="6" fill="none" stroke="#7c3aed" stroke-width="2.4" />}
+                        @if (sel()?.id === d.id) {<rect x="-13" y="-13" width="26" height="26" rx="6" fill="none" stroke="var(--kl-7c3aed)" stroke-width="2.4" />}
                         @if (d.shape === 'round') {
-                          <circle r="9" [attr.fill]="color[d.status]" stroke="#fff" stroke-width="1.4" />
+                          <circle r="9" [attr.fill]="color[d.status]" stroke="var(--kl-ffffff)" stroke-width="1.4" />
                         } @else {
                           <rect x="-10" y="-10" width="20" height="20" rx="4" [attr.fill]="color[d.status]" />
-                          <circle cy="-3.2" r="3" fill="#fff" /><path d="M-5.5 6.5a5.5 4.6 0 0 1 11 0z" fill="#fff" />
-                          @if (d.status === 'maintenance') {<path d="M3 -8l5 0" stroke="#fff" stroke-width="1.6" />}
+                          <circle cy="-3.2" r="3" fill="var(--ka-ffffff)" /><path d="M-5.5 6.5a5.5 4.6 0 0 1 11 0z" fill="var(--ka-ffffff)" />
+                          @if (d.status === 'maintenance') {<path d="M3 -8l5 0" stroke="var(--kl-ffffff)" stroke-width="1.6" />}
                         }
-                        @if (d.mine) {<g transform="translate(10,-10)"><circle r="5.5" fill="#7c3aed" stroke="#fff" stroke-width="1.2" /><path d="M-2.4 0l1.6 1.6 3-3" stroke="#fff" stroke-width="1.3" fill="none" /></g>}
+                        @if (d.mine) {<g transform="translate(10,-10)"><circle r="5.5" fill="var(--ka-7c3aed)" stroke="var(--kl-ffffff)" stroke-width="1.2" /><path d="M-2.4 0l1.6 1.6 3-3" stroke="var(--kl-ffffff)" stroke-width="1.3" fill="none" /></g>}
                         @if (ids()) {<text y="21" text-anchor="middle" class="did">{{ d.name.replace('Desk ', '').replace('Collab Table ', '') }}</text>}
                         <title>{{ d.name }} · {{ label[d.status] }}</title>
                       </g>
                     }
                   } @else {
                     <g class="nod-plan">
-                      <rect x="80" y="70" width="440" height="232" rx="8" fill="#fff" stroke="#a1a1aa" stroke-dasharray="6 5" />
+                      <rect x="80" y="70" width="440" height="232" rx="8" fill="var(--ka-ffffff)" stroke="var(--kl-a1a1aa)" stroke-dasharray="6 5" />
                       <text x="300" y="176" text-anchor="middle" class="nd1">{{ floor() === 'Roof' ? 'Roof Terrace & Plant Room' : 'Reception, Lobby & Café' }}</text>
                       <text x="300" y="198" text-anchor="middle" class="nd2">No bookable desks on this floor · choose Floor 1–8</text>
                     </g>
                   }
-                  <rect x="4" y="4" width="592" height="364" fill="none" stroke="#3f3f46" stroke-width="5" />
+                  <rect x="4" y="4" width="592" height="364" fill="none" stroke="var(--kl-3f3f46)" stroke-width="5" />
                 </svg>
 
                 @if (sel(); as d) {
@@ -160,7 +160,7 @@ const PLANTS: [number, number][] = [[196, 26], [350, 26], [372, 24], [186, 132],
                     <button class="pop-x" aria-label="Close" (click)="selId.set(null)"><app-icon name="w-x" [size]="12" [stroke]="2.4" /></button>
                     <div class="pop-h">
                       <span class="pop-ic" [style.background]="color[d.status]"><app-icon [name]="typeIcon[d.type]" [size]="18" /></span>
-                      <div><b>{{ d.name }}</b><span class="pst" [style.color]="d.status === 'reserved' ? '#6b7280' : color[d.status]"><i [style.background]="color[d.status]"></i>{{ d.mine ? 'Booked by you' : label[d.status] }}</span></div>
+                      <div><b>{{ d.name }}</b><span class="pst" [style.color]="d.status === 'reserved' ? 'var(--ka-6b7280)' : color[d.status]"><i [style.background]="color[d.status]"></i>{{ d.mine ? 'Booked by you' : label[d.status] }}</span></div>
                     </div>
                     <p>{{ d.floor }} - {{ zoneName(d.zone) }}<br />{{ d.type }}<br />With {{ amenText(d) }}</p>
                     @switch (d.status) {
@@ -208,16 +208,16 @@ const PLANTS: [number, number][] = [[196, 26], [350, 26], [372, 24], [186, 132],
         <div class="row2">
           <div class="card">
             <div class="ch"><h3>Workspace Usage</h3><select class="select sm" [value]="usageRange()" (change)="usageRange.set($any($event.target).value)"><option>Last 7 Days</option><option>Previous 7 Days</option></select></div>
-            <div class="ulg"><span><i style="background:#7c3aed"></i>Occupancy Rate</span><span><i style="background:#3b82f6"></i>Available Desks</span></div>
+            <div class="ulg"><span><i style="background:var(--kb-7c3aed)"></i>Occupancy Rate</span><span><i style="background:var(--kb-3b82f6)"></i>Available Desks</span></div>
             <svg viewBox="0 0 340 150" class="bars" (mouseleave)="uh.set(null)">
               @for (t of [0, 25, 50, 75, 100]; track t) {
                 <line x1="34" x2="336" [attr.y1]="128 - t * 1.16" [attr.y2]="128 - t * 1.16" class="gl" />
                 <text x="26" [attr.y]="131 - t * 1.16" text-anchor="end" class="ax">{{ t }}%</text>
               }
               @for (l of usage().labels; track l; let i = $index) {
-                <rect [attr.x]="34 + i * 43" y="6" width="43" height="122" [attr.fill]="uh() === i ? '#f5f3ff' : 'transparent'" (mouseenter)="uh.set(i)" />
-                <rect [attr.x]="44 + i * 43" [attr.y]="128 - usage().occ[i] * 1.16" width="11" [attr.height]="usage().occ[i] * 1.16" fill="#7c3aed" rx="1" pointer-events="none" />
-                <rect [attr.x]="56 + i * 43" [attr.y]="128 - usage().avail[i] * 1.16" width="11" [attr.height]="usage().avail[i] * 1.16" fill="#3b82f6" rx="1" pointer-events="none" />
+                <rect [attr.x]="34 + i * 43" y="6" width="43" height="122" [attr.fill]="uh() === i ? 'var(--ka-f5f3ff)' : 'transparent'" (mouseenter)="uh.set(i)" />
+                <rect [attr.x]="44 + i * 43" [attr.y]="128 - usage().occ[i] * 1.16" width="11" [attr.height]="usage().occ[i] * 1.16" fill="var(--ka-7c3aed)" rx="1" pointer-events="none" />
+                <rect [attr.x]="56 + i * 43" [attr.y]="128 - usage().avail[i] * 1.16" width="11" [attr.height]="usage().avail[i] * 1.16" fill="var(--ka-3b82f6)" rx="1" pointer-events="none" />
                 <text [attr.x]="55.5 + i * 43" y="145" text-anchor="middle" class="ax">{{ l }}</text>
               }
             </svg>
@@ -373,8 +373,8 @@ const PLANTS: [number, number][] = [[196, 26], [350, 26], [372, 24], [186, 132],
   styles: `
     :host { display: block; }
     .hb { padding: 10px 18px; font-size: 13px; font-weight: 500; border-radius: 6px; } .btn-primary.hb { padding: 10px 26px; }
-    .hb.sq { padding: 10px 12px; } .hb.on { border-color: #c4b5fd; color: var(--primary); }
-    .fc { font-style: normal; background: var(--primary); color: #fff; border-radius: 10px; font-size: 10.5px; padding: 0 6px; }
+    .hb.sq { padding: 10px 12px; } .hb.on { border-color: var(--kl-c4b5fd); color: var(--primary); }
+    .fc { font-style: normal; background: var(--primary); color: var(--kf-ffffff); border-radius: 10px; font-size: 10.5px; padding: 0 6px; }
     .fpanel { width: 230px; padding: 10px 12px; } .fpanel h4 { margin: 6px 0 4px; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
     .ck { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px 2px; cursor: pointer; } .ck i { width: 10px; height: 10px; border-radius: 50%; }
     .fp-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
@@ -389,87 +389,87 @@ const PLANTS: [number, number][] = [[196, 26], [350, 26], [372, 24], [186, 132],
     .map-card { padding: 0; overflow: visible; } .map-card:fullscreen { overflow: auto; padding: 16px; }
     .mc-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 10px 10px 10px; flex-wrap: wrap; }
     .mc-tools { display: flex; gap: 10px; align-items: center; } .mc-tools .select { min-width: 140px; padding: 7px 32px 7px 12px; } .mc-tools .select.sm { min-width: 100px; }
-    .ib { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--border); background: #fff; border-radius: 6px; cursor: pointer; color: #27272a; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+    .ib { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; cursor: pointer; color: var(--kf-27272a); box-shadow: 0 1px 2px rgba(0,0,0,.04); }
     .ib:hover, .ib.on { background: var(--primary-soft); color: var(--primary); }
     .mc-body { display: grid; grid-template-columns: 84px minmax(0, 1fr) 44px; gap: 6px 10px; padding: 0 6px 0 4px; align-items: start; }
-    .floors { display: flex; flex-direction: column; background: #f7f7fa; border-radius: 6px; padding: 4px 0; }
-    .floors button { position: relative; text-align: left; border: 0; background: none; padding: 9px 12px; font-size: 12px; color: #3f3f46; cursor: pointer; border-radius: 4px; }
-    .floors button:hover { background: #efeff5; } .floors button.on { background: #ede7fe; color: var(--primary); font-weight: 600; }
-    .floors button.nod { color: #52525b; }
-    .floors em { position: absolute; right: 4px; top: 8px; font-style: normal; font-size: 9.5px; background: var(--primary); color: #fff; border-radius: 8px; padding: 0 5px; }
+    .floors { display: flex; flex-direction: column; background: var(--kb-f7f7fa); border-radius: 6px; padding: 4px 0; }
+    .floors button { position: relative; text-align: left; border: 0; background: none; padding: 9px 12px; font-size: 12px; color: var(--kf-3f3f46); cursor: pointer; border-radius: 4px; }
+    .floors button:hover { background: var(--kb-efeff5); } .floors button.on { background: var(--kb-ede7fe); color: var(--primary); font-weight: 600; }
+    .floors button.nod { color: var(--kf-52525b); }
+    .floors em { position: absolute; right: 4px; top: 8px; font-style: normal; font-size: 9.5px; background: var(--primary); color: var(--kf-ffffff); border-radius: 8px; padding: 0 5px; }
     .mv { position: relative; overflow: hidden; border-radius: 4px; user-select: none; touch-action: none; }
     .mv.grab { cursor: grab; }
     .stage { position: relative; transform-origin: 0 0; transition: transform .15s ease; }
     .plan { display: block; width: 100%; height: auto; }
-    .zl { cursor: pointer; } .zl text { font-size: 9.5px; font-weight: 600; fill: #18181b; }
-    .core-t { font-size: 7px; fill: #71717a; text-anchor: middle; }
+    .zl { cursor: pointer; } .zl text { font-size: 9.5px; font-weight: 600; fill: var(--ka-18181b); }
+    .core-t { font-size: 7px; fill: var(--ka-71717a); text-anchor: middle; }
     .desk { cursor: pointer; transition: opacity .15s; } .desk:hover > rect:last-of-type { filter: brightness(1.08); }
-    .did { font-size: 6.5px; fill: #3f3f46; font-weight: 600; }
-    .pulse { fill: none; stroke: #7c3aed; stroke-width: 2.4; animation: wp-pulse 1.3s ease-in-out infinite; }
+    .did { font-size: 6.5px; fill: var(--ka-3f3f46); font-weight: 600; }
+    .pulse { fill: none; stroke: var(--kl-7c3aed); stroke-width: 2.4; animation: wp-pulse 1.3s ease-in-out infinite; }
     @keyframes wp-pulse { 50% { stroke-opacity: .25; stroke-width: 5; } }
-    .nd1 { font-size: 15px; font-weight: 700; fill: #27272a; } .nd2 { font-size: 11px; fill: #71717a; }
-    .zchip { position: absolute; left: 8px; bottom: 8px; background: rgba(24,24,27,.75); color: #fff; font-size: 11px; padding: 2px 7px; border-radius: 10px; }
-    .pop { position: absolute; width: 196px; background: #fff; border-radius: 8px; box-shadow: 0 10px 28px rgba(20,20,60,.22); padding: 10px 12px 12px; transform-origin: 0 0; z-index: 3; }
-    .pop-x { position: absolute; right: 6px; top: 6px; border: 0; background: none; color: #a1a1aa; cursor: pointer; padding: 2px; }
+    .nd1 { font-size: 15px; font-weight: 700; fill: var(--ka-27272a); } .nd2 { font-size: 11px; fill: var(--ka-71717a); }
+    .zchip { position: absolute; left: 8px; bottom: 8px; background: rgba(24,24,27,.75); color: var(--kf-ffffff); font-size: 11px; padding: 2px 7px; border-radius: 10px; }
+    .pop { position: absolute; width: 196px; background: var(--kb-ffffff); border-radius: 8px; box-shadow: 0 10px 28px rgba(20,20,60,.22); padding: 10px 12px 12px; transform-origin: 0 0; z-index: 3; }
+    .pop-x { position: absolute; right: 6px; top: 6px; border: 0; background: none; color: var(--kf-a1a1aa); cursor: pointer; padding: 2px; }
     .pop-h { display: flex; gap: 10px; align-items: center; } .pop-h div { display: flex; flex-direction: column; } .pop-h b { font-size: 12.5px; }
-    .pop-ic { width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .pop-ic { width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
     .pst { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; } .pst i { width: 9px; height: 9px; border-radius: 50%; }
-    .pop p { margin: 9px 0 8px; font-size: 11px; line-height: 1.45; color: #52525b; }
+    .pop p { margin: 9px 0 8px; font-size: 11px; line-height: 1.45; color: var(--kf-52525b); }
     .pop-b { width: 100%; justify-content: center; padding: 7px; border-radius: 5px; font-weight: 500; } .pbtns { display: flex; gap: 6px; }
     .pnote { display: block; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
     .danger { color: var(--red); }
     .tools { display: flex; flex-direction: column; gap: 10px; padding-top: 0; } .tools .ib { width: 40px; height: 40px; } .tools .mt { margin-top: 8px; }
     .layers { right: 46px; top: 0; min-width: 170px; padding: 8px 10px; }
-    .legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 2px; padding: 12px 8px 12px; margin-top: 8px; border-top: 1px solid #f0f0f5; }
-    .legend button { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; font-size: 11px; color: #27272a; cursor: pointer; padding: 3px 5px; white-space: nowrap; border-radius: 6px; }
-    .legend button:hover { background: #f5f3ff; } .legend button.off { opacity: .35; } .legend button.on2 { background: var(--primary-soft); color: var(--primary); }
-    .lg-c { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; color: #fff; }
+    .legend { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 2px; padding: 12px 8px 12px; margin-top: 8px; border-top: 1px solid var(--kl-f0f0f5); }
+    .legend button { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; font-size: 11px; color: var(--kf-27272a); cursor: pointer; padding: 3px 5px; white-space: nowrap; border-radius: 6px; }
+    .legend button:hover { background: var(--kb-f5f3ff); } .legend button.off { opacity: .35; } .legend button.on2 { background: var(--primary-soft); color: var(--primary); }
+    .lg-c { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); }
     .sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; }
     .row2 { display: grid; grid-template-columns: 1fr 1.04fr; gap: 12px; } .row2 .card { position: relative; }
     .ulg { display: flex; justify-content: flex-end; gap: 18px; font-size: 11.5px; margin: -2px 6px 4px; } .ulg span { display: inline-flex; align-items: center; gap: 6px; } .ulg i { width: 11px; height: 11px; border-radius: 50%; }
-    .bars { width: 100%; display: block; } .gl { stroke: #eceef3; stroke-width: .8; } .ax { font-size: 8.5px; fill: #52525b; }
-    .utip { position: absolute; right: 14px; top: 46px; font-size: 11px; background: #1e1b3a; color: #fff; padding: 4px 8px; border-radius: 6px; }
+    .bars { width: 100%; display: block; } .gl { stroke: var(--kl-eceef3); stroke-width: .8; } .ax { font-size: 8.5px; fill: var(--ka-52525b); }
+    .utip { position: absolute; right: 14px; top: 46px; font-size: 11px; background: var(--kb-1e1b3a); color: var(--kf-ffffff); padding: 4px 8px; border-radius: 6px; }
     .ins { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 12px; padding: 4px 0 2px; }
     .dn { position: relative; width: 150px; } .dn svg { display: block; width: 150px; height: 150px; } .dn circle { transition: stroke-width .15s; cursor: pointer; }
-    .dn-mid { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; } .dn-mid b { font-size: 21px; } .dn-mid span { font-size: 11px; color: #3f3f46; text-align: center; max-width: 80px; }
+    .dn-mid { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; } .dn-mid b { font-size: 21px; } .dn-mid span { font-size: 11px; color: var(--kf-3f3f46); text-align: center; max-width: 80px; }
     .dl { list-style: none; margin: 0; padding: 0; } .dl li { display: grid; grid-template-columns: 12px 1fr auto 42px; gap: 8px; align-items: center; padding: 6px 0; font-size: 12px; cursor: default; }
-    .dl li.dim { opacity: .4; } .dl i { width: 11px; height: 11px; border-radius: 50%; } .dl b { text-align: right; } .dl em { font-style: normal; color: #52525b; text-align: right; }
+    .dl li.dim { opacity: .4; } .dl i { width: 11px; height: 11px; border-radius: 50%; } .dl b { text-align: right; } .dl em { font-style: normal; color: var(--kf-52525b); text-align: right; }
     /* booking form */
     .book h3 { margin-bottom: 12px; }
     .btabs { display: grid; grid-template-columns: .55fr 1fr 1fr 1.25fr; gap: 6px; margin-bottom: 12px; }
-    .btabs button { border: 0; background: #f2f2f7; padding: 9px 6px; border-radius: 4px; font-size: 12px; color: #27272a; cursor: pointer; white-space: nowrap; }
-    .btabs button.on { background: var(--primary); color: #fff; } .btabs button:not(.on):hover { background: #ebe7fb; }
+    .btabs button { border: 0; background: var(--kb-f2f2f7); padding: 9px 6px; border-radius: 4px; font-size: 12px; color: var(--kf-27272a); cursor: pointer; white-space: nowrap; }
+    .btabs button.on { background: var(--primary); color: var(--kf-ffffff); } .btabs button:not(.on):hover { background: var(--kb-ebe7fb); }
     .bf { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
-    .bf label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #3f3f46; } .bf label i { color: var(--red); font-style: normal; margin-left: 1px; display: inline; }
+    .bf label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--kf-3f3f46); } .bf label i { color: var(--red); font-style: normal; margin-left: 1px; display: inline; }
     .bf label { display: block; } .bf label > .select, .bf label > .datef { display: flex; width: 100%; margin-top: 6px; }
     .bf .select { padding: 9px 30px 9px 12px; font-size: 12px; }
-    .datef { position: relative; align-items: center; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--border); border-radius: 7px; font-size: 12.5px; color: var(--text); cursor: pointer; background: #fff; }
+    .datef { position: relative; align-items: center; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--border); border-radius: 7px; font-size: 12.5px; color: var(--text); cursor: pointer; background: var(--kb-ffffff); }
     .datef input { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
     .bbtns { display: grid; grid-template-columns: 1.7fr 1fr; gap: 12px; margin-top: 18px; } .find { justify-content: center; padding: 11px; font-weight: 500; border-radius: 5px; } .clr { justify-content: center; font-weight: 500; }
-    .res { margin-top: 12px; padding: 10px; border-radius: 8px; background: #faf8ff; border: 1px solid #ece6fd; font-size: 12px; }
-    .res-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; } .res-chips button { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #ddd6fe; background: #fff; border-radius: 12px; padding: 3px 9px; font-size: 11px; cursor: pointer; } .res-chips i { width: 7px; height: 7px; border-radius: 50%; }
-    .rrow { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid #efeaff; } .rrow:first-of-type { margin-top: 6px; }
+    .res { margin-top: 12px; padding: 10px; border-radius: 8px; background: var(--kb-faf8ff); border: 1px solid var(--kl-ece6fd); font-size: 12px; }
+    .res-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; } .res-chips button { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--kl-ddd6fe); background: var(--kb-ffffff); border-radius: 12px; padding: 3px 9px; font-size: 11px; cursor: pointer; } .res-chips i { width: 7px; height: 7px; border-radius: 50%; }
+    .rrow { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid var(--kl-efeaff); } .rrow:first-of-type { margin-top: 6px; }
     .rrow div { display: flex; flex-direction: column; min-width: 0; } .rrow small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ric { width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: #fff; }
+    .ric { width: 30px; height: 30px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .sm { font-size: 12px; }
     /* upcoming */
     .up .ch { margin-bottom: 6px; }
     .ub { display: grid; grid-template-columns: 32px minmax(0, 1fr) 112px auto 22px; gap: 8px; align-items: center; padding: 8px 0; }
-    .ub-ic { width: 32px; height: 32px; border-radius: 6px; display: grid; place-items: center; color: #fff; }
-    .ub-n { display: flex; flex-direction: column; min-width: 0; } .ub-n b { font-size: 12px; font-weight: 600; } .ub-n small { font-size: 9.5px; color: #52525b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.2px; }
-    .ub-t { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px; color: #3f3f46; } .ub-t span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; } .ub-t app-icon { color: #6d28d9; }
+    .ub-ic { width: 32px; height: 32px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .ub-n { display: flex; flex-direction: column; min-width: 0; } .ub-n b { font-size: 12px; font-weight: 600; } .ub-n small { font-size: 9.5px; color: var(--kf-52525b); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -.2px; }
+    .ub-t { display: flex; flex-direction: column; gap: 3px; font-size: 10.5px; color: var(--kf-3f3f46); } .ub-t span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; } .ub-t app-icon { color: var(--kf-6d28d9); }
     .ub-s { border-radius: 4px; padding: 4px 10px; font-size: 11px; }
     .ub .dropdown { min-width: 170px; }
-    .ub.big { grid-template-columns: 34px minmax(0, 1fr) 130px auto auto; border-bottom: 1px solid #f0f1f6; }
+    .ub.big { grid-template-columns: 34px minmax(0, 1fr) 130px auto auto; border-bottom: 1px solid var(--kl-f0f1f6); }
     .dact { display: flex; gap: 4px; }
     .dtabs { display: flex; gap: 18px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-    .dtabs button { border: 0; background: none; padding: 8px 0; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; color: #4b4f6b; } .dtabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
-    .dtabs em { font-style: normal; font-size: 11px; background: #eef0f5; border-radius: 8px; padding: 0 6px; margin-left: 3px; }
+    .dtabs button { border: 0; background: none; padding: 8px 0; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; color: var(--kf-4b4f6b); } .dtabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
+    .dtabs em { font-style: normal; font-size: 11px; background: var(--kb-eef0f5); border-radius: 8px; padding: 0 6px; margin-left: 3px; }
     /* top zones */
     .tz .ch { margin-bottom: 8px; }
     .tzr { display: grid; grid-template-columns: 170px 1fr 44px; gap: 10px; align-items: center; width: 100%; border: 0; background: none; padding: 4px 0; cursor: pointer; font-size: 12px; text-align: left; color: var(--text); }
     .tzr:hover span { color: var(--primary); } .tzr b { font-weight: 500; text-align: right; }
-    .tzt { height: 12px; background: #f1f1f6; border-radius: 2px; overflow: hidden; } .tzt i { display: block; height: 100%; border-radius: 2px; }
+    .tzt { height: 12px; background: var(--kb-f1f1f6); border-radius: 2px; overflow: hidden; } .tzt i { display: block; height: 100%; border-radius: 2px; }
     @media (max-width: 1400px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 1250px) { .layout { grid-template-columns: 1fr; } }
     @media (max-width: 760px) { .row2, .bf { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr 1fr; } .mc-body { grid-template-columns: 1fr; } .floors { flex-direction: row; overflow-x: auto; } .tools { flex-direction: row; } }
@@ -566,7 +566,7 @@ export class DeskBooking {
   }
   protected heatFill(z: string) {
     const v = this.zoneUtil(z);
-    return v >= 75 ? '#fecaca' : v >= 55 ? '#fed7aa' : v >= 35 ? '#fef08a' : '#bbf7d0';
+    return v >= 75 ? 'var(--ka-fecaca)' : v >= 55 ? 'var(--ka-fed7aa)' : v >= 35 ? 'var(--ka-fef08a)' : 'var(--ka-bbf7d0)';
   }
 
   protected setSite(s: string) {

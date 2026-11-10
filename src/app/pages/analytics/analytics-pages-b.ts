@@ -28,11 +28,11 @@ const fmtWait = (m: number) => (m <= 0 ? '—' : `${Math.floor(m)}m ${String(Mat
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="People in Queue" [value]="live().waiting" icon="users" color="#7c3aed" sub="across open counters" />
-      <app-kpi label="Avg. Wait Time" [value]="w(live().avg)" icon="a-timer" color="#f59e0b" [sub]="live().avg > sla() ? 'above ' + sla() + ' min SLA' : 'within ' + sla() + ' min SLA'" [subColor]="live().avg > sla() ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Longest Wait" [value]="w(live().longest.wait)" icon="clock" color="#ef4444" [sub]="live().longest.name" />
-      <app-kpi label="Counters Open" [value]="live().open + ' / ' + s.counters().length" icon="door-open" color="#22c55e" sub="tap a counter to open/close" />
-      <app-kpi label="SLA Met Today" [value]="slaMet() + '%'" icon="shield-check" color="#3b82f6" change="3%" sub="vs. yesterday" />
+      <app-kpi label="People in Queue" [value]="live().waiting" icon="users" color="var(--ka-7c3aed)" sub="across open counters" />
+      <app-kpi label="Avg. Wait Time" [value]="w(live().avg)" icon="a-timer" color="var(--ka-f59e0b)" [sub]="live().avg > sla() ? 'above ' + sla() + ' min SLA' : 'within ' + sla() + ' min SLA'" [subColor]="live().avg > sla() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Longest Wait" [value]="w(live().longest.wait)" icon="clock" color="var(--ka-ef4444)" [sub]="live().longest.name" />
+      <app-kpi label="Counters Open" [value]="live().open + ' / ' + s.counters().length" icon="door-open" color="var(--ka-22c55e)" sub="tap a counter to open/close" />
+      <app-kpi label="SLA Met Today" [value]="slaMet() + '%'" icon="shield-check" color="var(--ka-3b82f6)" change="3%" sub="vs. yesterday" />
     </section>
 
     @if (alerts().length) {
@@ -51,8 +51,8 @@ const fmtWait = (m: number) => (m <= 0 ? '—' : `${Math.floor(m)}m ${String(Mat
           <div class="qh"><div class="col"><b>{{ c.name }}</b><small>{{ c.zone }}</small></div><button class="toggle" [class.on]="c.open" (click)="toggle(c)" [title]="c.open ? 'Close counter' : 'Open counter'"></button></div>
           @if (c.open) {
             <div class="qn"><b>{{ c.waiting }}</b><span>waiting</span></div>
-            <div class="people">@for (p of dots(c.waiting); track $index) {<i [style.background]="c.wait > sla() ? '#ef4444' : '#7c3aed'"></i>}</div>
-            <div class="qf"><span>Wait <b [style.color]="c.wait > sla() ? '#dc2626' : '#16a34a'">{{ w(c.wait) }}</b></span><span>{{ c.served }}/hr</span></div>
+            <div class="people">@for (p of dots(c.waiting); track $index) {<i [style.background]="c.wait > sla() ? 'var(--ka-ef4444)' : 'var(--ka-7c3aed)'"></i>}</div>
+            <div class="qf"><span>Wait <b [style.color]="c.wait > sla() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'">{{ w(c.wait) }}</b></span><span>{{ c.served }}/hr</span></div>
             <small class="muted">Staff: {{ c.staff }}</small>
           } @else {
             <div class="closed"><app-icon name="ban" [size]="20" /><span>Closed</span><button class="btn-ghost sm" (click)="toggle(c)">Open counter</button></div>
@@ -82,9 +82,9 @@ const fmtWait = (m: number) => (m <= 0 ? '—' : `${Math.floor(m)}m ${String(Mat
   `,
   styles: [A_CSS, `
     .alerts { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-    .al { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; background: #fef2f2; color: #991b1b; font-size: 12.5px; border: 1px solid #fecaca; } .al .sp { flex: 1; }
+    .al { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; background: var(--kb-fef2f2); color: var(--kf-991b1b); font-size: 12.5px; border: 1px solid var(--kl-fecaca); } .al .sp { flex: 1; }
     .counters { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
-    .qc { display: flex; flex-direction: column; gap: 8px; } .qc.off { background: #fafafc; } .qc.bad { border-color: #fca5a5; box-shadow: 0 0 0 2px #fee2e2; }
+    .qc { display: flex; flex-direction: column; gap: 8px; } .qc.off { background: var(--kb-fafafc); } .qc.bad { border-color: var(--kl-fca5a5); box-shadow: 0 0 0 2px var(--kb-fee2e2); }
     .qh { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; } .qh small { color: var(--muted); font-size: 11.5px; }
     .qn b { font-size: 26px; } .qn span { margin-left: 6px; color: var(--muted); font-size: 12px; }
     .people { display: flex; flex-wrap: wrap; gap: 3px; min-height: 18px; } .people i { width: 8px; height: 14px; border-radius: 4px 4px 2px 2px; }
@@ -128,14 +128,14 @@ export class QueueManagement {
     const base = [1.2, 1.6, 2.1, 2.6, 3.1, 3.8, 4.6, 5.2, 5.6, 6.1, 5.4, 4.8, 4.2, 3.6, 2.9, 2.2];
     const k = (this.live().open ? 8 / this.live().open : 1.5) * 0.98;
     return [
-      { name: 'Avg wait (min)', color: '#f59e0b', values: base.map((v) => +(v * k).toFixed(1)), area: true },
-      { name: 'SLA', color: '#ef4444', dashed: true, values: base.map(() => this.sla()) },
+      { name: 'Avg wait (min)', color: 'var(--ka-f59e0b)', values: base.map((v) => +(v * k).toFixed(1)), area: true },
+      { name: 'SLA', color: 'var(--ka-ef4444)', dashed: true, values: base.map(() => this.sla()) },
     ];
   });
   protected readonly byZone = computed(() => {
     const m = new Map<string, number>();
     this.live().list.filter((c) => c.open).forEach((c) => m.set(c.zone, (m.get(c.zone) ?? 0) + c.waiting));
-    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value], i) => ({ label, value, display: `${value}`, color: ['#ef4444', '#f97316', '#f59e0b', '#7c3aed', '#3b82f6', '#22c55e', '#14b8a6'][i] }));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value], i) => ({ label, value, display: `${value}`, color: ['var(--ka-ef4444)', 'var(--ka-f97316)', 'var(--ka-f59e0b)', 'var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-14b8a6)'][i] }));
   });
   protected dots(n: number) {
     return Array.from({ length: Math.min(n, 24) });
@@ -185,11 +185,11 @@ export class QueueManagement {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Footfall" [value]="n(s.total())" icon="users" color="#7c3aed" change="12%" sub="vs. last week" />
-      <app-kpi label="Engaged Visitors" [value]="n(funnel()[2].v)" icon="eye" color="#3b82f6" change="8%" sub="dwell > 10 min in a store" />
-      <app-kpi label="Conversion Rate" [value]="conv() + '%'" icon="a-target" color="#22c55e" change="1.6%" sub="vs. last week" />
-      <app-kpi label="Avg. Basket" value="AED 236" icon="a-bag" color="#f59e0b" change="4%" sub="vs. last week" />
-      <app-kpi label="Active Campaigns" [value]="activeCamps()" icon="megaphone" color="#ec4899" [sub]="n(totalReach()) + ' reached'" />
+      <app-kpi label="Total Footfall" [value]="n(s.total())" icon="users" color="var(--ka-7c3aed)" change="12%" sub="vs. last week" />
+      <app-kpi label="Engaged Visitors" [value]="n(funnel()[2].v)" icon="eye" color="var(--ka-3b82f6)" change="8%" sub="dwell > 10 min in a store" />
+      <app-kpi label="Conversion Rate" [value]="conv() + '%'" icon="a-target" color="var(--ka-22c55e)" change="1.6%" sub="vs. last week" />
+      <app-kpi label="Avg. Basket" value="AED 236" icon="a-bag" color="var(--ka-f59e0b)" change="4%" sub="vs. last week" />
+      <app-kpi label="Active Campaigns" [value]="activeCamps()" icon="megaphone" color="var(--ka-ec4899)" [sub]="n(totalReach()) + ' reached'" />
     </section>
 
     <section class="row c2 eq">
@@ -244,9 +244,9 @@ export class QueueManagement {
   styles: [A_CSS, `
     .funnel { display: flex; flex-direction: column; gap: 14px; padding-top: 6px; }
     .fr { display: grid; grid-template-columns: 120px 1fr 56px; gap: 10px; align-items: center; font-size: 12.5px; }
-    .ft { height: 30px; background: #f4f4f9; border-radius: 6px; overflow: hidden; } .ft i { font-style: normal; display: flex; align-items: center; height: 100%; border-radius: 6px; transition: width .5s; min-width: 60px; }
-    .ft b { color: #fff; font-size: 12px; padding-left: 10px; } .fp { text-align: right; font-weight: 600; }
-    .sc { width: 100%; display: block; } .sc .grid { stroke: #eceef4; } .sc .axis { font-size: 10px; fill: #6b7090; } .sl { font-size: 9.5px; fill: #12142b; font-weight: 600; } .pt { cursor: pointer; }
+    .ft { height: 30px; background: var(--kb-f4f4f9); border-radius: 6px; overflow: hidden; } .ft i { font-style: normal; display: flex; align-items: center; height: 100%; border-radius: 6px; transition: width .5s; min-width: 60px; }
+    .ft b { color: var(--kf-ffffff); font-size: 12px; padding-left: 10px; } .fp { text-align: right; font-weight: 600; }
+    .sc { width: 100%; display: block; } .sc .grid { stroke: var(--kl-eceef4); } .sc .axis { font-size: 10px; fill: var(--ka-6b7090); } .sl { font-size: 9.5px; fill: var(--ka-12142b); font-weight: 600; } .pt { cursor: pointer; }
   `],
 })
 export class Conversion {
@@ -258,17 +258,17 @@ export class Conversion {
   protected readonly funnel = computed(() => {
     const T = this.s.total();
     return [
-      { label: 'Footfall', v: T, c: '#7c3aed' },
-      { label: 'Store visits', v: Math.round(T * 0.68), c: '#8b5cf6' },
-      { label: 'Engaged (10m+)', v: Math.round(T * 0.33), c: '#3b82f6' },
-      { label: 'Purchases', v: Math.round(T * 0.185), c: '#22c55e' },
-      { label: 'Loyalty sign-ups', v: Math.round(T * 0.031), c: '#f59e0b' },
+      { label: 'Footfall', v: T, c: 'var(--ka-7c3aed)' },
+      { label: 'Store visits', v: Math.round(T * 0.68), c: 'var(--ka-8b5cf6)' },
+      { label: 'Engaged (10m+)', v: Math.round(T * 0.33), c: 'var(--ka-3b82f6)' },
+      { label: 'Purchases', v: Math.round(T * 0.185), c: 'var(--ka-22c55e)' },
+      { label: 'Loyalty sign-ups', v: Math.round(T * 0.031), c: 'var(--ka-f59e0b)' },
     ];
   });
   protected readonly conv = computed(() => ((this.funnel()[3].v / this.funnel()[0].v) * 100).toFixed(1));
   protected readonly zc = computed(() => {
     const z = this.s.zonesNow().filter((x) => x.conv);
-    return { labels: z.map((x) => x.name), series: [{ name: 'Conversion %', color: '#22c55e', values: z.map((x) => x.conv) }, { name: 'Target %', color: '#c4b5fd', values: z.map((x) => (x.type === 'Leisure' ? 55 : x.type === 'Dining' ? 45 : 25)) }] as Series[] };
+    return { labels: z.map((x) => x.name), series: [{ name: 'Conversion %', color: 'var(--ka-22c55e)', values: z.map((x) => x.conv) }, { name: 'Target %', color: 'var(--ka-c4b5fd)', values: z.map((x) => (x.type === 'Leisure' ? 55 : x.type === 'Dining' ? 45 : 25)) }] as Series[] };
   });
   protected readonly scatter = computed(() => this.s.zonesNow().filter((z) => z.conv).map((z) => ({ name: z.name, color: z.color, x: 40 + ((z.dwell - 30) / 35) * 100, y: 170 - (z.conv / 60) * 150 + 14, r: 6 + Math.sqrt(z.entries) / 4 })));
   protected readonly selZ = computed(() => this.s.zonesNow().find((z) => z.name === this.sel()) ?? null);
@@ -325,14 +325,14 @@ export class Conversion {
    Reports & Insights
    ========================================================= */
 const TEMPLATES = [
-  { name: 'Footfall & People Counting', icon: 'users', color: '#7c3aed', desc: 'Entries, exits, occupancy and trends' },
-  { name: 'Zone Performance', icon: 'map-floor', color: '#3b82f6', desc: 'Utilisation, dwell and conversion by zone' },
-  { name: 'Dwell Time & Journeys', icon: 'clock', color: '#f59e0b', desc: 'Dwell distribution and top paths' },
-  { name: 'Demographics Summary', icon: 'sparkles', color: '#ec4899', desc: 'Age, gender and group mix' },
-  { name: 'Loyalty & Repeat Visits', icon: 'a-repeat', color: '#22c55e', desc: 'New vs repeat, cohorts, at-risk' },
-  { name: 'Queue SLA', icon: 'a-timer', color: '#ef4444', desc: 'Wait times and SLA compliance' },
-  { name: 'Campaign ROI', icon: 'megaphone', color: '#14b8a6', desc: 'Reach, engagement and conversion' },
-  { name: 'Device Health', icon: 'cpu', color: '#64748b', desc: 'Uptime, accuracy and alerts' },
+  { name: 'Footfall & People Counting', icon: 'users', color: 'var(--ka-7c3aed)', desc: 'Entries, exits, occupancy and trends' },
+  { name: 'Zone Performance', icon: 'map-floor', color: 'var(--ka-3b82f6)', desc: 'Utilisation, dwell and conversion by zone' },
+  { name: 'Dwell Time & Journeys', icon: 'clock', color: 'var(--ka-f59e0b)', desc: 'Dwell distribution and top paths' },
+  { name: 'Demographics Summary', icon: 'sparkles', color: 'var(--ka-ec4899)', desc: 'Age, gender and group mix' },
+  { name: 'Loyalty & Repeat Visits', icon: 'a-repeat', color: 'var(--ka-22c55e)', desc: 'New vs repeat, cohorts, at-risk' },
+  { name: 'Queue SLA', icon: 'a-timer', color: 'var(--ka-ef4444)', desc: 'Wait times and SLA compliance' },
+  { name: 'Campaign ROI', icon: 'megaphone', color: 'var(--ka-14b8a6)', desc: 'Reach, engagement and conversion' },
+  { name: 'Device Health', icon: 'cpu', color: 'var(--ka-64748b)', desc: 'Uptime, accuracy and alerts' },
 ];
 
 @Component({
@@ -346,10 +346,10 @@ const TEMPLATES = [
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Scheduled Reports" [value]="activeSched()" icon="calendar-days" color="#7c3aed" [sub]="s.reports().length + ' configured'" />
-      <app-kpi label="Generated (MTD)" [value]="148 + s.runs().length - 5" icon="file-chart" color="#3b82f6" change="22%" sub="vs. last month" />
-      <app-kpi label="Open Insights" [value]="openInsights()" icon="lightbulb" color="#f59e0b" [sub]="highInsights() + ' high priority'" [subColor]="highInsights() ? '#dc2626' : undefined" />
-      <app-kpi label="Subscribers" value="36" icon="a-mail" color="#22c55e" sub="across 6 teams" />
+      <app-kpi label="Scheduled Reports" [value]="activeSched()" icon="calendar-days" color="var(--ka-7c3aed)" [sub]="s.reports().length + ' configured'" />
+      <app-kpi label="Generated (MTD)" [value]="148 + s.runs().length - 5" icon="file-chart" color="var(--ka-3b82f6)" change="22%" sub="vs. last month" />
+      <app-kpi label="Open Insights" [value]="openInsights()" icon="lightbulb" color="var(--ka-f59e0b)" [sub]="highInsights() + ' high priority'" [subColor]="highInsights() ? 'var(--ka-dc2626)' : undefined" />
+      <app-kpi label="Subscribers" value="36" icon="a-mail" color="var(--ka-22c55e)" sub="across 6 teams" />
     </section>
 
     <section class="row c21 eq">
@@ -357,7 +357,7 @@ const TEMPLATES = [
         <div class="ch"><h3>Report Templates</h3><span class="muted">{{ s.site().name }} · {{ s.range() }}</span></div>
         <div class="tpl">
           @for (t of templates; track t.name) {
-            <div class="tp"><span class="ic" [style.background]="t.color + '1a'" [style.color]="t.color"><app-icon [name]="t.icon" [size]="18" /></span>
+            <div class="tp"><span class="ic" [style.background]="'color-mix(in srgb, ' + t.color + ' 10%, transparent)'" [style.color]="t.color"><app-icon [name]="t.icon" [size]="18" /></span>
               <div class="col"><b>{{ t.name }}</b><small>{{ t.desc }}</small></div>
               <button class="btn-ghost sm" [disabled]="busy() === t.name" (click)="generate(t.name)">{{ busy() === t.name ? 'Generating…' : 'Generate' }}</button></div>
           }
@@ -393,7 +393,7 @@ const TEMPLATES = [
         <div class="ch"><h3>Recently Generated</h3><span class="muted">{{ s.runs().length }} files</span></div>
         <ul class="list runs">
           @for (r of s.runs().slice(0, 8); track r.id) {
-            <li><span class="ic" style="background:#f3efff;color:#7c3aed"><app-icon name="file-text" [size]="16" /></span><div class="col"><b>{{ r.name }}</b><small>{{ r.at }} · {{ r.by }} · {{ r.size }}</small></div>
+            <li><span class="ic" style="background:var(--kb-f3efff);color:var(--kf-7c3aed)"><app-icon name="file-text" [size]="16" /></span><div class="col"><b>{{ r.name }}</b><small>{{ r.at }} · {{ r.by }} · {{ r.size }}</small></div>
               <button class="btn-ghost sm" (click)="download(r.name)"><app-icon name="download" [size]="13" />{{ r.format }}</button></li>
           }
         </ul>
@@ -420,7 +420,7 @@ const TEMPLATES = [
     .tpl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .tp { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; font-size: 12.5px; } .tp small { color: var(--muted); font-size: 11.5px; }
     .ins li { grid-template-columns: 4px 1fr; align-items: stretch; } .ins li.ack { opacity: .55; } .ins small { line-height: 1.4; }
-    .sev { width: 4px; border-radius: 2px; } .sev.high { background: #ef4444; } .sev.medium { background: #f59e0b; } .sev.info { background: #3b82f6; }
+    .sev { width: 4px; border-radius: 2px; } .sev.high { background: var(--kb-ef4444); } .sev.medium { background: var(--kb-f59e0b); } .sev.info { background: var(--kb-3b82f6); }
     .ia { display: flex; gap: 14px; margin-top: 4px; } .ins { max-height: 330px; overflow: auto; }
     .acts { display: flex; gap: 10px; } .danger { color: var(--red); } .rc { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
     .runs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; } .runs li { grid-template-columns: 34px 1fr auto; padding: 7px 4px; }
@@ -490,7 +490,7 @@ export class AnalyticsReports {
    ========================================================= */
 const DEV_TYPES: DevType[] = ['AI Camera', '3D People Counter', 'Thermal Sensor', 'Wi-Fi Probe', 'Queue Sensor'];
 const TYPE_ICON: Record<DevType, string> = { 'AI Camera': 'a-camera', '3D People Counter': 'a-scan', 'Thermal Sensor': 'activity', 'Wi-Fi Probe': 'wifi', 'Queue Sensor': 'a-timer' };
-const STATUS_COLOR: Record<string, string> = { Online: '#22c55e', Warning: '#f59e0b', Offline: '#ef4444', Disabled: '#94a3b8' };
+const STATUS_COLOR: Record<string, string> = { Online: 'var(--ka-22c55e)', Warning: 'var(--ka-f59e0b)', Offline: 'var(--ka-ef4444)', Disabled: 'var(--ka-94a3b8)' };
 
 @Component({
   selector: 'app-device-management',
@@ -504,11 +504,11 @@ const STATUS_COLOR: Record<string, string> = { Online: '#22c55e', Warning: '#f59
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Devices" [value]="s.devCounts().total" icon="cpu" color="#7c3aed" sub="5 device types" />
-      <app-kpi label="Online" [value]="s.devCounts().online" icon="wifi" color="#22c55e" [sub]="pctOnline() + '% availability'" subColor="#16a34a" />
-      <app-kpi label="Offline" [value]="s.devCounts().offline" icon="a-power" color="#ef4444" [sub]="s.devCounts().offline ? 'needs attention' : 'none'" [subColor]="s.devCounts().offline ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Warnings" [value]="s.devCounts().warning" icon="triangle-alert" color="#f59e0b" sub="accuracy below target" />
-      <app-kpi label="Avg. Count Accuracy" [value]="avgAcc() + '%'" icon="a-target" color="#3b82f6" sub="target ≥ 97%" />
+      <app-kpi label="Total Devices" [value]="s.devCounts().total" icon="cpu" color="var(--ka-7c3aed)" sub="5 device types" />
+      <app-kpi label="Online" [value]="s.devCounts().online" icon="wifi" color="var(--ka-22c55e)" [sub]="pctOnline() + '% availability'" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Offline" [value]="s.devCounts().offline" icon="a-power" color="var(--ka-ef4444)" [sub]="s.devCounts().offline ? 'needs attention' : 'none'" [subColor]="s.devCounts().offline ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Warnings" [value]="s.devCounts().warning" icon="triangle-alert" color="var(--ka-f59e0b)" sub="accuracy below target" />
+      <app-kpi label="Avg. Count Accuracy" [value]="avgAcc() + '%'" icon="a-target" color="var(--ka-3b82f6)" sub="target ≥ 97%" />
     </section>
 
     <section class="row" [class.dsel]="!!sel()">
@@ -518,7 +518,7 @@ const STATUS_COLOR: Record<string, string> = { Online: '#22c55e', Warning: '#f59
       </div>
       @if (sel(); as d) {
         <aside class="card det">
-          <div class="dh"><span class="ic" [style.background]="STATUS_COLOR[d.status] + '22'" [style.color]="STATUS_COLOR[d.status]"><app-icon [name]="TYPE_ICON[d.type]" [size]="18" /></span>
+          <div class="dh"><span class="ic" [style.background]="'color-mix(in srgb, ' + STATUS_COLOR[d.status] + ' 13%, transparent)'" [style.color]="STATUS_COLOR[d.status]"><app-icon [name]="TYPE_ICON[d.type]" [size]="18" /></span>
             <div class="col"><h3>{{ d.name }}</h3><small class="muted">{{ d.id }} · {{ d.type }}</small></div>
             <span [class]="tagCls(d.status)">{{ busyId() === d.id ? 'Restarting…' : d.status }}</span><button class="close-btn" (click)="selId.set(null)">×</button></div>
           @if (d.type === 'AI Camera') {
@@ -528,7 +528,7 @@ const STATUS_COLOR: Record<string, string> = { Online: '#22c55e', Warning: '#f59
             <dt>Zone</dt><dd>{{ d.zone }}</dd><dt>IP address</dt><dd>{{ d.ip }}</dd><dt>Firmware</dt><dd>{{ d.firmware }} @if (d.firmware < latest(d)) {<span class="tag amber">update {{ latest(d) }}</span>}</dd>
             <dt>Last seen</dt><dd>{{ d.lastSeen }}</dd><dt>Counted today</dt><dd>{{ n(d.counted) }}</dd><dt>Uptime (30d)</dt><dd>{{ d.uptime.toFixed(1) }}%</dd>
           </dl>
-          <div class="acc"><span>Accuracy</span><div class="bar"><i [style.width.%]="d.accuracy" [style.background]="d.accuracy >= 97 ? '#22c55e' : d.accuracy >= 90 ? '#f59e0b' : '#ef4444'"></i></div><b>{{ d.accuracy.toFixed(1) }}%</b></div>
+          <div class="acc"><span>Accuracy</span><div class="bar"><i [style.width.%]="d.accuracy" [style.background]="d.accuracy >= 97 ? 'var(--ka-22c55e)' : d.accuracy >= 90 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></div><b>{{ d.accuracy.toFixed(1) }}%</b></div>
           <h4>Accuracy · last 7 days</h4>
           <app-ff-line [labels]="days" [series]="accSeries(d)" [height]="140" [max]="100" />
           <div class="acts">
@@ -610,7 +610,7 @@ export class AnalyticsDevices {
     { id: 'enable', label: 'Enable', icon: 'a-power', when: (r) => r.status === 'Disabled' },
   ];
   protected readonly bulk: RowAction[] = [{ id: 'restart', label: 'Restart selected' }, { id: 'update', label: 'Update firmware' }];
-  protected readonly mapZones = computed(() => this.s.zones().map((z) => ({ id: z.id, name: z.name, x: z.x, y: z.y, w: z.w, h: z.h, color: '#94a3b8' })));
+  protected readonly mapZones = computed(() => this.s.zones().map((z) => ({ id: z.id, name: z.name, x: z.x, y: z.y, w: z.w, h: z.h, color: 'var(--ka-94a3b8)' })));
   protected readonly markers = computed<MapMarker[]>(() => {
     const zones = this.s.zones();
     const per = new Map<string, number>();

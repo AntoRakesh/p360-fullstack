@@ -43,7 +43,7 @@ import { hhmm, isOpen, Priority, PRIORITIES, TASK_SITES, TaskStore, workerById, 
       <div class="form-actions"><button type="button" class="btn-ghost" (click)="closed.emit()">Cancel</button><button class="btn-primary" type="submit">Create Task</button></div>
     </form>
   `,
-  styles: `.sum { margin: 12px 0 0; padding: 9px 12px; border-radius: 8px; background: #f5f3ff; color: #4c1d95; font-size: 12px; }`,
+  styles: `.sum { margin: 12px 0 0; padding: 9px 12px; border-radius: 8px; background: var(--kb-f5f3ff); color: var(--kf-4c1d95); font-size: 12px; }`,
 })
 export class TaskForm implements OnInit {
   protected readonly store = inject(TaskStore);

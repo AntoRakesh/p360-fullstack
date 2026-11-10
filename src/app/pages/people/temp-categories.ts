@@ -37,11 +37,11 @@ const TEMPS: Temp[] = (() => {
   template: `
     <app-page-head title="Temporary &amp; Agency Workers" parent="People &amp; Identity Management" parentLink="/people-identity" subtitle="Agency staff, assignment periods, hours and contract extensions." />
     <section class="kpi-row">
-      <app-kpi label="Temporary Workers" [value]="list().length" icon="briefcase" color="#14b8a6" change="7%" />
-      <app-kpi label="Ending in 14 days" [value]="cnt('Ending soon')" icon="clock" color="#f59e0b" sub="need decision" />
-      <app-kpi label="Hours This Week" [value]="hours()" icon="activity" color="#8b5cf6" />
-      <app-kpi label="Weekly Agency Cost" [value]="'AED ' + cost()" icon="trending-up" color="#3b82f6" />
-      <app-kpi label="Converted to Employee" [value]="converted()" icon="user-check" color="#22c55e" sub="this session" />
+      <app-kpi label="Temporary Workers" [value]="list().length" icon="briefcase" color="var(--ka-14b8a6)" change="7%" />
+      <app-kpi label="Ending in 14 days" [value]="cnt('Ending soon')" icon="clock" color="var(--ka-f59e0b)" sub="need decision" />
+      <app-kpi label="Hours This Week" [value]="hours()" icon="activity" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Weekly Agency Cost" [value]="'AED ' + cost()" icon="trending-up" color="var(--ka-3b82f6)" />
+      <app-kpi label="Converted to Employee" [value]="converted()" icon="user-check" color="var(--ka-22c55e)" sub="this session" />
     </section>
     <section class="dash">
       <div class="card span-5">
@@ -71,7 +71,7 @@ const TEMPS: Temp[] = (() => {
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
   styles: `.ending { display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow: auto; }
-    .end-row { display: grid; grid-template-columns: 32px 1fr auto auto; gap: 10px; align-items: center; padding: 6px 4px; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .end-row { display: grid; grid-template-columns: 32px 1fr auto auto; gap: 10px; align-items: center; padding: 6px 4px; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .end-row div { display: flex; flex-direction: column; } .end-row small { color: var(--muted); font-size: 11.5px; }`,
 })
 export class TempWorkers {
@@ -101,7 +101,7 @@ export class TempWorkers {
   protected readonly byAgency = computed(() =>
     AGENCIES.map((label) => {
       const v = this.list().filter((t) => t.company === label).length;
-      return { label, value: v, display: String(v), color: '#14b8a6' };
+      return { label, value: v, display: String(v), color: 'var(--ka-14b8a6)' };
     }).sort((a, b) => b.value - a.value),
   );
   protected readonly endingSoon = computed(() => this.list().filter((t) => t.assignment === 'Ending soon').sort((a, b) => a.daysLeft - b.daysLeft));
@@ -157,13 +157,13 @@ const COMMON: Attr[] = [
   { name: 'Photo', type: 'Image', required: true, visible: 'Everyone' },
 ];
 const CATEGORIES: Category[] = [
-  { name: 'Employee', icon: 'users', color: '#7c3aed', count: TYPE_COUNTS.Employee, access: 'Standard', prefix: 'EMP', retention: '7 years after exit', attrs: [...COMMON, { name: 'Department', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Grade', type: 'Dropdown', required: true, visible: 'HR only' }, { name: 'Cost center', type: 'Text', required: false, visible: 'Finance' }, { name: 'Emergency contact', type: 'Text', required: true, visible: 'HR & Security' }] },
-  { name: 'Contractor', icon: 'hard-hat', color: '#f97316', count: TYPE_COUNTS.Contractor, access: 'Restricted', prefix: 'CON', retention: '3 years', attrs: [...COMMON, { name: 'Company', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Trade', type: 'Dropdown', required: true, visible: 'Everyone' }, { name: 'Insurance expiry', type: 'Date', required: true, visible: 'Procurement' }] },
-  { name: 'Visitor', icon: 'user-plus', color: '#3b82f6', count: TYPE_COUNTS.Visitor, access: 'Escorted', prefix: 'VIS', retention: '90 days', attrs: [...COMMON, { name: 'Host', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Purpose', type: 'Dropdown', required: true, visible: 'Everyone' }, { name: 'NDA signed', type: 'Yes / No', required: false, visible: 'Security' }] },
-  { name: 'Temporary', icon: 'briefcase', color: '#14b8a6', count: TYPE_COUNTS.Temporary, access: 'Standard', prefix: 'TMP', retention: '2 years', attrs: [...COMMON, { name: 'Agency', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Contract end', type: 'Date', required: true, visible: 'HR only' }] },
-  { name: 'Customer', icon: 'user', color: '#db2777', count: 1200, access: 'Public areas', prefix: 'CUS', retention: 'Until consent withdrawn', attrs: [...COMMON.slice(0, 2), { name: 'Loyalty tier', type: 'Dropdown', required: false, visible: 'Marketing' }, { name: 'Marketing consent', type: 'Yes / No', required: true, visible: 'Marketing' }] },
-  { name: 'VIP Guest', icon: 'star', color: '#ca8a04', count: 46, access: 'Executive', prefix: 'VIP', retention: '1 year', attrs: [...COMMON, { name: 'Protocol notes', type: 'Long text', required: false, visible: 'Security' }] },
-  { name: 'Intern', icon: 'graduation-cap', color: '#0891b2', count: 312, access: 'Standard', prefix: 'INT', retention: '2 years', attrs: [...COMMON, { name: 'University', type: 'Text', required: true, visible: 'HR only' }, { name: 'Mentor', type: 'Lookup', required: true, visible: 'Everyone' }] },
+  { name: 'Employee', icon: 'users', color: 'var(--ka-7c3aed)', count: TYPE_COUNTS.Employee, access: 'Standard', prefix: 'EMP', retention: '7 years after exit', attrs: [...COMMON, { name: 'Department', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Grade', type: 'Dropdown', required: true, visible: 'HR only' }, { name: 'Cost center', type: 'Text', required: false, visible: 'Finance' }, { name: 'Emergency contact', type: 'Text', required: true, visible: 'HR & Security' }] },
+  { name: 'Contractor', icon: 'hard-hat', color: 'var(--ka-f97316)', count: TYPE_COUNTS.Contractor, access: 'Restricted', prefix: 'CON', retention: '3 years', attrs: [...COMMON, { name: 'Company', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Trade', type: 'Dropdown', required: true, visible: 'Everyone' }, { name: 'Insurance expiry', type: 'Date', required: true, visible: 'Procurement' }] },
+  { name: 'Visitor', icon: 'user-plus', color: 'var(--ka-3b82f6)', count: TYPE_COUNTS.Visitor, access: 'Escorted', prefix: 'VIS', retention: '90 days', attrs: [...COMMON, { name: 'Host', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Purpose', type: 'Dropdown', required: true, visible: 'Everyone' }, { name: 'NDA signed', type: 'Yes / No', required: false, visible: 'Security' }] },
+  { name: 'Temporary', icon: 'briefcase', color: 'var(--ka-14b8a6)', count: TYPE_COUNTS.Temporary, access: 'Standard', prefix: 'TMP', retention: '2 years', attrs: [...COMMON, { name: 'Agency', type: 'Lookup', required: true, visible: 'Everyone' }, { name: 'Contract end', type: 'Date', required: true, visible: 'HR only' }] },
+  { name: 'Customer', icon: 'user', color: 'var(--ka-db2777)', count: 1200, access: 'Public areas', prefix: 'CUS', retention: 'Until consent withdrawn', attrs: [...COMMON.slice(0, 2), { name: 'Loyalty tier', type: 'Dropdown', required: false, visible: 'Marketing' }, { name: 'Marketing consent', type: 'Yes / No', required: true, visible: 'Marketing' }] },
+  { name: 'VIP Guest', icon: 'star', color: 'var(--ka-ca8a04)', count: 46, access: 'Executive', prefix: 'VIP', retention: '1 year', attrs: [...COMMON, { name: 'Protocol notes', type: 'Long text', required: false, visible: 'Security' }] },
+  { name: 'Intern', icon: 'graduation-cap', color: 'var(--ka-0891b2)', count: 312, access: 'Standard', prefix: 'INT', retention: '2 years', attrs: [...COMMON, { name: 'University', type: 'Text', required: true, visible: 'HR only' }, { name: 'Mentor', type: 'Lookup', required: true, visible: 'Everyone' }] },
 ];
 const TYPES = ['Text', 'Long text', 'Email', 'Phone', 'Date', 'Dropdown', 'Lookup', 'Yes / No', 'Image', 'Number'];
 
@@ -197,7 +197,7 @@ const TYPES = ['Text', 'Long text', 'Email', 'Phone', 'Date', 'Dropdown', 'Looku
               </select>
             </label>
             <label>Data retention<input class="input" [value]="c.retention" (change)="patch({ retention: $any($event.target).value })" /></label>
-            <label>Colour<input class="input color" type="color" [value]="c.color" (input)="patch({ color: $any($event.target).value })" /></label>
+            <label>Colour<input class="input color" type="color" [value]="(c.color.startsWith('#') ? c.color : '#' + c.color.slice(-7, -1))" (input)="patch({ color: $any($event.target).value })" /></label>
           </div>
         </div>
         <div class="card span-8">
@@ -234,11 +234,11 @@ const TYPES = ['Text', 'Long text', 'Email', 'Phone', 'Date', 'Dropdown', 'Looku
     .cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 12px; }
     .cat { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; cursor: pointer; font-family: inherit; }
     .cat.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
-    .cat-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; color: #fff; }
+    .cat-icon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .one { grid-template-columns: 1fr; } .color { height: 36px; padding: 2px; }
     .sw input { display: none; } .sw { cursor: pointer; display: inline-block; }
-    .switch { position: relative; display: inline-block; width: 34px; height: 20px; border-radius: 10px; background: #d4d7e2; transition: background .15s; }
-    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
+    .switch { position: relative; display: inline-block; width: 34px; height: 20px; border-radius: 10px; background: var(--kb-d4d7e2); transition: background .15s; }
+    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: transform .15s; }
     .sw input:checked + .switch { background: var(--primary); } .sw input:checked + .switch::after { transform: translateX(14px); }
     .danger { color: var(--red); } .link:disabled { color: var(--muted); cursor: default; }
     .add-attr { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
@@ -272,7 +272,7 @@ export class PersonCategories {
   }
   protected newCat() {
     const name = `New Category ${this.cats().length - 6}`;
-    this.cats.update((l) => [...l, { name, icon: 'users', color: '#64748b', count: 0, access: 'Standard', prefix: 'NEW', retention: '1 year', attrs: [...COMMON] }]);
+    this.cats.update((l) => [...l, { name, icon: 'users', color: 'var(--ka-64748b)', count: 0, access: 'Standard', prefix: 'NEW', retention: '1 year', attrs: [...COMMON] }]);
     this.sel.set(name);
   }
   private notify(m: string) {

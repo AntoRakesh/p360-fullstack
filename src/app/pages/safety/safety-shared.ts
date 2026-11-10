@@ -8,22 +8,22 @@ import { dayLabel, FLOORS, I_STATUSES, I_TYPES, Incident, IStatus, LOCATIONS, OF
 /** Pill styles used by several safety pages (component styles are encapsulated). */
 export const SF_STYLES = `
   .sev { display: inline-block; min-width: 54px; padding: 3px 10px; border-radius: 5px; font-size: 11.5px; font-weight: 500; text-align: center; }
-  .sev.red { background: #fde2e2; color: #dc2626; } .sev.amber { background: #fef3c7; color: #b45309; } .sev.green { background: #dcfce7; color: #15803d; }
+  .sev.red { background: var(--kb-fde2e2); color: var(--kf-dc2626); } .sev.amber { background: var(--kb-fef3c7); color: var(--kf-b45309); } .sev.green { background: var(--kb-dcfce7); color: var(--kf-15803d); }
   .st { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 5px; font-size: 11.5px; white-space: nowrap; }
   .st::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-  .st.red { background: #fde2e2; color: #dc2626; } .st.orange { background: #ffedd5; color: #ea580c; } .st.blue { background: #dbeafe; color: #2563eb; }
-  .st.purple { background: #ede9fe; color: #5b21b6; } .st.green { background: #dcfce7; color: #15803d; } .st.grey { background: #eef0f5; color: #4b5563; }
-  .btn-red { display: inline-flex; gap: 8px; align-items: center; height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: #e5162b; color: #fff; font: inherit; font-weight: 600; font-size: 13.5px; cursor: pointer; }
-  .btn-red:hover { background: #c81424; }
-  .av { width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; color: #fff; font-size: 11px; font-weight: 700; flex: none; }
+  .st.red { background: var(--kb-fde2e2); color: var(--kf-dc2626); } .st.orange { background: var(--kb-ffedd5); color: var(--kf-ea580c); } .st.blue { background: var(--kb-dbeafe); color: var(--kf-2563eb); }
+  .st.purple { background: var(--kb-ede9fe); color: var(--kf-5b21b6); } .st.green { background: var(--kb-dcfce7); color: var(--kf-15803d); } .st.grey { background: var(--kb-eef0f5); color: var(--kf-4b5563); }
+  .btn-red { display: inline-flex; gap: 8px; align-items: center; height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: var(--kb-e5162b); color: var(--kf-ffffff); font: inherit; font-weight: 600; font-size: 13.5px; cursor: pointer; }
+  .btn-red:hover { background: var(--kb-c81424); }
+  .av { width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; color: var(--kf-ffffff); font-size: 11px; font-weight: 700; flex: none; }
   .ic-sq { width: 30px; height: 30px; border-radius: 8px; display: inline-grid; place-items: center; flex: none; }
   .lnk { color: var(--primary); font-weight: 600; font-size: 13px; text-decoration: none; background: none; border: 0; cursor: pointer; padding: 0; font-family: inherit; }
   .segs { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .segs button { border: 0; background: #fff; padding: 7px 12px; font: inherit; font-size: 12.5px; cursor: pointer; color: #4b4f6b; } .segs button + button { border-left: 1px solid var(--border); }
-  .segs button.on { background: var(--primary); color: #fff; }
+  .segs button { border: 0; background: var(--kb-ffffff); padding: 7px 12px; font: inherit; font-size: 12.5px; cursor: pointer; color: var(--kf-4b4f6b); } .segs button + button { border-left: 1px solid var(--border); }
+  .segs button.on { background: var(--primary); color: var(--kf-ffffff); }
   .dl { display: grid; grid-template-columns: 130px 1fr; gap: 8px 10px; margin: 0; font-size: 12.5px; } .dl dt { color: var(--muted); } .dl dd { margin: 0; }
-  .tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid #ece9f8; } .tl li { position: relative; padding: 0 0 12px 8px; font-size: 12.5px; }
-  .tl li::before { content: ''; position: absolute; left: -21px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid #fff; }
+  .tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--kl-ece9f8); } .tl li { position: relative; padding: 0 0 12px 8px; font-size: 12.5px; }
+  .tl li::before { content: ''; position: absolute; left: -21px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--kl-ffffff); }
   .tl small { display: block; color: var(--muted); font-size: 11px; }
   .sec-h { font-size: 13px; margin: 16px 0 8px; font-weight: 600; }
   .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
@@ -32,8 +32,8 @@ export const SF_STYLES = `
   .split { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 12px; align-items: start; }
   .side { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; }
   .card h3 { margin: 0; font-size: 16px; }
-  .chk { display: flex; gap: 8px; align-items: center; padding: 7px 0; font-size: 12.5px; border-bottom: 1px solid #f1f2f7; cursor: pointer; } .chk input { accent-color: var(--primary); }
-  .bar { height: 8px; border-radius: 4px; background: #eef0f6; overflow: hidden; } .bar i { display: block; height: 100%; border-radius: 4px; }
+  .chk { display: flex; gap: 8px; align-items: center; padding: 7px 0; font-size: 12.5px; border-bottom: 1px solid var(--kl-f1f2f7); cursor: pointer; } .chk input { accent-color: var(--primary); }
+  .bar { height: 8px; border-radius: 4px; background: var(--kb-eef0f6); overflow: hidden; } .bar i { display: block; height: 100%; border-radius: 4px; }
   @media (max-width: 1400px) { .kpi6 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .split { grid-template-columns: 1fr; } .side { position: static; max-height: none; } }
   @media (max-width: 1100px) { .kpi5, .kpi4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid3, .grid2 { grid-template-columns: 1fr; } }
 `;
@@ -81,12 +81,12 @@ export class SfToast {
     }
   `,
   styles: [SF_STYLES, `
-    h3 { display: flex; gap: 8px; align-items: center; margin: 0; color: #dc2626; }
+    h3 { display: flex; gap: 8px; align-items: center; margin: 0; color: var(--kf-dc2626); }
     .types { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 14px; }
-    .types button { display: flex; gap: 6px; align-items: center; padding: 8px; border: 1px solid var(--border); background: #fff; border-radius: 8px; font: inherit; font-size: 12px; cursor: pointer; text-align: left; }
-    .types button.on { border-color: var(--primary); background: #faf8ff; box-shadow: 0 0 0 2px var(--primary-soft); }
-    .sevs { display: flex; gap: 6px; } .sv { flex: 1; height: 34px; border: 1px solid var(--border); background: #fff; border-radius: 8px; font: inherit; font-size: 12.5px; cursor: pointer; }
-    .sv.on.critical { background: #7f1d1d; color: #fff; } .sv.on.high { background: #dc2626; color: #fff; } .sv.on.medium { background: #f59e0b; color: #fff; } .sv.on.low { background: #16a34a; color: #fff; }
+    .types button { display: flex; gap: 6px; align-items: center; padding: 8px; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 8px; font: inherit; font-size: 12px; cursor: pointer; text-align: left; }
+    .types button.on { border-color: var(--primary); background: var(--kb-faf8ff); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .sevs { display: flex; gap: 6px; } .sv { flex: 1; height: 34px; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 8px; font: inherit; font-size: 12.5px; cursor: pointer; }
+    .sv.on.critical { background: var(--kb-7f1d1d); color: var(--kf-ffffff); } .sv.on.high { background: var(--kb-dc2626); color: var(--kf-ffffff); } .sv.on.medium { background: var(--kb-f59e0b); color: var(--kf-ffffff); } .sv.on.low { background: var(--kb-16a34a); color: var(--kf-ffffff); }
     .ta { height: 80px; padding-top: 8px; resize: vertical; } .notify { display: flex; gap: 8px; align-items: center; margin-top: 12px; font-size: 12.5px; }
   `],
 })
@@ -120,7 +120,7 @@ export class ReportIncident {
       <div class="g-overlay" (click)="store.openIncident.set(null)"></div>
       <aside class="g-drawer wide">
         <div class="dh">
-          <span class="ic-sq big" [style.background]="meta(i.type).color + '1f'" [style.color]="meta(i.type).color"><app-icon [name]="meta(i.type).icon" [size]="22" /></span>
+          <span class="ic-sq big" [style.background]="'color-mix(in srgb, ' + meta(i.type).color + ' 12%, transparent)'" [style.color]="meta(i.type).color"><app-icon [name]="meta(i.type).icon" [size]="22" /></span>
           <div><h3>{{ i.title }}</h3><small class="muted">{{ i.id }} · {{ i.type }} · {{ when(i) }}</small></div>
           <button class="close-btn" (click)="store.openIncident.set(null)">×</button>
         </div>
@@ -159,7 +159,7 @@ export class ReportIncident {
     .dh { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; } .dh h3 { margin: 0; font-size: 17px; } .big { width: 46px; height: 46px; border-radius: 12px; }
     .pills { display: flex; gap: 8px; margin: 12px 0; }
     .acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; } .acts label { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: var(--muted); }
-    .desc { font-size: 13px; line-height: 1.5; background: #f8f8fc; border-radius: 8px; padding: 10px 12px; }
+    .desc { font-size: 13px; line-height: 1.5; background: var(--kb-f8f8fc); border-radius: 8px; padding: 10px 12px; }
     .note { display: flex; gap: 8px; margin-top: 4px; } .note .input { flex: 1; }
     .close-box { display: flex; gap: 8px; align-items: flex-end; margin-top: 12px; padding: 10px; border: 1px dashed var(--border); border-radius: 8px; } .close-box label { flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
     .foot { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); flex-wrap: wrap; }
@@ -224,52 +224,52 @@ export class IncidentDrawer {
       @switch (variant()) {
         @case (1) {
           <!-- corridor / entrance -->
-          <rect width="160" height="110" fill="#c9ccd1" />
-          <path d="M0 0h160v14H0z" fill="#e8e9eb" /><path d="M0 0l52 30v50L0 110z" fill="#a9adb4" /><path d="M160 0l-52 30v50l52 30z" fill="#b2b6bc" />
-          <rect x="52" y="30" width="56" height="50" fill="#dfe2e6" /><rect x="66" y="40" width="28" height="40" fill="#8b95a1" /><rect x="74" y="32" width="12" height="5" fill="#16a34a" />
-          <path d="M0 110l52-30h56l52 30z" fill="#9aa1a9" /><path d="M78 80h4l10 30h-24z" fill="#facc15" opacity=".55" />
-          @for (r of [0, 1, 2, 3]; track r) {<rect [attr.x]="56 + r * 13" y="16" width="9" height="3" fill="#fff" />}
+          <rect width="160" height="110" fill="var(--ka-c9ccd1)" />
+          <path d="M0 0h160v14H0z" fill="var(--ka-e8e9eb)" /><path d="M0 0l52 30v50L0 110z" fill="var(--ka-a9adb4)" /><path d="M160 0l-52 30v50l52 30z" fill="var(--ka-b2b6bc)" />
+          <rect x="52" y="30" width="56" height="50" fill="var(--ka-dfe2e6)" /><rect x="66" y="40" width="28" height="40" fill="var(--ka-8b95a1)" /><rect x="74" y="32" width="12" height="5" fill="var(--ka-16a34a)" />
+          <path d="M0 110l52-30h56l52 30z" fill="var(--ka-9aa1a9)" /><path d="M78 80h4l10 30h-24z" fill="var(--ka-facc15)" opacity=".55" />
+          @for (r of [0, 1, 2, 3]; track r) {<rect [attr.x]="56 + r * 13" y="16" width="9" height="3" fill="var(--ka-ffffff)" />}
         }
         @case (2) {
           <!-- warehouse aisle with forklift -->
-          <rect width="160" height="110" fill="#7d8794" /><path d="M0 72h160v38H0z" fill="#8f949b" />
+          <rect width="160" height="110" fill="var(--ka-7d8794)" /><path d="M0 72h160v38H0z" fill="var(--ka-8f949b)" />
           @for (x of [0, 118]; track x) {
             <g [attr.transform]="'translate(' + x + ' 0)'">
-              <rect width="42" height="74" fill="#5b6675" />
-              @for (y of [14, 34, 54]; track y) {<rect x="0" [attr.y]="y" width="42" height="3" fill="#f97316" />@for (b of [3, 16, 29]; track b) {<rect [attr.x]="b" [attr.y]="y - 11" width="11" height="11" fill="#c8a173" />}}
-              <rect x="0" y="0" width="3" height="74" fill="#2563eb" /><rect x="39" y="0" width="3" height="74" fill="#2563eb" />
+              <rect width="42" height="74" fill="var(--ka-5b6675)" />
+              @for (y of [14, 34, 54]; track y) {<rect x="0" [attr.y]="y" width="42" height="3" fill="var(--ka-f97316)" />@for (b of [3, 16, 29]; track b) {<rect [attr.x]="b" [attr.y]="y - 11" width="11" height="11" fill="var(--ka-c8a173)" />}}
+              <rect x="0" y="0" width="3" height="74" fill="var(--ka-2563eb)" /><rect x="39" y="0" width="3" height="74" fill="var(--ka-2563eb)" />
             </g>
           }
-          <path d="M60 110l14-38h12l14 38z" fill="#a0a4aa" /><path d="M78 72v38" stroke="#facc15" stroke-width="1.5" stroke-dasharray="4 3" />
+          <path d="M60 110l14-38h12l14 38z" fill="var(--ka-a0a4aa)" /><path d="M78 72v38" stroke="var(--kl-facc15)" stroke-width="1.5" stroke-dasharray="4 3" />
           <!-- forklift -->
           <g [attr.transform]="'translate(' + (40 + shift()) + ' 54)'">
-            <rect x="0" y="16" width="34" height="18" rx="3" fill="#f59e0b" /><rect x="6" y="0" width="20" height="18" fill="none" stroke="#1f2937" stroke-width="2.5" />
-            <rect x="34" y="-4" width="3" height="38" fill="#374151" /><rect x="37" y="28" width="12" height="3" fill="#374151" />
-            <circle cx="8" cy="35" r="5" fill="#111827" /><circle cx="28" cy="35" r="5" fill="#111827" />
+            <rect x="0" y="16" width="34" height="18" rx="3" fill="var(--ka-f59e0b)" /><rect x="6" y="0" width="20" height="18" fill="none" stroke="var(--kl-1f2937)" stroke-width="2.5" />
+            <rect x="34" y="-4" width="3" height="38" fill="var(--ka-374151)" /><rect x="37" y="28" width="12" height="3" fill="var(--ka-374151)" />
+            <circle cx="8" cy="35" r="5" fill="var(--ka-111827)" /><circle cx="28" cy="35" r="5" fill="var(--ka-111827)" />
           </g>
         }
         @default {
           <!-- warehouse racking -->
-          <rect width="160" height="110" fill="#6b7686" /><path d="M0 74h160v36H0z" fill="#9aa0a7" />
+          <rect width="160" height="110" fill="var(--ka-6b7686)" /><path d="M0 74h160v36H0z" fill="var(--ka-9aa0a7)" />
           @for (x of [-6, 104]; track x) {
             <g [attr.transform]="'translate(' + x + ' 0)'">
-              <rect width="62" height="76" fill="#4a5565" />
-              @for (y of [12, 32, 52]; track y) {<rect x="0" [attr.y]="y" width="62" height="3" fill="#f97316" />@for (b of [4, 18, 32, 46]; track b) {<rect [attr.x]="b" [attr.y]="y - 10" width="12" height="10" [attr.fill]="b % 28 ? '#d4a373' : '#3b82f6'" />}}
-              @for (u of [0, 30, 59]; track u) {<rect [attr.x]="u" y="0" width="3" height="76" fill="#2563eb" />}
+              <rect width="62" height="76" fill="var(--ka-4a5565)" />
+              @for (y of [12, 32, 52]; track y) {<rect x="0" [attr.y]="y" width="62" height="3" fill="var(--ka-f97316)" />@for (b of [4, 18, 32, 46]; track b) {<rect [attr.x]="b" [attr.y]="y - 10" width="12" height="10" [attr.fill]="b % 28 ? 'var(--ka-d4a373)' : 'var(--ka-3b82f6)'" />}}
+              @for (u of [0, 30, 59]; track u) {<rect [attr.x]="u" y="0" width="3" height="76" fill="var(--ka-2563eb)" />}
             </g>
           }
-          <path d="M56 110l12-36h24l12 36z" fill="#b5b9be" />
+          <path d="M56 110l12-36h24l12 36z" fill="var(--ka-b5b9be)" />
         }
       }
       <!-- workers -->
       @for (p of people(); track $index) {
         <g [attr.transform]="'translate(' + (p.x + (p.walk ? shift() : 0)) + ' ' + p.y + ') scale(' + p.s + ')'">
-          <rect x="-4" y="14" width="3.4" height="13" fill="#1f2937" /><rect x="0.6" y="14" width="3.4" height="13" fill="#1f2937" />
-          <rect x="-6" y="0" width="12" height="16" rx="2.5" [attr.fill]="p.vest ? '#d9f99d' : '#475569'" />
-          @if (p.vest) {<rect x="-6" y="7" width="12" height="2" fill="#f8fafc" opacity=".9" />}
-          <circle cx="0" cy="-5" r="4.4" fill="#c58c62" />
-          @if (p.helmet) {<path d="M-5 -6a5 5 0 0 1 10 0z" fill="#facc15" /><rect x="-5.8" y="-6.5" width="11.6" height="1.6" fill="#eab308" />}
-          @else {<path d="M-4.3 -6.5a4.4 4.4 0 0 1 8.6 0z" fill="#2b1d14" />}
+          <rect x="-4" y="14" width="3.4" height="13" fill="var(--ka-1f2937)" /><rect x="0.6" y="14" width="3.4" height="13" fill="var(--ka-1f2937)" />
+          <rect x="-6" y="0" width="12" height="16" rx="2.5" [attr.fill]="p.vest ? 'var(--ka-d9f99d)' : 'var(--ka-475569)'" />
+          @if (p.vest) {<rect x="-6" y="7" width="12" height="2" fill="var(--ka-f8fafc)" opacity=".9" />}
+          <circle cx="0" cy="-5" r="4.4" fill="var(--ka-c58c62)" />
+          @if (p.helmet) {<path d="M-5 -6a5 5 0 0 1 10 0z" fill="var(--ka-facc15)" /><rect x="-5.8" y="-6.5" width="11.6" height="1.6" fill="var(--ka-eab308)" />}
+          @else {<path d="M-4.3 -6.5a4.4 4.4 0 0 1 8.6 0z" fill="var(--ka-2b1d14)" />}
         </g>
       }
       @if (box()) {
@@ -280,10 +280,10 @@ export class IncidentDrawer {
     @if (alert()) {<span class="al" [style.left.%]="alertPos()[0]" [style.top.%]="alertPos()[1]">{{ alert() }}</span>}
   `,
   styles: `
-    :host { display: block; position: relative; overflow: hidden; background: #6b7686; } svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-    .lv { position: absolute; left: 6px; top: 6px; display: flex; gap: 5px; align-items: center; padding: 2px 8px; border-radius: 4px; background: #16a34a; color: #fff; font-size: 11px; font-weight: 600; }
-    .lv i { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: b 1.4s infinite; } @keyframes b { 50% { opacity: .3; } }
-    .al { position: absolute; transform: translateX(-50%); padding: 2px 6px; background: #e11d2e; color: #fff; font-size: 10.5px; font-weight: 600; border-radius: 2px; white-space: nowrap; }
+    :host { display: block; position: relative; overflow: hidden; background: var(--kb-6b7686); } svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .lv { position: absolute; left: 6px; top: 6px; display: flex; gap: 5px; align-items: center; padding: 2px 8px; border-radius: 4px; background: var(--kb-16a34a); color: var(--kf-ffffff); font-size: 11px; font-weight: 600; }
+    .lv i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-ffffff); animation: b 1.4s infinite; } @keyframes b { 50% { opacity: .3; } }
+    .al { position: absolute; transform: translateX(-50%); padding: 2px 6px; background: var(--kb-e11d2e); color: var(--kf-ffffff); font-size: 10.5px; font-weight: 600; border-radius: 2px; white-space: nowrap; }
   `,
 })
 export class SafetyCam {
@@ -305,7 +305,7 @@ export class SafetyCam {
   protected readonly box = computed(() => {
     if (!this.alert()) return null;
     const v = this.variant();
-    return v === 2 ? { x: 106, y: 52, w: 24, h: 46, c: '#ef4444' } : v === 1 ? { x: 56, y: 60, w: 18, h: 40, c: '#22c55e' } : { x: 70, y: 48, w: 20, h: 50, c: '#ef4444' };
+    return v === 2 ? { x: 106, y: 52, w: 24, h: 46, c: 'var(--ka-ef4444)' } : v === 1 ? { x: 56, y: 60, w: 18, h: 40, c: 'var(--ka-22c55e)' } : { x: 70, y: 48, w: 20, h: 50, c: 'var(--ka-ef4444)' };
   });
   protected readonly alertPos = computed(() => (this.variant() === 2 ? [74, 38] : [50, 38]));
 }

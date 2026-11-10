@@ -25,11 +25,11 @@ const PARENT = 'Patrol & Guard Management';
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Compliance Rate" [value]="compliance() + '%'" icon="shield-check" color="#22c55e" change="1.2%" sub="guards fully certified" />
-      <app-kpi label="Expiring (30 days)" [value]="store.counts().expiring" icon="clock" color="#f97316" change="12%" [good]="false" sub="vs. last month" />
-      <app-kpi label="Expired" [value]="store.counts().expired" icon="triangle-alert" color="#ef4444" sub="guards blocked from posts" [subColor]="store.counts().expired ? '#dc2626' : undefined" />
-      <app-kpi label="Upcoming Sessions" [value]="store.courses().length" icon="graduation-cap" color="#8b5cf6" [sub]="enrolled() + ' guards enrolled'" />
-      <app-kpi label="In Training Today" [value]="store.counts().training" icon="users" color="#3b82f6" sub="off the roster" />
+      <app-kpi label="Compliance Rate" [value]="compliance() + '%'" icon="shield-check" color="var(--ka-22c55e)" change="1.2%" sub="guards fully certified" />
+      <app-kpi label="Expiring (30 days)" [value]="store.counts().expiring" icon="clock" color="var(--ka-f97316)" change="12%" [good]="false" sub="vs. last month" />
+      <app-kpi label="Expired" [value]="store.counts().expired" icon="triangle-alert" color="var(--ka-ef4444)" sub="guards blocked from posts" [subColor]="store.counts().expired ? 'var(--ka-dc2626)' : undefined" />
+      <app-kpi label="Upcoming Sessions" [value]="store.courses().length" icon="graduation-cap" color="var(--ka-8b5cf6)" [sub]="enrolled() + ' guards enrolled'" />
+      <app-kpi label="In Training Today" [value]="store.counts().training" icon="users" color="var(--ka-3b82f6)" sub="off the roster" />
     </section>
     <section class="two">
       <div class="card">
@@ -42,7 +42,7 @@ const PARENT = 'Patrol & Guard Management';
                 <td><span class="cn"><app-cert-badge [key]="m.t.key" [size]="20" />{{ m.t.name }}</span></td>
                 <td>@if (m.t.mandatory) {<span class="tag red">Mandatory</span>} @else {<span class="tag grey">Optional</span>}</td>
                 <td class="num good">{{ m.valid }}</td><td class="num warn-t">{{ m.exp }}</td><td class="num bad">{{ m.expired }}</td>
-                <td><div class="stack"><i [style.width.%]="m.pv" style="background:#22c55e"></i><i [style.width.%]="m.pe" style="background:#f59e0b"></i><i [style.width.%]="m.px" style="background:#ef4444"></i></div><small>{{ m.cov }}% of guards</small></td>
+                <td><div class="stack"><i [style.width.%]="m.pv" style="background:var(--kb-22c55e)"></i><i [style.width.%]="m.pe" style="background:var(--kb-f59e0b)"></i><i [style.width.%]="m.px" style="background:var(--kb-ef4444)"></i></div><small>{{ m.cov }}% of guards</small></td>
               </tr>
             }
           </tbody>
@@ -127,14 +127,14 @@ const PARENT = 'Patrol & Guard Management';
   styles: `
     ${PATROL_CSS}
     .two { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12px; margin-bottom: 12px; }
-    .cn { display: inline-flex; align-items: center; gap: 8px; } .mx tr { cursor: pointer; } .mx tr.on td { background: #f7f3ff; }
-    .stack { display: flex; width: 120px; height: 7px; border-radius: 4px; overflow: hidden; background: #eef0f5; } .stack i { display: block; height: 100%; } td small { font-size: 11px; color: var(--muted); }
+    .cn { display: inline-flex; align-items: center; gap: 8px; } .mx tr { cursor: pointer; } .mx tr.on td { background: var(--kb-f7f3ff); }
+    .stack { display: flex; width: 120px; height: 7px; border-radius: 4px; overflow: hidden; background: var(--kb-eef0f5); } .stack i { display: block; height: 100%; } td small { font-size: 11px; color: var(--muted); }
     .courses { display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow: auto; }
     .co { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 8px; border: 1px solid var(--border); border-radius: 10px; }
     .cb { display: flex; flex-direction: column; font-size: 12.5px; } .cb small { font-size: 11.5px; } .seat { display: flex; gap: 8px; align-items: center; font-size: 11px; margin-top: 3px; } .seat .mini-progress { width: 120px; }
     .acts { white-space: nowrap; } .acts button { margin-left: 4px; } .empty { text-align: center; padding: 24px !important; }
     .chip-s .x { border: 0; background: none; cursor: pointer; }
-    .el { display: flex; flex-direction: column; gap: 4px; max-height: 340px; overflow: auto; } .el label { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px; border-bottom: 1px solid #f0f1f6; }
+    .el { display: flex; flex-direction: column; gap: 4px; max-height: 340px; overflow: auto; } .el label { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 4px; border-bottom: 1px solid var(--kl-f0f1f6); }
     .form-actions { align-items: center; } .form-actions .muted { margin-right: auto; font-size: 12.5px; }
     @media (max-width: 1200px) { .two { grid-template-columns: 1fr; } }
   `,
@@ -235,11 +235,11 @@ export class GuardTraining {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Total Assets" [value]="store.assets().length" icon="box" color="#8b5cf6" [sub]="types.length + ' asset types'" />
-      <app-kpi label="Issued" [value]="count('Issued')" icon="user-check" color="#22c55e" [sub]="pct('Issued') + '% utilisation'" />
-      <app-kpi label="In Stock" [value]="count('In Stock')" icon="toolbox" color="#3b82f6" sub="ready to issue" />
-      <app-kpi label="In Maintenance" [value]="count('Maintenance')" icon="refresh" color="#f97316" sub="at service partner" />
-      <app-kpi label="Lost / Missing" [value]="count('Lost')" icon="triangle-alert" color="#ef4444" sub="incident raised" [subColor]="count('Lost') ? '#dc2626' : undefined" />
+      <app-kpi label="Total Assets" [value]="store.assets().length" icon="box" color="var(--ka-8b5cf6)" [sub]="types.length + ' asset types'" />
+      <app-kpi label="Issued" [value]="count('Issued')" icon="user-check" color="var(--ka-22c55e)" [sub]="pct('Issued') + '% utilisation'" />
+      <app-kpi label="In Stock" [value]="count('In Stock')" icon="toolbox" color="var(--ka-3b82f6)" sub="ready to issue" />
+      <app-kpi label="In Maintenance" [value]="count('Maintenance')" icon="refresh" color="var(--ka-f97316)" sub="at service partner" />
+      <app-kpi label="Lost / Missing" [value]="count('Lost')" icon="triangle-alert" color="var(--ka-ef4444)" sub="incident raised" [subColor]="count('Lost') ? 'var(--ka-dc2626)' : undefined" />
     </section>
     <section class="tiles">
       @for (t of tiles(); track t.type) {
@@ -291,8 +291,8 @@ export class GuardTraining {
     .tile.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .tile div { display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; } .tile small { color: var(--muted); font-size: 11px; } .tile em { font-style: normal; font-weight: 700; font-size: 18px; }
     .ti { width: 38px; height: 38px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; }
     .two { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 12px; align-items: start; }
-    .lb { list-style: none; margin: 0 0 8px; padding: 0; } .lb li { display: grid; grid-template-columns: 1fr 60px 40px; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; } .lb span:first-child { display: flex; flex-direction: column; } .lb small { color: var(--muted); font-size: 11px; }
-    .bt { height: 6px; background: #eef0f5; border-radius: 3px; overflow: hidden; } .bt i { display: block; height: 100%; background: #ef4444; }
+    .lb { list-style: none; margin: 0 0 8px; padding: 0; } .lb li { display: grid; grid-template-columns: 1fr 60px 40px; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; } .lb span:first-child { display: flex; flex-direction: column; } .lb small { color: var(--muted); font-size: 11px; }
+    .bt { height: 6px; background: var(--kb-eef0f5); border-radius: 3px; overflow: hidden; } .bt i { display: block; height: 100%; background: var(--kb-ef4444); }
     .mt { margin-top: 14px; } .gl { max-height: 360px; overflow: auto; margin-top: 8px; display: flex; flex-direction: column; } .g-modal .search-box { width: 100%; }
     @media (max-width: 1200px) { .two { grid-template-columns: 1fr; } }
   `,
@@ -406,11 +406,11 @@ const RESTRICTED = ['Data Center', 'Server Hall', 'Control Room', 'Production Ar
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Active Permits" [value]="by('Active').length" icon="key-round" color="#22c55e" [sub]="uniqueHolders() + ' guards'" />
-      <app-kpi label="Pending Approval" [value]="by('Pending').length" icon="clock" color="#f97316" sub="awaiting you" [subColor]="by('Pending').length ? '#ea580c' : undefined" />
-      <app-kpi label="Expiring (60 days)" [value]="expiring().length" icon="calendar-x" color="#f59e0b" sub="renew before expiry" />
-      <app-kpi label="Expired / Revoked" [value]="by('Expired').length + by('Revoked').length" icon="ban" color="#ef4444" sub="access disabled" />
-      <app-kpi label="Restricted Zone Holders" [value]="rzHolders()" icon="shield-plus" color="#8b5cf6" sub="Data Center · Server Hall · CR" />
+      <app-kpi label="Active Permits" [value]="by('Active').length" icon="key-round" color="var(--ka-22c55e)" [sub]="uniqueHolders() + ' guards'" />
+      <app-kpi label="Pending Approval" [value]="by('Pending').length" icon="clock" color="var(--ka-f97316)" sub="awaiting you" [subColor]="by('Pending').length ? 'var(--ka-ea580c)' : undefined" />
+      <app-kpi label="Expiring (60 days)" [value]="expiring().length" icon="calendar-x" color="var(--ka-f59e0b)" sub="renew before expiry" />
+      <app-kpi label="Expired / Revoked" [value]="by('Expired').length + by('Revoked').length" icon="ban" color="var(--ka-ef4444)" sub="access disabled" />
+      <app-kpi label="Restricted Zone Holders" [value]="rzHolders()" icon="shield-plus" color="var(--ka-8b5cf6)" sub="Data Center · Server Hall · CR" />
     </section>
     <section class="two">
       <div class="card">
@@ -436,7 +436,7 @@ const RESTRICTED = ['Data Center', 'Server Hall', 'Control Room', 'Production Ar
           <tbody>
             @for (z of zoneRows(); track z.name) {
               <tr><td><b>{{ z.name }}</b></td><td><span [class]="z.risk === 'High' ? 'tag red' : z.risk === 'Medium' ? 'tag amber' : 'tag green'">{{ z.risk }}</span></td><td class="num">{{ z.auth }}</td><td class="num">{{ z.on }}</td>
-                <td><div class="mini-progress"><i [style.width.%]="Math.min(100, (z.on / z.req) * 100)" [style.background]="z.on >= z.req ? '#22c55e' : '#f59e0b'"></i></div><small>{{ z.on }}/{{ z.req }} required</small></td></tr>
+                <td><div class="mini-progress"><i [style.width.%]="Math.min(100, (z.on / z.req) * 100)" [style.background]="z.on >= z.req ? 'var(--ka-22c55e)' : 'var(--ka-f59e0b)'"></i></div><small>{{ z.on }}/{{ z.req }} required</small></td></tr>
             }
           </tbody>
         </table>
@@ -504,7 +504,7 @@ export class GuardPermits {
     { id: 'extend', label: 'Extend 6 months', icon: 'calendar-days', when: (r) => r.status === 'Active' || r.status === 'Expired' },
     { id: 'revoke', label: 'Revoke', icon: 'ban', danger: true, when: (r) => r.status === 'Active' },
   ];
-  protected readonly rows = computed(() => this.store.permits().map((p) => { const n = this.store.guard(p.guardId)?.name ?? p.guardId; return { ...p, guard: n, initials: n.split(' ').map((x) => x[0]).join('').slice(0, 2), avatar: ['#7c3aed', '#2563eb', '#0d9488', '#ea580c', '#db2777'][Math.abs(hash(p.guardId)) % 5], zonesTxt: p.zones.join(', ') }; }));
+  protected readonly rows = computed(() => this.store.permits().map((p) => { const n = this.store.guard(p.guardId)?.name ?? p.guardId; return { ...p, guard: n, initials: n.split(' ').map((x) => x[0]).join('').slice(0, 2), avatar: ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ea580c)', 'var(--ka-db2777)'][Math.abs(hash(p.guardId)) % 5], zonesTxt: p.zones.join(', ') }; }));
   protected readonly expiring = computed(() => this.store.permits().filter((p) => p.status === 'Active' && p.to <= '2026-12-14'));
   protected readonly uniqueHolders = computed(() => new Set(this.by('Active').map((p) => p.guardId)).size);
   protected readonly rzHolders = computed(() => new Set(this.store.permits().filter((p) => p.status === 'Active' && p.zones.some((z) => ['Data Center', 'Server Hall', 'Control Room'].includes(z))).map((p) => p.guardId)).size);
@@ -568,11 +568,11 @@ const MONTHS = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="p-upload" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Security Vendors" [value]="store.companies().length" icon="building" color="#8b5cf6" [sub]="renewals() + ' renewal due'" />
-      <app-kpi label="Contract Guards" [value]="store.counts().total" icon="users" color="#3b82f6" [sub]="store.counts().on + ' on duty now'" />
-      <app-kpi label="Avg SLA Achievement" [value]="avgSla() + '%'" icon="shield-check" color="#22c55e" sub="target 95%" />
-      <app-kpi label="Monthly Spend (AED)" [value]="spend()" icon="file-chart" color="#f97316" change="3%" [good]="false" sub="vs. last month" />
-      <app-kpi label="SLA Breaches" [value]="breaches()" icon="triangle-alert" color="#ef4444" sub="vendors below target" [subColor]="breaches() ? '#dc2626' : undefined" />
+      <app-kpi label="Security Vendors" [value]="store.companies().length" icon="building" color="var(--ka-8b5cf6)" [sub]="renewals() + ' renewal due'" />
+      <app-kpi label="Contract Guards" [value]="store.counts().total" icon="users" color="var(--ka-3b82f6)" [sub]="store.counts().on + ' on duty now'" />
+      <app-kpi label="Avg SLA Achievement" [value]="avgSla() + '%'" icon="shield-check" color="var(--ka-22c55e)" sub="target 95%" />
+      <app-kpi label="Monthly Spend (AED)" [value]="spend()" icon="file-chart" color="var(--ka-f97316)" change="3%" [good]="false" sub="vs. last month" />
+      <app-kpi label="SLA Breaches" [value]="breaches()" icon="triangle-alert" color="var(--ka-ef4444)" sub="vendors below target" [subColor]="breaches() ? 'var(--ka-dc2626)' : undefined" />
     </section>
     <section class="vendors">
       @for (c of rows(); track c.name) {
@@ -630,12 +630,12 @@ const MONTHS = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
     .vendors { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-bottom: 12px; }
     .vc { text-align: left; cursor: pointer; font: inherit; display: flex; flex-direction: column; gap: 10px; } .vc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .vh { display: grid; grid-template-columns: 38px 1fr auto; gap: 8px; align-items: center; } .vh div { display: flex; flex-direction: column; font-size: 13px; min-width: 0; } .vh small { color: var(--muted); font-size: 11px; }
-    .lg { width: 38px; height: 38px; border-radius: 10px; color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+    .lg { width: 38px; height: 38px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; font-weight: 700; font-size: 13px; }
     .vm { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; } .vm div { display: flex; flex-direction: column; } .vm small, .vf small { color: var(--muted); font-size: 11px; } .vm b { font-size: 15px; }
     .vf { display: flex; justify-content: space-between; } .vf small.bad { color: var(--red); }
     .det { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr 0.8fr; gap: 12px; }
     .kv { display: grid; grid-template-columns: 110px 1fr; gap: 6px 10px; font-size: 12.5px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
-    .bill { display: flex; flex-direction: column; gap: 6px; } .bl { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; border-bottom: 1px solid #f0f1f6; } .bl.tot { font-size: 14px; border: 0; } .bill .btn-ghost { align-self: flex-start; margin-top: 4px; }
+    .bill { display: flex; flex-direction: column; gap: 6px; } .bl { display: flex; justify-content: space-between; font-size: 12.5px; padding: 4px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .bl.tot { font-size: 14px; border: 0; } .bill .btn-ghost { align-self: flex-start; margin-top: 4px; }
     @media (max-width: 1400px) { .det { grid-template-columns: 1fr 1fr; } }
   `,
 })
@@ -669,13 +669,13 @@ export class ContractorGuards {
   protected statusSegs(n: string) {
     const gs = this.store.guards().filter((g) => g.company === n);
     const c = (s: string) => gs.filter((g) => g.status === s).length;
-    return [{ label: 'On Duty', value: c('On Duty'), color: '#22c55e' }, { label: 'Off Duty', value: c('Off Duty'), color: '#94a3b8' }, { label: 'On Leave', value: c('On Leave'), color: '#f97316' }, { label: 'Training', value: c('Training'), color: '#3b82f6' }];
+    return [{ label: 'On Duty', value: c('On Duty'), color: 'var(--ka-22c55e)' }, { label: 'Off Duty', value: c('Off Duty'), color: 'var(--ka-94a3b8)' }, { label: 'On Leave', value: c('On Leave'), color: 'var(--ka-f97316)' }, { label: 'Training', value: c('Training'), color: 'var(--ka-3b82f6)' }];
   }
   protected slaTrend(c: SecCompany) {
     const h = Math.abs(hash(c.name));
     return [
       { name: 'SLA', color: c.color, values: MONTHS.map((_, i) => Math.round((c.sla - 2.5 + i * 0.5 + ((h >> i) % 3) * 0.4) * 10) / 10), area: true },
-      { name: 'Target', color: '#94a3b8', values: MONTHS.map(() => c.slaTarget), dashed: true },
+      { name: 'Target', color: 'var(--ka-94a3b8)', values: MONTHS.map(() => c.slaTarget), dashed: true },
     ];
   }
   protected hours(c: SecCompany) {
@@ -703,7 +703,7 @@ export class ContractorGuards {
     this.router.navigate([BASE, 'guard-directory'], { queryParams: { company: c.name } });
   }
   protected openVendor() {
-    this.vf.set({ name: '', short: '', color: '#475569', guards: 0, type: 'Licensed Vendor', contractNo: '', start: '2026-11-01', end: '2027-10-31', rate: 38, monthly: 0, sla: 100, slaTarget: 95, contact: '', phone: '', email: '', license: '', licenseExpiry: '2027-10-31', rating: 0, status: 'Under Review' });
+    this.vf.set({ name: '', short: '', color: 'var(--ka-475569)', guards: 0, type: 'Licensed Vendor', contractNo: '', start: '2026-11-01', end: '2027-10-31', rate: 38, monthly: 0, sla: 100, slaTarget: 95, contact: '', phone: '', email: '', license: '', licenseExpiry: '2027-10-31', rating: 0, status: 'Under Review' });
   }
   protected saveVendor() {
     const f = this.vf()!;
@@ -791,7 +791,7 @@ const STABS = ['Patrol Rules', 'Alerts & Escalation', 'Shifts & Compliance', 'Ce
     .set div { display: flex; flex-direction: column; gap: 2px; font-size: 13px; } .set small { color: var(--muted); font-size: 11.5px; }
     .num-in { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); white-space: nowrap; } .num-in .input { width: 76px; }
     .sw { position: relative; display: inline-block; width: 38px; height: 22px; flex: none; } .sw input { opacity: 0; width: 0; height: 0; }
-    .sw i { position: absolute; inset: 0; background: #d1d5db; border-radius: 22px; cursor: pointer; transition: 0.2s; } .sw i::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+    .sw i { position: absolute; inset: 0; background: var(--kb-d1d5db); border-radius: 22px; cursor: pointer; transition: 0.2s; } .sw i::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: var(--kb-ffffff); border-radius: 50%; transition: 0.2s; }
     .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(16px); }
     h4 { margin: 18px 0 8px; font-size: 13px; }
     .ints { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .int { display: grid; grid-template-columns: 40px 1fr auto auto; gap: 10px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 10px; }

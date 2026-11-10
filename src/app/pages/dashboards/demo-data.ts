@@ -19,7 +19,7 @@ export const DEPARTMENTS = ['Operations', 'Engineering', 'Sales', 'Finance', 'HR
 export const SITE_NAMES = ['Head Office', 'Manufacturing', 'Warehouse', 'Logistics Hub', 'Retail Stores', 'Data Center'];
 export const COMPANIES = ['BuildRight LLC', 'SafeGuard Security', 'CleanPro Services', 'TechServe FM', 'Rapid Logistics', 'Spark Electricals'];
 
-const AVATAR_COLORS = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#475569', '#16a34a', '#ea580c'];
+const AVATAR_COLORS = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-475569)', 'var(--ka-16a34a)', 'var(--ka-ea580c)'];
 
 export const initials = (name: string) =>
   name

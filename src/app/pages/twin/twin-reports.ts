@@ -53,11 +53,11 @@ const today = () => new Date().toLocaleDateString('en-GB', { day: '2-digit', mon
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Avg Utilization" [value]="avgUtil() + '%'" icon="map-floor" color="#7c3aed" change="3%" sub="vs. previous period" />
-      <app-kpi label="Peak Occupancy" [value]="peak().v + '%'" icon="users" color="#2563eb" [sub]="peak().at" />
-      <app-kpi label="Under-used Space" [value]="fmt(underArea()) + ' m²'" icon="trending-up" color="#f59e0b" [sub]="underCount() + ' zones below 40%'" />
-      <app-kpi label="Savings Potential" [value]="'AED ' + savings()" icon="twin-zap" color="#16a34a" sub="per year · consolidation" subColor="#15803d" />
-      <app-kpi label="Scheduled Reports" [value]="store.reports().length" icon="file-chart" color="#0ea5e9" [sub]="ready() + ' ready · ' + generating() + ' generating'" />
+      <app-kpi label="Avg Utilization" [value]="avgUtil() + '%'" icon="map-floor" color="var(--ka-7c3aed)" change="3%" sub="vs. previous period" />
+      <app-kpi label="Peak Occupancy" [value]="peak().v + '%'" icon="users" color="var(--ka-2563eb)" [sub]="peak().at" />
+      <app-kpi label="Under-used Space" [value]="fmt(underArea()) + ' m²'" icon="trending-up" color="var(--ka-f59e0b)" [sub]="underCount() + ' zones below 40%'" />
+      <app-kpi label="Savings Potential" [value]="'AED ' + savings()" icon="twin-zap" color="var(--ka-16a34a)" sub="per year · consolidation" subColor="var(--ka-15803d)" />
+      <app-kpi label="Scheduled Reports" [value]="store.reports().length" icon="file-chart" color="var(--ka-0ea5e9)" [sub]="ready() + ' ready · ' + generating() + ' generating'" />
     </section>
 
     <section class="card ins-wrap">
@@ -84,7 +84,7 @@ const today = () => new Date().toLocaleDateString('en-GB', { day: '2-digit', mon
           <h3>Space Utilization Report <span class="card-sub">{{ periodLabel() }} · 08:00–18:00</span></h3>
           <div class="tabs">@for (g of groups; track g) {<button [class.on]="groupBy() === g" (click)="groupBy.set(g)">{{ g }}</button>}</div>
         </div>
-        <app-column-chart [labels]="chartRows().map(lab)" [series]="[{ name: 'Average', color: '#7c3aed', values: avgVals() }, { name: 'Peak', color: '#c4b5fd', values: peakVals() }]" [height]="220" suffix="%" />
+        <app-column-chart [labels]="chartRows().map(lab)" [series]="[{ name: 'Average', color: 'var(--ka-7c3aed)', values: avgVals() }, { name: 'Peak', color: 'var(--ka-c4b5fd)', values: peakVals() }]" [height]="220" suffix="%" />
         <div class="tw">
           <table class="table ut">
             <thead><tr>
@@ -96,7 +96,7 @@ const today = () => new Date().toLocaleDateString('en-GB', { day: '2-digit', mon
                 <tr>
                   <td><span class="sw" [style.background]="r.color"></span><b>{{ r.name }}</b><small class="muted">{{ r.sub }}</small></td>
                   <td class="num">{{ fmt(r.capacity) }}</td><td class="num">{{ fmt(r.heads) }}</td>
-                  <td><div class="pb"><i class="bar"><i [style.width.%]="r.avg" [style.background]="r.avg < 40 ? '#f59e0b' : r.avg > 85 ? '#ef4444' : '#7c3aed'"></i></i><span>{{ r.avg }}%</span></div></td>
+                  <td><div class="pb"><i class="bar"><i [style.width.%]="r.avg" [style.background]="r.avg < 40 ? 'var(--ka-f59e0b)' : r.avg > 85 ? 'var(--ka-ef4444)' : 'var(--ka-7c3aed)'"></i></i><span>{{ r.avg }}%</span></div></td>
                   <td class="num">{{ r.peak }}%</td><td>{{ r.peakAt }}</td>
                   <td><span [class]="r.avg < 40 ? 'tag amber' : r.peak > 100 ? 'tag red' : 'tag green'">{{ r.avg < 40 ? 'Under-used' : r.peak > 100 ? 'Over capacity' : 'Healthy' }}</span></td>
                 </tr>
@@ -166,17 +166,17 @@ const today = () => new Date().toLocaleDateString('en-GB', { day: '2-digit', mon
   styles: `
     .ins-wrap { margin-bottom: 12px; } .ins-wrap h3 { display: flex; align-items: center; gap: 6px; }
     .ins { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .in { border: 1px solid var(--border); border-top: 3px solid var(--c); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 6px; background: #fff; }
-    .in header { display: flex; justify-content: space-between; align-items: center; } .in .ic { width: 32px; height: 32px; border-radius: 8px; background: var(--c); color: #fff; display: grid; place-items: center; }
-    .in .m { font-size: 22px; color: var(--c); } .in h4 { margin: 0; font-size: 13.5px; } .in p { margin: 0; font-size: 12px; color: #4b4f6b; line-height: 1.45; flex: 1; }
+    .in { border: 1px solid var(--border); border-top: 3px solid var(--c); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 6px; background: var(--kb-ffffff); }
+    .in header { display: flex; justify-content: space-between; align-items: center; } .in .ic { width: 32px; height: 32px; border-radius: 8px; background: var(--c); color: var(--kf-ffffff); display: grid; place-items: center; }
+    .in .m { font-size: 22px; color: var(--c); } .in h4 { margin: 0; font-size: 13.5px; } .in p { margin: 0; font-size: 12px; color: var(--kf-4b4f6b); line-height: 1.45; flex: 1; }
     .in footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; } .lnk { border: none; background: none; color: var(--muted); font-size: 12px; cursor: pointer; }
     .row2 { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: start; } .col { display: flex; flex-direction: column; gap: 12px; }
     .tw { max-height: 420px; overflow: auto; margin-top: 10px; } .ut td small { display: block; font-size: 11px; margin-left: 16px; } .ut td b { font-weight: 500; }
     .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; } .srt { cursor: pointer; user-select: none; } .num { text-align: right; }
-    .ut { font-size: 12.5px; } .ut th, .ut td { padding-left: 8px; padding-right: 8px; } .pb { display: grid; grid-template-columns: 60px auto; gap: 8px; align-items: center; } .bar { display: block; height: 7px; border-radius: 6px; background: #e8eaf2; overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
+    .ut { font-size: 12.5px; } .ut th, .ut td { padding-left: 8px; padding-right: 8px; } .pb { display: grid; grid-template-columns: 60px auto; gap: 8px; align-items: center; } .bar { display: block; height: 7px; border-radius: 6px; background: var(--kb-e8eaf2); overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
     .more { margin-top: 8px; }
-    .pv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 6px 0 14px; } .pv-k { background: #f5f3ff; border-radius: 8px; padding: 10px; } .pv-k span { font-size: 11.5px; color: var(--muted); display: block; } .pv-k b { font-size: 20px; }
-    .g-drawer h4 { margin: 14px 0 8px; font-size: 13px; } .pv-l { list-style: none; margin: 0; padding: 0; } .pv-l li { display: flex; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid #f2f3f7; }
+    .pv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 6px 0 14px; } .pv-k { background: var(--kb-f5f3ff); border-radius: 8px; padding: 10px; } .pv-k span { font-size: 11.5px; color: var(--muted); display: block; } .pv-k b { font-size: 20px; }
+    .g-drawer h4 { margin: 14px 0 8px; font-size: 13px; } .pv-l { list-style: none; margin: 0; padding: 0; } .pv-l li { display: flex; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid var(--kl-f2f3f7); }
     .facts { display: grid; grid-template-columns: 90px 1fr; gap: 7px; margin: 14px 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; }
     @media (max-width: 1280px) { .row2 { grid-template-columns: 1fr; } .ins { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -224,7 +224,7 @@ export class TwinReportsInsights {
   protected readonly allRows = computed<URow[]>(() => {
     const zs = this.hz();
     const g = this.groupBy();
-    if (g === 'Floor') return FLOOR_TABS.map((f) => this.agg(zs.filter((z) => z.floor === f.id), f.id, floorById(f.id).name, `${zs.filter((z) => z.floor === f.id).length} zones`, '#7c3aed'));
+    if (g === 'Floor') return FLOOR_TABS.map((f) => this.agg(zs.filter((z) => z.floor === f.id), f.id, floorById(f.id).name, `${zs.filter((z) => z.floor === f.id).length} zones`, 'var(--ka-7c3aed)'));
     if (g === 'Zone Type') {
       const types = [...new Set(zs.map((z) => z.type))];
       return types.map((t) => {
@@ -241,7 +241,7 @@ export class TwinReportsInsights {
   protected readonly peakVals = computed(() => this.chartRows().map((r) => r.peak));
   protected lab = (r: URow) => (this.groupBy() === 'Floor' ? r.name.replace('Floor ', 'F').replace('Ground Floor', 'G') : r.name.length > 9 ? r.name.slice(0, 8) + '…' : r.name);
 
-  private readonly building = computed(() => this.agg(this.hz(), 'all', 'Building', '', '#7c3aed'));
+  private readonly building = computed(() => this.agg(this.hz(), 'all', 'Building', '', 'var(--ka-7c3aed)'));
   protected readonly avgUtil = computed(() => this.building().avg);
   protected readonly peak = computed(() => {
     let best = { v: 0, at: '' };
@@ -268,9 +268,9 @@ export class TwinReportsInsights {
     const u = this.avgUtil();
     const pk = this.peak().v;
     return [
-      { name: 'Avg utilization', color: '#7c3aed', values: this.weeks.map((_, i) => Math.round(u - 7 + i * 0.6 + Math.sin(i * 1.7) * 2.4)), area: true },
-      { name: 'Peak', color: '#f59e0b', values: this.weeks.map((_, i) => Math.round(pk - 9 + i * 0.7 + Math.cos(i * 1.3) * 3)) },
-      { name: 'Target', color: '#16a34a', values: this.weeks.map(() => 75), dashed: true },
+      { name: 'Avg utilization', color: 'var(--ka-7c3aed)', values: this.weeks.map((_, i) => Math.round(u - 7 + i * 0.6 + Math.sin(i * 1.7) * 2.4)), area: true },
+      { name: 'Peak', color: 'var(--ka-f59e0b)', values: this.weeks.map((_, i) => Math.round(pk - 9 + i * 0.7 + Math.cos(i * 1.3) * 3)) },
+      { name: 'Target', color: 'var(--ka-16a34a)', values: this.weeks.map(() => 75), dashed: true },
     ];
   });
   protected readonly floorDay = computed(() =>
@@ -280,7 +280,7 @@ export class TwinReportsInsights {
       return DAYS.map((_, d) => Math.round((WORK_HOURS.reduce((a, h) => a + zs.reduce((b, z) => b + zoneUtil(z, h, this.pf() * DAY_FACTOR[d]) * z.capacity, 0), 0) / WORK_HOURS.length / cap) * 100));
     }),
   );
-  protected readonly floorBars = computed(() => FLOOR_TABS.map((f) => this.agg(this.hz().filter((z) => z.floor === f.id), f.id, '', '', '')).map((r, i) => ({ label: FLOOR_TABS[i].name, value: r.avg, display: `${r.avg}%`, color: r.avg < 40 ? '#f59e0b' : '#7c3aed' })));
+  protected readonly floorBars = computed(() => FLOOR_TABS.map((f) => this.agg(this.hz().filter((z) => z.floor === f.id), f.id, '', '', '')).map((r, i) => ({ label: FLOOR_TABS[i].name, value: r.avg, display: `${r.avg}%`, color: r.avg < 40 ? 'var(--ka-f59e0b)' : 'var(--ka-7c3aed)' })));
 
   /* ---------- insights ---------- */
   protected readonly insights = computed<Insight[]>(() => {
@@ -295,12 +295,12 @@ export class TwinReportsInsights {
     const open = this.store.activeAlerts().length;
     const lowArea = this.hz().filter((z) => z.floor === low.id).reduce((a, z) => a + areaOf(z), 0);
     const list: Insight[] = [
-      { id: 'consolidate', icon: 'twin-building', color: '#f59e0b', impact: 'Opportunity', title: `Consolidate ${low.name}`, metric: `${low.avg}% avg`, text: `${low.name} averages ${low.avg}% (peak ${low.peak}%). Moving its ${low.heads} daily occupants to other floors frees ${fmtN(lowArea)} m² — about AED ${((lowArea * AED_PER_M2 * 0.4) / 1e6).toFixed(1)}M a year.`, action: 'Simulate', link: '/digital-twin/scenario-simulation' },
-      { id: 'lunch', icon: 'users', color: '#ef4444', impact: 'High', title: `${caf?.z.name ?? 'Cafeteria'} over capacity at lunch`, metric: `${caf?.v ?? 0}% at 12:00`, text: `${floorById(caf?.z.floor ?? '4').name} cafeteria exceeds capacity between 12:00–13:30. Staggering lunch by department in 30-min waves keeps it under 85%.`, action: 'View heatmap', link: '/digital-twin/heatmaps-analytics' },
-      { id: 'meeting', icon: 'twin-door', color: '#2563eb', impact: 'Medium', title: 'Meeting rooms: 31% ghost bookings', metric: `${meetAvg}% used`, text: 'Nearly a third of booked meeting slots have no one present after 10 minutes. Enable auto-release with occupancy sensors.', action: 'Create task' },
-      { id: 'temp', icon: 'twin-thermo', color: '#ef4444', impact: 'High', title: `${alarms.length} sensor${alarms.length === 1 ? '' : 's'} in alarm`, metric: alarms[0] ? `${alarms[0].value}${alarms[0].unit}` : '0', text: `${alarms.map((a) => `${a.name} (${a.zone})`).join(', ') || 'No sensors'} above threshold; ${offline} sensors offline. Server room cooling should be inspected.`, action: 'Open sensors', link: '/digital-twin/sensor-iot-visualization' },
-      { id: 'battery', icon: 'battery', color: '#7c3aed', impact: 'Medium', title: 'Asset tags need charging', metric: `${lowBat} tags`, text: `${lowBat} tracked assets report battery below 25%. Location accuracy drops when tags go silent.`, action: 'View assets', link: '/digital-twin/asset-visualization' },
-      { id: 'alerts', icon: 'shield', color: '#0891b2', impact: open > 3 ? 'High' : 'Medium', title: 'Open spatial alerts', metric: `${open} open`, text: `${open} alerts across the building are not acknowledged yet, ${this.store.newAlerts()} new in the last hour.`, action: 'Open viewer', link: '/digital-twin/2d-3d-facility-viewer' },
+      { id: 'consolidate', icon: 'twin-building', color: 'var(--ka-f59e0b)', impact: 'Opportunity', title: `Consolidate ${low.name}`, metric: `${low.avg}% avg`, text: `${low.name} averages ${low.avg}% (peak ${low.peak}%). Moving its ${low.heads} daily occupants to other floors frees ${fmtN(lowArea)} m² — about AED ${((lowArea * AED_PER_M2 * 0.4) / 1e6).toFixed(1)}M a year.`, action: 'Simulate', link: '/digital-twin/scenario-simulation' },
+      { id: 'lunch', icon: 'users', color: 'var(--ka-ef4444)', impact: 'High', title: `${caf?.z.name ?? 'Cafeteria'} over capacity at lunch`, metric: `${caf?.v ?? 0}% at 12:00`, text: `${floorById(caf?.z.floor ?? '4').name} cafeteria exceeds capacity between 12:00–13:30. Staggering lunch by department in 30-min waves keeps it under 85%.`, action: 'View heatmap', link: '/digital-twin/heatmaps-analytics' },
+      { id: 'meeting', icon: 'twin-door', color: 'var(--ka-2563eb)', impact: 'Medium', title: 'Meeting rooms: 31% ghost bookings', metric: `${meetAvg}% used`, text: 'Nearly a third of booked meeting slots have no one present after 10 minutes. Enable auto-release with occupancy sensors.', action: 'Create task' },
+      { id: 'temp', icon: 'twin-thermo', color: 'var(--ka-ef4444)', impact: 'High', title: `${alarms.length} sensor${alarms.length === 1 ? '' : 's'} in alarm`, metric: alarms[0] ? `${alarms[0].value}${alarms[0].unit}` : '0', text: `${alarms.map((a) => `${a.name} (${a.zone})`).join(', ') || 'No sensors'} above threshold; ${offline} sensors offline. Server room cooling should be inspected.`, action: 'Open sensors', link: '/digital-twin/sensor-iot-visualization' },
+      { id: 'battery', icon: 'battery', color: 'var(--ka-7c3aed)', impact: 'Medium', title: 'Asset tags need charging', metric: `${lowBat} tags`, text: `${lowBat} tracked assets report battery below 25%. Location accuracy drops when tags go silent.`, action: 'View assets', link: '/digital-twin/asset-visualization' },
+      { id: 'alerts', icon: 'shield', color: 'var(--ka-0891b2)', impact: open > 3 ? 'High' : 'Medium', title: 'Open spatial alerts', metric: `${open} open`, text: `${open} alerts across the building are not acknowledged yet, ${this.store.newAlerts()} new in the last hour.`, action: 'Open viewer', link: '/digital-twin/2d-3d-facility-viewer' },
     ];
     return list.filter((i) => !this.dismissed().has(i.id));
   });
@@ -336,7 +336,7 @@ export class TwinReportsInsights {
   }
   protected doInsight(i: Insight) {
     if (i.link) return this.router.navigateByUrl(i.link);
-    this.store.log({ icon: 'twin-wrench', color: '#f59e0b', who: 'Insight action', what: i.title });
+    this.store.log({ icon: 'twin-wrench', color: 'var(--ka-f59e0b)', who: 'Insight action', what: i.title });
     this.dismiss(i.id);
     this.toast$(`Task created: ${i.title}`);
     return undefined;
@@ -354,7 +354,7 @@ export class TwinReportsInsights {
     this.toast$(`Generating ${r.name}…`);
     setTimeout(() => {
       this.patch(r.id, { status: 'Ready', last: today() });
-      this.store.log({ icon: 'file-chart', color: '#0ea5e9', who: r.name, what: `Report generated (${r.format})` });
+      this.store.log({ icon: 'file-chart', color: 'var(--ka-0ea5e9)', who: r.name, what: `Report generated (${r.format})` });
       this.toast$(`${r.name} is ready`);
     }, 2200);
   }
@@ -371,7 +371,7 @@ export class TwinReportsInsights {
   }
   protected email(r: TReport) {
     this.toast$(`${r.name} emailed to ${this.recipients(r)}`);
-    this.store.log({ icon: 'twin-mail', color: '#2563eb', who: r.name, what: 'Report emailed' });
+    this.store.log({ icon: 'twin-mail', color: 'var(--ka-2563eb)', who: r.name, what: 'Report emailed' });
   }
   protected newReport() {
     this.isNew.set(true);

@@ -30,10 +30,10 @@ const HOURS = ['07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17',
       </label>
     </section>
     <section class="kpi-row">
-      <app-kpi [label]="'Forecast ' + site().unit" [value]="total().toLocaleString()" icon="trending-up" color="#8b5cf6" [sub]="site().driver" />
-      <app-kpi label="Staff-hours Needed" [value]="needH()" icon="users" color="#3b82f6" />
-      <app-kpi label="Staff-hours Scheduled" [value]="schedH()" icon="calendar-days" color="#22c55e" />
-      <app-kpi label="Gap" [value]="(gapH() > 0 ? '+' : '') + gapH()" icon="triangle-alert" [color]="gapH() > 0 ? '#ef4444' : '#22c55e'" [sub]="gapH() > 0 ? 'hours short' : 'hours spare'" />
+      <app-kpi [label]="'Forecast ' + site().unit" [value]="total().toLocaleString()" icon="trending-up" color="var(--ka-8b5cf6)" [sub]="site().driver" />
+      <app-kpi label="Staff-hours Needed" [value]="needH()" icon="users" color="var(--ka-3b82f6)" />
+      <app-kpi label="Staff-hours Scheduled" [value]="schedH()" icon="calendar-days" color="var(--ka-22c55e)" />
+      <app-kpi label="Gap" [value]="(gapH() > 0 ? '+' : '') + gapH()" icon="triangle-alert" [color]="gapH() > 0 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" [sub]="gapH() > 0 ? 'hours short' : 'hours spare'" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -68,11 +68,11 @@ const HOURS = ['07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17',
   `,
   styles: `
     .bar { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; padding: 12px; margin-bottom: 12px; }
-    .bar label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; }
+    .bar label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); }
     .slider { min-width: 240px; } .slider input { accent-color: var(--primary); }
-    .sug { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .sug { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .sug.done { opacity: .55; }
-    .code { padding: 3px 7px; border-radius: 5px; color: #fff; font-weight: 700; font-size: 10.5px; }
+    .code { padding: 3px 7px; border-radius: 5px; color: var(--kf-ffffff); font-weight: 700; font-size: 10.5px; }
   `,
 })
 export class DemandPlanning {
@@ -106,8 +106,8 @@ export class DemandPlanning {
   protected readonly schedH = computed(() => this.sched().reduce((a, b) => a + b, 0));
   protected readonly gapH = computed(() => this.needH() - this.schedH());
   protected readonly chart = computed(() => [
-    { name: 'Needed', color: '#c4b5fd', values: this.need() },
-    { name: 'Scheduled', color: '#7c3aed', values: this.sched() },
+    { name: 'Needed', color: 'var(--ka-c4b5fd)', values: this.need() },
+    { name: 'Scheduled', color: 'var(--ka-7c3aed)', values: this.sched() },
   ]);
   /** Groups under-covered hours into whole shifts to add. */
   protected readonly suggestions = computed(() => {
@@ -195,16 +195,16 @@ interface Need {
   `,
   styles: `
     .mx { max-height: 560px; } .c { text-align: center; } .sm-av { width: 24px !important; height: 24px !important; font-size: 9.5px !important; display: inline-grid !important; margin-right: 8px; vertical-align: middle; }
-    .lvl { width: 30px; height: 26px; border: 0; border-radius: 6px; background: #f3f4f6; color: #9ca3af; font-weight: 700; cursor: pointer; }
-    .lvl[data-l='1'], .leg i[data-l='1'] { background: #ede9fe; color: #6d28d9; }
-    .lvl[data-l='2'], .leg i[data-l='2'] { background: #a78bfa; color: #fff; }
-    .lvl[data-l='3'], .leg i[data-l='3'] { background: #6d28d9; color: #fff; }
+    .lvl { width: 30px; height: 26px; border: 0; border-radius: 6px; background: var(--kb-f3f4f6); color: var(--kf-9ca3af); font-weight: 700; cursor: pointer; }
+    .lvl[data-l='1'], .leg i[data-l='1'] { background: var(--kb-ede9fe); color: var(--kf-6d28d9); }
+    .lvl[data-l='2'], .leg i[data-l='2'] { background: var(--kb-a78bfa); color: var(--kf-ffffff); }
+    .lvl[data-l='3'], .leg i[data-l='3'] { background: var(--kb-6d28d9); color: var(--kf-ffffff); }
     .leg { display: flex; gap: 14px; margin-top: 10px; font-size: 12px; } .leg span { display: flex; gap: 6px; align-items: center; } .leg i { width: 14px; height: 14px; border-radius: 4px; }
-    .need { padding: 10px 0; border-bottom: 1px solid #f0f1f6; }
+    .need { padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .nh { display: flex; align-items: center; gap: 8px; font-size: 13px; } .nh .tag { margin-left: auto; }
-    .code { padding: 3px 7px; border-radius: 5px; color: #fff; font-weight: 700; font-size: 10.5px; }
+    .code { padding: 3px 7px; border-radius: 5px; color: var(--kf-ffffff); font-weight: 700; font-size: 10.5px; }
     .reqs { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-    .req { padding: 3px 8px; border-radius: 12px; font-size: 11.5px; background: #fee2e2; color: #b91c1c; } .req.ok { background: #dcfce7; color: #15803d; }
+    .req { padding: 3px 8px; border-radius: 12px; font-size: 11.5px; background: var(--kb-fee2e2); color: var(--kf-b91c1c); } .req.ok { background: var(--kb-dcfce7); color: var(--kf-15803d); }
     .cands { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; } .cands small { color: var(--muted); }
   `,
 })
@@ -313,7 +313,7 @@ interface Reqm {
     </section>
   `,
   styles: `
-    .code { padding: 3px 7px; border-radius: 5px; color: #fff; font-weight: 700; font-size: 10.5px; }
+    .code { padding: 3px 7px; border-radius: 5px; color: var(--kf-ffffff); font-weight: 700; font-size: 10.5px; }
     .n { width: 64px; text-align: right; } .req-t .select { padding: 5px 24px 5px 8px; } .req-t .input { padding: 5px 8px; }
     .danger { color: var(--red); }
   `,
@@ -336,9 +336,9 @@ export class StaffingRequirements {
     const sites = this.siteLabels();
     const wk = this.rows().filter((r) => r.dayType === 'Weekday');
     return [
-      { name: 'Min required', color: '#c4b5fd', values: sites.map((s) => wk.filter((r) => r.site === s).reduce((a, r) => a + r.min, 0)) },
-      { name: 'Ideal', color: '#8b5cf6', values: sites.map((s) => wk.filter((r) => r.site === s).reduce((a, r) => a + r.ideal, 0)) },
-      { name: 'Available', color: '#22c55e', values: sites.map((s) => wk.filter((r) => r.site === s).reduce((a, r) => a + this.avail(r), 0)) },
+      { name: 'Min required', color: 'var(--ka-c4b5fd)', values: sites.map((s) => wk.filter((r) => r.site === s).reduce((a, r) => a + r.min, 0)) },
+      { name: 'Ideal', color: 'var(--ka-8b5cf6)', values: sites.map((s) => wk.filter((r) => r.site === s).reduce((a, r) => a + r.ideal, 0)) },
+      { name: 'Available', color: 'var(--ka-22c55e)', values: sites.map((s) => wk.filter((r) => r.site === s).reduce((a, r) => a + this.avail(r), 0)) },
     ];
   });
   protected readonly invalid = computed(() => this.rows().filter((r) => !(r.min <= r.ideal && r.ideal <= r.max)).map((r) => r.id));

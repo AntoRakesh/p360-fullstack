@@ -72,7 +72,7 @@
       <div class="presence">
         <div class="donut">
           <svg viewBox="0 0 160 160">
-            <circle cx="80" cy="80" [attr.r]="donutR" fill="none" stroke="#f1f2f7" stroke-width="26" />
+            <circle cx="80" cy="80" [attr.r]="donutR" fill="none" stroke="var(--kl-f1f2f7)" stroke-width="26" />
             @for (s of distribution().segs; track s.label) {
               <circle
                 cx="80"
@@ -167,8 +167,8 @@
         <svg class="trend" viewBox="0 0 380 182">
           <defs>
             <linearGradient id="trendFill" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
-              <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.03" />
+              <stop offset="0%" stop-color="var(--ka-8b5cf6)" stop-opacity="0.35" />
+              <stop offset="100%" stop-color="var(--ka-8b5cf6)" stop-opacity="0.03" />
             </linearGradient>
           </defs>
           @for (tk of trend().ticks; track $index) {
@@ -181,19 +181,19 @@
             }
           }
           <path [attr.d]="trend().area" fill="url(#trendFill)" />
-          <path [attr.d]="trend().visitorLine" fill="none" stroke="#38bdf8" stroke-width="2" />
-          <path [attr.d]="trend().peopleLine" fill="none" stroke="#7c3aed" stroke-width="2.5" />
+          <path [attr.d]="trend().visitorLine" fill="none" stroke="var(--kl-38bdf8)" stroke-width="2" />
+          <path [attr.d]="trend().peopleLine" fill="none" stroke="var(--kl-7c3aed)" stroke-width="2.5" />
           @if (hoverPoint() !== null) {
             <line class="cursor" [attr.x1]="trend().people[hoverPoint()!].x" [attr.x2]="trend().people[hoverPoint()!].x" [attr.y1]="t.t" [attr.y2]="t.b" />
           }
           @for (p of trend().visitors; track $index) {
             @if (trend().dots || hoverPoint() === $index) {
-              <circle [attr.cx]="p.x" [attr.cy]="p.y" r="3.5" fill="#fff" stroke="#38bdf8" stroke-width="2" />
+              <circle [attr.cx]="p.x" [attr.cy]="p.y" r="3.5" fill="var(--ka-ffffff)" stroke="var(--kl-38bdf8)" stroke-width="2" />
             }
           }
           @for (p of trend().people; track $index) {
             @if (trend().dots || hoverPoint() === $index) {
-              <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="hoverPoint() === $index ? 6 : 4.5" fill="#fff" stroke="#7c3aed" stroke-width="2.5" />
+              <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="hoverPoint() === $index ? 6 : 4.5" fill="var(--ka-ffffff)" stroke="var(--kl-7c3aed)" stroke-width="2.5" />
             }
           }
           @for (p of trend().people; track $index) {
@@ -257,7 +257,7 @@
         <div class="map" (click)="selectedId.set(null)">
           <div class="map-inner" [class.is3d]="view3d()" [style.--z]="zoom()">
             <svg viewBox="0 0 610 270">
-              <rect width="610" height="270" fill="#f1f2f6" />
+              <rect width="610" height="270" fill="var(--ka-f1f2f6)" />
               <g class="walls">
                 <rect x="6" y="6" width="598" height="258" />
                 <path d="M6 78h600M6 186h600" />
@@ -280,7 +280,7 @@
               </g>
               @for (d of dots(); track d.id) {
                 @if (d.type === 'Alert') {
-                  <circle [attr.cx]="d.x" [attr.cy]="d.y" r="16" fill="#ef4444" class="pulse" [style.transform-origin]="d.x + 'px ' + d.y + 'px'" />
+                  <circle [attr.cx]="d.x" [attr.cy]="d.y" r="16" fill="var(--ka-ef4444)" class="pulse" [style.transform-origin]="d.x + 'px ' + d.y + 'px'" />
                 }
                 <circle
                   class="dot"
@@ -346,7 +346,7 @@
               }
             </span>
             <div class="ev-body">
-              <b [class.danger]="e.color === '#ef4444'">{{ e.title }}</b>
+              <b [class.danger]="e.color === 'var(--ka-ef4444)'">{{ e.title }}</b>
               <span>{{ e.person }}</span>
               <small><app-icon name="map-pin" [size]="12" />{{ e.location }}</small>
             </div>
@@ -373,29 +373,29 @@
           <defs>
             <linearGradient id="camSky" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" [attr.stop-color]="camera().tint" />
-              <stop offset="100%" stop-color="#e9edf2" />
+              <stop offset="100%" stop-color="var(--ka-e9edf2)" />
             </linearGradient>
             <linearGradient id="camFloor" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#cfd5dc" />
-              <stop offset="100%" stop-color="#8d96a3" />
+              <stop offset="0%" stop-color="var(--ka-cfd5dc)" />
+              <stop offset="100%" stop-color="var(--ka-8d96a3)" />
             </linearGradient>
           </defs>
           <rect width="260" height="300" fill="url(#camSky)" />
-          <rect width="260" height="28" fill="#4b5563" />
-          <g stroke="#56606d" stroke-width="4">
+          <rect width="260" height="28" fill="var(--ka-4b5563)" />
+          <g stroke="var(--kl-56606d)" stroke-width="4">
             <path d="M20 28v150M75 28v150M130 28v150M185 28v150M240 28v150M0 100h260" />
           </g>
           <path d="M0 178h260v122H0z" fill="url(#camFloor)" />
-          <path d="M0 300 100 178h60l100 122" fill="#b7bec7" opacity="0.5" />
-          <g fill="#3f7d4a">
+          <path d="M0 300 100 178h60l100 122" fill="var(--ka-b7bec7)" opacity="0.5" />
+          <g fill="var(--ka-3f7d4a)">
             <ellipse cx="8" cy="120" rx="26" ry="70" />
             <ellipse cx="252" cy="110" rx="24" ry="74" />
           </g>
-          <g fill="#9ca3af">
+          <g fill="var(--ka-9ca3af)">
             <rect x="150" y="200" width="70" height="16" rx="3" />
             <rect x="150" y="235" width="80" height="18" rx="3" />
           </g>
-          <g fill="#1f2937" [attr.transform]="'translate(' + (state.live() ? (now().getSeconds() % 6) - 3 : 0) + ' 0)'">
+          <g fill="var(--ka-1f2937)" [attr.transform]="'translate(' + (state.live() ? (now().getSeconds() % 6) - 3 : 0) + ' 0)'">
             <circle cx="105" cy="135" r="7" /><rect x="96" y="143" width="18" height="40" rx="7" />
             <circle cx="152" cy="132" r="7" /><rect x="143" y="140" width="18" height="42" rx="7" />
             <circle cx="60" cy="150" r="10" /><rect x="47" y="161" width="26" height="62" rx="10" />

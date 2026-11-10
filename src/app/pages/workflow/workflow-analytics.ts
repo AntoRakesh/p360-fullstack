@@ -42,12 +42,12 @@ type ApprSort = 'decided' | 'avg' | 'pending' | 'sla' | 'rate';
     }
 
     <section class="kpi-row">
-      <app-kpi label="Instances Started" [value]="inRange().length" icon="workflow-play" color="#7c3aed" change="8%" [sub]="rangeLabel()" />
-      <app-kpi label="Completed" [value]="closed().length" icon="workflow-check" color="#22c55e" [sub]="running().length + ' still running'" />
-      <app-kpi label="Approval Rate" [value]="approvalRate() + '%'" icon="shield-check" color="#3b82f6" [sub]="rejected() + ' rejected'" />
-      <app-kpi label="Avg. Cycle Time" [value]="fmtH(avgCycle())" icon="workflow-timer" color="#0d9488" change="11%" [up]="false" sub="vs. prev. period" />
-      <app-kpi label="SLA Compliance" [value]="sla() + '%'" icon="clock" color="#f59e0b" [sub]="overdue() + ' running past SLA'" [subColor]="overdue() ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Auto Decisions" [value]="autoN().toLocaleString()" icon="workflow-bolt" color="#ec4899" change="12%" sub="by rules" />
+      <app-kpi label="Instances Started" [value]="inRange().length" icon="workflow-play" color="var(--ka-7c3aed)" change="8%" [sub]="rangeLabel()" />
+      <app-kpi label="Completed" [value]="closed().length" icon="workflow-check" color="var(--ka-22c55e)" [sub]="running().length + ' still running'" />
+      <app-kpi label="Approval Rate" [value]="approvalRate() + '%'" icon="shield-check" color="var(--ka-3b82f6)" [sub]="rejected() + ' rejected'" />
+      <app-kpi label="Avg. Cycle Time" [value]="fmtH(avgCycle())" icon="workflow-timer" color="var(--ka-0d9488)" change="11%" [up]="false" sub="vs. prev. period" />
+      <app-kpi label="SLA Compliance" [value]="sla() + '%'" icon="clock" color="var(--ka-f59e0b)" [sub]="overdue() + ' running past SLA'" [subColor]="overdue() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Auto Decisions" [value]="autoN().toLocaleString()" icon="workflow-bolt" color="var(--ka-ec4899)" change="12%" sub="by rules" />
     </section>
 
     <section class="g2">
@@ -111,7 +111,7 @@ type ApprSort = 'decided' | 'avg' | 'pending' | 'sla' | 'rate';
                   <td class="num">{{ a.decided }}</td>
                   <td class="num">{{ a.rate }}%</td>
                   <td class="num"><span [class]="a.avg > 12 ? 'tag red' : a.avg > 6 ? 'tag amber' : 'tag green'">{{ fmtH(a.avg) }}</span></td>
-                  <td class="num"><div class="mb"><i [style.width.%]="a.sla" [style.background]="a.sla >= 90 ? '#22c55e' : a.sla >= 75 ? '#f59e0b' : '#ef4444'"></i></div>{{ a.sla }}%</td>
+                  <td class="num"><div class="mb"><i [style.width.%]="a.sla" [style.background]="a.sla >= 90 ? 'var(--ka-22c55e)' : a.sla >= 75 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></div>{{ a.sla }}%</td>
                   <td class="num">{{ a.pending }}@if (a.overdue) { <span class="od">{{ a.overdue }} late</span>}</td>
                   <td>@if (a.pending && a.name !== me) {<button class="btn-ghost sm" [disabled]="nudged().has(a.name)" (click)="nudge(a.name)">{{ nudged().has(a.name) ? 'Nudged' : 'Nudge' }}</button>}</td>
                 </tr>
@@ -130,7 +130,7 @@ type ApprSort = 'decided' | 'avg' | 'pending' | 'sla' | 'rate';
           <tbody>
             @for (w of perf(); track w.name) {
               <tr class="clickable" [class.selected]="wf() === w.name" (click)="wf.set(wf() === w.name ? 'All' : w.name)">
-                <td><div class="pp"><span class="wi" [style.background]="w.color + '1a'" [style.color]="w.color"><app-icon [name]="w.icon" [size]="14" /></span><b>{{ w.name }}</b></div></td>
+                <td><div class="pp"><span class="wi" [style.background]="'color-mix(in srgb, ' + w.color + ' 10%, transparent)'" [style.color]="w.color"><app-icon [name]="w.icon" [size]="14" /></span><b>{{ w.name }}</b></div></td>
                 <td class="num">{{ w.started }}</td><td class="num">{{ w.running }}</td><td class="num">{{ w.approved }}</td><td class="num">{{ w.rejected }}</td>
                 <td class="num" [class.bad]="w.avg > w.slaH">{{ w.avg ? fmtH(w.avg) : '—' }}</td><td class="num">{{ w.slaH }} h</td>
                 <td class="num"><span [class]="w.sla >= 90 ? 'tag green' : w.sla >= 75 ? 'tag amber' : 'tag red'">{{ w.sla }}%</span></td>
@@ -166,7 +166,7 @@ type ApprSort = 'decided' | 'avg' | 'pending' | 'sla' | 'rate';
   styles: `
     :host ::ng-deep app-page-head .select { min-width: 150px; }
     .dropdown.right { right: 0; left: auto; min-width: 210px; }
-    .fchip { display: inline-flex; gap: 8px; align-items: center; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; background: #f3efff; color: #4c1d95; margin-bottom: 12px; }
+    .fchip { display: inline-flex; gap: 8px; align-items: center; font-size: 12.5px; padding: 6px 10px; border-radius: 8px; background: var(--kb-f3efff); color: var(--kf-4c1d95); margin-bottom: 12px; }
     .fchip button { border: 0; background: none; cursor: pointer; color: var(--primary); font-weight: 600; }
     .sm { font-size: 12px; }
     .g2 { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); gap: 12px; margin-bottom: 12px; }
@@ -176,22 +176,22 @@ type ApprSort = 'decided' | 'avg' | 'pending' | 'sla' | 'rate';
     .mini div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; } .mini b { font-size: 16px; } .mini small { font-size: 11px; color: var(--muted); }
     .bn { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
     .bn li { display: grid; grid-template-columns: 150px 1fr 56px 74px; gap: 10px; align-items: center; font-size: 12.5px; padding: 5px 6px; border-radius: 7px; cursor: pointer; }
-    .bn li:hover, .bn li.on { background: #f5f3ff; }
+    .bn li:hover, .bn li.on { background: var(--kb-f5f3ff); }
     .lb { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tr { height: 9px; border-radius: 6px; background: #eef0f5; overflow: hidden; } .tr i { display: block; height: 100%; border-radius: 6px; background: #8b5cf6; } .tr i.warm { background: #f59e0b; } .tr i.hot { background: #ef4444; }
-    .bn b { text-align: right; } .wn { font-size: 11px; color: #b45309; text-align: right; } .wn.z { color: var(--muted); }
-    .insight { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0 0; padding: 8px 10px; border-radius: 8px; background: #fffbeb; color: #92400e; font-size: 12px; }
+    .tr { height: 9px; border-radius: 6px; background: var(--kb-eef0f5); overflow: hidden; } .tr i { display: block; height: 100%; border-radius: 6px; background: var(--kb-8b5cf6); } .tr i.warm { background: var(--kb-f59e0b); } .tr i.hot { background: var(--kb-ef4444); }
+    .bn b { text-align: right; } .wn { font-size: 11px; color: var(--kf-b45309); text-align: right; } .wn.z { color: var(--muted); }
+    .insight { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0 0; padding: 8px 10px; border-radius: 8px; background: var(--kb-fffbeb); color: var(--kf-92400e); font-size: 12px; }
     .pp { display: flex; align-items: center; gap: 8px; } .pp small { display: block; font-size: 10.5px; color: var(--muted); }
     .wi { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; }
     .at th, .at td { padding: 7px 7px; }
-    .mb { display: inline-block; width: 46px; height: 6px; border-radius: 4px; background: #eef0f5; overflow: hidden; margin-right: 6px; vertical-align: middle; } .mb i { display: block; height: 100%; }
-    .od { font-size: 10.5px; color: #dc2626; margin-left: 4px; }
-    .bad { color: #dc2626; font-weight: 600; }
+    .mb { display: inline-block; width: 46px; height: 6px; border-radius: 4px; background: var(--kb-eef0f5); overflow: hidden; margin-right: 6px; vertical-align: middle; } .mb i { display: block; height: 100%; }
+    .od { font-size: 10.5px; color: var(--kf-dc2626); margin-left: 4px; }
+    .bad { color: var(--kf-dc2626); font-weight: 600; }
     .sp { width: 120px; } .sp app-sparkline { display: block; width: 110px; }
     .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
     .wl { list-style: none; margin: 0; padding: 0; }
-    .wl li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 8px 6px; border-bottom: 1px solid #f0f1f6; cursor: pointer; font-size: 12.5px; border-radius: 6px; }
-    .wl li:hover { background: #faf8ff; } .wl small { display: block; color: var(--muted); font-size: 11px; }
+    .wl li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 8px 6px; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; font-size: 12.5px; border-radius: 6px; }
+    .wl li:hover { background: var(--kb-faf8ff); } .wl small { display: block; color: var(--muted); font-size: 11px; }
     @media (max-width: 1250px) { .g2, .g3, .g2b { grid-template-columns: 1fr; } }
   `,
 })
@@ -262,18 +262,18 @@ export class WorkflowAnalytics {
     const labels = Array.from({ length: n }, (_, k) => new Date(now - (n - 1 - k) * step * D).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }));
     return {
       bucket: step === 1 ? 'per day' : `per ${step} days`, labels,
-      series: [{ name: 'Started', color: '#7c3aed', values: started, area: true }, { name: 'Approved', color: '#22c55e', values: done }, { name: 'Rejected', color: '#ef4444', values: rej, dashed: true }],
+      series: [{ name: 'Started', color: 'var(--ka-7c3aed)', values: started, area: true }, { name: 'Approved', color: 'var(--ka-22c55e)', values: done }, { name: 'Rejected', color: 'var(--ka-ef4444)', values: rej, dashed: true }],
     };
   });
   protected readonly mix = computed(() => {
     const l = this.inRange();
     const c = (s: string) => l.filter((i) => instStatus(i) === s).length;
     return [
-      { label: 'Approved', value: c('Approved'), color: '#22c55e' },
-      { label: 'In progress', value: c('In Progress'), color: '#3b82f6' },
-      { label: 'Overdue', value: c('Overdue'), color: '#f97316' },
-      { label: 'Rejected', value: c('Rejected'), color: '#ef4444' },
-      { label: 'Cancelled', value: c('Cancelled'), color: '#a3a7c2' },
+      { label: 'Approved', value: c('Approved'), color: 'var(--ka-22c55e)' },
+      { label: 'In progress', value: c('In Progress'), color: 'var(--ka-3b82f6)' },
+      { label: 'Overdue', value: c('Overdue'), color: 'var(--ka-f97316)' },
+      { label: 'Rejected', value: c('Rejected'), color: 'var(--ka-ef4444)' },
+      { label: 'Cancelled', value: c('Cancelled'), color: 'var(--ka-a3a7c2)' },
     ];
   });
   protected readonly perf = computed(() => {
@@ -300,7 +300,7 @@ export class WorkflowAnalytics {
     const p = this.perf().filter((w) => w.avg).slice(0, 8);
     return {
       labels: p.map((w) => w.name.split(' ')[0]),
-      series: [{ name: 'Avg. cycle (h)', color: '#7c3aed', values: p.map((w) => Math.round(w.avg * 10) / 10) }, { name: 'SLA target (h)', color: '#f59e0b', values: p.map((w) => w.slaH), line: true }],
+      series: [{ name: 'Avg. cycle (h)', color: 'var(--ka-7c3aed)', values: p.map((w) => Math.round(w.avg * 10) / 10) }, { name: 'SLA target (h)', color: 'var(--ka-f59e0b)', values: p.map((w) => w.slaH), line: true }],
     };
   });
   /** Average wait per step: completed hand-offs from the activity logs + live waits of running instances. */
@@ -391,7 +391,7 @@ export class WorkflowAnalytics {
     const l = this.waitingAt();
     l.forEach((i) => this.store.patchInst(i.id, { log: [...i.log, { at: demoNow(), text: `Reminder sent to ${i.assignee}`, by: ME }] }));
     const who = new Set(l.map((i) => i.assignee));
-    this.store.pushActivity(`Reminders sent for ${l.length} requests at ${this.stepSel()}`, '#f59e0b');
+    this.store.pushActivity(`Reminders sent for ${l.length} requests at ${this.stepSel()}`, 'var(--ka-f59e0b)');
     this.msg(`Reminders sent to ${who.size} approver${who.size === 1 ? '' : 's'} (${l.length} requests)`);
   }
   protected escalateLate() {
@@ -403,7 +403,7 @@ export class WorkflowAnalytics {
     const l = this.store.instances().filter((i) => i.status === 'In Progress' && i.assignee === name);
     l.forEach((i) => this.store.patchInst(i.id, { log: [...i.log, { at: demoNow(), text: `Reminder sent to ${name}`, by: ME }] }));
     this.nudged.update((s) => new Set(s).add(name));
-    this.store.pushActivity(`${name} nudged about ${l.length} pending approvals`, '#f59e0b');
+    this.store.pushActivity(`${name} nudged about ${l.length} pending approvals`, 'var(--ka-f59e0b)');
     this.msg(`${name} reminded about ${l.length} pending approval${l.length === 1 ? '' : 's'}`);
   }
 

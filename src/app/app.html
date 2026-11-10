@@ -3,9 +3,9 @@
     <div class="brand">
       <div class="brand-logo">
         <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true">
-          <circle cx="24" cy="24" r="21" fill="none" stroke="#a78bfa" stroke-width="3" />
-          <path d="M14 30c2-9 6-14 11-14s9 4 9 9-4 8-8 8h-3" fill="none" stroke="#c4b5fd" stroke-width="3" stroke-linecap="round" />
-          <circle cx="27" cy="25" r="2.5" fill="#c4b5fd" />
+          <circle cx="24" cy="24" r="21" fill="none" stroke="var(--kl-a78bfa)" stroke-width="3" />
+          <path d="M14 30c2-9 6-14 11-14s9 4 9 9-4 8-8 8h-3" fill="none" stroke="var(--kl-c4b5fd)" stroke-width="3" stroke-linecap="round" />
+          <circle cx="27" cy="25" r="2.5" fill="var(--ka-c4b5fd)" />
         </svg>
         <span class="brand-name">Purple <b>IQ</b></span>
       </div>
@@ -78,9 +78,9 @@
       </button>
       <a class="top-logo" routerLink="/command-center">
         <svg viewBox="0 0 48 48" width="38" height="38" aria-hidden="true">
-          <circle cx="24" cy="24" r="21" fill="none" stroke="#6d28d9" stroke-width="3" />
-          <path d="M14 30c2-9 6-14 11-14s9 4 9 9-4 8-8 8h-3" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" />
-          <circle cx="27" cy="25" r="2.5" fill="#7c3aed" />
+          <circle cx="24" cy="24" r="21" fill="none" stroke="var(--kl-6d28d9)" stroke-width="3" />
+          <path d="M14 30c2-9 6-14 11-14s9 4 9 9-4 8-8 8h-3" fill="none" stroke="var(--kl-7c3aed)" stroke-width="3" stroke-linecap="round" />
+          <circle cx="27" cy="25" r="2.5" fill="var(--ka-7c3aed)" />
         </svg>
         <span>People<b>360</b></span>
       </a>
@@ -130,6 +130,37 @@
         >
           <i></i>{{ state.live() ? 'Live' : state.isToday() ? 'Paused' : 'History' }}
         </button>
+
+        <button class="icon-btn" [attr.aria-label]="theme.dark() ? 'Switch to light mode' : 'Switch to dark mode'" [title]="theme.dark() ? 'Light mode' : 'Dark mode'" (click)="theme.toggleDark()">
+          <app-icon [name]="theme.dark() ? 'th-sun' : 'th-moon'" [size]="20" />
+        </button>
+
+        <div class="menu-wrap">
+          <button class="icon-btn" aria-label="Theme" title="Theme" (click)="toggleMenu('theme')">
+            <app-icon name="th-palette" [size]="21" />
+          </button>
+          @if (menu() === 'theme') {
+            <div class="dropdown theme-dd">
+              <div class="dd-head"><b>Appearance</b></div>
+              <div class="th-modes">
+                @for (m of modes; track m.id) {
+                  <button [class.on]="theme.mode() === m.id" (click)="theme.mode.set(m.id)">
+                    <app-icon [name]="m.icon" [size]="16" />{{ m.name }}
+                  </button>
+                }
+              </div>
+              <div class="th-label">Accent color</div>
+              <div class="th-swatches">
+                @for (a of accents; track a.id) {
+                  <button class="th-sw" [class.on]="theme.accent() === a.id" (click)="theme.accent.set(a.id)" [title]="a.name">
+                    <i [style.background]="a.swatch">@if (theme.accent() === a.id) {<app-icon name="th-check" [size]="15" [stroke]="3" />}</i>
+                    <span>{{ a.name }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
 
         <div class="menu-wrap">
           <button class="icon-btn" aria-label="Notifications" (click)="toggleMenu('notif')">

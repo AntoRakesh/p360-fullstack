@@ -28,10 +28,10 @@ const HEAT_METRICS = ['People Density', 'Dwell Time', 'Asset Density', 'Temperat
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Peak Occupancy" [value]="peak() + ' ppl'" icon="users" color="#7c3aed" sub="at 11:00 AM" />
-      <app-kpi label="Avg Dwell Time" value="47 min" icon="activity" color="#2563eb" change="6%" sub="vs. last week" />
-      <app-kpi label="Hottest Zone" [value]="hottest().name" icon="map-floor" color="#ef4444" [sub]="hottest().pct + '% of capacity'" subColor="#dc2626" />
-      <app-kpi label="Cold Zones (<30%)" [value]="cold()" icon="twin-snow" color="#0ea5e9" sub="consolidation candidates" />
+      <app-kpi label="Peak Occupancy" [value]="peak() + ' ppl'" icon="users" color="var(--ka-7c3aed)" sub="at 11:00 AM" />
+      <app-kpi label="Avg Dwell Time" value="47 min" icon="activity" color="var(--ka-2563eb)" change="6%" sub="vs. last week" />
+      <app-kpi label="Hottest Zone" [value]="hottest().name" icon="map-floor" color="var(--ka-ef4444)" [sub]="hottest().pct + '% of capacity'" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Cold Zones (<30%)" [value]="cold()" icon="twin-snow" color="var(--ka-0ea5e9)" sub="consolidation candidates" />
     </section>
     <section class="hm">
       <div class="card">
@@ -67,9 +67,9 @@ const HEAT_METRICS = ['People Density', 'Dwell Time', 'Asset Density', 'Temperat
   styles: `
     .hm { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 12px; margin-bottom: 12px; align-items: start; }
     .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; } .two h3, aside h3 { margin-bottom: 10px; } .mt { margin-top: 16px; }
-    .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; } .seg button { border: 0; background: #fff; padding: 6px 14px; cursor: pointer; } .seg button.on { background: var(--primary); color: #fff; }
+    .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; } .seg button { border: 0; background: var(--kb-ffffff); padding: 6px 14px; cursor: pointer; } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
     .time { display: flex; gap: 12px; align-items: center; margin-top: 10px; } .time input { flex: 1; accent-color: var(--primary); }
-    .ins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; } .ins li { display: flex; gap: 8px; font-size: 12.5px; background: #faf8ff; padding: 8px; border-radius: 8px; } .ins app-icon { color: #f59e0b; flex-shrink: 0; }
+    .ins { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; } .ins li { display: flex; gap: 8px; font-size: 12.5px; background: var(--kb-faf8ff); padding: 8px; border-radius: 8px; } .ins app-icon { color: var(--kf-f59e0b); flex-shrink: 0; }
     @media (max-width: 1200px) { .hm, .two { grid-template-columns: 1fr; } }
   `,
 })
@@ -103,15 +103,15 @@ export class HeatmapsAnalytics {
     this.zones().filter((z) => z.capacity).map((z) => ({ x: z.x + z.w / 2, y: z.y + z.h / 2, r: Math.min(z.w, z.h) * 0.55, v: Math.min(1, (z.occupancy / z.capacity) * this.factor()) })),
   );
   private readonly util = computed(() => this.zones().filter((z) => z.capacity).map((z) => ({ name: z.name, pct: Math.round((z.occupancy / z.capacity) * 100 * Math.min(1.15, this.factor() + 0.1)), z })));
-  protected readonly topZones = computed(() => [...this.util()].sort((a, b) => b.pct - a.pct).slice(0, 7).map((u) => ({ label: u.name, value: Math.min(u.pct, 100), display: `${u.pct}%`, color: u.pct > 85 ? '#ef4444' : u.pct > 60 ? '#f59e0b' : '#22c55e' })));
+  protected readonly topZones = computed(() => [...this.util()].sort((a, b) => b.pct - a.pct).slice(0, 7).map((u) => ({ label: u.name, value: Math.min(u.pct, 100), display: `${u.pct}%`, color: u.pct > 85 ? 'var(--ka-ef4444)' : u.pct > 60 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' })));
   protected readonly hottest = computed(() => [...this.util()].sort((a, b) => b.pct - a.pct)[0] ?? { name: '—', pct: 0 });
   protected readonly cold = computed(() => this.store.zones().filter((z) => z.capacity && z.occupancy / z.capacity < 0.3).length || 4);
   protected readonly peak = computed(() => this.store.people().filter((p) => p.floor === this.floor()).length);
   protected readonly hmRows = computed(() => this.util().map((u) => u.name.replace('Workstations', 'WS')).slice(0, 9));
   protected readonly hmData = computed(() => this.util().slice(0, 9).map((u, i) => this.hmCols.map((h) => Math.min(100, Math.round((u.pct * HOURLY[+h]) / 92 + ((i * 7 + +h) % 9) - 4)))));
   protected readonly daySeries = computed(() => [
-    { name: this.floorName(), color: '#7c3aed', values: this.dayLabels.map((h) => Math.round((this.peak() * HOURLY[+h]) / 95)), area: true },
-    { name: 'Last week avg', color: '#94a3b8', values: this.dayLabels.map((h) => Math.round((this.peak() * HOURLY[+h] * 0.92) / 95)), dashed: true },
+    { name: this.floorName(), color: 'var(--ka-7c3aed)', values: this.dayLabels.map((h) => Math.round((this.peak() * HOURLY[+h]) / 95)), area: true },
+    { name: 'Last week avg', color: 'var(--ka-94a3b8)', values: this.dayLabels.map((h) => Math.round((this.peak() * HOURLY[+h] * 0.92) / 95)), dashed: true },
   ]);
   constructor() {
     inject(DestroyRef).onDestroy(() => clearInterval(this.timer));
@@ -144,7 +144,7 @@ const SUBJECTS: Subject[] = [
     { zone: 'Reception', in: '08:58', out: '09:04', dwell: 6 }, { zone: 'Lift Core', in: '09:05', out: '09:07', dwell: 2 }, { zone: 'Collaboration Area', in: '09:08', out: '09:40', dwell: 32 }, { zone: 'Open Workstations North', in: '09:42', out: 'now', dwell: 40 }] },
   { id: 'V-102', name: 'Visitor - V102', kind: 'visitor', color: TYPE_COLOR.visitor, path: [[176, 470], [240, 400], [300, 330], [280, 240], [236, 196]], stops: [
     { zone: 'Reception', in: '09:50', out: '10:05', dwell: 15 }, { zone: 'Lift Core', in: '10:06', out: '10:08', dwell: 2 }, { zone: 'Meeting Rooms', in: '10:18', out: 'now', dwell: 14 }] },
-  { id: 'Forklift-01', name: 'Forklift-01 (Asset)', kind: 'asset', color: '#7c3aed', path: [[690, 520], [700, 450], [800, 430], [930, 450], [930, 510], [805, 470]], stops: [
+  { id: 'Forklift-01', name: 'Forklift-01 (Asset)', kind: 'asset', color: 'var(--ka-7c3aed)', path: [[690, 520], [700, 450], [800, 430], [930, 450], [930, 510], [805, 470]], stops: [
     { zone: 'Storage – Bay A', in: '09:30', out: '09:52', dwell: 22 }, { zone: 'Storage – Bay C', in: '09:55', out: '10:12', dwell: 17 }, { zone: 'Storage', in: '10:15', out: 'now', dwell: 9 }] },
   { id: 'C-2201', name: 'Ravi Kumar (Contractor)', kind: 'contractor', color: TYPE_COLOR.contractor, path: [[176, 470], [300, 395], [372, 398], [700, 300], [790, 300], [700, 300], [372, 398]], stops: [
     { zone: 'Reception', in: '10:02', out: '10:06', dwell: 4 }, { zone: 'Server Room', in: '10:14', out: '10:31', dwell: 17 }, { zone: 'Workstations South', in: '10:33', out: 'now', dwell: 6 }] },
@@ -160,10 +160,10 @@ const SUBJECTS: Subject[] = [
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Distance Covered" [value]="dist() + ' m'" icon="twin-route" color="#7c3aed" />
-      <app-kpi label="Stops" [value]="subj().stops.length" icon="map-pin" color="#2563eb" />
-      <app-kpi label="Avg Dwell" [value]="avgDwell() + ' min'" icon="clock" color="#16a34a" />
-      <app-kpi label="Zone Transitions Today" value="3,482" icon="activity" color="#f59e0b" change="9%" sub="vs. last week" />
+      <app-kpi label="Distance Covered" [value]="dist() + ' m'" icon="twin-route" color="var(--ka-7c3aed)" />
+      <app-kpi label="Stops" [value]="subj().stops.length" icon="map-pin" color="var(--ka-2563eb)" />
+      <app-kpi label="Avg Dwell" [value]="avgDwell() + ' min'" icon="clock" color="var(--ka-16a34a)" />
+      <app-kpi label="Zone Transitions Today" value="3,482" icon="activity" color="var(--ka-f59e0b)" change="9%" sub="vs. last week" />
     </section>
     <section class="pm">
       <div class="card">
@@ -187,7 +187,7 @@ const SUBJECTS: Subject[] = [
   styles: `
     .pm { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; align-items: start; } aside h3 { margin-bottom: 8px; } .mt { margin-top: 16px; }
     .time { display: flex; gap: 12px; align-items: center; margin-top: 10px; } .time input { flex: 1; accent-color: var(--primary); }
-    tr.cur td { background: #f1ecff; font-weight: 600; } .btn-ghost.on { color: var(--primary); border-color: var(--primary); }
+    tr.cur td { background: var(--kb-f1ecff); font-weight: 600; } .btn-ghost.on { color: var(--primary); border-color: var(--primary); }
     @media (max-width: 1200px) { .pm { grid-template-columns: 1fr; } }
   `,
 })
@@ -238,14 +238,14 @@ export class PathMovementAnalysis {
       else done.push(this.at());
       d -= L[i];
     }
-    const out: MapPath[] = [{ points: s.path, color: '#cbd5e1', dashed: true, width: 3 }, { points: done, color: s.color, arrow: true, width: 4 }];
-    if (this.flows()) out.unshift({ points: [[176, 470], [300, 395], [480, 215]], color: '#f59e0b', width: 14 }, { points: [[480, 215], [700, 120]], color: '#f59e0b', width: 10 }, { points: [[480, 215], [175, 130]], color: '#f59e0b', width: 7 });
+    const out: MapPath[] = [{ points: s.path, color: 'var(--ka-cbd5e1)', dashed: true, width: 3 }, { points: done, color: s.color, arrow: true, width: 4 }];
+    if (this.flows()) out.unshift({ points: [[176, 470], [300, 395], [480, 215]], color: 'var(--ka-f59e0b)', width: 14 }, { points: [[480, 215], [700, 120]], color: 'var(--ka-f59e0b)', width: 10 }, { points: [[480, 215], [175, 130]], color: 'var(--ka-f59e0b)', width: 7 });
     return out;
   });
   protected readonly markers = computed<MapMarker[]>(() => {
     const s = this.subj();
     const [x, y] = this.at();
-    return [...s.path.filter((_, i) => i > 0 && i < s.path.length - 1).map((p, i) => ({ id: 'n' + i, x: p[0], y: p[1], color: '#94a3b8', kind: 'dot' as const, size: 5 })), { id: s.id, x, y, color: s.color, kind: 'icon' as const, icon: s.kind === 'asset' ? 'twin-forklift' : 'user', pulse: this.playing(), title: s.name }];
+    return [...s.path.filter((_, i) => i > 0 && i < s.path.length - 1).map((p, i) => ({ id: 'n' + i, x: p[0], y: p[1], color: 'var(--ka-94a3b8)', kind: 'dot' as const, size: 5 })), { id: s.id, x, y, color: s.color, kind: 'icon' as const, icon: s.kind === 'asset' ? 'twin-forklift' : 'user', pulse: this.playing(), title: s.name }];
   });
   constructor() {
     inject(DestroyRef).onDestroy(() => clearInterval(this.timer));
@@ -309,7 +309,7 @@ const BASE: Inputs = { occupancy: 68, blockedExits: 0, hvacSetpoint: 23, outside
       <div class="res">
         <div class="tiles">
           @for (t of tiles(); track t.label) {
-            <div class="card tile" [class.stale]="stale()"><small>{{ t.label }}</small><b [style.color]="t.bad ? '#dc2626' : null">{{ t.value }}</b><em [class]="t.delta.startsWith('+') === t.upBad && t.delta !== '±0' ? 'bad-t' : 'good-t'">{{ t.delta }} vs baseline</em></div>
+            <div class="card tile" [class.stale]="stale()"><small>{{ t.label }}</small><b [style.color]="t.bad ? 'var(--ka-dc2626)' : null">{{ t.value }}</b><em [class]="t.delta.startsWith('+') === t.upBad && t.delta !== '±0' ? 'bad-t' : 'good-t'">{{ t.delta }} vs baseline</em></div>
           }
         </div>
         <div class="card">
@@ -334,13 +334,13 @@ const BASE: Inputs = { occupancy: 68, blockedExits: 0, hvacSetpoint: 23, outside
   `,
   styles: `
     .ss { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: start; }
-    .ctl { display: flex; flex-direction: column; gap: 14px; } .ctl label { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: #4b4f6b; } .ctl label b { color: var(--text); float: right; } .ctl input[type=range] { accent-color: var(--primary); }
+    .ctl { display: flex; flex-direction: column; gap: 14px; } .ctl label { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; color: var(--kf-4b4f6b); } .ctl label b { color: var(--text); float: right; } .ctl input[type=range] { accent-color: var(--primary); }
     .chk { flex-direction: row !important; align-items: center; } .save { display: flex; gap: 6px; } .save .input { flex: 1; min-width: 0; }
     .res { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-    .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } .tile { display: flex; flex-direction: column; gap: 4px; transition: opacity .2s; } .tile.stale { opacity: .55; } .tile small { color: #3b3f5c; } .tile b { font-size: 24px; } .tile em { font-style: normal; font-size: 12px; font-weight: 600; }
-    .good-t { color: #16a34a; } .bad-t { color: #dc2626; }
+    .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } .tile { display: flex; flex-direction: column; gap: 4px; transition: opacity .2s; } .tile.stale { opacity: .55; } .tile small { color: var(--kf-3b3f5c); } .tile b { font-size: 24px; } .tile em { font-style: normal; font-size: 12px; font-weight: 600; }
+    .good-t { color: var(--kf-16a34a); } .bad-t { color: var(--kf-dc2626); }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .two h3 { margin-bottom: 8px; }
-    .acts { display: flex; gap: 10px; } .danger { color: var(--red); } td.bad { color: #dc2626; font-weight: 600; }
+    .acts { display: flex; gap: 10px; } .danger { color: var(--red); } td.bad { color: var(--kf-dc2626); font-weight: 600; }
     @media (max-width: 1200px) { .ss, .two { grid-template-columns: 1fr; } .tiles { grid-template-columns: 1fr 1fr; } }
   `,
 })
@@ -378,20 +378,20 @@ export class ScenarioSimulation {
   });
   protected readonly routes = computed(() => {
     const b = this.applied().blockedExits;
-    const r = [{ points: [[480, 115], [480, 230], [300, 395], [60, 520]] as [number, number][], color: '#16a34a', dots: true }, { points: [[805, 115], [700, 210], [700, 400], [960, 530]] as [number, number][], color: '#16a34a', dots: true }];
-    if (b >= 1) r[1].color = '#ef4444';
-    if (b >= 2) r[0].color = '#ef4444';
+    const r = [{ points: [[480, 115], [480, 230], [300, 395], [60, 520]] as [number, number][], color: 'var(--ka-16a34a)', dots: true }, { points: [[805, 115], [700, 210], [700, 400], [960, 530]] as [number, number][], color: 'var(--ka-16a34a)', dots: true }];
+    if (b >= 1) r[1].color = 'var(--ka-ef4444)';
+    if (b >= 2) r[0].color = 'var(--ka-ef4444)';
     return r;
   });
-  protected readonly blockedGlows = computed(() => [[960, 530], [60, 520], [960, 30]].slice(0, this.applied().blockedExits).map(([x, y]) => ({ x, y, r: 60, color: '#ef4444' })));
+  protected readonly blockedGlows = computed(() => [[960, 530], [60, 520], [960, 30]].slice(0, this.applied().blockedExits).map(([x, y]) => ({ x, y, r: 60, color: 'var(--ka-ef4444)' })));
   protected readonly evacSeries = computed(() => {
     const curve = (m: number, n: number) => this.evacLabels.map((t) => Math.max(0, Math.round(n * (1 - Math.min(1, (+t / m) ** 1.3)))));
-    return [{ name: 'Scenario', color: '#ef4444', values: curve(this.sim().evacMin, this.sim().people), area: true }, { name: 'Baseline', color: '#94a3b8', values: curve(this.base.evacMin, this.base.people), dashed: true }];
+    return [{ name: 'Scenario', color: 'var(--ka-ef4444)', values: curve(this.sim().evacMin, this.sim().people), area: true }, { name: 'Baseline', color: 'var(--ka-94a3b8)', values: curve(this.base.evacMin, this.base.people), dashed: true }];
   });
   protected readonly energySeries = computed(() => {
     const prof = [0.5, 0.8, 1, 1.05, 1.1, 1.15, 1.2, 1.2, 1.1, 1, 0.8, 0.5];
     const tot = prof.reduce((a, b) => a + b, 0);
-    return [{ name: 'Baseline', color: '#c4b5fd', values: prof.map((p) => Math.round((this.base.energyKwh * p) / tot)) }, { name: 'Scenario', color: '#7c3aed', values: prof.map((p) => Math.round((this.sim().energyKwh * p) / tot)) }];
+    return [{ name: 'Baseline', color: 'var(--ka-c4b5fd)', values: prof.map((p) => Math.round((this.base.energyKwh * p) / tot)) }, { name: 'Scenario', color: 'var(--ka-7c3aed)', values: prof.map((p) => Math.round((this.sim().energyKwh * p) / tot)) }];
   });
   protected set<K extends keyof Inputs>(k: K, v: Inputs[K]) {
     this.inp.update((i) => ({ ...i, [k]: v }));
@@ -419,7 +419,7 @@ export class ScenarioSimulation {
     const a = this.applied();
     const sc: TScenario = { id: `SC-${Date.now()}`, name: this.name().trim() || `Scenario ${this.store.scenarios().length + 1}`, occupancy: a.occupancy, blockedExits: a.blockedExits, hvacSetpoint: a.hvacSetpoint, outsideTemp: a.outsideTemp, shift: a.shift, evacMin: s.evacMin, energyKwh: s.energyKwh, comfort: s.comfort, congestion: s.congestion, created: '06 Nov 2026', by: 'Rex Kumar' };
     this.store.scenarios.update((l) => [sc, ...l]);
-    this.store.log({ icon: 'twin-sparkles', color: '#7c3aed', who: sc.name, what: 'Scenario saved' });
+    this.store.log({ icon: 'twin-sparkles', color: 'var(--ka-7c3aed)', who: sc.name, what: 'Scenario saved' });
     this.name.set('');
     toast(this.msg, `${sc.name} saved · available in Reports & Insights`);
   }
@@ -439,11 +439,11 @@ export class ScenarioSimulation {
    ===================================================================== */
 interface Insight { id: number; title: string; text: string; impact: string; icon: string; color: string; link: string }
 const INSIGHTS: Insight[] = [
-  { id: 1, title: 'Executive Suite under-utilized', text: 'Floor 5 Executive Suite averaged 31% utilization over 6 weeks. Consolidating into Floor 4 frees 420 m².', impact: 'AED 186K / yr', icon: 'map-floor', color: '#7c3aed', link: 'space-zone-management' },
-  { id: 2, title: 'Server Room cooling risk', text: 'Server Room (F4) temperature trend +1.2°C / 10 min; CRAC-2 compressor fault likely. Pre-emptive service recommended.', impact: 'High risk', icon: 'twin-thermo', color: '#ef4444', link: 'sensor-iot-visualization' },
-  { id: 3, title: 'Meeting room no-shows', text: '18% of meeting room bookings on Floor 4 are no-shows. Auto-release after 10 min would recover ~46 hours/week.', impact: '46 h / week', icon: 'calendar-days', color: '#2563eb', link: 'heatmaps-analytics' },
-  { id: 4, title: 'Cafeteria peak congestion', text: 'Cafeteria reaches 118% at 12:30. Staggered lunch (12:00/12:45) simulated to cut peak by 27%.', impact: '−27% peak', icon: 'users', color: '#f59e0b', link: 'scenario-simulation' },
-  { id: 5, title: 'HVAC setpoint optimization', text: 'Raising setpoint 23→24°C on low-occupancy floors (G, 5) saves 7% energy with comfort ≥ 84.', impact: '−7% kWh', icon: 'twin-zap', color: '#16a34a', link: 'scenario-simulation' },
+  { id: 1, title: 'Executive Suite under-utilized', text: 'Floor 5 Executive Suite averaged 31% utilization over 6 weeks. Consolidating into Floor 4 frees 420 m².', impact: 'AED 186K / yr', icon: 'map-floor', color: 'var(--ka-7c3aed)', link: 'space-zone-management' },
+  { id: 2, title: 'Server Room cooling risk', text: 'Server Room (F4) temperature trend +1.2°C / 10 min; CRAC-2 compressor fault likely. Pre-emptive service recommended.', impact: 'High risk', icon: 'twin-thermo', color: 'var(--ka-ef4444)', link: 'sensor-iot-visualization' },
+  { id: 3, title: 'Meeting room no-shows', text: '18% of meeting room bookings on Floor 4 are no-shows. Auto-release after 10 min would recover ~46 hours/week.', impact: '46 h / week', icon: 'calendar-days', color: 'var(--ka-2563eb)', link: 'heatmaps-analytics' },
+  { id: 4, title: 'Cafeteria peak congestion', text: 'Cafeteria reaches 118% at 12:30. Staggered lunch (12:00/12:45) simulated to cut peak by 27%.', impact: '−27% peak', icon: 'users', color: 'var(--ka-f59e0b)', link: 'scenario-simulation' },
+  { id: 5, title: 'HVAC setpoint optimization', text: 'Raising setpoint 23→24°C on low-occupancy floors (G, 5) saves 7% energy with comfort ≥ 84.', impact: '−7% kWh', icon: 'twin-zap', color: 'var(--ka-16a34a)', link: 'scenario-simulation' },
 ];
 @Component({
   selector: 'app-twin-reports-insights',
@@ -454,11 +454,11 @@ const INSIGHTS: Insight[] = [
       <button class="btn-primary" (click)="openForm()"><app-icon name="plus" [size]="16" />New Report</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Reports this Month" [value]="18 + extra()" icon="file-chart" color="#7c3aed" change="12%" sub="vs. last month" />
-      <app-kpi label="Scheduled Reports" [value]="scheduled()" icon="calendar-days" color="#2563eb" />
-      <app-kpi label="Open Insights" [value]="insights().length" icon="lightbulb" color="#f59e0b" />
-      <app-kpi label="Savings Identified" value="AED 412K" icon="trending-up" color="#16a34a" sub="annualized" />
-      <app-kpi label="Saved Scenarios" [value]="store.scenarios().length" icon="twin-sparkles" color="#db2777" sub="from Scenario Simulation" />
+      <app-kpi label="Reports this Month" [value]="18 + extra()" icon="file-chart" color="var(--ka-7c3aed)" change="12%" sub="vs. last month" />
+      <app-kpi label="Scheduled Reports" [value]="scheduled()" icon="calendar-days" color="var(--ka-2563eb)" />
+      <app-kpi label="Open Insights" [value]="insights().length" icon="lightbulb" color="var(--ka-f59e0b)" />
+      <app-kpi label="Savings Identified" value="AED 412K" icon="trending-up" color="var(--ka-16a34a)" sub="annualized" />
+      <app-kpi label="Saved Scenarios" [value]="store.scenarios().length" icon="twin-sparkles" color="var(--ka-db2777)" sub="from Scenario Simulation" />
     </section>
     <section class="ri">
       <div class="card">
@@ -504,9 +504,9 @@ const INSIGHTS: Insight[] = [
   styles: `
     .ri { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: start; }
     .charts { display: flex; flex-direction: column; gap: 12px; } .charts h3 { margin-bottom: 8px; }
-    .ins { list-style: none; margin: 0; padding: 0; } .ins li { display: grid; grid-template-columns: 38px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f1f6; }
-    .ic { width: 38px; height: 38px; border-radius: 10px; color: #fff; display: grid; place-items: center; } .ins p { margin: 3px 0 6px; font-size: 12.5px; color: #4b4f6b; } .ia { display: flex; gap: 12px; align-items: center; }
-    .cats { display: flex; gap: 4px; flex-wrap: wrap; } .cats button { border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 4px 10px; font-size: 12px; cursor: pointer; } .cats button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .ins { list-style: none; margin: 0; padding: 0; } .ins li { display: grid; grid-template-columns: 38px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
+    .ic { width: 38px; height: 38px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; } .ins p { margin: 3px 0 6px; font-size: 12.5px; color: var(--kf-4b4f6b); } .ia { display: flex; gap: 12px; align-items: center; }
+    .cats { display: flex; gap: 4px; flex-wrap: wrap; } .cats button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 4px 10px; font-size: 12px; cursor: pointer; } .cats button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .acts { display: flex; gap: 10px; }
     @media (max-width: 1200px) { .ri { grid-template-columns: 1fr; } }
   `,
@@ -524,14 +524,14 @@ export class TwinReportsInsights {
   protected readonly scheduled = computed(() => this.store.reports().filter((r) => r.schedule !== 'On demand').length);
   protected readonly weeks = Array.from({ length: 12 }, (_, i) => `W${i + 31}`);
   protected readonly trend = [
-    { name: 'Floor 4', color: '#7c3aed', values: [58, 60, 61, 63, 62, 64, 66, 65, 67, 66, 68, 68] },
-    { name: 'Floor 2', color: '#2563eb', values: [65, 66, 68, 67, 69, 70, 69, 71, 72, 70, 71, 71] },
-    { name: 'Floor 5', color: '#f59e0b', values: [41, 40, 38, 37, 39, 36, 35, 34, 33, 32, 31, 31] },
+    { name: 'Floor 4', color: 'var(--ka-7c3aed)', values: [58, 60, 61, 63, 62, 64, 66, 65, 67, 66, 68, 68] },
+    { name: 'Floor 2', color: 'var(--ka-2563eb)', values: [65, 66, 68, 67, 69, 70, 69, 71, 72, 70, 71, 71] },
+    { name: 'Floor 5', color: 'var(--ka-f59e0b)', values: [41, 40, 38, 37, 39, 36, 35, 34, 33, 32, 31, 31] },
   ];
   protected readonly days = ['Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed'];
   protected readonly energy = [
-    { name: 'Avg occupancy (people)', color: '#c4b5fd', values: [402, 371, 64, 41, 418, 428, 415] },
-    { name: 'HVAC energy (MWh ×100)', color: '#16a34a', values: [482, 470, 260, 240, 489, 496, 486], line: true },
+    { name: 'Avg occupancy (people)', color: 'var(--ka-c4b5fd)', values: [402, 371, 64, 41, 418, 428, 415] },
+    { name: 'HVAC energy (MWh ×100)', color: 'var(--ka-16a34a)', values: [482, 470, 260, 240, 489, 496, 486], line: true },
   ];
   protected go(slug: string) {
     this.router.navigateByUrl(`/digital-twin/${slug}`);

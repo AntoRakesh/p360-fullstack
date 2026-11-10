@@ -14,18 +14,18 @@ import { ADMIN_CSS, AdminSwitch, AdminToast } from './admin-ui';
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Modules" [value]="mods().length" icon="grid" color="#7c3aed" [sub]="enabled() + ' enabled'" />
-      <app-kpi label="Licensed" [value]="licensedCount()" icon="admin-card" color="#10b981" [sub]="store.subscription().plan + ' plan'" />
-      <app-kpi label="Add-ons Not Licensed" [value]="mods().length - licensedCount()" icon="admin-rocket" color="#f59e0b" sub="available to purchase" />
-      <app-kpi label="Restricted by Business Unit" [value]="restricted()" icon="admin-sitemap" color="#2563eb" sub="not available in all BUs" />
-      <app-kpi label="Sub-modules" [value]="subTotal()" icon="list-checks" color="#ef4444" sub="pages across all modules" />
+      <app-kpi label="Modules" [value]="mods().length" icon="grid" color="var(--ka-7c3aed)" [sub]="enabled() + ' enabled'" />
+      <app-kpi label="Licensed" [value]="licensedCount()" icon="admin-card" color="var(--ka-10b981)" [sub]="store.subscription().plan + ' plan'" />
+      <app-kpi label="Add-ons Not Licensed" [value]="mods().length - licensedCount()" icon="admin-rocket" color="var(--ka-f59e0b)" sub="available to purchase" />
+      <app-kpi label="Restricted by Business Unit" [value]="restricted()" icon="admin-sitemap" color="var(--ka-2563eb)" sub="not available in all BUs" />
+      <app-kpi label="Sub-modules" [value]="subTotal()" icon="list-checks" color="var(--ka-ef4444)" sub="pages across all modules" />
     </section>
 
     <section class="split">
       <div class="cards">
         @for (m of shown(); track m.path) {
           <div class="card mc" [class.on]="sel() === m.path" [class.off]="!m.enabled" (click)="sel.set(m.path)">
-            <div class="top"><span class="ri" [style.background]="m.enabled ? '#ede9fe' : '#f1f2f6'" [style.color]="m.enabled ? '#7c3aed' : '#9ca3af'"><app-icon [name]="m.icon" [size]="18" /></span>
+            <div class="top"><span class="ri" [style.background]="m.enabled ? 'var(--ka-ede9fe)' : 'var(--ka-f1f2f6)'" [style.color]="m.enabled ? 'var(--ka-7c3aed)' : 'var(--ka-9ca3af)'"><app-icon [name]="m.icon" [size]="18" /></span>
               <span (click)="$event.stopPropagation()"><app-admin-switch [on]="m.enabled" [disabled]="!m.licensed || m.path === 'administration-configuration'" (toggled)="toggle(m.path, $event)" /></span></div>
             <b>{{ m.no }}. {{ m.title }}</b>
             <small class="muted">{{ m.subs }} sub-modules · {{ m.roles }} roles</small>
@@ -39,7 +39,7 @@ import { ADMIN_CSS, AdminSwitch, AdminToast } from './admin-ui';
       </div>
       @if (cur(); as m) {
         <aside class="card det">
-          <div class="dh"><span class="ri" style="background:#ede9fe;color:#7c3aed"><app-icon [name]="m.icon" [size]="20" /></span><div><h3>{{ m.title }}</h3><small class="muted">{{ m.enabled ? 'Enabled' : 'Disabled' }} for {{ store.org().name }}</small></div></div>
+          <div class="dh"><span class="ri" style="background:var(--kb-ede9fe);color:var(--kf-7c3aed)"><app-icon [name]="m.icon" [size]="20" /></span><div><h3>{{ m.title }}</h3><small class="muted">{{ m.enabled ? 'Enabled' : 'Disabled' }} for {{ store.org().name }}</small></div></div>
           @if (!m.licensed) {
             <p class="note warn"><app-icon name="admin-rocket" [size]="15" /><span>This add-on isn't in your subscription. <button class="link" (click)="router.navigateByUrl('/administration-configuration/subscription-licensing')">Add it in Subscription &amp; Licensing</button></span></p>
           }
@@ -63,7 +63,7 @@ import { ADMIN_CSS, AdminSwitch, AdminToast } from './admin-ui';
   `,
   styles: [ADMIN_CSS, `
     .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .mc { cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 12px; } .mc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .mc.off b { color: #6b7090; }
+    .mc { cursor: pointer; display: flex; flex-direction: column; gap: 6px; padding: 12px; } .mc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .mc.off b { color: var(--kf-6b7090); }
     .mc b { font-size: 12.5px; } .mc small { font-size: 11px; } .top { display: flex; justify-content: space-between; align-items: center; } .tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .det { position: sticky; top: 76px; } .dot { width: 9px; height: 9px; border-radius: 50%; } .acts { margin-top: 12px; } .beta { display: flex; gap: 5px; align-items: center; font-size: 12px; }
   `],

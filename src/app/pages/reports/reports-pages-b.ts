@@ -39,11 +39,11 @@ function downloadText(name: string, text: string, type: string) {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Exports (This Month)" [value]="store.exportsThisMonth()" icon="download" color="#ef4444" change="12%" sub="vs. last month" />
-      <app-kpi label="Rows Exported" [value]="fmt(rowsTotal())" icon="reports-table" color="#2563eb" sub="last 40 jobs" />
-      <app-kpi label="Datasets Available" [value]="datasets.length" icon="reports-db" color="#7c3aed" sub="across 9 modules" />
-      <app-kpi label="Avg. Export Time" value="3.1s" icon="clock" color="#f59e0b" change="0.4s" [up]="false" sub="faster" />
-      <app-kpi label="Failed Exports" [value]="failed()" icon="triangle-alert" color="#dc2626" sub="last 30 days" />
+      <app-kpi label="Exports (This Month)" [value]="store.exportsThisMonth()" icon="download" color="var(--ka-ef4444)" change="12%" sub="vs. last month" />
+      <app-kpi label="Rows Exported" [value]="fmt(rowsTotal())" icon="reports-table" color="var(--ka-2563eb)" sub="last 40 jobs" />
+      <app-kpi label="Datasets Available" [value]="datasets.length" icon="reports-db" color="var(--ka-7c3aed)" sub="across 9 modules" />
+      <app-kpi label="Avg. Export Time" value="3.1s" icon="clock" color="var(--ka-f59e0b)" change="0.4s" [up]="false" sub="faster" />
+      <app-kpi label="Failed Exports" [value]="failed()" icon="triangle-alert" color="var(--ka-dc2626)" sub="last 30 days" />
     </section>
 
     <section class="ex">
@@ -86,15 +86,15 @@ function downloadText(name: string, text: string, type: string) {
   styles: `
     .ex { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; align-items: start; } .wiz .dsg { grid-template-columns: repeat(5, 1fr); }
     h4 { margin: 0 0 10px; font-size: 13px; display: flex; gap: 8px; align-items: center; } h4 .link { margin-left: auto; } .mt { margin-top: 14px; } .muted { color: var(--muted); font-weight: 400; font-size: 12px; }
-    .n { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: #fff; display: grid; place-items: center; font-size: 11px; }
+    .n { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: var(--kf-ffffff); display: grid; place-items: center; font-size: 11px; }
     .dsg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
-    .dsg button { display: flex; gap: 8px; align-items: center; border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 7px; cursor: pointer; text-align: left; }
-    .dsg button.on { border-color: var(--primary); background: #f5f3ff; } .dsg div { display: flex; flex-direction: column; font-size: 12px; min-width: 0; } .dsg small { color: var(--muted); font-size: 11px; }
-    .di { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .dsg button { display: flex; gap: 8px; align-items: center; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); padding: 7px; cursor: pointer; text-align: left; }
+    .dsg button.on { border-color: var(--primary); background: var(--kb-f5f3ff); } .dsg div { display: flex; flex-direction: column; font-size: 12px; min-width: 0; } .dsg small { color: var(--muted); font-size: 11px; }
+    .di { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .cl { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; } .cl label, .ck { display: flex; gap: 6px; align-items: center; font-size: 12px; } .ck { margin-top: 8px; } input[type='checkbox'] { accent-color: var(--primary); }
-    .fg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .fg label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: #4b4f6b; } .fg .select, .fg .input { min-width: 0; font-size: 12px; }
-    .fmt { display: flex; gap: 6px; } .fmt button { border: 1px solid var(--border); background: #fff; border-radius: 7px; padding: 6px 14px; font-size: 12px; cursor: pointer; } .fmt button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .fg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .fg label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--kf-4b4f6b); } .fg .select, .fg .input { min-width: 0; font-size: 12px; }
+    .fmt { display: flex; gap: 6px; } .fmt button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; padding: 6px 14px; font-size: 12px; cursor: pointer; } .fmt button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .pvh { display: flex; justify-content: space-between; align-items: center; margin: 16px 0 8px; } .pvh h4 { margin: 0; }
     .pw { border: 1px solid var(--border); border-radius: 8px; }
     @media (max-width: 1350px) { .ex { grid-template-columns: 1fr; } }
@@ -225,11 +225,11 @@ interface Req {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Shared Reports" [value]="sharedReports()" icon="reports-share" color="#7c3aed" sub="with at least one share" />
-      <app-kpi label="Active Public Links" [value]="activeLinks()" icon="reports-link" color="#2563eb" sub="password protected" />
-      <app-kpi label="External Recipients" [value]="external()" icon="reports-mail" color="#f59e0b" sub="outside the organisation" />
-      <app-kpi label="Roles Configured" [value]="roles.length" icon="reports-lock" color="#16a34a" [sub]="categories.length + ' report categories'" />
-      <app-kpi label="Pending Requests" [value]="requests().length" icon="bell" color="#ef4444" sub="awaiting approval" [subColor]="requests().length ? '#dc2626' : undefined" />
+      <app-kpi label="Shared Reports" [value]="sharedReports()" icon="reports-share" color="var(--ka-7c3aed)" sub="with at least one share" />
+      <app-kpi label="Active Public Links" [value]="activeLinks()" icon="reports-link" color="var(--ka-2563eb)" sub="password protected" />
+      <app-kpi label="External Recipients" [value]="external()" icon="reports-mail" color="var(--ka-f59e0b)" sub="outside the organisation" />
+      <app-kpi label="Roles Configured" [value]="roles.length" icon="reports-lock" color="var(--ka-16a34a)" [sub]="categories.length + ' report categories'" />
+      <app-kpi label="Pending Requests" [value]="requests().length" icon="bell" color="var(--ka-ef4444)" sub="awaiting approval" [subColor]="requests().length ? 'var(--ka-dc2626)' : undefined" />
     </section>
 
     <nav class="tabs tb">
@@ -263,7 +263,7 @@ interface Req {
         <section class="rq">
           @for (q of requests(); track q.id) {
             <div class="card rqc">
-              <span class="dt-av" [style.background]="'#7c3aed'">{{ ini(q.user) }}</span>
+              <span class="dt-av" [style.background]="'var(--ka-7c3aed)'">{{ ini(q.user) }}</span>
               <div class="rb"><b>{{ q.user }}</b> <small class="muted">{{ q.role }} · {{ q.at }}</small><p>Requests <span class="tag">{{ q.level }}</span> access to <b>{{ q.report }}</b></p><small class="muted">“{{ q.reason }}”</small></div>
               <div class="ra"><button class="btn-primary btn-sm" (click)="decide(q, true)">Approve</button><button class="btn-ghost sm danger" (click)="decide(q, false)">Deny</button></div>
             </div>
@@ -287,13 +287,13 @@ interface Req {
     .lg { display: flex; gap: 12px; font-size: 11.5px; } .lg span { display: inline-flex; gap: 5px; align-items: center; } .lg i.lv { width: 12px; min-width: 0; height: 12px; padding: 0; border-radius: 3px; display: inline-block; }
     .mx td, .mx th { text-align: center; } .mx td:first-child, .mx th:first-child { text-align: left; }
     .lv { border: 0; border-radius: 6px; padding: 4px 8px; font-size: 11px; cursor: pointer; min-width: 74px; font-weight: 500; }
-    .l0 { background: #f3f4f6; color: #6b7280; } .l1 { background: #dbeafe; color: #1d4ed8; } .l2 { background: #dcfce7; color: #15803d; } .l3 { background: #fef3c7; color: #b45309; } .l4 { background: #ede9fe; color: #6d28d9; }
-    .note { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #4b4f6b; margin: 12px 0 0; }
+    .l0 { background: var(--kb-f3f4f6); color: var(--kf-6b7280); } .l1 { background: var(--kb-dbeafe); color: var(--kf-1d4ed8); } .l2 { background: var(--kb-dcfce7); color: var(--kf-15803d); } .l3 { background: var(--kb-fef3c7); color: var(--kf-b45309); } .l4 { background: var(--kb-ede9fe); color: var(--kf-6d28d9); }
+    .note { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--kf-4b4f6b); margin: 12px 0 0; }
     .rq { display: flex; flex-direction: column; gap: 10px; } .rqc { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; }
     .rb p { margin: 4px 0; font-size: 12.5px; } .ra { display: flex; gap: 6px; } .danger { color: var(--red); } .empty { text-align: center; color: var(--muted); padding: 40px; }
     .pick { list-style: none; padding: 0; margin: 10px 0 0; max-height: 50vh; overflow: auto; }
     .pick button { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; width: 100%; border: 0; background: none; padding: 7px; border-radius: 7px; cursor: pointer; text-align: left; font-size: 12.5px; }
-    .pick button:hover { background: #f5f3ff; } .pick small { color: var(--muted); } .ri { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: #fff; }
+    .pick button:hover { background: var(--kb-f5f3ff); } .pick small { color: var(--muted); } .ri { width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); }
   `,
 })
 export class ReportSharingAccess {
@@ -341,7 +341,7 @@ export class ReportSharingAccess {
     this.store.shares().map((s) => {
       const r = this.store.byId().get(s.reportId);
       const expired = s.expires !== 'Never' && s.expires < TODAY;
-      return { ...s, report: r?.name ?? s.reportId, icon: r?.icon ?? 'file-text', color: r?.color ?? '#7c3aed', status: !s.active ? 'Revoked' : expired ? 'Expired' : 'Active' };
+      return { ...s, report: r?.name ?? s.reportId, icon: r?.icon ?? 'file-text', color: r?.color ?? 'var(--ka-7c3aed)', status: !s.active ? 'Revoked' : expired ? 'Expired' : 'Active' };
     }),
   );
   protected readonly sharedReports = computed(() => new Set(this.store.shares().filter((s) => s.active).map((s) => s.reportId)).size);
@@ -411,7 +411,7 @@ export class ReportSharingAccess {
 }
 
 /* ======================= Report Audit Trail ======================= */
-const ACTION_COLOR: Record<string, string> = { Run: '#7c3aed', View: '#3b82f6', Export: '#ef4444', Share: '#16a34a', Schedule: '#f59e0b', Edit: '#0ea5e9', Create: '#22c55e', Delete: '#dc2626', Permission: '#6366f1', Revoke: '#9ca3af' };
+const ACTION_COLOR: Record<string, string> = { Run: 'var(--ka-7c3aed)', View: 'var(--ka-3b82f6)', Export: 'var(--ka-ef4444)', Share: 'var(--ka-16a34a)', Schedule: 'var(--ka-f59e0b)', Edit: 'var(--ka-0ea5e9)', Create: 'var(--ka-22c55e)', Delete: 'var(--ka-dc2626)', Permission: 'var(--ka-6366f1)', Revoke: 'var(--ka-9ca3af)' };
 const SIM_USERS = ['Priya Nair', 'Omar Haddad', 'Sara Khan', 'Grace Liu', 'Scheduler', 'Ken Watanabe'];
 @Component({
   selector: 'app-reports-report-audit-trail',
@@ -424,11 +424,11 @@ const SIM_USERS = ['Priya Nair', 'Omar Haddad', 'Sara Khan', 'Grace Liu', 'Sched
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Events (14 Days)" [value]="fmt(store.audit().length)" icon="activity" color="#7c3aed" sub="all report activity" />
-      <app-kpi label="Runs Today" [value]="today('Run')" icon="play" color="#2563eb" sub="incl. scheduled" />
-      <app-kpi label="Exports Today" [value]="today('Export')" icon="download" color="#ef4444" sub="CSV, Excel, PDF" />
-      <app-kpi label="Failed / Denied" [value]="bad()" icon="triangle-alert" color="#f59e0b" sub="last 14 days" />
-      <app-kpi label="Active Users" [value]="users().length" icon="users" color="#16a34a" sub="distinct actors" />
+      <app-kpi label="Events (14 Days)" [value]="fmt(store.audit().length)" icon="activity" color="var(--ka-7c3aed)" sub="all report activity" />
+      <app-kpi label="Runs Today" [value]="today('Run')" icon="play" color="var(--ka-2563eb)" sub="incl. scheduled" />
+      <app-kpi label="Exports Today" [value]="today('Export')" icon="download" color="var(--ka-ef4444)" sub="CSV, Excel, PDF" />
+      <app-kpi label="Failed / Denied" [value]="bad()" icon="triangle-alert" color="var(--ka-f59e0b)" sub="last 14 days" />
+      <app-kpi label="Active Users" [value]="users().length" icon="users" color="var(--ka-16a34a)" sub="distinct actors" />
     </section>
 
     <section class="at">
@@ -469,11 +469,11 @@ const SIM_USERS = ['Priya Nair', 'Omar Haddad', 'Sara Khan', 'Grace Liu', 'Sched
   styles: `
     .at { display: grid; grid-template-columns: 1.6fr 1fr 0.9fr; gap: 12px; margin-bottom: 12px; } .muted { color: var(--muted); font-size: 12px; }
     .btn-ghost.on { background: var(--primary-soft); color: var(--primary); }
-    .tu { list-style: none; margin: 0; padding: 0; } .tu li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid #f0f1f6; }
-    .ab { display: inline-block; color: #fff; border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 600; }
+    .tu { list-style: none; margin: 0; padding: 0; } .tu li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid var(--kl-f0f1f6); }
+    .ab { display: inline-block; color: var(--kf-ffffff); border-radius: 6px; padding: 3px 10px; font-size: 12px; font-weight: 600; }
     .kv { display: grid; grid-template-columns: 110px 1fr; gap: 8px; font-size: 12.5px; margin: 14px 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; } .mono { font-family: monospace; font-size: 11px; }
     h4 { margin: 14px 0 8px; font-size: 13px; }
-    .oa { list-style: none; padding: 0; margin: 0 0 14px; } .oa li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; align-items: center; padding: 6px 0; cursor: pointer; font-size: 12px; border-bottom: 1px solid #f0f1f6; }
+    .oa { list-style: none; padding: 0; margin: 0 0 14px; } .oa li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; align-items: center; padding: 6px 0; cursor: pointer; font-size: 12px; border-bottom: 1px solid var(--kl-f0f1f6); }
     .oa div { display: flex; flex-direction: column; } .oa small { color: var(--muted); } .dot { width: 8px; height: 8px; border-radius: 50%; }
     @media (max-width: 1300px) { .at { grid-template-columns: 1fr 1fr; } }
   `,
@@ -520,14 +520,14 @@ export class ReportAuditTrail {
   }
 
   protected readonly rows = computed(() =>
-    this.store.audit().map((e) => ({ ...e, rid: '' + e.id, when: dt(e.at), initials: e.user.split(' ').map((p) => p[0]).join('').slice(0, 2), avatar: e.user === 'Scheduler' ? '#64748b' : e.user === 'You' ? '#7c3aed' : ['#3b82f6', '#22c55e', '#f97316', '#ec4899', '#06b6d4'][e.user.length % 5] })),
+    this.store.audit().map((e) => ({ ...e, rid: '' + e.id, when: dt(e.at), initials: e.user.split(' ').map((p) => p[0]).join('').slice(0, 2), avatar: e.user === 'Scheduler' ? 'var(--ka-64748b)' : e.user === 'You' ? 'var(--ka-7c3aed)' : ['var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ec4899)', 'var(--ka-06b6d4)'][e.user.length % 5] })),
   );
   protected readonly sel = computed(() => this.store.audit().find((e) => e.id === this.selId()) ?? null);
   protected readonly bad = computed(() => this.store.audit().filter((e) => e.result !== 'Success').length);
   protected readonly users = computed(() => [...new Set(this.store.audit().map((e) => e.user))]);
   protected readonly days = computed(() => Array.from({ length: 14 }, (_, i) => fmtDate(new Date(Date.UTC(2026, 9, 1 + i)).toISOString().slice(0, 10)).slice(0, 6)));
   protected readonly daySeries = computed(() => {
-    const groups: [string, string, string[]][] = [['Runs', '#7c3aed', ['Run']], ['Views', '#3b82f6', ['View']], ['Exports', '#ef4444', ['Export']], ['Admin', '#f59e0b', ['Share', 'Schedule', 'Edit', 'Create', 'Delete', 'Permission', 'Revoke']]];
+    const groups: [string, string, string[]][] = [['Runs', 'var(--ka-7c3aed)', ['Run']], ['Views', 'var(--ka-3b82f6)', ['View']], ['Exports', 'var(--ka-ef4444)', ['Export']], ['Admin', 'var(--ka-f59e0b)', ['Share', 'Schedule', 'Edit', 'Create', 'Delete', 'Permission', 'Revoke']]];
     const iso = Array.from({ length: 14 }, (_, i) => new Date(Date.UTC(2026, 9, 1 + i)).toISOString().slice(0, 10));
     return groups.map(([name, color, acts]) => ({ name, color, values: iso.map((d) => this.store.audit().filter((e) => e.at.startsWith(d) && acts.includes(e.action)).length) }));
   });
@@ -544,14 +544,14 @@ export class ReportAuditTrail {
     return [...m.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 7)
-      .map(([name, count], i) => ({ name, count, ini: name.split(' ').map((p) => p[0]).join('').slice(0, 2), color: ['#7c3aed', '#3b82f6', '#22c55e', '#f97316', '#ec4899', '#06b6d4', '#64748b'][i] }));
+      .map(([name, count], i) => ({ name, count, ini: name.split(' ').map((p) => p[0]).join('').slice(0, 2), color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ec4899)', 'var(--ka-06b6d4)', 'var(--ka-64748b)'][i] }));
   });
 
   protected today(a: string) {
     return this.store.audit().filter((e) => e.action === a && e.at.startsWith(TODAY)).length;
   }
   protected color(a: string) {
-    return ACTION_COLOR[a] ?? '#7c3aed';
+    return ACTION_COLOR[a] ?? 'var(--ka-7c3aed)';
   }
   protected tagOf(a: string) {
     return a === 'Run' ? 'tag' : a === 'View' ? 'tag blue' : a === 'Export' || a === 'Delete' ? 'tag red' : a === 'Share' || a === 'Create' ? 'tag green' : a === 'Revoke' ? 'tag grey' : 'tag amber';

@@ -30,7 +30,7 @@ export class VmKpi {
   readonly value = input.required<string | number>();
   readonly icon = input('users');
   /** Accent colour; tile background is a soft gradient of it. */
-  readonly color = input('#7c3aed');
+  readonly color = input('var(--ka-7c3aed)');
   readonly delta = input<string>();
   readonly up = input(true);
   readonly good = input(true);
@@ -42,9 +42,9 @@ export class VmKpi {
   readonly pick = output<void>();
 }
 
-const SKIN = ['#f1c7a5', '#e0ac85', '#c68d63', '#a96f4a', '#f4d3b8', '#d9a07a'];
-const HAIR = ['#2b1d16', '#3b2a20', '#1d1a1a', '#5a3b26', '#6b4a2f', '#262626'];
-const SHIRT = ['#1e3a8a', '#334155', '#7c3aed', '#0f766e', '#475569', '#9d174d', '#1f2937', '#b45309'];
+const SKIN = ['var(--ka-f1c7a5)', 'var(--ka-e0ac85)', 'var(--ka-c68d63)', 'var(--ka-a96f4a)', 'var(--ka-f4d3b8)', 'var(--ka-d9a07a)'];
+const HAIR = ['var(--ka-2b1d16)', 'var(--ka-3b2a20)', 'var(--ka-1d1a1a)', 'var(--ka-5a3b26)', 'var(--ka-6b4a2f)', 'var(--ka-262626)'];
+const SHIRT = ['var(--ka-1e3a8a)', 'var(--ka-334155)', 'var(--ka-7c3aed)', 'var(--ka-0f766e)', 'var(--ka-475569)', 'var(--ka-9d174d)', 'var(--ka-1f2937)', 'var(--ka-b45309)'];
 const FEMALE = new Set(['Maria Santos', 'Sarah Khan', 'Priya Sharma', 'Fatima Ali', 'Li Wei', 'Anika Rao', 'Dr. Anika Rao', 'Sophie Martin', 'Grace Park', 'Aisha Noor', 'Emily Clark', 'Neha Gupta', 'Hana Yusuf', 'Olivia Brown', 'Meera Iyer', 'Layla Hassan', 'Sara Ahmed', 'Nadia Karim']);
 const hash = (s: string) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
 export const isFemale = (name: string) => FEMALE.has(name) || /^(Ms|Mrs|Dr\. ?[A-Z][a-z]+a)\b/.test(name);
@@ -59,7 +59,7 @@ export const isFemale = (name: string) => FEMALE.has(name) || /^(Ms|Mrs|Dr\. ?[A
       <rect width="64" height="64" [attr.fill]="p().bg" />
       @if (p().f) { <path [attr.d]="'M14 40 Q12 14 32 12 Q52 14 50 40 Q50 50 44 52 L20 52 Q14 50 14 40Z'" [attr.fill]="p().hair" /> }
       <path d="M8 64 Q10 46 32 44 Q54 46 56 64Z" [attr.fill]="p().shirt" />
-      @if (!p().f) { <path d="M26 45 L32 54 L38 45" fill="#fff" opacity=".9" /> }
+      @if (!p().f) { <path d="M26 45 L32 54 L38 45" fill="var(--ka-ffffff)" opacity=".9" /> }
       <rect x="27" y="36" width="10" height="10" rx="4" [attr.fill]="p().skin" />
       <ellipse cx="32" cy="29" rx="11" ry="13" [attr.fill]="p().skin" />
       @if (p().f) {
@@ -68,8 +68,8 @@ export const isFemale = (name: string) => FEMALE.has(name) || /^(Ms|Mrs|Dr\. ?[A
         <path d="M21 27 Q20 14 32 14 Q44 14 43 27 Q42 19 32 20 Q24 19 21 27Z" [attr.fill]="p().hair" />
         @if (p().beard) { <path d="M22 31 Q23 43 32 43 Q41 43 42 31 Q40 38 32 38 Q24 38 22 31Z" [attr.fill]="p().hair" opacity=".85" /> }
       }
-      <circle cx="28" cy="29" r="1.3" fill="#1f1a17" /><circle cx="36" cy="29" r="1.3" fill="#1f1a17" />
-      <path d="M29 35 Q32 37 35 35" stroke="#7a4a35" stroke-width="1.2" fill="none" stroke-linecap="round" />
+      <circle cx="28" cy="29" r="1.3" fill="var(--ka-1f1a17)" /><circle cx="36" cy="29" r="1.3" fill="var(--ka-1f1a17)" />
+      <path d="M29 35 Q32 37 35 35" stroke="var(--kl-7a4a35)" stroke-width="1.2" fill="none" stroke-linecap="round" />
     </svg>
   `,
 })
@@ -86,7 +86,7 @@ export class VmAvatar {
       hair: HAIR[(h >>> 3) % HAIR.length],
       shirt: SHIRT[(h >>> 5) % SHIRT.length],
       beard: (h >>> 7) % 3 === 0,
-      bg: ['#e9e3ff', '#dbeafe', '#dcfce7', '#fef3c7', '#fce7f3', '#e0f2fe'][(h >>> 9) % 6],
+      bg: ['var(--ka-e9e3ff)', 'var(--ka-dbeafe)', 'var(--ka-dcfce7)', 'var(--ka-fef3c7)', 'var(--ka-fce7f3)', 'var(--ka-e0f2fe)'][(h >>> 9) % 6],
     };
   });
 }

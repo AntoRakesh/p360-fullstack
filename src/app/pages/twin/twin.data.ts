@@ -114,15 +114,15 @@ export interface TReport {
   status: 'Ready' | 'Generating' | 'Scheduled';
 }
 
-export const TYPE_COLOR: Record<EntKind, string> = { employee: '#2563eb', visitor: '#f59e0b', contractor: '#16a34a', asset: '#7c3aed', sensor: '#0ea5e9' };
+export const TYPE_COLOR: Record<EntKind, string> = { employee: 'var(--ka-2563eb)', visitor: 'var(--ka-f59e0b)', contractor: 'var(--ka-16a34a)', asset: 'var(--ka-7c3aed)', sensor: 'var(--ka-0ea5e9)' };
 export const TYPE_ICON: Record<EntKind, string> = { employee: 'user', visitor: 'user', contractor: 'hard-hat', asset: 'twin-dolly', sensor: 'twin-sensor' };
 export const DEPTS = ['IT', 'Finance', 'HR', 'Operations', 'Sales', 'Marketing', 'Legal', 'Facilities'];
-export const DEPT_COLOR: Record<string, string> = { IT: '#2563eb', Finance: '#0891b2', HR: '#db2777', Operations: '#ea580c', Sales: '#16a34a', Marketing: '#9333ea', Legal: '#64748b', Facilities: '#ca8a04', Visitor: '#f59e0b', Contractor: '#16a34a' };
+export const DEPT_COLOR: Record<string, string> = { IT: 'var(--ka-2563eb)', Finance: 'var(--ka-0891b2)', HR: 'var(--ka-db2777)', Operations: 'var(--ka-ea580c)', Sales: 'var(--ka-16a34a)', Marketing: 'var(--ka-9333ea)', Legal: 'var(--ka-64748b)', Facilities: 'var(--ka-ca8a04)', Visitor: 'var(--ka-f59e0b)', Contractor: 'var(--ka-16a34a)' };
 export const ZONE_GROUP: Record<ZoneType, ZoneGroup> = {
   workstations: 'Workspaces', pods: 'Workspaces', meeting: 'Workspaces', collab: 'Common Areas', cafeteria: 'Common Areas', reception: 'Common Areas', lobby: 'Common Areas', wellness: 'Common Areas',
   server: 'Restricted', security: 'Restricted', storage: 'Service', core: 'Service', hvac: 'Service', solar: 'Service',
 };
-export const ZONE_COLOR: Record<ZoneGroup, string> = { Workspaces: '#3b82f6', 'Common Areas': '#22c55e', Restricted: '#ef4444', Service: '#94a3b8' };
+export const ZONE_COLOR: Record<ZoneGroup, string> = { Workspaces: 'var(--ka-3b82f6)', 'Common Areas': 'var(--ka-22c55e)', Restricted: 'var(--ka-ef4444)', Service: 'var(--ka-94a3b8)' };
 
 export const BUILDINGS = [
   { id: 'A', name: 'Building A - Head Office', site: 'Head Office - Main Building', floors: 7 },
@@ -208,7 +208,7 @@ export const ZONES0 = buildZones();
 /* ---------- people ---------- */
 const FIRST = ['Aisha', 'Omar', 'Priya', 'Daniel', 'Fatima', 'Rahul', 'Sara', 'Michael', 'Layla', 'Arjun', 'Noura', 'James', 'Maria', 'Khalid', 'Emma', 'Yusuf', 'Hannah', 'Vikram', 'Mariam', 'Lucas', 'Zainab', 'Ethan', 'Reem', 'Anil', 'Chloe', 'Hamza', 'Grace', 'Imran', 'Olivia', 'Tariq'];
 const LAST = ['Khan', 'Sharma', 'Al Mansoori', 'Fernandes', 'Hassan', 'Patel', 'Wilson', 'Nair', 'Rahman', 'Thomas', 'Al Hashimi', 'Iyer', 'Garcia', 'Ali', 'Brown', 'Menon', 'Saeed', 'Lee', 'Joseph', 'Kapoor'];
-const AV = ['#7c3aed', '#2563eb', '#db2777', '#0891b2', '#ea580c', '#16a34a', '#9333ea', '#ca8a04'];
+const AV = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-db2777)', 'var(--ka-0891b2)', 'var(--ka-ea580c)', 'var(--ka-16a34a)', 'var(--ka-9333ea)', 'var(--ka-ca8a04)'];
 const COMPANIES = ['Al Futtaim Facilities', 'Emrill Services', 'Siemens Building Tech', 'Johnson Controls', 'Transguard'];
 
 function pointIn(z: TZone, r: () => number): [number, number] {
@@ -268,16 +268,16 @@ function buildPeople(zones: TZone[]): TEntity[] {
 
 /* ---------- assets (1,256) ---------- */
 export const ASSET_TYPES: { type: string; count: number; icon: string; color: string; mobile?: boolean }[] = [
-  { type: 'Laptop', count: 412, icon: 'twin-laptop', color: '#7c3aed' },
-  { type: 'Monitor', count: 380, icon: 'twin-monitor', color: '#6366f1' },
-  { type: 'Smart Desk', count: 180, icon: 'twin-desk', color: '#0891b2' },
-  { type: 'AV Equipment', count: 64, icon: 'twin-projector', color: '#db2777' },
-  { type: 'Safety Kit / AED', count: 60, icon: 'twin-firstaid', color: '#ef4444' },
-  { type: 'Printer', count: 46, icon: 'twin-printer', color: '#64748b' },
-  { type: 'Server Rack', count: 42, icon: 'twin-server', color: '#0f172a' },
-  { type: 'HVAC Unit', count: 38, icon: 'twin-fan', color: '#0ea5e9' },
-  { type: 'Cart / Trolley', count: 28, icon: 'twin-dolly', color: '#f59e0b', mobile: true },
-  { type: 'Forklift', count: 6, icon: 'twin-forklift', color: '#f97316', mobile: true },
+  { type: 'Laptop', count: 412, icon: 'twin-laptop', color: 'var(--ka-7c3aed)' },
+  { type: 'Monitor', count: 380, icon: 'twin-monitor', color: 'var(--ka-6366f1)' },
+  { type: 'Smart Desk', count: 180, icon: 'twin-desk', color: 'var(--ka-0891b2)' },
+  { type: 'AV Equipment', count: 64, icon: 'twin-projector', color: 'var(--ka-db2777)' },
+  { type: 'Safety Kit / AED', count: 60, icon: 'twin-firstaid', color: 'var(--ka-ef4444)' },
+  { type: 'Printer', count: 46, icon: 'twin-printer', color: 'var(--ka-64748b)' },
+  { type: 'Server Rack', count: 42, icon: 'twin-server', color: 'var(--ka-0f172a)' },
+  { type: 'HVAC Unit', count: 38, icon: 'twin-fan', color: 'var(--ka-0ea5e9)' },
+  { type: 'Cart / Trolley', count: 28, icon: 'twin-dolly', color: 'var(--ka-f59e0b)', mobile: true },
+  { type: 'Forklift', count: 6, icon: 'twin-forklift', color: 'var(--ka-f97316)', mobile: true },
 ];
 const ASSET_STATUS = ['In Use', 'In Use', 'In Use', 'Available', 'Available', 'Maintenance', 'Idle'];
 
@@ -352,22 +352,22 @@ export const ALERTS0: TAlert[] = [
 ];
 
 export const ACTIVITY0: TActivity[] = [
-  { id: 1, icon: 'user', color: '#7c3aed', who: 'John Mathew', what: 'Arrived at 4th Floor', time: '10:22 AM', ref: 'P-1001', floor: '4' },
-  { id: 2, icon: 'user', color: '#f59e0b', who: 'Visitor - V102', what: 'Entered Meeting Room 1', time: '10:18 AM', ref: 'V-102', floor: '4' },
-  { id: 3, icon: 'twin-forklift', color: '#7c3aed', who: 'Forklift-01', what: 'Moved to Storage Area', time: '10:15 AM', ref: 'Forklift-01', floor: '4' },
-  { id: 4, icon: 'twin-thermo', color: '#ef4444', who: 'High Temperature', what: '32°C at Server Room', time: '10:12 AM', ref: 'AL-501', floor: '4' },
-  { id: 5, icon: 'twin-door', color: '#3b82f6', who: 'Conference Room 2', what: 'Booked by Priya Sharma', time: '10:10 AM', ref: 'Z4-1', floor: '4' },
-  { id: 6, icon: 'shield', color: '#ef4444', who: 'Data Room', what: 'Unbadged entry on Floor 2', time: '10:06 AM', ref: 'AL-502', floor: '2' },
-  { id: 7, icon: 'hard-hat', color: '#16a34a', who: 'Ravi Kumar', what: 'Checked in at Reception', time: '10:02 AM', ref: 'C-2201', floor: '4' },
-  { id: 8, icon: 'battery', color: '#f59e0b', who: 'Forklift-03', what: 'Battery dropped to 14%', time: '09:58 AM', ref: 'AL-503', floor: 'G' },
+  { id: 1, icon: 'user', color: 'var(--ka-7c3aed)', who: 'John Mathew', what: 'Arrived at 4th Floor', time: '10:22 AM', ref: 'P-1001', floor: '4' },
+  { id: 2, icon: 'user', color: 'var(--ka-f59e0b)', who: 'Visitor - V102', what: 'Entered Meeting Room 1', time: '10:18 AM', ref: 'V-102', floor: '4' },
+  { id: 3, icon: 'twin-forklift', color: 'var(--ka-7c3aed)', who: 'Forklift-01', what: 'Moved to Storage Area', time: '10:15 AM', ref: 'Forklift-01', floor: '4' },
+  { id: 4, icon: 'twin-thermo', color: 'var(--ka-ef4444)', who: 'High Temperature', what: '32°C at Server Room', time: '10:12 AM', ref: 'AL-501', floor: '4' },
+  { id: 5, icon: 'twin-door', color: 'var(--ka-3b82f6)', who: 'Conference Room 2', what: 'Booked by Priya Sharma', time: '10:10 AM', ref: 'Z4-1', floor: '4' },
+  { id: 6, icon: 'shield', color: 'var(--ka-ef4444)', who: 'Data Room', what: 'Unbadged entry on Floor 2', time: '10:06 AM', ref: 'AL-502', floor: '2' },
+  { id: 7, icon: 'hard-hat', color: 'var(--ka-16a34a)', who: 'Ravi Kumar', what: 'Checked in at Reception', time: '10:02 AM', ref: 'C-2201', floor: '4' },
+  { id: 8, icon: 'battery', color: 'var(--ka-f59e0b)', who: 'Forklift-03', what: 'Battery dropped to 14%', time: '09:58 AM', ref: 'AL-503', floor: 'G' },
 ];
 
 const LIVE_EVENTS: Omit<TActivity, 'id' | 'time'>[] = [
-  { icon: 'user', color: '#7c3aed', who: 'Sara Wilson', what: 'Entered Workstations South', ref: 'P-1004', floor: '4' },
-  { icon: 'twin-door', color: '#3b82f6', who: 'Meeting Room 3', what: 'Checked in · 6 attendees', ref: 'Z4-1', floor: '4' },
-  { icon: 'user', color: '#f59e0b', who: 'Visitor - V098', what: 'Moved to Cafeteria', ref: 'V-098', floor: '4' },
-  { icon: 'twin-sensor', color: '#0ea5e9', who: 'CO2-401', what: 'CO₂ back to normal (612 ppm)', floor: '4' },
-  { icon: 'user', color: '#7c3aed', who: 'Ahmed Al Mansoori', what: 'Entered Focus Pods', ref: 'P-1003', floor: '4' },
+  { icon: 'user', color: 'var(--ka-7c3aed)', who: 'Sara Wilson', what: 'Entered Workstations South', ref: 'P-1004', floor: '4' },
+  { icon: 'twin-door', color: 'var(--ka-3b82f6)', who: 'Meeting Room 3', what: 'Checked in · 6 attendees', ref: 'Z4-1', floor: '4' },
+  { icon: 'user', color: 'var(--ka-f59e0b)', who: 'Visitor - V098', what: 'Moved to Cafeteria', ref: 'V-098', floor: '4' },
+  { icon: 'twin-sensor', color: 'var(--ka-0ea5e9)', who: 'CO2-401', what: 'CO₂ back to normal (612 ppm)', floor: '4' },
+  { icon: 'user', color: 'var(--ka-7c3aed)', who: 'Ahmed Al Mansoori', what: 'Entered Focus Pods', ref: 'P-1003', floor: '4' },
 ];
 
 export const SCENARIOS0: TScenario[] = [
@@ -457,7 +457,7 @@ export class TwinStore {
   acknowledge(id: string) {
     this.alerts.update((l) => l.map((a) => (a.id === id ? { ...a, ack: true, isNew: false } : a)));
     const a = this.alerts().find((x) => x.id === id);
-    if (a) this.log({ icon: 'shield-check', color: '#16a34a', who: a.title, what: `Acknowledged · ${a.zone}`, floor: a.floor });
+    if (a) this.log({ icon: 'shield-check', color: 'var(--ka-16a34a)', who: a.title, what: `Acknowledged · ${a.zone}`, floor: a.floor });
   }
   log(e: Omit<TActivity, 'id' | 'time'>) {
     const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
@@ -482,6 +482,6 @@ export class TwinStore {
   raiseAlert(a: Omit<TAlert, 'id' | 'time' | 'ack' | 'isNew'>) {
     const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     this.alerts.update((l) => [{ ...a, id: `AL-${510 + l.length}`, time, ack: false, isNew: true }, ...l]);
-    this.log({ icon: a.icon, color: '#ef4444', who: a.title, what: `${a.detail} · ${a.zone}`, floor: a.floor });
+    this.log({ icon: a.icon, color: 'var(--ka-ef4444)', who: a.title, what: `${a.detail} · ${a.zone}`, floor: a.floor });
   }
 }

@@ -9,12 +9,12 @@ import { Custom, fmtTime, integ, IntegrationStore, Step, SyncLog, Template, TEMP
 
 const BASE = '/integrations-api-hub';
 const STEP_META: Record<Step['kind'], { color: string; icon: string }> = {
-  Trigger: { color: '#7c3aed', icon: 'play' },
-  Fetch: { color: '#3b82f6', icon: 'download' },
-  Transform: { color: '#14b8a6', icon: 'workflow' },
-  Condition: { color: '#f59e0b', icon: 'filter' },
-  Action: { color: '#22c55e', icon: 'integrations-send' },
-  Notify: { color: '#ec4899', icon: 'bell' },
+  Trigger: { color: 'var(--ka-7c3aed)', icon: 'play' },
+  Fetch: { color: 'var(--ka-3b82f6)', icon: 'download' },
+  Transform: { color: 'var(--ka-14b8a6)', icon: 'workflow' },
+  Condition: { color: 'var(--ka-f59e0b)', icon: 'filter' },
+  Action: { color: 'var(--ka-22c55e)', icon: 'integrations-send' },
+  Notify: { color: 'var(--ka-ec4899)', icon: 'bell' },
 };
 
 /* =====================================================================
@@ -32,11 +32,11 @@ const STEP_META: Record<Step['kind'], { color: string; icon: string }> = {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Sync Runs Today" [value]="(logs().length | number) ?? ''" icon="refresh" color="#7c3aed" change="4%" sub="vs. yesterday" />
-      <app-kpi label="Success Rate" [value]="rate() + '%'" icon="shield-check" color="#22c55e" sub="target 99%" [subColor]="+rate() >= 99 ? '#16a34a' : '#d97706'" />
-      <app-kpi label="Failed Runs" [value]="failedCount()" icon="ban" color="#ef4444" sub="awaiting retry" />
-      <app-kpi label="Records Processed" [value]="(records() | number) ?? ''" icon="layers" color="#3b82f6" sub="today" />
-      <app-kpi label="Avg Duration" [value]="avgDur() + ' s'" icon="clock" color="#f59e0b" sub="per run" />
+      <app-kpi label="Sync Runs Today" [value]="(logs().length | number) ?? ''" icon="refresh" color="var(--ka-7c3aed)" change="4%" sub="vs. yesterday" />
+      <app-kpi label="Success Rate" [value]="rate() + '%'" icon="shield-check" color="var(--ka-22c55e)" sub="target 99%" [subColor]="+rate() >= 99 ? 'var(--ka-16a34a)' : 'var(--ka-d97706)'" />
+      <app-kpi label="Failed Runs" [value]="failedCount()" icon="ban" color="var(--ka-ef4444)" sub="awaiting retry" />
+      <app-kpi label="Records Processed" [value]="(records() | number) ?? ''" icon="layers" color="var(--ka-3b82f6)" sub="today" />
+      <app-kpi label="Avg Duration" [value]="avgDur() + ' s'" icon="clock" color="var(--ka-f59e0b)" sub="per run" />
     </section>
 
     <section class="dash">
@@ -96,17 +96,17 @@ correlation-id: {{ l.id.toLowerCase() }}-{{ l.connId.toLowerCase() }}</pre>
   `,
   styles: `
     .sl { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .sl.with-d { grid-template-columns: minmax(0, 1fr) 360px; }
-    code { font-size: 11.5px; } .msg { max-width: 260px; overflow: hidden; text-overflow: ellipsis; color: #4b4f6b; }
-    tr.new td { animation: fl 1.5s; } @keyframes fl { from { background: #ede9fe; } }
+    code { font-size: 11.5px; } .msg { max-width: 260px; overflow: hidden; text-overflow: ellipsis; color: var(--kf-4b4f6b); }
+    tr.new td { animation: fl 1.5s; } @keyframes fl { from { background: var(--kb-ede9fe); } }
     .det { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .dh { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; } .dh h3 { margin: 0; font-size: 15px; } .dh div { display: flex; flex-direction: column; }
     .dl { display: grid; grid-template-columns: 90px 1fr; gap: 6px 10px; margin: 0; font-size: 12.5px; } .dl dt { color: var(--muted); } .dl dd { margin: 0; }
     h4 { margin: 4px 0 0; font-size: 13px; }
     .steps { list-style: none; margin: 0; padding: 0; } .steps li { display: grid; grid-template-columns: 14px 1fr; gap: 10px; padding: 6px 0; position: relative; }
-    .steps li span { width: 12px; height: 12px; border-radius: 50%; background: #22c55e; margin-top: 3px; } .steps li.f span { background: #ef4444; } .steps li.w span { background: #f59e0b; } .steps li.p span { background: #e4e6ef; } .steps li.r span { background: #7c3aed; animation: pl 1s infinite; }
+    .steps li span { width: 12px; height: 12px; border-radius: 50%; background: var(--kb-22c55e); margin-top: 3px; } .steps li.f span { background: var(--kb-ef4444); } .steps li.w span { background: var(--kb-f59e0b); } .steps li.p span { background: var(--kb-e4e6ef); } .steps li.r span { background: var(--kb-7c3aed); animation: pl 1s infinite; }
     @keyframes pl { 50% { opacity: .3; } }
     .steps div { display: flex; flex-direction: column; font-size: 12.5px; } .steps small { color: var(--muted); font-size: 11px; }
-    pre { margin: 0; padding: 10px; border-radius: 8px; background: #1e1b3a; color: #fecaca; font-size: 11.5px; white-space: pre-wrap; }
+    pre { margin: 0; padding: 10px; border-radius: 8px; background: var(--kb-1e1b3a); color: var(--kf-fecaca); font-size: 11.5px; white-space: pre-wrap; }
     @media (max-width: 1250px) { .sl.with-d { grid-template-columns: 1fr; } .det { position: static; } }
   `,
 })
@@ -153,18 +153,18 @@ export class SyncLogsMonitoring {
   });
   protected readonly hourLabels = computed(() => this.hourBuckets().map(([h]) => `${String(h).padStart(2, '0')}:00`));
   protected readonly hourly = computed(() => [
-    { name: 'Success', color: '#22c55e', values: this.hourBuckets().map(([, b]) => b[0]) },
-    { name: 'Warning', color: '#f59e0b', values: this.hourBuckets().map(([, b]) => b[1]) },
-    { name: 'Failed', color: '#ef4444', values: this.hourBuckets().map(([, b]) => b[2]) },
+    { name: 'Success', color: 'var(--ka-22c55e)', values: this.hourBuckets().map(([, b]) => b[0]) },
+    { name: 'Warning', color: 'var(--ka-f59e0b)', values: this.hourBuckets().map(([, b]) => b[1]) },
+    { name: 'Failed', color: 'var(--ka-ef4444)', values: this.hourBuckets().map(([, b]) => b[2]) },
   ]);
   protected readonly outcome = computed(() => {
     const l = this.logs();
     const c = (s: string) => l.filter((x) => x.status === s).length;
     return [
-      { label: 'Success', value: c('Success'), color: '#22c55e' },
-      { label: 'Warning', value: c('Warning'), color: '#f59e0b' },
-      { label: 'Failed', value: c('Failed'), color: '#ef4444' },
-      { label: 'Running', value: c('Running'), color: '#7c3aed' },
+      { label: 'Success', value: c('Success'), color: 'var(--ka-22c55e)' },
+      { label: 'Warning', value: c('Warning'), color: 'var(--ka-f59e0b)' },
+      { label: 'Failed', value: c('Failed'), color: 'var(--ka-ef4444)' },
+      { label: 'Running', value: c('Running'), color: 'var(--ka-7c3aed)' },
     ];
   });
 
@@ -277,16 +277,16 @@ export class SyncLogsMonitoring {
     .tg { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 12px; }
     .tc { display: flex; flex-direction: column; gap: 10px; }
     .th { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: center; } .th div { display: flex; flex-direction: column; } .th b { font-size: 14px; } .th small { color: var(--muted); font-size: 11.5px; }
-    .ti { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; color: #fff; }
-    .tc p { margin: 0; font-size: 12.5px; color: #3b3f5c; }
-    .flow { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; } .st { display: inline-flex; gap: 5px; align-items: center; padding: 3px 8px; border: 1px solid; border-radius: 14px; font-size: 11px; background: #fff; } .st i { width: 6px; height: 6px; border-radius: 50%; } .ar { color: var(--muted); }
+    .ti { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .tc p { margin: 0; font-size: 12.5px; color: var(--kf-3b3f5c); }
+    .flow { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; } .st { display: inline-flex; gap: 5px; align-items: center; padding: 3px 8px; border: 1px solid; border-radius: 14px; font-size: 11px; background: var(--kb-ffffff); } .st i { width: 6px; height: 6px; border-radius: 50%; } .ar { color: var(--muted); }
     .tf { display: flex; justify-content: space-between; align-items: center; margin-top: auto; } .sys { display: flex; gap: 4px; }
     .vflow { list-style: none; padding: 0; margin: 12px 0; } .vflow li { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding-bottom: 16px; position: relative; }
-    .vflow li:not(:last-child)::after { content: ''; position: absolute; left: 13px; top: 30px; bottom: 2px; width: 2px; background: #e4e6ef; }
-    .vi { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: #fff; } .vflow div { display: flex; flex-direction: column; font-size: 13px; } .vflow small { font-size: 10.5px; text-transform: uppercase; color: var(--muted); letter-spacing: .4px; }
+    .vflow li:not(:last-child)::after { content: ''; position: absolute; left: 13px; top: 30px; bottom: 2px; width: 2px; background: var(--kb-e4e6ef); }
+    .vi { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); } .vflow div { display: flex; flex-direction: column; font-size: 13px; } .vflow small { font-size: 10.5px; text-transform: uppercase; color: var(--muted); letter-spacing: .4px; }
     h4 { margin: 8px 0 6px; font-size: 13px; }
-    .req { list-style: none; margin: 0; padding: 0; } .req li { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; }
-    .warn { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: #b45309; background: #fffbeb; padding: 8px 10px; border-radius: 8px; }
+    .req { list-style: none; margin: 0; padding: 0; } .req li { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; }
+    .warn { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--kf-b45309); background: var(--kb-fffbeb); padding: 8px 10px; border-radius: 8px; }
   `,
 })
 export class IntegrationTemplates {
@@ -341,10 +341,10 @@ const KINDS: Step['kind'][] = ['Trigger', 'Fetch', 'Transform', 'Condition', 'Ac
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Custom Integrations" [value]="store.customs().length" icon="integrations-custom" color="#7c3aed" />
-      <app-kpi label="Published" [value]="countSt('Published')" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Drafts" [value]="countSt('Draft')" icon="file-text" color="#f59e0b" />
-      <app-kpi label="Runs (30 days)" [value]="(runs() | number) ?? ''" icon="activity" color="#3b82f6" />
+      <app-kpi label="Custom Integrations" [value]="store.customs().length" icon="integrations-custom" color="var(--ka-7c3aed)" />
+      <app-kpi label="Published" [value]="countSt('Published')" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Drafts" [value]="countSt('Draft')" icon="file-text" color="var(--ka-f59e0b)" />
+      <app-kpi label="Runs (30 days)" [value]="(runs() | number) ?? ''" icon="activity" color="var(--ka-3b82f6)" />
     </section>
 
     <section class="ci">
@@ -419,18 +419,18 @@ const KINDS: Step['kind'][] = ['Trigger', 'Fetch', 'Transform', 'Condition', 'Ac
     .ci { display: grid; grid-template-columns: 300px minmax(0, 1fr) 290px; gap: 12px; align-items: start; }
     h3 { margin: 0 0 10px; font-size: 15px; } h4 { margin: 14px 0 6px; font-size: 13px; } .danger { color: var(--red); }
     .fl { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-    .fl li { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 9px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; } .fl li.on { border-color: var(--primary); background: #faf8ff; }
+    .fl li { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 9px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; } .fl li.on { border-color: var(--primary); background: var(--kb-faf8ff); }
     .fl div { display: flex; flex-direction: column; font-size: 12.5px; min-width: 0; } .fl small { color: var(--muted); font-size: 11px; }
-    .ttl { display: flex; flex-direction: column; min-width: 0; flex: 1; } .nm { border: 0; font: inherit; font-size: 16px; font-weight: 700; padding: 2px 0; border-bottom: 1px dashed transparent; } .nm:hover, .nm:focus { border-bottom-color: #c4b5fd; outline: none; }
-    .canvas { display: flex; flex-direction: column; align-items: center; padding: 18px; border-radius: 10px; background-color: #fafaff; background-image: radial-gradient(#e4e6ef 1px, transparent 1px); background-size: 16px 16px; }
-    .node { width: min(420px, 100%); display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; cursor: pointer; box-shadow: 0 1px 3px rgba(20,20,60,.05); }
-    .node.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .node.ok { border-color: #86efac; } .node.bad { border-color: #fca5a5; }
+    .ttl { display: flex; flex-direction: column; min-width: 0; flex: 1; } .nm { border: 0; font: inherit; font-size: 16px; font-weight: 700; padding: 2px 0; border-bottom: 1px dashed transparent; } .nm:hover, .nm:focus { border-bottom-color: var(--kl-c4b5fd); outline: none; }
+    .canvas { display: flex; flex-direction: column; align-items: center; padding: 18px; border-radius: 10px; background-color: var(--kb-fafaff); background-image: radial-gradient(var(--kb-e4e6ef) 1px, transparent 1px); background-size: 16px 16px; }
+    .node { width: min(420px, 100%); display: grid; grid-template-columns: 32px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); cursor: pointer; box-shadow: 0 1px 3px rgba(20,20,60,.05); }
+    .node.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .node.ok { border-color: var(--kl-86efac); } .node.bad { border-color: var(--kl-fca5a5); }
     .node div { display: flex; flex-direction: column; font-size: 12.5px; } .node small { font-size: 10.5px; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); } .node .muted { font-size: 11.5px; }
-    .node em { font-style: normal; font-size: 11px; color: #15803d; } .node.bad em { color: #b91c1c; }
-    .nk { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; color: #fff; }
-    .conn { height: 30px; width: 2px; background: #c4b5fd; position: relative; } .add { position: absolute; left: -10px; top: 5px; width: 22px; height: 20px; border-radius: 10px; border: 1px solid #c4b5fd; background: #fff; color: var(--primary); font-size: 13px; line-height: 1; cursor: pointer; opacity: 0; } .conn:hover .add { opacity: 1; }
+    .node em { font-style: normal; font-size: 11px; color: var(--kf-15803d); } .node.bad em { color: var(--kf-b91c1c); }
+    .nk { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .conn { height: 30px; width: 2px; background: var(--kb-c4b5fd); position: relative; } .add { position: absolute; left: -10px; top: 5px; width: 22px; height: 20px; border-radius: 10px; border: 1px solid var(--kl-c4b5fd); background: var(--kb-ffffff); color: var(--primary); font-size: 13px; line-height: 1; cursor: pointer; opacity: 0; } .conn:hover .add { opacity: 1; }
     .addn { margin-top: 14px; display: block; text-align: center; border-style: dashed; color: var(--primary); font: inherit; font-size: 12.5px; }
-    .console { margin-top: 10px; padding: 10px; border-radius: 8px; background: #12142b; color: #c4f1be; font-family: ui-monospace, monospace; font-size: 11.5px; } .console .e { color: #fca5a5; }
+    .console { margin-top: 10px; padding: 10px; border-radius: 8px; background: var(--kb-12142b); color: var(--kf-c4f1be); font-family: ui-monospace, monospace; font-size: 11.5px; } .console .e { color: var(--kf-fca5a5); }
     .one { grid-template-columns: 1fr; } .code { font-family: ui-monospace, monospace; font-size: 12px; } .sp { margin-top: 12px; }
     .dl { display: grid; grid-template-columns: 80px 1fr; gap: 6px 10px; margin: 0; font-size: 12.5px; } .dl dt { color: var(--muted); } .dl dd { margin: 0; }
     @media (max-width: 1400px) { .ci { grid-template-columns: 260px minmax(0, 1fr); } .prop { grid-column: 1 / -1; } }

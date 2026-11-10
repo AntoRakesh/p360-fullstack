@@ -28,11 +28,11 @@ const PARENT = 'Workplace & Facility Services';
       <button class="btn-ghost hb" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Tasks Today" [value]="tasks().length" icon="w-broom" color="#2563eb" [sub]="postBooking() + ' after desk bookings'" />
-      <app-wkpi label="Completed" [value]="cnt()['Done']" icon="w-check-circle" color="#16c26b" [strong]="pct(cnt()['Done'])" sub="on schedule" />
-      <app-wkpi label="In Progress" [value]="cnt()['In Progress']" icon="activity" color="#7c3aed" [sub]="cnt()['Pending'] + ' pending'" />
-      <app-wkpi label="Missed" [value]="cnt()['Missed']" icon="triangle-alert" color="#ef3b4f" sub="needs re-clean" [clickable]="true" (click)="filter.set('Missed')" />
-      <app-wkpi label="Cleanliness Score" value="4.6 / 5" icon="star" color="#f5a524" strong="0.2" arrow="up" sub="vs. last week" />
+      <app-wkpi label="Tasks Today" [value]="tasks().length" icon="w-broom" color="var(--ka-2563eb)" [sub]="postBooking() + ' after desk bookings'" />
+      <app-wkpi label="Completed" [value]="cnt()['Done']" icon="w-check-circle" color="var(--ka-16c26b)" [strong]="pct(cnt()['Done'])" sub="on schedule" />
+      <app-wkpi label="In Progress" [value]="cnt()['In Progress']" icon="activity" color="var(--ka-7c3aed)" [sub]="cnt()['Pending'] + ' pending'" />
+      <app-wkpi label="Missed" [value]="cnt()['Missed']" icon="triangle-alert" color="var(--ka-ef3b4f)" sub="needs re-clean" [clickable]="true" (click)="filter.set('Missed')" />
+      <app-wkpi label="Cleanliness Score" value="4.6 / 5" icon="star" color="var(--ka-f5a524)" strong="0.2" arrow="up" sub="vs. last week" />
     </section>
     <section class="wl">
       <div class="card">
@@ -47,7 +47,7 @@ const PARENT = 'Workplace & Facility Services';
                 <span class="nm"><b>{{ t.task }}</b><small>{{ t.area }} · {{ t.site }} · {{ t.floor }}</small></span>
                 <span class="who"><span class="dt-av" [style.background]="av(t.staff)">{{ ini(t.staff) }}</span>{{ t.staff }}</span>
                 <span [class]="t.trigger === 'Sensor' ? 'tag red' : t.trigger === 'Post-booking' ? 'tag' : t.trigger === 'On demand' ? 'tag amber' : 'tag grey'">{{ t.trigger }}</span>
-                <span class="prog"><span class="bar"><i [style.width.%]="done(t)" [style.background]="t.status === 'Missed' ? '#ef4444' : '#22c55e'"></i></span><small>{{ doneN(t) }}/{{ t.checklist.length }}</small></span>
+                <span class="prog"><span class="bar"><i [style.width.%]="done(t)" [style.background]="t.status === 'Missed' ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'"></i></span><small>{{ doneN(t) }}/{{ t.checklist.length }}</small></span>
                 <span [class]="reqTag(t.status)">{{ t.status }}</span>
                 <span class="acts" (click)="$event.stopPropagation()">
                   @if (t.status === 'Pending' || t.status === 'Missed') {<button class="btn-ghost sm" (click)="start(t)">Start</button>}
@@ -69,7 +69,7 @@ const PARENT = 'Workplace & Facility Services';
           <div class="ch"><h3>Sensor Alerts</h3><span class="chip live"><i></i>Live</span></div>
           <div class="rows">
             @for (s of sensors(); track s.id) {
-              <div class="row"><span class="ic soft" [style.--c]="s.level > 80 ? '#ef4444' : '#f59e0b'"><app-icon [name]="s.icon" [size]="16" /></span><span class="nm"><b>{{ s.place }}</b><small>{{ s.metric }} · {{ s.value }}</small></span>
+              <div class="row"><span class="ic soft" [style.--c]="s.level > 80 ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)'"><app-icon [name]="s.icon" [size]="16" /></span><span class="nm"><b>{{ s.place }}</b><small>{{ s.metric }} · {{ s.value }}</small></span>
                 @if (dispatched().has(s.id)) {<span class="tag green">Dispatched</span>} @else {<button class="btn-ghost sm" (click)="dispatch(s)">Dispatch</button>}</div>
             }
           </div>
@@ -78,7 +78,7 @@ const PARENT = 'Workplace & Facility Services';
           <div class="ch"><h3>Staff on Duty</h3><span class="muted sm">{{ cleaners.length }} cleaners</span></div>
           <div class="rows">
             @for (c of staff(); track c.name) {
-              <div class="row"><span class="dt-av" [style.background]="av(c.name)">{{ ini(c.name) }}</span><span class="nm"><b>{{ c.name }}</b><span class="bar"><i [style.width.%]="(c.done / (c.total || 1)) * 100" style="background:#7c3aed"></i></span></span><small>{{ c.done }}/{{ c.total }}</small></div>
+              <div class="row"><span class="dt-av" [style.background]="av(c.name)">{{ ini(c.name) }}</span><span class="nm"><b>{{ c.name }}</b><span class="bar"><i [style.width.%]="(c.done / (c.total || 1)) * 100" style="background:var(--kb-7c3aed)"></i></span></span><small>{{ c.done }}/{{ c.total }}</small></div>
             }
           </div>
         </div>
@@ -86,7 +86,7 @@ const PARENT = 'Workplace & Facility Services';
           <div class="ch"><h3>Supplies Running Low</h3></div>
           <div class="rows">
             @for (s of supplies(); track s.item) {
-              <div class="row"><span class="ic soft" style="--c:#0891b2"><app-icon name="w-package" [size]="16" /></span><span class="nm"><b>{{ s.item }}</b><small>{{ s.where }} · {{ s.left }}% left</small></span>
+              <div class="row"><span class="ic soft" style="--c:var(--ka-0891b2)"><app-icon name="w-package" [size]="16" /></span><span class="nm"><b>{{ s.item }}</b><small>{{ s.where }} · {{ s.left }}% left</small></span>
                 @if (s.ordered) {<span class="tag green">Ordered</span>} @else {<button class="btn-ghost sm" (click)="reorder(s.item)">Reorder</button>}</div>
             }
           </div>
@@ -110,7 +110,7 @@ const PARENT = 'Workplace & Facility Services';
   `,
   styles: [WP_CSS, `
     .seg em { font-style: normal; font-size: 10.5px; opacity: .7; margin-left: 2px; }
-    .task { border-bottom: 1px solid #f0f1f6; } .task.open { background: #fcfbff; }
+    .task { border-bottom: 1px solid var(--kl-f0f1f6); } .task.open { background: var(--kb-fcfbff); }
     .tr { display: grid; grid-template-columns: 66px minmax(0, 1.4fr) minmax(0, 1fr) 92px 80px 86px 86px; gap: 10px; align-items: center; padding: 9px 4px; font-size: 12.5px; cursor: pointer; }
     .tm { font-weight: 600; font-size: 12px; } .nm { display: flex; flex-direction: column; min-width: 0; } .nm b { font-weight: 600; } .nm small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .who { display: flex; align-items: center; gap: 7px; font-size: 12px; white-space: nowrap; overflow: hidden; } .tr .tag { justify-self: start; }
@@ -233,11 +233,11 @@ const STAGES: ReqStatus[] = ['Open', 'Assigned', 'In Progress', 'On Hold', 'Reso
       <button class="btn-ghost hb" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Open Work Orders" [value]="open().length" icon="w-wrench" color="#2563eb" [sub]="list().length + ' this month'" />
-      <app-wkpi label="Preventive Due" [value]="ppmDue()" icon="w-calendar" color="#7c3aed" sub="this week" />
-      <app-wkpi label="Overdue" [value]="overdue()" icon="w-timer" color="#ef3b4f" sub="past SLA" />
-      <app-wkpi label="MTTR" value="6.4 hrs" icon="clock" color="#16c26b" strong="9%" arrow="down" sub="vs. last month" />
-      <app-wkpi label="Cost MTD" [value]="'AED ' + (cost() / 1000).toFixed(1) + 'K'" icon="w-bars" color="#f5a524" sub="labour + parts" />
+      <app-wkpi label="Open Work Orders" [value]="open().length" icon="w-wrench" color="var(--ka-2563eb)" [sub]="list().length + ' this month'" />
+      <app-wkpi label="Preventive Due" [value]="ppmDue()" icon="w-calendar" color="var(--ka-7c3aed)" sub="this week" />
+      <app-wkpi label="Overdue" [value]="overdue()" icon="w-timer" color="var(--ka-ef3b4f)" sub="past SLA" />
+      <app-wkpi label="MTTR" value="6.4 hrs" icon="clock" color="var(--ka-16c26b)" strong="9%" arrow="down" sub="vs. last month" />
+      <app-wkpi label="Cost MTD" [value]="'AED ' + (cost() / 1000).toFixed(1) + 'K'" icon="w-bars" color="var(--ka-f5a524)" sub="labour + parts" />
     </section>
     <div class="card">
       <div class="ch"><h3>Work Order Board</h3>
@@ -307,10 +307,10 @@ const STAGES: ReqStatus[] = ['Open', 'Assigned', 'In Progress', 'On Hold', 'Reso
   `,
   styles: [WP_CSS, `
     .board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-    .lane { background: #f7f7fb; border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
-    .lh { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px; font-size: 12.5px; } .lh em { font-style: normal; font-size: 11px; background: #fff; border-radius: 10px; padding: 0 7px; border: 1px solid var(--border); }
-    .wo { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font: inherit; color: inherit; }
-    .wo:hover { border-color: #c4b5fd; } .wo.crit { border-left: 3px solid #ef4444; }
+    .lane { background: var(--kb-f7f7fb); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
+    .lh { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px; font-size: 12.5px; } .lh em { font-style: normal; font-size: 11px; background: var(--kb-ffffff); border-radius: 10px; padding: 0 7px; border: 1px solid var(--border); }
+    .wo { display: flex; flex-direction: column; gap: 4px; text-align: left; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font: inherit; color: inherit; }
+    .wo:hover { border-color: var(--kl-c4b5fd); } .wo.crit { border-left: 3px solid var(--kl-ef4444); }
     .wo-h { display: flex; justify-content: space-between; align-items: center; } .wo-h small { font-size: 10.5px; color: var(--muted); } .wo b { font-size: 12.5px; line-height: 1.3; } .wo small.muted { font-size: 11px; }
     .wo-f { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; } .who { display: flex; align-items: center; gap: 5px; font-size: 11px; }
     .dt-av.sm { width: 20px; height: 20px; font-size: 9px; }
@@ -355,7 +355,7 @@ export class MaintenanceRequests {
   protected readonly cost = computed(() => this.list().reduce((a, w) => a + (w.cost ?? 0), 0));
   protected readonly sel = computed(() => this.list().find((w) => w.id === this.selId()) ?? null);
   protected readonly costSegs = computed(() => {
-    const colors = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)'];
     const cats = [...new Set(this.list().map((w) => w.category))];
     return cats.map((c, i) => ({ label: c, value: this.list().filter((w) => w.category === c).reduce((a, w) => a + (w.cost ?? 0), 0), color: colors[i % 5] }));
   });
@@ -407,11 +407,11 @@ export class MaintenanceRequests {
       <label class="search-box big"><app-icon name="search" [size]="16" /><input placeholder="Search services…" [value]="q()" (input)="q.set($any($event.target).value)" /></label>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Services Available" [value]="services.length" icon="w-catalog" color="#2563eb" [sub]="cats.length - 1 + ' categories'" />
-      <app-wkpi label="My Open Requests" [value]="myOpen().length" icon="message" color="#7c3aed" sub="in progress" />
-      <app-wkpi label="Awaiting Approval" [value]="myPending()" icon="file-check" color="#f5a524" sub="from your manager" />
-      <app-wkpi label="Avg Fulfilment" value="9.6 hrs" icon="w-timer" color="#16c26b" strong="14%" arrow="down" sub="faster vs. Q3" />
-      <app-wkpi label="Service Rating" value="4.5 / 5" icon="star" color="#ef3b4f" sub="1,585 requests rated" />
+      <app-wkpi label="Services Available" [value]="services.length" icon="w-catalog" color="var(--ka-2563eb)" [sub]="cats.length - 1 + ' categories'" />
+      <app-wkpi label="My Open Requests" [value]="myOpen().length" icon="message" color="var(--ka-7c3aed)" sub="in progress" />
+      <app-wkpi label="Awaiting Approval" [value]="myPending()" icon="file-check" color="var(--ka-f5a524)" sub="from your manager" />
+      <app-wkpi label="Avg Fulfilment" value="9.6 hrs" icon="w-timer" color="var(--ka-16c26b)" strong="14%" arrow="down" sub="faster vs. Q3" />
+      <app-wkpi label="Service Rating" value="4.5 / 5" icon="star" color="var(--ka-ef3b4f)" sub="1,585 requests rated" />
     </section>
     <section class="wl">
       <div class="card">
@@ -432,7 +432,7 @@ export class MaintenanceRequests {
           <div class="ch"><h3>My Service Requests</h3><button class="link" (click)="go('facility-requests')">View All</button></div>
           <div class="rows">
             @for (r of mine().slice(0, 6); track r.id) {
-              <div class="row"><span class="ic soft" style="--c:#7c3aed"><app-icon name="message" [size]="15" /></span><span class="nm"><b>{{ r.title }}</b><small>{{ r.id }} · {{ r.assignee }}</small></span><span [class]="r.approval === 'Pending' ? 'tag amber' : reqTag(r.status)">{{ r.approval === 'Pending' ? 'Awaiting approval' : r.status }}</span></div>
+              <div class="row"><span class="ic soft" style="--c:var(--ka-7c3aed)"><app-icon name="message" [size]="15" /></span><span class="nm"><b>{{ r.title }}</b><small>{{ r.id }} · {{ r.assignee }}</small></span><span [class]="r.approval === 'Pending' ? 'tag amber' : reqTag(r.status)">{{ r.approval === 'Pending' ? 'Awaiting approval' : r.status }}</span></div>
             } @empty {<p class="empty">You have not requested any services yet.</p>}
           </div>
         </div>
@@ -462,10 +462,10 @@ export class MaintenanceRequests {
   styles: [WP_CSS, `
     .search-box.big { padding: 9px 12px; } .search-box.big input { width: 260px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-    .sc { display: flex; flex-direction: column; gap: 6px; padding: 14px; border: 1px solid var(--border); border-radius: 10px; background: #fff; }
-    .sc:hover { border-color: #c4b5fd; box-shadow: 0 4px 14px rgba(124,58,237,.08); }
-    .sc-h { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; } .sc b { font-size: 13.5px; } .sc p { margin: 0; font-size: 12px; color: #52525b; line-height: 1.45; flex: 1; }
-    .sc-m { display: flex; gap: 10px; font-size: 11px; color: #52525b; margin: 4px 0; } .sc-m span { display: inline-flex; gap: 4px; align-items: center; }
+    .sc { display: flex; flex-direction: column; gap: 6px; padding: 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); }
+    .sc:hover { border-color: var(--kl-c4b5fd); box-shadow: 0 4px 14px rgba(124,58,237,.08); }
+    .sc-h { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; } .sc b { font-size: 13.5px; } .sc p { margin: 0; font-size: 12px; color: var(--kf-52525b); line-height: 1.45; flex: 1; }
+    .sc-m { display: flex; gap: 10px; font-size: 11px; color: var(--kf-52525b); margin: 4px 0; } .sc-m span { display: inline-flex; gap: 4px; align-items: center; }
     .sc .btn-outline { justify-content: center; }
     .mh { display: flex; gap: 10px; align-items: center; } .mh h3 { margin: 0; }
     textarea.input { resize: vertical; font: inherit; font-size: 12.5px; }
@@ -519,11 +519,11 @@ interface ApprovalItem { id: string; src: 'booking' | 'request'; type: string; i
       <button class="btn-primary hb" [disabled]="!queue().length" (click)="approveAll()"><app-icon name="w-check-circle" [size]="17" />Approve All ({{ queue().length }})</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Pending Approvals" [value]="queue().length" icon="file-check" color="#f5a524" [sub]="bookingsQ() + ' bookings | ' + (queue().length - bookingsQ()) + ' requests'" />
-      <app-wkpi label="Approved Today" [value]="approved()" icon="w-check-circle" color="#16c26b" [sub]="rejected() + ' rejected'" />
-      <app-wkpi label="SLA Compliance" [value]="compliance() + '%'" icon="shield-check" color="#7c3aed" strong="3%" arrow="up" sub="vs. last month" />
-      <app-wkpi label="SLA Breached" [value]="breached().length" icon="w-timer" color="#ef3b4f" sub="open & overdue" />
-      <app-wkpi label="At Risk" [value]="atRisk().length" icon="triangle-alert" color="#2563eb" sub="over 75% of SLA used" />
+      <app-wkpi label="Pending Approvals" [value]="queue().length" icon="file-check" color="var(--ka-f5a524)" [sub]="bookingsQ() + ' bookings | ' + (queue().length - bookingsQ()) + ' requests'" />
+      <app-wkpi label="Approved Today" [value]="approved()" icon="w-check-circle" color="var(--ka-16c26b)" [sub]="rejected() + ' rejected'" />
+      <app-wkpi label="SLA Compliance" [value]="compliance() + '%'" icon="shield-check" color="var(--ka-7c3aed)" strong="3%" arrow="up" sub="vs. last month" />
+      <app-wkpi label="SLA Breached" [value]="breached().length" icon="w-timer" color="var(--ka-ef3b4f)" sub="open & overdue" />
+      <app-wkpi label="At Risk" [value]="atRisk().length" icon="triangle-alert" color="var(--ka-2563eb)" sub="over 75% of SLA used" />
     </section>
     <section class="wl">
       <div class="card">
@@ -548,7 +548,7 @@ interface ApprovalItem { id: string; src: 'booking' | 'request'; type: string; i
           <div class="ch"><h3>SLA by Priority</h3></div>
           <table class="table">
             <thead><tr><th>Priority</th><th class="num">Target</th><th class="num">Open</th><th class="num">Met</th><th>Compliance</th></tr></thead>
-            <tbody>@for (p of byPrio(); track p.p) {<tr><td><span [class]="prioTag(p.p)">{{ p.p }}</span></td><td class="num">{{ p.target }}h</td><td class="num">{{ p.open }}</td><td class="num">{{ p.met }}</td><td><span class="cmp"><span class="bar"><i [style.width.%]="p.pct" [style.background]="p.pct >= 85 ? '#22c55e' : p.pct >= 70 ? '#f59e0b' : '#ef4444'"></i></span>{{ p.pct }}%</span></td></tr>}</tbody>
+            <tbody>@for (p of byPrio(); track p.p) {<tr><td><span [class]="prioTag(p.p)">{{ p.p }}</span></td><td class="num">{{ p.target }}h</td><td class="num">{{ p.open }}</td><td class="num">{{ p.met }}</td><td><span class="cmp"><span class="bar"><i [style.width.%]="p.pct" [style.background]="p.pct >= 85 ? 'var(--ka-22c55e)' : p.pct >= 70 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></span>{{ p.pct }}%</span></td></tr>}</tbody>
           </table>
         </div>
         <div class="card">
@@ -564,7 +564,7 @@ interface ApprovalItem { id: string; src: 'booking' | 'request'; type: string; i
         <tbody>
           @for (q of risky(); track q.id) {
             <tr><td>{{ q.id }}</td><td><b>{{ q.title }}</b><div class="muted">{{ q.location }}</div></td><td><span [class]="prioTag(q.priority)">{{ q.priority }}</span></td><td>{{ q.assignee }}</td>
-              <td><span class="cmp"><span class="bar"><i [style.width.%]="min(100, (q.createdH / q.slaH) * 100)" [style.background]="sla(q) === 'Breached' ? '#ef4444' : '#f59e0b'"></i></span>{{ round((q.createdH / q.slaH) * 100) }}%</span></td>
+              <td><span class="cmp"><span class="bar"><i [style.width.%]="min(100, (q.createdH / q.slaH) * 100)" [style.background]="sla(q) === 'Breached' ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)'"></i></span>{{ round((q.createdH / q.slaH) * 100) }}%</span></td>
               <td><span [class]="slaTag(sla(q))">{{ sla(q) }}</span></td>
               <td><button class="btn-ghost sm" (click)="escalate(q)">{{ q.notes[0]?.text?.startsWith('Escalated') ? 'Escalated ✓' : 'Escalate' }}</button></td></tr>
           }
@@ -574,7 +574,7 @@ interface ApprovalItem { id: string; src: 'booking' | 'request'; type: string; i
     @if (ts.t()) {<div class="g-toast">{{ ts.t() }}</div>}
   `,
   styles: [WP_CSS, `
-    .aq { display: grid; grid-template-columns: 34px minmax(0, 1.6fr) minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .aq { display: grid; grid-template-columns: 34px minmax(0, 1.6fr) minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .aq .nm { display: flex; flex-direction: column; min-width: 0; } .aq .nm b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .aq .nm small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .who { display: flex; gap: 8px; align-items: center; min-width: 0; }
     .cmp { display: grid; grid-template-columns: 1fr 38px; gap: 8px; align-items: center; min-width: 110px; font-size: 12px; }
@@ -598,11 +598,11 @@ export class ApprovalsSla {
   protected readonly rejected = signal(2);
   protected readonly log = signal<string[]>([]);
   protected readonly months = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
-  protected readonly trend = [{ name: 'SLA compliance', color: '#7c3aed', values: [81, 84, 83, 86, 88, 91], area: true }, { name: 'Target', color: '#ef4444', values: [90, 90, 90, 90, 90, 90], dashed: true }];
+  protected readonly trend = [{ name: 'SLA compliance', color: 'var(--ka-7c3aed)', values: [81, 84, 83, 86, 88, 91], area: true }, { name: 'Target', color: 'var(--ka-ef4444)', values: [90, 90, 90, 90, 90, 90], dashed: true }];
 
   protected readonly queue = computed<ApprovalItem[]>(() => [
     ...this.store.bookings().filter((b) => b.status === 'Pending').sort((a, b) => a.date.localeCompare(b.date)).map((b) => ({ id: b.id, src: 'booking' as const, type: b.kind === 'Asset' ? 'Equipment booking' : `${b.kind} booking`, icon: BOOKING_ICON[b.kind].icon, color: BOOKING_ICON[b.kind].color, title: `${b.resource} · ${b.title ?? 'Reservation'}`, who: b.by, detail: `${fmtD(b.date)} · ${b.from} - ${b.to}${b.attendees ? ' · ' + b.attendees + ' people' : ''}`, when: 'Submitted today' })),
-    ...this.store.requests().filter((q) => q.approval === 'Pending').map((q) => ({ id: q.id, src: 'request' as const, type: q.kind === 'Service' ? 'Service request' : 'Facility request', icon: 'message', color: '#7c3aed', title: q.title, who: q.requester, detail: `${q.location}${q.cost ? ' · AED ' + q.cost.toLocaleString() : ''}`, when: q.createdH < 1 ? 'Just now' : `${Math.round(q.createdH)} hrs ago` })),
+    ...this.store.requests().filter((q) => q.approval === 'Pending').map((q) => ({ id: q.id, src: 'request' as const, type: q.kind === 'Service' ? 'Service request' : 'Facility request', icon: 'message', color: 'var(--ka-7c3aed)', title: q.title, who: q.requester, detail: `${q.location}${q.cost ? ' · AED ' + q.cost.toLocaleString() : ''}`, when: q.createdH < 1 ? 'Just now' : `${Math.round(q.createdH)} hrs ago` })),
   ]);
   protected readonly bookingsQ = computed(() => this.queue().filter((a) => a.src === 'booking').length);
   protected readonly shownQ = computed(() => this.queue().filter((a) => this.tab() === 'All' || (this.tab() === 'Bookings' ? a.src === 'booking' : a.src === 'request')));
@@ -653,11 +653,11 @@ interface Report { id: string; name: string; desc: string; icon: string; color: 
       <button class="btn-primary hb" (click)="openSchedule(reports[0])"><app-icon name="w-calendar" [size]="16" />Schedule Report</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Bookings" [value]="f(bookingsTotal())" icon="w-calendar" color="#2563eb" strong="11%" arrow="up" sub="vs. last month" />
-      <app-wkpi label="Desk Utilization" value="76%" icon="w-desk" color="#7c3aed" strong="8%" arrow="up" sub="vs. last month" />
-      <app-wkpi label="Requests Resolved" [value]="resolved()" icon="w-check-circle" color="#16c26b" [sub]="'of ' + store.requests().length + ' raised'" />
-      <app-wkpi label="Facility Cost" value="AED 184K" icon="w-bars" color="#f5a524" strong="4%" arrow="down" strongColor="#16a34a" sub="vs. budget" />
-      <app-wkpi label="Scheduled Reports" [value]="schedules().length" icon="file-chart" color="#ef3b4f" [sub]="activeSchedules() + ' active'" />
+      <app-wkpi label="Bookings" [value]="f(bookingsTotal())" icon="w-calendar" color="var(--ka-2563eb)" strong="11%" arrow="up" sub="vs. last month" />
+      <app-wkpi label="Desk Utilization" value="76%" icon="w-desk" color="var(--ka-7c3aed)" strong="8%" arrow="up" sub="vs. last month" />
+      <app-wkpi label="Requests Resolved" [value]="resolved()" icon="w-check-circle" color="var(--ka-16c26b)" [sub]="'of ' + store.requests().length + ' raised'" />
+      <app-wkpi label="Facility Cost" value="AED 184K" icon="w-bars" color="var(--ka-f5a524)" strong="4%" arrow="down" strongColor="var(--ka-16a34a)" sub="vs. budget" />
+      <app-wkpi label="Scheduled Reports" [value]="schedules().length" icon="file-chart" color="var(--ka-ef3b4f)" [sub]="activeSchedules() + ' active'" />
     </section>
     <section class="wl even">
       <div class="card">
@@ -728,7 +728,7 @@ interface Report { id: string; name: string; desc: string; icon: string; color: 
     .rp { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 10px; }
     .rp .nm { display: flex; flex-direction: column; min-width: 0; } .rp .nm b { font-size: 13px; } .rp .nm small { font-size: 11.5px; color: var(--muted); }
     .rp .acts .btn-ghost { gap: 4px; }
-    .tg { width: 36px; height: 20px; border-radius: 10px; border: 0; background: #d4d4d8; position: relative; cursor: pointer; } .tg i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left .15s; }
+    .tg { width: 36px; height: 20px; border-radius: 10px; border: 0; background: var(--kb-d4d4d8); position: relative; cursor: pointer; } .tg i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: left .15s; }
     .tg.on { background: var(--primary); } .tg.on i { left: 18px; }
     @media (max-width: 1300px) { .lib { grid-template-columns: 1fr; } }
   `],
@@ -744,10 +744,10 @@ export class WorkplaceReports {
   protected readonly cats = ['All', 'Bookings', 'Space', 'Services', 'Cost'];
   protected readonly months = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
   protected readonly bookingSeries = [
-    { name: 'Desks', color: '#7c3aed', values: [3120, 3310, 2980, 3405, 3720, 3890] },
-    { name: 'Meeting rooms', color: '#3b82f6', values: [1240, 1310, 1190, 1350, 1420, 1505] },
-    { name: 'Parking', color: '#22c55e', values: [2100, 2180, 2060, 2240, 2310, 2390] },
-    { name: 'Equipment', color: '#f59e0b', values: [310, 290, 260, 330, 360, 384] },
+    { name: 'Desks', color: 'var(--ka-7c3aed)', values: [3120, 3310, 2980, 3405, 3720, 3890] },
+    { name: 'Meeting rooms', color: 'var(--ka-3b82f6)', values: [1240, 1310, 1190, 1350, 1420, 1505] },
+    { name: 'Parking', color: 'var(--ka-22c55e)', values: [2100, 2180, 2060, 2240, 2310, 2390] },
+    { name: 'Equipment', color: 'var(--ka-f59e0b)', values: [310, 290, 260, 330, 360, 384] },
   ];
   protected readonly preview = signal<Report | null>(null);
   protected readonly sched = signal<{ name: string; freq: string; fmt: string; to: string } | null>(null);
@@ -759,18 +759,18 @@ export class WorkplaceReports {
   protected readonly bookingsTotal = computed(() => 8164 + this.store.bookings().filter((b) => b.by === ME).length);
   protected readonly resolved = computed(() => this.store.requests().filter((q) => q.status === 'Resolved' || q.status === 'Closed').length);
   protected readonly activeSchedules = computed(() => this.schedules().filter((s) => s.active).length);
-  protected readonly reqCats = computed(() => CATEGORIES.map((c, i) => ({ label: c, value: this.store.requests().filter((q) => q.category === c).length, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444'][i % 5] })).sort((a, b) => b.value - a.value).slice(0, 8));
+  protected readonly reqCats = computed(() => CATEGORIES.map((c, i) => ({ label: c, value: this.store.requests().filter((q) => q.category === c).length, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)'][i % 5] })).sort((a, b) => b.value - a.value).slice(0, 8));
   protected readonly maxCat = computed(() => Math.max(1, ...this.reqCats().map((r) => r.value)));
 
   protected readonly reports: Report[] = [
-    { id: 'r1', cat: 'Bookings', name: 'Desk Booking Register', desc: 'Every desk booking with check-in and no-show status', icon: 'w-desk', color: '#7c3aed', rows: () => [['Desk', 'Site', 'Floor', 'Type', 'Status', 'Occupant'], ...this.store.desks().map((d) => [d.name, d.site, d.floor, d.type, d.status, d.occupant ?? ''])] },
-    { id: 'r2', cat: 'Bookings', name: 'Meeting Room Bookings', desc: 'Room bookings by date, organizer and attendance', icon: 'users', color: '#ef4444', rows: () => [['ID', 'Room', 'Date', 'From', 'To', 'Title', 'Organizer', 'Status'], ...this.store.bookings().filter((b) => ROOMS.some((r) => r.id === b.resourceId)).map((b) => [b.id, b.resource, b.date, b.from, b.to, b.title ?? '', b.by, b.status])] },
-    { id: 'r3', cat: 'Space', name: 'Desk Utilization Report', desc: 'Utilization by zone and floor vs. target', icon: 'w-bars', color: '#2563eb', rows: () => [['Zone', 'Utilization %'], ...TOP_ZONES.map((z) => [z.label, z.value])] },
-    { id: 'r4', cat: 'Space', name: 'Daily Occupancy Trend', desc: 'Occupancy and availability over the last 7 days', icon: 'chart-line', color: '#0891b2', rows: () => [['Date', 'Occupancy %', 'Available %'], ...USAGE_7D.labels.map((l, i) => [l, USAGE_7D.occ[i], USAGE_7D.avail[i]])] },
-    { id: 'r5', cat: 'Services', name: 'Facility Requests & SLA', desc: 'Requests by category, priority and SLA outcome', icon: 'message', color: '#16a34a', rows: () => [['ID', 'Title', 'Category', 'Priority', 'Status', 'Assignee', 'SLA'], ...this.store.requests().filter((q) => q.kind !== 'Maintenance').map((q) => [q.id, q.title, q.category, q.priority, q.status, q.assignee, slaState(q)])] },
-    { id: 'r6', cat: 'Services', name: 'Housekeeping Compliance', desc: 'Cleaning tasks completed vs. scheduled, by area', icon: 'w-broom', color: '#22c55e', rows: () => [['ID', 'Time', 'Task', 'Area', 'Staff', 'Status'], ...this.store.cleaning().map((t) => [t.id, t.time, t.task, t.area, t.staff, t.status])] },
-    { id: 'r7', cat: 'Cost', name: 'Maintenance Cost Summary', desc: 'Work-order cost by category, asset and vendor', icon: 'w-wrench', color: '#f59e0b', rows: () => [['WO', 'Title', 'Asset', 'Technician', 'Status', 'Cost AED'], ...this.store.requests().filter((q) => q.kind === 'Maintenance').map((q) => [q.id, q.title, q.asset ?? '', q.assignee, q.status, q.cost ?? 0])] },
-    { id: 'r8', cat: 'Bookings', name: 'Parking Occupancy', desc: 'Bay occupancy by site, level and bay type', icon: 'w-car', color: '#db2777', rows: () => [['Bay', 'Site', 'Level', 'Type', 'Status', 'Plate'], ...this.store.bays().map((b) => [`${b.row}${b.n}`, b.site, b.level, b.type, b.status, b.plate ?? ''])] },
+    { id: 'r1', cat: 'Bookings', name: 'Desk Booking Register', desc: 'Every desk booking with check-in and no-show status', icon: 'w-desk', color: 'var(--ka-7c3aed)', rows: () => [['Desk', 'Site', 'Floor', 'Type', 'Status', 'Occupant'], ...this.store.desks().map((d) => [d.name, d.site, d.floor, d.type, d.status, d.occupant ?? ''])] },
+    { id: 'r2', cat: 'Bookings', name: 'Meeting Room Bookings', desc: 'Room bookings by date, organizer and attendance', icon: 'users', color: 'var(--ka-ef4444)', rows: () => [['ID', 'Room', 'Date', 'From', 'To', 'Title', 'Organizer', 'Status'], ...this.store.bookings().filter((b) => ROOMS.some((r) => r.id === b.resourceId)).map((b) => [b.id, b.resource, b.date, b.from, b.to, b.title ?? '', b.by, b.status])] },
+    { id: 'r3', cat: 'Space', name: 'Desk Utilization Report', desc: 'Utilization by zone and floor vs. target', icon: 'w-bars', color: 'var(--ka-2563eb)', rows: () => [['Zone', 'Utilization %'], ...TOP_ZONES.map((z) => [z.label, z.value])] },
+    { id: 'r4', cat: 'Space', name: 'Daily Occupancy Trend', desc: 'Occupancy and availability over the last 7 days', icon: 'chart-line', color: 'var(--ka-0891b2)', rows: () => [['Date', 'Occupancy %', 'Available %'], ...USAGE_7D.labels.map((l, i) => [l, USAGE_7D.occ[i], USAGE_7D.avail[i]])] },
+    { id: 'r5', cat: 'Services', name: 'Facility Requests & SLA', desc: 'Requests by category, priority and SLA outcome', icon: 'message', color: 'var(--ka-16a34a)', rows: () => [['ID', 'Title', 'Category', 'Priority', 'Status', 'Assignee', 'SLA'], ...this.store.requests().filter((q) => q.kind !== 'Maintenance').map((q) => [q.id, q.title, q.category, q.priority, q.status, q.assignee, slaState(q)])] },
+    { id: 'r6', cat: 'Services', name: 'Housekeeping Compliance', desc: 'Cleaning tasks completed vs. scheduled, by area', icon: 'w-broom', color: 'var(--ka-22c55e)', rows: () => [['ID', 'Time', 'Task', 'Area', 'Staff', 'Status'], ...this.store.cleaning().map((t) => [t.id, t.time, t.task, t.area, t.staff, t.status])] },
+    { id: 'r7', cat: 'Cost', name: 'Maintenance Cost Summary', desc: 'Work-order cost by category, asset and vendor', icon: 'w-wrench', color: 'var(--ka-f59e0b)', rows: () => [['WO', 'Title', 'Asset', 'Technician', 'Status', 'Cost AED'], ...this.store.requests().filter((q) => q.kind === 'Maintenance').map((q) => [q.id, q.title, q.asset ?? '', q.assignee, q.status, q.cost ?? 0])] },
+    { id: 'r8', cat: 'Bookings', name: 'Parking Occupancy', desc: 'Bay occupancy by site, level and bay type', icon: 'w-car', color: 'var(--ka-db2777)', rows: () => [['Bay', 'Site', 'Level', 'Type', 'Status', 'Plate'], ...this.store.bays().map((b) => [`${b.row}${b.n}`, b.site, b.level, b.type, b.status, b.plate ?? ''])] },
   ];
   protected readonly shownReports = computed(() => this.reports.filter((r) => this.cat() === 'All' || r.cat === this.cat()));
 

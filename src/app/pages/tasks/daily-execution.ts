@@ -8,10 +8,10 @@ import { CAT_NAMES, catMeta, catOf, hhmm, isOpen, prioCls, TaskItem, TaskStore, 
 
 type Col = 'Pending' | 'In Progress' | 'Overdue' | 'Done';
 const COLS: { id: Col; label: string; color: string }[] = [
-  { id: 'Pending', label: 'To Do', color: '#a78bfa' },
-  { id: 'In Progress', label: 'In Progress', color: '#3b82f6' },
-  { id: 'Overdue', label: 'Overdue', color: '#ef4444' },
-  { id: 'Done', label: 'Completed', color: '#22c55e' },
+  { id: 'Pending', label: 'To Do', color: 'var(--ka-a78bfa)' },
+  { id: 'In Progress', label: 'In Progress', color: 'var(--ka-3b82f6)' },
+  { id: 'Overdue', label: 'Overdue', color: 'var(--ka-ef4444)' },
+  { id: 'Done', label: 'Completed', color: 'var(--ka-22c55e)' },
 ];
 
 @Component({
@@ -26,11 +26,11 @@ const COLS: { id: Col; label: string; color: string }[] = [
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="Today's Tasks" [value]="list().length" icon="tasks-clipboard" color="#7c3aed" [sub]="filtered().length + ' in current view'" />
-      <app-tkpi label="Completed" [value]="counts().Done" icon="tasks-check-circle" color="#22c55e" [pct]="pct(counts().Done) + '%'" sub="of today" />
-      <app-tkpi label="In Progress" [value]="counts()['In Progress']" icon="activity" color="#2563eb" [sub]="active() + ' workers active'" />
-      <app-tkpi label="To Do" [value]="counts().Pending" icon="clock" color="#f59e0b" [sub]="unassigned() + ' unassigned'" />
-      <app-tkpi label="Overdue" [value]="counts().Overdue" icon="triangle-alert" color="#ef4444" [pct]="escalated() + ''" pctColor="#ef4444" sub="escalated" />
+      <app-tkpi label="Today's Tasks" [value]="list().length" icon="tasks-clipboard" color="var(--ka-7c3aed)" [sub]="filtered().length + ' in current view'" />
+      <app-tkpi label="Completed" [value]="counts().Done" icon="tasks-check-circle" color="var(--ka-22c55e)" [pct]="pct(counts().Done) + '%'" sub="of today" />
+      <app-tkpi label="In Progress" [value]="counts()['In Progress']" icon="activity" color="var(--ka-2563eb)" [sub]="active() + ' workers active'" />
+      <app-tkpi label="To Do" [value]="counts().Pending" icon="clock" color="var(--ka-f59e0b)" [sub]="unassigned() + ' unassigned'" />
+      <app-tkpi label="Overdue" [value]="counts().Overdue" icon="triangle-alert" color="var(--ka-ef4444)" [pct]="escalated() + ''" pctColor="var(--ka-ef4444)" sub="escalated" />
     </section>
 
     <section class="card prog">
@@ -40,7 +40,7 @@ const COLS: { id: Col; label: string; color: string }[] = [
       </div>
       <div class="sites">
         @for (s of bySite(); track s.site) {
-          <button [class.on]="site() === s.site" (click)="site.set(site() === s.site ? 'All' : s.site)"><b>{{ s.site }}</b><span>{{ s.done }}/{{ s.total }}</span><app-ring [value]="s.pct" [size]="34" [color]="s.pct > 60 ? '#22c55e' : '#f59e0b'" /></button>
+          <button [class.on]="site() === s.site" (click)="site.set(site() === s.site ? 'All' : s.site)"><b>{{ s.site }}</b><span>{{ s.done }}/{{ s.total }}</span><app-ring [value]="s.pct" [size]="34" [color]="s.pct > 60 ? 'var(--ka-22c55e)' : 'var(--ka-f59e0b)'" /></button>
         }
       </div>
     </section>
@@ -111,7 +111,7 @@ const COLS: { id: Col; label: string; color: string }[] = [
         <div class="card-head"><h3>Live Activity</h3><em class="chip live"><i></i>Live</em></div>
         <ul>
           @for (e of store.events().slice(0, 14); track $index) {
-            <li><span class="fi" [style.background]="e.color + '1a'" [style.color]="e.color"><app-icon [name]="e.icon" [size]="13" /></span><div><span>{{ e.text }}</span><small>{{ e.who }} · {{ hhmm(e.at) }}</small></div></li>
+            <li><span class="fi" [style.background]="'color-mix(in srgb, ' + e.color + ' 10%, transparent)'" [style.color]="e.color"><app-icon [name]="e.icon" [size]="13" /></span><div><span>{{ e.text }}</span><small>{{ e.who }} · {{ hhmm(e.at) }}</small></div></li>
           }
         </ul>
       </aside>
@@ -125,28 +125,28 @@ const COLS: { id: Col; label: string; color: string }[] = [
     .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .prog { margin-bottom: 12px; display: grid; grid-template-columns: 1fr; gap: 10px; }
     .ph { display: flex; justify-content: space-between; align-items: center; font-size: 13px; } .ph span { color: var(--muted); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-    .pbar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: #eef0f5; } .pbar i { display: block; height: 100%; transition: width 0.4s; }
+    .pbar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--kb-eef0f5); } .pbar i { display: block; height: 100%; transition: width 0.4s; }
     .sites { display: flex; gap: 10px; flex-wrap: wrap; }
-    .sites button { display: grid; grid-template-columns: auto auto 34px; gap: 10px; align-items: center; padding: 4px 6px 4px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; cursor: pointer; font-size: 12px; }
+    .sites button { display: grid; grid-template-columns: auto auto 34px; gap: 10px; align-items: center; padding: 4px 6px 4px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); cursor: pointer; font-size: 12px; }
     .sites button.on { border-color: var(--primary); background: var(--primary-soft); } .sites span { color: var(--muted); }
     .filters { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; } .filters .search-box { flex: 0 1 320px; } .filters .search-box input { width: 100%; } .filters .tabs { margin-left: auto; }
     .layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 12px; align-items: start; }
     .board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-    .col { background: #eeeef6; border-radius: 12px; padding: 8px; min-height: 300px; }
-    .ch { display: flex; align-items: center; gap: 8px; padding: 4px 4px 10px; font-size: 13px; } .ch i { width: 10px; height: 10px; border-radius: 3px; } .ch span { margin-left: auto; font-size: 11.5px; background: #fff; border-radius: 10px; padding: 1px 8px; color: #4b4f6b; }
+    .col { background: var(--kb-eeeef6); border-radius: 12px; padding: 8px; min-height: 300px; }
+    .ch { display: flex; align-items: center; gap: 8px; padding: 4px 4px 10px; font-size: 13px; } .ch i { width: 10px; height: 10px; border-radius: 3px; } .ch span { margin-left: auto; font-size: 11.5px; background: var(--kb-ffffff); border-radius: 10px; padding: 1px 8px; color: var(--kf-4b4f6b); }
     .cards { display: flex; flex-direction: column; gap: 7px; max-height: 640px; overflow: auto; }
-    .tc { display: flex; flex-direction: column; gap: 5px; padding: 9px 10px; border: 1px solid var(--border); border-radius: 9px; background: #fff; text-align: left; cursor: pointer; font: inherit; }
-    .tc:hover { border-color: #c4b5fd; box-shadow: 0 3px 10px rgba(124, 58, 237, 0.1); } .tc.esc { border-left: 3px solid #ef4444; }
+    .tc { display: flex; flex-direction: column; gap: 5px; padding: 9px 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--kb-ffffff); text-align: left; cursor: pointer; font: inherit; }
+    .tc:hover { border-color: var(--kl-c4b5fd); box-shadow: 0 3px 10px rgba(124, 58, 237, 0.1); } .tc.esc { border-left: 3px solid var(--kl-ef4444); }
     .t1 { display: grid; grid-template-columns: 20px 1fr auto; gap: 6px; align-items: center; } .t1 b { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ci { width: 20px; height: 20px; border-radius: 5px; display: grid; place-items: center; color: #fff; }
+    .ci { width: 20px; height: 20px; border-radius: 5px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .tc small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .sb { height: 4px; border-radius: 3px; background: #eef0f5; overflow: hidden; } .sb i { display: block; height: 100%; background: #3b82f6; transition: width 0.3s; }
-    .t2 { display: flex; align-items: center; gap: 6px; font-size: 11.5px; } .av { width: 20px; height: 20px; border-radius: 50%; color: #fff; font-size: 9px; display: grid; place-items: center; font-weight: 600; }
-    .wn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .un { color: #b45309; font-weight: 500; } .tm { margin-left: auto; color: #4b4f6b; white-space: nowrap; } .tm.red { color: var(--red); font-weight: 600; }
-    .more { border: 1px dashed #c4b5fd; background: #fff; border-radius: 8px; padding: 7px; font-size: 12px; color: var(--primary); cursor: pointer; }
+    .sb { height: 4px; border-radius: 3px; background: var(--kb-eef0f5); overflow: hidden; } .sb i { display: block; height: 100%; background: var(--kb-3b82f6); transition: width 0.3s; }
+    .t2 { display: flex; align-items: center; gap: 6px; font-size: 11.5px; } .av { width: 20px; height: 20px; border-radius: 50%; color: var(--kf-ffffff); font-size: 9px; display: grid; place-items: center; font-weight: 600; }
+    .wn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .un { color: var(--kf-b45309); font-weight: 500; } .tm { margin-left: auto; color: var(--kf-4b4f6b); white-space: nowrap; } .tm.red { color: var(--red); font-weight: 600; }
+    .more { border: 1px dashed var(--kl-c4b5fd); background: var(--kb-ffffff); border-radius: 8px; padding: 7px; font-size: 12px; color: var(--primary); cursor: pointer; }
     .none { text-align: center; color: var(--muted); font-size: 12px; }
     .lst .sm { font-size: 12px; margin: 8px 0 0; }
-    .feed ul { list-style: none; margin: 0; padding: 0; } .feed li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f1f2f7; font-size: 12px; }
+    .feed ul { list-style: none; margin: 0; padding: 0; } .feed li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12px; }
     .fi { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; } .feed li > div { display: flex; flex-direction: column; } .feed small { color: var(--muted); font-size: 11px; }
     @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .layout { grid-template-columns: 1fr; } }
   `,

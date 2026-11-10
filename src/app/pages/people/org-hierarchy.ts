@@ -23,7 +23,7 @@ const node = (name: string, title: string, dept: string, headcount: number, chil
     title,
     dept,
     initials: name.split(' ').map((x) => x[0]).join('').slice(0, 2),
-    avatar: p?.avatar ?? '#7c3aed',
+    avatar: p?.avatar ?? 'var(--ka-7c3aed)',
     headcount,
     children,
   };
@@ -72,11 +72,11 @@ const ALL = flatten(TREE);
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Headcount" value="8,920" icon="users" color="#8b5cf6" sub="employees" />
-      <app-kpi label="Departments" [value]="depts.length" icon="building" color="#3b82f6" />
-      <app-kpi label="People Managers" value="1,046" icon="briefcase" color="#22c55e" sub="avg. span 8.5" />
-      <app-kpi label="Org Layers" value="6" icon="workflow" color="#f59e0b" sub="CEO to front line" />
-      <app-kpi label="Open Positions" value="37" icon="user-plus" color="#ef4444" />
+      <app-kpi label="Total Headcount" value="8,920" icon="users" color="var(--ka-8b5cf6)" sub="employees" />
+      <app-kpi label="Departments" [value]="depts.length" icon="building" color="var(--ka-3b82f6)" />
+      <app-kpi label="People Managers" value="1,046" icon="briefcase" color="var(--ka-22c55e)" sub="avg. span 8.5" />
+      <app-kpi label="Org Layers" value="6" icon="workflow" color="var(--ka-f59e0b)" sub="CEO to front line" />
+      <app-kpi label="Open Positions" value="37" icon="user-plus" color="var(--ka-ef4444)" />
     </section>
 
     <section class="dash">
@@ -145,22 +145,22 @@ const ALL = flatten(TREE);
   `,
   styles: `
     .tree { overflow: auto; max-height: 640px; padding: 4px; }
-    .kids { margin-left: 26px; padding-left: 14px; border-left: 2px solid #ede9fe; }
+    .kids { margin-left: 26px; padding-left: 14px; border-left: 2px solid var(--kl-ede9fe); }
     .node-wrap { position: relative; }
-    .kids > .node-wrap::before { content: ''; position: absolute; left: -14px; top: 26px; width: 14px; border-top: 2px solid #ede9fe; }
-    .node { display: flex; align-items: center; gap: 10px; margin: 5px 0; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; cursor: pointer; max-width: 460px; transition: opacity .15s; }
-    .node:hover { border-color: #c4b5fd; } .node.sel { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
-    .node.hit { background: #fef9c3; } .node.dim { opacity: 0.45; }
+    .kids > .node-wrap::before { content: ''; position: absolute; left: -14px; top: 26px; width: 14px; border-top: 2px solid var(--kl-ede9fe); }
+    .node { display: flex; align-items: center; gap: 10px; margin: 5px 0; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); cursor: pointer; max-width: 460px; transition: opacity .15s; }
+    .node:hover { border-color: var(--kl-c4b5fd); } .node.sel { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .node.hit { background: var(--kb-fef9c3); } .node.dim { opacity: 0.45; }
     .info { display: flex; flex-direction: column; flex: 1; min-width: 0; font-size: 12.5px; } .info small { color: var(--muted); }
     .hc { font-size: 11.5px; padding: 2px 8px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); }
-    .tog { width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 5px; background: #fff; cursor: pointer; line-height: 1; padding: 0; flex-shrink: 0; }
+    .tog { width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 5px; background: var(--kb-ffffff); cursor: pointer; line-height: 1; padding: 0; flex-shrink: 0; }
     .tog.leaf { border: 0; }
     .side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .kv { display: grid; grid-template-columns: 110px 1fr; gap: 8px; font-size: 13px; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     h4 { margin: 12px 0 6px; font-size: 13px; }
     .reports { list-style: none; margin: 0 0 12px; padding: 0; }
     .reports li { display: flex; align-items: center; gap: 8px; padding: 6px 4px; cursor: pointer; border-radius: 6px; font-size: 12.5px; }
-    .reports li:hover { background: #faf8ff; } .reports div { display: flex; flex-direction: column; } .reports small { color: var(--muted); }
+    .reports li:hover { background: var(--kb-faf8ff); } .reports div { display: flex; flex-direction: column; } .reports small { color: var(--muted); }
   `,
 })
 export class OrgHierarchy {

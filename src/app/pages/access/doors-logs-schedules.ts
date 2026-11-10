@@ -16,11 +16,11 @@ const SITES = ['Head Office', 'Manufacturing', 'Warehouse', 'Data Center', 'Regi
   template: `
     <app-page-head title="Door Monitoring" parent="Physical Access Control" parentLink="/physical-access-control" subtitle="Live state of every door, reader and controller, with remote control." />
     <section class="kpi-row">
-      <app-kpi label="Doors" [value]="doors().length" icon="door-open" color="#8b5cf6" />
-      <app-kpi label="Online" [value]="cnt('Online')" icon="wifi" color="#22c55e" />
-      <app-kpi label="Offline" [value]="cnt('Offline')" icon="ban" color="#ef4444" />
-      <app-kpi label="In Alarm" [value]="cnt('Alarm')" icon="bell" color="#f97316" />
-      <app-kpi label="Held Unlocked" [value]="unlocked()" icon="key-round" color="#3b82f6" />
+      <app-kpi label="Doors" [value]="doors().length" icon="door-open" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Online" [value]="cnt('Online')" icon="wifi" color="var(--ka-22c55e)" />
+      <app-kpi label="Offline" [value]="cnt('Offline')" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="In Alarm" [value]="cnt('Alarm')" icon="bell" color="var(--ka-f97316)" />
+      <app-kpi label="Held Unlocked" [value]="unlocked()" icon="key-round" color="var(--ka-3b82f6)" />
     </section>
     <section class="card bar">
       <label class="search-box"><app-icon name="search" [size]="15" /><input placeholder="Search door" [value]="q()" (input)="q.set($any($event.target).value)" /></label>
@@ -76,18 +76,18 @@ const SITES = ['Head Office', 'Manufacturing', 'Warehouse', 'Data Center', 'Regi
     .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 10px 12px; margin-bottom: 12px; }
     .dm { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .dm.with-detail { grid-template-columns: minmax(0, 1fr) 360px; }
     .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; align-content: start; }
-    .tile { display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--border); border-left: 4px solid #22c55e; border-radius: 8px; background: #fff; text-align: left; cursor: pointer; font-size: 12.5px; }
-    .tile[data-s='Offline'] { border-left-color: #ef4444; background: #fffafa; } .tile[data-s='Alarm'] { border-left-color: #f59e0b; background: #fffbeb; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 50% { box-shadow: 0 0 0 3px #fde68a; } }
+    .tile { display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid var(--border); border-left: 4px solid var(--kl-22c55e); border-radius: 8px; background: var(--kb-ffffff); text-align: left; cursor: pointer; font-size: 12.5px; }
+    .tile[data-s='Offline'] { border-left-color: var(--kl-ef4444); background: var(--kb-fffafa); } .tile[data-s='Alarm'] { border-left-color: var(--kl-f59e0b); background: var(--kb-fffbeb); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 3px var(--kb-fde68a); } }
     .tile.on { box-shadow: 0 0 0 2px var(--primary); }
-    .t-top { display: flex; justify-content: space-between; } .dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; }
-    .tile[data-s='Offline'] .dot { background: #ef4444; } .tile[data-s='Alarm'] .dot { background: #f59e0b; }
-    .tile small { color: var(--muted); } .t-foot { display: flex; justify-content: space-between; font-size: 11px; color: #4b4f6b; }
+    .t-top { display: flex; justify-content: space-between; } .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--kb-22c55e); }
+    .tile[data-s='Offline'] .dot { background: var(--kb-ef4444); } .tile[data-s='Alarm'] .dot { background: var(--kb-f59e0b); }
+    .tile small { color: var(--muted); } .t-foot { display: flex; justify-content: space-between; font-size: 11px; color: var(--kf-4b4f6b); }
     .detail { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .cam { height: 180px; border-radius: 8px; }
     .state { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; } .state div { display: flex; flex-direction: column; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 11.5px; }
-    .state span { color: var(--muted); } .s-Online { color: #16a34a; } .s-Offline { color: var(--red); } .s-Alarm { color: #d97706; }
-    .cd { margin: 0; color: #d97706; font-weight: 600; font-size: 13px; } .danger { color: var(--red); }
+    .state span { color: var(--muted); } .s-Online { color: var(--kf-16a34a); } .s-Offline { color: var(--red); } .s-Alarm { color: var(--kf-d97706); }
+    .cd { margin: 0; color: var(--kf-d97706); font-weight: 600; font-size: 13px; } .danger { color: var(--red); }
     .kv { display: grid; grid-template-columns: 100px 1fr; gap: 6px; font-size: 12.5px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     h4 { margin: 4px 0 0; font-size: 13px; } .ev { list-style: none; margin: 0; padding: 0; font-size: 12px; } .ev li { padding: 4px 0; display: flex; gap: 6px; }
     @media (max-width: 1100px) { .dm.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
@@ -167,7 +167,7 @@ export class DoorMonitoring {
       <app-data-table [rows]="rows()" [columns]="cols" [filters]="filters" noun="events" [pageSize]="20" [searchKeys]="['name', 'personId', 'door', 'reason']" searchPlaceholder="Search person, ID, door, reason..." />
     </div>
   `,
-  styles: `.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 10px 12px; margin-bottom: 12px; } .bar label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: #4b4f6b; } .quick { display: flex; gap: 6px; } .bar .muted { margin-left: auto; }`,
+  styles: `.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; padding: 10px 12px; margin-bottom: 12px; } .bar label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--kf-4b4f6b); } .quick { display: flex; gap: 6px; } .bar .muted { margin-left: auto; }`,
 })
 export class AccessLogs {
   private readonly state = inject(AppState);
@@ -271,11 +271,11 @@ const mk = (fn: (d: number, h: number) => boolean) => DAYS.map((_, d) => Array.f
     .sc { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 12px; align-items: start; }
     .sl { display: flex; flex-direction: column; gap: 6px; padding: 10px; }
     .si { display: flex; flex-direction: column; gap: 2px; padding: 10px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
-    .si small { color: var(--muted); } .si.on { border-color: var(--primary); background: #f5f3ff; }
+    .si small { color: var(--muted); } .si.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
     .title { font-size: 16px; font-weight: 600; flex: 1; max-width: 360px; }
     .wk { display: grid; grid-template-columns: 40px repeat(24, 1fr); gap: 2px; user-select: none; }
-    .hh { font-size: 10px; color: var(--muted); text-align: center; } .dl { font-size: 12px; color: #4b4f6b; align-self: center; }
-    .c { height: 26px; border-radius: 3px; background: #eef0f6; cursor: pointer; } .c.on { background: var(--primary); } .c:hover { outline: 2px solid #c4b5fd; }
+    .hh { font-size: 10px; color: var(--muted); text-align: center; } .dl { font-size: 12px; color: var(--kf-4b4f6b); align-self: center; }
+    .c { height: 26px; border-radius: 3px; background: var(--kb-eef0f6); cursor: pointer; } .c.on { background: var(--primary); } .c:hover { outline: 2px solid var(--kl-c4b5fd); }
     .opts { margin-top: 14px; } .sum { font-size: 13px; }
     @media (max-width: 1000px) { .sc { grid-template-columns: 1fr; } }
   `,

@@ -22,10 +22,10 @@ import { duration, fmtTime, HISTORY_VISITS, HOSTS, PURPOSES, Visit } from './vis
       @if (msg(); as m) {<span [class]="m.ok ? 'good' : 'bad'">{{ m.text }}</span>}
     </section>
     <section class="kpi-row">
-      <app-kpi label="Expected (not arrived)" [value]="expected().length" icon="clock" color="#f59e0b" />
-      <app-kpi label="On Site" [value]="onsite().length" icon="users" color="#22c55e" />
-      <app-kpi label="Checked Out Today" [value]="out()" icon="door-open" color="#ef4444" />
-      <app-kpi label="Overstaying" [value]="overstay()" icon="triangle-alert" color="#dc2626" sub="on site > 6 h" />
+      <app-kpi label="Expected (not arrived)" [value]="expected().length" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="On Site" [value]="onsite().length" icon="users" color="var(--ka-22c55e)" />
+      <app-kpi label="Checked Out Today" [value]="out()" icon="door-open" color="var(--ka-ef4444)" />
+      <app-kpi label="Overstaying" [value]="overstay()" icon="triangle-alert" color="var(--ka-dc2626)" sub="on site > 6 h" />
     </section>
     <section class="desk">
       <div class="card">
@@ -61,10 +61,10 @@ import { duration, fmtTime, HISTORY_VISITS, HOSTS, PURPOSES, Visit } from './vis
     .scanbar form { display: flex; gap: 8px; flex: 1; min-width: 280px; } .scanbar .input { flex: 1; font-size: 14px; padding: 10px 12px; }
     .desk { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .vl { list-style: none; margin: 0; padding: 0; max-height: 600px; overflow: auto; }
-    .vl li { display: grid; grid-template-columns: 34px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 4px; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .vl li { display: grid; grid-template-columns: 34px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .vl li div { display: flex; flex-direction: column; } .vl small { color: var(--muted); font-size: 11.5px; }
-    .vl li.late small:last-child { color: #d97706; } .vl li.over { background: #fff7ed; }
-    .dur { padding: 2px 8px; border-radius: 6px; background: #dcfce7; color: #15803d; font-size: 11.5px; font-weight: 600; } .over .dur { background: #ffedd5; color: #c2410c; }
+    .vl li.late small:last-child { color: var(--kf-d97706); } .vl li.over { background: var(--kb-fff7ed); }
+    .dur { padding: 2px 8px; border-radius: 6px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 11.5px; font-weight: 600; } .over .dur { background: var(--kb-ffedd5); color: var(--kf-c2410c); }
     .search-box input { width: 120px; }
     @media (max-width: 900px) { .desk { grid-template-columns: 1fr; } }
   `,
@@ -151,7 +151,7 @@ interface Template {
         </div>
         @let t = tpl();
         <div class="opts">
-          <label>Colour<input type="color" [value]="t.color" (input)="patch({ color: $any($event.target).value })" /></label>
+          <label>Colour<input type="color" [value]="(t.color.startsWith('#') ? t.color : '#' + t.color.slice(-7, -1))" (input)="patch({ color: $any($event.target).value })" /></label>
           <label>Header text<input class="input" [value]="t.label" (input)="patch({ label: $any($event.target).value })" /></label>
           @for (o of toggles; track o.key) {
             <label class="chk"><input type="checkbox" [checked]="t[o.key]" (change)="flip(o.key)" />{{ o.label }}</label>
@@ -189,18 +189,18 @@ interface Template {
   `,
   styles: `
     .tpls { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-    .tp { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 16px; background: #fff; font-size: 12px; cursor: pointer; } .tp.on { border-color: var(--primary); background: #f5f3ff; }
+    .tp { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 16px; background: var(--kb-ffffff); font-size: 12px; cursor: pointer; } .tp.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
     .tp i { width: 10px; height: 10px; border-radius: 50%; }
     .opts { display: flex; flex-direction: column; gap: 8px; font-size: 12.5px; } .opts label { display: flex; flex-direction: column; gap: 4px; } .opts .chk { flex-direction: row; align-items: center; gap: 8px; }
     .prev { display: flex; flex-direction: column; align-items: center; }
-    .badge { width: 200px; padding: 14px; border-radius: 14px; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .badge { width: 200px; padding: 14px; border-radius: 14px; color: var(--kf-ffffff); display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
     .b-top { width: 100%; display: flex; justify-content: space-between; font-size: 11px; } .b-top span { padding: 1px 8px; border-radius: 10px; background: rgba(255,255,255,.22); }
-    .b-photo { width: 66px; height: 66px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.25); font-size: 22px; font-weight: 700; border: 3px solid #fff; margin: 8px 0; }
-    .b-name { font-size: 15px; } .b-co { font-size: 12px; opacity: .9; } .badge small { font-size: 10.5px; opacity: .9; } .esc { padding: 2px 6px; border-radius: 4px; background: #fff; color: #b91c1c; font-weight: 700; opacity: 1 !important; }
-    .b-qr { width: 64px; height: 64px; margin-top: 8px; background: conic-gradient(#fff 0 25%, transparent 0 50%, #fff 0 75%, transparent 0) 0 0 / 12px 12px; border: 4px solid #fff; }
+    .b-photo { width: 66px; height: 66px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.25); font-size: 22px; font-weight: 700; border: 3px solid var(--kl-ffffff); margin: 8px 0; }
+    .b-name { font-size: 15px; } .b-co { font-size: 12px; opacity: .9; } .badge small { font-size: 10.5px; opacity: .9; } .esc { padding: 2px 6px; border-radius: 4px; background: var(--kb-ffffff); color: var(--kf-b91c1c); font-weight: 700; opacity: 1 !important; }
+    .b-qr { width: 64px; height: 64px; margin-top: 8px; background: conic-gradient(var(--kb-ffffff) 0 25%, transparent 0 50%, var(--kb-ffffff) 0 75%, transparent 0) 0 0 / 12px 12px; border: 4px solid var(--kl-ffffff); }
     .pl { list-style: none; margin: 0; padding: 0; max-height: 520px; overflow: auto; }
-    .pl li { display: grid; grid-template-columns: 18px 32px 1fr auto; gap: 8px; align-items: center; padding: 6px 4px; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; cursor: pointer; }
-    .pl li.on { background: #faf8ff; } .pl div { display: flex; flex-direction: column; } .pl small { color: var(--muted); }
+    .pl li { display: grid; grid-template-columns: 18px 32px 1fr auto; gap: 8px; align-items: center; padding: 6px 4px; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; cursor: pointer; }
+    .pl li.on { background: var(--kb-faf8ff); } .pl div { display: flex; flex-direction: column; } .pl small { color: var(--muted); }
   `,
 })
 export class PassesBadges {
@@ -210,11 +210,11 @@ export class PassesBadges {
     { key: 'photo', label: 'Show photo' }, { key: 'host', label: 'Show host' }, { key: 'qr', label: 'QR code for doors' }, { key: 'validity', label: 'Show validity' }, { key: 'escort', label: 'Escort required banner' },
   ];
   protected readonly templates = signal<Template[]>([
-    { id: 'visitor', name: 'Visitor', color: '#3b82f6', label: 'VISITOR', photo: true, host: true, qr: true, validity: true, escort: false },
-    { id: 'contractor', name: 'Contractor', color: '#f97316', label: 'CONTRACTOR', photo: true, host: true, qr: true, validity: true, escort: true },
-    { id: 'vip', name: 'VIP', color: '#a16207', label: 'VIP GUEST', photo: false, host: true, qr: false, validity: false, escort: false },
-    { id: 'delivery', name: 'Delivery', color: '#0d9488', label: 'DELIVERY', photo: false, host: false, qr: true, validity: true, escort: false },
-    { id: 'interview', name: 'Interview', color: '#7c3aed', label: 'CANDIDATE', photo: true, host: true, qr: true, validity: true, escort: true },
+    { id: 'visitor', name: 'Visitor', color: 'var(--ka-3b82f6)', label: 'VISITOR', photo: true, host: true, qr: true, validity: true, escort: false },
+    { id: 'contractor', name: 'Contractor', color: 'var(--ka-f97316)', label: 'CONTRACTOR', photo: true, host: true, qr: true, validity: true, escort: true },
+    { id: 'vip', name: 'VIP', color: 'var(--ka-a16207)', label: 'VIP GUEST', photo: false, host: true, qr: false, validity: false, escort: false },
+    { id: 'delivery', name: 'Delivery', color: 'var(--ka-0d9488)', label: 'DELIVERY', photo: false, host: false, qr: true, validity: true, escort: false },
+    { id: 'interview', name: 'Interview', color: 'var(--ka-7c3aed)', label: 'CANDIDATE', photo: true, host: true, qr: true, validity: true, escort: true },
   ]);
   protected readonly tid = signal('visitor');
   protected readonly previewId = signal<string | null>(null);
@@ -266,7 +266,7 @@ export class PassesBadges {
       <app-data-table [rows]="rows()" [columns]="cols" [filters]="filters" noun="visits" [pageSize]="20" [searchKeys]="['name', 'company', 'host', 'id']" searchPlaceholder="Search visitor, company, host, visit ID..." />
     </div>
   `,
-  styles: `.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; padding: 10px 12px; margin-bottom: 12px; } .bar label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: #4b4f6b; } .bar .muted { margin-left: auto; }`,
+  styles: `.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; padding: 10px 12px; margin-bottom: 12px; } .bar label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--kf-4b4f6b); } .bar .muted { margin-left: auto; }`,
 })
 export class VisitorLogs {
   private readonly store = inject(VisitorStore);

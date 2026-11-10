@@ -25,11 +25,11 @@ const flashFn = (sig: ReturnType<typeof signal<string | null>>) => (m: string) =
 const PERIOD_F: Record<string, number> = { 'This Week': 1, 'This Month': 4.3, 'This Quarter': 13 };
 const METRICS = ['Headcount', 'Attendance %', 'Overtime', 'Absenteeism'] as const;
 const FEED = [
-  { icon: 'ai-chart-up', color: '#ef4444', title: 'Overtime is accelerating', text: 'Operations overtime is 31% above baseline; 42 people exceeded 12 h this week.', conf: 94, q: 'Which department has the highest overtime?' },
-  { icon: 'ai-clock-alert', color: '#f59e0b', title: 'Sales attendance slipping', text: 'Sales attendance fell to 81.6% (company 86.7%). Late arrivals doubled this month.', conf: 89, q: 'Show late arrivals in Sales' },
-  { icon: 'heart', color: '#db2777', title: '23 employees at flight risk', text: 'Risk concentrated in Operations (8) and Logistics (4); overtime is the top driver.', conf: 82, q: 'Who is at risk of leaving?' },
-  { icon: 'users', color: '#3b82f6', title: 'Contractor growth +12%', text: 'Contractors rose to 349 for the Q4 peak — mostly Warehouse logistics crews.', conf: 97, q: 'How many contractors this month?' },
-  { icon: 'id-card', color: '#8b5cf6', title: '8 certifications expiring', text: '3 of them gate Warehouse site access. Renew within 2 weeks to avoid gaps.', conf: 99, q: 'List employees with expiring certifications' },
+  { icon: 'ai-chart-up', color: 'var(--ka-ef4444)', title: 'Overtime is accelerating', text: 'Operations overtime is 31% above baseline; 42 people exceeded 12 h this week.', conf: 94, q: 'Which department has the highest overtime?' },
+  { icon: 'ai-clock-alert', color: 'var(--ka-f59e0b)', title: 'Sales attendance slipping', text: 'Sales attendance fell to 81.6% (company 86.7%). Late arrivals doubled this month.', conf: 89, q: 'Show late arrivals in Sales' },
+  { icon: 'heart', color: 'var(--ka-db2777)', title: '23 employees at flight risk', text: 'Risk concentrated in Operations (8) and Logistics (4); overtime is the top driver.', conf: 82, q: 'Who is at risk of leaving?' },
+  { icon: 'users', color: 'var(--ka-3b82f6)', title: 'Contractor growth +12%', text: 'Contractors rose to 349 for the Q4 peak — mostly Warehouse logistics crews.', conf: 97, q: 'How many contractors this month?' },
+  { icon: 'id-card', color: 'var(--ka-8b5cf6)', title: '8 certifications expiring', text: '3 of them gate Warehouse site access. Renew within 2 weeks to avoid gaps.', conf: 99, q: 'List employees with expiring certifications' },
 ];
 
 @Component({
@@ -44,11 +44,11 @@ const FEED = [
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Headcount" [value]="fmt(total)" icon="users" color="#8b5cf6" change="6.1%" sub="vs. last year" />
-      <app-kpi label="Attendance Rate" [value]="attRate + '%'" icon="clock" color="#22c55e" change="0.6 pt" [up]="false" [good]="false" sub="vs. last week" />
-      <app-kpi label="Overtime Hours" [value]="fmt(ot() )" icon="ai-chart-up" color="#f97316" change="8%" [good]="false" [sub]="'vs. previous ' + unit()" />
-      <app-kpi label="Engagement Score" value="76/100" icon="heart" color="#3b82f6" change="2 pts" sub="vs. last pulse" />
-      <app-kpi label="High Attrition Risk" value="23" icon="triangle-alert" color="#ef4444" sub="employees above 60% risk" subColor="#dc2626" />
+      <app-kpi label="Total Headcount" [value]="fmt(total)" icon="users" color="var(--ka-8b5cf6)" change="6.1%" sub="vs. last year" />
+      <app-kpi label="Attendance Rate" [value]="attRate + '%'" icon="clock" color="var(--ka-22c55e)" change="0.6 pt" [up]="false" [good]="false" sub="vs. last week" />
+      <app-kpi label="Overtime Hours" [value]="fmt(ot() )" icon="ai-chart-up" color="var(--ka-f97316)" change="8%" [good]="false" [sub]="'vs. previous ' + unit()" />
+      <app-kpi label="Engagement Score" value="76/100" icon="heart" color="var(--ka-3b82f6)" change="2 pts" sub="vs. last pulse" />
+      <app-kpi label="High Attrition Risk" value="23" icon="triangle-alert" color="var(--ka-ef4444)" sub="employees above 60% risk" subColor="var(--ka-dc2626)" />
     </section>
 
     <section class="dash">
@@ -64,7 +64,7 @@ const FEED = [
         <ul>
           @for (f of feed; track f.title) {
             <li>
-              <span class="f-ic" [style.background]="f.color + '1a'" [style.color]="f.color"><app-icon [name]="f.icon" [size]="16" /></span>
+              <span class="f-ic" [style.background]="'color-mix(in srgb, ' + f.color + ' 10%, transparent)'" [style.color]="f.color"><app-icon [name]="f.icon" [size]="16" /></span>
               <div><b>{{ f.title }}</b><p>{{ f.text }}</p>
                 <div class="f-foot"><span class="muted">{{ f.conf }}% confidence</span><button class="link" (click)="ask(f.q)">Ask Copilot →</button></div></div>
             </li>
@@ -109,8 +109,8 @@ const FEED = [
         <aside class="card det">
           <div class="d-h"><div><h3>{{ d.name }}</h3><span class="muted">{{ d.headcount }} employees · {{ d.present }} present this week</span></div><button class="close-btn" (click)="selName.set(null)">×</button></div>
           <div class="d-k">
-            <div><app-ring [value]="d.att" [color]="d.att < 85 ? '#ef4444' : '#22c55e'" [size]="66" /><small>Attendance</small></div>
-            <div><app-ring [value]="d.engagement" color="#3b82f6" [size]="66" /><small>Engagement</small></div>
+            <div><app-ring [value]="d.att" [color]="d.att < 85 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" [size]="66" /><small>Attendance</small></div>
+            <div><app-ring [value]="d.engagement" color="var(--ka-3b82f6)" [size]="66" /><small>Engagement</small></div>
             <div><b>{{ d.otPer }} h</b><small>Overtime / person</small></div>
             <div><b>{{ d.highRisk }}</b><small>High-risk people</small></div>
           </div>
@@ -131,22 +131,22 @@ const FEED = [
   `,
   styles: `
     .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .seg button { border: 0; background: #fff; padding: 6px 12px; font-size: 12px; cursor: pointer; } .seg button + button { border-left: 1px solid var(--border); } .seg button.on { background: var(--primary); color: #fff; }
-    .ai-note { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; padding: 9px 12px; background: #f7f4ff; border-radius: 8px; font-size: 12.5px; color: #3d3570; } .ai-note app-icon { color: var(--primary); flex: none; margin-top: 1px; }
+    .seg button { border: 0; background: var(--kb-ffffff); padding: 6px 12px; font-size: 12px; cursor: pointer; } .seg button + button { border-left: 1px solid var(--border); } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
+    .ai-note { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; padding: 9px 12px; background: var(--kb-f7f4ff); border-radius: 8px; font-size: 12.5px; color: var(--kf-3d3570); } .ai-note app-icon { color: var(--primary); flex: none; margin-top: 1px; }
     .feed ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-    .feed li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #f1f0f8; } .feed li:last-child { border: 0; padding: 0; }
+    .feed li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--kl-f1f0f8); } .feed li:last-child { border: 0; padding: 0; }
     .f-ic { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; }
-    .feed b { font-size: 13px; } .feed p { margin: 2px 0 4px; font-size: 12px; color: #4b4f6b; line-height: 1.4; }
+    .feed b { font-size: 13px; } .feed p { margin: 2px 0 4px; font-size: 12px; color: var(--kf-4b4f6b); line-height: 1.4; }
     .f-foot { display: flex; justify-content: space-between; font-size: 11.5px; }
     .explorer { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .explorer.with-detail { grid-template-columns: minmax(0, 1.4fr) minmax(380px, 1fr); }
-    .sortable { cursor: pointer; user-select: none; } tbody tr { cursor: pointer; } tbody tr:hover { background: #faf8ff; } tbody tr.on { background: #f3eeff; }
+    .sortable { cursor: pointer; user-select: none; } tbody tr { cursor: pointer; } tbody tr:hover { background: var(--kb-faf8ff); } tbody tr.on { background: var(--kb-f3eeff); }
     .det { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 76px; }
     .d-h { display: flex; justify-content: space-between; } .d-h h3 { margin: 0; font-size: 18px; }
     .d-k { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; } .d-k div { border: 1px solid var(--border); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
     .d-k b { font-size: 20px; } .d-k small { font-size: 11px; color: var(--muted); }
-    .ai-box { display: flex; gap: 8px; padding: 10px 12px; background: #f7f4ff; border-radius: 10px; color: var(--primary); } .ai-box p { margin: 0; font-size: 12.5px; color: #3d3570; line-height: 1.45; }
+    .ai-box { display: flex; gap: 8px; padding: 10px 12px; background: var(--kb-f7f4ff); border-radius: 10px; color: var(--primary); } .ai-box p { margin: 0; font-size: 12.5px; color: var(--kf-3d3570); line-height: 1.45; }
     h4 { margin: 0; font-size: 13px; }
-    .watch { list-style: none; margin: 0; padding: 0; } .watch li { display: grid; grid-template-columns: 32px 1fr auto auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f1f0f8; font-size: 12.5px; }
+    .watch { list-style: none; margin: 0; padding: 0; } .watch li { display: grid; grid-template-columns: 32px 1fr auto auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f0f8); font-size: 12.5px; }
     .watch div { display: flex; flex-direction: column; } .watch small { color: var(--muted); font-size: 11px; }
     .d-btns { display: flex; gap: 8px; flex-wrap: wrap; }
     @media (max-width: 1250px) { .explorer.with-detail { grid-template-columns: 1fr; } .det { position: static; } }
@@ -166,10 +166,10 @@ export class WorkforceInsights {
   protected readonly heat = OT_HEAT;
   protected readonly deptNames = DEPTS.map((d) => d.name);
   protected readonly attSeries: Series[] = [
-    { name: 'Present', color: '#22c55e', values: DEPTS.map((d) => d.present) },
-    { name: 'Late', color: '#f59e0b', values: DEPTS.map((d) => d.late) },
-    { name: 'Absent', color: '#ef4444', values: DEPTS.map((d) => d.absent) },
-    { name: 'On Leave', color: '#64748b', values: DEPTS.map((d) => d.leave) },
+    { name: 'Present', color: 'var(--ka-22c55e)', values: DEPTS.map((d) => d.present) },
+    { name: 'Late', color: 'var(--ka-f59e0b)', values: DEPTS.map((d) => d.late) },
+    { name: 'Absent', color: 'var(--ka-ef4444)', values: DEPTS.map((d) => d.absent) },
+    { name: 'On Leave', color: 'var(--ka-64748b)', values: DEPTS.map((d) => d.leave) },
   ];
   protected readonly period = signal('This Week');
   protected readonly metric = signal<(typeof METRICS)[number]>('Headcount');
@@ -191,13 +191,13 @@ export class WorkforceInsights {
   protected readonly trend = computed(() => {
     switch (this.metric()) {
       case 'Headcount':
-        return { labels: MONTHS, suffix: '', note: 'Headcount grew 6.1% in 12 months while contractors grew 30%; contractor share is now 21.9% of the workforce.', series: [{ name: 'Employees', color: '#7c3aed', values: HEADCOUNT_TREND, area: true }, { name: 'Contractors', color: '#ef4444', values: CONTRACTOR_TREND }] as Series[] };
+        return { labels: MONTHS, suffix: '', note: 'Headcount grew 6.1% in 12 months while contractors grew 30%; contractor share is now 21.9% of the workforce.', series: [{ name: 'Employees', color: 'var(--ka-7c3aed)', values: HEADCOUNT_TREND, area: true }, { name: 'Contractors', color: 'var(--ka-ef4444)', values: CONTRACTOR_TREND }] as Series[] };
       case 'Attendance %':
-        return { labels: WEEKS, suffix: '%', note: 'Attendance has declined for 4 consecutive weeks (89.4% → 86.7%). Sales and HR drive 61% of the drop.', series: [{ name: 'Attendance %', color: '#22c55e', values: ATTENDANCE_RATE, area: true }] as Series[] };
+        return { labels: WEEKS, suffix: '%', note: 'Attendance has declined for 4 consecutive weeks (89.4% → 86.7%). Sales and HR drive 61% of the drop.', series: [{ name: 'Attendance %', color: 'var(--ka-22c55e)', values: ATTENDANCE_RATE, area: true }] as Series[] };
       case 'Overtime':
-        return { labels: WEEKS, suffix: '', note: 'Overtime is up 30% since W31 and the model forecasts 5,300 h next week unless a 4th night crew is added.', series: [{ name: 'Overtime (h)', color: '#f97316', values: OVERTIME_TREND, area: true }] as Series[] };
+        return { labels: WEEKS, suffix: '', note: 'Overtime is up 30% since W31 and the model forecasts 5,300 h next week unless a 4th night crew is added.', series: [{ name: 'Overtime (h)', color: 'var(--ka-f97316)', values: OVERTIME_TREND, area: true }] as Series[] };
       default:
-        return { labels: WEEKS, suffix: '%', note: 'Absenteeism reached 4.8%, the highest in 12 weeks. Unplanned Monday/Friday absences grew 22%.', series: [{ name: 'Absenteeism %', color: '#ef4444', values: ABSENTEEISM, area: true }] as Series[] };
+        return { labels: WEEKS, suffix: '%', note: 'Absenteeism reached 4.8%, the highest in 12 weeks. Unplanned Monday/Friday absences grew 22%.', series: [{ name: 'Absenteeism %', color: 'var(--ka-ef4444)', values: ABSENTEEISM, area: true }] as Series[] };
     }
   });
 
@@ -242,11 +242,11 @@ const FC14 = [87.9, 88.3, 87.4, 86.8, 85.6, 88.6, 88.2, 87.9, 87.5, 86.4, 85.2, 
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Forecast Attendance (next wk)" value="88.2%" icon="clock" color="#22c55e" change="1.5 pt" sub="vs. this week" />
-      <app-kpi label="Predicted Absences (next wk)" value="412" icon="calendar-x" color="#f97316" change="6%" [good]="false" sub="vs. this week" />
-      <app-kpi label="High Attrition Risk" [value]="highRisk()" icon="heart" color="#ef4444" [sub]="planned() + ' with retention plan'" subColor="#16a34a" />
-      <app-kpi label="Peak Staffing Gap" [value]="peakGap() + ' FTE'" icon="users" color="#8b5cf6" [sub]="'in ' + peakWeek()" [subColor]="peakGapNum() < 0 ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Avg Model Accuracy" [value]="avgAcc() + '%'" icon="ai-brain" color="#3b82f6" sub="4 production models" />
+      <app-kpi label="Forecast Attendance (next wk)" value="88.2%" icon="clock" color="var(--ka-22c55e)" change="1.5 pt" sub="vs. this week" />
+      <app-kpi label="Predicted Absences (next wk)" value="412" icon="calendar-x" color="var(--ka-f97316)" change="6%" [good]="false" sub="vs. this week" />
+      <app-kpi label="High Attrition Risk" [value]="highRisk()" icon="heart" color="var(--ka-ef4444)" [sub]="planned() + ' with retention plan'" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Peak Staffing Gap" [value]="peakGap() + ' FTE'" icon="users" color="var(--ka-8b5cf6)" [sub]="'in ' + peakWeek()" [subColor]="peakGapNum() < 0 ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Avg Model Accuracy" [value]="avgAcc() + '%'" icon="ai-brain" color="var(--ka-3b82f6)" sub="4 production models" />
     </section>
 
     <section class="dash">
@@ -296,9 +296,9 @@ const FC14 = [87.9, 88.3, 87.4, 86.8, 85.6, 88.6, 88.2, 87.9, 87.5, 86.4, 85.2, 
   `,
   styles: `
     .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .seg button { border: 0; background: #fff; padding: 6px 12px; font-size: 12px; cursor: pointer; } .seg button + button { border-left: 1px solid var(--border); } .seg button.on { background: var(--primary); color: #fff; }
-    .ai-note { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; padding: 9px 12px; background: #f7f4ff; border-radius: 8px; font-size: 12.5px; color: #3d3570; } .ai-note app-icon { color: var(--primary); flex: none; margin-top: 1px; }
-    .sc label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: #4b4f6b; margin-bottom: 10px; } .sc label b { color: var(--text); margin-left: 6px; }
+    .seg button { border: 0; background: var(--kb-ffffff); padding: 6px 12px; font-size: 12px; cursor: pointer; } .seg button + button { border-left: 1px solid var(--border); } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
+    .ai-note { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 0; padding: 9px 12px; background: var(--kb-f7f4ff); border-radius: 8px; font-size: 12.5px; color: var(--kf-3d3570); } .ai-note app-icon { color: var(--primary); flex: none; margin-top: 1px; }
+    .sc label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--kf-4b4f6b); margin-bottom: 10px; } .sc label b { color: var(--text); margin-left: 6px; }
     .sc label { position: relative; } .sc input[type='range'] { accent-color: var(--primary); width: 100%; }
     .sc-out { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0 8px; }
     .sc-out div { border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; } .sc-out b { font-size: 17px; } .sc-out small { font-size: 11px; color: var(--muted); }
@@ -307,7 +307,7 @@ const FC14 = [87.9, 88.3, 87.4, 86.8, 85.6, 88.6, 88.2, 87.9, 87.5, 86.4, 85.2, 
     .m-top { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; } .m-top div { display: flex; flex-direction: column; } .m-top b { font-size: 13px; } .m-top small { font-size: 11px; color: var(--muted); }
     .m-ic { width: 32px; height: 32px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; }
     .m-bot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-    .prog { height: 6px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .prog i { display: block; height: 100%; background: var(--primary); transition: width 0.3s; }
+    .prog { height: 6px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .prog i { display: block; height: 100%; background: var(--primary); transition: width 0.3s; }
   `,
 })
 export class PredictiveAnalytics {
@@ -338,10 +338,10 @@ export class PredictiveAnalytics {
       labels,
       dips,
       series: [
-        { name: 'Actual', color: '#7c3aed', values: [...past, ...nan(h)], area: true },
-        { name: 'Forecast', color: '#22c55e', values: [...nan(h - 1), past[h - 1], ...fut], dashed: true },
-        { name: 'Upper band', color: '#c4b5fd', values: [...nan(h), ...fut.map((v) => +(v + 1.6).toFixed(1))], dashed: true },
-        { name: 'Lower band', color: '#c4b5fd', values: [...nan(h), ...fut.map((v) => +(v - 1.6).toFixed(1))], dashed: true },
+        { name: 'Actual', color: 'var(--ka-7c3aed)', values: [...past, ...nan(h)], area: true },
+        { name: 'Forecast', color: 'var(--ka-22c55e)', values: [...nan(h - 1), past[h - 1], ...fut], dashed: true },
+        { name: 'Upper band', color: 'var(--ka-c4b5fd)', values: [...nan(h), ...fut.map((v) => +(v + 1.6).toFixed(1))], dashed: true },
+        { name: 'Lower band', color: 'var(--ka-c4b5fd)', values: [...nan(h), ...fut.map((v) => +(v - 1.6).toFixed(1))], dashed: true },
       ] as Series[],
     };
   });
@@ -353,8 +353,8 @@ export class PredictiveAnalytics {
   protected readonly coverage = computed(() => +((DEMAND.reduce((a, d) => a + Math.min(1, this.capacity() / d), 0) / DEMAND.length) * 100).toFixed(1));
   protected readonly cost = computed(() => this.hires() * 9800 + this.contractors() * 7200 + this.otCap() * 1082 * 0.12 * 4.3 * 42);
   protected readonly demandSeries = computed<Series[]>(() => [
-    { name: 'Demand (FTE)', color: '#c4b5fd', values: DEMAND },
-    { name: 'Capacity', color: '#ef4444', values: DEMAND.map(() => this.capacity()), line: true },
+    { name: 'Demand (FTE)', color: 'var(--ka-c4b5fd)', values: DEMAND },
+    { name: 'Capacity', color: 'var(--ka-ef4444)', values: DEMAND.map(() => this.capacity()), line: true },
   ]);
   protected readonly avgAcc = computed(() => +(this.models().reduce((a, m) => a + m.accuracy, 0) / this.models().length).toFixed(1));
 
@@ -438,11 +438,11 @@ const STATUSES = ['Open', 'Acknowledged', 'Resolved', 'False Positive', 'All'] a
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Open Anomalies" [value]="count('Open')" icon="activity" color="#8b5cf6" [sub]="'of ' + store.anomalies().length + ' detected (7 days)'" />
-      <app-kpi label="High Severity" [value]="highOpen()" icon="triangle-alert" color="#ef4444" sub="need attention" subColor="#dc2626" />
-      <app-kpi label="Acknowledged" [value]="count('Acknowledged')" icon="eye" color="#f97316" sub="under investigation" />
-      <app-kpi label="Resolved" [value]="count('Resolved')" icon="shield-check" color="#22c55e" sub="avg 3.4 h to resolve" />
-      <app-kpi label="False-Positive Rate" [value]="fpRate() + '%'" icon="sliders" color="#3b82f6" [sub]="'sensitivity: ' + sens()" />
+      <app-kpi label="Open Anomalies" [value]="count('Open')" icon="activity" color="var(--ka-8b5cf6)" [sub]="'of ' + store.anomalies().length + ' detected (7 days)'" />
+      <app-kpi label="High Severity" [value]="highOpen()" icon="triangle-alert" color="var(--ka-ef4444)" sub="need attention" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Acknowledged" [value]="count('Acknowledged')" icon="eye" color="var(--ka-f97316)" sub="under investigation" />
+      <app-kpi label="Resolved" [value]="count('Resolved')" icon="shield-check" color="var(--ka-22c55e)" sub="avg 3.4 h to resolve" />
+      <app-kpi label="False-Positive Rate" [value]="fpRate() + '%'" icon="sliders" color="var(--ka-3b82f6)" [sub]="'sensitivity: ' + sens()" />
     </section>
 
     <section class="an">
@@ -466,7 +466,7 @@ const STATUSES = ['Open', 'Acknowledged', 'Resolved', 'False Positive', 'All'] a
       @if (sel(); as a) {
         <div class="card det">
           <div class="d-h">
-            <span class="d-ic" [style.background]="sevColor(a.severity) + '1f'" [style.color]="sevColor(a.severity)"><app-icon name="activity" [size]="22" /></span>
+            <span class="d-ic" [style.background]="'color-mix(in srgb, ' + sevColor(a.severity) + ' 12%, transparent)'" [style.color]="sevColor(a.severity)"><app-icon name="activity" [size]="22" /></span>
             <div><h2>{{ a.title }}</h2><span class="muted">{{ a.id }} · {{ a.category }} · {{ a.scope }} · {{ a.site }}</span></div>
             <span [class]="'tag ' + statusTag(a.status)">{{ a.status }}</span>
           </div>
@@ -501,27 +501,27 @@ const STATUSES = ['Open', 'Acknowledged', 'Resolved', 'False Positive', 'All'] a
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
   styles: `
-    .sens { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #4b4f6b; }
+    .sens { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--kf-4b4f6b); }
     .an { display: grid; grid-template-columns: minmax(340px, 0.9fr) minmax(0, 1.4fr); gap: 12px; align-items: start; }
     .list { padding: 12px; } .filters { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
     .cats, .sts { display: flex; flex-wrap: wrap; gap: 5px; }
-    .cats button, .sts button { border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; display: inline-flex; gap: 5px; align-items: center; }
-    .cats button.on, .sts button.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .cats button, .sts button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; display: inline-flex; gap: 5px; align-items: center; }
+    .cats button.on, .sts button.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); }
     .sts em { font-style: normal; font-size: 10.5px; opacity: 0.75; }
     .list ul { list-style: none; margin: 0; padding: 0; max-height: 640px; overflow: auto; }
-    .list li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid #f3f2f8; }
-    .list li:hover { background: #faf8ff; } .list li.on { background: #f3eeff; } .list li.empty { display: block; cursor: default; }
+    .list li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid var(--kl-f3f2f8); }
+    .list li:hover { background: var(--kb-faf8ff); } .list li.on { background: var(--kb-f3eeff); } .list li.empty { display: block; cursor: default; }
     .dot { width: 9px; height: 9px; border-radius: 50%; } .li-m { display: flex; flex-direction: column; min-width: 0; } .li-m b { font-size: 12.5px; } .li-m small { font-size: 11px; color: var(--muted); }
-    .new { margin-left: 6px; background: #ef4444; color: #fff; font-size: 9px; padding: 1px 5px; border-radius: 4px; vertical-align: 2px; }
+    .new { margin-left: 6px; background: var(--kb-ef4444); color: var(--kf-ffffff); font-size: 9px; padding: 1px 5px; border-radius: 4px; vertical-align: 2px; }
     .det { display: flex; flex-direction: column; gap: 12px; }
     .d-h { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; } .d-h h2 { margin: 0; font-size: 18px; } .d-h div { display: flex; flex-direction: column; }
     .d-ic { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; }
     .d-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; } .d-stats div { border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; } .d-stats small { color: var(--muted); font-size: 11px; } .d-stats b { font-size: 17px; }
     .chart-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; } .chart-card .card-head { margin-bottom: 4px; } .chart-card h3 { font-size: 13.5px; margin: 0; }
-    .ai-box { display: flex; gap: 10px; padding: 10px 12px; background: #f7f4ff; border-radius: 10px; color: var(--primary); } .ai-box b { font-size: 12.5px; color: var(--text); } .ai-box p { margin: 2px 0 0; font-size: 12.5px; color: #3d3570; line-height: 1.45; }
+    .ai-box { display: flex; gap: 10px; padding: 10px 12px; background: var(--kb-f7f4ff); border-radius: 10px; color: var(--primary); } .ai-box b { font-size: 12.5px; color: var(--text); } .ai-box p { margin: 2px 0 0; font-size: 12.5px; color: var(--kf-3d3570); line-height: 1.45; }
     .acts { display: flex; flex-wrap: wrap; gap: 8px; } h4 { margin: 0; font-size: 13px; }
     .tl { list-style: none; margin: 0; padding: 0 0 0 4px; font-size: 12.5px; display: flex; flex-direction: column; gap: 8px; }
-    .tl li { display: flex; gap: 8px; align-items: baseline; } .tl i { width: 8px; height: 8px; border-radius: 50%; background: #c4b5fd; flex: none; } .tl i.p { background: var(--primary); }
+    .tl li { display: flex; gap: 8px; align-items: baseline; } .tl i { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-c4b5fd); flex: none; } .tl i.p { background: var(--primary); }
     @media (max-width: 1150px) { .an { grid-template-columns: 1fr; } }
   `,
 })
@@ -580,7 +580,7 @@ export class AnomalyDetection {
     return this.store.anomalies().filter((a) => a.status === s).length;
   }
   protected sevColor(s: string) {
-    return s === 'High' ? '#ef4444' : s === 'Medium' ? '#f59e0b' : s === 'Info' ? '#3b82f6' : '#22c55e';
+    return s === 'High' ? 'var(--ka-ef4444)' : s === 'Medium' ? 'var(--ka-f59e0b)' : s === 'Info' ? 'var(--ka-3b82f6)' : 'var(--ka-22c55e)';
   }
   protected sevTag(s: string) {
     return s === 'High' ? 'red' : s === 'Medium' ? 'amber' : s === 'Info' ? 'blue' : 'green';
@@ -591,7 +591,7 @@ export class AnomalyDetection {
   protected series(a: Anomaly): Series[] {
     return [
       { name: 'Observed', color: this.sevColor(a.severity), values: a.observed, area: true },
-      { name: 'Expected', color: '#94a3b8', values: a.baseline, dashed: true },
+      { name: 'Expected', color: 'var(--ka-94a3b8)', values: a.baseline, dashed: true },
     ];
   }
   private note(a: Anomaly, n: string) {

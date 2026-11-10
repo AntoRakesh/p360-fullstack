@@ -38,11 +38,11 @@ const SCALE = COST_SCALE;
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Monthly Meal Cost" [value]="'AED ' + fmt(company() + employee())" icon="m-coin" color="#ef4444" change="5%" [up]="false" [good]="false" sub="vs. last month" />
-      <app-kpi label="Company Subsidy" [value]="'AED ' + fmt(company())" icon="building" color="#7c3aed" [sub]="'at ' + avgSub() + '% weighted subsidy'" />
-      <app-kpi label="Employee Contribution" [value]="'AED ' + fmt(employee())" icon="users" color="#22c55e" sub="payroll / wallet deductions" />
-      <app-kpi label="Avg. Cost per Meal" [value]="'AED ' + avgMeal()" icon="m-cloche" color="#f59e0b" change="4%" sub="vs. last month" />
-      <app-kpi label="Budget Utilization" [value]="budgetPct() + '%'" icon="m-gauge" color="#2563eb" [sub]="'of AED ' + fmt(budget()) + ' budget'" subColor="#2563eb" />
+      <app-kpi label="Monthly Meal Cost" [value]="'AED ' + fmt(company() + employee())" icon="m-coin" color="var(--ka-ef4444)" change="5%" [up]="false" [good]="false" sub="vs. last month" />
+      <app-kpi label="Company Subsidy" [value]="'AED ' + fmt(company())" icon="building" color="var(--ka-7c3aed)" [sub]="'at ' + avgSub() + '% weighted subsidy'" />
+      <app-kpi label="Employee Contribution" [value]="'AED ' + fmt(employee())" icon="users" color="var(--ka-22c55e)" sub="payroll / wallet deductions" />
+      <app-kpi label="Avg. Cost per Meal" [value]="'AED ' + avgMeal()" icon="m-cloche" color="var(--ka-f59e0b)" change="4%" sub="vs. last month" />
+      <app-kpi label="Budget Utilization" [value]="budgetPct() + '%'" icon="m-gauge" color="var(--ka-2563eb)" [sub]="'of AED ' + fmt(budget()) + ' budget'" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="sp">
@@ -73,7 +73,7 @@ const SCALE = COST_SCALE;
           <div>
             <h4>Budget</h4>
             <label class="bud">Monthly subsidy budget (AED)<input class="input" type="number" step="1000" [value]="budget()" (input)="budget.set(+$any($event.target).value)" /></label>
-            <div class="meter"><i [style.width.%]="Math.min(100, budgetPct())" [style.background]="budgetPct() > 100 ? '#ef4444' : budgetPct() > 90 ? '#f59e0b' : '#22c55e'"></i></div>
+            <div class="meter"><i [style.width.%]="Math.min(100, budgetPct())" [style.background]="budgetPct() > 100 ? 'var(--ka-ef4444)' : budgetPct() > 90 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)'"></i></div>
             <p class="muted">{{ budgetPct() > 100 ? 'Forecast exceeds budget by AED ' + fmt(company() - budget()) : 'AED ' + fmt(budget() - company()) + ' headroom this month' }}</p>
             <h4>Scenario</h4>
             <div class="scn">@for (s of [-10, -5, 5, 10]; track s) {<button class="btn-ghost sm" (click)="shift(s)">{{ s > 0 ? '+' : '' }}{{ s }}% subsidy</button>}</div>
@@ -98,14 +98,14 @@ const SCALE = COST_SCALE;
   styles: `
     h3 { margin: 0; font-size: 15px; } h4 { margin: 14px 0 8px; font-size: 13px; }
     .sp { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; align-items: start; }
-    .pn { display: inline-flex; gap: 8px; align-items: center; } .pi { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: #fff; }
+    .pn { display: inline-flex; gap: 8px; align-items: center; } .pi { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .pr { width: 64px; padding: 4px 6px; text-align: right; } .sp .table th, .sp .table td { padding: 8px 7px; } .sl { display: flex; gap: 8px; align-items: center; } .sl input { flex: 1; accent-color: var(--primary); } .sl b { width: 36px; text-align: right; } .sl input { min-width: 70px; }
-    .tot td { background: #fafafe; font-weight: 600; }
+    .tot td { background: var(--kb-fafafe); font-weight: 600; }
     .two { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
-    .bud { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; margin-bottom: 10px; }
-    .meter { height: 10px; border-radius: 6px; background: #f1f2f7; overflow: hidden; } .meter i { display: block; height: 100%; }
+    .bud { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); margin-bottom: 10px; }
+    .meter { height: 10px; border-radius: 6px; background: var(--kb-f1f2f7); overflow: hidden; } .meter i { display: block; height: 100%; }
     .scn { display: flex; flex-wrap: wrap; gap: 6px; }
-    .pl { list-style: none; margin: 0; padding: 0; max-height: 640px; overflow: auto; } .pl li { display: grid; grid-template-columns: 30px 1fr 74px 78px; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .pl { list-style: none; margin: 0; padding: 0; max-height: 640px; overflow: auto; } .pl li { display: grid; grid-template-columns: 30px 1fr 74px 78px; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .pl span { display: flex; flex-direction: column; min-width: 0; } .pl small { color: var(--muted); } .pl em { font-style: normal; text-align: right; font-weight: 600; color: var(--primary); } .small { font-size: 11.5px; }
     @media (max-width: 1350px) { .sp { grid-template-columns: 1fr; } }
   `,
@@ -134,8 +134,8 @@ export class SubsidyPricing extends MealPage {
   protected readonly budgetPct = computed(() => Math.round((this.company() / Math.max(1, this.budget())) * 100));
   protected readonly shortNames = computed(() => this.rows().map((r) => r.name.replace(' Plan', '')));
   protected readonly share = computed(() => [
-    { name: 'Company', color: '#7c3aed', values: this.rows().map((r) => r.monthly) },
-    { name: 'Employee', color: '#c4b5fd', values: this.rows().map((r) => (r.status === 'Active' ? Math.round(r.price * WORK_DAYS * r.enrolled * ((100 - r.subsidy) / 100) * SCALE) : 0)) },
+    { name: 'Company', color: 'var(--ka-7c3aed)', values: this.rows().map((r) => r.monthly) },
+    { name: 'Employee', color: 'var(--ka-c4b5fd)', values: this.rows().map((r) => (r.status === 'Active' ? Math.round(r.price * WORK_DAYS * r.enrolled * ((100 - r.subsidy) / 100) * SCALE) : 0)) },
   ]);
   protected readonly planSubsidy = computed(() => this.rows().find((r) => r.id === this.planId())?.subsidy ?? 0);
 
@@ -176,11 +176,11 @@ export class SubsidyPricing extends MealPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Dishes Labelled" [value]="store.dishes().length + ' / ' + store.dishes().length" icon="file-check" color="#7c3aed" sub="100% allergen coverage" />
-      <app-kpi label="Allergen-free Dishes" [value]="free()" icon="shield-check" color="#22c55e" [sub]="'none of the ' + allergens.length + ' major allergens'" />
-      <app-kpi label="Vegan / Vegetarian" [value]="vegan() + ' / ' + veg()" icon="m-leaf" color="#f59e0b" sub="plant-based options" />
-      <app-kpi label="Diners with Dietary Needs" [value]="fmt(dietary())" icon="users" color="#ef4444" [sub]="pctDiet() + '% of enrolled users'" />
-      <app-kpi label="Allergen Alerts Today" [value]="alerts()" icon="triangle-alert" color="#2563eb" [sub]="'policy: ' + alertPolicy()" subColor="#2563eb" />
+      <app-kpi label="Dishes Labelled" [value]="store.dishes().length + ' / ' + store.dishes().length" icon="file-check" color="var(--ka-7c3aed)" sub="100% allergen coverage" />
+      <app-kpi label="Allergen-free Dishes" [value]="free()" icon="shield-check" color="var(--ka-22c55e)" [sub]="'none of the ' + allergens.length + ' major allergens'" />
+      <app-kpi label="Vegan / Vegetarian" [value]="vegan() + ' / ' + veg()" icon="m-leaf" color="var(--ka-f59e0b)" sub="plant-based options" />
+      <app-kpi label="Diners with Dietary Needs" [value]="fmt(dietary())" icon="users" color="var(--ka-ef4444)" [sub]="pctDiet() + '% of enrolled users'" />
+      <app-kpi label="Allergen Alerts Today" [value]="alerts()" icon="triangle-alert" color="var(--ka-2563eb)" [sub]="'policy: ' + alertPolicy()" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="al">
@@ -235,16 +235,16 @@ export class SubsidyPricing extends MealPage {
   styles: `
     h3 { margin: 0; font-size: 15px; } h4 { margin: 12px 0 6px; font-size: 13px; }
     .al { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; align-items: start; }
-    .excl { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; font-size: 12px; margin-bottom: 10px; } .excl button:not(.link) { border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; } .excl button.on { background: #fee2e2; border-color: #fca5a5; color: #b91c1c; }
+    .excl { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; font-size: 12px; margin-bottom: 10px; } .excl button:not(.link) { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; } .excl button.on { background: var(--kb-fee2e2); border-color: var(--kl-fca5a5); color: var(--kf-b91c1c); }
     .mx th, .mx td { padding: 5px 6px; } .mx .c { text-align: center; } .vt { font-size: 10.5px; font-weight: 500; }
-    .dn { display: inline-flex; gap: 8px; align-items: center; } .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #ef4444; }
-    .dg { display: inline-block; font-size: 9.5px; font-weight: 600; padding: 1px 4px; border-radius: 4px; background: #dcfce7; color: #15803d; margin-right: 2px; }
+    .dn { display: inline-flex; gap: 8px; align-items: center; } .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--kb-ef4444); }
+    .dg { display: inline-block; font-size: 9.5px; font-weight: 600; padding: 1px 4px; border-radius: 4px; background: var(--kb-dcfce7); color: var(--kf-15803d); margin-right: 2px; }
     .small { font-size: 11.5px; margin: 8px 0 0; }
     .det { position: sticky; top: 76px; } .dh { display: flex; gap: 12px; align-items: center; } .dh div { display: flex; flex-direction: column; }
     .nut { display: flex; gap: 12px; align-items: center; margin-top: 10px; } .nut ul { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; gap: 8px; }
     .nut li { display: grid; grid-template-columns: 10px 1fr auto 60px; gap: 6px; align-items: center; font-size: 12px; } .nut i { width: 9px; height: 9px; border-radius: 50%; } .nut em { font-style: normal; color: var(--muted); text-align: right; }
-    .chips { display: flex; flex-wrap: wrap; gap: 5px; } .chips button { border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; }
-    .chips button.on { background: #fee2e2; border-color: #fca5a5; color: #b91c1c; } .chips.g button.on { background: #dcfce7; border-color: #86efac; color: #15803d; }
+    .chips { display: flex; flex-wrap: wrap; gap: 5px; } .chips button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; }
+    .chips button.on { background: var(--kb-fee2e2); border-color: var(--kl-fca5a5); color: var(--kf-b91c1c); } .chips.g button.on { background: var(--kb-dcfce7); border-color: var(--kl-86efac); color: var(--kf-15803d); }
     @media (max-width: 1350px) { .al { grid-template-columns: 1fr; } .det { position: static; } }
   `,
 })
@@ -280,9 +280,9 @@ export class AllergenInfo extends MealPage {
   }
   protected macros(x: Dish) {
     return [
-      { label: 'Protein', value: x.protein * 4, color: '#7c3aed' },
-      { label: 'Carbs', value: x.carbs * 4, color: '#f59e0b' },
-      { label: 'Fat', value: x.fat * 9, color: '#22c55e' },
+      { label: 'Protein', value: x.protein * 4, color: 'var(--ka-7c3aed)' },
+      { label: 'Carbs', value: x.carbs * 4, color: 'var(--ka-f59e0b)' },
+      { label: 'Fat', value: x.fat * 9, color: 'var(--ka-22c55e)' },
     ];
   }
   protected grams(x: Dish, l: string) {
@@ -321,11 +321,11 @@ export class AllergenInfo extends MealPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Average Rating" [value]="store.avgRating() + ' / 5'" icon="star" color="#7c3aed" change="0.2" sub="vs. last month" />
-      <app-kpi label="Reviews (14 days)" [value]="store.feedback().length" icon="message" color="#22c55e" change="18%" sub="vs. prior period" />
-      <app-kpi label="Positive (4–5 ★)" [value]="positive() + '%'" icon="trending-up" color="#f59e0b" sub="of all reviews" />
-      <app-kpi label="Escalated" [value]="count('Escalated')" icon="triangle-alert" color="#ef4444" sub="hygiene / service issues" subColor="#ef4444" />
-      <app-kpi label="Response Rate" [value]="respRate() + '%'" icon="message" color="#2563eb" [sub]="count('New') + ' awaiting reply'" subColor="#2563eb" />
+      <app-kpi label="Average Rating" [value]="store.avgRating() + ' / 5'" icon="star" color="var(--ka-7c3aed)" change="0.2" sub="vs. last month" />
+      <app-kpi label="Reviews (14 days)" [value]="store.feedback().length" icon="message" color="var(--ka-22c55e)" change="18%" sub="vs. prior period" />
+      <app-kpi label="Positive (4–5 ★)" [value]="positive() + '%'" icon="trending-up" color="var(--ka-f59e0b)" sub="of all reviews" />
+      <app-kpi label="Escalated" [value]="count('Escalated')" icon="triangle-alert" color="var(--ka-ef4444)" sub="hygiene / service issues" subColor="var(--ka-ef4444)" />
+      <app-kpi label="Response Rate" [value]="respRate() + '%'" icon="message" color="var(--ka-2563eb)" [sub]="count('New') + ' awaiting reply'" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="fb">
@@ -333,7 +333,7 @@ export class AllergenInfo extends MealPage {
         <div class="card">
           <h3>Rating Distribution</h3>
           @for (r of dist(); track r.star) {
-            <button class="rd" [class.on]="rating() === r.star" (click)="rating.set(rating() === r.star ? 0 : r.star)"><span>{{ r.star }} ★</span><div class="trk"><i [style.width.%]="r.pct" [style.background]="r.star >= 4 ? '#22c55e' : r.star === 3 ? '#f59e0b' : '#ef4444'"></i></div><b>{{ r.n }}</b></button>
+            <button class="rd" [class.on]="rating() === r.star" (click)="rating.set(rating() === r.star ? 0 : r.star)"><span>{{ r.star }} ★</span><div class="trk"><i [style.width.%]="r.pct" [style.background]="r.star >= 4 ? 'var(--ka-22c55e)' : r.star === 3 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></div><b>{{ r.n }}</b></button>
           }
         </div>
         <div class="card">
@@ -406,15 +406,15 @@ export class AllergenInfo extends MealPage {
     h3 { margin: 0 0 10px; font-size: 15px; }
     .fb { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 12px; align-items: start; } .col { display: flex; flex-direction: column; gap: 12px; }
     .rd, .rc { display: grid; width: 100%; border: 0; background: none; padding: 5px 4px; border-radius: 6px; cursor: pointer; font: inherit; font-size: 12.5px; align-items: center; text-align: left; } .rd.on, .rc.on { background: var(--primary-soft); }
-    .rd { grid-template-columns: 34px 1fr 34px; gap: 8px; } .rd b { text-align: right; font-weight: 500; } .trk { height: 9px; border-radius: 5px; background: #f1f2f7; overflow: hidden; } .trk i { display: block; height: 100%; }
+    .rd { grid-template-columns: 34px 1fr 34px; gap: 8px; } .rd b { text-align: right; font-weight: 500; } .trk { height: 9px; border-radius: 5px; background: var(--kb-f1f2f7); overflow: hidden; } .trk i { display: block; height: 100%; }
     .rc { grid-template-columns: 1fr 30px auto; gap: 2px 8px; } .rc small { grid-column: 1; color: var(--muted); font-size: 11px; }
-    .stars i { font-style: normal; color: #e5e7eb; font-size: 13px; } .stars i.on { color: #f59e0b; }
-    .fl { list-style: none; margin: 0; padding: 0; } .fl li { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f1f6; }
+    .stars i { font-style: normal; color: var(--kf-e5e7eb); font-size: 13px; } .stars i.on { color: var(--kf-f59e0b); }
+    .fl { list-style: none; margin: 0; padding: 0; } .fl li { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .fm { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: 12.5px; } .fh { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; } .fm p { margin: 0; }
-    .reply { display: flex; gap: 6px; align-items: center; font-size: 12px; background: #f6f3ff; color: #5b21b6; border-radius: 6px; padding: 5px 8px; }
+    .reply { display: flex; gap: 6px; align-items: center; font-size: 12px; background: var(--kb-f6f3ff); color: var(--kf-5b21b6); border-radius: 6px; padding: 5px 8px; }
     .fa { display: flex; flex-direction: column; gap: 6px; }
     .tpl { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; } .tpl button { border: 0; cursor: pointer; }
-    .rate { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; } .rate button { border: 0; background: none; font-size: 22px; color: #e5e7eb; cursor: pointer; padding: 0 2px; } .rate button.on { color: #f59e0b; }
+    .rate { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); } .rate button { border: 0; background: none; font-size: 22px; color: var(--kf-e5e7eb); cursor: pointer; padding: 0 2px; } .rate button.on { color: var(--kf-f59e0b); }
     @media (max-width: 1250px) { .fb { grid-template-columns: 1fr; } }
   `,
 })
@@ -443,7 +443,7 @@ export class MealFeedback extends MealPage {
     }),
   );
   protected readonly cats = computed(() => {
-    const colors: Record<string, string> = { Taste: '#7c3aed', Service: '#3b82f6', Quantity: '#f59e0b', Variety: '#22c55e', Hygiene: '#ef4444' };
+    const colors: Record<string, string> = { Taste: 'var(--ka-7c3aed)', Service: 'var(--ka-3b82f6)', Quantity: 'var(--ka-f59e0b)', Variety: 'var(--ka-22c55e)', Hygiene: 'var(--ka-ef4444)' };
     return Object.keys(colors).map((k) => ({ label: k, value: this.store.feedback().filter((f) => f.category === k).length, color: colors[k] }));
   });
   protected count(s: Feedback['status']) {
@@ -504,11 +504,11 @@ interface Report {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Meals Served" [value]="fmt(sum(meals()))" icon="m-cloche" color="#7c3aed" change="6%" [sub]="'in ' + range().toLowerCase()" />
-      <app-kpi label="Total Meal Cost" [value]="'AED ' + fmt(sum(costs()))" icon="m-coin" color="#ef4444" change="3%" [up]="false" sub="vs. prior period" />
-      <app-kpi label="Avg. Cost per Meal" [value]="'AED ' + avg()" icon="m-gauge" color="#f59e0b" sub="company + employee" />
-      <app-kpi label="Plan Uptake" [value]="uptake() + '%'" icon="users" color="#22c55e" change="4%" sub="of eligible workforce" />
-      <app-kpi label="Food Waste" value="6.8%" icon="m-leaf" color="#2563eb" change="1.2%" [up]="false" sub="vs. prior period" />
+      <app-kpi label="Meals Served" [value]="fmt(sum(meals()))" icon="m-cloche" color="var(--ka-7c3aed)" change="6%" [sub]="'in ' + range().toLowerCase()" />
+      <app-kpi label="Total Meal Cost" [value]="'AED ' + fmt(sum(costs()))" icon="m-coin" color="var(--ka-ef4444)" change="3%" [up]="false" sub="vs. prior period" />
+      <app-kpi label="Avg. Cost per Meal" [value]="'AED ' + avg()" icon="m-gauge" color="var(--ka-f59e0b)" sub="company + employee" />
+      <app-kpi label="Plan Uptake" [value]="uptake() + '%'" icon="users" color="var(--ka-22c55e)" change="4%" sub="of eligible workforce" />
+      <app-kpi label="Food Waste" value="6.8%" icon="m-leaf" color="var(--ka-2563eb)" change="1.2%" [up]="false" sub="vs. prior period" />
     </section>
 
     <section class="rp">
@@ -527,7 +527,7 @@ interface Report {
       <div class="lib">
         @for (r of reports(); track r.id) {
           <div class="rep">
-            <span class="ri" [style.background]="r.color + '1a'" [style.color]="r.color"><app-icon [name]="r.icon" [size]="18" /></span>
+            <span class="ri" [style.background]="'color-mix(in srgb, ' + r.color + ' 10%, transparent)'" [style.color]="r.color"><app-icon [name]="r.icon" [size]="18" /></span>
             <div><b>{{ r.name }}</b><small>{{ r.desc }}</small><small class="muted">Last generated {{ r.last }}</small></div>
             <div class="ra">
               <button class="btn-ghost sm" (click)="gen(r)"><app-icon name="download" [size]="13" />CSV</button>
@@ -544,10 +544,10 @@ interface Report {
     .rp { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 10px; }
     .rep { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
-    .rep div { display: flex; flex-direction: column; font-size: 12.5px; min-width: 0; } .rep small { font-size: 11px; color: #4b4f6b; }
+    .rep div { display: flex; flex-direction: column; font-size: 12.5px; min-width: 0; } .rep small { font-size: 11px; color: var(--kf-4b4f6b); }
     .ri { width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; }
     .ra { align-items: flex-end; gap: 6px; } .sch { display: flex; gap: 6px; align-items: center; font-size: 11px; color: var(--muted); }
-    .tgl { width: 30px; height: 17px; border-radius: 10px; border: 0; background: #d1d5db; position: relative; cursor: pointer; padding: 0; } .tgl i { position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: #fff; transition: left 0.15s; } .tgl.on { background: #22c55e; } .tgl.on i { left: 15px; }
+    .tgl { width: 30px; height: 17px; border-radius: 10px; border: 0; background: var(--kb-d1d5db); position: relative; cursor: pointer; padding: 0; } .tgl i { position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: var(--kb-ffffff); transition: left 0.15s; } .tgl.on { background: var(--kb-22c55e); } .tgl.on i { left: 15px; }
     @media (max-width: 1100px) { .rp { grid-template-columns: 1fr; } }
   `,
 })
@@ -561,22 +561,22 @@ export class MealReports extends MealPage {
   protected readonly avg = computed(() => (this.sum(this.avgs()) / this.avgs().length).toFixed(2));
   protected readonly uptake = computed(() => Math.round((this.store.enrolled() / 3120) * 100));
   protected readonly byType = computed(() => [
-    { name: 'Breakfast', color: '#f59e0b', values: this.meals().map((m) => Math.round(m * 0.31)) },
-    { name: 'Lunch', color: '#7c3aed', values: this.meals().map((m) => Math.round(m * 0.57)) },
-    { name: 'Dinner', color: '#22c55e', values: this.meals().map((m) => Math.round(m * 0.12)) },
+    { name: 'Breakfast', color: 'var(--ka-f59e0b)', values: this.meals().map((m) => Math.round(m * 0.31)) },
+    { name: 'Lunch', color: 'var(--ka-7c3aed)', values: this.meals().map((m) => Math.round(m * 0.57)) },
+    { name: 'Dinner', color: 'var(--ka-22c55e)', values: this.meals().map((m) => Math.round(m * 0.12)) },
   ]);
   protected readonly planSegs = computed(() => this.store.plans().map((p) => ({ label: p.name, value: p.enrolled, color: p.donut })));
-  protected readonly util = computed(() => this.store.canteens().map((c, i) => ({ label: c.name, value: Math.round((c.usage / c.capacity) * 100), display: `${Math.round((c.usage / c.capacity) * 100)}%`, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#14b8a6'][i % 5] })));
-  protected readonly sat = computed(() => [{ name: 'Avg rating', color: '#f59e0b', area: true, values: [4.0, 4.1, 3.9, 4.0, 4.2, 4.1, 4.0, 4.2, 4.1, 4.3, 4.2, this.store.avgRating() || 4.2].slice(-this.n()) }]);
+  protected readonly util = computed(() => this.store.canteens().map((c, i) => ({ label: c.name, value: Math.round((c.usage / c.capacity) * 100), display: `${Math.round((c.usage / c.capacity) * 100)}%`, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-14b8a6)'][i % 5] })));
+  protected readonly sat = computed(() => [{ name: 'Avg rating', color: 'var(--ka-f59e0b)', area: true, values: [4.0, 4.1, 3.9, 4.0, 4.2, 4.1, 4.0, 4.2, 4.1, 4.3, 4.2, this.store.avgRating() || 4.2].slice(-this.n()) }]);
   protected readonly reports = signal<Report[]>([
-    { id: 'cost', name: 'Monthly Meal Cost Report', desc: 'Cost by plan, site and meal type with subsidy split', icon: 'm-coin', color: '#ef4444', freq: 'Monthly', scheduled: true, last: '01 Nov 2026' },
-    { id: 'consumption', name: 'Meal Consumption by Plan', desc: 'Entitled vs consumed meals per plan', icon: 'm-cloche', color: '#7c3aed', freq: 'Weekly', scheduled: true, last: '03 Nov 2026' },
-    { id: 'canteen', name: 'Canteen Utilization', desc: 'Meals, capacity and queue times per canteen', icon: 'm-store', color: '#2563eb', freq: 'Weekly', scheduled: false, last: '27 Oct 2026' },
-    { id: 'bookings', name: 'Bookings & No-shows', desc: 'Pre-orders, collections, cancellations, no-shows', icon: 'calendar-days', color: '#f59e0b', freq: 'Daily', scheduled: true, last: 'Today 06:00' },
-    { id: 'wallet', name: 'Wallet Transactions', desc: 'Top-ups, deductions, refunds and credits', icon: 'm-wallet', color: '#22c55e', freq: 'Monthly', scheduled: false, last: '01 Nov 2026' },
-    { id: 'feedback', name: 'Feedback Summary', desc: 'Ratings by canteen, dish and category', icon: 'star', color: '#ec4899', freq: 'Weekly', scheduled: false, last: '03 Nov 2026' },
-    { id: 'allergen', name: 'Allergen Compliance', desc: 'Dish labelling coverage and alerts sent', icon: 'shield-plus', color: '#14b8a6', freq: 'Monthly', scheduled: true, last: '01 Nov 2026' },
-    { id: 'payroll', name: 'Payroll Deduction File', desc: 'Employee meal contributions for payroll', icon: 'file-text', color: '#64748b', freq: 'Monthly', scheduled: true, last: '31 Oct 2026' },
+    { id: 'cost', name: 'Monthly Meal Cost Report', desc: 'Cost by plan, site and meal type with subsidy split', icon: 'm-coin', color: 'var(--ka-ef4444)', freq: 'Monthly', scheduled: true, last: '01 Nov 2026' },
+    { id: 'consumption', name: 'Meal Consumption by Plan', desc: 'Entitled vs consumed meals per plan', icon: 'm-cloche', color: 'var(--ka-7c3aed)', freq: 'Weekly', scheduled: true, last: '03 Nov 2026' },
+    { id: 'canteen', name: 'Canteen Utilization', desc: 'Meals, capacity and queue times per canteen', icon: 'm-store', color: 'var(--ka-2563eb)', freq: 'Weekly', scheduled: false, last: '27 Oct 2026' },
+    { id: 'bookings', name: 'Bookings & No-shows', desc: 'Pre-orders, collections, cancellations, no-shows', icon: 'calendar-days', color: 'var(--ka-f59e0b)', freq: 'Daily', scheduled: true, last: 'Today 06:00' },
+    { id: 'wallet', name: 'Wallet Transactions', desc: 'Top-ups, deductions, refunds and credits', icon: 'm-wallet', color: 'var(--ka-22c55e)', freq: 'Monthly', scheduled: false, last: '01 Nov 2026' },
+    { id: 'feedback', name: 'Feedback Summary', desc: 'Ratings by canteen, dish and category', icon: 'star', color: 'var(--ka-ec4899)', freq: 'Weekly', scheduled: false, last: '03 Nov 2026' },
+    { id: 'allergen', name: 'Allergen Compliance', desc: 'Dish labelling coverage and alerts sent', icon: 'shield-plus', color: 'var(--ka-14b8a6)', freq: 'Monthly', scheduled: true, last: '01 Nov 2026' },
+    { id: 'payroll', name: 'Payroll Deduction File', desc: 'Employee meal contributions for payroll', icon: 'file-text', color: 'var(--ka-64748b)', freq: 'Monthly', scheduled: true, last: '31 Oct 2026' },
   ]);
   protected readonly scheduledCount = computed(() => this.reports().filter((r) => r.scheduled).length);
 

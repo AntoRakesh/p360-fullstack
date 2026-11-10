@@ -22,11 +22,11 @@ const HEAD = { parent: 'Training, Skills & Compliance' };
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Overall Compliance" [value]="k().pct + '%'" icon="shield-check" color="#7c3aed" change="1.2%" sub="vs. last month" />
-      <app-kpi label="Compliant Records" [value]="fmt(k().ok)" icon="training-check" color="#22c55e" [sub]="'of ' + fmt(k().req) + ' required'" />
-      <app-kpi label="Non-Compliant" [value]="fmt(k().bad)" icon="triangle-alert" color="#ef4444" change="8%" [up]="false" sub="vs. last month" />
-      <app-kpi label="Requirements Tracked" [value]="reqs().length" icon="file-text" color="#3b82f6" [sub]="reqs().filter(atRisk).length + ' below 95% target'" subColor="#dc2626" />
-      <app-kpi label="Next External Audit" value="ISO 45001" icon="calendar-days" color="#f59e0b" [sub]="'in ' + 24 + ' days · ' + fd(auditDate)" />
+      <app-kpi label="Overall Compliance" [value]="k().pct + '%'" icon="shield-check" color="var(--ka-7c3aed)" change="1.2%" sub="vs. last month" />
+      <app-kpi label="Compliant Records" [value]="fmt(k().ok)" icon="training-check" color="var(--ka-22c55e)" [sub]="'of ' + fmt(k().req) + ' required'" />
+      <app-kpi label="Non-Compliant" [value]="fmt(k().bad)" icon="triangle-alert" color="var(--ka-ef4444)" change="8%" [up]="false" sub="vs. last month" />
+      <app-kpi label="Requirements Tracked" [value]="reqs().length" icon="file-text" color="var(--ka-3b82f6)" [sub]="reqs().filter(atRisk).length + ' below 95% target'" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Next External Audit" value="ISO 45001" icon="calendar-days" color="var(--ka-f59e0b)" [sub]="'in ' + 24 + ' days · ' + fd(auditDate)" />
     </section>
 
     <section class="dash">
@@ -75,10 +75,10 @@ const HEAD = { parent: 'Training, Skills & Compliance' };
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
   styles: `
-    .rq tbody tr { cursor: pointer; } .rq tr.on td { background: #f5f1ff; } .rq small { display: block; color: var(--muted); font-size: 11px; }
-    .bar { display: inline-block; width: 70px; height: 6px; background: #eef0f6; border-radius: 4px; overflow: hidden; vertical-align: middle; } .bar i { display: block; height: 100%; }
+    .rq tbody tr { cursor: pointer; } .rq tr.on td { background: var(--kb-f5f1ff); } .rq small { display: block; color: var(--muted); font-size: 11px; }
+    .bar { display: inline-block; width: 70px; height: 6px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; vertical-align: middle; } .bar i { display: block; height: 100%; }
     .pv { margin-left: 8px; font-size: 12px; } .sm { font-size: 12px; } h4 { margin: 12px 0 6px; font-size: 13px; } .mt { margin-top: 16px; }
-    .nc { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow: auto; } .nc li { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .nc { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow: auto; } .nc li { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .nc li div { display: flex; flex-direction: column; flex: 1; } .nc small { color: var(--muted); font-size: 11px; }
   `,
 })
@@ -88,7 +88,7 @@ export class ComplianceTracking extends TrnPage {
   protected readonly depts = DEPTS;
   protected readonly auditDate = iso(24);
   protected readonly heatCols = REQS.map((r) => r.name.split(' ')[0]);
-  protected readonly trend = [{ name: 'Compliance', color: '#7c3aed', values: COMPLIANCE_TREND, area: true }, { name: 'Target', color: '#22c55e', values: COMPLIANCE_TREND.map(() => 95), dashed: true }];
+  protected readonly trend = [{ name: 'Compliance', color: 'var(--ka-7c3aed)', values: COMPLIANCE_TREND, area: true }, { name: 'Target', color: 'var(--ka-22c55e)', values: COMPLIANCE_TREND.map(() => 95), dashed: true }];
   protected readonly rf = signal('All');
   protected readonly selId = signal<string | null>(null);
   protected readonly atRisk = (r: { pct: number }) => r.pct < 95;
@@ -107,10 +107,10 @@ export class ComplianceTracking extends TrnPage {
   });
   protected readonly shown = computed(() => this.reqs().filter((r) => this.rf() === 'All' || (this.rf() === 'At risk' ? r.pct < 95 : r.pct >= 95)));
   protected readonly sel = computed(() => this.reqs().find((r) => r.id === this.selId()) ?? null);
-  protected readonly bySite = computed(() => SITES.map((s, i) => ({ label: s, value: Math.min(99.5, this.k().pct + [0.8, -1.6, -2.4, 0.3, 1.4, 2.1][i]), display: `${(Math.min(99.5, this.k().pct + [0.8, -1.6, -2.4, 0.3, 1.4, 2.1][i])).toFixed(1)}%`, color: '#7c3aed' })));
+  protected readonly bySite = computed(() => SITES.map((s, i) => ({ label: s, value: Math.min(99.5, this.k().pct + [0.8, -1.6, -2.4, 0.3, 1.4, 2.1][i]), display: `${(Math.min(99.5, this.k().pct + [0.8, -1.6, -2.4, 0.3, 1.4, 2.1][i])).toFixed(1)}%`, color: 'var(--ka-7c3aed)' })));
   protected readonly heat = computed(() => DEPTS.map((d, di) => this.reqs().map((r, ri) => Math.max(70, Math.min(100, Math.round(r.pct + ((di * 7 + ri * 5) % 9) - 4))))));
   protected color(p: number) {
-    return p >= 95 ? '#22c55e' : p >= 90 ? '#f59e0b' : '#ef4444';
+    return p >= 95 ? 'var(--ka-22c55e)' : p >= 90 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)';
   }
   protected gapsOf(r: Req) {
     return r.typeId ? this.store.certs().filter((c) => c.typeId === r.typeId && (certStatus(c) === 'Expired' || certStatus(c) === 'Revoked')) : [];
@@ -152,11 +152,11 @@ const fmtN = (n: number) => n.toLocaleString('en-US');
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Active Assessments" [value]="quizzes.length + store.evals().length" icon="training-quiz" color="#7c3aed" [sub]="quizzes.length + ' quizzes · ' + store.evals().length + ' practical'" />
-      <app-kpi label="Attempts (30 days)" [value]="store.attempts().length" icon="activity" color="#3b82f6" [sub]="(3 + app.wobble('trn-q', 2)) + ' in progress now'" subColor="#2563eb" />
-      <app-kpi label="Average Score" [value]="k().avg + '%'" icon="training-target" color="#f59e0b" change="3%" sub="vs. last month" />
-      <app-kpi label="Pass Rate" [value]="k().pass + '%'" icon="training-check" color="#22c55e" change="5%" sub="vs. last month" />
-      <app-kpi label="Pending Evaluations" [value]="k().pending" icon="clock" color="#ef4444" sub="practical, by supervisors" subColor="#dc2626" />
+      <app-kpi label="Active Assessments" [value]="quizzes.length + store.evals().length" icon="training-quiz" color="var(--ka-7c3aed)" [sub]="quizzes.length + ' quizzes · ' + store.evals().length + ' practical'" />
+      <app-kpi label="Attempts (30 days)" [value]="store.attempts().length" icon="activity" color="var(--ka-3b82f6)" [sub]="(3 + app.wobble('trn-q', 2)) + ' in progress now'" subColor="var(--ka-2563eb)" />
+      <app-kpi label="Average Score" [value]="k().avg + '%'" icon="training-target" color="var(--ka-f59e0b)" change="3%" sub="vs. last month" />
+      <app-kpi label="Pass Rate" [value]="k().pass + '%'" icon="training-check" color="var(--ka-22c55e)" change="5%" sub="vs. last month" />
+      <app-kpi label="Pending Evaluations" [value]="k().pending" icon="clock" color="var(--ka-ef4444)" sub="practical, by supervisors" subColor="var(--ka-dc2626)" />
     </section>
 
     <section class="card">
@@ -227,7 +227,7 @@ const fmtN = (n: number) => n.toLocaleString('en-US');
           @case ('done') {
             @let sc = score(q);
             <div class="res" [class.pass]="sc >= q.pass">
-              <app-ring [value]="sc" [color]="sc >= q.pass ? '#22c55e' : '#ef4444'" [size]="96" />
+              <app-ring [value]="sc" [color]="sc >= q.pass ? 'var(--ka-22c55e)' : 'var(--ka-ef4444)'" [size]="96" />
               <div><h3>{{ sc >= q.pass ? 'Passed' : 'Not passed' }}</h3><p class="muted">{{ correct(q) }} of {{ q.questions.length }} correct · pass mark {{ q.pass }}%</p>
                 @if (sc >= q.pass) {<p class="good">Skill level updated for {{ asName() }}.</p>} @else {<p class="bad">A retake is available. Refresher course suggested.</p>}</div>
             </div>
@@ -261,18 +261,18 @@ const fmtN = (n: number) => n.toLocaleString('en-US');
     .qg { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
     .qc { border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 7px; align-items: flex-start; } .qc h4 { margin: 0; font-size: 14px; }
     .qc .btn-primary { margin-top: auto; align-self: stretch; justify-content: center; }
-    .qi { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; color: #fff; }
-    .qs { display: flex; gap: 12px; font-size: 12px; color: #4b4f6b; }
+    .qi { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .qs { display: flex; gap: 12px; font-size: 12px; color: var(--kf-4b4f6b); }
     .quiz { width: min(680px, calc(100vw - 32px)); }
-    .qp { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); } .qp .bar { flex: 1; height: 6px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .qp .bar i { display: block; height: 100%; background: var(--primary); }
+    .qp { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); } .qp .bar { flex: 1; height: 6px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .qp .bar i { display: block; height: 100%; background: var(--primary); }
     .qt { font-size: 16px; margin: 16px 0; }
-    .opts { display: flex; flex-direction: column; gap: 8px; } .opts button { display: flex; align-items: center; gap: 10px; text-align: left; padding: 11px 12px; border: 1px solid var(--border); border-radius: 9px; background: #fff; cursor: pointer; font: inherit; font-size: 13px; }
-    .opts button.on { border-color: var(--primary); background: #f5f1ff; } .opts em { font-style: normal; width: 24px; height: 24px; border-radius: 50%; background: #f1f2f7; display: grid; place-items: center; font-weight: 700; font-size: 12px; } .opts button.on em { background: var(--primary); color: #fff; }
-    .res { display: flex; gap: 18px; align-items: center; padding: 12px; border-radius: 10px; background: #fef2f2; } .res.pass { background: #f0fdf4; } .res h3 { font-size: 20px; } .res p { margin: 4px 0; }
-    .rev { list-style: none; padding: 0; margin: 12px 0 0; max-height: 40vh; overflow: auto; } .rev li { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-left: 3px solid #ef4444; margin-bottom: 6px; background: #fafafe; font-size: 12.5px; }
-    .rev li.ok { border-left-color: #22c55e; } .rev small { color: #4b4f6b; } .rev .why { color: var(--muted); font-style: italic; }
-    .crit { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; } .crit div { display: flex; gap: 4px; }
-    .crit button { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; } .crit button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .opts { display: flex; flex-direction: column; gap: 8px; } .opts button { display: flex; align-items: center; gap: 10px; text-align: left; padding: 11px 12px; border: 1px solid var(--border); border-radius: 9px; background: var(--kb-ffffff); cursor: pointer; font: inherit; font-size: 13px; }
+    .opts button.on { border-color: var(--primary); background: var(--kb-f5f1ff); } .opts em { font-style: normal; width: 24px; height: 24px; border-radius: 50%; background: var(--kb-f1f2f7); display: grid; place-items: center; font-weight: 700; font-size: 12px; } .opts button.on em { background: var(--primary); color: var(--kf-ffffff); }
+    .res { display: flex; gap: 18px; align-items: center; padding: 12px; border-radius: 10px; background: var(--kb-fef2f2); } .res.pass { background: var(--kb-f0fdf4); } .res h3 { font-size: 20px; } .res p { margin: 4px 0; }
+    .rev { list-style: none; padding: 0; margin: 12px 0 0; max-height: 40vh; overflow: auto; } .rev li { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-left: 3px solid var(--kl-ef4444); margin-bottom: 6px; background: var(--kb-fafafe); font-size: 12.5px; }
+    .rev li.ok { border-left-color: var(--kl-22c55e); } .rev small { color: var(--kf-4b4f6b); } .rev .why { color: var(--muted); font-style: italic; }
+    .crit { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; } .crit div { display: flex; gap: 4px; }
+    .crit button { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 6px; background: var(--kb-ffffff); cursor: pointer; } .crit button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
   `,
 })
 export class AssessmentsEvaluations extends TrnPage {
@@ -394,11 +394,11 @@ export class AssessmentsEvaluations extends TrnPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Expired" [value]="b().expired" icon="triangle-alert" color="#ef4444" sub="renew immediately" subColor="#dc2626" />
-      <app-kpi label="Due in 7 days" [value]="b().d7" icon="bell-ring" color="#f97316" sub="critical" subColor="#ea580c" />
-      <app-kpi label="Due for Training" [value]="b().d30" icon="graduation-cap" color="#3b82f6" change="28%" sub="within 30 days" />
-      <app-kpi label="Due in 31–90 days" [value]="b().d90" icon="calendar-days" color="#7c3aed" sub="plan sessions" />
-      <app-kpi label="Renewals Booked" [value]="booked()" icon="training-repeat" color="#22c55e" sub="auto + manual enrolments" />
+      <app-kpi label="Expired" [value]="b().expired" icon="triangle-alert" color="var(--ka-ef4444)" sub="renew immediately" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Due in 7 days" [value]="b().d7" icon="bell-ring" color="var(--ka-f97316)" sub="critical" subColor="var(--ka-ea580c)" />
+      <app-kpi label="Due for Training" [value]="b().d30" icon="graduation-cap" color="var(--ka-3b82f6)" change="28%" sub="within 30 days" />
+      <app-kpi label="Due in 31–90 days" [value]="b().d90" icon="calendar-days" color="var(--ka-7c3aed)" sub="plan sessions" />
+      <app-kpi label="Renewals Booked" [value]="booked()" icon="training-repeat" color="var(--ka-22c55e)" sub="auto + manual enrolments" />
     </section>
 
     <section class="dash">
@@ -436,10 +436,10 @@ export class AssessmentsEvaluations extends TrnPage {
   `,
   styles: `
     .mt { margin-top: 16px; } h3 { margin-bottom: 8px; }
-    .dg { list-style: none; margin: 0; padding: 0; max-height: 330px; overflow: auto; } .dg li { display: grid; grid-template-columns: 1fr 28px 74px 36px; gap: 8px; align-items: center; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #f3f4f8; }
+    .dg { list-style: none; margin: 0; padding: 0; max-height: 330px; overflow: auto; } .dg li { display: grid; grid-template-columns: 1fr 28px 74px 36px; gap: 8px; align-items: center; font-size: 12px; padding: 5px 0; border-bottom: 1px solid var(--kl-f3f4f8); }
     .dg b { text-align: right; } .dg em { font-style: normal; font-size: 11px; text-align: center; padding: 2px 0; border-radius: 4px; }
-    .dg em.red { background: #fee2e2; color: #dc2626; } .dg em.orange { background: #ffedd5; color: #ea580c; } .dg em.blue { background: #dbeafe; color: #2563eb; }
-    .rule { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f1f6; } .rule span { display: flex; flex-direction: column; font-size: 13px; } .rule small { color: var(--muted); font-size: 11.5px; }
+    .dg em.red { background: var(--kb-fee2e2); color: var(--kf-dc2626); } .dg em.orange { background: var(--kb-ffedd5); color: var(--kf-ea580c); } .dg em.blue { background: var(--kb-dbeafe); color: var(--kf-2563eb); }
+    .rule { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .rule span { display: flex; flex-direction: column; font-size: 13px; } .rule small { color: var(--muted); font-size: 11.5px; }
     .rule input { width: 18px; height: 18px; accent-color: var(--primary); } h4 { margin: 14px 0 8px; } .ch { display: flex; gap: 16px; font-size: 13px; } .ch label { display: flex; gap: 6px; align-items: center; }
   `,
 })
@@ -496,7 +496,7 @@ export class RenewalsExpiryAlerts extends TrnPage {
   protected readonly tl = computed(() => {
     const buckets = [['Expired', -9999, -1], ['0–7', 0, 7], ['8–14', 8, 14], ['15–21', 15, 21], ['22–30', 22, 30], ['31–60', 31, 60], ['61–90', 61, 90]] as const;
     const l = this.live();
-    return { labels: buckets.map((b) => b[0] as string), series: [{ name: 'Certificates', color: '#7c3aed', values: buckets.map(([, lo, hi]) => l.filter((x) => x.d >= lo && x.d <= hi).length) }] };
+    return { labels: buckets.map((b) => b[0] as string), series: [{ name: 'Certificates', color: 'var(--ka-7c3aed)', values: buckets.map(([, lo, hi]) => l.filter((x) => x.d >= lo && x.d <= hi).length) }] };
   });
   protected act(a: string, r: Cert & { name: string }) {
     if (a === 'remind') this.store.remind([r.id]);
@@ -545,11 +545,11 @@ export class RenewalsExpiryAlerts extends TrnPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Training Hours" [value]="fmt(hours())" icon="clock" color="#7c3aed" change="12%" sub="vs. prior period" />
-      <app-kpi label="Completion Rate" [value]="COMPLETION_TREND[11] + '%'" icon="training-check" color="#22c55e" change="4%" sub="vs. prior period" />
-      <app-kpi label="Proficient Employees" [value]="store.proficientPct() + '%'" icon="training-target" color="#f59e0b" [sub]="fmt(store.bands()[0].value) + ' of ' + fmt(total)" />
-      <app-kpi label="Compliance" value="92%" icon="shield-check" color="#3b82f6" change="1.2%" sub="vs. last month" />
-      <app-kpi label="Spend / Employee" value="AED 486" icon="sparkles" color="#0891b2" change="3%" [up]="false" sub="vs. budget" />
+      <app-kpi label="Training Hours" [value]="fmt(hours())" icon="clock" color="var(--ka-7c3aed)" change="12%" sub="vs. prior period" />
+      <app-kpi label="Completion Rate" [value]="COMPLETION_TREND[11] + '%'" icon="training-check" color="var(--ka-22c55e)" change="4%" sub="vs. prior period" />
+      <app-kpi label="Proficient Employees" [value]="store.proficientPct() + '%'" icon="training-target" color="var(--ka-f59e0b)" [sub]="fmt(store.bands()[0].value) + ' of ' + fmt(total)" />
+      <app-kpi label="Compliance" value="92%" icon="shield-check" color="var(--ka-3b82f6)" change="1.2%" sub="vs. last month" />
+      <app-kpi label="Spend / Employee" value="AED 486" icon="sparkles" color="var(--ka-0891b2)" change="3%" [up]="false" sub="vs. budget" />
     </section>
 
     <section class="dash">
@@ -588,9 +588,9 @@ export class RenewalsExpiryAlerts extends TrnPage {
   `,
   styles: `
     h3 { margin-bottom: 10px; } h4 { margin: 12px 0 6px; font-size: 13px; }
-    .rl { list-style: none; margin: 0; padding: 0; } .rl li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .rl { list-style: none; margin: 0; padding: 0; } .rl li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .rl li div { flex: 1; display: flex; flex-direction: column; } .rl small { color: var(--muted); font-size: 11px; }
-    .ri { width: 30px; height: 30px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; } .ri.g { background: #dcfce7; color: #16a34a; }
+    .ri { width: 30px; height: 30px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; } .ri.g { background: var(--kb-dcfce7); color: var(--kf-16a34a); }
   `,
 })
 export class TrnReportsAnalytics extends TrnPage {
@@ -603,13 +603,13 @@ export class TrnReportsAnalytics extends TrnPage {
   protected readonly labels = computed(() => MONTHS_12.slice(12 - this.n()));
   protected readonly hours = computed(() => HOURS_BY_MONTH.slice(12 - this.n()).reduce((a, x) => a + x, 0));
   protected readonly hoursSeries = computed(() => [
-    { name: 'Safety', color: '#7c3aed', values: HOURS_BY_MONTH.slice(12 - this.n()).map((v) => Math.round(v * 0.58)) },
-    { name: 'Technical', color: '#3b82f6', values: HOURS_BY_MONTH.slice(12 - this.n()).map((v) => Math.round(v * 0.24)) },
-    { name: 'Soft Skills & Compliance', color: '#22c55e', values: HOURS_BY_MONTH.slice(12 - this.n()).map((v) => Math.round(v * 0.18)) },
+    { name: 'Safety', color: 'var(--ka-7c3aed)', values: HOURS_BY_MONTH.slice(12 - this.n()).map((v) => Math.round(v * 0.58)) },
+    { name: 'Technical', color: 'var(--ka-3b82f6)', values: HOURS_BY_MONTH.slice(12 - this.n()).map((v) => Math.round(v * 0.24)) },
+    { name: 'Soft Skills & Compliance', color: 'var(--ka-22c55e)', values: HOURS_BY_MONTH.slice(12 - this.n()).map((v) => Math.round(v * 0.18)) },
   ]);
   protected readonly trend = computed(() => [
-    { name: 'Completion', color: '#7c3aed', values: COMPLETION_TREND.slice(12 - this.n()) },
-    { name: 'Compliance', color: '#22c55e', values: COMPLIANCE_TREND.slice(12 - this.n()) },
+    { name: 'Completion', color: 'var(--ka-7c3aed)', values: COMPLETION_TREND.slice(12 - this.n()) },
+    { name: 'Compliance', color: 'var(--ka-22c55e)', values: COMPLIANCE_TREND.slice(12 - this.n()) },
   ]);
   protected readonly bands = computed(() => this.store.bands().map((b) => ({ label: b.key, value: b.value, color: b.color })));
   protected readonly gaps = computed(() => this.store.gaps().slice(0, 8).map((g) => ({ label: g.name, value: g.gaps, color: g.color })));

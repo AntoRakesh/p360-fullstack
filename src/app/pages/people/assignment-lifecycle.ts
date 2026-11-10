@@ -55,11 +55,11 @@ const ASSIGNS: Assign[] = (() => {
       <button class="btn-primary" (click)="openForm()"><app-icon name="plus" [size]="16" />New Assignment</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Active Assignments" [value]="cnt('Active')" icon="map-pin" color="#8b5cf6" />
-      <app-kpi label="Restricted Zone Access" [value]="lvl('Restricted')" icon="shield" color="#ef4444" sub="people" />
-      <app-kpi label="Expiring in 14 days" [value]="expiring()" icon="clock" color="#f59e0b" />
-      <app-kpi label="Expired" [value]="cnt('Expired')" icon="ban" color="#9ca3af" sub="auto-revoked" />
-      <app-kpi label="Sites Covered" [value]="sites.length" icon="building" color="#3b82f6" />
+      <app-kpi label="Active Assignments" [value]="cnt('Active')" icon="map-pin" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Restricted Zone Access" [value]="lvl('Restricted')" icon="shield" color="var(--ka-ef4444)" sub="people" />
+      <app-kpi label="Expiring in 14 days" [value]="expiring()" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Expired" [value]="cnt('Expired')" icon="ban" color="var(--ka-9ca3af)" sub="auto-revoked" />
+      <app-kpi label="Sites Covered" [value]="sites.length" icon="building" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-6">
@@ -110,7 +110,7 @@ const ASSIGNS: Assign[] = (() => {
     }
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
-  styles: `.zone-pick { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; } .zone-pick > span { width: 100%; color: #4b4f6b; font-size: 12px; }
+  styles: `.zone-pick { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; } .zone-pick > span { width: 100%; color: var(--kf-4b4f6b); font-size: 12px; }
     .zone-pick label { display: flex; align-items: center; gap: 6px; flex-direction: row !important; color: var(--text) !important; }`,
 })
 export class ZoneAssignment {
@@ -145,10 +145,10 @@ export class ZoneAssignment {
   protected readonly byZone = computed(() =>
     (ZONES[this.zoneSite()] ?? []).map((z) => {
       const v = this.list().filter((a) => a.site === this.zoneSite() && a.zones.includes(z) && a.status === 'Active').length;
-      return { label: z, value: v, display: String(v), color: /Server|Data Hall|Chemical|Executive/.test(z) ? '#ef4444' : '#8b5cf6' };
+      return { label: z, value: v, display: String(v), color: /Server|Data Hall|Chemical|Executive/.test(z) ? 'var(--ka-ef4444)' : 'var(--ka-8b5cf6)' };
     }),
   );
-  protected readonly levels = computed(() => LEVELS.map((l, i) => ({ label: l, value: +this.lvl(l), color: ['#3b82f6', '#8b5cf6', '#ef4444', '#f59e0b'][i] })));
+  protected readonly levels = computed(() => LEVELS.map((l, i) => ({ label: l, value: +this.lvl(l), color: ['var(--ka-3b82f6)', 'var(--ka-8b5cf6)', 'var(--ka-ef4444)', 'var(--ka-f59e0b)'][i] })));
   protected readonly expiring = computed(() => String(this.list().filter((a) => a.validUntil && a.validUntil >= iso(0) && a.validUntil <= iso(14)).length));
 
   protected cnt(s: string) {
@@ -162,7 +162,7 @@ export class ZoneAssignment {
   }
   protected openForm(a?: Assign) {
     this.err.set('');
-    this.form.set(a ? { ...a, zones: [...a.zones] } : { id: '', name: '', initials: '', avatar: '#7c3aed', personId: '', type: '', site: 'Head Office', zones: ['Main Entrance'], level: 'Standard', validUntil: '', status: 'Active' });
+    this.form.set(a ? { ...a, zones: [...a.zones] } : { id: '', name: '', initials: '', avatar: 'var(--ka-7c3aed)', personId: '', type: '', site: 'Head Office', zones: ['Main Entrance'], level: 'Standard', validUntil: '', status: 'Active' });
   }
   protected patchForm(c: Partial<Assign>) {
     this.form.update((f) => (f ? { ...f, ...c } : f));
@@ -202,7 +202,7 @@ export class ZoneAssignment {
 
 /* ======================= Identity Lifecycle & Offboarding ======================= */
 const STAGES = ['Pre-boarding', 'Onboarding', 'Transfer', 'Notice Period', 'Offboarding', 'Archived'];
-const STAGE_COLOR: Record<string, string> = { 'Pre-boarding': '#3b82f6', Onboarding: '#8b5cf6', Transfer: '#06b6d4', 'Notice Period': '#f59e0b', Offboarding: '#ef4444', Archived: '#64748b' };
+const STAGE_COLOR: Record<string, string> = { 'Pre-boarding': 'var(--ka-3b82f6)', Onboarding: 'var(--ka-8b5cf6)', Transfer: 'var(--ka-06b6d4)', 'Notice Period': 'var(--ka-f59e0b)', Offboarding: 'var(--ka-ef4444)', Archived: 'var(--ka-64748b)' };
 const TASKS: Record<string, string[]> = {
   'Pre-boarding': ['Create identity record', 'Background check', 'Send welcome pack', 'Order laptop & badge'],
   Onboarding: ['Issue access card', 'Enroll face & fingerprint', 'Assign sites & zones', 'Safety induction', 'Create system accounts'],
@@ -267,7 +267,7 @@ const CASES: Case[] = (() => {
         @if (sel(); as c) {
           <div class="card">
             <div class="card-head"><h3>{{ c.name }}</h3><button class="close-btn" (click)="selId.set(null)">×</button></div>
-            <p class="muted"><span class="tag" [style.background]="color[c.stage] + '22'" [style.color]="color[c.stage]">{{ c.stage }}</span> · {{ c.dept }} · owner {{ c.owner }}</p>
+            <p class="muted"><span class="tag" [style.background]="'color-mix(in srgb, ' + color[c.stage] + ' 13%, transparent)'" [style.color]="color[c.stage]">{{ c.stage }}</span> · {{ c.dept }} · owner {{ c.owner }}</p>
             <div class="prog"><i [style.width.%]="c.progress"></i></div>
             <p class="muted">{{ c.progress }}% complete · due {{ c.due }}</p>
             <ul class="tasks">
@@ -294,12 +294,12 @@ const CASES: Case[] = (() => {
     .pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 12px; }
     .stage { display: flex; flex-direction: column; gap: 2px; border-top: 4px solid; text-align: left; cursor: pointer; font-family: inherit; }
     .stage.on { box-shadow: 0 0 0 2px var(--primary-soft); border-color: var(--primary); }
-    .stage span { font-size: 12.5px; color: #4b4f6b; } .stage b { font-size: 24px; } .stage small { font-size: 11px; color: var(--muted); }
+    .stage span { font-size: 12.5px; color: var(--kf-4b4f6b); } .stage b { font-size: 24px; } .stage small { font-size: 11px; color: var(--muted); }
     .side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-    .prog { height: 8px; border-radius: 4px; background: #eef0f6; overflow: hidden; margin: 10px 0 4px; }
+    .prog { height: 8px; border-radius: 4px; background: var(--kb-eef0f6); overflow: hidden; margin: 10px 0 4px; }
     .prog i { display: block; height: 100%; background: var(--primary); transition: width .3s; }
     .tasks { list-style: none; margin: 10px 0 14px; padding: 0; font-size: 13px; }
-    .tasks li { padding: 6px 0; border-bottom: 1px solid #f0f1f6; } .tasks label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+    .tasks li { padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .tasks label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
     .tasks li.done { color: var(--muted); text-decoration: line-through; } .tasks input { accent-color: var(--primary); }
   `,
 })
@@ -312,8 +312,8 @@ export class Lifecycle {
   protected readonly selId = signal<string | null>(CASES.find((c) => c.stage === 'Offboarding')!.id);
   protected readonly toast = signal<string | null>(null);
   protected readonly flow = [
-    { name: 'Joiners', color: '#7c3aed', values: [61, 80, 67, 52, 58, 64] },
-    { name: 'Leavers', color: '#f87171', values: [20, 28, 23, 19, 16, 21] },
+    { name: 'Joiners', color: 'var(--ka-7c3aed)', values: [61, 80, 67, 52, 58, 64] },
+    { name: 'Leavers', color: 'var(--ka-f87171)', values: [20, 28, 23, 19, 16, 21] },
   ];
   protected readonly cols: Col[] = [
     { key: 'name', label: 'Person', kind: 'person', sub: 'personId' },

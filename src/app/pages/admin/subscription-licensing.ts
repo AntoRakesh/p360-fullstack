@@ -19,11 +19,11 @@ const ADDON_PRICE: Record<string, number> = { 'real-time-location': 3, 'digital-
     @if (seatPct() >= 85) {<p class="note warn"><app-icon name="triangle-alert" [size]="16" />{{ seatPct() }}% of licensed seats are in use. Add seats to keep inviting users.</p>}
 
     <section class="kpi-row">
-      <app-kpi label="Plan" [value]="s.plan" icon="admin-card" color="#7c3aed" [sub]="s.term + ' · renews ' + fmtDay(s.renewal)" />
-      <app-kpi label="Seats Used" [value]="fmt(store.seatsUsed()) + ' / ' + fmt(s.seats)" icon="users" color="#2563eb" [sub]="seatPct() + '% utilised'" />
-      <app-kpi label="Monthly Cost" [value]="'AED ' + fmt(monthly())" icon="admin-receipt" color="#10b981" [sub]="'AED ' + s.price + ' / seat + add-ons'" />
-      <app-kpi label="Add-on Modules" [value]="activeAddons() + ' / ' + addons.length" icon="admin-rocket" color="#f59e0b" sub="active add-ons" />
-      <app-kpi label="Days to Renewal" [value]="daysLeft()" icon="calendar-days" color="#ef4444" [sub]="s.autoRenew ? 'auto-renew on' : 'auto-renew off'" [subColor]="s.autoRenew ? '#16a34a' : '#dc2626'" />
+      <app-kpi label="Plan" [value]="s.plan" icon="admin-card" color="var(--ka-7c3aed)" [sub]="s.term + ' · renews ' + fmtDay(s.renewal)" />
+      <app-kpi label="Seats Used" [value]="fmt(store.seatsUsed()) + ' / ' + fmt(s.seats)" icon="users" color="var(--ka-2563eb)" [sub]="seatPct() + '% utilised'" />
+      <app-kpi label="Monthly Cost" [value]="'AED ' + fmt(monthly())" icon="admin-receipt" color="var(--ka-10b981)" [sub]="'AED ' + s.price + ' / seat + add-ons'" />
+      <app-kpi label="Add-on Modules" [value]="activeAddons() + ' / ' + addons.length" icon="admin-rocket" color="var(--ka-f59e0b)" sub="active add-ons" />
+      <app-kpi label="Days to Renewal" [value]="daysLeft()" icon="calendar-days" color="var(--ka-ef4444)" [sub]="s.autoRenew ? 'auto-renew on' : 'auto-renew off'" [subColor]="s.autoRenew ? 'var(--ka-16a34a)' : 'var(--ka-dc2626)'" />
     </section>
 
     <section class="grid2">
@@ -83,7 +83,7 @@ const ADDON_PRICE: Record<string, number> = { 'real-time-location': 3, 'digital-
     .seat { display: grid; gap: 6px; margin-bottom: 14px; } .seat > div:first-child { display: flex; justify-content: space-between; align-items: baseline; } .seat b { font-size: 20px; } .seat small { color: var(--muted); }
     .r { text-align: right; white-space: nowrap; }
     .plan { border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; } .plan.cur { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
-    .pr { font-size: 24px; font-weight: 700; } .pr small { font-size: 12px; color: var(--muted); font-weight: 400; } .plan ul { list-style: none; padding: 0; margin: 0; font-size: 12.5px; display: grid; gap: 5px; flex: 1; } .plan li { display: flex; gap: 6px; align-items: center; } .plan li app-icon { color: #16a34a; }
+    .pr { font-size: 24px; font-weight: 700; } .pr small { font-size: 12px; color: var(--muted); font-weight: 400; } .plan ul { list-style: none; padding: 0; margin: 0; font-size: 12.5px; display: grid; gap: 5px; flex: 1; } .plan li { display: flex; gap: 6px; align-items: center; } .plan li app-icon { color: var(--kf-16a34a); }
   `],
 })
 export class SubscriptionLicensing {
@@ -107,8 +107,8 @@ export class SubscriptionLicensing {
   });
   protected readonly daysLeft = computed(() => Math.max(0, Math.ceil((new Date(this.store.subscription().renewal).getTime() - Date.now()) / 86400_000)));
   protected readonly usage = computed(() => [
-    { name: 'Active users', color: '#7c3aed', values: [...USAGE_USERS.slice(0, -1), this.store.seatsUsed()], area: true },
-    { name: 'Licensed seats', color: '#f59e0b', values: USAGE_USERS.map((_, i) => (i === USAGE_USERS.length - 1 ? this.store.subscription().seats : 1500)), dashed: true },
+    { name: 'Active users', color: 'var(--ka-7c3aed)', values: [...USAGE_USERS.slice(0, -1), this.store.seatsUsed()], area: true },
+    { name: 'Licensed seats', color: 'var(--ka-f59e0b)', values: USAGE_USERS.map((_, i) => (i === USAGE_USERS.length - 1 ? this.store.subscription().seats : 1500)), dashed: true },
   ]);
   private sub(ch: Partial<ReturnType<AdminStore['subscription']>>, what: string) {
     this.store.subscription.update((s) => ({ ...s, ...ch }));

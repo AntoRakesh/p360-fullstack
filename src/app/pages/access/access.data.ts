@@ -150,7 +150,7 @@ export function makeEvents(count: number, seed: number, spanMinutes: number, end
     const noPerson = kind === 'Door Held Open' || kind === 'Door Forced Open';
     out.push({
       id: `AE-${seed}-${i}`, ts, time: new Date(ts).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-      name: noPerson ? '—' : p.name, initials: noPerson ? '!' : p.initials, avatar: noPerson ? '#ef4444' : p.avatar, personId: noPerson ? '-' : p.id,
+      name: noPerson ? '—' : p.name, initials: noPerson ? '!' : p.initials, avatar: noPerson ? 'var(--ka-ef4444)' : p.avatar, personId: noPerson ? '-' : p.id,
       cred: noPerson ? 'System' : credOf(p.type), door: d.name, location: d.location, site: d.site, kind, reason,
       result: kind === 'Access Granted' || kind === 'Request to Exit' ? (kind === 'Request to Exit' ? 'Info' : 'Granted') : kind === 'Access Denied' ? 'Denied' : 'Alarm',
       method: METHODS[Math.floor(r() * METHODS.length)],
@@ -171,7 +171,7 @@ export const TODAY_EVENTS: AccessEvent[] = (() => {
     const d = doorByName(door)!;
     return {
       id: `AE-F-${i}`, ts, time: new Date(ts).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-      name, initials: name === 'Unknown Person' ? '?' : name.split(' ').map((x) => x[0]).join(''), avatar: p?.avatar ?? '#64748b', personId: id, cred,
+      name, initials: name === 'Unknown Person' ? '?' : name.split(' ').map((x) => x[0]).join(''), avatar: p?.avatar ?? 'var(--ka-64748b)', personId: id, cred,
       door, location: d.location, site: d.site, kind, reason, result: kind === 'Access Granted' ? 'Granted' : 'Denied', method: i % 2 ? 'Card' : 'Face',
     };
   });

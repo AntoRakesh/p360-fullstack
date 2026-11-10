@@ -27,11 +27,11 @@ const CHANNELS = ['Push', 'SMS', 'Email', 'WhatsApp', 'Call'];
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="SLA Compliance (Today)" [value]="compliance() + '%'" icon="shield-check" color="#22c55e" change="1.4%" sub="vs. 7-day avg" />
-      <app-tkpi label="Breached (Open)" [value]="breached().length" icon="triangle-alert" color="#ef4444" [pct]="closedLate() + ''" pctColor="#b91c1c" sub="closed late today" />
-      <app-tkpi label="At Risk (< 15 min)" [value]="atRisk().length" icon="tasks-timer" color="#f59e0b" sub="will breach soon" />
-      <app-tkpi label="Escalated" [value]="escalated().length" icon="tasks-escalate" color="#7c3aed" [pct]="'L2: ' + l2()" pctColor="#b91c1c" sub="open escalations" />
-      <app-tkpi label="Avg Response Time" [value]="avgResponse() + ' min'" icon="clock" color="#2563eb" change="2.1m" [up]="false" sub="vs. last week" />
+      <app-tkpi label="SLA Compliance (Today)" [value]="compliance() + '%'" icon="shield-check" color="var(--ka-22c55e)" change="1.4%" sub="vs. 7-day avg" />
+      <app-tkpi label="Breached (Open)" [value]="breached().length" icon="triangle-alert" color="var(--ka-ef4444)" [pct]="closedLate() + ''" pctColor="var(--ka-b91c1c)" sub="closed late today" />
+      <app-tkpi label="At Risk (< 15 min)" [value]="atRisk().length" icon="tasks-timer" color="var(--ka-f59e0b)" sub="will breach soon" />
+      <app-tkpi label="Escalated" [value]="escalated().length" icon="tasks-escalate" color="var(--ka-7c3aed)" [pct]="'L2: ' + l2()" pctColor="var(--ka-b91c1c)" sub="open escalations" />
+      <app-tkpi label="Avg Response Time" [value]="avgResponse() + ' min'" icon="clock" color="var(--ka-2563eb)" change="2.1m" [up]="false" sub="vs. last week" />
     </section>
 
     <section class="grid">
@@ -80,7 +80,7 @@ const CHANNELS = ['Push', 'SMS', 'Email', 'WhatsApp', 'Call'];
                   </td>
                   <td>
                     <span class="timer" [class.neg]="left < 0" [class.warn]="left >= 0 && left < 900">{{ left < 0 ? '−' : '' }}{{ clock(left) }}</span>
-                    <span class="tbar"><i [style.width.%]="usedPct(t)" [style.background]="left < 0 ? '#ef4444' : left < 900 ? '#f59e0b' : '#22c55e'"></i></span><small class="due">due {{ hhmm(t.due) }}</small>
+                    <span class="tbar"><i [style.width.%]="usedPct(t)" [style.background]="left < 0 ? 'var(--ka-ef4444)' : left < 900 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)'"></i></span><small class="due">due {{ hhmm(t.due) }}</small>
                   </td>
                   <td><span [class]="prioCls(t.priority)">{{ t.priority }}</span><br />@if (t.escalation) {<span class="lvl red">L{{ t.escalation }} · {{ escTo(t) }}</span>} @else {<span class="lvl">L0 · Assignee</span>}</td>
                   <td class="r acts">
@@ -108,10 +108,10 @@ const CHANNELS = ['Push', 'SMS', 'Email', 'WhatsApp', 'Call'];
           </div>
           @if (policy(); as p) {
             <ol class="ladder">
-              <li><span class="lv" style="background:#22c55e">L0</span><div><b>Assignee</b><small>Push reminder at {{ p.response }} min with no start</small></div><em>{{ countAt(p, 0) }}</em></li>
-              <li><span class="lv" style="background:#f59e0b">L1</span><div><b>{{ p.l1 }}</b><small>{{ p.l1After ? p.l1After + ' min after breach' : 'Immediately on breach' }} · {{ p.notify.join(', ') }}</small></div><em>{{ countAt(p, 1) }}</em></li>
-              <li><span class="lv" style="background:#ef4444">L2</span><div><b>{{ p.l2 }}</b><small>{{ p.l2After }} min after breach · SMS + Call</small></div><em>{{ countAt(p, 2) }}</em></li>
-              <li><span class="lv" style="background:#1e1b3a">L3</span><div><b>Operations Director</b><small>Repeat breach &gt; 3 in a shift · daily digest</small></div><em>0</em></li>
+              <li><span class="lv" style="background:var(--kb-22c55e)">L0</span><div><b>Assignee</b><small>Push reminder at {{ p.response }} min with no start</small></div><em>{{ countAt(p, 0) }}</em></li>
+              <li><span class="lv" style="background:var(--kb-f59e0b)">L1</span><div><b>{{ p.l1 }}</b><small>{{ p.l1After ? p.l1After + ' min after breach' : 'Immediately on breach' }} · {{ p.notify.join(', ') }}</small></div><em>{{ countAt(p, 1) }}</em></li>
+              <li><span class="lv" style="background:var(--kb-ef4444)">L2</span><div><b>{{ p.l2 }}</b><small>{{ p.l2After }} min after breach · SMS + Call</small></div><em>{{ countAt(p, 2) }}</em></li>
+              <li><span class="lv" style="background:var(--kb-1e1b3a)">L3</span><div><b>Operations Director</b><small>Repeat breach &gt; 3 in a shift · daily digest</small></div><em>0</em></li>
             </ol>
             <div class="pfacts">
               <span>Response<b>{{ p.response }} min</b></span><span>Resolve<b>{{ p.resolve }} min</b></span><span>Priority<b>{{ p.priority }}</b></span>
@@ -141,7 +141,7 @@ const CHANNELS = ['Push', 'SMS', 'Email', 'WhatsApp', 'Call'];
                   <td class="num">{{ p.response }}m</td><td class="num">{{ p.resolve }}m</td>
                   <td><small>{{ p.l1 }} ({{ p.l1After }}m) → {{ p.l2 }} ({{ p.l2After }}m)</small></td>
                   <td>@for (n of p.notify; track n) {<span class="chip-s">{{ n }}</span>}</td>
-                  <td class="num"><span [style.color]="st.pct < 90 ? '#b91c1c' : '#15803d'">{{ st.pct }}%</span><br /><small class="muted">{{ st.n }} tasks</small></td>
+                  <td class="num"><span [style.color]="st.pct < 90 ? 'var(--ka-b91c1c)' : 'var(--ka-15803d)'">{{ st.pct }}%</span><br /><small class="muted">{{ st.n }} tasks</small></td>
                   <td (click)="$event.stopPropagation()"><app-tswitch [on]="p.active" (onChange)="togglePolicy(p, $event)" /></td>
                   <td (click)="$event.stopPropagation()"><button class="btn-ghost sm" (click)="edit(p)">Edit</button></td>
                 </tr>
@@ -164,7 +164,7 @@ const CHANNELS = ['Push', 'SMS', 'Email', 'WhatsApp', 'Call'];
         <div class="card-head"><h3>Escalation Log</h3><span class="card-sub">{{ escLog().length }} today</span></div>
         <ul>
           @for (e of escLog().slice(0, 9); track $index) {
-            <li><span class="fi" [style.background]="e.color + '1a'" [style.color]="e.color"><app-icon [name]="e.icon" [size]="13" /></span><div><span>{{ e.text }}</span><small>{{ e.who }} · {{ hhmm(e.at) }}</small></div></li>
+            <li><span class="fi" [style.background]="'color-mix(in srgb, ' + e.color + ' 10%, transparent)'" [style.color]="e.color"><app-icon [name]="e.icon" [size]="13" /></span><div><span>{{ e.text }}</span><small>{{ e.who }} · {{ hhmm(e.at) }}</small></div></li>
           } @empty {<li class="muted">No escalations yet</li>}
         </ul>
       </div>
@@ -205,32 +205,32 @@ const CHANNELS = ['Push', 'SMS', 'Email', 'WhatsApp', 'Call'];
     .pol { margin-bottom: 12px; }
     .grid3 { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: start; }
     .queue h3 { display: flex; align-items: center; gap: 8px; }
-    .bulk { display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin-bottom: 10px; background: #f5f3ff; border-radius: 8px; font-size: 12.5px; flex-wrap: wrap; }
+    .bulk { display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin-bottom: 10px; background: var(--kb-f5f3ff); border-radius: 8px; font-size: 12.5px; flex-wrap: wrap; }
     .xs { padding: 4px 24px 4px 8px; font-size: 11.5px; max-width: 150px; }
     .cb { width: 28px; } .cb input { accent-color: var(--primary); }
     .tk { cursor: pointer; display: flex; gap: 8px; align-items: center; } .tk > span:last-child { display: flex; flex-direction: column; gap: 2px; } .tk b { font-size: 12.5px; } .tk small { font-size: 11px; color: var(--muted); }
-    .ci { width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; color: #fff; flex: none; }
-    tr.br td { background: #fff7f7; } tr.rk td { background: #fffbeb; }
-    .timer { font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: #15803d; display: block; } .timer.warn { color: #b45309; } .timer.neg { color: #dc2626; }
-    .tbar { display: block; width: 90px; height: 4px; border-radius: 3px; background: #eef0f5; overflow: hidden; margin-top: 3px; } .tbar i { display: block; height: 100%; }
-    .r { text-align: right; } .lvl { font-size: 11px; color: var(--muted); white-space: nowrap; } .lvl.red { color: #b91c1c; font-weight: 600; } .acts { white-space: nowrap; } .acts button + button { margin-left: 4px; } .ib { padding: 5px 7px; } .due { display: block; font-size: 10.5px; color: var(--muted); margin-top: 2px; }
-    .center { text-align: center; padding: 22px !important; color: #16a34a; }
-    .pager { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12.5px; color: #4b4f6b; } .pager button { margin: 0 4px; }
+    .ci { width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; color: var(--kf-ffffff); flex: none; }
+    tr.br td { background: var(--kb-fff7f7); } tr.rk td { background: var(--kb-fffbeb); }
+    .timer { font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--kf-15803d); display: block; } .timer.warn { color: var(--kf-b45309); } .timer.neg { color: var(--kf-dc2626); }
+    .tbar { display: block; width: 90px; height: 4px; border-radius: 3px; background: var(--kb-eef0f5); overflow: hidden; margin-top: 3px; } .tbar i { display: block; height: 100%; }
+    .r { text-align: right; } .lvl { font-size: 11px; color: var(--muted); white-space: nowrap; } .lvl.red { color: var(--kf-b91c1c); font-weight: 600; } .acts { white-space: nowrap; } .acts button + button { margin-left: 4px; } .ib { padding: 5px 7px; } .due { display: block; font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+    .center { text-align: center; padding: 22px !important; color: var(--kf-16a34a); }
+    .pager { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12.5px; color: var(--kf-4b4f6b); } .pager button { margin: 0 4px; }
     .side { display: flex; flex-direction: column; gap: 12px; }
     .ladder { list-style: none; margin: 0 0 12px; padding: 0; position: relative; }
-    .ladder::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: #e5e7ef; }
+    .ladder::before { content: ''; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: var(--kb-e5e7ef); }
     .ladder li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; position: relative; }
-    .lv { width: 32px; height: 32px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-size: 11.5px; font-weight: 700; box-shadow: 0 0 0 3px #fff; }
+    .lv { width: 32px; height: 32px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 11.5px; font-weight: 700; box-shadow: 0 0 0 3px var(--kb-ffffff); }
     .ladder div { display: flex; flex-direction: column; } .ladder b { font-size: 12.5px; } .ladder small { font-size: 11px; color: var(--muted); }
-    .ladder em { font-style: normal; font-size: 12px; font-weight: 600; background: #f3f3f8; border-radius: 10px; padding: 1px 8px; }
-    .pfacts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; } .pfacts span { display: flex; flex-direction: column; font-size: 11px; color: var(--muted); background: #fafafe; border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; } .pfacts b { font-size: 13px; color: var(--text); }
+    .ladder em { font-style: normal; font-size: 12px; font-weight: 600; background: var(--kb-f3f3f8); border-radius: 10px; padding: 1px 8px; }
+    .pfacts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; } .pfacts span { display: flex; flex-direction: column; font-size: 11px; color: var(--muted); background: var(--kb-fafafe); border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; } .pfacts b { font-size: 13px; color: var(--text); }
     .full { width: 100%; justify-content: center; }
-    tr.sel td { background: #faf8ff; }
-    .esclog ul { list-style: none; margin: 0; padding: 0; } .esclog li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f1f2f7; font-size: 12px; }
+    tr.sel td { background: var(--kb-faf8ff); }
+    .esclog ul { list-style: none; margin: 0; padding: 0; } .esclog li { display: grid; grid-template-columns: 26px 1fr; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12px; }
     .fi { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; } .esclog li > div { display: flex; flex-direction: column; } .esclog small { color: var(--muted); font-size: 11px; }
-    .chans { display: flex; gap: 14px; align-items: center; font-size: 12px; color: #4b4f6b; flex-wrap: wrap; }
+    .chans { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--kf-4b4f6b); flex-wrap: wrap; }
     .ck { display: flex !important; flex-direction: row !important; align-items: center; gap: 6px !important; } .ck input { accent-color: var(--primary); }
-    .warn-t { color: #b91c1c; font-size: 12px; margin: 10px 0 0; }
+    .warn-t { color: var(--kf-b91c1c); font-size: 12px; margin: 10px 0 0; }
     .danger { color: var(--red); margin-right: auto; }
     @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid, .grid3 { grid-template-columns: 1fr; } }
   `,
@@ -287,9 +287,9 @@ export class SLAEscalations {
   protected readonly levelSegs = computed(() => {
     const o = this.open();
     return [
-      { label: 'No escalation', value: o.filter((t) => !t.escalation).length, color: '#22c55e' },
-      { label: 'L1 – Supervisor', value: o.filter((t) => t.escalation === 1).length, color: '#f59e0b' },
-      { label: 'L2 – Manager', value: o.filter((t) => t.escalation === 2).length, color: '#ef4444' },
+      { label: 'No escalation', value: o.filter((t) => !t.escalation).length, color: 'var(--ka-22c55e)' },
+      { label: 'L1 – Supervisor', value: o.filter((t) => t.escalation === 1).length, color: 'var(--ka-f59e0b)' },
+      { label: 'L2 – Manager', value: o.filter((t) => t.escalation === 2).length, color: 'var(--ka-ef4444)' },
     ];
   });
   protected readonly byCat = computed(() =>
@@ -298,11 +298,11 @@ export class SLAEscalations {
       const br = this.breached().filter((t) => catOf(t.category) === c).length;
       const ok = cl.filter((t) => t.completedAt! <= t.due).length;
       const v = cl.length + br ? Math.round((ok / (cl.length + br)) * 100) : 100;
-      return { label: c, value: v, display: v + '%', color: v >= 95 ? '#22c55e' : v >= 85 ? '#f59e0b' : '#ef4444' };
+      return { label: c, value: v, display: v + '%', color: v >= 95 ? 'var(--ka-22c55e)' : v >= 85 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)' };
     }),
   );
   protected readonly trend = computed(() => [
-    { name: 'Breaches', color: '#f87171', values: [...TREND_BREACH, this.breached().length + this.closedLate()] },
+    { name: 'Breaches', color: 'var(--ka-f87171)', values: [...TREND_BREACH, this.breached().length + this.closedLate()] },
   ]);
   protected readonly escLog = computed(() => this.store.events().filter((e) => e.icon === 'tasks-escalate' || /SLA extended|reassigned|assigned to/.test(e.text)));
 
@@ -422,7 +422,7 @@ export class SLAEscalations {
     else this.store.policies.update((l) => l.map((x) => (x.id === f.id ? f : x)));
     this.polId.set(f.id);
     this.form.set(null);
-    this.store.log(`SLA policy "${f.name}" ${this.isNew() ? 'created' : 'updated'}`, 'Rex Kumar', 'shield-check', '#7c3aed');
+    this.store.log(`SLA policy "${f.name}" ${this.isNew() ? 'created' : 'updated'}`, 'Rex Kumar', 'shield-check', 'var(--ka-7c3aed)');
     this.say(`SLA policy "${f.name}" saved`);
   }
   protected deletePolicy(f: SlaPolicy) {

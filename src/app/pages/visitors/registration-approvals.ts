@@ -40,10 +40,10 @@ interface Invite {
       }
     </section>
     <section class="kpi-row">
-      <app-kpi label="Upcoming Invitations" [value]="list().length" icon="calendar-days" color="#8b5cf6" sub="next 7 days" />
-      <app-kpi label="Form Completed" [value]="pct('Form completed') + '%'" icon="file-check" color="#22c55e" />
-      <app-kpi label="Invite Not Opened" [value]="cnt('Sent')" icon="message" color="#f59e0b" sub="send a reminder" />
-      <app-kpi label="Group Visits" [value]="groups()" icon="users" color="#3b82f6" />
+      <app-kpi label="Upcoming Invitations" [value]="list().length" icon="calendar-days" color="var(--ka-8b5cf6)" sub="next 7 days" />
+      <app-kpi label="Form Completed" [value]="pct('Form completed') + '%'" icon="file-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Invite Not Opened" [value]="cnt('Sent')" icon="message" color="var(--ka-f59e0b)" sub="send a reminder" />
+      <app-kpi label="Group Visits" [value]="groups()" icon="users" color="var(--ka-3b82f6)" />
     </section>
     <div class="card">
       <app-data-table [rows]="rows()" [columns]="cols" noun="invitations" [selectable]="true" [searchKeys]="['name', 'company', 'host', 'group']" searchPlaceholder="Search visitor, company, host, group..."
@@ -73,7 +73,7 @@ interface Invite {
   styles: `
     .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 12px; }
     .day { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; font-family: inherit; padding: 10px; }
-    .day span { font-size: 12px; color: #4b4f6b; } .day b { font-size: 22px; } .day small { color: var(--muted); font-size: 11px; }
+    .day span { font-size: 12px; color: var(--kf-4b4f6b); } .day b { font-size: 22px; } .day small { color: var(--muted); font-size: 11px; }
     .day.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     @media (max-width: 800px) { .days { grid-template-columns: repeat(4, 1fr); } }
   `,
@@ -144,7 +144,7 @@ export class PreRegistration {
     const group = lines.length > 1 ? `${company} group` : '';
     const added: Invite[] = lines.map((l, i) => {
       const [name, email] = l.split(',').map((x) => x.trim());
-      return { id: `INV-${9000 + this.list().length + i}`, name, initials: name.split(' ').map((x) => x[0]).join('').slice(0, 2).toUpperCase(), avatar: '#7c3aed', company, email: email || `${name.toLowerCase().replace(/\s+/g, '.')}@guest.com`, host, purpose, when, group, invite: 'Sent', recurring: rec.split(' ')[0] };
+      return { id: `INV-${9000 + this.list().length + i}`, name, initials: name.split(' ').map((x) => x[0]).join('').slice(0, 2).toUpperCase(), avatar: 'var(--ka-7c3aed)', company, email: email || `${name.toLowerCase().replace(/\s+/g, '.')}@guest.com`, host, purpose, when, group, invite: 'Sent', recurring: rec.split(' ')[0] };
     });
     this.list.update((l) => [...added, ...l]);
     this.open.set(false);
@@ -250,25 +250,25 @@ interface WalkForm {
     .wi { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 12px; align-items: start; }
     .kiosk { min-height: 520px; display: flex; flex-direction: column; }
     .steps { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 18px; flex-wrap: wrap; }
-    .steps li { flex: 1; min-width: 110px; display: flex; align-items: center; gap: 6px; padding-bottom: 8px; border-bottom: 3px solid #eef0f6; font-size: 12.5px; color: var(--muted); }
-    .steps span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #eef0f6; font-size: 11px; font-weight: 600; }
-    .steps .on { color: var(--primary); border-color: var(--primary); font-weight: 600; } .steps .on span { background: var(--primary); color: #fff; }
-    .steps .done { color: #16a34a; border-color: #22c55e; } .steps .done span { background: #22c55e; color: #fff; }
+    .steps li { flex: 1; min-width: 110px; display: flex; align-items: center; gap: 6px; padding-bottom: 8px; border-bottom: 3px solid var(--kl-eef0f6); font-size: 12.5px; color: var(--muted); }
+    .steps span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--kb-eef0f6); font-size: 11px; font-weight: 600; }
+    .steps .on { color: var(--primary); border-color: var(--primary); font-weight: 600; } .steps .on span { background: var(--primary); color: var(--kf-ffffff); }
+    .steps .done { color: var(--kf-16a34a); border-color: var(--kl-22c55e); } .steps .done span { background: var(--kb-22c55e); color: var(--kf-ffffff); }
     .scan, .cam, .done { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: var(--primary); }
     .scan p, .cam p { color: var(--text); margin: 0; } .scan.busy app-icon { animation: blink .5s infinite; } @keyframes blink { 50% { opacity: .3; } }
-    .cam { background: #1e1b3a; border-radius: 12px; color: #a78bfa; padding: 20px; } .cam p { color: #fff; } .cam.flash { animation: fl .3s; } @keyframes fl { from { background: #fff; } }
+    .cam { background: var(--kb-1e1b3a); border-radius: 12px; color: var(--kf-a78bfa); padding: 20px; } .cam p { color: var(--kf-ffffff); } .cam.flash { animation: fl .3s; } @keyframes fl { from { background: var(--kb-ffffff); } }
     .kv { display: grid; grid-template-columns: 110px 1fr; gap: 6px; font-size: 13px; text-align: left; } .kv dt { color: var(--muted); } .kv dd { margin: 0; color: var(--text); }
     .agree { display: flex; flex-direction: column; gap: 10px; flex: 1; } .agree label { display: flex; gap: 8px; align-items: center; font-size: 13px; }
-    .doc { padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: #fafafe; font-size: 12.5px; } .doc p { margin: 6px 0 0; color: #4b4f6b; }
-    .hit { padding: 10px; border-radius: 8px; background: #fef2f2; color: #991b1b; font-size: 13px; }
-    .badge { width: 210px; padding: 14px; border-radius: 14px; background: linear-gradient(160deg, #1e3a8a, #3b82f6); color: #fff; display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 10px 30px rgba(30,58,138,.35); }
+    .doc { padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-fafafe); font-size: 12.5px; } .doc p { margin: 6px 0 0; color: var(--kf-4b4f6b); }
+    .hit { padding: 10px; border-radius: 8px; background: var(--kb-fef2f2); color: var(--kf-991b1b); font-size: 13px; }
+    .badge { width: 210px; padding: 14px; border-radius: 14px; background: linear-gradient(160deg, var(--kb-1e3a8a), var(--kb-3b82f6)); color: var(--kf-ffffff); display: flex; flex-direction: column; align-items: center; gap: 3px; box-shadow: 0 10px 30px rgba(30,58,138,.35); }
     .b-top { width: 100%; display: flex; justify-content: space-between; font-size: 11px; } .b-top span { padding: 1px 8px; border-radius: 10px; background: rgba(255,255,255,.2); }
-    .b-photo { width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; background: #60a5fa; font-size: 24px; font-weight: 700; border: 3px solid #fff; margin: 8px 0; }
+    .b-photo { width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; background: var(--kb-60a5fa); font-size: 24px; font-weight: 700; border: 3px solid var(--kl-ffffff); margin: 8px 0; }
     .b-name { font-size: 16px; } .badge small { font-size: 10.5px; opacity: .85; }
-    .b-bar { width: 80%; height: 24px; margin-top: 6px; background: repeating-linear-gradient(90deg, #fff 0 2px, transparent 2px 4px, #fff 4px 5px, transparent 5px 8px); }
+    .b-bar { width: 80%; height: 24px; margin-top: 6px; background: repeating-linear-gradient(90deg, var(--kb-ffffff) 0 2px, transparent 2px 4px, var(--kb-ffffff) 4px 5px, transparent 5px 8px); }
     .wl { list-style: none; margin: 0; padding: 0; max-height: 520px; overflow: auto; }
-    .wl li { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
-    .wl div { display: flex; flex-direction: column; } .wl small { color: var(--muted); } .wl > li > span:last-child { font-size: 11.5px; color: #4b4f6b; }
+    .wl li { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
+    .wl div { display: flex; flex-direction: column; } .wl small { color: var(--muted); } .wl > li > span:last-child { font-size: 11.5px; color: var(--kf-4b4f6b); }
     @media (max-width: 1000px) { .wi { grid-template-columns: 1fr; } }
   `,
 })
@@ -334,10 +334,10 @@ export class WalkIn {
   template: `
     <app-page-head title="Visitor Approvals" parent="Visitor Management" parentLink="/visitor-management" subtitle="Host and security approvals with automatic risk checks." />
     <section class="kpi-row">
-      <app-kpi label="Awaiting Approval" [value]="pending().length" icon="clock" color="#f59e0b" />
-      <app-kpi label="Approved Today" [value]="approved()" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Rejected Today" [value]="rejected()" icon="ban" color="#ef4444" />
-      <app-kpi label="Avg. Approval Time" value="7 min" icon="activity" color="#3b82f6" />
+      <app-kpi label="Awaiting Approval" [value]="pending().length" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Approved Today" [value]="approved()" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Rejected Today" [value]="rejected()" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Avg. Approval Time" value="7 min" icon="activity" color="var(--ka-3b82f6)" />
     </section>
     <section class="ap" [class.with-detail]="!!sel()">
       <div class="card">
@@ -362,7 +362,7 @@ export class WalkIn {
     .detail { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .who { display: flex; gap: 10px; align-items: center; } .who div { display: flex; flex-direction: column; } .who small { color: var(--muted); }
     .kv { display: grid; grid-template-columns: 80px 1fr; gap: 6px; font-size: 12.5px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
-    h4 { margin: 4px 0 0; font-size: 13px; } .checks { list-style: none; margin: 0; padding: 0; font-size: 12.5px; } .checks li { padding: 4px 0; color: #15803d; } .checks li.warn { color: #b45309; }
+    h4 { margin: 4px 0 0; font-size: 13px; } .checks { list-style: none; margin: 0; padding: 0; font-size: 12.5px; } .checks li { padding: 4px 0; color: var(--kf-15803d); } .checks li.warn { color: var(--kf-b45309); }
     .danger { color: var(--red); }
     @media (max-width: 1100px) { .ap.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,

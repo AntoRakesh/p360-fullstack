@@ -36,10 +36,10 @@ interface Drill {
       <button class="btn-primary" (click)="open.set(true)"><app-icon name="plus" [size]="16" />Schedule Drill</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Drills (12 months)" value="14" icon="calendar-days" color="#7c3aed" sub="target 12" />
-      <app-kpi label="Avg. Evacuation Time" value="8m 42s" icon="clock" color="#3b82f6" change="11%" [up]="false" />
-      <app-kpi label="Best Time" value="6m 05s" icon="trending-up" color="#22c55e" sub="Warehouse · Aug" />
-      <app-kpi label="Avg. Accounted at 10 min" value="97.6%" icon="user-check" color="#f59e0b" />
+      <app-kpi label="Drills (12 months)" value="14" icon="calendar-days" color="var(--ka-7c3aed)" sub="target 12" />
+      <app-kpi label="Avg. Evacuation Time" value="8m 42s" icon="clock" color="var(--ka-3b82f6)" change="11%" [up]="false" />
+      <app-kpi label="Best Time" value="6m 05s" icon="trending-up" color="var(--ka-22c55e)" sub="Warehouse · Aug" />
+      <app-kpi label="Avg. Accounted at 10 min" value="97.6%" icon="user-check" color="var(--ka-f59e0b)" />
     </section>
     <section class="dash">
       <div class="card span-7">
@@ -85,7 +85,7 @@ interface Drill {
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .dr { display: flex; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f1f6; } .dt { width: 46px; display: flex; flex-direction: column; align-items: center; padding: 4px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); }
+    .dr { display: flex; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .dt { width: 46px; display: flex; flex-direction: column; align-items: center; padding: 4px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); }
     .dt b { font-size: 17px; } .dt small { font-size: 11px; } .di { flex: 1; display: flex; flex-direction: column; font-size: 13px; } .di small { color: var(--muted); font-size: 11.5px; }
   `,
 })
@@ -100,8 +100,8 @@ export class EventsDrills {
   protected readonly nextWeek = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
   protected readonly months = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
   protected readonly times = [
-    { name: 'Evacuation time', color: '#7c3aed', values: [11.2, 10.4, 9.8, 10.1, 9.2, 8.8, 9.4, 8.1, 6.1, 8.6, 7.9, 6.4] },
-    { name: 'Target', color: '#ef4444', values: Array(12).fill(10), line: true },
+    { name: 'Evacuation time', color: 'var(--ka-7c3aed)', values: [11.2, 10.4, 9.8, 10.1, 9.2, 8.8, 9.4, 8.1, 6.1, 8.6, 7.9, 6.4] },
+    { name: 'Target', color: 'var(--ka-ef4444)', values: Array(12).fill(10), line: true },
   ];
   protected readonly drills = signal<Drill[]>([
     { id: 'D1', date: this.iso(9), time: '10:00', site: 'Manufacturing', type: 'Fire Alarm', scope: 'Full Building', lead: 'Ravi Shankar', notice: 'Announced' },
@@ -170,8 +170,8 @@ export class EventsDrills {
   styles: `
     .comp { display: flex; flex-direction: column; gap: 10px; } .comp > label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); } textarea.input { height: auto; padding: 8px 10px; font: inherit; }
     .chs { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; } .chs label { display: flex; gap: 5px; align-items: center; } .chs input { accent-color: var(--primary); } .comp > button { align-self: flex-start; }
-    .ch { display: grid; grid-template-columns: 1fr 60px 80px; padding: 9px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; } .ch small { color: var(--muted); text-align: right; }
-    .txt { max-width: 380px; white-space: normal; color: #4b5068; }
+    .ch { display: grid; grid-template-columns: 1fr 60px 80px; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; } .ch small { color: var(--muted); text-align: right; }
+    .txt { max-width: 380px; white-space: normal; color: var(--kf-4b5068); }
   `,
 })
 export class EmergencyNotifications {
@@ -184,10 +184,10 @@ export class EmergencyNotifications {
   protected readonly picked = signal(['SMS', 'Push', 'PA System']);
   protected readonly msg = signal<string | null>(null);
   protected readonly delivery = [
-    { label: 'Read', value: 761, color: '#22c55e' },
-    { label: 'Delivered', value: 64, color: '#3b82f6' },
-    { label: 'Pending', value: 11, color: '#f59e0b' },
-    { label: 'Failed', value: 6, color: '#ef4444' },
+    { label: 'Read', value: 761, color: 'var(--ka-22c55e)' },
+    { label: 'Delivered', value: 64, color: 'var(--ka-3b82f6)' },
+    { label: 'Pending', value: 11, color: 'var(--ka-f59e0b)' },
+    { label: 'Failed', value: 6, color: 'var(--ka-ef4444)' },
   ];
   protected readonly chStats = [
     { name: 'Push', rate: 98.9, time: '2 s avg' }, { name: 'SMS', rate: 99.4, time: '6 s avg' }, { name: 'PA System', rate: 100, time: 'instant' },
@@ -227,10 +227,10 @@ export class EmergencyNotifications {
           <div class="card-head"><h3>After-Action Report · {{ h.id }}</h3><button class="btn-outline" (click)="exportCsv(h)"><app-icon name="download" [size]="15" />Export</button></div>
           <dl class="kv"><dt>Type</dt><dd>{{ h.type }}</dd><dt>Location</dt><dd>{{ h.location }}</dd><dt>Scope</dt><dd>{{ h.scope }}</dd><dt>Triggered</dt><dd>{{ date(h.triggeredAt) }} {{ clock(h.triggeredAt) }} by {{ h.by }}</dd><dt>Duration</dt><dd>{{ h.endedAt ? timer(h.endedAt - h.triggeredAt) : 'In progress' }}</dd></dl>
           <section class="kpi-row">
-            <app-kpi label="People Involved" [value]="m(h).people" icon="users" color="#3b82f6" />
-            <app-kpi label="Accounted @ 10 min" [value]="m(h).acc + '%'" icon="user-check" color="#22c55e" />
-            <app-kpi label="Missing (final)" [value]="m(h).missing" icon="triangle-alert" color="#ef4444" />
-            <app-kpi label="Injuries" [value]="m(h).injuries" icon="shield-plus" color="#f59e0b" />
+            <app-kpi label="People Involved" [value]="m(h).people" icon="users" color="var(--ka-3b82f6)" />
+            <app-kpi label="Accounted @ 10 min" [value]="m(h).acc + '%'" icon="user-check" color="var(--ka-22c55e)" />
+            <app-kpi label="Missing (final)" [value]="m(h).missing" icon="triangle-alert" color="var(--ka-ef4444)" />
+            <app-kpi label="Injuries" [value]="m(h).injuries" icon="shield-plus" color="var(--ka-f59e0b)" />
           </section>
           <h4>Findings &amp; actions</h4>
           <ul class="fd">@for (f of m(h).findings; track $index) {<li>{{ f }}</li>}</ul>
@@ -241,7 +241,7 @@ export class EmergencyNotifications {
   `,
   styles: `
     .ir { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 14px; align-items: start; }
-    .it { display: flex; flex-direction: column; gap: 2px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 13px; } .it.on { border-color: var(--primary); background: #faf8ff; } .it small { color: var(--muted); }
+    .it { display: flex; flex-direction: column; gap: 2px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 13px; } .it.on { border-color: var(--primary); background: var(--kb-faf8ff); } .it small { color: var(--muted); }
     .rep { display: flex; flex-direction: column; gap: 12px; } .kv { display: grid; grid-template-columns: 100px 1fr; gap: 6px; font-size: 13px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     h4 { margin: 0; font-size: 14px; } .fd { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.7; } .ll { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); } textarea.input { height: auto; padding: 8px; font: inherit; }
     @media (max-width: 1100px) { .ir { grid-template-columns: 1fr; } }
@@ -298,10 +298,10 @@ const DEV_TYPES = ['Fire Alarm Panel', 'Manual Call Point', 'Smoke Detector', 'S
   template: `
     <app-page-head title="Emergency Devices" [parent]="parent" [parentLink]="link" subtitle="Fire panels, detectors, sirens, PA, emergency lighting, AEDs and muster readers." />
     <section class="kpi-row">
-      <app-kpi label="Devices" [value]="list().length" icon="cpu" color="#7c3aed" />
-      <app-kpi label="In Alarm" [value]="cnt('Alarm')" icon="flame" color="#ef4444" />
-      <app-kpi label="Faults" [value]="cnt('Fault')" icon="triangle-alert" color="#f59e0b" />
-      <app-kpi label="Inspections Due (30 d)" [value]="due()" icon="calendar-days" color="#3b82f6" />
+      <app-kpi label="Devices" [value]="list().length" icon="cpu" color="var(--ka-7c3aed)" />
+      <app-kpi label="In Alarm" [value]="cnt('Alarm')" icon="flame" color="var(--ka-ef4444)" />
+      <app-kpi label="Faults" [value]="cnt('Fault')" icon="triangle-alert" color="var(--ka-f59e0b)" />
+      <app-kpi label="Inspections Due (30 d)" [value]="due()" icon="calendar-days" color="var(--ka-3b82f6)" />
     </section>
     <div class="card">
       <app-data-table [rows]="list()" [columns]="cols" [filters]="filters" [actions]="actions" noun="devices" [pageSize]="12" [searchKeys]="['id', 'location', 'type']" (action)="act($event.action, $event.row)" />
@@ -415,7 +415,7 @@ export class EmergencyDevices {
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .tabs-row { display: flex; gap: 6px; margin-bottom: 12px; } .tabs-row button { padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font: inherit; } .tabs-row button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .tabs-row { display: flex; gap: 6px; margin-bottom: 12px; } .tabs-row button { padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font: inherit; } .tabs-row button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .input.sm { height: 32px; width: auto; } .esc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 30px; } .esc label { display: grid; grid-template-columns: 1fr 100px 60px; gap: 10px; align-items: center; font-size: 13px; } .esc small { color: var(--muted); }
     .tp { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; font-size: 13px; } textarea.input { height: auto; padding: 8px; font: inherit; }
   `,

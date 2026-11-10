@@ -13,14 +13,14 @@ export const LE_ZONES = ['Main Entrance', 'Reception', 'Meeting Rooms', 'Visitor
 
 /** Zone geometry on the 900×280 live map (x, y, w, h) + label anchor. */
 export const ZONE_GEO: Record<string, { x: number; y: number; w: number; h: number; fill: string; stroke: string; icon?: string }> = {
-  'Meeting Rooms': { x: 160, y: 18, w: 220, h: 82, fill: '#e8e4ff', stroke: '#8b80dd', icon: 'vm-e-meeting' },
-  'Executive Floor': { x: 400, y: 18, w: 230, h: 108, fill: '#ece8fb', stroke: '#b4acec', icon: 'vm-e-columns' },
-  'Restricted Zone': { x: 650, y: 12, w: 190, h: 132, fill: 'hatch', stroke: '#ef4444', icon: 'admin-lock' },
-  'Visitor Lounge': { x: 100, y: 128, w: 190, h: 76, fill: '#e3e6fd', stroke: '#9aa3ef', icon: 'vm-e-sofa' },
-  Reception: { x: 382, y: 134, w: 160, h: 70, fill: '#fff4e8', stroke: '#fcc58f', icon: 'user' },
-  Cafeteria: { x: 586, y: 150, w: 150, h: 76, fill: '#fdf6ec', stroke: '#f2d7b0', icon: 'utensils' },
-  'Main Entrance': { x: 70, y: 228, w: 170, h: 40, fill: '#f8f7ff', stroke: '#cfcbe9', icon: 'vm-e-door' },
-  'Parking Gate': { x: 712, y: 232, w: 152, h: 38, fill: '#ffffff', stroke: '#cfcbe9', icon: 'w-car' },
+  'Meeting Rooms': { x: 160, y: 18, w: 220, h: 82, fill: 'var(--kb-e8e4ff)', stroke: 'var(--ka-8b80dd)', icon: 'vm-e-meeting' },
+  'Executive Floor': { x: 400, y: 18, w: 230, h: 108, fill: 'var(--kb-ece8fb)', stroke: 'var(--ka-b4acec)', icon: 'vm-e-columns' },
+  'Restricted Zone': { x: 650, y: 12, w: 190, h: 132, fill: 'hatch', stroke: 'var(--ka-ef4444)', icon: 'admin-lock' },
+  'Visitor Lounge': { x: 100, y: 128, w: 190, h: 76, fill: 'var(--kb-e3e6fd)', stroke: 'var(--ka-9aa3ef)', icon: 'vm-e-sofa' },
+  Reception: { x: 382, y: 134, w: 160, h: 70, fill: 'var(--kb-fff4e8)', stroke: 'var(--ka-fcc58f)', icon: 'user' },
+  Cafeteria: { x: 586, y: 150, w: 150, h: 76, fill: 'var(--kb-fdf6ec)', stroke: 'var(--ka-f2d7b0)', icon: 'utensils' },
+  'Main Entrance': { x: 70, y: 228, w: 170, h: 40, fill: 'var(--kb-f8f7ff)', stroke: 'var(--ka-cfcbe9)', icon: 'vm-e-door' },
+  'Parking Gate': { x: 712, y: 232, w: 152, h: 38, fill: 'var(--kb-ffffff)', stroke: 'var(--ka-cfcbe9)', icon: 'w-car' },
 };
 /** Path waypoint for each zone (where routes pass / markers sit). */
 export const ZONE_PT: Record<string, [number, number]> = {

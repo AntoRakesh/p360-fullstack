@@ -30,7 +30,7 @@ interface Hot {
 }
 const WINDOWS: Record<string, [number, number]> = { 'All day': [0, 1440], 'Morning 07–11': [420, 660], 'Midday 11–14': [660, 840], 'Afternoon 14–19': [840, 1140] };
 const KIND_LABEL: Record<Kind, string> = { employee: 'Employees', visitor: 'Visitors', contractor: 'Contractors' };
-const SANKEY_COLORS = ['#7c3aed', '#2563eb', '#0891b2', '#16a34a', '#f59e0b', '#db2777'];
+const SANKEY_COLORS = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0891b2)', 'var(--ka-16a34a)', 'var(--ka-f59e0b)', 'var(--ka-db2777)'];
 const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(Math.floor(m % 60)).padStart(2, '0')}`;
 
 @Component({
@@ -44,11 +44,11 @@ const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Journeys Tracked" [value]="fmt(allCount())" icon="twin-route" color="#7c3aed" change="9%" sub="vs. last Thursday" />
-      <app-kpi label="Avg Path Length" [value]="avgLen() + ' m'" icon="activity" color="#2563eb" [sub]="floorName() + ' · ' + win()" />
-      <app-kpi label="Avg Travel Time" [value]="avgDur() + ' min'" icon="clock" color="#0891b2" sub="door-to-desk incl. stops" />
-      <app-kpi label="Avg Dwell per Stop" [value]="avgDwell() + ' min'" icon="map-pin" color="#16a34a" sub="excl. final destination" />
-      <app-kpi label="Congestion Points" [value]="activeHot()" icon="triangle-alert" color="#ef4444" [sub]="hots().length + ' monitored on ' + floorName()" subColor="#dc2626" />
+      <app-kpi label="Journeys Tracked" [value]="fmt(allCount())" icon="twin-route" color="var(--ka-7c3aed)" change="9%" sub="vs. last Thursday" />
+      <app-kpi label="Avg Path Length" [value]="avgLen() + ' m'" icon="activity" color="var(--ka-2563eb)" [sub]="floorName() + ' · ' + win()" />
+      <app-kpi label="Avg Travel Time" [value]="avgDur() + ' min'" icon="clock" color="var(--ka-0891b2)" sub="door-to-desk incl. stops" />
+      <app-kpi label="Avg Dwell per Stop" [value]="avgDwell() + ' min'" icon="map-pin" color="var(--ka-16a34a)" sub="excl. final destination" />
+      <app-kpi label="Congestion Points" [value]="activeHot()" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="hots().length + ' monitored on ' + floorName()" subColor="var(--ka-dc2626)" />
     </section>
 
     <section class="pm">
@@ -58,12 +58,12 @@ const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}
           <div class="tabs">@for (m of modes; track m) {<button [class.on]="mode() === m" (click)="setMode(m)">{{ m }}</button>}</div>
           <div class="kinds">@for (k of kindList; track k) {<button [class.on]="kinds().has(k)" [style.--c]="kc[k]" (click)="toggleKind(k)"><i></i>{{ kl[k] }}</button>}</div>
         </div>
-        <app-iso-view [zones]="zones()" [floor]="floor()" [paths]="paths()" [markers]="markers()" [glows]="glows()" [shirts]="mode() === 'Replay' ? ['#cbd5e1'] : []" [selectedZone]="selZone()" aspect="1000 / 520" (markerClick)="markerPick($event)" (zoneClick)="zonePick($event)" />
+        <app-iso-view [zones]="zones()" [floor]="floor()" [paths]="paths()" [markers]="markers()" [glows]="glows()" [shirts]="mode() === 'Replay' ? ['var(--ka-cbd5e1)'] : []" [selectedZone]="selZone()" aspect="1000 / 520" (markerClick)="markerPick($event)" (zoneClick)="zonePick($event)" />
         <div class="legend-row">
           @switch (mode()) {
-            @case ('Flows') {<span><i class="ln" style="background: linear-gradient(90deg, #3b82f6, #22c55e, #f59e0b, #ef4444)"></i>Flow volume (low → high)</span><span><i class="dot red"></i>Congestion point</span><span class="muted">{{ selFlow() ? 'Showing ' + selFlow()!.from + ' → ' + selFlow()!.to : 'Top ' + mapFlows().length + ' flows · click a flow or sankey link to isolate it' }}</span>}
+            @case ('Flows') {<span><i class="ln" style="background: linear-gradient(90deg, var(--kb-3b82f6), var(--kb-22c55e), var(--kb-f59e0b), var(--kb-ef4444))"></i>Flow volume (low → high)</span><span><i class="dot red"></i>Congestion point</span><span class="muted">{{ selFlow() ? 'Showing ' + selFlow()!.from + ' → ' + selFlow()!.to : 'Top ' + mapFlows().length + ' flows · click a flow or sankey link to isolate it' }}</span>}
             @case ('Trajectories') {@for (k of kindList; track k) {<span><i class="ln" [style.background]="kc[k]"></i>{{ kl[k] }}</span>}<span class="muted">{{ shownTraj().length }} of {{ filtered().length }} journeys drawn</span>}
-            @case ('Replay') {<span><i class="ln" [style.background]="kc[$any(cur()?.kind) ?? 'employee']"></i>{{ cur()?.who }}</span><span><i class="dot" style="background:#fff;border:2px solid #7c3aed"></i>Stop</span><span class="muted">{{ cur()?.id }} · {{ cur()?.distance }} m</span>}
+            @case ('Replay') {<span><i class="ln" [style.background]="kc[$any(cur()?.kind) ?? 'employee']"></i>{{ cur()?.who }}</span><span><i class="dot" style="background:var(--kb-ffffff);border:2px solid var(--kl-7c3aed)"></i>Stop</span><span class="muted">{{ cur()?.id }} · {{ cur()?.distance }} m</span>}
           }
         </div>
       </div>
@@ -117,7 +117,7 @@ const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}
             <path [attr.d]="l.d" [attr.fill]="l.color" [attr.opacity]="selFlowKey() ? (selFlowKey() === l.key ? 0.75 : 0.1) : 0.32" (click)="pickFlow(l.key)"><title>{{ l.from }} → {{ l.to }}: {{ l.n }}</title></path>
           }
           @for (n of sankey().left; track n.name) {<rect x="150" [attr.y]="n.y" width="10" [attr.height]="n.h" [attr.fill]="n.color" rx="2" /><text x="142" [attr.y]="n.y + n.h / 2 + 4" text-anchor="end">{{ n.name }} · {{ n.n }}</text>}
-          @for (n of sankey().right; track n.name) {<rect x="430" [attr.y]="n.y" width="10" [attr.height]="n.h" fill="#94a3b8" rx="2" /><text x="448" [attr.y]="n.y + n.h / 2 + 4">{{ n.name }} · {{ n.n }}</text>}
+          @for (n of sankey().right; track n.name) {<rect x="430" [attr.y]="n.y" width="10" [attr.height]="n.h" fill="var(--ka-94a3b8)" rx="2" /><text x="448" [attr.y]="n.y + n.h / 2 + 4">{{ n.name }} · {{ n.n }}</text>}
         </svg>
       </div>
       <div class="card">
@@ -129,7 +129,7 @@ const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}
               <tr [class.sel]="selHot() === h.id" (click)="selHot.set(h.id)">
                 <td><b>{{ h.name }}</b><small class="muted">{{ h.arrivals }} arrivals</small></td>
                 <td>{{ h.peak }}</td>
-                <td class="num" [style.color]="h.density >= 3 ? '#dc2626' : null">{{ h.density }} p/m²</td>
+                <td class="num" [style.color]="h.density >= 3 ? 'var(--ka-dc2626)' : null">{{ h.density }} p/m²</td>
                 <td class="num">{{ h.wait }} s</td>
                 <td><span [class]="statusCls(h.id)">{{ status(h.id) }}</span></td>
                 <td class="ra">
@@ -151,7 +151,7 @@ const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}
       </div>
       <div class="card">
         <div class="card-head"><h3>Dwell Distribution <span class="card-sub">per stop</span></h3></div>
-        <app-column-chart [labels]="dwellBuckets" [series]="[{ name: 'Stops', color: '#7c3aed', values: dwellDist() }]" [height]="200" [legend]="false" />
+        <app-column-chart [labels]="dwellBuckets" [series]="[{ name: 'Stops', color: 'var(--ka-7c3aed)', values: dwellDist() }]" [height]="200" [legend]="false" />
       </div>
     </section>
 
@@ -164,28 +164,28 @@ const hhmm = (m: number) => `${String(Math.floor(m / 60) % 24).padStart(2, '0')}
   `,
   styles: `
     .pm { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; margin-bottom: 12px; align-items: start; }
-    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .kinds { display: flex; gap: 4px; } .kinds button { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--border); background: #fff; border-radius: 16px; padding: 5px 10px; font-size: 12px; cursor: pointer; color: #94a3b8; }
-    .kinds button i { width: 9px; height: 9px; border-radius: 50%; background: #cbd5e1; } .kinds button.on { color: var(--text); border-color: var(--c); } .kinds button.on i { background: var(--c); }
-    .legend-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; font-size: 12px; margin-top: 10px; color: #3b3f5c; } .legend-row span { display: inline-flex; gap: 6px; align-items: center; }
-    .ln { width: 26px; height: 4px; border-radius: 2px; display: inline-block; } .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; } .dot.red { background: #ef4444; box-shadow: 0 0 0 3px #fecaca; }
+    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
+    .kinds { display: flex; gap: 4px; } .kinds button { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 16px; padding: 5px 10px; font-size: 12px; cursor: pointer; color: var(--kf-94a3b8); }
+    .kinds button i { width: 9px; height: 9px; border-radius: 50%; background: var(--kb-cbd5e1); } .kinds button.on { color: var(--text); border-color: var(--c); } .kinds button.on i { background: var(--c); }
+    .legend-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; font-size: 12px; margin-top: 10px; color: var(--kf-3b3f5c); } .legend-row span { display: inline-flex; gap: 6px; align-items: center; }
+    .ln { width: 26px; height: 4px; border-radius: 2px; display: inline-block; } .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; } .dot.red { background: var(--kb-ef4444); box-shadow: 0 0 0 3px var(--kb-fecaca); }
     .side { display: flex; flex-direction: column; gap: 10px; } .sh { display: flex; justify-content: space-between; align-items: baseline; }
-    .who { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; } .av { width: 44px; height: 44px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-weight: 600; }
-    .rp { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; } .pl { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--primary); color: #fff; display: grid; place-items: center; cursor: pointer; }
-    .rp input { width: 100%; accent-color: #7c3aed; margin: 0; } .rp-t { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); } .rp-t b { color: var(--text); font-size: 13px; }
+    .who { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; } .av { width: 44px; height: 44px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-weight: 600; }
+    .rp { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: center; } .pl { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--primary); color: var(--kf-ffffff); display: grid; place-items: center; cursor: pointer; }
+    .rp input { width: 100%; accent-color: var(--kf-7c3aed); margin: 0; } .rp-t { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); } .rp-t b { color: var(--text); font-size: 13px; }
     .sp { align-self: flex-start; }
     .stops { list-style: none; margin: 0; padding: 0; } .stops li { display: grid; grid-template-columns: 14px 1fr; gap: 10px; padding: 6px 0; cursor: pointer; position: relative; font-size: 12.5px; }
-    .stops li i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #c4b5fd; background: #fff; margin-top: 3px; z-index: 1; } .stops li:not(:last-child)::after { content: ''; position: absolute; left: 6px; top: 20px; bottom: -6px; width: 2px; background: #e9e5f8; }
-    .stops li.done i { background: #c4b5fd; } .stops li.on i { background: #7c3aed; border-color: #7c3aed; box-shadow: 0 0 0 4px #ede9fe; } .stops li.on b { color: var(--primary); } .stops b { font-weight: 500; display: block; } .stops small { color: var(--muted); }
+    .stops li i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--kl-c4b5fd); background: var(--kb-ffffff); margin-top: 3px; z-index: 1; } .stops li:not(:last-child)::after { content: ''; position: absolute; left: 6px; top: 20px; bottom: -6px; width: 2px; background: var(--kb-e9e5f8); }
+    .stops li.done i { background: var(--kb-c4b5fd); } .stops li.on i { background: var(--kb-7c3aed); border-color: var(--kl-7c3aed); box-shadow: 0 0 0 4px var(--kb-ede9fe); } .stops li.on b { color: var(--primary); } .stops b { font-weight: 500; display: block; } .stops small { color: var(--muted); }
     .facts { display: grid; grid-template-columns: 90px 1fr; gap: 6px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; }
-    .flows { list-style: none; margin: 0; padding: 0; } .flows li { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 7px 6px; border-radius: 8px; cursor: pointer; font-size: 12px; } .flows li:hover, .flows li.on { background: #f5f3ff; }
+    .flows { list-style: none; margin: 0; padding: 0; } .flows li { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 7px 6px; border-radius: 8px; cursor: pointer; font-size: 12px; } .flows li:hover, .flows li.on { background: var(--kb-f5f3ff); }
     .flows li div { display: flex; align-items: center; gap: 4px; min-width: 0; } .flows li div b { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .flows li > span { font-weight: 600; }
-    .flows .bar { grid-column: 1 / -1; } .bar { display: block; height: 6px; border-radius: 6px; background: #e8eaf2; overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
-    .side h4 { margin: 4px 0 0; font-size: 13px; } .fsel { background: #f5f3ff; border-radius: 8px; padding: 10px; font-size: 12.5px; display: flex; flex-direction: column; gap: 8px; }
+    .flows .bar { grid-column: 1 / -1; } .bar { display: block; height: 6px; border-radius: 6px; background: var(--kb-e8eaf2); overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
+    .side h4 { margin: 4px 0 0; font-size: 13px; } .fsel { background: var(--kb-f5f3ff); border-radius: 8px; padding: 10px; font-size: 12.5px; display: flex; flex-direction: column; gap: 8px; }
     .row2 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; margin-bottom: 12px; } .row2.b { grid-template-columns: 1fr 1fr; }
-    .sankey { width: 100%; height: auto; display: block; } .sankey text { font-size: 11px; fill: #3b3f5c; } .sankey path { cursor: pointer; transition: opacity 0.15s; }
-    .ct td small { display: block; font-size: 11px; } .ct tr { cursor: pointer; } .ct tr.sel td { background: #f5f3ff; } .ra { text-align: right; } .num { text-align: right; }
+    .sankey { width: 100%; height: auto; display: block; } .sankey text { font-size: 11px; fill: var(--ka-3b3f5c); } .sankey path { cursor: pointer; transition: opacity 0.15s; }
+    .ct td small { display: block; font-size: 11px; } .ct tr { cursor: pointer; } .ct tr.sel td { background: var(--kb-f5f3ff); } .ra { text-align: right; } .num { text-align: right; }
     @media (max-width: 1280px) { .pm, .row2, .row2.b { grid-template-columns: 1fr; } }
   `,
 })
@@ -329,7 +329,7 @@ export class PathMovementAnalysis {
       const n = 40;
       for (let i = 0; i <= n * p; i++) done.push(along(j.points, i / n));
       done.push(along(j.points, p));
-      return [{ points: j.points, color: '#c4b5fd', dashed: true }, ...(done.length > 1 ? [{ points: done, color: TYPE_COLOR[j.kind], dots: false }] : [])];
+      return [{ points: j.points, color: 'var(--ka-c4b5fd)', dashed: true }, ...(done.length > 1 ? [{ points: done, color: TYPE_COLOR[j.kind], dots: false }] : [])];
     }
     if (m === 'Trajectories') return this.shownTraj().map((j) => ({ points: j.points, color: TYPE_COLOR[j.kind], dashed: j.kind !== 'employee' }));
     const max = this.maxFlow();
@@ -350,14 +350,14 @@ export class PathMovementAnalysis {
       const [x, y] = along(j.points, this.prog());
       const stopsAt = j.stops.map((s, i) => {
         const [sx, sy] = along(j.points, i / (j.stops.length - 1 || 1));
-        return { id: `stop-${i}`, x: sx, y: sy, color: i <= this.stopIdx() ? '#7c3aed' : '#94a3b8', icon: 'map-pin', kind: 'chip', title: `${s.zone} · ${s.at}` } as IsoMarker;
+        return { id: `stop-${i}`, x: sx, y: sy, color: i <= this.stopIdx() ? 'var(--ka-7c3aed)' : 'var(--ka-94a3b8)', icon: 'map-pin', kind: 'chip', title: `${s.zone} · ${s.at}` } as IsoMarker;
       });
       return [...stopsAt, { id: 'who', x, y, color: TYPE_COLOR[j.kind], icon: j.kind === 'contractor' ? 'hard-hat' : 'user', kind: 'pin', title: j.who }];
     }
-    if (m === 'Flows') return this.hots().map((h) => ({ id: h.id, x: h.x, y: h.y, color: this.status(h.id) === 'Congested' ? '#ef4444' : this.status(h.id) === 'Normal' || this.status(h.id) === 'Resolved' ? '#16a34a' : '#f59e0b', icon: 'users', kind: 'value', label: `${h.density} p/m²`, title: h.name }));
+    if (m === 'Flows') return this.hots().map((h) => ({ id: h.id, x: h.x, y: h.y, color: this.status(h.id) === 'Congested' ? 'var(--ka-ef4444)' : this.status(h.id) === 'Normal' || this.status(h.id) === 'Resolved' ? 'var(--ka-16a34a)' : 'var(--ka-f59e0b)', icon: 'users', kind: 'value', label: `${h.density} p/m²`, title: h.name }));
     return [];
   });
-  protected readonly glows = computed<IsoGlow[]>(() => (this.mode() === 'Flows' ? this.hots().filter((h) => this.status(h.id) === 'Congested').map((h) => ({ x: h.x, y: h.y, r: 46, color: '#ef4444' })) : []));
+  protected readonly glows = computed<IsoGlow[]>(() => (this.mode() === 'Flows' ? this.hots().filter((h) => this.status(h.id) === 'Congested').map((h) => ({ x: h.x, y: h.y, r: 46, color: 'var(--ka-ef4444)' })) : []));
 
   /* ---------- sankey ---------- */
   protected readonly sankey = computed(() => {
@@ -524,12 +524,12 @@ export class PathMovementAnalysis {
   }
   protected dispatch(h: Hot) {
     this.hotStatus.update((s) => ({ ...s, [h.id]: 'Steward on site' }));
-    this.store.log({ icon: 'users', color: '#f59e0b', who: h.name, what: `Floor steward dispatched · ${h.density} p/m²`, floor: this.floor() });
+    this.store.log({ icon: 'users', color: 'var(--ka-f59e0b)', who: h.name, what: `Floor steward dispatched · ${h.density} p/m²`, floor: this.floor() });
     this.toast$(`Steward dispatched to ${h.name}`);
   }
   protected resolve(h: Hot) {
     this.hotStatus.update((s) => ({ ...s, [h.id]: 'Resolved' }));
-    this.store.log({ icon: 'shield-check', color: '#16a34a', who: h.name, what: 'Congestion cleared', floor: this.floor() });
+    this.store.log({ icon: 'shield-check', color: 'var(--ka-16a34a)', who: h.name, what: 'Congestion cleared', floor: this.floor() });
     this.toast$(`${h.name} marked resolved`);
   }
   protected alert(h: Hot) {

@@ -73,7 +73,7 @@ const RECIPIENTS = ['Employee', 'Line Manager', 'HSE', 'Security Manager', 'Trai
             @for (r of store.rules(); track r.id) {
               <li [class.off]="!r.enabled">
                 <div class="rh">
-                  <span class="rd" [style.background]="r.days === 0 ? '#ef4444' : r.days <= 14 ? '#f97316' : r.days <= 30 ? '#f59e0b' : '#3b82f6'">{{ r.days === 0 ? 'EXP' : r.days + 'd' }}</span>
+                  <span class="rd" [style.background]="r.days === 0 ? 'var(--ka-ef4444)' : r.days <= 14 ? 'var(--ka-f97316)' : r.days <= 30 ? 'var(--ka-f59e0b)' : 'var(--ka-3b82f6)'">{{ r.days === 0 ? 'EXP' : r.days + 'd' }}</span>
                   <div><b>{{ r.name }}</b><small>{{ scopeName(r.scope) }} · {{ r.channels.join(', ') }} → {{ r.recipients.join(', ') }}</small></div>
                   <label class="sw"><input type="checkbox" [checked]="r.enabled" (change)="toggleRule(r)" /><i></i></label>
                 </div>
@@ -160,34 +160,34 @@ const RECIPIENTS = ['Employee', 'Line Manager', 'HSE', 'Security Manager', 'Trai
     .wins { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .wc { text-align: left; border: 1px solid transparent; cursor: pointer; display: grid; grid-template-columns: 42px 1fr; gap: 4px 12px; align-items: center; font: inherit; color: inherit; }
     .wc.on { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 15%, transparent); }
-    .wi { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 14%, #fff); color: var(--c); grid-row: span 1; }
+    .wi { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 14%, var(--kb-ffffff)); color: var(--c); grid-row: span 1; }
     .wc > div { display: flex; flex-direction: column; } .wc small { color: var(--muted); font-size: 12px; } .wc b { font-size: 24px; line-height: 1.2; } .wc em { font-style: normal; font-size: 11px; color: var(--c); }
-    .wp { grid-column: 1 / -1; height: 5px; background: #eef0f6; border-radius: 4px; overflow: hidden; margin-top: 6px; } .wp i { display: block; height: 100%; background: var(--c); }
+    .wp { grid-column: 1 / -1; height: 5px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; margin-top: 6px; } .wp i { display: block; height: 100%; background: var(--c); }
     .ws { grid-column: 1 / -1; font-size: 10.5px; color: var(--muted); }
-    .lg { display: flex; gap: 12px; font-size: 11.5px; color: #4b4f6b; } .lg span { display: inline-flex; align-items: center; gap: 5px; } .lg i { width: 10px; height: 10px; border-radius: 3px; }
+    .lg { display: flex; gap: 12px; font-size: 11.5px; color: var(--kf-4b4f6b); } .lg span { display: inline-flex; align-items: center; gap: 5px; } .lg i { width: 10px; height: 10px; border-radius: 3px; }
     .rw { position: relative; }
     .bands { display: flex; gap: 2px; margin: 0 0 6px 40px; font-size: 10.5px; font-weight: 600; text-align: center; }
-    .bands span { padding: 3px 0; border-radius: 4px; } .b1 { background: #fee2e2; color: #b91c1c; } .b2 { background: #fef3c7; color: #b45309; } .b3 { background: #dbeafe; color: #1d4ed8; }
+    .bands span { padding: 3px 0; border-radius: 4px; } .b1 { background: var(--kb-fee2e2); color: var(--kf-b91c1c); } .b2 { background: var(--kb-fef3c7); color: var(--kf-b45309); } .b3 { background: var(--kb-dbeafe); color: var(--kf-1d4ed8); }
     .ex { list-style: none; margin: 0; padding: 0; max-height: 262px; overflow: auto; }
-    .ex li { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; } .ex li > div { flex: 1; display: flex; flex-direction: column; min-width: 0; } .ex small { color: var(--muted); font-size: 11px; }
+    .ex li { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; } .ex li > div { flex: 1; display: flex; flex-direction: column; min-width: 0; } .ex small { color: var(--muted); font-size: 11px; }
     .lay { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 12px; align-items: start; } .side { display: flex; flex-direction: column; gap: 12px; }
     .rules, .feed { list-style: none; margin: 0; padding: 0; }
-    .rules li { padding: 9px 0; border-bottom: 1px solid #f0f1f6; } .rules li.off { opacity: .55; }
+    .rules li { padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .rules li.off { opacity: .55; }
     .rh { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; } .rh > div { display: flex; flex-direction: column; min-width: 0; } .rh b { font-size: 12.5px; } .rh small { color: var(--muted); font-size: 10.5px; }
-    .rd { height: 26px; border-radius: 6px; color: #fff; font-size: 10.5px; font-weight: 700; display: grid; place-items: center; }
+    .rd { height: 26px; border-radius: 6px; color: var(--kf-ffffff); font-size: 10.5px; font-weight: 700; display: grid; place-items: center; }
     .rf { display: flex; justify-content: space-between; align-items: center; margin: 4px 0 0 48px; gap: 8px; } .rf small { color: var(--muted); font-size: 10.5px; } .rf span { display: flex; gap: 10px; white-space: nowrap; }
     .link:disabled { opacity: .4; cursor: default; }
-    .sw { position: relative; width: 34px; height: 19px; cursor: pointer; } .sw input { display: none; } .sw i { position: absolute; inset: 0; border-radius: 12px; background: #d6d8e3; transition: .2s; }
-    .sw i::after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; border-radius: 50%; background: #fff; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::after { left: 17px; }
-    .feed li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; } .feed li > div { display: flex; flex-direction: column; } .feed small { color: var(--muted); font-size: 10.5px; }
-    .fi { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; } .fi.reminder { background: #dbeafe; color: #1d4ed8; } .fi.rule { background: #ede9fe; color: #6d28d9; } .fi.renewal { background: #dcfce7; color: #15803d; } .fi.schedule { background: #fef3c7; color: #b45309; }
-    .sc1 { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; background: #f7f7fb; padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 12.5px; }
-    .sc1 > div { display: flex; flex-direction: column; } .sc1 small { color: var(--muted); font-size: 11px; } .sc1 .r { text-align: right; } .red { color: #dc2626 !important; }
+    .sw { position: relative; width: 34px; height: 19px; cursor: pointer; } .sw input { display: none; } .sw i { position: absolute; inset: 0; border-radius: 12px; background: var(--kb-d6d8e3); transition: .2s; }
+    .sw i::after { content: ''; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; border-radius: 50%; background: var(--kb-ffffff); transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::after { left: 17px; }
+    .feed li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; } .feed li > div { display: flex; flex-direction: column; } .feed small { color: var(--muted); font-size: 10.5px; }
+    .fi { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; } .fi.reminder { background: var(--kb-dbeafe); color: var(--kf-1d4ed8); } .fi.rule { background: var(--kb-ede9fe); color: var(--kf-6d28d9); } .fi.renewal { background: var(--kb-dcfce7); color: var(--kf-15803d); } .fi.schedule { background: var(--kb-fef3c7); color: var(--kf-b45309); }
+    .sc1 { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; background: var(--kb-f7f7fb); padding: 10px; border-radius: 8px; margin-bottom: 12px; font-size: 12.5px; }
+    .sc1 > div { display: flex; flex-direction: column; } .sc1 small { color: var(--muted); font-size: 11px; } .sc1 .r { text-align: right; } .red { color: var(--kf-dc2626) !important; }
     .cg { border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
     .cgh { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; font-size: 13px; } .cgh .muted { margin-left: auto; font-size: 11.5px; }
     .ss { display: grid; gap: 6px; } .ss label { display: grid; grid-template-columns: 18px 1fr auto; grid-template-rows: auto auto; column-gap: 8px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 7px; cursor: pointer; font-size: 12px; }
-    .ss label input { grid-row: span 2; align-self: center; } .ss label small { grid-column: 2; color: var(--muted); font-size: 11px; } .ss label em { grid-row: 1 / 3; grid-column: 3; align-self: center; font-style: normal; font-size: 11px; color: #15803d; }
-    .ss label.on { border-color: var(--primary); background: #faf7ff; } .ss label.full { opacity: .5; } .ss label.full em { color: #b91c1c; }
+    .ss label input { grid-row: span 2; align-self: center; } .ss label small { grid-column: 2; color: var(--muted); font-size: 11px; } .ss label em { grid-row: 1 / 3; grid-column: 3; align-self: center; font-style: normal; font-size: 11px; color: var(--kf-15803d); }
+    .ss label.on { border-color: var(--primary); background: var(--kb-faf7ff); } .ss label.full { opacity: .5; } .ss label.full em { color: var(--kf-b91c1c); }
     .dl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; max-width: 220px; }
     .ck { display: flex; align-items: center; gap: 6px; font-size: 12.5px; margin-top: 4px; }
     .cks { display: flex; gap: 14px; flex-wrap: wrap; } .cks label { flex-direction: row !important; display: flex; align-items: center; gap: 6px; font-size: 12.5px; }
@@ -228,10 +228,10 @@ export class RenewalsExpiryAlerts extends TrnPage {
   });
   protected readonly winCards = computed(() => {
     const defs: [Win, string, string, string, string][] = [
-      ['Expired', 'Expired', '#ef4444', 'triangle-alert', 'not authorised to work'],
-      ['0–30 days', 'Expiring in 30 days', '#f97316', 'clock', 'reminders + auto-enrol'],
-      ['31–60 days', 'Expiring in 31–60 days', '#f59e0b', 'calendar-days', 'manager heads-up'],
-      ['61–90 days', 'Expiring in 61–90 days', '#3b82f6', 'bell', 'early notice'],
+      ['Expired', 'Expired', 'var(--ka-ef4444)', 'triangle-alert', 'not authorised to work'],
+      ['0–30 days', 'Expiring in 30 days', 'var(--ka-f97316)', 'clock', 'reminders + auto-enrol'],
+      ['31–60 days', 'Expiring in 31–60 days', 'var(--ka-f59e0b)', 'calendar-days', 'manager heads-up'],
+      ['61–90 days', 'Expiring in 61–90 days', 'var(--ka-3b82f6)', 'bell', 'early notice'],
     ];
     return defs.map(([win, label, color, icon, sub]) => {
       const l = this.live().filter((c) => inWin(daysUntil(c.expiry), win));
@@ -251,9 +251,9 @@ export class RenewalsExpiryAlerts extends TrnPage {
       else crt[w]++;
     }
     return [
-      { name: 'Certificates', color: '#8b5cf6', values: crt },
-      { name: 'Licences', color: '#f97316', values: lic },
-      { name: 'Renewal scheduled', color: '#22c55e', values: done },
+      { name: 'Certificates', color: 'var(--ka-8b5cf6)', values: crt },
+      { name: 'Licences', color: 'var(--ka-f97316)', values: lic },
+      { name: 'Renewal scheduled', color: 'var(--ka-22c55e)', values: done },
     ];
   });
   protected readonly expiredByType = computed(() => {

@@ -22,19 +22,19 @@ interface LiveEvent {
 
 const nowMinus = (min: number) => new Date(Date.now() - min * 60000).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 const SEED_EVENTS: Omit<LiveEvent, 'key' | 'time'>[] = [
-  { name: 'Arjun Mehta', initials: 'AM', avatar: '#0d9488', id: 'EMP-00123', sub: 'IT', location: 'Main Entrance - Head Office', kind: 'Check-In' },
-  { name: 'Priya Sharma', initials: 'PS', avatar: '#ca8a04', id: 'EMP-00124', sub: 'HR', location: 'Reception - Head Office', kind: 'Check-In' },
-  { name: 'Ramesh Kumar', initials: 'RK', avatar: '#16a34a', id: 'CON-00456', sub: 'Contractor', location: 'Gate 2 - Manufacturing', kind: 'Check-In' },
-  { name: 'Fatima Ali', initials: 'FA', avatar: '#db2777', id: 'EMP-00128', sub: 'Operations', location: 'Warehouse - Zone B', kind: 'Check-In' },
-  { name: 'Ahmed Hassan', initials: 'AH', avatar: '#ea580c', id: 'EMP-00127', sub: 'Sales', location: 'Regional Office', kind: 'Check-In' },
-  { name: 'Li Wei', initials: 'LW', avatar: '#2563eb', id: 'EMP-00129', sub: 'R&D', location: 'Tech Center', kind: 'Late' },
-  { name: 'Maria Santos', initials: 'MS', avatar: '#9333ea', id: 'VIS-00982', sub: 'Visitor', location: 'Main Entrance - Head Office', kind: 'Check-In' },
-  { name: 'David Lee', initials: 'DL', avatar: '#475569', id: 'EMP-00130', sub: 'Support', location: 'Head Office', kind: 'Check-In' },
+  { name: 'Arjun Mehta', initials: 'AM', avatar: 'var(--ka-0d9488)', id: 'EMP-00123', sub: 'IT', location: 'Main Entrance - Head Office', kind: 'Check-In' },
+  { name: 'Priya Sharma', initials: 'PS', avatar: 'var(--ka-ca8a04)', id: 'EMP-00124', sub: 'HR', location: 'Reception - Head Office', kind: 'Check-In' },
+  { name: 'Ramesh Kumar', initials: 'RK', avatar: 'var(--ka-16a34a)', id: 'CON-00456', sub: 'Contractor', location: 'Gate 2 - Manufacturing', kind: 'Check-In' },
+  { name: 'Fatima Ali', initials: 'FA', avatar: 'var(--ka-db2777)', id: 'EMP-00128', sub: 'Operations', location: 'Warehouse - Zone B', kind: 'Check-In' },
+  { name: 'Ahmed Hassan', initials: 'AH', avatar: 'var(--ka-ea580c)', id: 'EMP-00127', sub: 'Sales', location: 'Regional Office', kind: 'Check-In' },
+  { name: 'Li Wei', initials: 'LW', avatar: 'var(--ka-2563eb)', id: 'EMP-00129', sub: 'R&D', location: 'Tech Center', kind: 'Late' },
+  { name: 'Maria Santos', initials: 'MS', avatar: 'var(--ka-9333ea)', id: 'VIS-00982', sub: 'Visitor', location: 'Main Entrance - Head Office', kind: 'Check-In' },
+  { name: 'David Lee', initials: 'DL', avatar: 'var(--ka-475569)', id: 'EMP-00130', sub: 'Support', location: 'Head Office', kind: 'Check-In' },
 ];
 const CAMERAS = ['Head Office - Main Entrance', 'Head Office - Reception', 'Manufacturing - Gate 2', 'Warehouse - Zone B'];
 const FLOORS = ['F3', 'F2', 'F1', 'G'];
 const HOURS = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM'];
-const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'], ['Absent', '#ef4444'], ['Visitor', '#8b5cf6'], ['Contractor', '#3b82f6']];
+const LEGEND: [string, string][] = [['Present', 'var(--ka-22c55e)'], ['Late', 'var(--ka-f59e0b)'], ['Absent', 'var(--ka-ef4444)'], ['Visitor', 'var(--ka-8b5cf6)'], ['Contractor', 'var(--ka-3b82f6)']];
 
 @Component({
   selector: 'app-live-monitor',
@@ -56,12 +56,12 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Employees" [value]="fmt(k().total)" icon="users" color="#8b5cf6" sub="On Roll" />
-      <app-kpi label="Present Now" [value]="fmt(k().present)" [extra]="pct(k().present)" icon="clock" color="#34d399" change="+2.4%" />
-      <app-kpi label="Late Arrivals" [value]="fmt(k().late)" [extra]="pct(k().late)" icon="clock" color="#fb923c" change="+0.6%" [good]="false" />
-      <app-kpi label="Absent" [value]="fmt(k().absent)" [extra]="pct(k().absent)" icon="bell" color="#ef4444" change="-1.1%" [up]="false" />
-      <app-kpi label="On Leave" [value]="fmt(k().leave)" [extra]="pct(k().leave)" icon="calendar-x" color="#a855f7" change="+0.3%" />
-      <app-kpi label="Remote / WFH" [value]="fmt(k().wfh)" [extra]="pct(k().wfh)" icon="square-user" color="#3b82f6" change="+0.8%" />
+      <app-kpi label="Total Employees" [value]="fmt(k().total)" icon="users" color="var(--ka-8b5cf6)" sub="On Roll" />
+      <app-kpi label="Present Now" [value]="fmt(k().present)" [extra]="pct(k().present)" icon="clock" color="var(--ka-34d399)" change="+2.4%" />
+      <app-kpi label="Late Arrivals" [value]="fmt(k().late)" [extra]="pct(k().late)" icon="clock" color="var(--ka-fb923c)" change="+0.6%" [good]="false" />
+      <app-kpi label="Absent" [value]="fmt(k().absent)" [extra]="pct(k().absent)" icon="bell" color="var(--ka-ef4444)" change="-1.1%" [up]="false" />
+      <app-kpi label="On Leave" [value]="fmt(k().leave)" [extra]="pct(k().leave)" icon="calendar-x" color="var(--ka-a855f7)" change="+0.3%" />
+      <app-kpi label="Remote / WFH" [value]="fmt(k().wfh)" [extra]="pct(k().wfh)" icon="square-user" color="var(--ka-3b82f6)" change="+0.8%" />
     </section>
 
     <section class="card filterbar">
@@ -132,22 +132,22 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
             <div class="cam-wrap">
               <div class="feed">
                 <svg viewBox="0 0 300 420" preserveAspectRatio="xMidYMid slice">
-                  <defs><linearGradient id="lamsky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9fb7c8" /><stop offset="1" stop-color="#e5e9ee" /></linearGradient></defs>
+                  <defs><linearGradient id="lamsky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--ka-9fb7c8)" /><stop offset="1" stop-color="var(--ka-e5e9ee)" /></linearGradient></defs>
                   <rect width="300" height="420" fill="url(#lamsky)" />
-                  <rect width="300" height="30" fill="#4b5563" />
-                  <g stroke="#5b6573" stroke-width="5"><path d="M30 30v200M110 30v200M190 30v200M270 30v200M0 120h300" /></g>
-                  <path d="M0 230h300v190H0z" fill="#aab3bd" />
-                  <path d="M0 420 120 230h60l120 190" fill="#c6ccd3" opacity=".6" />
-                  <g fill="#3f7d4a"><ellipse cx="6" cy="160" rx="26" ry="90" /><ellipse cx="294" cy="150" rx="24" ry="95" /></g>
-                  <g fill="#9ca3af"><rect x="40" y="250" width="50" height="60" rx="4" /><rect x="210" y="250" width="50" height="60" rx="4" /></g>
-                  <g fill="#1f2937" [attr.transform]="'translate(' + shift() + ' 0)'">
+                  <rect width="300" height="30" fill="var(--ka-4b5563)" />
+                  <g stroke="var(--kl-5b6573)" stroke-width="5"><path d="M30 30v200M110 30v200M190 30v200M270 30v200M0 120h300" /></g>
+                  <path d="M0 230h300v190H0z" fill="var(--ka-aab3bd)" />
+                  <path d="M0 420 120 230h60l120 190" fill="var(--ka-c6ccd3)" opacity=".6" />
+                  <g fill="var(--ka-3f7d4a)"><ellipse cx="6" cy="160" rx="26" ry="90" /><ellipse cx="294" cy="150" rx="24" ry="95" /></g>
+                  <g fill="var(--ka-9ca3af)"><rect x="40" y="250" width="50" height="60" rx="4" /><rect x="210" y="250" width="50" height="60" rx="4" /></g>
+                  <g fill="var(--ka-1f2937)" [attr.transform]="'translate(' + shift() + ' 0)'">
                     <circle cx="200" cy="170" r="11" /><rect x="186" y="183" width="28" height="70" rx="11" />
                     <circle cx="245" cy="180" r="9" /><rect x="234" y="191" width="22" height="58" rx="9" />
                     <circle cx="130" cy="190" r="22" /><rect x="100" y="214" width="60" height="206" rx="24" />
-                    <rect x="124" y="214" width="12" height="60" fill="#e5e7eb" />
+                    <rect x="124" y="214" width="12" height="60" fill="var(--ka-e5e7eb)" />
                   </g>
-                  <rect [attr.x]="104 + shift()" y="162" width="52" height="58" fill="none" stroke="#22c55e" stroke-width="2.5" />
-                  <rect [attr.x]="186 + shift()" y="155" width="28" height="30" fill="none" stroke="#22c55e" stroke-width="2" />
+                  <rect [attr.x]="104 + shift()" y="162" width="52" height="58" fill="none" stroke="var(--kl-22c55e)" stroke-width="2.5" />
+                  <rect [attr.x]="186 + shift()" y="155" width="28" height="30" fill="none" stroke="var(--kl-22c55e)" stroke-width="2" />
                 </svg>
                 @if (focus(); as f) {
                   <div class="recog">
@@ -213,7 +213,7 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
               </div>
               <div class="map" (click)="sel.set(null)">
                 <svg viewBox="0 0 420 200" [style.transform]="'scale(' + zoom() + ')'">
-                  <rect width="420" height="200" fill="#f1f2f6" />
+                  <rect width="420" height="200" fill="var(--ka-f1f2f6)" />
                   <g class="walls"><rect x="5" y="5" width="410" height="190" /><path d="M5 60h410M5 140h410M70 5v55M140 5v55M210 5v55M280 5v55M350 5v55M80 140v55M160 140v55M240 140v55M320 140v55M100 80h80v40h-80zM250 80h90v40h-90z" /></g>
                   @for (d of dots(); track d.id) {
                     <circle class="dot" [attr.cx]="d.x" [attr.cy]="d.y" [attr.r]="sel()?.id === d.id ? 8 : 5.5" [attr.fill]="d.color" (click)="$event.stopPropagation(); sel.set(d)"><title>{{ d.name }}</title></circle>
@@ -291,7 +291,7 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
             </div>
             <div class="map big" (click)="sel.set(null)">
               <svg viewBox="0 0 420 200">
-                <rect width="420" height="200" fill="#f1f2f6" />
+                <rect width="420" height="200" fill="var(--ka-f1f2f6)" />
                 <g class="walls"><rect x="5" y="5" width="410" height="190" /><path d="M5 60h410M5 140h410M70 5v55M140 5v55M210 5v55M280 5v55M350 5v55M80 140v55M160 140v55M240 140v55M320 140v55M100 80h80v40h-80zM250 80h90v40h-90z" /></g>
                 @for (d of dots(); track d.id) {
                   <circle class="dot" [attr.cx]="d.x" [attr.cy]="d.y" [attr.r]="sel()?.id === d.id ? 6 : 4" [attr.fill]="d.color" (click)="$event.stopPropagation(); sel.set(d)"><title>{{ d.name }}</title></circle>
@@ -322,12 +322,12 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
     .filterbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px; margin-bottom: 12px; }
     .filterbar .select { min-width: 128px; }
     .grow { flex: 1 1 180px; } .grow input { width: 100%; }
-    .live-btn.off { background: #9ca3af; box-shadow: none; }
+    .live-btn.off { background: var(--kb-9ca3af); box-shadow: none; }
     .views { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .views button { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border: 0; background: #fff; font-size: 12.5px; cursor: pointer; color: #3b3f5c; }
+    .views button { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border: 0; background: var(--kb-ffffff); font-size: 12.5px; cursor: pointer; color: var(--kf-3b3f5c); }
     .views button + button { border-left: 1px solid var(--border); }
     .views button.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
-    .mini { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 8px; background: #fff; display: grid; place-items: center; cursor: pointer; }
+    .mini { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; }
     .select.sm { padding: 5px 26px 5px 9px; font-size: 11.5px; }
 
     .lam { display: grid; grid-template-columns: 1.05fr 1fr 0.95fr; gap: 12px; }
@@ -336,32 +336,32 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
     @media (max-width: 860px) { .lam { grid-template-columns: 1fr; } .status-card { grid-column: auto; } }
 
     .events { list-style: none; margin: 0; padding: 0; }
-    .ev { display: grid; grid-template-columns: 22px 38px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; cursor: pointer; animation: rowin .5s ease; }
-    .ev:last-child { border-bottom: 0; } .ev:hover { background: #faf8ff; }
-    @keyframes rowin { from { background: #ecfdf5; } }
-    .ev-ic { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid #c4b5fd; color: var(--primary); display: grid; place-items: center; }
+    .ev { display: grid; grid-template-columns: 22px 38px 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; animation: rowin .5s ease; }
+    .ev:last-child { border-bottom: 0; } .ev:hover { background: var(--kb-faf8ff); }
+    @keyframes rowin { from { background: var(--kb-ecfdf5); } }
+    .ev-ic { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--kl-c4b5fd); color: var(--primary); display: grid; place-items: center; }
     .ev .dt-av { width: 38px; height: 38px; }
     .ev-body { display: flex; flex-direction: column; min-width: 0; font-size: 11.5px; line-height: 1.35; }
-    .ev-body b { font-size: 12.5px; } .ev-body span { color: #4b4f6b; }
+    .ev-body b { font-size: 12.5px; } .ev-body span { color: var(--kf-4b4f6b); }
     .ev-body small { display: flex; align-items: center; gap: 3px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ev time { font-size: 11.5px; color: #4b4f6b; align-self: start; padding-top: 2px; }
-    .pill { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11.5px; background: #dcfce7; color: #15803d; white-space: nowrap; }
-    .pill.late { background: #ffedd5; color: #c2410c; } .pill.out { background: #e0e7ff; color: #4338ca; }
+    .ev time { font-size: 11.5px; color: var(--kf-4b4f6b); align-self: start; padding-top: 2px; }
+    .pill { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11.5px; background: var(--kb-dcfce7); color: var(--kf-15803d); white-space: nowrap; }
+    .pill.late { background: var(--kb-ffedd5); color: var(--kf-c2410c); } .pill.out { background: var(--kb-e0e7ff); color: var(--kf-4338ca); }
 
     .cam-wrap { display: grid; grid-template-columns: 1fr 120px; gap: 10px; }
     .feed { position: relative; border-radius: 8px; overflow: hidden; min-height: 360px; }
     .feed svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .recog { position: absolute; left: 12%; top: 45%; display: grid; grid-template-columns: 36px 1fr; gap: 4px 10px; padding: 10px 12px; border-radius: 8px; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,.2); font-size: 11.5px; min-width: 160px; animation: rowin .4s; }
-    .recog div { display: flex; flex-direction: column; } .recog b { font-size: 12.5px; } .recog span { color: #4b4f6b; }
-    .recog-foot { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 2px; padding-top: 6px; border-top: 1px solid #f0f1f6; }
-    .rec { position: absolute; top: 10px; left: 10px; display: flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,.55); color: #fff; font-size: 10.5px; font-weight: 700; }
-    .rec i { width: 7px; height: 7px; border-radius: 50%; background: #ef4444; animation: blink 1s infinite; }
+    .recog { position: absolute; left: 12%; top: 45%; display: grid; grid-template-columns: 36px 1fr; gap: 4px 10px; padding: 10px 12px; border-radius: 8px; background: var(--kb-ffffff); box-shadow: 0 6px 20px rgba(0,0,0,.2); font-size: 11.5px; min-width: 160px; animation: rowin .4s; }
+    .recog div { display: flex; flex-direction: column; } .recog b { font-size: 12.5px; } .recog span { color: var(--kf-4b4f6b); }
+    .recog-foot { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 2px; padding-top: 6px; border-top: 1px solid var(--kl-f0f1f6); }
+    .rec { position: absolute; top: 10px; left: 10px; display: flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,0,0,.55); color: var(--kf-ffffff); font-size: 10.5px; font-weight: 700; }
+    .rec i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-ef4444); animation: blink 1s infinite; }
     @keyframes blink { 50% { opacity: .2; } }
     .thumbs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
     .thumbs li { display: flex; flex-direction: column; gap: 4px; padding: 6px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 11px; }
-    .thumbs li.on { border-color: var(--primary); background: #faf8ff; }
+    .thumbs li.on { border-color: var(--primary); background: var(--kb-faf8ff); }
     .thumbs li div { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; } .thumbs small { color: var(--muted); }
-    .thumb { height: 46px; border-radius: 6px; display: grid; place-items: center; color: #fff; font-weight: 700; }
+    .thumb { height: 46px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); font-weight: 700; }
 
     .status-box { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .ring-wrap { position: relative; } .ring-wrap ::ng-deep .donut-mid { display: none; }
@@ -374,28 +374,28 @@ const LEGEND: [string, string][] = [['Present', '#22c55e'], ['Late', '#f59e0b'],
 
     .map-box { display: flex; gap: 8px; }
     .floor-col { display: flex; flex-direction: column; gap: 5px; }
-    .floor-col button { width: 30px; height: 28px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font-size: 11.5px; cursor: pointer; }
-    .floor-col button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .floor-col button { width: 30px; height: 28px; border: 1px solid var(--border); border-radius: 6px; background: var(--kb-ffffff); font-size: 11.5px; cursor: pointer; }
+    .floor-col button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .map { position: relative; flex: 1; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; aspect-ratio: 420 / 200; }
     .map svg { width: 100%; height: 100%; display: block; transition: transform .3s; }
-    .walls { fill: none; stroke: #b4b9c6; stroke-width: 2; }
-    .dot { stroke: #fff; stroke-width: 1.5; cursor: pointer; transition: cx 2.4s linear, cy 2.4s linear; }
-    .tip { position: absolute; transform: translate(12px, -50%); display: flex; gap: 8px; padding: 8px 10px; background: #fff; border-radius: 8px; box-shadow: 0 6px 18px rgba(20,20,60,.18); font-size: 11px; z-index: 2; white-space: nowrap; }
+    .walls { fill: none; stroke: var(--kl-b4b9c6); stroke-width: 2; }
+    .dot { stroke: var(--kl-ffffff); stroke-width: 1.5; cursor: pointer; transition: cx 2.4s linear, cy 2.4s linear; }
+    .tip { position: absolute; transform: translate(12px, -50%); display: flex; gap: 8px; padding: 8px 10px; background: var(--kb-ffffff); border-radius: 8px; box-shadow: 0 6px 18px rgba(20,20,60,.18); font-size: 11px; z-index: 2; white-space: nowrap; }
     .tip div { display: flex; flex-direction: column; } .tip small { color: var(--muted); }
     .zoom { position: absolute; right: 8px; top: 8px; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-    .zoom button { width: 26px; height: 26px; border: 0; background: #fff; cursor: pointer; } .zoom button + button { border-top: 1px solid var(--border); }
-    .map-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 11.5px; color: #3b3f5c; }
+    .zoom button { width: 26px; height: 26px; border: 0; background: var(--kb-ffffff); cursor: pointer; } .zoom button + button { border-top: 1px solid var(--border); }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 11.5px; color: var(--kf-3b3f5c); }
     .map-legend span { display: inline-flex; align-items: center; gap: 5px; } .map-legend i { width: 10px; height: 10px; border-radius: 50%; }
 
     .agg { font-size: 12px; } .agg th, .agg td { padding: 7px 6px; }
-    .pct { display: inline-block; width: 46px; } .bar { display: inline-block; width: 50px; height: 8px; border-radius: 2px; background: #eef0f6; vertical-align: middle; overflow: hidden; }
-    .bar i { display: block; height: 100%; background: #7c3aed; }
+    .pct { display: inline-block; width: 46px; } .bar { display: inline-block; width: 50px; height: 8px; border-radius: 2px; background: var(--kb-eef0f6); vertical-align: middle; overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--kb-7c3aed); }
 
     .map-view { display: grid; grid-template-columns: 1fr 280px; gap: 12px; }
     .map.big { aspect-ratio: 420 / 200; }
     .occupants { list-style: none; margin: 0; padding: 0; max-height: 520px; overflow: auto; font-size: 12.5px; }
     .occupants li { display: grid; grid-template-columns: 10px 1fr; gap: 0 8px; padding: 6px 4px; cursor: pointer; border-radius: 6px; }
-    .occupants li.on, .occupants li:hover { background: #faf8ff; }
+    .occupants li.on, .occupants li:hover { background: var(--kb-faf8ff); }
     .occupants i { width: 9px; height: 9px; border-radius: 50%; margin-top: 4px; grid-row: span 2; } .occupants small { color: var(--muted); }
     @media (max-width: 900px) { .map-view { grid-template-columns: 1fr; } .cam-wrap { grid-template-columns: 1fr; } }
   `,
@@ -497,10 +497,10 @@ export class LiveMonitor {
     const expected = [120, 760, 2150, 2380, 900, 260, 180, 160, 420, 260, 180, 140, 90, 60, 40];
     const nowH = new Date().getHours();
     return [
-      { name: 'Expected', color: '#ddd6fe', values: expected.map((v) => Math.round(v * f)) },
+      { name: 'Expected', color: 'var(--ka-ddd6fe)', values: expected.map((v) => Math.round(v * f)) },
       {
         name: 'Present',
-        color: '#7c3aed',
+        color: 'var(--ka-7c3aed)',
         values: expected.map((v, i) => (this.trendDay() === 'Today' && i + 6 > nowH ? 0 : Math.round(v * f * (0.78 + r() * 0.2)))),
       },
     ];
@@ -540,8 +540,8 @@ export class LiveMonitor {
       const y = i === 1 ? 100 : 15 + r() * 170;
       return { id: p.id, name: p.name, initials: p.initials, avatar: p.avatar, dept: p.dept, floor: fl, x, y, color: p.status === 'Late' ? STATUS_COLOR.Late : STATUS_COLOR.Present, time: ampm(p.checkIn) };
     });
-    extra.forEach((e, i) => all.push({ id: `X${i}`, name: e.name, initials: e.name.split(' ').map((x) => x[0]).join(''), avatar: '#64748b', dept: e.kind, floor: FLOORS[i % 4], x: 60 + i * 80, y: 100, color: e.kind === 'Visitor' ? '#8b5cf6' : '#3b82f6', time: 'on site' }));
-    all.push({ id: 'ABS', name: 'Badge without check-in', initials: '!', avatar: '#ef4444', dept: 'Security', floor: 'F1', x: 230, y: 70, color: STATUS_COLOR.Absent, time: 'flagged 10:20' });
+    extra.forEach((e, i) => all.push({ id: `X${i}`, name: e.name, initials: e.name.split(' ').map((x) => x[0]).join(''), avatar: 'var(--ka-64748b)', dept: e.kind, floor: FLOORS[i % 4], x: 60 + i * 80, y: 100, color: e.kind === 'Visitor' ? 'var(--ka-8b5cf6)' : 'var(--ka-3b82f6)', time: 'on site' }));
+    all.push({ id: 'ABS', name: 'Badge without check-in', initials: '!', avatar: 'var(--ka-ef4444)', dept: 'Security', floor: 'F1', x: 230, y: 70, color: STATUS_COLOR.Absent, time: 'flagged 10:20' });
     return all
       .filter((d) => f === 'All' || d.floor === f)
       .map((d, i) => (t && d.id !== this.sel()?.id ? { ...d, x: d.x + Math.sin(t / 3 + i) * 4, y: d.y + Math.cos(t / 4 + i) * 3 } : d));

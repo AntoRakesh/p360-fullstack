@@ -23,11 +23,11 @@ const companyNames = COMPANIES.map((c) => c.name);
       <button class="btn-outline" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Contractor Workers" [value]="list().length.toLocaleString()" icon="hard-hat" color="#fb923c" change="6%" />
-      <app-kpi label="On Site Now" [value]="cnt('onSite').toLocaleString()" icon="map-pin" color="#22c55e" />
-      <app-kpi label="Induction Pending" [value]="ind('Pending')" icon="graduation-cap" color="#f59e0b" />
-      <app-kpi label="Non-compliant" [value]="comp('Non-compliant')" icon="ban" color="#ef4444" sub="access blocked" />
-      <app-kpi label="Permits Expiring (30 d)" [value]="comp('Expiring')" icon="clock" color="#8b5cf6" />
+      <app-kpi label="Contractor Workers" [value]="list().length.toLocaleString()" icon="hard-hat" color="var(--ka-fb923c)" change="6%" />
+      <app-kpi label="On Site Now" [value]="cnt('onSite').toLocaleString()" icon="map-pin" color="var(--ka-22c55e)" />
+      <app-kpi label="Induction Pending" [value]="ind('Pending')" icon="graduation-cap" color="var(--ka-f59e0b)" />
+      <app-kpi label="Non-compliant" [value]="comp('Non-compliant')" icon="ban" color="var(--ka-ef4444)" sub="access blocked" />
+      <app-kpi label="Permits Expiring (30 d)" [value]="comp('Expiring')" icon="clock" color="var(--ka-8b5cf6)" />
     </section>
     <div class="card">
       <app-data-table [rows]="rows()" [columns]="cols" [filters]="filters" [actions]="actions" [selectable]="true" [bulkActions]="bulk" noun="workers" [pageSize]="15"
@@ -116,10 +116,10 @@ interface Contract {
   template: `
     <app-page-head title="Contract Management" parent="Contractor &amp; Vendor Workforce" parentLink="/contractor-vendor" subtitle="Contracts, values, SLAs and renewals for every contractor company." />
     <section class="kpi-row">
-      <app-kpi label="Active Contracts" [value]="cnt('Active')" icon="file-text" color="#8b5cf6" />
-      <app-kpi label="Total Value" [value]="'AED ' + total()" icon="trending-up" color="#22c55e" />
-      <app-kpi label="Expiring in 90 days" [value]="expiring()" icon="clock" color="#f59e0b" />
-      <app-kpi label="Avg. SLA Achievement" [value]="avgSla() + '%'" icon="activity" color="#3b82f6" />
+      <app-kpi label="Active Contracts" [value]="cnt('Active')" icon="file-text" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Total Value" [value]="'AED ' + total()" icon="trending-up" color="var(--ka-22c55e)" />
+      <app-kpi label="Expiring in 90 days" [value]="expiring()" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Avg. SLA Achievement" [value]="avgSla() + '%'" icon="activity" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -167,8 +167,8 @@ export class ContractManagement {
   protected readonly total = computed(() => `${(this.list().filter((c) => c.status !== 'Expired').reduce((a, c) => a + c.value, 0) / 1e6).toFixed(1)}M`);
   protected readonly expiring = computed(() => this.cnt('Expiring'));
   protected readonly avgSla = computed(() => Math.round(this.list().filter((c) => c.sla).reduce((a, c) => a + c.sla, 0) / this.list().filter((c) => c.sla).length));
-  protected readonly pipeline = computed(() => [{ name: 'Contracts ending', color: '#8b5cf6', values: this.quarters.map((_, q) => this.list().filter((c) => c.left >= q * 91 && c.left < (q + 1) * 91).length) }]);
-  protected readonly byType = computed(() => ['Annual', 'Multi-Year', 'Project Based', 'Call-off'].map((t, i) => ({ label: t, value: this.list().filter((c) => c.type === t).length, color: ['#7c3aed', '#3b82f6', '#f97316', '#22c55e'][i] })));
+  protected readonly pipeline = computed(() => [{ name: 'Contracts ending', color: 'var(--ka-8b5cf6)', values: this.quarters.map((_, q) => this.list().filter((c) => c.left >= q * 91 && c.left < (q + 1) * 91).length) }]);
+  protected readonly byType = computed(() => ['Annual', 'Multi-Year', 'Project Based', 'Call-off'].map((t, i) => ({ label: t, value: this.list().filter((c) => c.type === t).length, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-f97316)', 'var(--ka-22c55e)'][i] })));
   protected cnt(s: string) {
     return this.list().filter((c) => c.status === s).length;
   }
@@ -214,7 +214,7 @@ type DocState = 'Valid' | 'Expiring' | 'Expired' | 'Missing';
                   @let s = cell(ci, di);
                   <td class="c"><button class="cell" [attr.data-s]="s" (click)="fix(ci, di)" [title]="d + ': ' + s">{{ s === 'Valid' ? '✓' : s === 'Expiring' ? '!' : s === 'Missing' ? '—' : '✕' }}</button></td>
                 }
-                <td class="num"><b [style.color]="score(ci) >= 90 ? '#16a34a' : score(ci) >= 70 ? '#d97706' : '#dc2626'">{{ score(ci) }}%</b></td>
+                <td class="num"><b [style.color]="score(ci) >= 90 ? 'var(--ka-16a34a)' : score(ci) >= 70 ? 'var(--ka-d97706)' : 'var(--ka-dc2626)'">{{ score(ci) }}%</b></td>
               </tr>
             }
           </tbody>
@@ -225,8 +225,8 @@ type DocState = 'Valid' | 'Expiring' | 'Expired' | 'Missing';
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .mx .c { text-align: center; } .cell { width: 34px; height: 28px; border: 0; border-radius: 6px; font-weight: 700; cursor: pointer; color: #fff; }
-    .cell[data-s='Valid'] { background: #22c55e; } .cell[data-s='Expiring'] { background: #f59e0b; } .cell[data-s='Expired'] { background: #ef4444; } .cell[data-s='Missing'] { background: #e5e7eb; color: #6b7280; }
+    .mx .c { text-align: center; } .cell { width: 34px; height: 28px; border: 0; border-radius: 6px; font-weight: 700; cursor: pointer; color: var(--kf-ffffff); }
+    .cell[data-s='Valid'] { background: var(--kb-22c55e); } .cell[data-s='Expiring'] { background: var(--kb-f59e0b); } .cell[data-s='Expired'] { background: var(--kb-ef4444); } .cell[data-s='Missing'] { background: var(--kb-e5e7eb); color: var(--kf-6b7280); }
     .leg { display: flex; gap: 14px; margin-top: 10px; font-size: 12px; } .leg span { display: flex; gap: 5px; align-items: center; } .leg i { width: 10px; height: 10px; border-radius: 3px; }
   `,
 })
@@ -235,7 +235,7 @@ export class DocumentCompliance {
   protected readonly companies = COMPANIES.slice(0, 24);
   protected readonly states: DocState[] = ['Valid', 'Expiring', 'Expired', 'Missing'];
   protected readonly icon: Record<DocState, string> = { Valid: 'file-check', Expiring: 'clock', Expired: 'ban', Missing: 'file-text' };
-  protected readonly color: Record<DocState, string> = { Valid: '#22c55e', Expiring: '#f59e0b', Expired: '#ef4444', Missing: '#9ca3af' };
+  protected readonly color: Record<DocState, string> = { Valid: 'var(--ka-22c55e)', Expiring: 'var(--ka-f59e0b)', Expired: 'var(--ka-ef4444)', Missing: 'var(--ka-9ca3af)' };
   protected readonly msg = signal<string | null>(null);
   protected readonly grid = signal<DocState[][]>(
     (() => {
@@ -288,10 +288,10 @@ interface Session {
   template: `
     <app-page-head title="Induction &amp; Training" parent="Contractor &amp; Vendor Workforce" parentLink="/contractor-vendor" subtitle="Site inductions and safety courses contractors must pass before working." />
     <section class="kpi-row">
-      <app-kpi label="Inducted Workers" [value]="inductedPct() + '%'" icon="graduation-cap" color="#22c55e" />
-      <app-kpi label="Awaiting Induction" [value]="pending().length" icon="clock" color="#f59e0b" />
-      <app-kpi label="Sessions This Week" [value]="sessions().length" icon="calendar-days" color="#8b5cf6" />
-      <app-kpi label="Seats Available" [value]="seats()" icon="users" color="#3b82f6" />
+      <app-kpi label="Inducted Workers" [value]="inductedPct() + '%'" icon="graduation-cap" color="var(--ka-22c55e)" />
+      <app-kpi label="Awaiting Induction" [value]="pending().length" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Sessions This Week" [value]="sessions().length" icon="calendar-days" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Seats Available" [value]="seats()" icon="users" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-7">
@@ -329,11 +329,11 @@ interface Session {
   `,
   styles: `
     .sess { display: grid; grid-template-columns: 50px 1fr 130px; gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 12.5px; }
-    .sess.on { border-color: var(--primary); background: #faf8ff; } .sess div { display: flex; flex-direction: column; } .sess small { color: var(--muted); }
+    .sess.on { border-color: var(--primary); background: var(--kb-faf8ff); } .sess div { display: flex; flex-direction: column; } .sess small { color: var(--muted); }
     .date { align-items: center; padding: 4px; border-radius: 8px; background: var(--primary-soft); color: var(--primary); } .date b { font-size: 18px; }
-    .cap span { font-size: 12px; text-align: right; } .bar { height: 6px; border-radius: 3px; background: #eef0f6; overflow: hidden; } .bar i { display: block; height: 100%; background: var(--primary); }
+    .cap span { font-size: 12px; text-align: right; } .bar { height: 6px; border-radius: 3px; background: var(--kb-eef0f6); overflow: hidden; } .bar i { display: block; height: 100%; background: var(--primary); }
     .add { display: flex; gap: 6px; margin-bottom: 10px; } .add .input { flex: 1; }
-    .att { list-style: none; margin: 0 0 10px; padding: 0; max-height: 300px; overflow: auto; font-size: 12.5px; } .att li { padding: 6px 0; border-bottom: 1px solid #f0f1f6; } .att label { display: flex; gap: 8px; align-items: center; } .att small { color: var(--muted); }
+    .att { list-style: none; margin: 0 0 10px; padding: 0; max-height: 300px; overflow: auto; font-size: 12.5px; } .att li { padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .att label { display: flex; gap: 8px; align-items: center; } .att small { color: var(--muted); }
   `,
 })
 export class InductionTraining {
@@ -361,7 +361,7 @@ export class InductionTraining {
     COMPANIES.slice(0, 12).map((c) => {
       const ws = this.workers().filter((w) => w.companyId === c.id);
       const v = ws.length ? Math.round((ws.filter((w) => w.induction === 'Completed').length / ws.length) * 100) : 0;
-      return { label: c.name, value: v, display: `${v}%`, color: v < 85 ? '#f59e0b' : '#22c55e' };
+      return { label: c.name, value: v, display: `${v}%`, color: v < 85 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' };
     }),
   );
   protected mon(d: string) {
@@ -452,7 +452,7 @@ const CHECKS = ['Risk assessment attached', 'Area barricaded', 'Gas test / isola
 })
 export class WorkPermits {
   protected readonly statuses: Permit['status'][] = ['Requested', 'Approved', 'Active', 'Suspended', 'Closed'];
-  protected readonly colors: Record<string, string> = { Requested: '#f59e0b', Approved: '#3b82f6', Active: '#22c55e', Suspended: '#ef4444', Closed: '#64748b' };
+  protected readonly colors: Record<string, string> = { Requested: 'var(--ka-f59e0b)', Approved: 'var(--ka-3b82f6)', Active: 'var(--ka-22c55e)', Suspended: 'var(--ka-ef4444)', Closed: 'var(--ka-64748b)' };
   protected readonly checks = CHECKS;
   protected readonly msg = signal<string | null>(null);
   protected readonly list = signal<Permit[]>(
@@ -516,10 +516,10 @@ export class WorkPermits {
   template: `
     <app-page-head title="On-Site Attendance" parent="Contractor &amp; Vendor Workforce" parentLink="/contractor-vendor" subtitle="Who from each contractor company is on site today, against what was planned." />
     <section class="kpi-row">
-      <app-kpi label="On Site Now" [value]="onSite().toLocaleString()" icon="users" color="#22c55e" [sub]="pct() + '% of active workers'" />
-      <app-kpi label="Planned Today" [value]="planned().toLocaleString()" icon="calendar-days" color="#8b5cf6" />
-      <app-kpi label="No-shows" [value]="(planned() - onSite()).toLocaleString()" icon="ban" color="#ef4444" />
-      <app-kpi label="Billable Hours (today)" [value]="billHours()" icon="clock" color="#3b82f6" />
+      <app-kpi label="On Site Now" [value]="onSite().toLocaleString()" icon="users" color="var(--ka-22c55e)" [sub]="pct() + '% of active workers'" />
+      <app-kpi label="Planned Today" [value]="planned().toLocaleString()" icon="calendar-days" color="var(--ka-8b5cf6)" />
+      <app-kpi label="No-shows" [value]="(planned() - onSite()).toLocaleString()" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Billable Hours (today)" [value]="billHours()" icon="clock" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-7">
@@ -543,12 +543,12 @@ export class ContractorAttendance {
   protected readonly planned = computed(() => Math.round(WORKERS.filter((w) => w.status === 'Active').length * 0.78));
   protected readonly billHours = computed(() => Math.round(this.onSite() * 7.6).toLocaleString());
   protected readonly pct = computed(() => ((this.onSite() / WORKERS.filter((w) => w.status === 'Active').length) * 100).toFixed(1));
-  protected readonly arrivals = computed(() => [{ name: 'Arrivals', color: '#f97316', values: this.hours.map((h) => this.present().filter((w) => w.checkIn.startsWith(h)).length) }]);
+  protected readonly arrivals = computed(() => [{ name: 'Arrivals', color: 'var(--ka-f97316)', values: this.hours.map((h) => this.present().filter((w) => w.checkIn.startsWith(h)).length) }]);
   protected readonly byCompany = computed(() =>
     COMPANIES.slice(0, 9).map((c) => {
       const plan = Math.round(c.active * 0.78);
       const here = WORKERS.filter((w) => w.companyId === c.id && w.onSite).length;
-      return { label: c.name, value: plan ? Math.min(100, Math.round((here / plan) * 100)) : 0, display: `${here}/${plan}`, color: here >= plan * 0.9 ? '#22c55e' : '#f59e0b' };
+      return { label: c.name, value: plan ? Math.min(100, Math.round((here / plan) * 100)) : 0, display: `${here}/${plan}`, color: here >= plan * 0.9 ? 'var(--ka-22c55e)' : 'var(--ka-f59e0b)' };
     }),
   );
   protected readonly cols: Col[] = [

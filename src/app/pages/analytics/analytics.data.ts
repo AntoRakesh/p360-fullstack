@@ -41,14 +41,14 @@ export interface AZone {
   camera: string;
 }
 export const ZONE_SEED: AZone[] = [
-  { id: 'Z1', name: 'Main Entrance', type: 'Entrance', floor: 'Ground', entries: 1824, exits: 1740, occ: 46, capacity: 80, threshold: 85, dwell: 72, conv: 0, color: '#7c3aed', x: 30, y: 196, w: 220, h: 116, trend: [12, 14, 13, 16, 15, 18, 17, 21, 19, 22], camera: 'CAM-01' },
-  { id: 'Z2', name: 'Food Court', type: 'Dining', floor: 'Level 1', entries: 1256, exits: 1190, occ: 112, capacity: 140, threshold: 85, dwell: 108, conv: 46.2, color: '#f97316', x: 700, y: 20, w: 270, h: 150, trend: [10, 12, 11, 14, 13, 12, 16, 15, 18, 17], camera: 'CAM-04' },
-  { id: 'Z3', name: 'Retail Zone', type: 'Retail', floor: 'Ground', entries: 1018, exits: 980, occ: 98, capacity: 130, threshold: 85, dwell: 86, conv: 22.4, color: '#3b82f6', x: 30, y: 20, w: 300, h: 150, trend: [9, 11, 10, 12, 14, 12, 15, 14, 13, 16], camera: 'CAM-02' },
-  { id: 'Z4', name: 'Parking Entry', type: 'Parking', floor: 'Basement', entries: 680, exits: 640, occ: 18, capacity: 40, threshold: 90, dwell: 42, conv: 0, color: '#22c55e', x: 820, y: 196, w: 72, h: 116, trend: [8, 10, 9, 11, 10, 13, 11, 12, 14, 13], camera: 'CAM-06' },
-  { id: 'Z5', name: 'Parking Exit', type: 'Parking', floor: 'Basement', entries: 602, exits: 580, occ: 12, capacity: 30, threshold: 90, dwell: 38, conv: 0, color: '#14b8a6', x: 898, y: 196, w: 72, h: 116, trend: [11, 9, 12, 10, 13, 11, 10, 12, 11, 14], camera: 'CAM-07' },
-  { id: 'Z6', name: 'Event Area', type: 'Event', floor: 'Ground', entries: 420, exits: 392, occ: 54, capacity: 70, threshold: 80, dwell: 55, conv: 12.8, color: '#ec4899', x: 400, y: 196, w: 250, h: 116, trend: [6, 8, 7, 9, 12, 10, 9, 13, 12, 15], camera: 'CAM-05' },
-  { id: 'Z7', name: 'Cinema', type: 'Leisure', floor: 'Level 2', entries: 348, exits: 310, occ: 56, capacity: 70, threshold: 90, dwell: 130, conv: 61.5, color: '#8b5cf6', x: 360, y: 20, w: 310, h: 150, trend: [5, 6, 8, 7, 9, 8, 10, 12, 11, 13], camera: 'CAM-03' },
-  { id: 'Z8', name: 'Kids Zone', type: 'Leisure', floor: 'Level 1', entries: 272, exits: 230, occ: 32, capacity: 40, threshold: 85, dwell: 64, conv: 18.9, color: '#eab308', x: 680, y: 196, w: 120, h: 116, trend: [4, 6, 5, 7, 6, 8, 7, 9, 8, 10], camera: 'CAM-08' },
+  { id: 'Z1', name: 'Main Entrance', type: 'Entrance', floor: 'Ground', entries: 1824, exits: 1740, occ: 46, capacity: 80, threshold: 85, dwell: 72, conv: 0, color: 'var(--ka-7c3aed)', x: 30, y: 196, w: 220, h: 116, trend: [12, 14, 13, 16, 15, 18, 17, 21, 19, 22], camera: 'CAM-01' },
+  { id: 'Z2', name: 'Food Court', type: 'Dining', floor: 'Level 1', entries: 1256, exits: 1190, occ: 112, capacity: 140, threshold: 85, dwell: 108, conv: 46.2, color: 'var(--ka-f97316)', x: 700, y: 20, w: 270, h: 150, trend: [10, 12, 11, 14, 13, 12, 16, 15, 18, 17], camera: 'CAM-04' },
+  { id: 'Z3', name: 'Retail Zone', type: 'Retail', floor: 'Ground', entries: 1018, exits: 980, occ: 98, capacity: 130, threshold: 85, dwell: 86, conv: 22.4, color: 'var(--ka-3b82f6)', x: 30, y: 20, w: 300, h: 150, trend: [9, 11, 10, 12, 14, 12, 15, 14, 13, 16], camera: 'CAM-02' },
+  { id: 'Z4', name: 'Parking Entry', type: 'Parking', floor: 'Basement', entries: 680, exits: 640, occ: 18, capacity: 40, threshold: 90, dwell: 42, conv: 0, color: 'var(--ka-22c55e)', x: 820, y: 196, w: 72, h: 116, trend: [8, 10, 9, 11, 10, 13, 11, 12, 14, 13], camera: 'CAM-06' },
+  { id: 'Z5', name: 'Parking Exit', type: 'Parking', floor: 'Basement', entries: 602, exits: 580, occ: 12, capacity: 30, threshold: 90, dwell: 38, conv: 0, color: 'var(--ka-14b8a6)', x: 898, y: 196, w: 72, h: 116, trend: [11, 9, 12, 10, 13, 11, 10, 12, 11, 14], camera: 'CAM-07' },
+  { id: 'Z6', name: 'Event Area', type: 'Event', floor: 'Ground', entries: 420, exits: 392, occ: 54, capacity: 70, threshold: 80, dwell: 55, conv: 12.8, color: 'var(--ka-ec4899)', x: 400, y: 196, w: 250, h: 116, trend: [6, 8, 7, 9, 12, 10, 9, 13, 12, 15], camera: 'CAM-05' },
+  { id: 'Z7', name: 'Cinema', type: 'Leisure', floor: 'Level 2', entries: 348, exits: 310, occ: 56, capacity: 70, threshold: 90, dwell: 130, conv: 61.5, color: 'var(--ka-8b5cf6)', x: 360, y: 20, w: 310, h: 150, trend: [5, 6, 8, 7, 9, 8, 10, 12, 11, 13], camera: 'CAM-03' },
+  { id: 'Z8', name: 'Kids Zone', type: 'Leisure', floor: 'Level 1', entries: 272, exits: 230, occ: 32, capacity: 40, threshold: 85, dwell: 64, conv: 18.9, color: 'var(--ka-eab308)', x: 680, y: 196, w: 120, h: 116, trend: [4, 6, 5, 7, 6, 8, 7, 9, 8, 10], camera: 'CAM-08' },
 ];
 
 export const TREND_DAYS = ['8 Oct', '9 Oct', '10 Oct', '11 Oct', '12 Oct', '13 Oct', '14 Oct'];
@@ -60,11 +60,11 @@ export const PEAK_TODAY = [120, 210, 320, 430, 560, 700, 880, 1120, 1460, 1842, 
 export const PEAK_LAST = [90, 160, 260, 360, 470, 600, 760, 960, 1240, 1560, 1420, 1210, 1020, 820, 660, 540];
 
 export const VISITOR_TYPES = [
-  { label: 'Customers', value: 8488, color: '#7c3aed' },
-  { label: 'Staff', value: 1747, color: '#3b82f6' },
-  { label: 'Contractors', value: 999, color: '#22c55e' },
-  { label: 'Visitors', value: 749, color: '#f59e0b' },
-  { label: 'Others', value: 499, color: '#ef4444' },
+  { label: 'Customers', value: 8488, color: 'var(--ka-7c3aed)' },
+  { label: 'Staff', value: 1747, color: 'var(--ka-3b82f6)' },
+  { label: 'Contractors', value: 999, color: 'var(--ka-22c55e)' },
+  { label: 'Visitors', value: 749, color: 'var(--ka-f59e0b)' },
+  { label: 'Others', value: 499, color: 'var(--ka-ef4444)' },
 ];
 
 export type DevType = '3D People Counter' | 'AI Camera' | 'Thermal Sensor' | 'Wi-Fi Probe' | 'Queue Sensor';
@@ -160,7 +160,7 @@ export interface AMember { id: string; name: string; initials: string; color: st
 const FIRST = ['Aisha', 'Omar', 'Priya', 'Daniel', 'Lina', 'Rahul', 'Sara', 'Hassan', 'Maria', 'Yusuf', 'Chen', 'Nadia', 'Ahmed', 'Fatima', 'Leo', 'Zara', 'Imran', 'Sofia', 'Karim', 'Mei', 'Tariq', 'Elena', 'Bilal', 'Hana'];
 const LAST = ['Khan', 'Farooq', 'Nair', 'Costa', 'Haddad', 'Mehta', 'Ali', 'Javed', 'Lopez', 'Rahman', 'Wei', 'Saeed'];
 const SEGS: AMember['segment'][] = ['VIP', 'Loyal', 'Regular', 'Regular', 'At Risk', 'New', 'Loyal', 'Regular'];
-const COLORS = ['#7c3aed', '#3b82f6', '#22c55e', '#f97316', '#ec4899', '#14b8a6', '#eab308', '#ef4444'];
+const COLORS = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ec4899)', 'var(--ka-14b8a6)', 'var(--ka-eab308)', 'var(--ka-ef4444)'];
 export const MEMBERS: AMember[] = Array.from({ length: 48 }, (_, i) => {
   const name = `${FIRST[i % FIRST.length]} ${LAST[(i * 5) % LAST.length]}`;
   const segment = SEGS[i % SEGS.length];

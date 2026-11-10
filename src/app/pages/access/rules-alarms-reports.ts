@@ -73,10 +73,10 @@ interface Violation {
     .ic { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); }
     .r-body { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 12px; }
     .select.sm { padding: 5px 26px 5px 9px; font-size: 11.5px; } .v { display: flex; align-items: center; gap: 6px; } .n { width: 64px; padding: 4px 6px; }
-    .hits { color: #d97706; font-weight: 600; }
+    .hits { color: var(--kf-d97706); font-weight: 600; }
     .sw input { display: none; } .sw { cursor: pointer; }
-    .switch { position: relative; display: inline-block; width: 34px; height: 20px; border-radius: 10px; background: #d4d7e2; }
-    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
+    .switch { position: relative; display: inline-block; width: 34px; height: 20px; border-radius: 10px; background: var(--kb-d4d7e2); }
+    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: transform .15s; }
     .sw input:checked + .switch { background: var(--primary); } .sw input:checked + .switch::after { transform: translateX(14px); }
   `,
 })
@@ -153,11 +153,11 @@ const ALARM_TYPES: [string, Sev][] = [['Door Forced Open', 'Critical'], ['Door H
   template: `
     <app-page-head title="Door Alarms &amp; Tamper Events" parent="Physical Access Control" parentLink="/physical-access-control" subtitle="Forced and held doors, tamper, controller and power alarms — acknowledge and clear." />
     <section class="kpi-row">
-      <app-kpi label="Active Alarms" [value]="cnt('Active')" icon="bell" color="#ef4444" sub="unacknowledged" />
-      <app-kpi label="Acknowledged" [value]="cnt('Acknowledged')" icon="shield" color="#f59e0b" />
-      <app-kpi label="Cleared Today" [value]="cnt('Cleared')" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Critical" [value]="critical()" icon="siren" color="#dc2626" sub="forced / tamper / duress" />
-      <app-kpi label="Avg. Response" value="3m 12s" icon="clock" color="#3b82f6" />
+      <app-kpi label="Active Alarms" [value]="cnt('Active')" icon="bell" color="var(--ka-ef4444)" sub="unacknowledged" />
+      <app-kpi label="Acknowledged" [value]="cnt('Acknowledged')" icon="shield" color="var(--ka-f59e0b)" />
+      <app-kpi label="Cleared Today" [value]="cnt('Cleared')" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Critical" [value]="critical()" icon="siren" color="var(--ka-dc2626)" sub="forced / tamper / duress" />
+      <app-kpi label="Avg. Response" value="3m 12s" icon="clock" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -182,9 +182,9 @@ export class DoorAlarms {
   protected readonly byHour = (() => {
     const r = rng(5);
     return [
-      { name: 'Held open', color: '#f59e0b', values: this.hourLabels.map((_, h) => Math.round((h >= 7 && h <= 19 ? 3 : 0.5) * (0.5 + r()))) },
-      { name: 'Forced / tamper', color: '#ef4444', values: this.hourLabels.map((_, h) => (r() < (h < 6 ? 0.25 : 0.1) ? 1 : 0)) },
-      { name: 'Device', color: '#8b5cf6', values: this.hourLabels.map(() => (r() < 0.2 ? 1 : 0)) },
+      { name: 'Held open', color: 'var(--ka-f59e0b)', values: this.hourLabels.map((_, h) => Math.round((h >= 7 && h <= 19 ? 3 : 0.5) * (0.5 + r()))) },
+      { name: 'Forced / tamper', color: 'var(--ka-ef4444)', values: this.hourLabels.map((_, h) => (r() < (h < 6 ? 0.25 : 0.1) ? 1 : 0)) },
+      { name: 'Device', color: 'var(--ka-8b5cf6)', values: this.hourLabels.map(() => (r() < 0.2 ? 1 : 0)) },
     ];
   })();
   protected readonly toast = signal<string | null>(null);
@@ -236,7 +236,7 @@ export class DoorAlarms {
   protected readonly byDoor = computed(() => {
     const m = new Map<string, number>();
     this.alarms().forEach((a) => m.set(a.door, (m.get(a.door) ?? 0) + 1));
-    return [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([label, value]) => ({ label, value, display: String(value), color: '#ef4444' }));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([label, value]) => ({ label, value, display: String(value), color: 'var(--ka-ef4444)' }));
   });
   protected cnt(s: string) {
     return this.alarms().filter((a) => a.status === s).length;
@@ -264,10 +264,10 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   template: `
     <app-page-head title="Access Reports &amp; Analytics" parent="Physical Access Control" parentLink="/physical-access-control" subtitle="Traffic patterns, denials, door utilization and audit reports." />
     <section class="kpi-row">
-      <app-kpi label="Events (7 days)" [value]="HISTORY.length.toLocaleString()" icon="door-open" color="#8b5cf6" />
-      <app-kpi label="Denial Rate" [value]="denyRate() + '%'" icon="ban" color="#ef4444" />
-      <app-kpi label="Face Recognition Share" [value]="faceShare() + '%'" icon="user-check" color="#22c55e" change="6%" />
-      <app-kpi label="Busiest Hour" value="08:00–09:00" icon="clock" color="#3b82f6" />
+      <app-kpi label="Events (7 days)" [value]="HISTORY.length.toLocaleString()" icon="door-open" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Denial Rate" [value]="denyRate() + '%'" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Face Recognition Share" [value]="faceShare() + '%'" icon="user-check" color="var(--ka-22c55e)" change="6%" />
+      <app-kpi label="Busiest Hour" value="08:00–09:00" icon="clock" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-7">
@@ -326,7 +326,7 @@ export class AccessReports {
     const max = Math.max(...m.flat(), 1);
     return m.map((row) => row.map((v) => Math.round((v / max) * 100)));
   });
-  protected readonly reasons = computed(() => DENY_REASONS.map((r, i) => ({ label: r, value: HISTORY.filter((e) => e.reason === r).length, color: ['#ef4444', '#f97316', '#f59e0b', '#8b5cf6', '#64748b'][i] })));
+  protected readonly reasons = computed(() => DENY_REASONS.map((r, i) => ({ label: r, value: HISTORY.filter((e) => e.reason === r).length, color: ['var(--ka-ef4444)', 'var(--ka-f97316)', 'var(--ka-f59e0b)', 'var(--ka-8b5cf6)', 'var(--ka-64748b)'][i] })));
   protected readonly topDenied = computed(() => {
     const m = new Map<string, { n: number; reasons: Record<string, number> }>();
     HISTORY.filter((e) => e.result === 'Denied').forEach((e) => {

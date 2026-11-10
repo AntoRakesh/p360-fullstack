@@ -34,11 +34,11 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Assessments in Bank" [value]="store.quizzes().length" icon="training-quiz" color="#7c3aed" [sub]="qCount() + ' questions'" />
-      <app-kpi label="Attempts (40 days)" [value]="store.attempts().length" icon="activity" color="#3b82f6" change="12%" sub="vs. previous period" />
-      <app-kpi label="Average Score" [value]="k().avg + '%'" icon="training-target" color="#f59e0b" [sub]="'median ' + k().median + '%'" />
-      <app-kpi label="First-time Pass Rate" [value]="k().pass + '%'" icon="training-check" color="#22c55e" [sub]="k().failed + ' failed attempts'" subColor="#dc2626" />
-      <app-kpi label="Practical Evaluations Due" [value]="k().pending" icon="hard-hat" color="#ef4444" [sub]="k().week + ' due this week'" />
+      <app-kpi label="Assessments in Bank" [value]="store.quizzes().length" icon="training-quiz" color="var(--ka-7c3aed)" [sub]="qCount() + ' questions'" />
+      <app-kpi label="Attempts (40 days)" [value]="store.attempts().length" icon="activity" color="var(--ka-3b82f6)" change="12%" sub="vs. previous period" />
+      <app-kpi label="Average Score" [value]="k().avg + '%'" icon="training-target" color="var(--ka-f59e0b)" [sub]="'median ' + k().median + '%'" />
+      <app-kpi label="First-time Pass Rate" [value]="k().pass + '%'" icon="training-check" color="var(--ka-22c55e)" [sub]="k().failed + ' failed attempts'" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Practical Evaluations Due" [value]="k().pending" icon="hard-hat" color="var(--ka-ef4444)" [sub]="k().week + ' due this week'" />
     </section>
 
     <div class="tabs main">
@@ -58,9 +58,9 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
                 @let sk = skill(s.quiz.skillId);
                 <article class="card qc" [class.on]="focus() === s.quiz.id" (click)="focus.set(focus() === s.quiz.id ? null : s.quiz.id)">
                   <div class="qh">
-                    <span class="qi" [style.background]="sk.color + '1f'" [style.color]="sk.color"><app-icon [name]="sk.icon" [size]="18" /></span>
+                    <span class="qi" [style.background]="'color-mix(in srgb, ' + sk.color + ' 12%, transparent)'" [style.color]="sk.color"><app-icon [name]="sk.icon" [size]="18" /></span>
                     <div><b>{{ s.quiz.title }}</b><small>{{ s.quiz.id }} · {{ sk.name }} · {{ course(s.quiz.courseId)?.title }}</small></div>
-                    <app-ring [value]="s.passRate" [size]="46" [color]="s.passRate >= 75 ? '#22c55e' : s.passRate >= 60 ? '#f59e0b' : '#ef4444'" />
+                    <app-ring [value]="s.passRate" [size]="46" [color]="s.passRate >= 75 ? 'var(--ka-22c55e)' : s.passRate >= 60 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'" />
                   </div>
                   <div class="qm">
                     <span><app-icon name="training-quiz" [size]="13" />{{ s.quiz.questions.length }} questions</span>
@@ -127,7 +127,7 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
                 <li>
                   <span class="dt-av" [style.background]="p.avatar">{{ p.initials }}</span>
                   <div class="evn"><b>{{ p.name }}</b><small>{{ p.id }} · {{ p.role }} · {{ p.dept }}</small></div>
-                  <div class="evs"><span class="qi sm" [style.background]="sk.color + '1f'" [style.color]="sk.color"><app-icon [name]="sk.icon" [size]="14" /></span><div><b>{{ sk.name }}</b><small>Assessor: {{ e.assessor }}</small></div></div>
+                  <div class="evs"><span class="qi sm" [style.background]="'color-mix(in srgb, ' + sk.color + ' 12%, transparent)'" [style.color]="sk.color"><app-icon [name]="sk.icon" [size]="14" /></span><div><b>{{ sk.name }}</b><small>Assessor: {{ e.assessor }}</small></div></div>
                   <div class="evd"><small>{{ e.status === 'Completed' ? 'Evaluated' : 'Due' }}</small><b [class.red]="e.status === 'Pending' && d < 0">{{ fd(e.due) }}</b></div>
                   @if (e.status === 'Completed') {
                     <span class="stars">@for (i of five; track i) {<i [class.on]="i <= (e.rating ?? 0)">★</i>}</span>
@@ -196,7 +196,7 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
         } @else {
           @let sc = scoreOf(qz, pl.ans);
           <div class="result" [class.fail]="sc < qz.pass">
-            <app-ring [value]="sc" [size]="96" [color]="sc >= qz.pass ? '#22c55e' : '#ef4444'" />
+            <app-ring [value]="sc" [size]="96" [color]="sc >= qz.pass ? 'var(--ka-22c55e)' : 'var(--ka-ef4444)'" />
             <div><h3>{{ sc >= qz.pass ? 'Passed' : 'Not yet competent' }}</h3>
               <p class="muted">{{ person(pl.empId).name }} scored {{ sc }}% (pass mark {{ qz.pass }}%).
                 @if (sc >= qz.pass) { Result recorded and {{ skill(qz.skillId).name }} competency updated. } @else { A retake has been assigned automatically. }</p></div>
@@ -223,7 +223,7 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
       <aside class="g-drawer">
         <div class="modal-head"><h3>Assessment Result</h3><button class="close-btn" (click)="att.set(null)">×</button></div>
         <div class="ad">
-          <app-ring [value]="a.score" [size]="80" [color]="a.passed ? '#22c55e' : '#ef4444'" />
+          <app-ring [value]="a.score" [size]="80" [color]="a.passed ? 'var(--ka-22c55e)' : 'var(--ka-ef4444)'" />
           <div><b>{{ p.name }}</b><small>{{ p.id }} · {{ p.role }} · {{ p.dept }}</small><span [class]="a.passed ? 'tag green' : 'tag red'">{{ a.passed ? 'Passed' : 'Failed' }}</span></div>
         </div>
         <dl class="kv">
@@ -235,7 +235,7 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
         </dl>
         <h4>Attempt history</h4>
         <ul class="hist">
-          @for (h of history(a); track h.id) {<li [class.cur]="h.id === a.id"><span>{{ fd(h.at) }}</span><span class="hb"><i [style.width.%]="h.score" [style.background]="h.passed ? '#22c55e' : '#ef4444'"></i></span><b>{{ h.score }}%</b></li>}
+          @for (h of history(a); track h.id) {<li [class.cur]="h.id === a.id"><span>{{ fd(h.at) }}</span><span class="hb"><i [style.width.%]="h.score" [style.background]="h.passed ? 'var(--ka-22c55e)' : 'var(--ka-ef4444)'"></i></span><b>{{ h.score }}%</b></li>}
         </ul>
         <div class="form-actions">
           <button class="btn-ghost" (click)="go('training-plan-enrollment', { emp: a.empId })">Training plan</button>
@@ -328,47 +328,47 @@ const ASSESSORS = ['Meera Iyer', 'Priya Sharma', 'James Carter', 'Fatima Ali', '
     .qh { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .qh > div { display: flex; flex-direction: column; min-width: 0; }
     .qh b { font-size: 13.5px; } .qh small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .qi { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; } .qi.sm { width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0; }
-    .qm { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: #4b4f6b; } .qm span { display: inline-flex; gap: 4px; align-items: center; }
-    .qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: #f7f7fb; border-radius: 8px; padding: 8px 10px; } .qs div { display: flex; flex-direction: column; } .qs small { font-size: 10.5px; color: var(--muted); } .qs b { font-size: 15px; }
+    .qm { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11.5px; color: var(--kf-4b4f6b); } .qm span { display: inline-flex; gap: 4px; align-items: center; }
+    .qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--kb-f7f7fb); border-radius: 8px; padding: 8px 10px; } .qs div { display: flex; flex-direction: column; } .qs small { font-size: 10.5px; color: var(--muted); } .qs b { font-size: 15px; }
     .qa { display: flex; gap: 6px; justify-content: flex-end; } .qa button { display: inline-flex; align-items: center; gap: 4px; }
     .aw, .ev, .wl, .hist { list-style: none; margin: 0; padding: 0; }
-    .aw li { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .aw li { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .aw li > div { display: flex; flex-direction: column; min-width: 0; } .aw small { color: var(--muted); font-size: 10.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ev li { display: grid; grid-template-columns: 30px minmax(140px, 1.2fr) minmax(160px, 1.3fr) 96px auto auto; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .ev li { display: grid; grid-template-columns: 30px minmax(140px, 1.2fr) minmax(160px, 1.3fr) 96px auto auto; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .evn, .evd { display: flex; flex-direction: column; min-width: 0; } .evn small, .evd small, .evs small { color: var(--muted); font-size: 11px; }
     .evs { display: flex; gap: 8px; align-items: center; min-width: 0; } .evs > div { display: flex; flex-direction: column; }
-    .red { color: #dc2626; }
-    .stars i, .stars button { font-style: normal; color: #d8dbe6; font-size: 15px; } .stars .on { color: #f59e0b; }
+    .red { color: var(--kf-dc2626); }
+    .stars i, .stars button { font-style: normal; color: var(--kf-d8dbe6); font-size: 15px; } .stars .on { color: var(--kf-f59e0b); }
     .stars.big button { border: 0; background: none; cursor: pointer; font-size: 22px; padding: 0 1px; } .stars.big button:hover { transform: scale(1.15); }
     .wl li { display: grid; grid-template-columns: 110px 1fr 24px; gap: 10px; align-items: center; padding: 6px 0; font-size: 12px; }
-    .wlb { height: 7px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .wlb i { display: block; height: 100%; background: #8b5cf6; }
+    .wlb { height: 7px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .wlb i { display: block; height: 100%; background: var(--kb-8b5cf6); }
     .qp .modal-head small { display: block; margin-top: 2px; }
     .who { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin-bottom: 12px; } .who label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; min-width: 300px; }
-    .timer { display: inline-flex; gap: 5px; align-items: center; font-variant-numeric: tabular-nums; background: #f3f3f8; padding: 5px 10px; border-radius: 6px; font-size: 13px; }
+    .timer { display: inline-flex; gap: 5px; align-items: center; font-variant-numeric: tabular-nums; background: var(--kb-f3f3f8); padding: 5px 10px; border-radius: 6px; font-size: 13px; }
     .steps { display: flex; gap: 6px; margin-bottom: 14px; }
-    .steps button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: #fff; cursor: pointer; font-weight: 600; color: #4b4f6b; }
+    .steps button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: var(--kb-ffffff); cursor: pointer; font-weight: 600; color: var(--kf-4b4f6b); }
     .steps button.ans { background: var(--primary-soft); color: var(--primary); border-color: transparent; } .steps button.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .qq small { color: var(--muted); } .qq h4 { font-size: 16px; margin: 4px 0 14px; }
     .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .opt { display: flex; align-items: center; gap: 10px; text-align: left; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 13px; }
-    .opt:hover { border-color: #c4b5fd; } .opt.pick { border-color: var(--primary); background: #faf7ff; } .opt.right { border-color: #22c55e; background: #f0fdf4; }
-    .ol { width: 26px; height: 26px; border-radius: 50%; background: #f3f3f8; display: grid; place-items: center; font-weight: 700; font-size: 12px; flex-shrink: 0; } .opt.pick .ol { background: var(--primary); color: #fff; }
-    .why { display: flex; gap: 6px; align-items: center; background: #fffbeb; color: #92400e; padding: 8px 10px; border-radius: 8px; font-size: 12.5px; margin: 12px 0 0; }
+    .opt { display: flex; align-items: center; gap: 10px; text-align: left; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--kb-ffffff); cursor: pointer; font-size: 13px; }
+    .opt:hover { border-color: var(--kl-c4b5fd); } .opt.pick { border-color: var(--primary); background: var(--kb-faf7ff); } .opt.right { border-color: var(--kl-22c55e); background: var(--kb-f0fdf4); }
+    .ol { width: 26px; height: 26px; border-radius: 50%; background: var(--kb-f3f3f8); display: grid; place-items: center; font-weight: 700; font-size: 12px; flex-shrink: 0; } .opt.pick .ol { background: var(--primary); color: var(--kf-ffffff); }
+    .why { display: flex; gap: 6px; align-items: center; background: var(--kb-fffbeb); color: var(--kf-92400e); padding: 8px 10px; border-radius: 8px; font-size: 12.5px; margin: 12px 0 0; }
     .mr { margin-right: auto; align-self: center; }
-    .result { display: flex; gap: 18px; align-items: center; padding: 14px; border-radius: 10px; background: #f0fdf4; } .result.fail { background: #fef2f2; } .result h3 { font-size: 20px; }
+    .result { display: flex; gap: 18px; align-items: center; padding: 14px; border-radius: 10px; background: var(--kb-f0fdf4); } .result.fail { background: var(--kb-fef2f2); } .result h3 { font-size: 20px; }
     .rv { margin: 16px 0 6px; } .review { margin: 0; padding-left: 20px; max-height: 260px; overflow: auto; }
-    .review li { padding: 6px 0; font-size: 12.5px; display: list-item; } .review li b { display: block; } .review small { display: block; color: #15803d; } .review li.bad small { color: #b91c1c; } .review em { display: block; color: var(--muted); font-size: 11.5px; }
+    .review li { padding: 6px 0; font-size: 12.5px; display: list-item; } .review li b { display: block; } .review small { display: block; color: var(--kf-15803d); } .review li.bad small { color: var(--kf-b91c1c); } .review em { display: block; color: var(--muted); font-size: 11.5px; }
     .ad { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; } .ad > div { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; } .ad small { color: var(--muted); font-size: 11.5px; }
     .kv { display: grid; grid-template-columns: 120px 1fr; gap: 6px 10px; font-size: 12.5px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; font-weight: 500; }
     h4 { margin: 16px 0 6px; font-size: 13px; }
     .hist li { display: grid; grid-template-columns: 90px 1fr 40px; gap: 8px; align-items: center; padding: 5px 4px; font-size: 12px; border-radius: 6px; } .hist li.cur { background: var(--primary-soft); }
-    .hb { height: 6px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .hb i { display: block; height: 100%; }
-    .crit { list-style: none; margin: 0; padding: 0; } .crit li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; }
+    .hb { height: 6px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .hb i { display: block; height: 100%; }
+    .crit { list-style: none; margin: 0; padding: 0; } .crit li { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; }
     .evsum { display: flex; gap: 10px; align-items: center; margin: 12px 0; font-size: 13px; } .evsum b { font-size: 18px; }
     textarea.input { resize: vertical; font: inherit; }
     .qb { border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
     .qbh { display: flex; gap: 8px; align-items: center; } .qbh .input { flex: 1; }
-    .qbo { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; } .qbo label { display: flex; gap: 6px; align-items: center; } .qbo .input { flex: 1; } .qbo label.right .input { border-color: #22c55e; }
+    .qbo { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; } .qbo label { display: flex; gap: 6px; align-items: center; } .qbo .input { flex: 1; } .qbo label.right .input { border-color: var(--kl-22c55e); }
     @media (max-width: 1250px) { .bank, .res { grid-template-columns: 1fr; } .ev li { grid-template-columns: 30px 1fr 1fr; } }
   `,
 })
@@ -441,10 +441,10 @@ export class AssessmentsEvaluations extends TrnPage {
     const at = this.store.attempts().filter((a) => !f || a.quizId === f);
     const pass = BINS.map(() => 0), fail = BINS.map(() => 0);
     at.forEach((a) => (a.passed ? pass : fail)[bin(a.score)]++);
-    return [{ name: 'Passed', color: '#22c55e', values: pass }, { name: 'Failed', color: '#ef4444', values: fail }];
+    return [{ name: 'Passed', color: 'var(--ka-22c55e)', values: pass }, { name: 'Failed', color: 'var(--ka-ef4444)', values: fail }];
   });
   protected readonly passRows = computed(() =>
-    this.quizStats().map((s) => ({ label: s.quiz.title.replace(/ (Knowledge Check|Theory|Safety)$/, ''), value: s.passRate, display: s.passRate + '%', color: s.passRate >= 75 ? '#22c55e' : s.passRate >= 60 ? '#f59e0b' : '#ef4444' })).sort((a, b) => b.value - a.value),
+    this.quizStats().map((s) => ({ label: s.quiz.title.replace(/ (Knowledge Check|Theory|Safety)$/, ''), value: s.passRate, display: s.passRate + '%', color: s.passRate >= 75 ? 'var(--ka-22c55e)' : s.passRate >= 60 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)' })).sort((a, b) => b.value - a.value),
   );
   protected assignDone(quizId: string, ids: string[], due: string) {
     const have = new Set(this.store.quizAssigned().filter((a) => a.quizId === quizId).map((a) => a.empId));
@@ -525,7 +525,7 @@ export class AssessmentsEvaluations extends TrnPage {
       const w = at.filter((a) => -this.days(a.at) >= lo && -this.days(a.at) <= hi);
       return w.length ? Math.round(w.reduce((s, a) => s + a.score, 0) / w.length) : 0;
     });
-    return [{ name: 'Avg score', color: '#7c3aed', area: true, values: avg }, { name: 'Typical pass mark', color: '#16a34a', dashed: true, values: this.weeks.map(() => 80) }];
+    return [{ name: 'Avg score', color: 'var(--ka-7c3aed)', area: true, values: avg }, { name: 'Typical pass mark', color: 'var(--ka-16a34a)', dashed: true, values: this.weeks.map(() => 80) }];
   });
   private csv(name: string, rows: ReturnType<AssessmentsEvaluations['results']>) {
     downloadCsv(name, [['Attempt', 'Employee ID', 'Employee', 'Department', 'Assessment', 'Skill', 'Score', 'Pass Mark', 'Result', 'Date', 'Minutes'], ...rows.map((r) => [r.id, r.empId, r.name, r.dept, r.quiz, r.skill, r.score, r.passMark ?? '', r.result, r.at, r.mins])]);

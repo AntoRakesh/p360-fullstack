@@ -30,12 +30,12 @@ const FLOORS = ['Roof', 'Floor 5', 'Floor 4', 'Floor 3', 'Floor 2', 'Floor 1', '
     @if (store.drillMode()) {<div class="drill">DRILL MODE — new evacuations are logged as exercises and notifications are tagged “DRILL”.</div>}
 
     <section class="kpi-row six">
-      <app-kpi label="Active Evacuations" [value]="activeCount()" icon="bell-ring" color="#ef4444" [sub]="activeCount() ? 'Head Office – ' + evac()!.type : 'None active'" subColor="#dc2626" />
-      <app-kpi label="Total People On-Site" [value]="c().total" icon="users" color="#3b82f6" sub="Live count" />
-      <app-kpi label="Evacuated" [value]="c().evac" icon="shield-check" color="#22c55e" [sub]="pct(c().evac) + '%'" subColor="#16a34a" />
-      <app-kpi label="Yet to Evacuate" [value]="c().yet" icon="run" color="#f59e0b" [sub]="pct(c().yet) + '%'" subColor="#d97706" />
-      <app-kpi label="Missing" [value]="c().missing" icon="triangle-alert" color="#ef4444" [sub]="pct(c().missing) + '%'" subColor="#dc2626" />
-      <app-kpi label="Muster Points" [value]="store.musters().length" icon="users" color="#7c3aed" [sub]="complete() + ' complete | ' + (store.musters().length - complete()) + ' in progress'" subColor="#7c3aed" />
+      <app-kpi label="Active Evacuations" [value]="activeCount()" icon="bell-ring" color="var(--ka-ef4444)" [sub]="activeCount() ? 'Head Office – ' + evac()!.type : 'None active'" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Total People On-Site" [value]="c().total" icon="users" color="var(--ka-3b82f6)" sub="Live count" />
+      <app-kpi label="Evacuated" [value]="c().evac" icon="shield-check" color="var(--ka-22c55e)" [sub]="pct(c().evac) + '%'" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Yet to Evacuate" [value]="c().yet" icon="run" color="var(--ka-f59e0b)" [sub]="pct(c().yet) + '%'" subColor="var(--ka-d97706)" />
+      <app-kpi label="Missing" [value]="c().missing" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="pct(c().missing) + '%'" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Muster Points" [value]="store.musters().length" icon="users" color="var(--ka-7c3aed)" [sub]="complete() + ' complete | ' + (store.musters().length - complete()) + ' in progress'" subColor="var(--ka-7c3aed)" />
     </section>
 
     <section class="ecc">
@@ -71,10 +71,10 @@ const FLOORS = ['Roof', 'Floor 5', 'Floor 4', 'Floor 3', 'Floor 2', 'Floor 1', '
             <div class="prog">
               <app-donut [segments]="donut()" [value]="pct(c().evac) + '%'" center="Evacuated" [size]="120" [legend]="false" />
               <ul>
-                <li><i style="background:#22c55e"></i><em>Evacuated</em><b>{{ c().evac }}</b><span>({{ pct(c().evac) }}%)</span></li>
-                <li><i style="background:#f59e0b"></i><em>Yet to Evacuate</em><b>{{ c().yet }}</b><span>({{ pct(c().yet) }}%)</span></li>
-                <li><i style="background:#ef4444"></i><em>Missing</em><b>{{ c().missing }}</b><span>({{ pct(c().missing) }}%)</span></li>
-                <li><i style="background:#c4b5fd"></i><em>Total On-Site</em><b>{{ c().total }}</b><span>(100%)</span></li>
+                <li><i style="background:var(--kb-22c55e)"></i><em>Evacuated</em><b>{{ c().evac }}</b><span>({{ pct(c().evac) }}%)</span></li>
+                <li><i style="background:var(--kb-f59e0b)"></i><em>Yet to Evacuate</em><b>{{ c().yet }}</b><span>({{ pct(c().yet) }}%)</span></li>
+                <li><i style="background:var(--kb-ef4444)"></i><em>Missing</em><b>{{ c().missing }}</b><span>({{ pct(c().missing) }}%)</span></li>
+                <li><i style="background:var(--kb-c4b5fd)"></i><em>Total On-Site</em><b>{{ c().total }}</b><span>(100%)</span></li>
               </ul>
             </div>
           </div>
@@ -108,10 +108,10 @@ const FLOORS = ['Roof', 'Floor 5', 'Floor 4', 'Floor 3', 'Floor 2', 'Floor 1', '
               </dl>
               <div class="cam">
                 <svg viewBox="0 0 160 130" preserveAspectRatio="xMidYMid slice">
-                  <defs><radialGradient id="smk" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#e6e6e6" stop-opacity="0.95" /><stop offset="1" stop-color="#8a8f99" stop-opacity="0.2" /></radialGradient></defs>
-                  <rect width="160" height="130" fill="#3a3f4a" /><path d="M0 0H160V36L0 52z" fill="#5a606d" /><path d="M0 130 40 70H120L160 130z" fill="#2d313a" />
-                  <rect x="22" y="50" width="22" height="44" fill="#4a505c" /><rect x="118" y="44" width="26" height="54" fill="#4a505c" />
-                  <circle cx="34" cy="38" r="5" fill="#ff3b30" [attr.opacity]="blink() ? 1 : 0.35" /><circle cx="34" cy="38" r="12" fill="#ff3b30" [attr.opacity]="blink() ? 0.3 : 0.05" />
+                  <defs><radialGradient id="smk" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="var(--ka-e6e6e6)" stop-opacity="0.95" /><stop offset="1" stop-color="var(--ka-8a8f99)" stop-opacity="0.2" /></radialGradient></defs>
+                  <rect width="160" height="130" fill="var(--ka-3a3f4a)" /><path d="M0 0H160V36L0 52z" fill="var(--ka-5a606d)" /><path d="M0 130 40 70H120L160 130z" fill="var(--ka-2d313a)" />
+                  <rect x="22" y="50" width="22" height="44" fill="var(--ka-4a505c)" /><rect x="118" y="44" width="26" height="54" fill="var(--ka-4a505c)" />
+                  <circle cx="34" cy="38" r="5" fill="var(--ka-ff3b30)" [attr.opacity]="blink() ? 1 : 0.35" /><circle cx="34" cy="38" r="12" fill="var(--ka-ff3b30)" [attr.opacity]="blink() ? 0.3 : 0.05" />
                   <ellipse cx="95" cy="55" rx="70" ry="40" fill="url(#smk)" [attr.transform]="'translate(' + (blink() ? 3 : -3) + ' 0)'" /><ellipse cx="60" cy="30" rx="50" ry="22" fill="url(#smk)" opacity="0.8" />
                 </svg>
                 <span class="live"><i></i>Live Camera</span>
@@ -165,9 +165,9 @@ const FLOORS = ['Roof', 'Floor 5', 'Floor 4', 'Floor 3', 'Floor 2', 'Floor 1', '
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .btn-danger { display: inline-flex; gap: 8px; align-items: center; height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: #e11d2e; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
-    .btn-danger:hover { background: #c81424; } .icon-only { padding: 0 10px; } .btn-outline.on { color: var(--primary); border-color: var(--primary); background: #faf8ff; }
-    .drill { margin-bottom: 12px; padding: 10px 14px; border-radius: 10px; background: repeating-linear-gradient(45deg, #fef3c7, #fef3c7 12px, #fde68a 12px, #fde68a 24px); color: #92400e; font-weight: 600; font-size: 13px; }
+    .btn-danger { display: inline-flex; gap: 8px; align-items: center; height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: var(--kb-e11d2e); color: var(--kf-ffffff); font: inherit; font-weight: 600; cursor: pointer; }
+    .btn-danger:hover { background: var(--kb-c81424); } .icon-only { padding: 0 10px; } .btn-outline.on { color: var(--primary); border-color: var(--primary); background: var(--kb-faf8ff); }
+    .drill { margin-bottom: 12px; padding: 10px 14px; border-radius: 10px; background: repeating-linear-gradient(45deg, var(--kb-fef3c7), var(--kb-fef3c7) 12px, var(--kb-fde68a) 12px, var(--kb-fde68a) 24px); color: var(--kf-92400e); font-weight: 600; font-size: 13px; }
     .six { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .ecc { display: grid; grid-template-columns: minmax(0, 1fr) 430px; gap: 14px; align-items: start; }
     .left, .right { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
@@ -175,24 +175,24 @@ const FLOORS = ['Roof', 'Floor 5', 'Floor 4', 'Floor 3', 'Floor 2', 'Floor 1', '
     .opts { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; min-width: 170px; font-size: 13px; } .opts label { display: flex; gap: 8px; align-items: center; } .opts input { accent-color: var(--primary); }
     .map-body { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; }
     .floors { list-style: none; margin: 0; padding: 6px; border: 1px solid var(--border); border-radius: 10px; font-size: 12.5px; align-self: start; }
-    .floors li { padding: 9px 10px; border-radius: 7px; cursor: pointer; } .floors li:hover { background: #f6f5fb; } .floors li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+    .floors li { padding: 9px 10px; border-radius: 7px; cursor: pointer; } .floors li:hover { background: var(--kb-f6f5fb); } .floors li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
     .legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 10px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 12px; }
-    .legend span { display: flex; gap: 7px; align-items: center; } .dot { width: 12px; height: 12px; border-radius: 50%; } .dot.g { background: #22c55e; }
-    .pi { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; color: #fff; } .pi.g { background: #16a34a; } .pi.a { background: #f59e0b; } .pi.r { background: #ef4444; }
-    .route { color: #16a34a; letter-spacing: 1px; }
+    .legend span { display: flex; gap: 7px; align-items: center; } .dot { width: 12px; height: 12px; border-radius: 50%; } .dot.g { background: var(--kb-22c55e); }
+    .pi { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); } .pi.g { background: var(--kb-16a34a); } .pi.a { background: var(--kb-f59e0b); } .pi.r { background: var(--kb-ef4444); }
+    .route { color: var(--kf-16a34a); letter-spacing: 1px; }
     .row2 { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.3fr); gap: 14px; } .row2 > .card, .right > .card.tbl { min-width: 0; overflow-x: auto; }
     .prog { display: flex; gap: 14px; align-items: center; } .prog ul { list-style: none; margin: 0; padding: 0; flex: 1; font-size: 12.5px; }
     .prog li { display: flex; gap: 7px; white-space: nowrap; gap: 8px; align-items: center; padding: 8px 0; } .prog li i { width: 10px; height: 10px; border-radius: 50%; flex: none; } .prog li em { flex: 1; min-width: 0; font-style: normal; overflow: hidden; text-overflow: ellipsis; } .prog li span { color: var(--muted); font-size: 11px; width: 46px; }
-    .mini { width: 100%; } .mini th, .mini td { font-size: 11.5px; padding: 7px 5px; white-space: nowrap; } .mini td.r { color: #dc2626; } .mini tr.tot td { font-weight: 700; border-top: 1px solid var(--border); }
-    .pb { display: flex; gap: 6px; align-items: center; } .pb span { font-size: 11px; color: #16a34a; width: 30px; } .bar { flex: 1; height: 9px; border-radius: 3px; background: #eef0f6; overflow: hidden; min-width: 40px; } .bar i { display: block; height: 100%; background: #22c55e; }
-    .ae-head { gap: 10px; } .ae-head h3 { flex: 1; } .pill { padding: 4px 12px; border-radius: 6px; background: #fee2e2; color: #dc2626; font-size: 12px; font-weight: 600; } .pill.done { background: #dcfce7; color: #16a34a; }
+    .mini { width: 100%; } .mini th, .mini td { font-size: 11.5px; padding: 7px 5px; white-space: nowrap; } .mini td.r { color: var(--kf-dc2626); } .mini tr.tot td { font-weight: 700; border-top: 1px solid var(--border); }
+    .pb { display: flex; gap: 6px; align-items: center; } .pb span { font-size: 11px; color: var(--kf-16a34a); width: 30px; } .bar { flex: 1; height: 9px; border-radius: 3px; background: var(--kb-eef0f6); overflow: hidden; min-width: 40px; } .bar i { display: block; height: 100%; background: var(--kb-22c55e); }
+    .ae-head { gap: 10px; } .ae-head h3 { flex: 1; } .pill { padding: 4px 12px; border-radius: 6px; background: var(--kb-fee2e2); color: var(--kf-dc2626); font-size: 12px; font-weight: 600; } .pill.done { background: var(--kb-dcfce7); color: var(--kf-16a34a); }
     .timer { display: flex; gap: 6px; align-items: center; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
     .ae { display: grid; grid-template-columns: minmax(0, 1fr) 130px; gap: 10px; }
     .ae dl { display: grid; grid-template-columns: 108px 1fr; gap: 7px 8px; margin: 0; font-size: 12.5px; } .ae dt { color: var(--muted); } .ae dd { margin: 0; }
     .cam { position: relative; border-radius: 10px; overflow: hidden; height: 140px; } .cam svg { width: 100%; height: 100%; display: block; }
-    .live { position: absolute; left: 8px; bottom: 8px; display: flex; gap: 5px; align-items: center; padding: 3px 8px; border-radius: 5px; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 11px; } .live i { width: 7px; height: 7px; border-radius: 50%; background: #ef4444; }
+    .live { position: absolute; left: 8px; bottom: 8px; display: flex; gap: 5px; align-items: center; padding: 3px 8px; border-radius: 5px; background: rgba(0, 0, 0, 0.6); color: var(--kf-ffffff); font-size: 11px; } .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-ef4444); }
     .ae-btns { display: grid; grid-template-columns: 1.15fr 1.05fr 0.95fr; gap: 6px; margin-top: 14px; } .ae-btns button { justify-content: center; width: 100%; height: 40px; font-size: 12px; padding: 0 6px; gap: 5px; white-space: nowrap; }
-    .loc { color: #4b5068; } .evt { display: flex; gap: 6px; align-items: center; }
+    .loc { color: var(--kf-4b5068); } .evt { display: flex; gap: 6px; align-items: center; }
     @media (max-width: 1400px) { .six { grid-template-columns: repeat(3, 1fr); } .ecc { grid-template-columns: 1fr; } }
     @media (max-width: 900px) { .row2 { grid-template-columns: 1fr; } }
   `,
@@ -219,7 +219,7 @@ export class EmergencyCommandCenter {
     const d = new Date(this.evac()!.triggeredAt);
     return `${d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}, ${d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
   });
-  protected readonly zones = computed(() => (this.layer('Zones') ? E_ZONES.map((z) => (z.id === 'conf' && this.floor() !== 'Floor 1' ? { ...z, name: 'Meeting Rooms', color: '#3b82f6', fill: 0.16 } : z)) : []));
+  protected readonly zones = computed(() => (this.layer('Zones') ? E_ZONES.map((z) => (z.id === 'conf' && this.floor() !== 'Floor 1' ? { ...z, name: 'Meeting Rooms', color: 'var(--ka-3b82f6)', fill: 0.16 } : z)) : []));
   protected readonly markers = computed<MapMarker[]>(() => {
     const out: MapMarker[] = [];
     const f = this.floor();
@@ -227,34 +227,34 @@ export class EmergencyCommandCenter {
       for (const p of this.store.people()) {
         if (p.floor !== f || p.status === 'Evacuated') continue;
         const [x, y] = mapXY(p);
-        out.push({ id: p.id, x, y, kind: 'icon', icon: 'user', label: 'o', size: 11, color: p.status === 'Missing' ? '#ef4444' : '#f59e0b', title: `${p.name} · ${p.status}` });
+        out.push({ id: p.id, x, y, kind: 'icon', icon: 'user', label: 'o', size: 11, color: p.status === 'Missing' ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)', title: `${p.name} · ${p.status}` });
       }
       const evac = this.store.people().filter((p) => p.floor === f && p.status === 'Evacuated').slice(0, 14);
       evac.forEach((p, i) => {
         const r = ROUTES[i % ROUTES.length];
         const pt = r[Math.min(r.length - 1, 1 + (i % (r.length - 1)))];
-        out.push({ id: p.id, x: pt[0] + ((i * 13) % 20) - 10, y: pt[1] + ((i * 7) % 16) - 8, kind: 'icon', icon: 'user', label: 'o', size: 11, color: '#16a34a', title: `${p.name} · evacuated` });
+        out.push({ id: p.id, x: pt[0] + ((i * 13) % 20) - 10, y: pt[1] + ((i * 7) % 16) - 8, kind: 'icon', icon: 'user', label: 'o', size: 11, color: 'var(--ka-16a34a)', title: `${p.name} · evacuated` });
       });
     }
     if (this.layer('Exits & routes')) {
-      EXITS.forEach((e) => out.push({ id: e.id, x: e.x, y: e.y, kind: 'icon', icon: 'run', size: 12, color: '#16a34a', title: e.name }));
-      out.push({ id: 'lbl-exit', x: 400, y: 575, kind: 'pill', label: 'Main Exit', color: '#15803d' });
+      EXITS.forEach((e) => out.push({ id: e.id, x: e.x, y: e.y, kind: 'icon', icon: 'run', size: 12, color: 'var(--ka-16a34a)', title: e.name }));
+      out.push({ id: 'lbl-exit', x: 400, y: 575, kind: 'pill', label: 'Main Exit', color: 'var(--ka-15803d)' });
     }
     if (this.layer('Muster points')) {
-      out.push({ id: 'mpA', x: MUSTER_XY[0], y: MUSTER_XY[1], kind: 'icon', icon: 'users', label: 'o', size: 22, color: '#16a34a', title: 'Muster Point A' });
-      out.push({ id: 'lbl-mp', x: MUSTER_XY[0], y: MUSTER_XY[1] + 42, kind: 'pill', label: 'Muster Point A', color: '#15803d' });
+      out.push({ id: 'mpA', x: MUSTER_XY[0], y: MUSTER_XY[1], kind: 'icon', icon: 'users', label: 'o', size: 22, color: 'var(--ka-16a34a)', title: 'Muster Point A' });
+      out.push({ id: 'lbl-mp', x: MUSTER_XY[0], y: MUSTER_XY[1] + 42, kind: 'pill', label: 'Muster Point A', color: 'var(--ka-15803d)' });
     }
-    if (f === 'Floor 1' && this.activeCount()) out.push({ id: 'fire', x: 220, y: 245, kind: 'icon', icon: 'flame', size: 14, color: '#ef4444', pulse: true, title: 'Fire alarm – Conference Room' });
+    if (f === 'Floor 1' && this.activeCount()) out.push({ id: 'fire', x: 220, y: 245, kind: 'icon', icon: 'flame', size: 14, color: 'var(--ka-ef4444)', pulse: true, title: 'Fire alarm – Conference Room' });
     return out;
   });
-  protected readonly paths = computed<MapPath[]>(() => (this.layer('Exits & routes') ? ROUTES.map((points) => ({ points, color: '#16a34a', dashed: true, arrow: true, width: 3.5 })) : []));
+  protected readonly paths = computed<MapPath[]>(() => (this.layer('Exits & routes') ? ROUTES.map((points) => ({ points, color: 'var(--ka-16a34a)', dashed: true, arrow: true, width: 3.5 })) : []));
   protected readonly callout = computed<MapCallout | null>(() =>
-    this.floor() === 'Floor 1' && this.activeCount() ? { x: 230, y: 330, title: 'Fire Alarm', lines: ['Conference Room', new Date(this.evac()!.triggeredAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })], icon: 'flame', color: '#ef4444' } : null,
+    this.floor() === 'Floor 1' && this.activeCount() ? { x: 230, y: 330, title: 'Fire Alarm', lines: ['Conference Room', new Date(this.evac()!.triggeredAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })], icon: 'flame', color: 'var(--ka-ef4444)' } : null,
   );
   protected readonly donut = computed(() => [
-    { label: 'Evacuated', value: this.c().evac, color: '#22c55e' },
-    { label: 'Yet to Evacuate', value: this.c().yet, color: '#f59e0b' },
-    { label: 'Missing', value: this.c().missing, color: '#ef4444' },
+    { label: 'Evacuated', value: this.c().evac, color: 'var(--ka-22c55e)' },
+    { label: 'Yet to Evacuate', value: this.c().yet, color: 'var(--ka-f59e0b)' },
+    { label: 'Missing', value: this.c().missing, color: 'var(--ka-ef4444)' },
   ]);
   protected readonly depts = computed(() => {
     const m = new Map<string, { name: string; total: number; evac: number; yet: number; missing: number; pct: number }>();
@@ -299,7 +299,7 @@ export class EmergencyCommandCenter {
   }
   protected escalate() {
     this.menu.set(null);
-    this.store.log('Escalated to Civil Defence (997)', 'Head Office', 'Demo login', 'siren', '#ef4444');
+    this.store.log('Escalated to Civil Defence (997)', 'Head Office', 'Demo login', 'siren', 'var(--ka-ef4444)');
     this.toast('Civil Defence notified with live headcount & map link');
   }
   protected exportCsv() {

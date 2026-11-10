@@ -38,11 +38,11 @@ const VISITORS: Visitor[] = (() => {
   template: `
     <app-page-head title="Visitor Profiles" parent="People &amp; Identity Management" parentLink="/people-identity" subtitle="Returning visitor profiles, visit history, hosts and watchlist status." />
     <section class="kpi-row">
-      <app-kpi label="Visitor Profiles" [value]="list().length.toLocaleString()" icon="user-plus" color="#3b82f6" change="9%" sub="vs. last month" />
-      <app-kpi label="Frequent Visitors" [value]="frequent()" icon="star" color="#8b5cf6" sub="5+ visits" />
-      <app-kpi label="Visited This Month" [value]="thisMonth()" icon="calendar-days" color="#22c55e" />
-      <app-kpi label="Watchlist / Blacklist" [value]="flagged()" icon="ban" color="#ef4444" sub="flagged profiles" />
-      <app-kpi label="NDA Signed" [value]="nda() + '%'" icon="file-check" color="#06b6d4" />
+      <app-kpi label="Visitor Profiles" [value]="list().length.toLocaleString()" icon="user-plus" color="var(--ka-3b82f6)" change="9%" sub="vs. last month" />
+      <app-kpi label="Frequent Visitors" [value]="frequent()" icon="star" color="var(--ka-8b5cf6)" sub="5+ visits" />
+      <app-kpi label="Visited This Month" [value]="thisMonth()" icon="calendar-days" color="var(--ka-22c55e)" />
+      <app-kpi label="Watchlist / Blacklist" [value]="flagged()" icon="ban" color="var(--ka-ef4444)" sub="flagged profiles" />
+      <app-kpi label="NDA Signed" [value]="nda() + '%'" icon="file-check" color="var(--ka-06b6d4)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -65,7 +65,7 @@ export class VisitorProfiles {
   protected readonly list = signal<Visitor[]>(VISITORS);
   protected readonly toast = signal<string | null>(null);
   protected readonly labels = dayLabels(30, new Date());
-  protected readonly visits = [{ name: 'Visits', color: '#3b82f6', values: series(30, 260, 90, 3).map((v, i) => (i % 7 === 5 || i % 7 === 6 ? Math.round(v / 4) : v)), area: true }];
+  protected readonly visits = [{ name: 'Visits', color: 'var(--ka-3b82f6)', values: series(30, 260, 90, 3).map((v, i) => (i % 7 === 5 || i % 7 === 6 ? Math.round(v / 4) : v)), area: true }];
   protected readonly cols: Col[] = [
     { key: 'name', label: 'Visitor', kind: 'person', sub: 'email' },
     { key: 'company', label: 'Company' },
@@ -92,7 +92,7 @@ export class VisitorProfiles {
   protected readonly flagged = computed(() => String(this.list().filter((v) => v.watch !== 'Clear').length));
   protected readonly nda = computed(() => Math.round((this.list().filter((v) => v.nda === 'Signed').length / this.list().length) * 100));
   protected readonly purpose = computed(() =>
-    PURPOSES.map((label, i) => ({ label, value: this.list().filter((v) => v.purpose === label).length, color: ['#7c3aed', '#3b82f6', '#22c1a0', '#f59e0b', '#ef4444', '#9ca3af'][i] })),
+    PURPOSES.map((label, i) => ({ label, value: this.list().filter((v) => v.purpose === label).length, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c1a0)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-9ca3af)'][i] })),
   );
   protected act(a: string, v: Visitor) {
     if (a === 'invite') return this.notify(`Invitation sent to ${v.email}`);
@@ -133,7 +133,7 @@ const CUSTOMERS: Customer[] = (() => {
       id: `CUS-${String(40001 + i)}`,
       name,
       initials: name.split(' ').map((x) => x[0]).join('').slice(0, 2),
-      avatar: ['#7c3aed', '#0d9488', '#ca8a04', '#db2777', '#2563eb'][i % 5],
+      avatar: ['var(--ka-7c3aed)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-2563eb)'][i % 5],
       email: `${name.toLowerCase().replace(/[^a-z]+/g, '.')}@mail.com`,
       segment,
       visits,
@@ -152,11 +152,11 @@ const CUSTOMERS: Customer[] = (() => {
   template: `
     <app-page-head title="Customer Profiles" parent="People &amp; Identity Management" parentLink="/people-identity" subtitle="Known customers from loyalty programs, store visits and consented face recognition." />
     <section class="kpi-row">
-      <app-kpi label="Customer Profiles" [value]="list().length.toLocaleString()" icon="users" color="#8b5cf6" change="6%" sub="vs. last month" />
-      <app-kpi label="VIP Customers" [value]="seg('VIP')" icon="star" color="#f59e0b" />
-      <app-kpi label="Avg. Visits" [value]="avgVisits()" icon="activity" color="#3b82f6" sub="per customer" />
-      <app-kpi label="Lifetime Spend" [value]="'AED ' + spend()" icon="trending-up" color="#22c55e" change="11%" />
-      <app-kpi label="Marketing Consent" [value]="consent() + '%'" icon="shield-check" color="#06b6d4" />
+      <app-kpi label="Customer Profiles" [value]="list().length.toLocaleString()" icon="users" color="var(--ka-8b5cf6)" change="6%" sub="vs. last month" />
+      <app-kpi label="VIP Customers" [value]="seg('VIP')" icon="star" color="var(--ka-f59e0b)" />
+      <app-kpi label="Avg. Visits" [value]="avgVisits()" icon="activity" color="var(--ka-3b82f6)" sub="per customer" />
+      <app-kpi label="Lifetime Spend" [value]="'AED ' + spend()" icon="trending-up" color="var(--ka-22c55e)" change="11%" />
+      <app-kpi label="Marketing Consent" [value]="consent() + '%'" icon="shield-check" color="var(--ka-06b6d4)" />
     </section>
     <section class="dash">
       <div class="card span-4">
@@ -179,7 +179,7 @@ export class CustomerProfiles {
   protected readonly list = signal<Customer[]>(CUSTOMERS);
   protected readonly toast = signal<string | null>(null);
   protected readonly labels = dayLabels(30, new Date());
-  protected readonly footfall = [{ name: 'Known customers', color: '#8b5cf6', values: series(30, 420, 140, 12).map((v, i) => (i % 7 >= 4 ? Math.round(v * 1.5) : v)) }];
+  protected readonly footfall = [{ name: 'Known customers', color: 'var(--ka-8b5cf6)', values: series(30, 420, 140, 12).map((v, i) => (i % 7 >= 4 ? Math.round(v * 1.5) : v)) }];
   protected readonly cols: Col[] = [
     { key: 'name', label: 'Customer', kind: 'person', sub: 'email' },
     { key: 'id', label: 'ID' },
@@ -201,7 +201,7 @@ export class CustomerProfiles {
     { id: 'delete', label: 'Erase data (GDPR)', icon: 'ban', danger: true },
   ];
   protected readonly bulk: RowAction[] = [{ id: 'offer', label: 'Send offer' }, { id: 'delete', label: 'Erase data', danger: true }];
-  protected readonly segments = computed(() => SEGMENTS.map((label, i) => ({ label, value: +this.seg(label), color: ['#f59e0b', '#7c3aed', '#9ca3af', '#3b82f6'][i] })));
+  protected readonly segments = computed(() => SEGMENTS.map((label, i) => ({ label, value: +this.seg(label), color: ['var(--ka-f59e0b)', 'var(--ka-7c3aed)', 'var(--ka-9ca3af)', 'var(--ka-3b82f6)'][i] })));
   protected readonly avgVisits = computed(() => (this.list().reduce((a, c) => a + c.visits, 0) / this.list().length).toFixed(1));
   protected readonly spend = computed(() => `${(this.list().reduce((a, c) => a + c.spend, 0) / 1e6).toFixed(1)}M`);
   protected readonly consent = computed(() => Math.round((this.list().filter((c) => c.consent === 'Yes').length / this.list().length) * 100));

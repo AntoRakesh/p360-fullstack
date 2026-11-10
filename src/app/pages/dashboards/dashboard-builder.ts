@@ -119,8 +119,8 @@ const SPANS = [3, 4, 6, 8, 12];
     .builder.preview { grid-template-columns: 1fr; }
     .library { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 6px; }
     .library p { margin: 0 0 6px; } .library hr { width: 100%; border: 0; border-top: 1px solid var(--border); margin: 6px 0; }
-    .lib-item { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px dashed #c4b5fd; border-radius: 8px; background: #fff; cursor: grab; text-align: left; }
-    .lib-item:hover { background: #faf8ff; }
+    .lib-item { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px dashed var(--kl-c4b5fd); border-radius: 8px; background: var(--kb-ffffff); cursor: grab; text-align: left; }
+    .lib-item:hover { background: var(--kb-faf8ff); }
     .lib-item > span:nth-child(2) { flex: 1; display: flex; flex-direction: column; font-size: 12.5px; }
     .lib-item small { color: var(--muted); font-size: 11px; }
     .lib-icon { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); }
@@ -131,13 +131,13 @@ const SPANS = [3, 4, 6, 8, 12];
     .widget:hover { box-shadow: 0 4px 14px rgba(20, 20, 60, 0.07); }
     .title-input { border: 1px solid transparent; border-radius: 6px; padding: 3px 6px; font: inherit; font-size: 15px; font-weight: 600; min-width: 0; flex: 1; }
     .title-input:hover, .title-input:focus { border-color: var(--border); outline: 0; }
-    .w-tools { position: absolute; top: 10px; right: 10px; display: flex; gap: 2px; padding: 3px; border-radius: 8px; background: #fff; box-shadow: 0 2px 8px rgba(20,20,60,.12); opacity: 0; transition: opacity .15s; }
+    .w-tools { position: absolute; top: 10px; right: 10px; display: flex; gap: 2px; padding: 3px; border-radius: 8px; background: var(--kb-ffffff); box-shadow: 0 2px 8px rgba(20,20,60,.12); opacity: 0; transition: opacity .15s; }
     .widget:hover .w-tools, .widget:focus-within .w-tools { opacity: 1; }
-    .w-tools button { height: 26px; min-width: 26px; padding: 0 6px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font-size: 11px; cursor: pointer; display: grid; place-items: center; }
+    .w-tools button { height: 26px; min-width: 26px; padding: 0 6px; border: 1px solid var(--border); border-radius: 6px; background: var(--kb-ffffff); font-size: 11px; cursor: pointer; display: grid; place-items: center; }
     .w-tools button:disabled { opacity: 0.35; }
     .w-tools .del { color: var(--red); font-size: 16px; }
     .big { font-size: 34px; font-weight: 700; }
-    .empty-canvas { grid-column: span 12; display: grid; place-items: center; min-height: 300px; border: 2px dashed #c4b5fd; color: var(--muted); }
+    .empty-canvas { grid-column: span 12; display: grid; place-items: center; min-height: 300px; border: 2px dashed var(--kl-c4b5fd); color: var(--muted); }
     @media (max-width: 1000px) { .builder { grid-template-columns: 1fr; } .library { position: static; } .widget { grid-column: span 12 !important; } }
   `,
 })
@@ -164,13 +164,13 @@ export class DashboardBuilder {
       people: fmt(12480 * f + this.state.wobble('b', 40 * f)),
       alerts: Math.max(1, Math.round(14 * Math.sqrt(f))),
       days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      trend: [{ name: 'People', color: '#7c3aed', values: [10200, 11900, 12480, 12100, 11600, 4200, 3100].map((v) => Math.round(v * f)), area: true }],
-      hourly: [{ name: 'Events', color: '#8b5cf6', values: [900, 3200, 7400, 6100, 4300, 3600, 5200, 4100, 3500, 3000, 3900, 4600, 2600, 1200, 600].map((v) => Math.round(v * f)) }],
+      trend: [{ name: 'People', color: 'var(--ka-7c3aed)', values: [10200, 11900, 12480, 12100, 11600, 4200, 3100].map((v) => Math.round(v * f)), area: true }],
+      hourly: [{ name: 'Events', color: 'var(--ka-8b5cf6)', values: [900, 3200, 7400, 6100, 4300, 3600, 5200, 4100, 3500, 3000, 3900, 4600, 2600, 1200, 600].map((v) => Math.round(v * f)) }],
       dist: [
-        { label: 'Employees', value: Math.round(8920 * f), color: '#7c3aed' },
-        { label: 'Contractors', value: Math.round(1326 * f), color: '#3b82f6' },
-        { label: 'Visitors', value: Math.round(284 * f), color: '#22c1a0' },
-        { label: 'Others', value: Math.round(1950 * f), color: '#c4c9d6' },
+        { label: 'Employees', value: Math.round(8920 * f), color: 'var(--ka-7c3aed)' },
+        { label: 'Contractors', value: Math.round(1326 * f), color: 'var(--ka-3b82f6)' },
+        { label: 'Visitors', value: Math.round(284 * f), color: 'var(--ka-22c1a0)' },
+        { label: 'Others', value: Math.round(1950 * f), color: 'var(--ka-c4c9d6)' },
       ],
       sites: SITE_NAMES.map((label, i) => {
         const v = [78, 62, 86, 54, 71, 48][i];

@@ -23,7 +23,7 @@ interface Row {
 const PERIOD_MULT: Record<Period, number> = { today: 1, week: 5.6, month: 23.4 };
 const TREND_LABELS = ['02 Oct', '03 Oct', '04 Oct', '05 Oct', '06 Oct', '07 Oct', '08 Oct', '09 Oct', '10 Oct', '11 Oct', '12 Oct', '13 Oct', '14 Oct'];
 const HM_HOURS = ['06', '08', '10', '12', '14', '16', '18', '20'];
-const TEAM_COLORS = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899', '#64748b', '#0d9488', '#a855f7'];
+const TEAM_COLORS = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-06b6d4)', 'var(--ka-ec4899)', 'var(--ka-64748b)', 'var(--ka-0d9488)', 'var(--ka-a855f7)'];
 
 @Component({
   selector: 'app-tasks-productivity-performance',
@@ -41,11 +41,11 @@ const TEAM_COLORS = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#06
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="Completion vs Planned" [value]="tot().rate + '%'" icon="tasks-target" color="#7c3aed" [pct]="tot().completed + ' / ' + tot().planned" pctColor="#7c3aed" sub="tasks" />
-      <app-tkpi label="Avg Utilisation" [value]="tot().util + '%'" icon="tasks-gauge" color="#2563eb" change="3.2%" sub="vs. last period" />
-      <app-tkpi label="On-time Delivery" [value]="tot().onTime + '%'" icon="clock" color="#22c55e" change="1.1%" sub="within SLA" />
-      <app-tkpi label="Quality Score" [value]="tot().quality + '%'" icon="tasks-award" color="#f59e0b" [sub]="'avg rating ' + avgRating() + '★'" />
-      <app-tkpi label="Tasks per Worker" [value]="tot().perWorker" icon="users" color="#06b6d4" [sub]="rows().length + ' active workers'" />
+      <app-tkpi label="Completion vs Planned" [value]="tot().rate + '%'" icon="tasks-target" color="var(--ka-7c3aed)" [pct]="tot().completed + ' / ' + tot().planned" pctColor="var(--ka-7c3aed)" sub="tasks" />
+      <app-tkpi label="Avg Utilisation" [value]="tot().util + '%'" icon="tasks-gauge" color="var(--ka-2563eb)" change="3.2%" sub="vs. last period" />
+      <app-tkpi label="On-time Delivery" [value]="tot().onTime + '%'" icon="clock" color="var(--ka-22c55e)" change="1.1%" sub="within SLA" />
+      <app-tkpi label="Quality Score" [value]="tot().quality + '%'" icon="tasks-award" color="var(--ka-f59e0b)" [sub]="'avg rating ' + avgRating() + '★'" />
+      <app-tkpi label="Tasks per Worker" [value]="tot().perWorker" icon="users" color="var(--ka-06b6d4)" [sub]="rows().length + ' active workers'" />
     </section>
 
     <section class="grid">
@@ -75,11 +75,11 @@ const TEAM_COLORS = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#06
                   <td><span class="avatar-sm" [style.background]="r.w.color">{{ r.w.initials }}</span><span class="nm"><b>{{ r.w.name }}</b><small>{{ r.w.team }}</small></span></td>
                   <td class="nw"><span class="mini-progress"><i [style.width.%]="r.rate" [style.background]="col(r.rate)"></i></span>{{ r.rate }}% <small class="muted">({{ r.completed }}/{{ r.planned }})</small></td>
                   <td class="num">{{ r.onTime }}%</td>
-                  <td class="nw"><span class="mini-progress"><i [style.width.%]="r.util" [style.background]="r.util > 95 ? '#ef4444' : '#3b82f6'"></i></span>{{ r.util }}%</td>
-                  <td class="num" [style.color]="r.avgDur > r.stdDur * 1.15 ? '#b91c1c' : ''">{{ r.avgDur }} / {{ r.stdDur }}m</td>
+                  <td class="nw"><span class="mini-progress"><i [style.width.%]="r.util" [style.background]="r.util > 95 ? 'var(--ka-ef4444)' : 'var(--ka-3b82f6)'"></i></span>{{ r.util }}%</td>
+                  <td class="num" [style.color]="r.avgDur > r.stdDur * 1.15 ? 'var(--ka-b91c1c)' : ''">{{ r.avgDur }} / {{ r.stdDur }}m</td>
                   <td class="num">{{ r.quality }}%</td>
-                  <td class="sp"><app-sparkline [values]="r.trend" [color]="r.trend[6] >= r.trend[0] ? '#16a34a' : '#ef4444'" /></td>
-                  <td class="num"><span class="score" [style.background]="col(r.score) + '1f'" [style.color]="col(r.score)">{{ r.score }}</span></td>
+                  <td class="sp"><app-sparkline [values]="r.trend" [color]="r.trend[6] >= r.trend[0] ? 'var(--ka-16a34a)' : 'var(--ka-ef4444)'" /></td>
+                  <td class="num"><span class="score" [style.background]="'color-mix(in srgb, ' + col(r.score) + ' 12%, transparent)'" [style.color]="col(r.score)">{{ r.score }}</span></td>
                 </tr>
               } @empty {<tr><td colspan="8" class="muted center">No employees match</td></tr>}
             </tbody>
@@ -182,21 +182,21 @@ const TEAM_COLORS = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#06
     td .nm, .nm { display: inline-flex; flex-direction: column; vertical-align: middle; min-width: 0; } .nm b { font-size: 12.5px; white-space: nowrap; } .nm small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .sp { width: 76px; } .sp app-sparkline { display: block; width: 68px; } .nw { white-space: nowrap; } .nw .mini-progress { width: 48px; } .nw small { font-size: 11px; }
     .score { display: inline-block; min-width: 38px; text-align: center; padding: 3px 8px; border-radius: 8px; font-weight: 700; font-size: 12.5px; }
-    tr.sel td { background: #faf8ff; }
+    tr.sel td { background: var(--kb-faf8ff); }
     .center { text-align: center; padding: 20px !important; }
-    .pager { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12.5px; color: #4b4f6b; } .pager button { margin: 0 4px; }
+    .pager { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12.5px; color: var(--kf-4b4f6b); } .pager button { margin: 0 4px; }
     .side { display: flex; flex-direction: column; gap: 12px; }
     .hero { display: flex; gap: 14px; align-items: center; } .hero div { display: flex; flex-direction: column; gap: 3px; } .hero small { color: var(--muted); font-size: 12px; }
     .rank { font-size: 12px; font-weight: 600; color: var(--primary); }
-    .mets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 12px 0 0; } .mets span { display: flex; flex-direction: column; font-size: 10.5px; color: var(--muted); background: #fafafe; border: 1px solid var(--border); border-radius: 8px; padding: 6px; } .mets b { font-size: 14px; color: var(--text); }
+    .mets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 12px 0 0; } .mets span { display: flex; flex-direction: column; font-size: 10.5px; color: var(--muted); background: var(--kb-fafafe); border: 1px solid var(--border); border-radius: 8px; padding: 6px; } .mets b { font-size: 14px; color: var(--text); }
     h4 { margin: 14px 0 8px; font-size: 13px; }
-    .notes { margin: 0; padding-left: 18px; font-size: 12px; color: #3b3f5c; } .notes li { margin-bottom: 4px; }
+    .notes { margin: 0; padding-left: 18px; font-size: 12px; color: var(--kf-3b3f5c); } .notes li { margin-bottom: 4px; }
     .row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; } .btn-primary.sm { padding: 6px 10px; font-size: 12px; }
     .lb ol, .att ul { list-style: none; margin: 0; padding: 0; }
-    .lb li, .att li { display: grid; grid-template-columns: auto auto 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f2f7; cursor: pointer; } .att li { grid-template-columns: auto 1fr auto; }
+    .lb li, .att li { display: grid; grid-template-columns: auto auto 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f1f2f7); cursor: pointer; } .att li { grid-template-columns: auto 1fr auto; }
     .lb .avatar-sm, .att .avatar-sm { margin: 0; }
-    .medal { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 11.5px; font-weight: 700; background: #eef0f5; color: #4b4f6b; }
-    .medal.m0 { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #fff; } .medal.m1 { background: linear-gradient(135deg, #cbd5e1, #94a3b8); color: #fff; } .medal.m2 { background: linear-gradient(135deg, #f0b27a, #c2410c); color: #fff; }
+    .medal { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 11.5px; font-weight: 700; background: var(--kb-eef0f5); color: var(--kf-4b4f6b); }
+    .medal.m0 { background: linear-gradient(135deg, var(--kb-fbbf24), var(--kb-f59e0b)); color: var(--kf-ffffff); } .medal.m1 { background: linear-gradient(135deg, var(--kb-cbd5e1), var(--kb-94a3b8)); color: var(--kf-ffffff); } .medal.m2 { background: linear-gradient(135deg, var(--kb-f0b27a), var(--kb-c2410c)); color: var(--kf-ffffff); }
     .pts { font-size: 15px; color: var(--primary); }
     @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid, .grid3 { grid-template-columns: 1fr; } }
   `,
@@ -291,8 +291,8 @@ export class ProductivityPerformance {
     return {
       labels: ts.map((t) => t.team.replace('Housekeeping Team', 'HK').replace(' Technicians', '').replace('IT Field Support', 'IT').replace('Facility Services', 'Facility').replace(' Team', '').replace(' Crew', '').replace(' Control', '')),
       series: [
-        { name: 'Planned', color: '#c4b5fd', values: ts.map((t) => t.planned) },
-        { name: 'Completed', color: '#7c3aed', values: ts.map((t) => t.done) },
+        { name: 'Planned', color: 'var(--ka-c4b5fd)', values: ts.map((t) => t.planned) },
+        { name: 'Completed', color: 'var(--ka-7c3aed)', values: ts.map((t) => t.done) },
       ],
     };
   });
@@ -312,14 +312,14 @@ export class ProductivityPerformance {
     const c = TREND_LABELS.map(() => Math.round(82 + r() * 13));
     const o = TREND_LABELS.map((_, i) => (i === TREND_LABELS.length - 1 ? this.tot().onTime : Math.round(84 + r() * 12)));
     return [
-      { name: 'Completion %', color: '#7c3aed', values: c, area: true },
-      { name: 'On-time %', color: '#22c55e', values: o },
-      { name: 'Target', color: '#f59e0b', values: TREND_LABELS.map(() => 90), dashed: true },
+      { name: 'Completion %', color: 'var(--ka-7c3aed)', values: c, area: true },
+      { name: 'On-time %', color: 'var(--ka-22c55e)', values: o },
+      { name: 'Target', color: 'var(--ka-f59e0b)', values: TREND_LABELS.map(() => 90), dashed: true },
     ];
   });
 
   protected col(v: number) {
-    return v >= 85 ? '#16a34a' : v >= 70 ? '#d97706' : '#dc2626';
+    return v >= 85 ? 'var(--ka-16a34a)' : v >= 70 ? 'var(--ka-d97706)' : 'var(--ka-dc2626)';
   }
   protected arrow(k: SortKey) {
     return this.sortKey() === k ? (this.sortAsc() ? ' ▲' : ' ▼') : '';
@@ -351,8 +351,8 @@ export class ProductivityPerformance {
     const plan = this.week.map((d, i) => (i === 6 ? Math.max(1, Math.round(r.planned / m)) : d === 'Sat' || d === 'Sun' ? Math.round(2 + g() * 3) : Math.round(5 + g() * 4)));
     const done = plan.map((p, i) => (i === 6 ? Math.min(p, Math.round(r.completed / m)) : Math.round(p * (0.75 + g() * 0.25))));
     return [
-      { name: 'Planned', color: '#c4b5fd', values: plan },
-      { name: 'Completed', color: '#7c3aed', values: done },
+      { name: 'Planned', color: 'var(--ka-c4b5fd)', values: plan },
+      { name: 'Completed', color: 'var(--ka-7c3aed)', values: done },
     ];
   }
   protected mixOf(w: Worker) {
@@ -365,7 +365,7 @@ export class ProductivityPerformance {
     return Math.max(...this.mixOf(w).map((r) => r.value), 1);
   }
   protected kudos(w: Worker) {
-    this.store.log(`Recognition sent to ${w.name} for outstanding task performance`, 'Rex Kumar', 'tasks-award', '#f59e0b');
+    this.store.log(`Recognition sent to ${w.name} for outstanding task performance`, 'Rex Kumar', 'tasks-award', 'var(--ka-f59e0b)');
     this.say(`🏆 Kudos sent to ${w.name} · visible on their mobile app`);
   }
   protected saveNote(id: string) {

@@ -9,10 +9,10 @@ import {
 
 const LEVELS = ['All Levels', 'Proficient (4-5)', 'Intermediate (3)', 'Basic (1-2)', 'Not Trained'];
 const DUE_ICON: Record<string, [string, string]> = {
-  'ct-fa': ['flame', '#ef4444'], 'ct-fs': ['flame', '#f43f5e'], 'ct-wah': ['training-helmet', '#f59e0b'], 'ct-fl': ['run', '#16a34a'],
-  'ct-cs': ['box', '#334155'], 'ct-hm': ['triangle-alert', '#8b8fb0'],
+  'ct-fa': ['flame', 'var(--ka-ef4444)'], 'ct-fs': ['flame', 'var(--ka-f43f5e)'], 'ct-wah': ['training-helmet', 'var(--ka-f59e0b)'], 'ct-fl': ['run', 'var(--ka-16a34a)'],
+  'ct-cs': ['box', 'var(--ka-334155)'], 'ct-hm': ['triangle-alert', 'var(--ka-8b8fb0)'],
 };
-const GAP_COLORS = ['#f43f5e', '#f43f5e', '#f59e0b', '#f59e0b', '#fbbf24', '#fcd34d'];
+const GAP_COLORS = ['var(--ka-f43f5e)', 'var(--ka-f43f5e)', 'var(--ka-f59e0b)', 'var(--ka-f59e0b)', 'var(--ka-fbbf24)', 'var(--ka-fcd34d)'];
 const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
 
 @Component({
@@ -40,23 +40,23 @@ const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
     <!-- KPIs -->
     <section class="kpis">
       <button class="card k" (click)="view.set('list')">
-        <span class="ki" style="background:#7c3aed"><app-icon name="users" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-7c3aed)"><app-icon name="users" [size]="30" [stroke]="1.8" /></span>
         <div><small>Total Employees</small><b>{{ fmt(kTotal()) }}</b><em class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />6%</em><i>vs. last month</i></div>
       </button>
       <button class="card k" (click)="addSkillOpen.set(true)">
-        <span class="ki" style="background:#22c55e"><app-icon name="training-award" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-22c55e)"><app-icon name="training-award" [size]="30" [stroke]="1.8" /></span>
         <div><small>Skills Tracked</small><b>{{ store.skillsTracked() }}</b><em class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />12%</em><i>vs. last month</i></div>
       </button>
       <button class="card k" (click)="topLevel.set('Proficient (4-5)')">
-        <span class="ki" style="background:#f59e0b"><app-icon name="training-target" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-f59e0b)"><app-icon name="training-target" [size]="30" [stroke]="1.8" /></span>
         <div class="kp"><small>Proficient</small><b>{{ kProf() }}%</b><span class="bar"><i [style.width.%]="kProf()"></i></span></div>
       </button>
       <button class="card k" (click)="gapsOpen.set(true)">
-        <span class="ki" style="background:#ef4444"><app-icon name="triangle-alert" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-ef4444)"><app-icon name="triangle-alert" [size]="30" [stroke]="1.8" /></span>
         <div><small>Skill Gaps</small><b>{{ fmt(kGaps()) }}</b><em class="dn"><app-icon name="arrow-down" [size]="14" [stroke]="2.6" />15%</em><i>vs. last month</i></div>
       </button>
       <button class="card k" (click)="go('renewals-expiry-alerts')">
-        <span class="ki" style="background:#3b82f6"><app-icon name="graduation-cap" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-3b82f6)"><app-icon name="graduation-cap" [size]="30" [stroke]="1.8" /></span>
         <div><small>Due for Training</small><b>{{ fmt(kDue()) }}</b><em class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />28%</em><i>within 30 days</i></div>
       </button>
     </section>
@@ -156,8 +156,8 @@ const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
           <label class="search-box ss"><app-icon name="search" [size]="15" /><input placeholder="Search skills..." [value]="skillQ()" (input)="skillQ.set($any($event.target).value)" /></label>
         </div>
         <div class="legend">
-          <span><i style="background:#22c55e"></i>Proficient (4-5)</span><span><i style="background:#3b82f6"></i>Intermediate (3)</span>
-          <span><i style="background:#f59e0b"></i>Basic (1-2)</span><span><i style="background:#ef4444"></i>Not Trained</span><span><i style="background:#9ca3af"></i>Not Applicable</span>
+          <span><i style="background:var(--kb-22c55e)"></i>Proficient (4-5)</span><span><i style="background:var(--kb-3b82f6)"></i>Intermediate (3)</span>
+          <span><i style="background:var(--kb-f59e0b)"></i>Basic (1-2)</span><span><i style="background:var(--kb-ef4444)"></i>Not Trained</span><span><i style="background:var(--kb-9ca3af)"></i>Not Applicable</span>
           @if (picked().size) {
             <span class="bulk"><b>{{ picked().size }} selected</b>
               <button class="btn-ghost sm" (click)="assignOpen.set(true)">Assign Training</button>
@@ -400,27 +400,27 @@ const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
     /* KPIs */
     .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
     .k { display: flex; gap: 16px; align-items: center; padding: 14px 16px; text-align: left; font: inherit; color: inherit; cursor: pointer; min-width: 0; }
-    .k:hover { border-color: #d6ccfb; }
-    .ki { width: 58px; height: 58px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .k:hover { border-color: var(--kl-d6ccfb); }
+    .ki { width: 58px; height: 58px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
     .k > div { display: grid; grid-template-columns: auto 1fr; column-gap: 8px; min-width: 0; flex: 1; }
-    .k small { grid-column: 1 / -1; font-size: 12.5px; color: #3b3f5c; }
+    .k small { grid-column: 1 / -1; font-size: 12.5px; color: var(--kf-3b3f5c); }
     .k b { grid-column: 1 / -1; font-size: 22px; font-weight: 700; margin: 4px 0 6px; font-variant-numeric: tabular-nums; }
     .k em { font-style: normal; display: inline-flex; align-items: center; gap: 3px; font-size: 13px; font-weight: 600; }
-    .k em.up { color: #16a34a; } .k em.dn { color: #dc2626; }
+    .k em.up { color: var(--kf-16a34a); } .k em.dn { color: var(--kf-dc2626); }
     .k i { font-style: normal; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; align-self: center; }
-    .kp .bar { grid-column: 1 / -1; height: 7px; border-radius: 6px; background: #e8e9f2; overflow: hidden; margin: 4px 0 6px; max-width: 128px; } .kp .bar i { display: block; height: 100%; background: #22c55e; border-radius: 6px; }
+    .kp .bar { grid-column: 1 / -1; height: 7px; border-radius: 6px; background: var(--kb-e8e9f2); overflow: hidden; margin: 4px 0 6px; max-width: 128px; } .kp .bar i { display: block; height: 100%; background: var(--kb-22c55e); border-radius: 6px; }
     /* filter bar */
     .fbar { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
     .fs { flex: 1 1 120px; max-width: 262px; padding: 8px 12px; min-width: 0; } .fs input { width: 100%; }
     .f { height: 36px; flex: 0 1 138px; min-width: 120px; } .f.wide { flex-basis: 156px; }
     .mf { height: 36px; font-weight: 500; } .mf.act { border-color: var(--primary); color: var(--primary); }
-    .cnt { background: var(--primary); color: #fff; border-radius: 10px; padding: 0 6px; font-size: 10.5px; }
+    .cnt { background: var(--primary); color: var(--kf-ffffff); border-radius: 10px; padding: 0 6px; font-size: 10.5px; }
     .mfd { width: 250px; padding: 12px; display: flex; flex-direction: column; gap: 10px; left: 0; right: auto; }
-    .mfd label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; } .mfd .ck { flex-direction: row; align-items: center; gap: 7px; }
+    .mfd label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); } .mfd .ck { flex-direction: row; align-items: center; gap: 7px; }
     .mf-foot { display: flex; justify-content: space-between; align-items: center; }
-    .vt { display: flex; flex-shrink: 0; margin-left: auto; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
-    .vt button { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border: 0; background: #fff; font-size: 12.5px; cursor: pointer; color: #3b3f5c; }
-    .vt button + button { border-left: 1px solid var(--border); } .vt button.on { background: var(--primary); color: #fff; }
+    .vt { display: flex; flex-shrink: 0; margin-left: auto; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--kb-ffffff); }
+    .vt button { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 12px; border: 0; background: var(--kb-ffffff); font-size: 12.5px; cursor: pointer; color: var(--kf-3b3f5c); }
+    .vt button + button { border-left: 1px solid var(--border); } .vt button.on { background: var(--primary); color: var(--kf-ffffff); }
     /* overview */
     .ov3 { display: grid; grid-template-columns: 1fr 1.08fr 1.05fr; gap: 12px; margin-bottom: 14px; }
     .ch { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.2px; }
@@ -428,47 +428,47 @@ const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
     .donut-row { display: flex; align-items: center; gap: 22px; margin-top: 10px; }
     .dn-wrap { position: relative; width: 168px; flex-shrink: 0; } .dn-wrap svg { width: 100%; display: block; } .dn-wrap circle { cursor: pointer; transition: stroke-width .15s; }
     .dn-mid { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-    .dn-mid b { font-size: 21px; } .dn-mid span { font-size: 13px; font-weight: 600; color: #2b2e4a; }
+    .dn-mid b { font-size: 21px; } .dn-mid span { font-size: 13px; font-weight: 600; color: var(--kf-2b2e4a); }
     .dl { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; gap: 20px; }
     .dl li { display: grid; grid-template-columns: 12px 1fr auto auto; gap: 8px; align-items: center; font-size: 12.5px; cursor: pointer; } .dl li.dim { opacity: .45; }
-    .dl i { width: 12px; height: 12px; border-radius: 50%; } .dl b { font-weight: 700; } .dl em { font-style: normal; color: #4b4f6b; }
+    .dl i { width: 12px; height: 12px; border-radius: 50%; } .dl b { font-weight: 700; } .dl em { font-style: normal; color: var(--kf-4b4f6b); }
     .gaps { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-    .gaps li { display: grid; grid-template-columns: 1fr 44% 26px; gap: 10px; align-items: center; font-size: 12.5px; cursor: pointer; padding: 3px 4px; border-radius: 6px; } .gaps li:hover, .gaps li.on { background: #f6f3ff; }
+    .gaps li { display: grid; grid-template-columns: 1fr 44% 26px; gap: 10px; align-items: center; font-size: 12.5px; cursor: pointer; padding: 3px 4px; border-radius: 6px; } .gaps li:hover, .gaps li.on { background: var(--kb-f6f3ff); }
     .gt { height: 17px; } .gt i { display: block; height: 100%; border-radius: 2px; } .gaps b { text-align: right; font-weight: 600; }
     .due { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-    .due li { display: grid; grid-template-columns: 22px 1fr 34px 76px; gap: 12px; align-items: center; font-size: 12.5px; cursor: pointer; padding: 2px 4px; border-radius: 6px; } .due li:hover { background: #f6f3ff; }
-    .di { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: #fff; } .due b { font-weight: 500; text-align: right; }
+    .due li { display: grid; grid-template-columns: 22px 1fr 34px 76px; gap: 12px; align-items: center; font-size: 12.5px; cursor: pointer; padding: 2px 4px; border-radius: 6px; } .due li:hover { background: var(--kb-f6f3ff); }
+    .di { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: var(--kf-ffffff); } .due b { font-weight: 500; text-align: right; }
     .db { font-style: normal; font-size: 11.5px; text-align: center; padding: 3px 0; border-radius: 4px; }
-    .db.red { background: #fee2e2; color: #dc2626; } .db.orange { background: #ffedd5; color: #ea580c; } .db.blue { background: #dbeafe; color: #2563eb; }
+    .db.red { background: var(--kb-fee2e2); color: var(--kf-dc2626); } .db.orange { background: var(--kb-ffedd5); color: var(--kf-ea580c); } .db.blue { background: var(--kb-dbeafe); color: var(--kf-2563eb); }
     /* bottom */
     .bottom { display: grid; grid-template-columns: minmax(0, 1fr) 356px; gap: 12px; align-items: start; } .bottom.full { grid-template-columns: 1fr; }
     .mx-ctl { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin: 12px 0 12px; }
     .vb { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
     .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .seg button { border: 0; background: #fff; padding: 0 18px; height: 34px; font-size: 12.5px; cursor: pointer; color: #3b3f5c; } .seg button.on { background: var(--primary); color: #fff; }
-    .fl { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: #3b3f5c; } .fl .select { min-width: 140px; height: 34px; }
+    .seg button { border: 0; background: var(--kb-ffffff); padding: 0 18px; height: 34px; font-size: 12.5px; cursor: pointer; color: var(--kf-3b3f5c); } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
+    .fl { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: var(--kf-3b3f5c); } .fl .select { min-width: 140px; height: 34px; }
     .ss { padding: 7px 10px; flex: 1 1 140px; max-width: 160px; } .ss input { width: 100%; }
-    .legend { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 11.5px; color: #2b2e4a; margin-bottom: 12px; min-height: 26px; }
+    .legend { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 11.5px; color: var(--kf-2b2e4a); margin-bottom: 12px; min-height: 26px; }
     .legend span { display: inline-flex; align-items: center; gap: 7px; } .legend i { width: 12px; height: 12px; border-radius: 50%; }
     .bulk { margin-left: auto; gap: 8px !important; } .bulk b { font-size: 12px; }
     .tw { overflow-x: auto; max-height: 560px; overflow-y: auto; border-radius: 8px; }
     .mt { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12px; }
-    .mt th { position: sticky; top: 0; z-index: 2; background: #f6f7fb; font-weight: 500; font-size: 12px; color: #2b2e4a; padding: 8px 6px; border-bottom: 1px solid var(--border); text-align: left; }
+    .mt th { position: sticky; top: 0; z-index: 2; background: var(--kb-f6f7fb); font-weight: 500; font-size: 12px; color: var(--kf-2b2e4a); padding: 8px 6px; border-bottom: 1px solid var(--border); text-align: left; }
     .mt th.sk { text-align: center; font-size: 10.5px; line-height: 1.15; width: 78px; min-width: 70px; vertical-align: bottom; }
     .mt th.sk app-icon { display: flex; justify-content: center; margin-bottom: 4px; } .mt th.sk span { display: block; }
-    .mt th.sortable { cursor: pointer; } .mt th.sortable:hover { background: #efeafc; } .sa { font-style: normal; font-size: 9px; color: var(--primary); margin-left: 2px; }
-    .mt th.focus, .mt td.focus { background: #f3eeff; }
-    .mt td { padding: 3px 6px; border-bottom: 1px solid #eef0f5; height: 33px; }
-    .mt tbody tr { cursor: pointer; } .mt tbody tr:hover td { background: #fafaff; } .mt tbody tr.sel td { background: #f5f1ff; }
+    .mt th.sortable { cursor: pointer; } .mt th.sortable:hover { background: var(--kb-efeafc); } .sa { font-style: normal; font-size: 9px; color: var(--primary); margin-left: 2px; }
+    .mt th.focus, .mt td.focus { background: var(--kb-f3eeff); }
+    .mt td { padding: 3px 6px; border-bottom: 1px solid var(--kl-eef0f5); height: 33px; }
+    .mt tbody tr { cursor: pointer; } .mt tbody tr:hover td { background: var(--kb-fafaff); } .mt tbody tr.sel td { background: var(--kb-f5f1ff); }
     .cbx { width: 30px; text-align: center !important; } .cbx input { accent-color: var(--primary); }
-    .emp { min-width: 140px; } .rl { color: #4b4f6b; min-width: 96px; }
+    .emp { min-width: 140px; } .rl { color: var(--kf-4b4f6b); min-width: 96px; }
     .ep { display: flex; align-items: center; gap: 10px; } .ep b { font-weight: 500; white-space: nowrap; }
     .cell { position: relative; text-align: center; }
     .lv { display: inline-block; width: 100%; max-width: 64px; padding: 4px 0; border-radius: 4px; font-weight: 500; transition: opacity .15s; } .lv.dim { opacity: .25; }
     .cell:hover .lv { box-shadow: 0 0 0 1.5px currentColor inset; }
-    .lv-pop { position: absolute; z-index: 5; top: calc(100% - 2px); left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 30px rgba(20,20,60,.18); padding: 8px; width: 222px; cursor: default; }
+    .lv-pop { position: absolute; z-index: 5; top: calc(100% - 2px); left: 50%; transform: translateX(-50%); background: var(--kb-ffffff); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 12px 30px rgba(20,20,60,.18); padding: 8px; width: 222px; cursor: default; }
     .lv-pop small { display: block; font-size: 11px; color: var(--muted); margin-bottom: 6px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .lv-opts { display: flex; gap: 4px; } .lv-opts button { flex: 1; border: 1px solid transparent; border-radius: 5px; padding: 5px 0; font-size: 12px; cursor: pointer; } .lv-opts button.cur { border-color: #111; font-weight: 700; }
+    .lv-opts { display: flex; gap: 4px; } .lv-opts button { flex: 1; border: 1px solid transparent; border-radius: 5px; padding: 5px 0; font-size: 12px; cursor: pointer; } .lv-opts button.cur { border-color: var(--kl-111111); font-weight: 700; }
     .empty { text-align: center; color: var(--muted); padding: 24px !important; }
     .hm-note { margin: 0 0 10px; font-size: 12px; }
     /* detail */
@@ -477,20 +477,20 @@ const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
     .who { display: flex; gap: 14px; margin: 14px 0 12px; } .who app-trn-avatar { border-radius: 8px; overflow: hidden; }
     .who > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
     .nm { display: flex; justify-content: space-between; align-items: center; gap: 8px; } .nm b { font-size: 17px; }
-    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 6px; font-size: 12px; background: #dcfce7; color: #15803d; } .pill i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; }
-    .pill.amber { background: #fef3c7; color: #b45309; } .pill.amber i { background: #f59e0b; }
-    .mu { font-size: 12.5px; color: #4b4f6b; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 6px; font-size: 12px; background: var(--kb-dcfce7); color: var(--kf-15803d); } .pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-22c55e); }
+    .pill.amber { background: var(--kb-fef3c7); color: var(--kf-b45309); } .pill.amber i { background: var(--kb-f59e0b); }
+    .mu { font-size: 12.5px; color: var(--kf-4b4f6b); }
     .dtabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
-    .dtabs button { flex: 1; border: 0; background: none; padding: 9px 0; font-size: 12.5px; color: #3b3f5c; border-bottom: 2px solid transparent; cursor: pointer; } .dtabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
+    .dtabs button { flex: 1; border: 0; background: none; padding: 9px 0; font-size: 12.5px; color: var(--kf-3b3f5c); border-bottom: 2px solid transparent; cursor: pointer; } .dtabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
     .dbody { min-height: 262px; max-height: 330px; overflow: auto; }
-    .st { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; } .st th:nth-child(1) { width: 36%; } .st th:nth-child(2) { width: 31%; } .st th { text-align: left; font-weight: 500; color: #4b4f6b; padding: 4px 2px 6px; }
-    .st td { padding: 3px 2px; height: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .st td:first-child { color: #2b2e4a; }
+    .st { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; } .st th:nth-child(1) { width: 36%; } .st th:nth-child(2) { width: 31%; } .st th { text-align: left; font-weight: 500; color: var(--kf-4b4f6b); padding: 4px 2px 6px; }
+    .st td { padding: 3px 2px; height: 25px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .st td:first-child { color: var(--kf-2b2e4a); }
     .lvl { display: inline-block; width: 94%; padding: 3px 7px; border-radius: 3px; font-size: 11px; }
     .stt { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; white-space: nowrap; } .stt i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    .dl2 { list-style: none; margin: 0; padding: 0; } .dl2 li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .dl2 { list-style: none; margin: 0; padding: 0; } .dl2 li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .dl2 li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .dl2 small { color: var(--muted); font-size: 11px; }
     .dl2.scroll { max-height: 52vh; overflow: auto; }
-    .pg { display: block; height: 5px; width: 160px; background: #eef0f6; border-radius: 4px; overflow: hidden; margin-top: 3px; } .pg i { display: block; height: 100%; background: var(--primary); }
+    .pg { display: block; height: 5px; width: 160px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; margin-top: 3px; } .pg i { display: block; height: 100%; background: var(--primary); }
     .cr { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
     .pp { flex-direction: row !important; align-items: center; gap: 10px !important; } .pp > div { display: flex; flex-direction: column; }
     .hist { list-style: none; margin: 0; padding: 0 0 0 6px; } .hist li { display: flex; gap: 10px; padding: 6px 0; font-size: 12px; }
@@ -499,7 +499,7 @@ const DTABS = ['Skills', 'Training', 'Certifications', 'History'] as const;
     .dfoot { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; } .dfoot button { justify-content: center; padding: 10px; font-size: 13px; }
     .btn-outline { border-color: var(--primary); }
     .ug { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; } .ug label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; } .ug label span { display: flex; gap: 6px; align-items: center; }
-    .note { display: flex; flex-direction: column; gap: 4px; font-size: 12px; margin-top: 12px; color: #4b4f6b; }
+    .note { display: flex; flex-direction: column; gap: 4px; font-size: 12px; margin-top: 12px; color: var(--kf-4b4f6b); }
     .gi { display: inline-flex; gap: 6px; align-items: center; } .sm { font-size: 12px; }
     @media (max-width: 1400px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .ov3 { grid-template-columns: 1fr 1fr; } .vt { margin-left: 0; } }
     @media (max-width: 1150px) { .bottom { grid-template-columns: 1fr; } .det { position: static; } }
@@ -608,7 +608,7 @@ export class SkillsCompetencyMatrix {
     return { type: CT.get(id)!, list, window: g?.window ?? 30 };
   });
   protected dueIcon(id: string) {
-    return DUE_ICON[id] ?? ['training-award', '#7c3aed'];
+    return DUE_ICON[id] ?? ['training-award', 'var(--ka-7c3aed)'];
   }
   protected dueTone(w: number) {
     return w <= 14 ? 'red' : w <= 21 ? 'orange' : 'blue';
@@ -692,7 +692,7 @@ export class SkillsCompetencyMatrix {
     this.rows().flatMap((e, i) =>
       this.cols().map((s) => {
         const l = e.levels[s.id] ?? null;
-        return { key: `${e.id}-${s.id}`, empId: e.id, name: e.name, initials: e.name.split(' ').map((p) => p[0]).join(''), avatar: ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777'][i % 5], role: e.role, dept: e.dept, skill: s.name, levelText: l === null ? 'N/A' : `${l} - ${levelName(l)}`, tone: levelTone(l), status: this.store.status(e, s.id) };
+        return { key: `${e.id}-${s.id}`, empId: e.id, name: e.name, initials: e.name.split(' ').map((p) => p[0]).join(''), avatar: ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)'][i % 5], role: e.role, dept: e.dept, skill: s.name, levelText: l === null ? 'N/A' : `${l} - ${levelName(l)}`, tone: levelTone(l), status: this.store.status(e, s.id) };
       }),
     ),
   );
@@ -715,7 +715,7 @@ export class SkillsCompetencyMatrix {
     return Math.round(a);
   }
   protected stColor(s: string) {
-    return s === 'Valid' ? '#16a34a' : s === 'Due for Training' ? '#ea580c' : s === 'In Progress' ? '#2563eb' : s === 'Required' ? '#dc2626' : '#6b7280';
+    return s === 'Valid' ? 'var(--ka-16a34a)' : s === 'Due for Training' ? 'var(--ka-ea580c)' : s === 'In Progress' ? 'var(--ka-2563eb)' : s === 'Required' ? 'var(--ka-dc2626)' : 'var(--ka-6b7280)';
   }
   protected enTag(s: string) {
     return s === 'Completed' ? 'tag green' : s === 'Overdue' ? 'tag red' : s === 'In Progress' ? 'tag blue' : s === 'Waitlisted' ? 'tag grey' : 'tag amber';
@@ -847,7 +847,7 @@ export class SkillsCompetencyMatrix {
     const f = this.ns();
     if (!f.name.trim()) return this.err.set('Skill name is required.');
     if (this.store.skills().some((s) => s.name.toLowerCase() === f.name.trim().toLowerCase())) return this.err.set('A skill with this name already exists.');
-    const icons: Record<string, [string, string]> = { Safety: ['shield-check', '#ef4444'], Technical: ['settings', '#7c3aed'], 'Soft Skills': ['message', '#2563eb'], Compliance: ['file-check', '#0f766e'] };
+    const icons: Record<string, [string, string]> = { Safety: ['shield-check', 'var(--ka-ef4444)'], Technical: ['settings', 'var(--ka-7c3aed)'], 'Soft Skills': ['message', 'var(--ka-2563eb)'], Compliance: ['file-check', 'var(--ka-0f766e)'] };
     const [icon, color] = icons[f.category];
     this.store.addSkill({ id: `sk-${Date.now()}`, name: f.name.trim(), category: f.category, icon, color, required: f.required, gap: 0, courseId: f.courseId });
     this.cat.set(f.category);

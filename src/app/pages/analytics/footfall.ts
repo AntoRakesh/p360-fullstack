@@ -41,15 +41,15 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
     </div>
 
     <section class="kpis">
-      <div class="card kp"><span class="ic" style="background:#7c3aed"><app-icon name="users" [size]="28" /></span>
+      <div class="card kp"><span class="ic" style="background:var(--kb-7c3aed)"><app-icon name="users" [size]="28" /></span>
         <div><small>Total Footfall</small><b>{{ n(s.total()) }}</b><p><span class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />12%</span>vs. last week</p></div></div>
-      <div class="card kp"><span class="ic" style="background:#22c55e"><app-icon name="a-log-in" [size]="28" /></span>
+      <div class="card kp"><span class="ic" style="background:var(--kb-22c55e)"><app-icon name="a-log-in" [size]="28" /></span>
         <div><small>Entries</small><b>{{ n(s.entries()) }}</b><p><span class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />10%</span>vs. last week</p></div></div>
-      <div class="card kp"><span class="ic" style="background:#ef4444"><app-icon name="a-log-out" [size]="28" /></span>
+      <div class="card kp"><span class="ic" style="background:var(--kb-ef4444)"><app-icon name="a-log-out" [size]="28" /></span>
         <div><small>Exits</small><b>{{ n(s.exits()) }}</b><p><span class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />9%</span>vs. last week</p></div></div>
-      <div class="card kp" (click)="go('zone-area-analytics')" title="Open Zone & Area Analytics"><span class="ic" style="background:#2563eb"><app-icon name="a-occupancy" [size]="28" /></span>
+      <div class="card kp" (click)="go('zone-area-analytics')" title="Open Zone & Area Analytics"><span class="ic" style="background:var(--kb-2563eb)"><app-icon name="a-occupancy" [size]="28" /></span>
         <div class="occ"><small>Current Occupancy</small><b>{{ n(s.occupancy()) }}</b><div class="bar"><i [style.width.%]="s.occPct()" [class.hot]="s.occPct() > 85"></i></div><p class="r">{{ s.occPct() }}% of capacity</p></div></div>
-      <div class="card kp" (click)="go('dwell-time-movement')" title="Open Dwell Time & Movement"><span class="ic" style="background:#f59e0b"><app-icon name="clock" [size]="28" /></span>
+      <div class="card kp" (click)="go('dwell-time-movement')" title="Open Dwell Time & Movement"><span class="ic" style="background:var(--kb-f59e0b)"><app-icon name="clock" [size]="28" /></span>
         <div><small>Avg. Dwell Time</small><b>{{ mins(s.avgDwell()) }}</b><p><span class="up"><app-icon name="arrow-up" [size]="14" [stroke]="2.6" />18%</span>vs. last week</p></div></div>
     </section>
 
@@ -57,8 +57,8 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
       <div class="card">
         <div class="ch"><h3>Footfall Trend</h3>
           <div class="ch-r">
-            <button class="lg" [class.off]="hideIn()" (click)="hideIn.set(!hideIn())"><i style="background:#7c3aed"></i>Entries</button>
-            <button class="lg" [class.off]="hideOut()" (click)="hideOut.set(!hideOut())"><i style="background:#3b82f6"></i>Exits</button>
+            <button class="lg" [class.off]="hideIn()" (click)="hideIn.set(!hideIn())"><i style="background:var(--kb-7c3aed)"></i>Entries</button>
+            <button class="lg" [class.off]="hideOut()" (click)="hideOut.set(!hideOut())"><i style="background:var(--kb-3b82f6)"></i>Exits</button>
             <label class="hsel sm"><select [value]="gran()" (change)="gran.set($any($event.target).value)"><option>Hourly</option><option>Daily</option><option>Weekly</option></select><app-icon name="chevron-down" [size]="14" /></label>
           </div>
         </div>
@@ -74,10 +74,10 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
           <span class="live"><i></i>{{ s.isLive() ? 'Live' : 'Playback' }}</span>
         </div>
         <div class="cam-legend">
-          <span><i class="sq" style="background:#22c55e"></i>Entry <b>+{{ s.perMin().in }}/min</b></span>
-          <span><i class="sq" style="background:#3b82f6"></i>Exit <b>+{{ s.perMin().out }}/min</b></span>
-          <button class="lg" [class.off]="!zoneOn()" (click)="zoneOn.set(!zoneOn())"><i class="sq" style="background:#ddd6fe"></i>Counting Zone</button>
-          <button class="lg" [class.off]="!boxes()" (click)="boxes.set(!boxes())"><i class="sq" style="background:#bae6fd"></i>Person</button>
+          <span><i class="sq" style="background:var(--kb-22c55e)"></i>Entry <b>+{{ s.perMin().in }}/min</b></span>
+          <span><i class="sq" style="background:var(--kb-3b82f6)"></i>Exit <b>+{{ s.perMin().out }}/min</b></span>
+          <button class="lg" [class.off]="!zoneOn()" (click)="zoneOn.set(!zoneOn())"><i class="sq" style="background:var(--kb-ddd6fe)"></i>Counting Zone</button>
+          <button class="lg" [class.off]="!boxes()" (click)="boxes.set(!boxes())"><i class="sq" style="background:var(--kb-bae6fd)"></i>Person</button>
           <button class="fs" title="Full screen" (click)="camFull.set(true)"><app-icon name="maximize" [size]="16" /></button>
         </div>
       </div>
@@ -87,7 +87,7 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
       <div class="card">
         <div class="ch"><h3>Footfall by Zone</h3>
           <div class="ch-r">
-            <span class="lg static"><i style="background:#7c3aed"></i>Entries</span><span class="lg static"><i style="background:#3b82f6"></i>Exits</span>
+            <span class="lg static"><i style="background:var(--kb-7c3aed)"></i>Entries</span><span class="lg static"><i style="background:var(--kb-3b82f6)"></i>Exits</span>
             <label class="hsel sm"><select [value]="zonePeriod()" (change)="zonePeriod.set($any($event.target).value)"><option>Today</option><option>This Week</option><option>This Month</option></select><app-icon name="chevron-down" [size]="14" /></label>
           </div>
         </div>
@@ -112,7 +112,7 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
           <thead><tr><th>#</th><th>Location / Zone</th><th class="num">Entries</th><th class="num">Exits</th><th class="num">Total Footfall</th><th class="num">Avg. Dwell Time</th><th class="c">Trend</th></tr></thead>
           <tbody>
             @for (z of top(); track z.id; let i = $index) {
-              <tr class="clickable" (click)="openZone(z.id)"><td>{{ i + 1 }}</td><td>{{ z.name }}</td><td class="num">{{ n(z.entries) }}</td><td class="num">{{ n(z.exits) }}</td><td class="num"><b>{{ n(z.entries + z.exits) }}</b></td><td class="num">{{ dwell(z.dwell) }}</td><td class="sp"><app-sparkline [values]="z.trend" color="#22c55e" /></td></tr>
+              <tr class="clickable" (click)="openZone(z.id)"><td>{{ i + 1 }}</td><td>{{ z.name }}</td><td class="num">{{ n(z.entries) }}</td><td class="num">{{ n(z.exits) }}</td><td class="num"><b>{{ n(z.entries + z.exits) }}</b></td><td class="num">{{ dwell(z.dwell) }}</td><td class="sp"><app-sparkline [values]="z.trend" color="var(--ka-22c55e)" /></td></tr>
             }
           </tbody>
         </table>
@@ -130,8 +130,8 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
       <div class="card">
         <div class="ch"><h3>Peak Hours</h3>
           <div class="ch-r">
-            <button class="lg" [class.off]="hideToday()" (click)="hideToday.set(!hideToday())"><i style="background:#7c3aed"></i>Today</button>
-            <button class="lg" [class.off]="hideLast()" (click)="hideLast.set(!hideLast())"><i style="background:#3b82f6"></i>Last Week</button>
+            <button class="lg" [class.off]="hideToday()" (click)="hideToday.set(!hideToday())"><i style="background:var(--kb-7c3aed)"></i>Today</button>
+            <button class="lg" [class.off]="hideLast()" (click)="hideLast.set(!hideLast())"><i style="background:var(--kb-3b82f6)"></i>Last Week</button>
           </div>
         </div>
         <div class="ph"><span class="unit">People</span>
@@ -174,8 +174,8 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
   styles: `
     :host { display: block; }
     .fh { margin-bottom: 16px; } .fh-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    .fh h1 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -.4px; } .fh .sub { margin: 2px 0 0; font-size: 15px; color: #3b3f5c; }
-    .hsel { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 10px 0 12px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: #3b3f5c; cursor: pointer; }
+    .fh h1 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -.4px; } .fh .sub { margin: 2px 0 0; font-size: 15px; color: var(--kf-3b3f5c); }
+    .hsel { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 10px 0 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); color: var(--kf-3b3f5c); cursor: pointer; }
     .hsel select { appearance: none; border: 0; background: none; font: inherit; font-size: 12.5px; color: var(--text); padding-right: 22px; cursor: pointer; outline: 0; min-width: 0; }
     .hsel > app-icon:last-child { position: absolute; right: 10px; pointer-events: none; }
     .hsel.sm { height: 32px; } .hsel.sm select { font-size: 12px; padding-right: 26px; }
@@ -183,34 +183,34 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
     .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .kp { display: flex; gap: 18px; align-items: center; padding: 16px 18px; cursor: default; }
     .kp:nth-child(n + 4) { cursor: pointer; }
-    .kp .ic { width: 56px; height: 56px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
-    .kp > div { min-width: 0; flex: 1; } .kp small { display: block; font-size: 12.5px; color: #3b3f5c; }
+    .kp .ic { width: 56px; height: 56px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
+    .kp > div { min-width: 0; flex: 1; } .kp small { display: block; font-size: 12.5px; color: var(--kf-3b3f5c); }
     .kp b { display: block; font-size: 25px; font-weight: 700; margin: 4px 0 6px; font-variant-numeric: tabular-nums; letter-spacing: -.3px; }
-    .kp p { margin: 0; font-size: 12.5px; color: #4b4f6b; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
-    .kp .up { display: inline-flex; align-items: center; gap: 3px; color: #16a34a; font-weight: 700; font-size: 13.5px; }
-    .occ b { margin-bottom: 4px; } .bar { height: 6px; border-radius: 3px; background: #e5e7eb; overflow: hidden; } .bar i { display: block; height: 100%; background: #2563eb; border-radius: 3px; transition: width .5s; } .bar i.hot { background: var(--red); }
+    .kp p { margin: 0; font-size: 12.5px; color: var(--kf-4b4f6b); display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+    .kp .up { display: inline-flex; align-items: center; gap: 3px; color: var(--kf-16a34a); font-weight: 700; font-size: 13.5px; }
+    .occ b { margin-bottom: 4px; } .bar { height: 6px; border-radius: 3px; background: var(--kb-e5e7eb); overflow: hidden; } .bar i { display: block; height: 100%; background: var(--kb-2563eb); border-radius: 3px; transition: width .5s; } .bar i.hot { background: var(--red); }
     .kp p.r { justify-content: flex-end; font-size: 11px; margin-top: 6px; }
     .row { display: grid; gap: 12px; margin-bottom: 12px; } .r2, .r3 { grid-template-columns: minmax(0, 1fr) minmax(0, .93fr); } .r4 { grid-template-columns: minmax(0, 1.32fr) minmax(0, .88fr) minmax(0, .98fr); }
     .ch { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; min-height: 32px; }
     .ch h3 { font-size: 15.5px; font-weight: 700; letter-spacing: -.2px; } .ch-r { display: flex; align-items: center; gap: 16px; }
-    .lg { display: inline-flex; align-items: center; gap: 7px; border: 0; background: none; font: inherit; font-size: 12px; color: #3b3f5c; cursor: pointer; padding: 0; white-space: nowrap; }
+    .lg { display: inline-flex; align-items: center; gap: 7px; border: 0; background: none; font: inherit; font-size: 12px; color: var(--kf-3b3f5c); cursor: pointer; padding: 0; white-space: nowrap; }
     .lg.static { cursor: default; } .lg i { width: 10px; height: 10px; border-radius: 50%; } .lg.off { opacity: .35; text-decoration: line-through; }
     .cam-card { display: flex; flex-direction: column; }
-    .cam { position: relative; height: 196px; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: #111; }
+    .cam { position: relative; height: 196px; border-radius: 6px; overflow: hidden; cursor: zoom-in; background: var(--kb-111111); }
     .cam app-mall-cam { position: absolute; inset: 0; }
     .cam.big { height: 460px; cursor: default; }
-    .occ-ov { position: absolute; left: 6px; top: 6px; display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 12px; background: rgba(23, 37, 84, .86); color: #fff; border-radius: 3px; }
+    .occ-ov { position: absolute; left: 6px; top: 6px; display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 12px; background: rgba(23, 37, 84, .86); color: var(--kf-ffffff); border-radius: 3px; }
     .occ-ov b { display: block; font-size: 17px; line-height: 1.1; } .occ-ov span { font-size: 11.5px; }
-    .live { position: absolute; right: 8px; top: 8px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 3px; background: rgba(17, 24, 39, .82); color: #fff; font-size: 12.5px; }
-    .live i { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; animation: g-blink 1.6s infinite; }
-    .cam-legend { display: flex; align-items: center; gap: 30px; margin-top: 12px; font-size: 12px; color: #3b3f5c; }
+    .live { position: absolute; right: 8px; top: 8px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 3px; background: rgba(17, 24, 39, .82); color: var(--kf-ffffff); font-size: 12.5px; }
+    .live i { width: 9px; height: 9px; border-radius: 50%; background: var(--kb-22c55e); animation: g-blink 1.6s infinite; }
+    .cam-legend { display: flex; align-items: center; gap: 30px; margin-top: 12px; font-size: 12px; color: var(--kf-3b3f5c); }
     .cam-legend span { display: inline-flex; align-items: center; gap: 7px; } .cam-legend b { font-weight: 500; }
     .sq { width: 13px; height: 13px; border-radius: 2px; display: inline-block; }
-    .fs { margin-left: auto; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; background: #fff; color: #3b3f5c; cursor: pointer; }
+    .fs { margin-left: auto; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; background: var(--kb-ffffff); color: var(--kf-3b3f5c); cursor: pointer; }
     .heat { display: grid; grid-template-columns: minmax(0, 1fr) 56px; gap: 8px; }
     .hm { height: 168px; } .hm-big { height: 420px; }
-    .scale { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; color: #3b3f5c; padding-top: 10px; }
-    .scale i { width: 6px; height: 88px; border-radius: 3px; background: linear-gradient(#ef4444, #f97316, #facc15, #22c55e, #22d3ee, #3b82f6, #4f46e5); }
+    .scale { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; color: var(--kf-3b3f5c); padding-top: 10px; }
+    .scale i { width: 6px; height: 88px; border-radius: 3px; background: linear-gradient(var(--kb-ef4444), var(--kb-f97316), var(--kb-facc15), var(--kb-22c55e), var(--kb-22d3ee), var(--kb-3b82f6), var(--kb-4f46e5)); }
     .scale .fs { margin: 10px 0 0; }
     .tl th { background: none; font-size: 11px; font-weight: 500; padding: 7px 8px; } .tl td { padding: 6px 8px; font-size: 11.5px; border-bottom: 0; }
     .tl th.c { text-align: center; } .tl .sp { width: 80px; } .tl .sp app-sparkline { display: block; width: 72px; } :host ::ng-deep .tl .spark { height: 16px; } .tl .num b { font-weight: 500; }
@@ -218,8 +218,8 @@ const HEAT_MODES = ['Now', '1 Hour Ago', 'Peak (3 PM)', 'Today Avg'];
     .vt ul { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; gap: 12px; }
     .vt li { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; font-size: 12px; cursor: pointer; } .vt li:hover { color: var(--primary); }
     .vt li i { width: 11px; height: 11px; border-radius: 50%; } .vt li b { font-weight: 600; }
-    :host ::ng-deep .vt .donut-mid b { font-size: 19px; } :host ::ng-deep .vt .donut-mid span { font-size: 11px; color: #3b3f5c; }
-    .ph { position: relative; } .unit { position: absolute; left: 14px; top: -6px; font-size: 11px; color: #6b7090; }
+    :host ::ng-deep .vt .donut-mid b { font-size: 19px; } :host ::ng-deep .vt .donut-mid span { font-size: 11px; color: var(--kf-3b3f5c); }
+    .ph { position: relative; } .unit { position: absolute; left: 14px; top: -6px; font-size: 11px; color: var(--kf-6b7090); }
     .ph app-ff-line { padding-top: 10px; }
     .cam-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; } .cam-tools .on { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); } .sp1 { flex: 1; }
     @media (max-width: 1350px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .r4 { grid-template-columns: 1fr 1fr; } .r4 > :first-child { grid-column: 1 / -1; } }
@@ -274,15 +274,15 @@ export class Footfall {
   protected readonly trendSeries = computed<Series[]>(() => {
     const t = this.trend();
     const out: Series[] = [];
-    if (!this.hideIn()) out.push({ name: 'Entries', color: '#7c3aed', values: t.inV, area: true });
-    if (!this.hideOut()) out.push({ name: 'Exits', color: '#3b82f6', values: t.outV, area: true });
+    if (!this.hideIn()) out.push({ name: 'Entries', color: 'var(--ka-7c3aed)', values: t.inV, area: true });
+    if (!this.hideOut()) out.push({ name: 'Exits', color: 'var(--ka-3b82f6)', values: t.outV, area: true });
     return out;
   });
   protected readonly peakSeries = computed<Series[]>(() => {
     const f = this.s.f();
     const out: Series[] = [];
-    if (!this.hideToday()) out.push({ name: 'Today', color: '#7c3aed', values: PEAK_TODAY.map((v) => Math.round(v * f)), area: true });
-    if (!this.hideLast()) out.push({ name: 'Last Week', color: '#3b82f6', values: PEAK_LAST.map((v) => Math.round(v * f)) });
+    if (!this.hideToday()) out.push({ name: 'Today', color: 'var(--ka-7c3aed)', values: PEAK_TODAY.map((v) => Math.round(v * f)), area: true });
+    if (!this.hideLast()) out.push({ name: 'Last Week', color: 'var(--ka-3b82f6)', values: PEAK_LAST.map((v) => Math.round(v * f)) });
     return out;
   });
 
@@ -293,8 +293,8 @@ export class Footfall {
       ids: z.map((x) => x.id),
       labels: z.map((x) => x.name),
       series: [
-        { name: 'Entries', color: '#7c3aed', values: z.map((x) => Math.round(x.entries * m)) },
-        { name: 'Exits', color: '#3b82f6', values: z.map((x) => Math.round(x.exits * m)) },
+        { name: 'Entries', color: 'var(--ka-7c3aed)', values: z.map((x) => Math.round(x.entries * m)) },
+        { name: 'Exits', color: 'var(--ka-3b82f6)', values: z.map((x) => Math.round(x.exits * m)) },
       ] as Series[],
     };
   });

@@ -31,23 +31,23 @@ type SortKey = 'name' | 'type' | 'model' | 'serial' | 'site' | 'location' | 'sta
 
     <section class="kpis">
       <button class="kc" (click)="resetFilters()">
-        <span class="ki" style="background:#7c3aed"><app-icon name="devices-chip" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-7c3aed)"><app-icon name="devices-chip" [size]="30" [stroke]="1.8" /></span>
         <div><small>Total Devices</small><b>{{ fmt(c().total) }}</b><em class="up-g"><app-icon name="arrow-up" [size]="13" [stroke]="2.6" />6% <span>vs. last month</span></em></div>
       </button>
       <button class="kc" [class.on]="statusF() === 'Online'" (click)="setStatus('Online')">
-        <span class="ki" style="background:#10b981"><app-icon name="wifi" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-10b981)"><app-icon name="wifi" [size]="30" [stroke]="1.8" /></span>
         <div><small>Online</small><b>{{ fmt(c().Online) }}</b><em class="up-g">↑{{ pct(c().Online) }}%</em></div>
       </button>
       <button class="kc" [class.on]="statusF() === 'Offline'" (click)="setStatus('Offline')">
-        <span class="ki" style="background:#f97316"><app-icon name="triangle-alert" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-f97316)"><app-icon name="triangle-alert" [size]="30" [stroke]="1.8" /></span>
         <div><small>Offline</small><b>{{ c().Offline }}</b><em class="dn-r"><app-icon name="ban" [size]="12" [stroke]="2.4" />{{ pct(c().Offline) }}%</em></div>
       </button>
       <button class="kc" [class.on]="statusF() === 'Maintenance'" (click)="setStatus('Maintenance')">
-        <span class="ki" style="background:#2f80ed"><app-icon name="devices-wrench" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-2f80ed)"><app-icon name="devices-wrench" [size]="30" [stroke]="1.8" /></span>
         <div><small>Maintenance</small><b>{{ c().Maintenance }}</b><em class="up-b">↑{{ pct(c().Maintenance) }}%</em></div>
       </button>
       <button class="kc" (click)="nav('alerts-notifications')">
-        <span class="ki" style="background:#10b981"><app-icon name="bell" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-10b981)"><app-icon name="bell" [size]="30" [stroke]="1.8" /></span>
         <div><small>Critical Alerts</small><b>{{ store.openCritical() }}</b><em class="dn-r"><app-icon name="arrow-down" [size]="13" [stroke]="2.6" />2%</em></div>
       </button>
     </section>
@@ -97,7 +97,7 @@ type SortKey = 'name' | 'type' | 'model' | 'serial' | 'site' | 'location' | 'sta
             </div>
           </div>
           <div class="card">
-            <div class="ch"><h3>Device Status</h3><div class="sl"><span><i style="background:#10b981"></i>Online</span><span><i style="background:#ef4444"></i>Offline</span><span><i style="background:#fbbf24"></i>Maintenance</span></div></div>
+            <div class="ch"><h3>Device Status</h3><div class="sl"><span><i style="background:var(--kb-10b981)"></i>Online</span><span><i style="background:var(--kb-ef4444)"></i>Offline</span><span><i style="background:var(--kb-fbbf24)"></i>Maintenance</span></div></div>
             <svg viewBox="0 0 420 210" class="bars">
               @for (t of [0, 100, 200, 300, 400, 500]; track t) {<line x1="34" x2="414" [attr.y1]="y(t)" [attr.y2]="y(t)" class="gl" /><text x="26" [attr.y]="y(t) + 4" text-anchor="end" class="ax">{{ t }}</text>}
               @for (g of store.statusChart(); track g.label; let gi = $index) {
@@ -292,58 +292,58 @@ type SortKey = 'name' | 'type' | 'model' | 'serial' | 'site' | 'location' | 'sta
     :host { display: block; }
     .big { padding: 10px 18px; font-size: 13.5px; } .btn-primary.big { padding: 10px 26px; } .sq { padding: 10px 14px; } .danger { color: var(--red); }
     .kpis { display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr 1.05fr; gap: 12px; margin-bottom: 12px; }
-    .kc { display: flex; align-items: center; gap: 18px; padding: 12px 14px; background: #fff; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-align: left; font: inherit; color: inherit; min-width: 0; box-shadow: 0 1px 3px rgba(20,20,60,.04); }
-    .kc:hover, .kc.on { border-color: #c4b5fd; } .kc.on { box-shadow: 0 0 0 2px var(--primary-soft); }
-    .ki { width: 66px; height: 62px; border-radius: 12px; color: #fff; display: grid; place-items: center; flex-shrink: 0; }
-    .kc div { display: flex; flex-direction: column; min-width: 0; } .kc small { font-size: 13px; color: #2b2f4a; } .kc b { font-size: 22px; font-weight: 700; margin: 2px 0; }
+    .kc { display: flex; align-items: center; gap: 18px; padding: 12px 14px; background: var(--kb-ffffff); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; text-align: left; font: inherit; color: inherit; min-width: 0; box-shadow: 0 1px 3px rgba(20,20,60,.04); }
+    .kc:hover, .kc.on { border-color: var(--kl-c4b5fd); } .kc.on { box-shadow: 0 0 0 2px var(--primary-soft); }
+    .ki { width: 66px; height: 62px; border-radius: 12px; color: var(--kf-ffffff); display: grid; place-items: center; flex-shrink: 0; }
+    .kc div { display: flex; flex-direction: column; min-width: 0; } .kc small { font-size: 13px; color: var(--kf-2b2f4a); } .kc b { font-size: 22px; font-weight: 700; margin: 2px 0; }
     .kc em { font-style: normal; font-size: 12px; display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; } .kc em span { color: var(--muted); margin-left: 18px; }
-    .up-g { color: #16a34a; } .dn-r { color: #dc2626; } .up-b { color: #2563eb; }
+    .up-g { color: var(--kf-16a34a); } .dn-r { color: var(--kf-dc2626); } .up-b { color: var(--kf-2563eb); }
     .filters { display: grid; grid-template-columns: 1.7fr 1fr 1fr 1fr 1fr 0.75fr; gap: 10px; padding: 10px; margin-bottom: 12px; align-items: stretch; }
-    .fsearch { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; color: #4b4f6b; }
+    .fsearch { display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; color: var(--kf-4b4f6b); }
     .fsearch input { border: 0; outline: 0; font: inherit; font-size: 12px; flex: 1; min-width: 0; }
     .fbox { position: relative; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px 4px; min-width: 0; }
     .fbox span { font-size: 11px; color: var(--muted); } .fbox select { border: 0; outline: 0; font: inherit; font-size: 12px; background: transparent; appearance: none; padding: 1px 18px 1px 0; cursor: pointer; color: var(--text); }
-    .fbox::after { content: ''; position: absolute; right: 12px; top: 50%; width: 6px; height: 6px; border-right: 1.6px solid #4b4f6b; border-bottom: 1.6px solid #4b4f6b; transform: translateY(-60%) rotate(45deg); pointer-events: none; }
-    .more-f { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; color: #2b2f4a; }
-    .more-f.on { border-color: var(--primary); color: var(--primary); } .more-f i { font-style: normal; background: var(--primary); color: #fff; border-radius: 10px; padding: 0 6px; font-size: 10.5px; }
-    .mf { width: 250px; padding: 12px; display: flex; flex-direction: column; gap: 10px; } .mf label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; } .mf-a { display: flex; justify-content: space-between; align-items: center; }
+    .fbox::after { content: ''; position: absolute; right: 12px; top: 50%; width: 6px; height: 6px; border-right: 1.6px solid var(--kl-4b4f6b); border-bottom: 1.6px solid var(--kl-4b4f6b); transform: translateY(-60%) rotate(45deg); pointer-events: none; }
+    .more-f { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); font: inherit; font-size: 12px; cursor: pointer; color: var(--kf-2b2f4a); }
+    .more-f.on { border-color: var(--primary); color: var(--primary); } .more-f i { font-style: normal; background: var(--primary); color: var(--kf-ffffff); border-radius: 10px; padding: 0 6px; font-size: 10.5px; }
+    .mf { width: 250px; padding: 12px; display: flex; flex-direction: column; gap: 10px; } .mf label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); } .mf-a { display: flex; justify-content: space-between; align-items: center; }
     .main { display: grid; grid-template-columns: minmax(0, 1fr) 236px; gap: 12px; align-items: start; } .main.no-detail { grid-template-columns: minmax(0, 1fr); }
     .left { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .charts { display: grid; grid-template-columns: 1.5fr 2fr 0.95fr; gap: 12px; } .charts .card { padding: 12px 14px; }
     h3 { margin: 0; font-size: 14px; font-weight: 700; } .ch { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
     .donut { display: grid; grid-template-columns: 128px 1fr; gap: 10px; align-items: center; margin-top: 10px; }
-    .ring { width: 128px; } .seg { cursor: pointer; transition: stroke-width .15s; } .d-v { font-size: 21px; font-weight: 700; fill: var(--text); } .d-l { font-size: 10.5px; fill: #3b3f5c; }
+    .ring { width: 128px; } .seg { cursor: pointer; transition: stroke-width .15s; } .d-v { font-size: 21px; font-weight: 700; fill: var(--text); } .d-l { font-size: 10.5px; fill: var(--ka-3b3f5c); }
     .lg { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; } .lg li { display: grid; grid-template-columns: 9px 1fr auto 40px; gap: 6px; white-space: nowrap; align-items: center; font-size: 11.5px; cursor: pointer; }
-    .lg li.dim { opacity: .4; } .lg i { width: 9px; height: 9px; border-radius: 50%; } .lg b { font-weight: 500; text-align: right; } .lg em { font-style: normal; color: #4b4f6b; }
-    .sl { display: flex; gap: 14px; font-size: 11.5px; color: #3b3f5c; } .sl span { display: inline-flex; align-items: center; gap: 6px; } .sl i { width: 8px; height: 8px; border-radius: 50%; }
-    .bars { width: 100%; height: auto; display: block; } .gl { stroke: #eef0f5; } .ax { font-size: 9.5px; fill: #4b4f6b; } .bv { font-size: 9px; fill: #2b2f4a; } .grp { cursor: pointer; } .grp:hover .lab { fill: var(--primary); font-weight: 600; }
+    .lg li.dim { opacity: .4; } .lg i { width: 9px; height: 9px; border-radius: 50%; } .lg b { font-weight: 500; text-align: right; } .lg em { font-style: normal; color: var(--kf-4b4f6b); }
+    .sl { display: flex; gap: 14px; font-size: 11.5px; color: var(--kf-3b3f5c); } .sl span { display: inline-flex; align-items: center; gap: 6px; } .sl i { width: 8px; height: 8px; border-radius: 50%; }
+    .bars { width: 100%; height: auto; display: block; } .gl { stroke: var(--kl-eef0f5); } .ax { font-size: 9.5px; fill: var(--ka-4b4f6b); } .bv { font-size: 9px; fill: var(--ka-2b2f4a); } .grp { cursor: pointer; } .grp:hover .lab { fill: var(--primary); font-weight: 600; }
     .loc .link.sm { font-size: 11px; }
     .tbl { padding: 10px 12px; }
-    .ttabs { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; } .ttabs button { border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 7px 18px; font: inherit; font-size: 11.5px; cursor: pointer; color: #2b2f4a; }
-    .ttabs button.on { background: #6d28d9; border-color: #6d28d9; color: #fff; font-weight: 600; }
+    .ttabs { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; } .ttabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; padding: 7px 18px; font: inherit; font-size: 11.5px; cursor: pointer; color: var(--kf-2b2f4a); }
+    .ttabs button.on { background: var(--kb-6d28d9); border-color: var(--kl-6d28d9); color: var(--kf-ffffff); font-weight: 600; }
     .bulk { display: flex; align-items: center; gap: 8px; padding: 6px 10px; margin-bottom: 8px; background: var(--primary-soft); border-radius: 8px; font-size: 12px; }
-    .inv th { font-size: 11.5px; font-weight: 500; color: #2b2f4a; background: #fff; } .inv td { font-size: 11px; color: #4b4f6b; padding: 7px 10px; } .inv .cb { width: 22px; }
-    .arr { margin-left: 4px; font-size: 9px; color: #c4c7d6; } .arr.on { color: var(--primary); }
-    .dn { display: inline-flex; align-items: center; gap: 8px; color: var(--text); } .dn i { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: #fff; }
+    .inv th { font-size: 11.5px; font-weight: 500; color: var(--kf-2b2f4a); background: var(--kb-ffffff); } .inv td { font-size: 11px; color: var(--kf-4b4f6b); padding: 7px 10px; } .inv .cb { width: 22px; }
+    .arr { margin-left: 4px; font-size: 9px; color: var(--kf-c4c7d6); } .arr.on { color: var(--primary); }
+    .dn { display: inline-flex; align-items: center; gap: 8px; color: var(--text); } .dn i { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .st { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px 3px 5px; border-radius: 12px; font-size: 11px; } .st i { width: 12px; height: 12px; border-radius: 50%; background: currentColor; }
-    .st.green { background: #dcfce7; color: #15803d; } .st.green i { background: #22c55e; } .st.red { background: #fee2e2; color: #b91c1c; } .st.red i { background: #ef4444; }
-    .st.amber { background: #ffedd5; color: #c2410c; } .st.amber i { background: #fb923c; } .st.grey { background: #f1f5f9; color: #475569; } .st.grey i { background: #94a3b8; }
+    .st.green { background: var(--kb-dcfce7); color: var(--kf-15803d); } .st.green i { background: var(--kb-22c55e); } .st.red { background: var(--kb-fee2e2); color: var(--kf-b91c1c); } .st.red i { background: var(--kb-ef4444); }
+    .st.amber { background: var(--kb-ffedd5); color: var(--kf-c2410c); } .st.amber i { background: var(--kb-fb923c); } .st.grey { background: var(--kb-f1f5f9); color: var(--kf-475569); } .st.grey i { background: var(--kb-94a3b8); }
     .act { text-align: left; } .dots { font-size: 11px; letter-spacing: 1px; font-weight: 700; } .empty { text-align: center; padding: 30px !important; }
-    .pgr { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 11.5px; color: #4b4f6b; flex-wrap: wrap; gap: 8px; }
-    .pages { display: flex; align-items: center; gap: 8px; } .pg { min-width: 22px; height: 22px; padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; background: #fff; font-size: 11px; cursor: pointer; } .pg.on { background: #6d28d9; border-color: #6d28d9; color: #fff; }
+    .pgr { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 11.5px; color: var(--kf-4b4f6b); flex-wrap: wrap; gap: 8px; }
+    .pages { display: flex; align-items: center; gap: 8px; } .pg { min-width: 22px; height: 22px; padding: 0 5px; border: 1px solid var(--border); border-radius: 4px; background: var(--kb-ffffff); font-size: 11px; cursor: pointer; } .pg.on { background: var(--kb-6d28d9); border-color: var(--kl-6d28d9); color: var(--kf-ffffff); }
     .pg:disabled { opacity: .4; cursor: default; } .show { margin-left: 22px; } .pages .select { padding: 5px 30px 5px 18px; font-size: 11.5px; }
     .detail { position: sticky; top: 76px; padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 6px; max-height: calc(100vh - 88px); overflow: auto; }
-    .dh { display: flex; align-items: center; gap: 4px; } .dh h2 { margin: 0; font-size: 15px; flex: 1; } .ib { border: 0; background: none; font-size: 17px; cursor: pointer; color: #2b2f4a; padding: 0 5px; } .ib.x { font-size: 22px; }
+    .dh { display: flex; align-items: center; gap: 4px; } .dh h2 { margin: 0; font-size: 15px; flex: 1; } .ib { border: 0; background: none; font-size: 17px; cursor: pointer; color: var(--kf-2b2f4a); padding: 0 5px; } .ib.x { font-size: 22px; }
     .st.big { align-self: flex-start; } .art { display: grid; place-items: center; margin: -2px 0 4px; }
-    .kv { display: grid; grid-template-columns: 100px 1fr; gap: 8px 6px; margin: 4px 0 10px; font-size: 10.5px; } .kv dt { color: #4b4f6b; display: flex; align-items: center; gap: 8px; } .kv dd { margin: 0; color: #2b2f4a; overflow-wrap: anywhere; }
-    .kv.ic dt app-icon { color: #2b2f4a; } .kv.sm { margin-top: 0; font-size: 10px; grid-template-columns: 92px 1fr; } .new { color: var(--primary); font-weight: 600; margin-left: 4px; }
-    h4 { margin: 6px 0 0; font-size: 12.5px; padding-top: 8px; border-top: 1px solid #f0f1f6; }
-    .cs { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; } .cs i { width: 10px; height: 10px; border-radius: 50%; } .cs.green { color: #15803d; } .cs.green i { background: #22c55e; } .cs.red { color: #b91c1c; } .cs.red i { background: #ef4444; } .cs.amber { color: #c2410c; } .cs.amber i { background: #fb923c; } .cs.grey i { background: #94a3b8; }
+    .kv { display: grid; grid-template-columns: 100px 1fr; gap: 8px 6px; margin: 4px 0 10px; font-size: 10.5px; } .kv dt { color: var(--kf-4b4f6b); display: flex; align-items: center; gap: 8px; } .kv dd { margin: 0; color: var(--kf-2b2f4a); overflow-wrap: anywhere; }
+    .kv.ic dt app-icon { color: var(--kf-2b2f4a); } .kv.sm { margin-top: 0; font-size: 10px; grid-template-columns: 92px 1fr; } .new { color: var(--primary); font-weight: 600; margin-left: 4px; }
+    h4 { margin: 6px 0 0; font-size: 12.5px; padding-top: 8px; border-top: 1px solid var(--kl-f0f1f6); }
+    .cs { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; } .cs i { width: 10px; height: 10px; border-radius: 50%; } .cs.green { color: var(--kf-15803d); } .cs.green i { background: var(--kb-22c55e); } .cs.red { color: var(--kf-b91c1c); } .cs.red i { background: var(--kb-ef4444); } .cs.amber { color: var(--kf-c2410c); } .cs.amber i { background: var(--kb-fb923c); } .cs.grey i { background: var(--kb-94a3b8); }
     .acts { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-    .acts button { display: flex; align-items: center; gap: 14px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font: inherit; font-size: 11px; color: #2b2f4a; cursor: pointer; text-align: left; }
-    .acts button app-icon { color: #4c1d95; } .acts button:hover { background: #f5f3ff; border-color: #c4b5fd; } .acts button:disabled { opacity: .5; cursor: default; }
+    .acts button { display: flex; align-items: center; gap: 14px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--kb-ffffff); font: inherit; font-size: 11px; color: var(--kf-2b2f4a); cursor: pointer; text-align: left; }
+    .acts button app-icon { color: var(--kf-4c1d95); } .acts button:hover { background: var(--kb-f5f3ff); border-color: var(--kl-c4b5fd); } .acts button:disabled { opacity: .5; cursor: default; }
     .bm { display: grid; grid-template-columns: 1fr 260px; gap: 12px; } .bml { list-style: none; margin: 0; padding: 0; max-height: 460px; overflow: auto; }
-    .bml li { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 12px; } .bml li.on, .bml li:hover { background: #f5f3ff; } .bml div { display: flex; flex-direction: column; } .bml small { color: var(--muted); } .bml .st { padding: 3px; }
+    .bml li { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 12px; } .bml li.on, .bml li:hover { background: var(--kb-f5f3ff); } .bml div { display: flex; flex-direction: column; } .bml small { color: var(--muted); } .bml .st { padding: 3px; }
     @media (max-width: 1350px) { .kpis { grid-template-columns: repeat(3, 1fr); } .filters { grid-template-columns: 1fr 1fr 1fr; } .charts { grid-template-columns: 1fr 1fr; } .charts .loc { grid-column: span 2; } .main { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
   `,
 })
@@ -356,7 +356,7 @@ export class DeviceInventory {
   protected readonly sites = SITES;
   protected readonly depts = DEPTS;
   protected readonly vendors = [...new Set(Object.values(TYPE_META).map((m) => m.vendor))];
-  protected readonly barColors = ['#10b981', '#ef4444', '#fbbf24'];
+  protected readonly barColors = ['var(--ka-10b981)', 'var(--ka-ef4444)', 'var(--ka-fbbf24)'];
   protected readonly heads: { k: SortKey; l: string }[] = [
     { k: 'name', l: 'Device Name' }, { k: 'type', l: 'Type' }, { k: 'model', l: 'Model' }, { k: 'serial', l: 'Serial Number' }, { k: 'site', l: 'Site' }, { k: 'location', l: 'Location' }, { k: 'status', l: 'Status' }, { k: 'seenAgo', l: 'Last Seen' },
   ];
@@ -448,7 +448,7 @@ export class DeviceInventory {
     return t === 'IoT Sensor' ? 'IoT Sensors' : TYPE_META[t].plural;
   }
   protected tileColor(d: Device) {
-    return d.status === 'Offline' ? '#ef4444' : d.status === 'Maintenance' ? '#f59e0b' : d.type === 'Switch' ? '#3b6fd8' : d.type === 'Access Point' ? '#1d8ff0' : d.type === 'Camera' ? '#12b5a6' : TYPE_META[d.type].color;
+    return d.status === 'Offline' ? 'var(--ka-ef4444)' : d.status === 'Maintenance' ? 'var(--ka-f59e0b)' : d.type === 'Switch' ? 'var(--ka-3b6fd8)' : d.type === 'Access Point' ? 'var(--ka-1d8ff0)' : d.type === 'Camera' ? 'var(--ka-12b5a6)' : TYPE_META[d.type].color;
   }
   protected pct(n: number) {
     return Math.round((n / (this.c().total || 1)) * 100);

@@ -80,7 +80,7 @@ const ZONES_BY_FLOOR: Record<string, string[]> = {
   'Floor 4': ['Exec Suite', 'Open Office 4'],
   'Floor 5': ['Innovation Lab', 'Hot Desks'],
 };
-const PAL = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#16a34a', '#ea580c', '#475569'];
+const PAL = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-475569)'];
 
 export const E_PEOPLE: EPerson[] = (() => {
   const r = rng(842);
@@ -112,13 +112,13 @@ export const E_PEOPLE: EPerson[] = (() => {
 /* ---------- Site map (Floor 1, building + outside muster area) ---------- */
 export const E_BUILDING = { x: 20, y: 20, w: 700, h: 520 };
 export const E_ZONES: MapZone[] = [
-  { id: 'nw', name: 'North Wing', x: 300, y: 50, w: 200, h: 120, color: '#3b82f6' },
-  { id: 'conf', name: 'Conference Room', x: 120, y: 180, w: 200, h: 130, color: '#ef4444', fill: 0.3 },
-  { id: 'ww', name: 'West Wing', x: 40, y: 320, w: 230, h: 200, color: '#3b82f6' },
-  { id: 'caf', name: 'Cafeteria', x: 430, y: 200, w: 230, h: 200, color: '#f59e0b' },
-  { id: 'off', name: 'Open Office', x: 280, y: 330, w: 140, h: 190, color: '#94a3b8', kind: 'open', fill: 0.05 },
-  { id: 'srv', name: 'Store', x: 540, y: 50, w: 130, h: 120, color: '#94a3b8', kind: 'open', fill: 0.05 },
-  { id: 'lob', name: 'Lobby', x: 440, y: 420, w: 200, h: 100, color: '#8b5cf6' },
+  { id: 'nw', name: 'North Wing', x: 300, y: 50, w: 200, h: 120, color: 'var(--ka-3b82f6)' },
+  { id: 'conf', name: 'Conference Room', x: 120, y: 180, w: 200, h: 130, color: 'var(--ka-ef4444)', fill: 0.3 },
+  { id: 'ww', name: 'West Wing', x: 40, y: 320, w: 230, h: 200, color: 'var(--ka-3b82f6)' },
+  { id: 'caf', name: 'Cafeteria', x: 430, y: 200, w: 230, h: 200, color: 'var(--ka-f59e0b)' },
+  { id: 'off', name: 'Open Office', x: 280, y: 330, w: 140, h: 190, color: 'var(--ka-94a3b8)', kind: 'open', fill: 0.05 },
+  { id: 'srv', name: 'Store', x: 540, y: 50, w: 130, h: 120, color: 'var(--ka-94a3b8)', kind: 'open', fill: 0.05 },
+  { id: 'lob', name: 'Lobby', x: 440, y: 420, w: 200, h: 100, color: 'var(--ka-8b5cf6)' },
 ];
 export const EXITS = [
   { id: 'ex1', name: 'Main Exit', x: 400, y: 540 },
@@ -175,13 +175,13 @@ export class EmergencyStore {
     this.evac.set({ id: 'EVC-2026-014', type: 'Fire Alarm', location: 'Head Office – Floor 1 (Conference Room)', triggeredAt: t0, by: 'Fire Panel (Auto)', scope: 'Full Building Evacuation', drill: false });
     const ev = (s: number, event: string, location: string, source: string, icon: string, color: string): EEvent => ({ at: t0 + s * 1000, event, location, source, icon, color });
     this.events.set([
-      ev(372, 'Person reached muster point', 'Muster Point A', 'RTLS', 'shield-check', '#22c55e'),
-      ev(345, 'Evacuation route cleared', 'North Wing', 'System', 'megaphone', '#3b82f6'),
-      ev(258, 'Person marked missing', 'Floor 1', 'Manual', 'triangle-alert', '#ef4444'),
-      ev(210, 'Zone evacuation complete', 'Floor 2', 'System', 'run', '#22c55e'),
-      ev(125, 'Fire alarm triggered', 'Conference Room', 'Fire Panel', 'flame', '#ef4444'),
-      ev(102, 'Emergency notification sent', 'All Floors', 'System', 'megaphone', '#ef4444'),
-      ev(0, 'Evacuation started', 'Head Office', 'Fire Panel', 'siren', '#ef4444'),
+      ev(372, 'Person reached muster point', 'Muster Point A', 'RTLS', 'shield-check', 'var(--ka-22c55e)'),
+      ev(345, 'Evacuation route cleared', 'North Wing', 'System', 'megaphone', 'var(--ka-3b82f6)'),
+      ev(258, 'Person marked missing', 'Floor 1', 'Manual', 'triangle-alert', 'var(--ka-ef4444)'),
+      ev(210, 'Zone evacuation complete', 'Floor 2', 'System', 'run', 'var(--ka-22c55e)'),
+      ev(125, 'Fire alarm triggered', 'Conference Room', 'Fire Panel', 'flame', 'var(--ka-ef4444)'),
+      ev(102, 'Emergency notification sent', 'All Floors', 'System', 'megaphone', 'var(--ka-ef4444)'),
+      ev(0, 'Evacuation started', 'Head Office', 'Fire Panel', 'siren', 'var(--ka-ef4444)'),
     ]);
     this.history.set([
       { id: 'EVC-2026-013', type: 'Fire Drill', location: 'Head Office – All Floors', triggeredAt: Date.now() - 22 * 86400000, by: 'HSE Manager', scope: 'Full Building Evacuation', drill: true, endedAt: Date.now() - 22 * 86400000 + 11 * 60000 },
@@ -222,7 +222,7 @@ export class EmergencyStore {
     );
     this.musters.update((l) => l.map((m) => ({ ...m, present: m.present + (per.get(m.id) ?? 0) })));
     const first = this.people().find((p) => set.has(p.id))!;
-    this.log(ids.length === 1 ? `${first.name} reached muster point` : `${ids.length} people reached muster points`, `Muster Point ${first.muster}`, source, 'shield-check', '#22c55e');
+    this.log(ids.length === 1 ? `${first.name} reached muster point` : `${ids.length} people reached muster points`, `Muster Point ${first.muster}`, source, 'shield-check', 'var(--ka-22c55e)');
   }
   private lowest() {
     return [...this.musters()].sort((a, b) => a.present / a.expected - b.present / b.expected)[0]?.id;
@@ -230,7 +230,7 @@ export class EmergencyStore {
   markMissing(id: string) {
     this.people.update((l) => l.map((p) => (p.id === id ? { ...p, status: 'Missing', muster: '', lastSeen: 1 } : p)));
     const p = this.people().find((x) => x.id === id)!;
-    this.log(`${p.name} marked missing`, `${p.floor} · ${p.zone}`, 'Manual', 'triangle-alert', '#ef4444');
+    this.log(`${p.name} marked missing`, `${p.floor} · ${p.zone}`, 'Manual', 'triangle-alert', 'var(--ka-ef4444)');
   }
   log(event: string, location: string, source: string, icon: string, color: string) {
     this.events.update((l) => [{ at: Date.now(), event, location, source, icon, color }, ...l]);
@@ -242,8 +242,8 @@ export class EmergencyStore {
     this.people.update((l) => l.map((p) => ({ ...p, status: 'Yet to Evacuate', muster: '', lastSeen: 0 })));
     this.musters.update((l) => l.map((m) => ({ ...m, present: 0 })));
     this.events.set([]);
-    this.log(e.drill ? 'Evacuation drill started' : 'Evacuation started', e.location, e.by, 'siren', '#ef4444');
-    this.log('Emergency notification sent', 'All Floors', 'System', 'megaphone', '#ef4444');
+    this.log(e.drill ? 'Evacuation drill started' : 'Evacuation started', e.location, e.by, 'siren', 'var(--ka-ef4444)');
+    this.log('Emergency notification sent', 'All Floors', 'System', 'megaphone', 'var(--ka-ef4444)');
   }
   allClear() {
     const cur = this.evac();
@@ -251,11 +251,11 @@ export class EmergencyStore {
     const ended = { ...cur, endedAt: Date.now() };
     this.evac.set(ended);
     this.history.update((h) => [ended, ...h]);
-    this.log('All clear — re-entry permitted', cur.location, 'Demo login', 'shield-check', '#22c55e');
+    this.log('All clear — re-entry permitted', cur.location, 'Demo login', 'shield-check', 'var(--ka-22c55e)');
   }
   broadcast(title: string, text: string, channels: string[], audience: string) {
     const delivered = audience === 'Yet to evacuate & missing' ? this.counts().yet + this.counts().missing : this.counts().total;
     this.sent.update((l) => [{ at: Date.now(), title, text, channels, audience, delivered }, ...l]);
-    this.log(`Broadcast: ${title}`, audience, channels.join(', '), 'megaphone', '#7c3aed');
+    this.log(`Broadcast: ${title}`, audience, channels.join(', '), 'megaphone', 'var(--ka-7c3aed)');
   }
 }

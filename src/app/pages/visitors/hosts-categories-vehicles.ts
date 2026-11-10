@@ -91,7 +91,7 @@ export class HostManagement {
     return names.map((name, i) => {
       const p = PEOPLE.find((x) => x.name === name);
       const base: Host = {
-        id: `H-${i}`, name, initials: name.split(' ').map((x) => x[0]).join('').slice(0, 2), avatar: p?.avatar ?? '#7c3aed', dept: HOSTS.includes(name) ? hostDept(name) : (p?.dept ?? 'General'),
+        id: `H-${i}`, name, initials: name.split(' ').map((x) => x[0]).join('').slice(0, 2), avatar: p?.avatar ?? 'var(--ka-7c3aed)', dept: HOSTS.includes(name) ? hostDept(name) : (p?.dept ?? 'General'),
         today: vs.filter((v) => v.host === name).length, month: HISTORY_VISITS.filter((v) => v.host === name && v.expected > Date.now() - 30 * 86400000).length,
         pending: vs.filter((v) => v.host === name && v.status === 'Pending Approval').length, email: true, sms: i % 3 === 0, teams: i % 2 === 0, delegate: '', canHost: true,
       };
@@ -145,7 +145,7 @@ const ZONES = ['Reception', 'Meeting Rooms', 'Office Floors', 'Canteen', 'Wareho
     </section>
     @let c = cats()[sel()];
     <div class="card">
-      <div class="card-head"><input class="input title" [value]="c.name" (change)="patch({ name: $any($event.target).value })" /><input type="color" [value]="c.color" (input)="patch({ color: $any($event.target).value })" /></div>
+      <div class="card-head"><input class="input title" [value]="c.name" (change)="patch({ name: $any($event.target).value })" /><input type="color" [value]="(c.color.startsWith('#') ? c.color : '#' + c.color.slice(-7, -1))" (input)="patch({ color: $any($event.target).value })" /></div>
       <div class="grid2">
         <div>
           <h4>Requirements</h4>
@@ -176,10 +176,10 @@ const ZONES = ['Reception', 'Meeting Rooms', 'Office Floors', 'Canteen', 'Wareho
     .cat { display: flex; flex-direction: column; gap: 3px; border-top: 4px solid; text-align: left; cursor: pointer; font-family: inherit; } .cat small { color: var(--muted); } .cat.on { box-shadow: 0 0 0 2px var(--primary-soft); border-color: var(--primary); }
     .title { font-size: 16px; font-weight: 600; max-width: 300px; }
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; } h4 { margin: 0 0 8px; font-size: 13px; }
-    .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; }
+    .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; }
     .row input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--primary); } .n { width: 70px; }
     .zones { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 16px; }
-    .zones label { display: flex; gap: 6px; align-items: center; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12.5px; cursor: pointer; } .zones label.on { background: #faf8ff; border-color: #c4b5fd; }
+    .zones label { display: flex; gap: 6px; align-items: center; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12.5px; cursor: pointer; } .zones label.on { background: var(--kb-faf8ff); border-color: var(--kl-c4b5fd); }
     .flow { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.9; }
     @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
   `,
@@ -191,12 +191,12 @@ export class VisitorCategories {
   ];
   protected readonly sel = signal(0);
   protected readonly cats = signal<Category[]>([
-    { name: 'Business Meeting', color: '#7c3aed', approval: 'Host approval', idRequired: true, nda: true, induction: false, escort: false, photo: true, maxHours: 8, zones: ['Reception', 'Meeting Rooms', 'Canteen'], badge: 'Visitor' },
-    { name: 'Contractor', color: '#f97316', approval: 'Host + Security', idRequired: true, nda: true, induction: true, escort: true, photo: true, maxHours: 10, zones: ['Reception', 'Warehouse', 'Plant Floor'], badge: 'Contractor' },
-    { name: 'Delivery', color: '#0d9488', approval: 'Auto-approve', idRequired: false, nda: false, induction: false, escort: false, photo: false, maxHours: 1, zones: ['Reception', 'Warehouse'], badge: 'Delivery' },
-    { name: 'Interview', color: '#3b82f6', approval: 'Host approval', idRequired: true, nda: false, induction: false, escort: true, photo: true, maxHours: 4, zones: ['Reception', 'Meeting Rooms'], badge: 'Interview' },
-    { name: 'Service & Maintenance', color: '#ea580c', approval: 'Host + Security', idRequired: true, nda: true, induction: true, escort: true, photo: true, maxHours: 8, zones: ['Reception', 'Office Floors', 'Labs'], badge: 'Contractor' },
-    { name: 'VIP / Government', color: '#a16207', approval: 'Auto-approve', idRequired: false, nda: false, induction: false, escort: true, photo: false, maxHours: 6, zones: ZONES, badge: 'VIP' },
+    { name: 'Business Meeting', color: 'var(--ka-7c3aed)', approval: 'Host approval', idRequired: true, nda: true, induction: false, escort: false, photo: true, maxHours: 8, zones: ['Reception', 'Meeting Rooms', 'Canteen'], badge: 'Visitor' },
+    { name: 'Contractor', color: 'var(--ka-f97316)', approval: 'Host + Security', idRequired: true, nda: true, induction: true, escort: true, photo: true, maxHours: 10, zones: ['Reception', 'Warehouse', 'Plant Floor'], badge: 'Contractor' },
+    { name: 'Delivery', color: 'var(--ka-0d9488)', approval: 'Auto-approve', idRequired: false, nda: false, induction: false, escort: false, photo: false, maxHours: 1, zones: ['Reception', 'Warehouse'], badge: 'Delivery' },
+    { name: 'Interview', color: 'var(--ka-3b82f6)', approval: 'Host approval', idRequired: true, nda: false, induction: false, escort: true, photo: true, maxHours: 4, zones: ['Reception', 'Meeting Rooms'], badge: 'Interview' },
+    { name: 'Service & Maintenance', color: 'var(--ka-ea580c)', approval: 'Host + Security', idRequired: true, nda: true, induction: true, escort: true, photo: true, maxHours: 8, zones: ['Reception', 'Office Floors', 'Labs'], badge: 'Contractor' },
+    { name: 'VIP / Government', color: 'var(--ka-a16207)', approval: 'Auto-approve', idRequired: false, nda: false, induction: false, escort: true, photo: false, maxHours: 6, zones: ZONES, badge: 'VIP' },
   ]);
   protected patch(c: Partial<Category>) {
     const i = this.sel();
@@ -210,7 +210,7 @@ export class VisitorCategories {
     this.patch({ zones: zs.includes(z) ? zs.filter((x) => x !== z) : [...zs, z] });
   }
   protected add() {
-    this.cats.update((l) => [...l, { name: 'New Category', color: '#64748b', approval: 'Host approval', idRequired: true, nda: false, induction: false, escort: false, photo: true, maxHours: 8, zones: ['Reception'], badge: 'Visitor' }]);
+    this.cats.update((l) => [...l, { name: 'New Category', color: 'var(--ka-64748b)', approval: 'Host approval', idRequired: true, nda: false, induction: false, escort: false, photo: true, maxHours: 8, zones: ['Reception'], badge: 'Visitor' }]);
     this.sel.set(this.cats().length - 1);
   }
 }
@@ -225,11 +225,11 @@ export class VisitorCategories {
       <button class="btn-primary" (click)="form.set(true)"><app-icon name="plus" [size]="16" />Register Vehicle</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Vehicles On Site" [value]="inCount()" icon="truck" color="#8b5cf6" />
-      <app-kpi label="Arrivals Today" [value]="list().length" icon="trending-up" color="#3b82f6" />
-      <app-kpi label="Visitor Parking P1" [value]="p1() + ' / 40'" icon="map-pin" [color]="p1() > 34 ? '#ef4444' : '#22c55e'" sub="slots used" />
-      <app-kpi label="Loading Bay" [value]="bay() + ' / 8'" icon="box" color="#f97316" sub="bays used" />
-      <app-kpi label="Overstaying" [value]="overstay()" icon="clock" color="#ef4444" sub="> 4 h on site" />
+      <app-kpi label="Vehicles On Site" [value]="inCount()" icon="truck" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Arrivals Today" [value]="list().length" icon="trending-up" color="var(--ka-3b82f6)" />
+      <app-kpi label="Visitor Parking P1" [value]="p1() + ' / 40'" icon="map-pin" [color]="p1() > 34 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" sub="slots used" />
+      <app-kpi label="Loading Bay" [value]="bay() + ' / 8'" icon="box" color="var(--ka-f97316)" sub="bays used" />
+      <app-kpi label="Overstaying" [value]="overstay()" icon="clock" color="var(--ka-ef4444)" sub="> 4 h on site" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -263,10 +263,10 @@ export class VisitorCategories {
   `,
   styles: `
     .anpr { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow: auto; }
-    .anpr li { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; animation: rin .4s; }
-    .anpr li.alert { background: #fef2f2; } .anpr div { display: flex; flex-direction: column; } .anpr small { color: var(--muted); }
-    .plate { padding: 3px 7px; border: 2px solid #111; border-radius: 4px; background: #fff; font-family: monospace; font-weight: 700; font-size: 12px; }
-    @keyframes rin { from { background: #f5f3ff; } }
+    .anpr li { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; animation: rin .4s; }
+    .anpr li.alert { background: var(--kb-fef2f2); } .anpr div { display: flex; flex-direction: column; } .anpr small { color: var(--muted); }
+    .plate { padding: 3px 7px; border: 2px solid var(--kl-111111); border-radius: 4px; background: var(--kb-ffffff); font-family: monospace; font-weight: 700; font-size: 12px; }
+    @keyframes rin { from { background: var(--kb-f5f3ff); } }
     .blocked { display: flex; flex-wrap: wrap; gap: 6px; } .blocked button { border: 0; background: none; color: inherit; cursor: pointer; }
   `,
 })

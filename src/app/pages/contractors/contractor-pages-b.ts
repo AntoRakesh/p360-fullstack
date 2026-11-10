@@ -33,10 +33,10 @@ const overall = (s: Pick<Score, 'safety' | 'quality' | 'timeliness' | 'complianc
   template: `
     <app-page-head title="Contractor Performance" parent="Contractor &amp; Vendor Workforce" parentLink="/contractor-vendor" subtitle="Scorecards for safety, quality, timeliness and compliance (weights 35 / 25 / 20 / 20)." />
     <section class="kpi-row">
-      <app-kpi label="Average Score" [value]="avg()" icon="star" color="#8b5cf6" change="2.4" />
-      <app-kpi label="Top Performer" [value]="best().name" icon="trending-up" color="#22c55e" [sub]="best().overall + ' / 100'" />
-      <app-kpi label="Below 70 (watch)" [value]="below()" icon="triangle-alert" color="#ef4444" />
-      <app-kpi label="Safety Incidents (90 d)" [value]="incidents()" icon="siren" color="#f97316" />
+      <app-kpi label="Average Score" [value]="avg()" icon="star" color="var(--ka-8b5cf6)" change="2.4" />
+      <app-kpi label="Top Performer" [value]="best().name" icon="trending-up" color="var(--ka-22c55e)" [sub]="best().overall + ' / 100'" />
+      <app-kpi label="Below 70 (watch)" [value]="below()" icon="triangle-alert" color="var(--ka-ef4444)" />
+      <app-kpi label="Safety Incidents (90 d)" [value]="incidents()" icon="siren" color="var(--ka-f97316)" />
     </section>
     <section class="pf" [class.with-detail]="!!sel()">
       <div class="card">
@@ -45,7 +45,7 @@ const overall = (s: Pick<Score, 'safety' | 'quality' | 'timeliness' | 'complianc
       @if (sel(); as s) {
         <aside class="card detail">
           <div class="card-head"><h3>{{ s.name }}</h3><button class="close-btn" (click)="selId.set(null)">×</button></div>
-          <div class="big"><b [style.color]="s.overall >= 85 ? '#16a34a' : s.overall >= 70 ? '#d97706' : '#dc2626'">{{ s.overall }}</b><span>overall score</span></div>
+          <div class="big"><b [style.color]="s.overall >= 85 ? 'var(--ka-16a34a)' : s.overall >= 70 ? 'var(--ka-d97706)' : 'var(--ka-dc2626)'">{{ s.overall }}</b><span>overall score</span></div>
           <app-sparkline [values]="s.trend" />
           <h4>Rate this month</h4>
           @for (k of keys; track k) {
@@ -181,7 +181,7 @@ export class VendorManagement {
   protected readonly spendMix = computed(() => {
     const m = new Map<string, number>();
     this.list().forEach((v) => m.set(v.category, (m.get(v.category) ?? 0) + v.spend));
-    const colors = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899', '#64748b'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-06b6d4)', 'var(--ka-ec4899)', 'var(--ka-64748b)'];
     return [...m.entries()].map(([label, value], i) => ({ label, value, color: colors[i % colors.length] }));
   });
   protected readonly totalSpend = computed(() => `${(this.list().reduce((a, v) => a + v.spend, 0) / 1e6).toFixed(1)}M`);
@@ -250,7 +250,7 @@ interface Ban {
     }
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
-  styles: `.full { width: 100%; } .res { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; padding: 12px; border-radius: 10px; font-size: 13px; } .bad-r { background: #fef2f2; color: #991b1b; } .ok { background: #f0fdf4; color: #166534; } .res b { font-size: 16px; }`,
+  styles: `.full { width: 100%; } .res { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; padding: 12px; border-radius: 10px; font-size: 13px; } .bad-r { background: var(--kb-fef2f2); color: var(--kf-991b1b); } .ok { background: var(--kb-f0fdf4); color: var(--kf-166534); } .res b { font-size: 16px; }`,
 })
 export class BlacklistedCompanies {
   protected readonly companies = COMPANIES;
@@ -297,10 +297,10 @@ export class BlacklistedCompanies {
   template: `
     <app-page-head title="Reports &amp; Analytics" parent="Contractor &amp; Vendor Workforce" parentLink="/contractor-vendor" subtitle="Contractor headcount, cost, compliance and safety trends." />
     <section class="kpi-row">
-      <app-kpi label="Contractor Headcount" value="3,245" icon="hard-hat" color="#fb923c" change="6%" />
-      <app-kpi label="Contract Value" [value]="'AED ' + value()" icon="trending-up" color="#8b5cf6" />
-      <app-kpi label="Avg. Compliance" [value]="avgComp() + '%'" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Cost per Worker / mo" value="AED 6,120" icon="briefcase" color="#3b82f6" />
+      <app-kpi label="Contractor Headcount" value="3,245" icon="hard-hat" color="var(--ka-fb923c)" change="6%" />
+      <app-kpi label="Contract Value" [value]="'AED ' + value()" icon="trending-up" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Avg. Compliance" [value]="avgComp() + '%'" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Cost per Worker / mo" value="AED 6,120" icon="briefcase" color="var(--ka-3b82f6)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -328,8 +328,8 @@ export class BlacklistedCompanies {
 export class ContractorReports {
   protected readonly months = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
   protected readonly headcount = [
-    { name: 'Contractors', color: '#f97316', values: [2710, 2780, 2820, 2905, 2960, 3010, 3050, 3090, 3120, 3170, 3210, 3245], area: true },
-    { name: 'On site (avg)', color: '#7c3aed', values: [1820, 1870, 1905, 1960, 2010, 2040, 2070, 2100, 2120, 2150, 2170, 2186] },
+    { name: 'Contractors', color: 'var(--ka-f97316)', values: [2710, 2780, 2820, 2905, 2960, 3010, 3050, 3090, 3120, 3170, 3210, 3245], area: true },
+    { name: 'On site (avg)', color: 'var(--ka-7c3aed)', values: [1820, 1870, 1905, 1960, 2010, 2040, 2070, 2100, 2120, 2150, 2170, 2186] },
   ];
   protected readonly reports = [
     { id: 'companies', name: 'Company Register', desc: 'All companies with contract & compliance' },
@@ -340,7 +340,7 @@ export class ContractorReports {
   protected readonly value = computed(() => `${(COMPANIES.reduce((a, c) => a + c.value, 0) / 1e6).toFixed(1)}M`);
   protected readonly avgComp = computed(() => Math.round(COMPANIES.filter((c) => c.status !== 'Inactive').reduce((a, c) => a + c.compliance, 0) / COMPANIES.filter((c) => c.status !== 'Inactive').length));
   protected readonly byTrade = computed(() => COMPANIES.slice(0, 8).map((c) => ({ label: c.trade, value: c.workers, color: c.color })));
-  protected readonly compRows = computed(() => COMPANIES.slice(0, 10).map((c: Company) => ({ label: c.name, value: c.compliance, display: `${c.compliance}%`, color: c.compliance >= 88 ? '#22c55e' : c.compliance >= 80 ? '#f59e0b' : '#ef4444' })));
+  protected readonly compRows = computed(() => COMPANIES.slice(0, 10).map((c: Company) => ({ label: c.name, value: c.compliance, display: `${c.compliance}%`, color: c.compliance >= 88 ? 'var(--ka-22c55e)' : c.compliance >= 80 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)' })));
   protected run(id: string) {
     if (id === 'companies') return downloadCsv('contractor-companies.csv', [['Code', 'Company', 'Trade', 'Workers', 'Status', 'Compliance'], ...COMPANIES.map((c) => [c.code, c.name, c.trade, c.workers, c.status, c.compliance])]);
     const rows = id === 'expiring' ? WORKERS.filter((w) => w.compliance === 'Expiring') : id === 'noncompliant' ? WORKERS.filter((w) => w.compliance === 'Non-compliant') : WORKERS;

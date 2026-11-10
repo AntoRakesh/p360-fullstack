@@ -22,7 +22,7 @@ interface Alert {
   log: LogEntry[];
 }
 
-const SEV_COLOR: Record<Severity, string> = { Critical: '#dc2626', High: '#f97316', Medium: '#3b82f6', Low: '#6b7280' };
+const SEV_COLOR: Record<Severity, string> = { Critical: 'var(--ka-dc2626)', High: 'var(--ka-f97316)', Medium: 'var(--ka-3b82f6)', Low: 'var(--ka-6b7280)' };
 const ASSIGNEES = ['Security Desk', 'Omar Khalid', 'Li Wei', 'Ravi Shankar', 'HSE Team', 'IT Support'];
 const SEED: [string, string, Severity, string, string, Status][] = [
   ['Restricted zone intrusion', 'Access Control', 'Critical', 'Head Office', 'Server Room - F1', 'Open'],
@@ -116,7 +116,7 @@ const now = (offsetMin = 0) => new Date(Date.now() - offsetMin * 60000).toLocale
       @if (active(); as a) {
         <aside class="card detail">
           <div class="card-head">
-            <span class="tag" [style.background]="sevColor[a.severity] + '1f'" [style.color]="sevColor[a.severity]">{{ a.severity }}</span>
+            <span class="tag" [style.background]="'color-mix(in srgb, ' + sevColor[a.severity] + ' 12%, transparent)'" [style.color]="sevColor[a.severity]">{{ a.severity }}</span>
             <button class="close-btn" (click)="activeId.set(null)">×</button>
           </div>
           <h3>{{ a.title }}</h3>
@@ -165,7 +165,7 @@ const now = (offsetMin = 0) => new Date(Date.now() - offsetMin * 60000).toLocale
     .sev-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 12px; }
     .sev { display: flex; flex-direction: column; gap: 2px; border-left: 4px solid; text-align: left; cursor: pointer; font-family: inherit; }
     .sev.on { box-shadow: 0 0 0 2px var(--primary-soft); }
-    .sev span { font-size: 12.5px; color: #4b4f6b; } .sev b { font-size: 26px; } .sev small { font-size: 11.5px; color: var(--muted); }
+    .sev span { font-size: 12.5px; color: var(--kf-4b4f6b); } .sev b { font-size: 26px; } .sev small { font-size: 11.5px; color: var(--muted); }
     .mttr { border-left-color: var(--primary); cursor: default; } .mttr b { color: var(--primary); }
     .layout { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; }
     .layout.has-detail { grid-template-columns: minmax(0, 1fr) 360px; }
@@ -176,12 +176,12 @@ const now = (offsetMin = 0) => new Date(Date.now() - offsetMin * 60000).toLocale
     .kv { display: grid; grid-template-columns: 80px 1fr; gap: 8px; align-items: center; font-size: 13px; margin: 6px 0; }
     .kv dt { color: var(--muted); } .kv dd { margin: 0; } .kv .select { width: 100%; }
     .note { width: 100%; resize: vertical; }
-    .timeline { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid #ede9fe; font-size: 12.5px; }
+    .timeline { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid var(--kl-ede9fe); font-size: 12.5px; }
     .timeline li { position: relative; padding: 4px 0 8px 8px; }
     .timeline li::before { content: ''; position: absolute; left: -18px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); }
     .timeline time { display: block; font-size: 11px; color: var(--muted); }
     .row-in { animation: rowin 0.6s ease; }
-    @keyframes rowin { from { background: #fef2f2; } }
+    @keyframes rowin { from { background: var(--kb-fef2f2); } }
     @media (max-width: 1100px) { .layout.has-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,
 })

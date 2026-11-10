@@ -38,12 +38,12 @@ export interface MealPlan {
 }
 const w = (s: string) => [...s].map((c) => c === '1');
 export const PLAN_SEED: MealPlan[] = [
-  { id: 'MP-01', name: 'Standard Plan', desc: 'Breakfast + Lunch', eligibility: 'All Employees', sites: 'All Sites', siteList: [...SITES], price: 15, status: 'Active', enrolled: 1842, icon: 'm-cutlery', color: '#7c3aed', donut: '#3b82f6', type: 'Employee Plan', from: '2026-10-01', to: '2027-12-31', meals: { Breakfast: w('1111110'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 60, grades: ['G1–G6'], carryForward: false, maxPerSlot: 1 },
-  { id: 'MP-02', name: 'Executive Plan', desc: 'Premium menu with more options', eligibility: 'Management', sites: 'Head Office', siteList: ['Head Office'], price: 25, status: 'Active', enrolled: 412, icon: 'star', color: '#3b82f6', donut: '#14b8a6', type: 'Management Plan', from: '2026-10-01', to: '2027-12-31', meals: { Breakfast: w('1111100'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 80, grades: ['G7–G10'], carryForward: true, maxPerSlot: 2 },
-  { id: 'MP-03', name: 'Shift Worker Plan', desc: 'Shift-based meal entitlement', eligibility: 'Operations (Shift)', sites: 'All Sites', siteList: [...SITES], price: 18, status: 'Active', enrolled: 356, icon: 'users', color: '#0ea5e9', donut: '#84cc16', type: 'Shift Plan', from: '2026-09-01', to: '2027-08-31', meals: { Breakfast: w('1111111'), Lunch: w('1111111'), Dinner: w('1111111') }, subsidy: 70, grades: ['G1–G4'], carryForward: false, maxPerSlot: 1 },
-  { id: 'MP-04', name: 'Contractor Plan', desc: 'Basic meals for contractors', eligibility: 'Contractors', sites: 'All Sites', siteList: [...SITES], price: 12, status: 'Active', enrolled: 184, icon: 'm-cloche', color: '#f97316', donut: '#f97316', type: 'Contractor Plan', from: '2026-07-01', to: '2027-06-30', meals: { Breakfast: w('0000000'), Lunch: w('1111110'), Dinner: w('0000000') }, subsidy: 40, grades: ['Contract'], carryForward: false, maxPerSlot: 1 },
-  { id: 'MP-05', name: 'Part-Time Plan', desc: 'Selected meal credits', eligibility: 'Part-Time', sites: 'All Sites', siteList: [...SITES], price: 10, status: 'Inactive', enrolled: 36, icon: 'user', color: '#a855f7', donut: '#ef4444', type: 'Part-Time Plan', from: '2026-01-01', to: '2026-12-31', meals: { Breakfast: w('0000000'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 30, grades: ['PT'], carryForward: true, maxPerSlot: 1 },
-  { id: 'MP-06', name: 'Guest Plan', desc: 'Visitors and Guests', eligibility: 'Visitors', sites: 'All Sites', siteList: [...SITES], price: 30, status: 'Active', enrolled: 16, icon: 'users', color: '#22c55e', donut: '#8b5cf6', type: 'Guest Plan', from: '2026-10-01', to: '2027-12-31', meals: { Breakfast: w('0000000'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 100, grades: ['Visitor'], carryForward: false, maxPerSlot: 1 },
+  { id: 'MP-01', name: 'Standard Plan', desc: 'Breakfast + Lunch', eligibility: 'All Employees', sites: 'All Sites', siteList: [...SITES], price: 15, status: 'Active', enrolled: 1842, icon: 'm-cutlery', color: 'var(--ka-7c3aed)', donut: 'var(--ka-3b82f6)', type: 'Employee Plan', from: '2026-10-01', to: '2027-12-31', meals: { Breakfast: w('1111110'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 60, grades: ['G1–G6'], carryForward: false, maxPerSlot: 1 },
+  { id: 'MP-02', name: 'Executive Plan', desc: 'Premium menu with more options', eligibility: 'Management', sites: 'Head Office', siteList: ['Head Office'], price: 25, status: 'Active', enrolled: 412, icon: 'star', color: 'var(--ka-3b82f6)', donut: 'var(--ka-14b8a6)', type: 'Management Plan', from: '2026-10-01', to: '2027-12-31', meals: { Breakfast: w('1111100'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 80, grades: ['G7–G10'], carryForward: true, maxPerSlot: 2 },
+  { id: 'MP-03', name: 'Shift Worker Plan', desc: 'Shift-based meal entitlement', eligibility: 'Operations (Shift)', sites: 'All Sites', siteList: [...SITES], price: 18, status: 'Active', enrolled: 356, icon: 'users', color: 'var(--ka-0ea5e9)', donut: 'var(--ka-84cc16)', type: 'Shift Plan', from: '2026-09-01', to: '2027-08-31', meals: { Breakfast: w('1111111'), Lunch: w('1111111'), Dinner: w('1111111') }, subsidy: 70, grades: ['G1–G4'], carryForward: false, maxPerSlot: 1 },
+  { id: 'MP-04', name: 'Contractor Plan', desc: 'Basic meals for contractors', eligibility: 'Contractors', sites: 'All Sites', siteList: [...SITES], price: 12, status: 'Active', enrolled: 184, icon: 'm-cloche', color: 'var(--ka-f97316)', donut: 'var(--ka-f97316)', type: 'Contractor Plan', from: '2026-07-01', to: '2027-06-30', meals: { Breakfast: w('0000000'), Lunch: w('1111110'), Dinner: w('0000000') }, subsidy: 40, grades: ['Contract'], carryForward: false, maxPerSlot: 1 },
+  { id: 'MP-05', name: 'Part-Time Plan', desc: 'Selected meal credits', eligibility: 'Part-Time', sites: 'All Sites', siteList: [...SITES], price: 10, status: 'Inactive', enrolled: 36, icon: 'user', color: 'var(--ka-a855f7)', donut: 'var(--ka-ef4444)', type: 'Part-Time Plan', from: '2026-01-01', to: '2026-12-31', meals: { Breakfast: w('0000000'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 30, grades: ['PT'], carryForward: true, maxPerSlot: 1 },
+  { id: 'MP-06', name: 'Guest Plan', desc: 'Visitors and Guests', eligibility: 'Visitors', sites: 'All Sites', siteList: [...SITES], price: 30, status: 'Active', enrolled: 16, icon: 'users', color: 'var(--ka-22c55e)', donut: 'var(--ka-8b5cf6)', type: 'Guest Plan', from: '2026-10-01', to: '2027-12-31', meals: { Breakfast: w('0000000'), Lunch: w('1111100'), Dinner: w('0000000') }, subsidy: 100, grades: ['Visitor'], carryForward: false, maxPerSlot: 1 },
 ];
 
 /** Scale so the seed plans reproduce this month's AED 46,850 bill (not every enrolee eats every working day). */
@@ -58,14 +58,14 @@ export interface Policy {
   options: string[];
 }
 export const POLICY_SEED: Policy[] = [
-  { id: 'cutoff', icon: 'clock', color: '#2563eb', name: 'Meal Booking Cut-off', value: '2 hours before meal time', options: ['1 hour before meal time', '2 hours before meal time', '4 hours before meal time', 'Previous day 18:00'] },
-  { id: 'noshow', icon: 'm-xcircle', color: '#ef4444', name: 'No Show Policy', value: '2 consecutive no-shows = 1 day block', options: ['No penalty', '2 consecutive no-shows = 1 day block', '3 no-shows / month = 1 week block', 'Charge full meal cost'] },
-  { id: 'carry', icon: 'refresh', color: '#22c55e', name: 'Carry Forward', value: 'Not allowed', options: ['Not allowed', 'Up to 5 meals / month', 'Unlimited within plan validity'] },
-  { id: 'guest', icon: 'users', color: '#7c3aed', name: 'Guest Access', value: 'Allowed with approval', options: ['Not allowed', 'Allowed with approval', 'Allowed (host pays)'] },
-  { id: 'subsidy', icon: 'm-wallet', color: '#16a34a', name: 'Subsidy Rules', value: 'As per company policy', options: ['As per company policy', 'Flat 50% for all plans', 'Grade based'] },
-  { id: 'diet', icon: 'm-leaf', color: '#22c55e', name: 'Special Diet', value: 'HALAL, Vegetarian, Vegan, Gluten Free', options: ['HALAL, Vegetarian, Vegan, Gluten Free', 'HALAL, Vegetarian', 'HALAL only'] },
-  { id: 'allergen', icon: 'triangle-alert', color: '#ef4444', name: 'Allergen Alerts', value: 'Enabled', options: ['Enabled', 'Disabled'] },
-  { id: 'limit', icon: 'm-gauge', color: '#ef4444', name: 'Usage Limit', value: '1 meal per slot per day', options: ['1 meal per slot per day', '2 meals per slot per day', 'Plan defined'] },
+  { id: 'cutoff', icon: 'clock', color: 'var(--ka-2563eb)', name: 'Meal Booking Cut-off', value: '2 hours before meal time', options: ['1 hour before meal time', '2 hours before meal time', '4 hours before meal time', 'Previous day 18:00'] },
+  { id: 'noshow', icon: 'm-xcircle', color: 'var(--ka-ef4444)', name: 'No Show Policy', value: '2 consecutive no-shows = 1 day block', options: ['No penalty', '2 consecutive no-shows = 1 day block', '3 no-shows / month = 1 week block', 'Charge full meal cost'] },
+  { id: 'carry', icon: 'refresh', color: 'var(--ka-22c55e)', name: 'Carry Forward', value: 'Not allowed', options: ['Not allowed', 'Up to 5 meals / month', 'Unlimited within plan validity'] },
+  { id: 'guest', icon: 'users', color: 'var(--ka-7c3aed)', name: 'Guest Access', value: 'Allowed with approval', options: ['Not allowed', 'Allowed with approval', 'Allowed (host pays)'] },
+  { id: 'subsidy', icon: 'm-wallet', color: 'var(--ka-16a34a)', name: 'Subsidy Rules', value: 'As per company policy', options: ['As per company policy', 'Flat 50% for all plans', 'Grade based'] },
+  { id: 'diet', icon: 'm-leaf', color: 'var(--ka-22c55e)', name: 'Special Diet', value: 'HALAL, Vegetarian, Vegan, Gluten Free', options: ['HALAL, Vegetarian, Vegan, Gluten Free', 'HALAL, Vegetarian', 'HALAL only'] },
+  { id: 'allergen', icon: 'triangle-alert', color: 'var(--ka-ef4444)', name: 'Allergen Alerts', value: 'Enabled', options: ['Enabled', 'Disabled'] },
+  { id: 'limit', icon: 'm-gauge', color: 'var(--ka-ef4444)', name: 'Usage Limit', value: '1 meal per slot per day', options: ['1 meal per slot per day', '2 meals per slot per day', 'Plan defined'] },
 ];
 
 export interface Canteen {
@@ -87,10 +87,10 @@ export interface Canteen {
   wait: number;
 }
 export const CANTEENS: Canteen[] = [
-  { id: 'CT-01', name: 'Head Office Canteen', site: 'Head Office', type: 'On-site', operator: 'In-house F&B', usage: 1248, capacity: 1950, seats: 420, counters: 8, hours: '06:30 - 22:00', rating: 4.5, manager: 'Farah Al Hashimi', status: 'Busy', color: '#7c3aed', floor: 'Ground Floor, Tower A', wait: 6 },
-  { id: 'CT-02', name: 'Production Canteen', site: 'Production', type: 'On-site', operator: 'In-house F&B', usage: 892, capacity: 1940, seats: 300, counters: 6, hours: '06:00 - 23:00', rating: 4.2, manager: 'Rajesh Nair', status: 'Open', color: '#3b82f6', floor: 'Plant 1, Block C', wait: 4 },
-  { id: 'CT-03', name: 'Warehouse Canteen', site: 'Warehouse', type: 'On-site', operator: 'In-house F&B', usage: 412, capacity: 1960, seats: 160, counters: 3, hours: '06:00 - 22:00', rating: 4.0, manager: 'Omar Haddad', status: 'Open', color: '#22c55e', floor: 'Warehouse 2, Mezzanine', wait: 2 },
-  { id: 'CT-04', name: 'Remote Site (Partner)', site: 'Remote Site', type: 'Partner', operator: 'Gulf Catering LLC', usage: 294, capacity: 1960, seats: 120, counters: 2, hours: '05:30 - 21:00', rating: 3.9, manager: 'Sameer Khan', status: 'Open', color: '#f97316', floor: 'Camp Facility, Ruwais', wait: 3 },
+  { id: 'CT-01', name: 'Head Office Canteen', site: 'Head Office', type: 'On-site', operator: 'In-house F&B', usage: 1248, capacity: 1950, seats: 420, counters: 8, hours: '06:30 - 22:00', rating: 4.5, manager: 'Farah Al Hashimi', status: 'Busy', color: 'var(--ka-7c3aed)', floor: 'Ground Floor, Tower A', wait: 6 },
+  { id: 'CT-02', name: 'Production Canteen', site: 'Production', type: 'On-site', operator: 'In-house F&B', usage: 892, capacity: 1940, seats: 300, counters: 6, hours: '06:00 - 23:00', rating: 4.2, manager: 'Rajesh Nair', status: 'Open', color: 'var(--ka-3b82f6)', floor: 'Plant 1, Block C', wait: 4 },
+  { id: 'CT-03', name: 'Warehouse Canteen', site: 'Warehouse', type: 'On-site', operator: 'In-house F&B', usage: 412, capacity: 1960, seats: 160, counters: 3, hours: '06:00 - 22:00', rating: 4.0, manager: 'Omar Haddad', status: 'Open', color: 'var(--ka-22c55e)', floor: 'Warehouse 2, Mezzanine', wait: 2 },
+  { id: 'CT-04', name: 'Remote Site (Partner)', site: 'Remote Site', type: 'Partner', operator: 'Gulf Catering LLC', usage: 294, capacity: 1960, seats: 120, counters: 2, hours: '05:30 - 21:00', rating: 3.9, manager: 'Sameer Khan', status: 'Open', color: 'var(--ka-f97316)', floor: 'Camp Facility, Ruwais', wait: 3 },
 ];
 
 export interface Dish {
@@ -111,32 +111,32 @@ export interface Dish {
   available: boolean;
   orders: number;
 }
-const d = (id: number, name: string, emoji: string, category: Dish['category'], cuisine: string, kcal: number, p: number, c: number, f: number, allergens: string[], diets: string[], price: number, rating: number, orders: number, bg = '#fef3c7'): Dish => ({ id: `D${String(id).padStart(3, '0')}`, name, emoji, bg, category, cuisine, kcal, protein: p, carbs: c, fat: f, allergens, diets, price, rating, available: true, orders });
+const d = (id: number, name: string, emoji: string, category: Dish['category'], cuisine: string, kcal: number, p: number, c: number, f: number, allergens: string[], diets: string[], price: number, rating: number, orders: number, bg = 'var(--ka-fef3c7)'): Dish => ({ id: `D${String(id).padStart(3, '0')}`, name, emoji, bg, category, cuisine, kcal, protein: p, carbs: c, fat: f, allergens, diets, price, rating, available: true, orders });
 export const DISH_SEED: Dish[] = [
   d(1, 'Full English Breakfast', '🥓', 'Breakfast', 'Continental', 720, 34, 48, 42, ['Gluten', 'Eggs'], ['Halal'], 14, 4.5, 412),
   d(2, 'Masala Omelette & Paratha', '🥚', 'Breakfast', 'Indian', 540, 24, 46, 28, ['Gluten', 'Eggs', 'Dairy'], ['Halal', 'Vegetarian'], 11, 4.6, 388),
-  d(3, 'Foul Medames & Bread', '🫘', 'Breakfast', 'Arabic', 460, 19, 62, 14, ['Gluten', 'Sesame'], ['Halal', 'Vegan'], 9, 4.3, 296, '#fde68a'),
+  d(3, 'Foul Medames & Bread', '🫘', 'Breakfast', 'Arabic', 460, 19, 62, 14, ['Gluten', 'Sesame'], ['Halal', 'Vegan'], 9, 4.3, 296, 'var(--ka-fde68a)'),
   d(4, 'Pancakes with Berries', '🥞', 'Breakfast', 'Continental', 610, 12, 92, 20, ['Gluten', 'Eggs', 'Dairy'], ['Vegetarian'], 12, 4.4, 264),
-  d(5, 'Greek Yoghurt Parfait', '🥣', 'Breakfast', 'Healthy', 320, 18, 40, 9, ['Dairy', 'Nuts'], ['Vegetarian', 'Gluten Free'], 10, 4.2, 198, '#e0e7ff'),
-  d(6, 'Avocado Toast', '🥑', 'Breakfast', 'Healthy', 410, 11, 38, 24, ['Gluten', 'Sesame'], ['Vegan'], 13, 4.1, 176, '#dcfce7'),
+  d(5, 'Greek Yoghurt Parfait', '🥣', 'Breakfast', 'Healthy', 320, 18, 40, 9, ['Dairy', 'Nuts'], ['Vegetarian', 'Gluten Free'], 10, 4.2, 198, 'var(--ka-e0e7ff)'),
+  d(6, 'Avocado Toast', '🥑', 'Breakfast', 'Healthy', 410, 11, 38, 24, ['Gluten', 'Sesame'], ['Vegan'], 13, 4.1, 176, 'var(--ka-dcfce7)'),
   d(7, 'Chicken Biryani', '🍛', 'Lunch', 'Indian', 820, 42, 96, 26, ['Dairy'], ['Halal'], 18, 4.7, 624),
   d(8, 'Grilled Chicken & Rice', '🍗', 'Lunch', 'Arabic', 690, 48, 72, 18, [], ['Halal', 'Gluten Free'], 18, 4.5, 512),
   d(9, 'Lamb Machboos', '🍖', 'Lunch', 'Emirati', 880, 46, 90, 32, [], ['Halal', 'Gluten Free'], 22, 4.6, 344),
   d(10, 'Vegetable Stir Fry & Noodles', '🍜', 'Lunch', 'Asian', 560, 16, 84, 16, ['Gluten', 'Soy', 'Sesame'], ['Vegan', 'Halal'], 15, 4.0, 238),
-  d(11, 'Grilled Salmon Bowl', '🐟', 'Lunch', 'Healthy', 610, 40, 52, 24, ['Fish', 'Soy'], ['Halal', 'Gluten Free'], 24, 4.4, 212, '#dbeafe'),
-  d(12, 'Caesar Salad', '🥗', 'Lunch', 'Continental', 420, 22, 18, 28, ['Dairy', 'Eggs', 'Fish', 'Gluten'], ['Halal'], 14, 4.1, 286, '#dcfce7'),
+  d(11, 'Grilled Salmon Bowl', '🐟', 'Lunch', 'Healthy', 610, 40, 52, 24, ['Fish', 'Soy'], ['Halal', 'Gluten Free'], 24, 4.4, 212, 'var(--ka-dbeafe)'),
+  d(12, 'Caesar Salad', '🥗', 'Lunch', 'Continental', 420, 22, 18, 28, ['Dairy', 'Eggs', 'Fish', 'Gluten'], ['Halal'], 14, 4.1, 286, 'var(--ka-dcfce7)'),
   d(13, 'Paneer Butter Masala', '🍲', 'Lunch', 'Indian', 720, 24, 64, 40, ['Dairy', 'Nuts'], ['Vegetarian', 'Halal'], 16, 4.5, 302),
   d(14, 'Falafel Wrap', '🌯', 'Lunch', 'Arabic', 540, 18, 70, 20, ['Gluten', 'Sesame'], ['Vegan', 'Halal'], 12, 4.3, 330),
   d(15, 'Beef Lasagne', '🍝', 'Dinner', 'Italian', 780, 38, 66, 38, ['Gluten', 'Dairy', 'Eggs', 'Celery'], ['Halal'], 19, 4.2, 188),
   d(16, 'Chicken Shawarma Plate', '🥙', 'Dinner', 'Arabic', 740, 44, 68, 30, ['Gluten', 'Sesame', 'Mustard'], ['Halal'], 17, 4.6, 402),
   d(17, 'Dal Tadka & Jeera Rice', '🍚', 'Dinner', 'Indian', 590, 20, 98, 12, [], ['Vegan', 'Halal', 'Gluten Free'], 12, 4.4, 254),
-  d(18, 'Prawn Curry', '🍤', 'Dinner', 'Indian', 640, 34, 60, 26, ['Shellfish', 'Dairy'], ['Halal', 'Gluten Free'], 21, 4.3, 140, '#ffedd5'),
-  d(19, 'Lentil Soup', '🥣', 'Dinner', 'Arabic', 260, 14, 38, 5, ['Celery'], ['Vegan', 'Halal', 'Gluten Free'], 8, 4.2, 210, '#fde68a'),
-  d(20, 'Fresh Fruit Cup', '🍉', 'Snacks', 'Healthy', 120, 2, 28, 0, [], ['Vegan', 'Halal', 'Gluten Free'], 6, 4.5, 366, '#fee2e2'),
+  d(18, 'Prawn Curry', '🍤', 'Dinner', 'Indian', 640, 34, 60, 26, ['Shellfish', 'Dairy'], ['Halal', 'Gluten Free'], 21, 4.3, 140, 'var(--ka-ffedd5)'),
+  d(19, 'Lentil Soup', '🥣', 'Dinner', 'Arabic', 260, 14, 38, 5, ['Celery'], ['Vegan', 'Halal', 'Gluten Free'], 8, 4.2, 210, 'var(--ka-fde68a)'),
+  d(20, 'Fresh Fruit Cup', '🍉', 'Snacks', 'Healthy', 120, 2, 28, 0, [], ['Vegan', 'Halal', 'Gluten Free'], 6, 4.5, 366, 'var(--ka-fee2e2)'),
   d(21, 'Chicken Sandwich', '🥪', 'Snacks', 'Continental', 380, 22, 36, 14, ['Gluten', 'Eggs', 'Mustard'], ['Halal'], 9, 4.0, 290),
-  d(22, 'Protein Bar', '🍫', 'Snacks', 'Healthy', 210, 15, 22, 8, ['Peanuts', 'Soy', 'Dairy'], ['Vegetarian'], 7, 3.9, 154, '#ede9fe'),
-  d(23, 'Karak Chai', '☕', 'Beverages', 'Emirati', 140, 4, 22, 4, ['Dairy'], ['Vegetarian', 'Halal', 'Gluten Free'], 3, 4.8, 980, '#ffedd5'),
-  d(24, 'Fresh Orange Juice', '🍊', 'Beverages', 'Healthy', 110, 2, 26, 0, [], ['Vegan', 'Halal', 'Gluten Free'], 6, 4.4, 420, '#ffedd5'),
+  d(22, 'Protein Bar', '🍫', 'Snacks', 'Healthy', 210, 15, 22, 8, ['Peanuts', 'Soy', 'Dairy'], ['Vegetarian'], 7, 3.9, 154, 'var(--ka-ede9fe)'),
+  d(23, 'Karak Chai', '☕', 'Beverages', 'Emirati', 140, 4, 22, 4, ['Dairy'], ['Vegetarian', 'Halal', 'Gluten Free'], 3, 4.8, 980, 'var(--ka-ffedd5)'),
+  d(24, 'Fresh Orange Juice', '🍊', 'Beverages', 'Healthy', 110, 2, 26, 0, [], ['Vegan', 'Halal', 'Gluten Free'], 6, 4.4, 420, 'var(--ka-ffedd5)'),
 ];
 
 /** Weekly menu: [canteenId][day][meal] -> dish ids. */
@@ -160,7 +160,7 @@ export function seedMenu(): Record<string, string[][][]> {
 const FIRST = ['Ahmed', 'Fatima', 'Rahul', 'Maria', 'Omar', 'Aisha', 'John', 'Priya', 'Khalid', 'Sara', 'Vikram', 'Layla', 'David', 'Noura', 'Arjun', 'Hessa', 'Michael', 'Mariam', 'Imran', 'Elena', 'Yousef', 'Anjali', 'Tariq', 'Grace', 'Hamad', 'Reem', 'Sanjay', 'Lina', 'Peter', 'Zainab'];
 const LAST = ['Al Mansoori', 'Khan', 'Sharma', 'Santos', 'Haddad', 'Al Ali', 'Smith', 'Nair', 'Al Suwaidi', 'Ibrahim', 'Patel', 'Hassan', 'Wilson', 'Al Shamsi', 'Menon', 'Al Ketbi', 'Brown', 'Saleh', 'Qureshi', 'Popescu'];
 const DEPTS = ['Finance', 'HR', 'IT', 'Operations', 'Production', 'Logistics', 'Sales', 'Security', 'Facilities', 'Procurement'];
-const COLORS = ['#7c3aed', '#3b82f6', '#22c55e', '#f97316', '#ef4444', '#06b6d4', '#a855f7', '#14b8a6', '#eab308', '#ec4899'];
+const COLORS = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ef4444)', 'var(--ka-06b6d4)', 'var(--ka-a855f7)', 'var(--ka-14b8a6)', 'var(--ka-eab308)', 'var(--ka-ec4899)'];
 
 export interface Diner {
   id: string;

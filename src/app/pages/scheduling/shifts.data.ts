@@ -52,34 +52,34 @@ const shiftBreaks = (start: string): Brk[] => {
 type Row = [string, string, string, string, string, string, number, number, Shift['status'], string, string, number, string?, string?];
 // name, code, type, pattern, start, end, hours, grace, status, color, site, assigned, start2/end2 for split
 const ROWS: Row[] = [
-  ['Day Shift', 'DS-01', 'General', 'Fixed', '08:00', '16:00', 8, 15, 'Active', '#7c3aed', 'All Sites', 2140],
-  ['Morning Shift', 'MS-01', 'General', 'Fixed', '06:00', '14:00', 8, 15, 'Active', '#4f46e5', 'All Sites', 1260],
-  ['Evening Shift', 'ES-01', 'General', 'Fixed', '14:00', '22:00', 8, 15, 'Active', '#2563eb', 'All Sites', 980],
-  ['Night Shift', 'NS-01', 'General', 'Fixed', '22:00', '06:00', 8, 15, 'Active', '#1e40af', 'All Sites', 640],
-  ['Split Shift', 'SS-01', 'General', 'Split', '08:00', '12:00', 8, 15, 'Active', '#9333ea', 'Retail Stores', 120, '16:00', '20:00'],
-  ['Rotating Shift A', 'RS-A', 'Rotational', 'Rotation', '06:00', '14:00', 8, 15, 'Active', '#0284c7', 'Manufacturing', 410],
-  ['Rotating Shift B', 'RS-B', 'Rotational', 'Rotation', '14:00', '22:00', 8, 15, 'Active', '#0369a1', 'Manufacturing', 405],
-  ['Rotating Shift C', 'RS-C', 'Rotational', 'Rotation', '22:00', '06:00', 8, 15, 'Active', '#075985', 'Manufacturing', 398],
-  ['Weekend Shift', 'WS-01', 'General', 'Fixed', '10:00', '18:00', 8, 15, 'Active', '#0d9488', 'Retail Stores', 96],
-  ['On Call', 'OC-01', 'On Call', 'Flexible', '', '', 0, 0, 'Active', '#dc2626', 'All Sites', 58],
-  ['Remote Shift', 'RM-01', 'Remote', 'Fixed', '09:00', '17:00', 8, 15, 'Active', '#2563eb', 'All Sites', 386],
-  ['Part Time - Morning', 'PT-M', 'Part Time', 'Fixed', '09:00', '13:00', 4, 10, 'Active', '#3730a3', 'All Sites', 142],
-  ['Part Time - Evening', 'PT-E', 'Part Time', 'Fixed', '17:00', '21:00', 4, 10, 'Active', '#4338ca', 'Retail Stores', 108],
-  ['General Office', 'GO-01', 'General', 'Fixed', '09:00', '18:00', 9, 10, 'Active', '#6d28d9', 'Head Office', 1830],
-  ['Warehouse Early', 'WH-E', 'General', 'Fixed', '05:00', '13:00', 8, 10, 'Active', '#ea580c', 'Warehouse', 520],
-  ['Warehouse Late', 'WH-L', 'General', 'Fixed', '13:00', '21:00', 8, 10, 'Active', '#c2410c', 'Warehouse', 488],
-  ['Plant 12h Day', 'P12-D', 'Rotational', 'Rotation', '07:00', '19:00', 12, 10, 'Active', '#16a34a', 'Manufacturing', 360],
-  ['Plant 12h Night', 'P12-N', 'Rotational', 'Rotation', '19:00', '07:00', 12, 10, 'Active', '#15803d', 'Manufacturing', 344],
-  ['Security Day', 'SEC-D', 'Rotational', 'Rotation', '07:00', '19:00', 12, 5, 'Active', '#475569', 'All Sites', 96],
-  ['Security Night', 'SEC-N', 'Rotational', 'Rotation', '19:00', '07:00', 12, 5, 'Active', '#334155', 'All Sites', 92],
-  ['Retail Opening', 'RT-O', 'General', 'Fixed', '09:00', '17:00', 8, 10, 'Active', '#db2777', 'Retail Stores', 210],
-  ['Retail Closing', 'RT-C', 'General', 'Fixed', '14:00', '22:00', 8, 10, 'Active', '#be185d', 'Retail Stores', 198],
-  ['Data Center A', 'DC-A', 'Rotational', 'Rotation', '06:00', '18:00', 12, 5, 'Active', '#0891b2', 'Data Center', 64],
-  ['Data Center B', 'DC-B', 'Rotational', 'Rotation', '18:00', '06:00', 12, 5, 'Active', '#155e75', 'Data Center', 60],
-  ['Ramadan Shift', 'RMD-01', 'General', 'Fixed', '09:00', '15:00', 6, 15, 'Inactive', '#a16207', 'All Sites', 0],
-  ['Flexi Hours', 'FX-01', 'Flexible', 'Flexible', '07:00', '19:00', 8, 0, 'Draft', '#65a30d', 'Head Office', 0],
-  ['Training Day', 'TR-01', 'General', 'Fixed', '09:00', '17:00', 8, 0, 'Inactive', '#64748b', 'Tech Center', 0],
-  ['Holiday Cover', 'HC-01', 'On Call', 'Flexible', '08:00', '20:00', 12, 15, 'Draft', '#b91c1c', 'All Sites', 0],
+  ['Day Shift', 'DS-01', 'General', 'Fixed', '08:00', '16:00', 8, 15, 'Active', 'var(--ka-7c3aed)', 'All Sites', 2140],
+  ['Morning Shift', 'MS-01', 'General', 'Fixed', '06:00', '14:00', 8, 15, 'Active', 'var(--ka-4f46e5)', 'All Sites', 1260],
+  ['Evening Shift', 'ES-01', 'General', 'Fixed', '14:00', '22:00', 8, 15, 'Active', 'var(--ka-2563eb)', 'All Sites', 980],
+  ['Night Shift', 'NS-01', 'General', 'Fixed', '22:00', '06:00', 8, 15, 'Active', 'var(--ka-1e40af)', 'All Sites', 640],
+  ['Split Shift', 'SS-01', 'General', 'Split', '08:00', '12:00', 8, 15, 'Active', 'var(--ka-9333ea)', 'Retail Stores', 120, '16:00', '20:00'],
+  ['Rotating Shift A', 'RS-A', 'Rotational', 'Rotation', '06:00', '14:00', 8, 15, 'Active', 'var(--ka-0284c7)', 'Manufacturing', 410],
+  ['Rotating Shift B', 'RS-B', 'Rotational', 'Rotation', '14:00', '22:00', 8, 15, 'Active', 'var(--ka-0369a1)', 'Manufacturing', 405],
+  ['Rotating Shift C', 'RS-C', 'Rotational', 'Rotation', '22:00', '06:00', 8, 15, 'Active', 'var(--ka-075985)', 'Manufacturing', 398],
+  ['Weekend Shift', 'WS-01', 'General', 'Fixed', '10:00', '18:00', 8, 15, 'Active', 'var(--ka-0d9488)', 'Retail Stores', 96],
+  ['On Call', 'OC-01', 'On Call', 'Flexible', '', '', 0, 0, 'Active', 'var(--ka-dc2626)', 'All Sites', 58],
+  ['Remote Shift', 'RM-01', 'Remote', 'Fixed', '09:00', '17:00', 8, 15, 'Active', 'var(--ka-2563eb)', 'All Sites', 386],
+  ['Part Time - Morning', 'PT-M', 'Part Time', 'Fixed', '09:00', '13:00', 4, 10, 'Active', 'var(--ka-3730a3)', 'All Sites', 142],
+  ['Part Time - Evening', 'PT-E', 'Part Time', 'Fixed', '17:00', '21:00', 4, 10, 'Active', 'var(--ka-4338ca)', 'Retail Stores', 108],
+  ['General Office', 'GO-01', 'General', 'Fixed', '09:00', '18:00', 9, 10, 'Active', 'var(--ka-6d28d9)', 'Head Office', 1830],
+  ['Warehouse Early', 'WH-E', 'General', 'Fixed', '05:00', '13:00', 8, 10, 'Active', 'var(--ka-ea580c)', 'Warehouse', 520],
+  ['Warehouse Late', 'WH-L', 'General', 'Fixed', '13:00', '21:00', 8, 10, 'Active', 'var(--ka-c2410c)', 'Warehouse', 488],
+  ['Plant 12h Day', 'P12-D', 'Rotational', 'Rotation', '07:00', '19:00', 12, 10, 'Active', 'var(--ka-16a34a)', 'Manufacturing', 360],
+  ['Plant 12h Night', 'P12-N', 'Rotational', 'Rotation', '19:00', '07:00', 12, 10, 'Active', 'var(--ka-15803d)', 'Manufacturing', 344],
+  ['Security Day', 'SEC-D', 'Rotational', 'Rotation', '07:00', '19:00', 12, 5, 'Active', 'var(--ka-475569)', 'All Sites', 96],
+  ['Security Night', 'SEC-N', 'Rotational', 'Rotation', '19:00', '07:00', 12, 5, 'Active', 'var(--ka-334155)', 'All Sites', 92],
+  ['Retail Opening', 'RT-O', 'General', 'Fixed', '09:00', '17:00', 8, 10, 'Active', 'var(--ka-db2777)', 'Retail Stores', 210],
+  ['Retail Closing', 'RT-C', 'General', 'Fixed', '14:00', '22:00', 8, 10, 'Active', 'var(--ka-be185d)', 'Retail Stores', 198],
+  ['Data Center A', 'DC-A', 'Rotational', 'Rotation', '06:00', '18:00', 12, 5, 'Active', 'var(--ka-0891b2)', 'Data Center', 64],
+  ['Data Center B', 'DC-B', 'Rotational', 'Rotation', '18:00', '06:00', 12, 5, 'Active', 'var(--ka-155e75)', 'Data Center', 60],
+  ['Ramadan Shift', 'RMD-01', 'General', 'Fixed', '09:00', '15:00', 6, 15, 'Inactive', 'var(--ka-a16207)', 'All Sites', 0],
+  ['Flexi Hours', 'FX-01', 'Flexible', 'Flexible', '07:00', '19:00', 8, 0, 'Draft', 'var(--ka-65a30d)', 'Head Office', 0],
+  ['Training Day', 'TR-01', 'General', 'Fixed', '09:00', '17:00', 8, 0, 'Inactive', 'var(--ka-64748b)', 'Tech Center', 0],
+  ['Holiday Cover', 'HC-01', 'On Call', 'Flexible', '08:00', '20:00', 12, 15, 'Draft', 'var(--ka-b91c1c)', 'All Sites', 0],
 ];
 
 export const SHIFTS: Shift[] = ROWS.map(([name, code, type, pattern, start, end, hours, grace, status, color, site, assigned, start2, end2], i) => ({
@@ -93,7 +93,7 @@ export const SHIFTS: Shift[] = ROWS.map(([name, code, type, pattern, start, end,
 /** Codes used inside rosters (shift codes plus OFF and LV). */
 export const OFF = 'OFF';
 export const LEAVE = 'LV';
-export const codeColor = (code: string) => (code === OFF ? '#e5e7eb' : code === LEAVE ? '#ddd6fe' : SHIFTS.find((s) => s.code === code)?.color ?? '#9ca3af');
+export const codeColor = (code: string) => (code === OFF ? 'var(--ka-e5e7eb)' : code === LEAVE ? 'var(--ka-ddd6fe)' : SHIFTS.find((s) => s.code === code)?.color ?? 'var(--ka-9ca3af)');
 export const codeHours = (code: string) => SHIFTS.find((s) => s.code === code)?.hours ?? 0;
 export const codeStart = (code: string) => SHIFTS.find((s) => s.code === code)?.start ?? '';
 export const codeEnd = (code: string) => SHIFTS.find((s) => s.code === code)?.end ?? '';

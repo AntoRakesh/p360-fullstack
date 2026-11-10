@@ -35,10 +35,10 @@ export const addMonths = (s: string, months: number) => {
 export const TOTAL_EMPLOYEES = 1248;
 /** Overall proficiency bands across all 1,248 employees (Skill Proficiency Overview). */
 export const BANDS = [
-  { key: 'Proficient', value: 850, color: '#22c55e' },
-  { key: 'Intermediate', value: 224, color: '#3b82f6' },
-  { key: 'Basic', value: 112, color: '#f59e0b' },
-  { key: 'Not Trained', value: 62, color: '#ef4444' },
+  { key: 'Proficient', value: 850, color: 'var(--ka-22c55e)' },
+  { key: 'Intermediate', value: 224, color: 'var(--ka-3b82f6)' },
+  { key: 'Basic', value: 112, color: 'var(--ka-f59e0b)' },
+  { key: 'Not Trained', value: 62, color: 'var(--ka-ef4444)' },
 ];
 export const DEPTS = ['Operations', 'Maintenance', 'Security', 'Logistics', 'Facilities', 'HSE', 'Production', 'Administration'];
 export const SITES = ['Head Office', 'Manufacturing', 'Warehouse', 'Logistics Hub', 'Retail Stores', 'Data Center'];
@@ -50,11 +50,11 @@ export const levelName = (l: number | null) => (l === null ? 'Not Applicable' : 
 export const levelTone = (l: number | null) =>
   l === null ? 'na' : l >= 4 ? 'green' : l === 3 ? 'blue' : l === 2 ? 'orange' : 'red';
 export const TONES: Record<string, { bg: string; fg: string }> = {
-  green: { bg: '#d9f7e3', fg: '#15803d' },
-  blue: { bg: '#dbe7ff', fg: '#1d4ed8' },
-  orange: { bg: '#fde7c8', fg: '#c2410c' },
-  red: { bg: '#fddde1', fg: '#be123c' },
-  na: { bg: '#f1f2f6', fg: '#6b7280' },
+  green: { bg: 'var(--kb-d9f7e3)', fg: 'var(--kf-15803d)' },
+  blue: { bg: 'var(--kb-dbe7ff)', fg: 'var(--kf-1d4ed8)' },
+  orange: { bg: 'var(--kb-fde7c8)', fg: 'var(--kf-c2410c)' },
+  red: { bg: 'var(--kb-fddde1)', fg: 'var(--kf-be123c)' },
+  na: { bg: 'var(--kb-f1f2f6)', fg: 'var(--kf-6b7280)' },
 };
 
 /* ---------------- skills ---------------- */
@@ -71,28 +71,28 @@ export interface Skill {
   courseId: string;
 }
 export const SKILL_SEED: Skill[] = [
-  { id: 'fa', name: 'First Aid', category: 'Safety', icon: 'training-first-aid', color: '#ef4444', required: 3, gap: 42, courseId: 'C-101' },
-  { id: 'fs', name: 'Fire Safety', category: 'Safety', icon: 'flame', color: '#ef4444', required: 3, gap: 36, courseId: 'C-102' },
-  { id: 'eo', name: 'Equipment Operation', category: 'Safety', icon: 'training-helmet', color: '#f59e0b', required: 3, gap: 28, courseId: 'C-103' },
-  { id: 'sp', name: 'Security Procedures', category: 'Safety', icon: 'shield-check', color: '#2563eb', required: 3, gap: 24, courseId: 'C-104' },
-  { id: 'er', name: 'Emergency Response', category: 'Safety', icon: 'run', color: '#16a34a', required: 3, gap: 18, courseId: 'C-105' },
-  { id: 'hi', name: 'Hazard Identification', category: 'Safety', icon: 'triangle-alert', color: '#f59e0b', required: 3, gap: 16, courseId: 'C-106' },
-  { id: 'wah', name: 'Working at Height', category: 'Safety', icon: 'training-climb', color: '#1f2937', required: 3, gap: 14, courseId: 'C-107' },
-  { id: 'fl', name: 'Forklift Operation', category: 'Safety', icon: 'training-forklift', color: '#1f2937', required: 3, gap: 11, courseId: 'C-108' },
-  { id: 'em', name: 'Electrical Maintenance', category: 'Technical', icon: 'training-bolt', color: '#eab308', required: 3, gap: 9, courseId: 'C-201' },
-  { id: 'plc', name: 'PLC Programming', category: 'Technical', icon: 'cpu', color: '#7c3aed', required: 3, gap: 8, courseId: 'C-202' },
-  { id: 'wd', name: 'Welding', category: 'Technical', icon: 'flame', color: '#ea580c', required: 3, gap: 5, courseId: 'C-203' },
-  { id: 'hv', name: 'HVAC Systems', category: 'Technical', icon: 'training-fan', color: '#0891b2', required: 3, gap: 4, courseId: 'C-204' },
-  { id: 'qi', name: 'Quality Inspection', category: 'Technical', icon: 'file-check', color: '#0d9488', required: 3, gap: 3, courseId: 'C-205' },
-  { id: 'ld', name: 'Leadership', category: 'Soft Skills', icon: 'star', color: '#7c3aed', required: 3, gap: 0, courseId: 'C-301' },
-  { id: 'cm', name: 'Communication', category: 'Soft Skills', icon: 'message', color: '#2563eb', required: 3, gap: 0, courseId: 'C-302' },
-  { id: 'cs', name: 'Customer Service', category: 'Soft Skills', icon: 'users', color: '#db2777', required: 3, gap: 0, courseId: 'C-303' },
-  { id: 'ps', name: 'Problem Solving', category: 'Soft Skills', icon: 'lightbulb', color: '#ca8a04', required: 3, gap: 0, courseId: 'C-304' },
-  { id: 'dp', name: 'Data Privacy', category: 'Compliance', icon: 'key-round', color: '#475569', required: 3, gap: 0, courseId: 'C-401' },
-  { id: 'ab', name: 'Anti-Bribery', category: 'Compliance', icon: 'ban', color: '#b91c1c', required: 3, gap: 0, courseId: 'C-402' },
-  { id: 'cc', name: 'Code of Conduct', category: 'Compliance', icon: 'file-text', color: '#4f46e5', required: 3, gap: 0, courseId: 'C-403' },
-  { id: 'iso', name: 'ISO 45001 Awareness', category: 'Compliance', icon: 'shield', color: '#0f766e', required: 3, gap: 0, courseId: 'C-404' },
-  { id: 'env', name: 'Environmental Awareness', category: 'Compliance', icon: 'tree', color: '#16a34a', required: 3, gap: 0, courseId: 'C-405' },
+  { id: 'fa', name: 'First Aid', category: 'Safety', icon: 'training-first-aid', color: 'var(--ka-ef4444)', required: 3, gap: 42, courseId: 'C-101' },
+  { id: 'fs', name: 'Fire Safety', category: 'Safety', icon: 'flame', color: 'var(--ka-ef4444)', required: 3, gap: 36, courseId: 'C-102' },
+  { id: 'eo', name: 'Equipment Operation', category: 'Safety', icon: 'training-helmet', color: 'var(--ka-f59e0b)', required: 3, gap: 28, courseId: 'C-103' },
+  { id: 'sp', name: 'Security Procedures', category: 'Safety', icon: 'shield-check', color: 'var(--ka-2563eb)', required: 3, gap: 24, courseId: 'C-104' },
+  { id: 'er', name: 'Emergency Response', category: 'Safety', icon: 'run', color: 'var(--ka-16a34a)', required: 3, gap: 18, courseId: 'C-105' },
+  { id: 'hi', name: 'Hazard Identification', category: 'Safety', icon: 'triangle-alert', color: 'var(--ka-f59e0b)', required: 3, gap: 16, courseId: 'C-106' },
+  { id: 'wah', name: 'Working at Height', category: 'Safety', icon: 'training-climb', color: 'var(--ka-1f2937)', required: 3, gap: 14, courseId: 'C-107' },
+  { id: 'fl', name: 'Forklift Operation', category: 'Safety', icon: 'training-forklift', color: 'var(--ka-1f2937)', required: 3, gap: 11, courseId: 'C-108' },
+  { id: 'em', name: 'Electrical Maintenance', category: 'Technical', icon: 'training-bolt', color: 'var(--ka-eab308)', required: 3, gap: 9, courseId: 'C-201' },
+  { id: 'plc', name: 'PLC Programming', category: 'Technical', icon: 'cpu', color: 'var(--ka-7c3aed)', required: 3, gap: 8, courseId: 'C-202' },
+  { id: 'wd', name: 'Welding', category: 'Technical', icon: 'flame', color: 'var(--ka-ea580c)', required: 3, gap: 5, courseId: 'C-203' },
+  { id: 'hv', name: 'HVAC Systems', category: 'Technical', icon: 'training-fan', color: 'var(--ka-0891b2)', required: 3, gap: 4, courseId: 'C-204' },
+  { id: 'qi', name: 'Quality Inspection', category: 'Technical', icon: 'file-check', color: 'var(--ka-0d9488)', required: 3, gap: 3, courseId: 'C-205' },
+  { id: 'ld', name: 'Leadership', category: 'Soft Skills', icon: 'star', color: 'var(--ka-7c3aed)', required: 3, gap: 0, courseId: 'C-301' },
+  { id: 'cm', name: 'Communication', category: 'Soft Skills', icon: 'message', color: 'var(--ka-2563eb)', required: 3, gap: 0, courseId: 'C-302' },
+  { id: 'cs', name: 'Customer Service', category: 'Soft Skills', icon: 'users', color: 'var(--ka-db2777)', required: 3, gap: 0, courseId: 'C-303' },
+  { id: 'ps', name: 'Problem Solving', category: 'Soft Skills', icon: 'lightbulb', color: 'var(--ka-ca8a04)', required: 3, gap: 0, courseId: 'C-304' },
+  { id: 'dp', name: 'Data Privacy', category: 'Compliance', icon: 'key-round', color: 'var(--ka-475569)', required: 3, gap: 0, courseId: 'C-401' },
+  { id: 'ab', name: 'Anti-Bribery', category: 'Compliance', icon: 'ban', color: 'var(--ka-b91c1c)', required: 3, gap: 0, courseId: 'C-402' },
+  { id: 'cc', name: 'Code of Conduct', category: 'Compliance', icon: 'file-text', color: 'var(--ka-4f46e5)', required: 3, gap: 0, courseId: 'C-403' },
+  { id: 'iso', name: 'ISO 45001 Awareness', category: 'Compliance', icon: 'shield', color: 'var(--ka-0f766e)', required: 3, gap: 0, courseId: 'C-404' },
+  { id: 'env', name: 'Environmental Awareness', category: 'Compliance', icon: 'tree', color: 'var(--ka-16a34a)', required: 3, gap: 0, courseId: 'C-405' },
 ];
 /** Skills in the framework that are not shown as matrix columns (86 tracked in total). */
 export const OTHER_TRACKED = 86 - SKILL_SEED.length;
@@ -121,9 +121,9 @@ export interface TEmp {
   email: string;
 }
 const SAFETY = ['fa', 'fs', 'eo', 'sp', 'er', 'hi', 'wah', 'fl'];
-const SKIN = ['#f1c7a5', '#d9a47a', '#b97a52', '#8d5a3b', '#e8b996'];
-const HAIR = ['#1f1a17', '#3b2a20', '#5a3b22', '#2b2b2b', '#6b4a2b'];
-const UNI = ['#1e3a8a', '#334155', '#0f766e', '#7c2d12', '#1f2937', '#4338ca'];
+const SKIN = ['var(--ka-f1c7a5)', 'var(--ka-d9a47a)', 'var(--ka-b97a52)', 'var(--ka-8d5a3b)', 'var(--ka-e8b996)'];
+const HAIR = ['var(--ka-1f1a17)', 'var(--ka-3b2a20)', 'var(--ka-5a3b22)', 'var(--ka-2b2b2b)', 'var(--ka-6b4a2b)'];
+const UNI = ['var(--ka-1e3a8a)', 'var(--ka-334155)', 'var(--ka-0f766e)', 'var(--ka-7c2d12)', 'var(--ka-1f2937)', 'var(--ka-4338ca)'];
 
 // [name, role, dept, site, g, levels (8 safety, -1 = N/A), due, cap, scarf]
 type Row = [string, string, string, string, 'm' | 'f', number[], string[], boolean?, boolean?];
@@ -176,7 +176,7 @@ export const MATRIX_SEED: TEmp[] = MATRIX_ROWS.map(([name, role, dept, site, g, 
   return {
     id: `EMP-${String(i + 1).padStart(3, '0')}`,
     name, role, dept, site, status: i === 21 ? 'On Leave' : 'Active',
-    look: { g, skin: SKIN[(i * 3) % SKIN.length], hair: HAIR[(i * 7) % HAIR.length], uni: cap ? '#1e3a8a' : UNI[i % UNI.length], cap, scarf },
+    look: { g, skin: SKIN[(i * 3) % SKIN.length], hair: HAIR[(i * 7) % HAIR.length], uni: cap ? 'var(--ka-1e3a8a)' : UNI[i % UNI.length], cap, scarf },
     levels, due, joined: iso(-400 - i * 53), email: emailOf(name),
   };
 });
@@ -194,7 +194,7 @@ const ROLE_BY_DEPT: Record<string, string[]> = {
   Production: ['Operator', 'Technician', 'Supervisor'],
   Administration: ['Coordinator', 'Manager', 'Analyst'],
 };
-const AV = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#475569', '#16a34a', '#ea580c'];
+const AV = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-475569)', 'var(--ka-16a34a)', 'var(--ka-ea580c)'];
 export interface Person {
   id: string;
   name: string;
@@ -449,12 +449,12 @@ function learners(seed: number, n: number, steps: number, first: string[] = []) 
   return ids.map((empId, i) => ({ empId, done: i < first.length ? Math.min(steps, 2) : Math.floor(r() * (steps + 1)), started: iso(-5 - Math.floor(r() * 120)) }));
 }
 export const PATH_SEED: LPath[] = [
-  { id: 'LP-01', name: 'New Technician Onboarding', audience: 'Technicians (first 90 days)', color: '#7c3aed', icon: 'training-helmet', steps: ['C-403', 'C-104', 'C-102', 'C-101', 'C-103', 'C-111'], learners: learners(11, 28, 6, ['EMP-001', 'EMP-005']), mandatory: true, owner: 'Maria Santos' },
-  { id: 'LP-02', name: 'Forklift Operator Certification', audience: 'Warehouse & Logistics operators', color: '#f59e0b', icon: 'training-forklift', steps: ['C-112', 'C-106', 'C-108'], learners: learners(12, 18, 3, ['EMP-007', 'EMP-027']), mandatory: true, owner: 'Zara Khan' },
-  { id: 'LP-03', name: 'Emergency Response Team', audience: 'Floor wardens & ERT members', color: '#ef4444', icon: 'run', steps: ['C-101', 'C-102', 'C-105', 'C-109'], learners: learners(13, 22, 4, ['EMP-002', 'EMP-006']), mandatory: false, owner: 'Priya Sharma' },
-  { id: 'LP-04', name: 'Supervisor Leadership Track', audience: 'New & aspiring supervisors', color: '#2563eb', icon: 'star', steps: ['C-302', 'C-301', 'C-304', 'C-106', 'C-404'], learners: learners(14, 15, 5, ['EMP-004', 'EMP-008']), mandatory: false, owner: 'HR – Talent' },
-  { id: 'LP-05', name: 'Working at Height Competency', audience: 'Maintenance & facilities', color: '#0f766e', icon: 'training-climb', steps: ['C-106', 'C-107', 'C-109'], learners: learners(15, 19, 3, ['EMP-001', 'EMP-016']), mandatory: true, owner: 'Meera Iyer' },
-  { id: 'LP-06', name: 'Compliance Essentials (Annual)', audience: 'All employees', color: '#475569', icon: 'file-check', steps: ['C-403', 'C-401', 'C-402', 'C-404'], learners: learners(16, 40, 4), mandatory: true, owner: 'Compliance Office' },
+  { id: 'LP-01', name: 'New Technician Onboarding', audience: 'Technicians (first 90 days)', color: 'var(--ka-7c3aed)', icon: 'training-helmet', steps: ['C-403', 'C-104', 'C-102', 'C-101', 'C-103', 'C-111'], learners: learners(11, 28, 6, ['EMP-001', 'EMP-005']), mandatory: true, owner: 'Maria Santos' },
+  { id: 'LP-02', name: 'Forklift Operator Certification', audience: 'Warehouse & Logistics operators', color: 'var(--ka-f59e0b)', icon: 'training-forklift', steps: ['C-112', 'C-106', 'C-108'], learners: learners(12, 18, 3, ['EMP-007', 'EMP-027']), mandatory: true, owner: 'Zara Khan' },
+  { id: 'LP-03', name: 'Emergency Response Team', audience: 'Floor wardens & ERT members', color: 'var(--ka-ef4444)', icon: 'run', steps: ['C-101', 'C-102', 'C-105', 'C-109'], learners: learners(13, 22, 4, ['EMP-002', 'EMP-006']), mandatory: false, owner: 'Priya Sharma' },
+  { id: 'LP-04', name: 'Supervisor Leadership Track', audience: 'New & aspiring supervisors', color: 'var(--ka-2563eb)', icon: 'star', steps: ['C-302', 'C-301', 'C-304', 'C-106', 'C-404'], learners: learners(14, 15, 5, ['EMP-004', 'EMP-008']), mandatory: false, owner: 'HR – Talent' },
+  { id: 'LP-05', name: 'Working at Height Competency', audience: 'Maintenance & facilities', color: 'var(--ka-0f766e)', icon: 'training-climb', steps: ['C-106', 'C-107', 'C-109'], learners: learners(15, 19, 3, ['EMP-001', 'EMP-016']), mandatory: true, owner: 'Meera Iyer' },
+  { id: 'LP-06', name: 'Compliance Essentials (Annual)', audience: 'All employees', color: 'var(--ka-475569)', icon: 'file-check', steps: ['C-403', 'C-401', 'C-402', 'C-404'], learners: learners(16, 40, 4), mandatory: true, owner: 'Compliance Office' },
 ];
 
 /* ---------------- compliance requirements ---------------- */

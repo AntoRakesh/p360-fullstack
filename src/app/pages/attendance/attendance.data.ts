@@ -7,7 +7,7 @@ import { PEOPLE, Person } from '../people/people.data';
  * Present Now 7,842 (on-site 7,456 + WFH 386) · Late 326 · Absent 752 (unplanned 332 + On Leave 420).
  */
 export type AttStatus = 'Present' | 'WFH' | 'Late' | 'On Leave' | 'Absent';
-export const STATUS_COLOR: Record<AttStatus, string> = { Present: '#22c55e', Late: '#f59e0b', Absent: '#ef4444', 'On Leave': '#8b5cf6', WFH: '#3b82f6' };
+export const STATUS_COLOR: Record<AttStatus, string> = { Present: 'var(--ka-22c55e)', Late: 'var(--ka-f59e0b)', Absent: 'var(--ka-ef4444)', 'On Leave': 'var(--ka-8b5cf6)', WFH: 'var(--ka-3b82f6)' };
 export const SHIFTS = [
   { name: 'General', start: '09:00', end: '18:00' },
   { name: 'Morning', start: '07:00', end: '16:00' },

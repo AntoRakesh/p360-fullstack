@@ -9,7 +9,7 @@ import { COMPANIES, duration, fmtTime, HOSTS, METHOD_COLORS, METHODS, PURPOSES, 
 
 const HOURS = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 const CAMS = ['Main Entrance', 'Side Entrance', 'Parking Gate', 'Reception'];
-const PURPOSE_COLORS = ['#8b5cf6', '#3b82f6', '#22c55e', '#f97316', '#ef4444', '#ec4899', '#0ea5e9', '#3b82f6'];
+const PURPOSE_COLORS = ['var(--ka-8b5cf6)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ef4444)', 'var(--ka-ec4899)', 'var(--ka-0ea5e9)', 'var(--ka-3b82f6)'];
 
 @Component({
   selector: 'app-visitor-dashboard',
@@ -42,11 +42,11 @@ const PURPOSE_COLORS = ['#8b5cf6', '#3b82f6', '#22c55e', '#f97316', '#ef4444', '
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Visitors (Today)" [value]="total()" icon="users" color="#8b5cf6" change="12%" />
-      <app-kpi label="Checked In" [value]="checkedIn()" [extra]="pct(checkedIn())" icon="shield-check" color="#22c55e" sub="arrived today" />
-      <app-kpi label="Expected Today" [value]="expected()" icon="clock" color="#f97316" [sub]="upcoming() + ' upcoming (next hour)'" />
-      <app-kpi label="Checked Out" [value]="c('Checked Out')" [extra]="pct(c('Checked Out'))" icon="door-open" color="#ef4444" sub="left site" />
-      <app-kpi label="Currently On-Site" [value]="c('Checked In')" icon="users" color="#a855f7" [sub]="state.live() ? '● Live' : 'paused'" />
+      <app-kpi label="Total Visitors (Today)" [value]="total()" icon="users" color="var(--ka-8b5cf6)" change="12%" />
+      <app-kpi label="Checked In" [value]="checkedIn()" [extra]="pct(checkedIn())" icon="shield-check" color="var(--ka-22c55e)" sub="arrived today" />
+      <app-kpi label="Expected Today" [value]="expected()" icon="clock" color="var(--ka-f97316)" [sub]="upcoming() + ' upcoming (next hour)'" />
+      <app-kpi label="Checked Out" [value]="c('Checked Out')" [extra]="pct(c('Checked Out'))" icon="door-open" color="var(--ka-ef4444)" sub="left site" />
+      <app-kpi label="Currently On-Site" [value]="c('Checked In')" icon="users" color="var(--ka-a855f7)" [sub]="state.live() ? '● Live' : 'paused'" />
     </section>
 
     <section class="vd">
@@ -191,25 +191,25 @@ const PURPOSE_COLORS = ['#8b5cf6', '#3b82f6', '#22c55e', '#f97316', '#ef4444', '
     .activity ::ng-deep .dt-person { gap: 6px; } .activity ::ng-deep .dt-person b { white-space: nowrap; }
     .activity ::ng-deep .dt-status { font-size: 11px; }
     .pl { list-style: none; margin: 0; padding: 0; } .pl li { display: grid; grid-template-columns: 1fr 110px 44px; gap: 10px; align-items: center; padding: 5px 0; font-size: 12.5px; }
-    .pl b { font-weight: 500; text-align: right; } .bar { height: 10px; background: #eef0f6; border-radius: 2px; overflow: hidden; } .bar i { display: block; height: 100%; }
-    .mini { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 7px; background: #fff; display: grid; place-items: center; cursor: pointer; }
+    .pl b { font-weight: 500; text-align: right; } .bar { height: 10px; background: var(--kb-eef0f6); border-radius: 2px; overflow: hidden; } .bar i { display: block; height: 100%; }
+    .mini { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: 7px; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; }
     .feed { position: relative; height: 230px; border-radius: 8px; overflow: hidden; } .feed app-cam-scene { position: absolute; inset: 0; }
-    .recog { position: absolute; right: 10px; bottom: 10px; display: grid; grid-template-columns: 34px 1fr; gap: 4px 10px; padding: 8px 10px; border-radius: 8px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.25); font-size: 11.5px; min-width: 190px; }
-    .recog div { display: flex; flex-direction: column; } .recog small { color: #4b4f6b; } .recog em { font-style: normal; color: var(--primary); }
-    .rf { grid-column: 1 / -1; flex-direction: row !important; justify-content: space-between; padding-top: 4px; border-top: 1px solid #f0f1f6; } .ok { color: #16a34a; font-weight: 600; }
+    .recog { position: absolute; right: 10px; bottom: 10px; display: grid; grid-template-columns: 34px 1fr; gap: 4px 10px; padding: 8px 10px; border-radius: 8px; background: var(--kb-ffffff); box-shadow: 0 6px 18px rgba(0,0,0,.25); font-size: 11.5px; min-width: 190px; }
+    .recog div { display: flex; flex-direction: column; } .recog small { color: var(--kf-4b4f6b); } .recog em { font-style: normal; color: var(--primary); }
+    .rf { grid-column: 1 / -1; flex-direction: row !important; justify-content: space-between; padding-top: 4px; border-top: 1px solid var(--kl-f0f1f6); } .ok { color: var(--kf-16a34a); font-weight: 600; }
     .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
     .thumbs button { position: relative; height: 58px; border: 2px solid transparent; border-radius: 6px; overflow: hidden; padding: 0; cursor: pointer; }
     .thumbs app-cam-scene { position: absolute; inset: 0; } .thumbs button.on { border-color: var(--primary); }
-    .thumbs span { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.55); color: #fff; font-size: 9.5px; padding: 1px 4px; }
-    .os { list-style: none; margin: 0; padding: 0; } .os li { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: start; padding: 8px 0; border-bottom: 1px solid #f0f1f6; cursor: pointer; font-size: 12px; }
-    .os li:hover { background: #faf8ff; } .os div { display: flex; flex-direction: column; line-height: 1.35; } .os small { color: #4b4f6b; font-size: 11px; }
-    .dur { padding: 3px 9px; border-radius: 6px; background: #dcfce7; color: #15803d; font-size: 11.5px; font-weight: 600; }
+    .thumbs span { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.55); color: var(--kf-ffffff); font-size: 9.5px; padding: 1px 4px; }
+    .os { list-style: none; margin: 0; padding: 0; } .os li { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: start; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; font-size: 12px; }
+    .os li:hover { background: var(--kb-faf8ff); } .os div { display: flex; flex-direction: column; line-height: 1.35; } .os small { color: var(--kf-4b4f6b); font-size: 11px; }
+    .dur { padding: 3px 9px; border-radius: 6px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 11.5px; font-weight: 600; }
     .veh .table { font-size: 12px; } .veh th, .veh td { padding: 7px 6px; }
     .qa { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .qa button, .qa a { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 4px; border: 1px solid var(--border); border-radius: 10px; background: #fff; color: #3b3f5c; font-size: 11px; text-align: center; cursor: pointer; text-decoration: none; }
-    .qa button:hover, .qa a:hover { border-color: #c4b5fd; background: #faf8ff; } .qa app-icon { color: var(--primary); }
+    .qa button, .qa a { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 4px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); color: var(--kf-3b3f5c); font-size: 11px; text-align: center; cursor: pointer; text-decoration: none; }
+    .qa button:hover, .qa a:hover { border-color: var(--kl-c4b5fd); background: var(--kb-faf8ff); } .qa app-icon { color: var(--primary); }
     .kv { display: grid; grid-template-columns: 90px 1fr; gap: 7px; font-size: 13px; margin: 12px 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
-    .hit { display: flex; align-items: center; gap: 8px; padding: 10px; border-radius: 8px; background: #fef2f2; color: #991b1b; font-size: 13px; }
+    .hit { display: flex; align-items: center; gap: 8px; padding: 10px; border-radius: 8px; background: var(--kb-fef2f2); color: var(--kf-991b1b); font-size: 13px; }
     @media (max-width: 1350px) { .vd { grid-template-columns: 1fr 1fr; } .activity { grid-column: span 2; } }
     @media (max-width: 860px) { .vd { grid-template-columns: 1fr; } .activity { grid-column: auto; } }
   `,
@@ -288,9 +288,9 @@ export class VisitorDashboard {
     const hourOf = (t: number | null) => (t ? new Date(t).getHours() : -1);
     const nowH = new Date().getHours();
     return [
-      { name: 'Expected', color: '#7c3aed', values: HOURS.map((h) => vs.filter((v) => hourOf(v.expected) === h).length + (h > nowH ? 0 : 0)) },
-      { name: 'Checked In', color: '#34d399', values: HOURS.map((h) => vs.filter((v) => hourOf(v.checkIn) === h).length) },
-      { name: 'Checked Out', color: '#a78bfa', values: HOURS.map((h) => vs.filter((v) => hourOf(v.checkOut) === h).length), line: true },
+      { name: 'Expected', color: 'var(--ka-7c3aed)', values: HOURS.map((h) => vs.filter((v) => hourOf(v.expected) === h).length + (h > nowH ? 0 : 0)) },
+      { name: 'Checked In', color: 'var(--ka-34d399)', values: HOURS.map((h) => vs.filter((v) => hourOf(v.checkIn) === h).length) },
+      { name: 'Checked Out', color: 'var(--ka-a78bfa)', values: HOURS.map((h) => vs.filter((v) => hourOf(v.checkOut) === h).length), line: true },
     ];
   });
   protected readonly types = computed(() => TYPES.map((t, i) => ({ label: t, value: this.store.visits().filter((v) => v.type === t).length, color: TYPE_COLORS[i] })));

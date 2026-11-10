@@ -30,18 +30,18 @@ export interface LeaveType {
 type Row = [string, string, LeaveType['category'], number, string, number, boolean | null, string, boolean, string, string, string];
 // name, code, category, days, per, carryMax(-1 = no), encash, applicable, paid, group, icon, color
 const ROWS: Row[] = [
-  ['Annual Leave', 'AL', 'Earned', 30, 'year', 15, true, 'Employees', true, 'Standard', 'tree', '#16a34a'],
-  ['Sick Leave', 'SL', 'Medical', 14, 'year', 7, false, 'Employees', true, 'Standard', 'shield-plus', '#dc2626'],
-  ['Casual Leave', 'CL', 'Earned', 10, 'year', 5, true, 'Employees', true, 'Standard', 'calendar-days', '#2563eb'],
-  ['Maternity Leave', 'ML', 'Special', 90, 'once', -1, false, 'Female Employees', true, 'Statutory', 'user', '#db2777'],
-  ['Paternity Leave', 'PL', 'Special', 5, 'once', -1, false, 'Male Employees', true, 'Statutory', 'user', '#3b82f6'],
-  ['Compassionate Leave', 'CP', 'Special', 5, 'event', -1, false, 'Employees', true, 'Statutory', 'heart', '#e11d48'],
-  ['Marriage Leave', 'MR', 'Special', 5, 'once', -1, false, 'Employees', true, 'Company', 'star', '#f97316'],
-  ['Hajj Leave', 'HJ', 'Special', 10, 'once', -1, false, 'Employees (Muslim)', true, 'Statutory', 'building', '#4f46e5'],
-  ['Unpaid Leave', 'UL', 'Unpaid', 0, 'request', -1, null, 'Employees', false, 'Company', 'file-text', '#64748b'],
-  ['Study Leave', 'ST', 'Special', 10, 'year', -1, false, 'Employees', true, 'Company', 'graduation-cap', '#9333ea'],
-  ['Bereavement Leave', 'BR', 'Special', 5, 'event', -1, false, 'Employees', true, 'Statutory', 'user', '#7c3aed'],
-  ['Other Leave', 'OT', 'Custom', 0, 'configurable', -1, null, 'Employees', true, 'Company', 'more', '#6b7280'],
+  ['Annual Leave', 'AL', 'Earned', 30, 'year', 15, true, 'Employees', true, 'Standard', 'tree', 'var(--ka-16a34a)'],
+  ['Sick Leave', 'SL', 'Medical', 14, 'year', 7, false, 'Employees', true, 'Standard', 'shield-plus', 'var(--ka-dc2626)'],
+  ['Casual Leave', 'CL', 'Earned', 10, 'year', 5, true, 'Employees', true, 'Standard', 'calendar-days', 'var(--ka-2563eb)'],
+  ['Maternity Leave', 'ML', 'Special', 90, 'once', -1, false, 'Female Employees', true, 'Statutory', 'user', 'var(--ka-db2777)'],
+  ['Paternity Leave', 'PL', 'Special', 5, 'once', -1, false, 'Male Employees', true, 'Statutory', 'user', 'var(--ka-3b82f6)'],
+  ['Compassionate Leave', 'CP', 'Special', 5, 'event', -1, false, 'Employees', true, 'Statutory', 'heart', 'var(--ka-e11d48)'],
+  ['Marriage Leave', 'MR', 'Special', 5, 'once', -1, false, 'Employees', true, 'Company', 'star', 'var(--ka-f97316)'],
+  ['Hajj Leave', 'HJ', 'Special', 10, 'once', -1, false, 'Employees (Muslim)', true, 'Statutory', 'building', 'var(--ka-4f46e5)'],
+  ['Unpaid Leave', 'UL', 'Unpaid', 0, 'request', -1, null, 'Employees', false, 'Company', 'file-text', 'var(--ka-64748b)'],
+  ['Study Leave', 'ST', 'Special', 10, 'year', -1, false, 'Employees', true, 'Company', 'graduation-cap', 'var(--ka-9333ea)'],
+  ['Bereavement Leave', 'BR', 'Special', 5, 'event', -1, false, 'Employees', true, 'Statutory', 'user', 'var(--ka-7c3aed)'],
+  ['Other Leave', 'OT', 'Custom', 0, 'configurable', -1, null, 'Employees', true, 'Company', 'more', 'var(--ka-6b7280)'],
 ];
 const UTIL = [62.4, 48.1, 55.3, 71.2, 64.8, 22.5, 18.4, 9.6, 6.1, 31.7, 12.3, 4.2];
 

@@ -18,12 +18,12 @@ const MONTHS = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', '
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Employees" [value]="fmt(emps().length)" icon="users" color="#8b5cf6" change="2.4%" sub="vs. last month" />
-      <app-kpi label="Active" [value]="fmt(count('Active'))" icon="user-check" color="#22c55e" sub="currently employed" />
-      <app-kpi label="On Leave" [value]="fmt(count('On Leave'))" icon="calendar-x" color="#f59e0b" sub="today" />
-      <app-kpi label="New Joiners" value="64" icon="user-plus" color="#3b82f6" change="12%" sub="this month" />
-      <app-kpi label="Exits" value="21" icon="door-open" color="#ef4444" change="4%" [up]="false" sub="this month" />
-      <app-kpi label="Avg. Tenure" value="4.2 yrs" icon="clock" color="#06b6d4" sub="all employees" />
+      <app-kpi label="Total Employees" [value]="fmt(emps().length)" icon="users" color="var(--ka-8b5cf6)" change="2.4%" sub="vs. last month" />
+      <app-kpi label="Active" [value]="fmt(count('Active'))" icon="user-check" color="var(--ka-22c55e)" sub="currently employed" />
+      <app-kpi label="On Leave" [value]="fmt(count('On Leave'))" icon="calendar-x" color="var(--ka-f59e0b)" sub="today" />
+      <app-kpi label="New Joiners" value="64" icon="user-plus" color="var(--ka-3b82f6)" change="12%" sub="this month" />
+      <app-kpi label="Exits" value="21" icon="door-open" color="var(--ka-ef4444)" change="4%" [up]="false" sub="this month" />
+      <app-kpi label="Avg. Tenure" value="4.2 yrs" icon="clock" color="var(--ka-06b6d4)" sub="all employees" />
     </section>
 
     <section class="dash">
@@ -115,8 +115,8 @@ export class Employees {
   ];
   protected readonly bulkActions: RowAction[] = [{ id: 'export', label: 'Export selected' }, { id: 'deactivate', label: 'Deactivate', danger: true }];
   protected readonly flow = [
-    { name: 'Joiners', color: '#7c3aed', values: [41, 58, 72, 49, 55, 61, 80, 67, 52, 58, 71, 64] },
-    { name: 'Leavers', color: '#f87171', values: [18, 22, 19, 25, 17, 20, 28, 23, 19, 16, 24, 21] },
+    { name: 'Joiners', color: 'var(--ka-7c3aed)', values: [41, 58, 72, 49, 55, 61, 80, 67, 52, 58, 71, 64] },
+    { name: 'Leavers', color: 'var(--ka-f87171)', values: [18, 22, 19, 25, 17, 20, 28, 23, 19, 16, 24, 21] },
   ];
 
   protected readonly emps = computed(() => {
@@ -134,8 +134,8 @@ export class Employees {
   protected readonly byType = computed(() => {
     const ft = this.emps().filter((p) => p.empType === 'Full Time').length;
     return [
-      { label: 'Full Time', value: ft, color: '#7c3aed' },
-      { label: 'Part Time', value: this.emps().length - ft, color: '#38bdf8' },
+      { label: 'Full Time', value: ft, color: 'var(--ka-7c3aed)' },
+      { label: 'Part Time', value: this.emps().length - ft, color: 'var(--ka-38bdf8)' },
     ];
   });
 

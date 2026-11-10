@@ -10,8 +10,8 @@ import {
 type Dim = 'Department' | 'Site' | 'Role';
 const ROLES_ALL = [...new Set(PEOPLE.map((p) => p.role))].sort();
 const TARGET = 95;
-const pctTone = (v: number) => (v >= TARGET ? '#16a34a' : v >= 90 ? '#f59e0b' : '#ef4444');
-const pctBg = (v: number) => (v >= 98 ? '#d9f7e3' : v >= TARGET ? '#ecfbe9' : v >= 90 ? '#fdf0d5' : v >= 85 ? '#fde3cf' : '#fddde1');
+const pctTone = (v: number) => (v >= TARGET ? 'var(--ka-16a34a)' : v >= 90 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)');
+const pctBg = (v: number) => (v >= 98 ? 'var(--ka-d9f7e3)' : v >= TARGET ? 'var(--ka-ecfbe9)' : v >= 90 ? 'var(--ka-fdf0d5)' : v >= 85 ? 'var(--ka-fde3cf)' : 'var(--ka-fddde1)');
 
 /** Head-count of each requirement's applicable population, per arbitrary group predicate. */
 const POP = new Map(REQS.map((r) => [r.id, PEOPLE.filter((p) => reqDepts(r).includes(p.dept))]));
@@ -32,11 +32,11 @@ const obligation = (r: Req, match: (p: (typeof PEOPLE)[number]) => boolean) => {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Overall Compliance" [value]="store.compliancePct() + '%'" icon="shield-check" color="#22c55e" [change]="delta() + ' pts'" [up]="delta() >= 0" sub="vs. last month" />
-      <app-kpi label="Fully Compliant Staff" [value]="fmt(k().compliant)" icon="user-check" color="#7c3aed" [sub]="Math.round((k().compliant / total) * 100) + '% of ' + fmt(total) + ' employees'" />
-      <app-kpi label="Open Compliance Gaps" [value]="fmt(k().gaps)" icon="triangle-alert" color="#ef4444" [sub]="k().expired + ' expired certificates'" subColor="#dc2626" />
-      <app-kpi label="In Remediation" [value]="fmt(k().assigned)" icon="graduation-cap" color="#3b82f6" sub="training assigned, not yet done" subColor="#2563eb" />
-      <app-kpi label="Requirements Below Target" [value]="k().below + ' / ' + reqs.length" icon="file-check" color="#f59e0b" [sub]="'target ' + target + '% per requirement'" />
+      <app-kpi label="Overall Compliance" [value]="store.compliancePct() + '%'" icon="shield-check" color="var(--ka-22c55e)" [change]="delta() + ' pts'" [up]="delta() >= 0" sub="vs. last month" />
+      <app-kpi label="Fully Compliant Staff" [value]="fmt(k().compliant)" icon="user-check" color="var(--ka-7c3aed)" [sub]="Math.round((k().compliant / total) * 100) + '% of ' + fmt(total) + ' employees'" />
+      <app-kpi label="Open Compliance Gaps" [value]="fmt(k().gaps)" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="k().expired + ' expired certificates'" subColor="var(--ka-dc2626)" />
+      <app-kpi label="In Remediation" [value]="fmt(k().assigned)" icon="graduation-cap" color="var(--ka-3b82f6)" sub="training assigned, not yet done" subColor="var(--ka-2563eb)" />
+      <app-kpi label="Requirements Below Target" [value]="k().below + ' / ' + reqs.length" icon="file-check" color="var(--ka-f59e0b)" [sub]="'target ' + target + '% per requirement'" />
     </section>
 
     <section class="dash">
@@ -207,9 +207,9 @@ const obligation = (r: Req, match: (p: (typeof PEOPLE)[number]) => boolean) => {
     .grp li { display: grid; grid-template-columns: 112px 1fr 46px 58px; gap: 10px; align-items: center; padding: 6px 6px; border-radius: 6px; cursor: pointer; font-size: 12.5px; }
     .grp li:hover, .grp li.on { background: var(--primary-soft); }
     .gn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .grp b { text-align: right; } .grp small { color: var(--muted); font-size: 11px; text-align: right; }
-    .gt { position: relative; height: 8px; background: #eef0f6; border-radius: 6px; } .gt i { display: block; height: 100%; border-radius: 6px; }
-    .gt em { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #1e1b3a; opacity: .5; }
-    .hint { margin: 10px 0 0; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 6px; } .tg { width: 2px; height: 12px; background: #1e1b3a; opacity: .5; }
+    .gt { position: relative; height: 8px; background: var(--kb-eef0f6); border-radius: 6px; } .gt i { display: block; height: 100%; border-radius: 6px; }
+    .gt em { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--kb-1e1b3a); opacity: .5; }
+    .hint { margin: 10px 0 0; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 6px; } .tg { width: 2px; height: 12px; background: var(--kb-1e1b3a); opacity: .5; }
     .rz { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; } .chip { cursor: pointer; } .chip.act { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
     .chip button { border: 0; background: none; cursor: pointer; color: inherit; font-size: 14px; line-height: 1; padding: 0 0 0 2px; }
     .hm { margin-bottom: 12px; } .hmw { overflow-x: auto; }
@@ -218,27 +218,27 @@ const obligation = (r: Req, match: (p: (typeof PEOPLE)[number]) => boolean) => {
     .hm tbody th { text-align: left; font-weight: 500; white-space: nowrap; padding-right: 8px; }
     .hm td { text-align: center; padding: 7px 4px; border-radius: 5px; font-weight: 600; cursor: pointer; min-width: 54px; transition: transform .1s; }
     .hm td:hover { transform: scale(1.06); } .hm td.sel { outline: 2px solid var(--primary); }
-    .hm td.na { background: #f4f5f8; color: #b8bccb; cursor: default; font-weight: 400; } .hm td.na:hover { transform: none; }
-    .hm td.ov { background: #fff; border: 1px solid var(--border); cursor: default; }
+    .hm td.na { background: var(--kb-f4f5f8); color: var(--kf-b8bccb); cursor: default; font-weight: 400; } .hm td.na:hover { transform: none; }
+    .hm td.ov { background: var(--kb-ffffff); border: 1px solid var(--border); cursor: default; }
     .lay { display: grid; grid-template-columns: minmax(0, 1fr) 370px; gap: 12px; align-items: start; }
     .scp { display: flex; gap: 6px; flex-wrap: wrap; }
     .reqc { max-height: 820px; overflow: auto; }
-    .rq { list-style: none; margin: 0; padding: 0; } .rq li { padding: 10px 8px; border-bottom: 1px solid #f0f1f6; cursor: pointer; border-radius: 6px; display: flex; flex-direction: column; gap: 4px; }
-    .rq li:hover, .rq li.on { background: #faf8ff; } .rq li.on { box-shadow: inset 3px 0 0 var(--primary); }
+    .rq { list-style: none; margin: 0; padding: 0; } .rq li { padding: 10px 8px; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; border-radius: 6px; display: flex; flex-direction: column; gap: 4px; }
+    .rq li:hover, .rq li.on { background: var(--kb-faf8ff); } .rq li.on { box-shadow: inset 3px 0 0 var(--primary); }
     .rt { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; } .rt span { font-weight: 700; }
-    .rq small { color: var(--muted); font-size: 11px; } .rb { height: 5px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .rb i { display: block; height: 100%; }
-    .rf { display: flex; justify-content: space-between; align-items: center; gap: 6px; } .red { color: #dc2626; }
+    .rq small { color: var(--muted); font-size: 11px; } .rb { height: 5px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .rb i { display: block; height: 100%; }
+    .rf { display: flex; justify-content: space-between; align-items: center; gap: 6px; } .red { color: var(--kf-dc2626); }
     .pf { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; } .pf div { display: flex; flex-direction: column; flex: 1; } .pf small { color: var(--muted); font-size: 11.5px; }
     .dt-av.big { width: 46px; height: 46px; font-size: 15px; }
-    .pk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; } .pk div { background: #f7f7fb; border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; } .pk small { color: var(--muted); font-size: 11px; } .pk b { font-size: 18px; }
+    .pk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; } .pk div { background: var(--kb-f7f7fb); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; } .pk small { color: var(--muted); font-size: 11px; } .pk b { font-size: 18px; }
     h4 { margin: 16px 0 6px; font-size: 13px; }
-    .er { list-style: none; margin: 0; padding: 0; } .er li { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .er { list-style: none; margin: 0; padding: 0; } .er li { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .er li > div { flex: 1; display: flex; flex-direction: column; min-width: 0; } .er small { color: var(--muted); font-size: 11px; }
-    .ic { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: #dcfce7; color: #15803d; flex-shrink: 0; } .ic.bad { background: #fee2e2; color: #b91c1c; }
+    .ic { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--kb-dcfce7); color: var(--kf-15803d); flex-shrink: 0; } .ic.bad { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .cks { display: flex; gap: 14px; } .cks label, .ck { flex-direction: row !important; display: flex; align-items: center; gap: 6px; font-size: 12.5px; }
     textarea.input { resize: vertical; font: inherit; }
     .ab { list-style: none; margin: 0 0 14px; padding: 0; border: 1px solid var(--border); border-radius: 8px; max-height: 240px; overflow: auto; }
-    .ab li { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 10px; padding: 8px 10px; border-bottom: 1px solid #f1f2f6; font-size: 12.5px; }
+    .ab li { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 10px; padding: 8px 10px; border-bottom: 1px solid var(--kl-f1f2f6); font-size: 12.5px; }
     .ab li small { color: var(--muted); font-size: 11px; grid-column: 1; } .ab li .tag { grid-row: 1 / 3; grid-column: 2; align-self: center; }
     @media (max-width: 1250px) { .lay { grid-template-columns: 1fr; } .reqc { max-height: none; } }
   `,
@@ -342,16 +342,16 @@ export class ComplianceTracking extends TrnPage {
     }),
   );
   protected readonly trend = computed<Series[]>(() => [
-    { name: 'Compliance %', color: '#7c3aed', area: true, values: [...COMPLIANCE_TREND.slice(0, 11), this.store.compliancePct()] },
-    { name: 'Target', color: '#16a34a', dashed: true, values: MONTHS_12.map(() => TARGET) },
+    { name: 'Compliance %', color: 'var(--ka-7c3aed)', area: true, values: [...COMPLIANCE_TREND.slice(0, 11), this.store.compliancePct()] },
+    { name: 'Target', color: 'var(--ka-16a34a)', dashed: true, values: MONTHS_12.map(() => TARGET) },
   ]);
   protected readonly reasons = computed(() => {
     const c = { 'Never trained': 0, 'Certificate expired': 0, 'Training overdue': 0 } as Record<NcReason, number>;
     for (const x of this.store.ncRows()) c[x.reason]++;
     return [
-      { label: 'Never trained', value: c['Never trained'], color: '#8b5cf6' },
-      { label: 'Certificate expired', value: c['Certificate expired'], color: '#ef4444' },
-      { label: 'Training overdue', value: c['Training overdue'], color: '#f59e0b' },
+      { label: 'Never trained', value: c['Never trained'], color: 'var(--ka-8b5cf6)' },
+      { label: 'Certificate expired', value: c['Certificate expired'], color: 'var(--ka-ef4444)' },
+      { label: 'Training overdue', value: c['Training overdue'], color: 'var(--ka-f59e0b)' },
     ];
   });
 

@@ -50,11 +50,11 @@ import { auditIcon } from './admin-ui';
     .hd { display: grid; grid-template-columns: 42px 1fr auto; gap: 12px; align-items: center; margin-bottom: 16px; } .hd div { display: flex; flex-direction: column; }
     .ic { width: 42px; height: 42px; border-radius: 10px; display: grid; place-items: center; }
     .facts { display: grid; grid-template-columns: 120px 1fr; gap: 9px 12px; font-size: 12.5px; margin: 0 0 16px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; display: flex; align-items: center; gap: 6px; }
-    .av { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 9.5px; font-weight: 700; display: grid; place-items: center; }
+    .av { width: 22px; height: 22px; border-radius: 50%; color: var(--kf-ffffff); font-size: 9.5px; font-weight: 700; display: grid; place-items: center; }
     h4 { margin: 14px 0 8px; font-size: 13px; }
     .diff { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; } pre { margin: 4px 0 0; padding: 8px; border-radius: 8px; white-space: pre-wrap; font-size: 11.5px; min-height: 40px; }
-    .old { background: #fef2f2; color: #991b1b; } .new { background: #f0fdf4; color: #166534; }
-    .rel { list-style: none; margin: 0; padding: 0; font-size: 12.5px; } .rel li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f0f1f6; } .rel div { display: flex; flex-direction: column; } .rel small { color: var(--muted); }
+    .old { background: var(--kb-fef2f2); color: var(--kf-991b1b); } .new { background: var(--kb-f0fdf4); color: var(--kf-166534); }
+    .rel { list-style: none; margin: 0; padding: 0; font-size: 12.5px; } .rel li { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); } .rel div { display: flex; flex-direction: column; } .rel small { color: var(--muted); }
     .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
   `,
 })

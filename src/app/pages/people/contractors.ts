@@ -34,11 +34,11 @@ const ROWS: Row[] = (() => {
     <app-page-head title="Contractor Personnel" parent="People &amp; Identity Management" parentLink="/people-identity" subtitle="Contractor workers, their companies, inductions, permits and compliance." />
 
     <section class="kpi-row">
-      <app-kpi label="Contractor Workers" [value]="rows().length.toLocaleString()" icon="hard-hat" color="#fb923c" change="4%" />
-      <app-kpi label="Compliant" [value]="c('Compliant')" icon="shield-check" color="#22c55e" sub="all documents valid" />
-      <app-kpi label="Expiring ≤ 30 days" [value]="c('Expiring')" icon="clock" color="#f59e0b" sub="permits" />
-      <app-kpi label="Non-compliant" [value]="c('Non-compliant')" icon="ban" color="#ef4444" sub="access blocked" />
-      <app-kpi label="Companies" value="6" icon="building" color="#8b5cf6" sub="active vendors" />
+      <app-kpi label="Contractor Workers" [value]="rows().length.toLocaleString()" icon="hard-hat" color="var(--ka-fb923c)" change="4%" />
+      <app-kpi label="Compliant" [value]="c('Compliant')" icon="shield-check" color="var(--ka-22c55e)" sub="all documents valid" />
+      <app-kpi label="Expiring ≤ 30 days" [value]="c('Expiring')" icon="clock" color="var(--ka-f59e0b)" sub="permits" />
+      <app-kpi label="Non-compliant" [value]="c('Non-compliant')" icon="ban" color="var(--ka-ef4444)" sub="access blocked" />
+      <app-kpi label="Companies" value="6" icon="building" color="var(--ka-8b5cf6)" sub="active vendors" />
     </section>
 
     <section class="dash">
@@ -112,17 +112,17 @@ export class Contractors {
   protected readonly byCompany = computed(() => {
     const m: Record<string, number> = {};
     for (const p of this.rows()) m[p.company] = (m[p.company] ?? 0) + 1;
-    return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value, display: String(value), color: '#fb923c' }));
+    return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value, display: String(value), color: 'var(--ka-fb923c)' }));
   });
   protected readonly compliance = computed(() => [
-    { label: 'Compliant', value: +this.c('Compliant'), color: '#22c55e' },
-    { label: 'Expiring', value: +this.c('Expiring'), color: '#f59e0b' },
-    { label: 'Non-compliant', value: +this.c('Non-compliant'), color: '#ef4444' },
+    { label: 'Compliant', value: +this.c('Compliant'), color: 'var(--ka-22c55e)' },
+    { label: 'Expiring', value: +this.c('Expiring'), color: 'var(--ka-f59e0b)' },
+    { label: 'Non-compliant', value: +this.c('Non-compliant'), color: 'var(--ka-ef4444)' },
   ]);
   protected readonly induction = computed(() =>
     ['Completed', 'Pending', 'Expired'].map((l, i) => {
       const v = this.rows().filter((r) => r.induction === l).length;
-      return { label: l, value: v, display: String(v), color: ['#22c55e', '#f59e0b', '#ef4444'][i] };
+      return { label: l, value: v, display: String(v), color: ['var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)'][i] };
     }),
   );
 

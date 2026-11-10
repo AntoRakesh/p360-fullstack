@@ -60,7 +60,7 @@ function summaryAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: 'Here is your workforce briefing:' },
-      { t: 'kpis', items: [{ label: 'Headcount', value: fmtN(TOTAL_EMPLOYEES), color: '#7c3aed' }, { label: 'Attendance', value: pct(ATTENDANCE.present, TOTAL_EMPLOYEES) + '%', color: '#22c55e' }, { label: 'Overtime (h)', value: fmtN(TOTAL_OVERTIME), color: '#f97316' }, { label: 'High risk', value: '23', color: '#ef4444' }] },
+      { t: 'kpis', items: [{ label: 'Headcount', value: fmtN(TOTAL_EMPLOYEES), color: 'var(--ka-7c3aed)' }, { label: 'Attendance', value: pct(ATTENDANCE.present, TOTAL_EMPLOYEES) + '%', color: 'var(--ka-22c55e)' }, { label: 'Overtime (h)', value: fmtN(TOTAL_OVERTIME), color: 'var(--ka-f97316)' }, { label: 'High risk', value: '23', color: 'var(--ka-ef4444)' }] },
       { t: 'list', items: ['Overtime is 31% above baseline in Operations — consider a 4th night crew.', 'Sales absenteeism is 5% higher than last week; late arrivals doubled.', `${EXPIRING.length} certifications expire within 30 days (3 gate site access).`, 'Contractor headcount grew 12% this month to 349.'] },
     ],
     actions: [{ label: 'Workforce Insights', kind: 'nav', arg: '/ai-people-intelligence/workforce-insights' }, { label: 'Recommendations', kind: 'nav', arg: '/ai-people-intelligence/recommendation-engine' }],
@@ -80,7 +80,7 @@ function companyAttendance(): Answer {
   return {
     blocks: [
       { t: 'text', text: `Across all sites this week, ${fmtN(a.present)} of ${fmtN(TOTAL_EMPLOYEES)} employees were present on time (${pct(a.present, TOTAL_EMPLOYEES)}%). ${a.late} arrived late, ${a.absent} were absent and ${a.leave} were on leave.` },
-      { t: 'donut', center: 'Total Employees', segs: [{ label: 'Present', value: a.present, color: '#22c55e' }, { label: 'Late', value: a.late, color: '#f59e0b' }, { label: 'Absent', value: a.absent, color: '#ef4444' }, { label: 'On Leave', value: a.leave, color: '#64748b' }] },
+      { t: 'donut', center: 'Total Employees', segs: [{ label: 'Present', value: a.present, color: 'var(--ka-22c55e)' }, { label: 'Late', value: a.late, color: 'var(--ka-f59e0b)' }, { label: 'Absent', value: a.absent, color: 'var(--ka-ef4444)' }, { label: 'On Leave', value: a.leave, color: 'var(--ka-64748b)' }] },
       { t: 'text', text: 'Lowest attendance: Sales (81.6%) and HR (76.2%, 5 people on planned leave).' },
     ],
     actions: [{ label: 'By Department', kind: 'prompt', arg: "Show today's attendance summary by department at Head Office" }, { label: 'Open Live Monitor', kind: 'nav', arg: '/time-attendance/live-attendance-monitor' }],
@@ -109,7 +109,7 @@ function assetAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: 'Asset utilization by site this week. The Warehouse is highest at 84%; Site B is lowest at 58% with 420 assets — a good candidate for redistribution.' },
-      { t: 'column', labels: ASSET_UTIL.map((a) => a.site), series: [{ name: 'Utilization %', color: '#7c3aed', values: ASSET_UTIL.map((a) => a.util) }] },
+      { t: 'column', labels: ASSET_UTIL.map((a) => a.site), series: [{ name: 'Utilization %', color: 'var(--ka-7c3aed)', values: ASSET_UTIL.map((a) => a.util) }] },
       { t: 'table', cols: ['Site', 'Assets', 'Utilization'], rows: ASSET_UTIL.map((a) => [a.site, fmtN(a.assets), { text: a.util + '%', cls: 'pill ' + (a.util >= 75 ? 'green' : a.util >= 62 ? 'amber' : 'red') }]) },
     ],
     actions: [{ label: 'Export CSV', kind: 'csv', arg: 'assets' }, { label: 'Space Utilization', kind: 'nav', arg: '/workplace-facility-services/space-utilization' }],
@@ -119,7 +119,7 @@ function safetyAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: 'Safety incident report — today. 2 near-miss incidents were reported at the Warehouse and 1 observation at Site A. No injuries. Near-miss rate is 2x the weekly baseline, both involving forklift movement during shift change.' },
-      { t: 'kpis', items: [{ label: 'Near misses', value: '2', color: '#f59e0b' }, { label: 'Observations', value: '1', color: '#3b82f6' }, { label: 'Injuries', value: '0', color: '#22c55e' }, { label: 'Days since LTI', value: '146', color: '#7c3aed' }] },
+      { t: 'kpis', items: [{ label: 'Near misses', value: '2', color: 'var(--ka-f59e0b)' }, { label: 'Observations', value: '1', color: 'var(--ka-3b82f6)' }, { label: 'Injuries', value: '0', color: 'var(--ka-22c55e)' }, { label: 'Days since LTI', value: '146', color: 'var(--ka-7c3aed)' }] },
       { t: 'table', cols: ['ID', 'Type', 'Location', 'Description', 'Time'], rows: INCIDENTS.map((i) => [i.id, { text: i.type, cls: 'pill ' + (i.sev === 'Medium' ? 'amber' : 'green') }, i.where, i.what, i.time]) },
       { t: 'text', text: 'Recommendation: add a spotter rule for reversing forklifts in Aisle 7 between 13:45 and 14:15.' },
     ],
@@ -132,7 +132,7 @@ function overtimeAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: `Overtime this week totals ${fmtN(TOTAL_OVERTIME)} hours (+8% vs last week). Operations has the highest overtime at 2,140 h — 31% above its 8-week baseline.` },
-      { t: 'bars', max: 2200, rows: top.map((d, i) => ({ label: d.name, value: d.overtime, display: fmtN(d.overtime) + ' h', color: i ? '#a78bfa' : '#7c3aed' })) },
+      { t: 'bars', max: 2200, rows: top.map((d, i) => ({ label: d.name, value: d.overtime, display: fmtN(d.overtime) + ' h', color: i ? 'var(--ka-a78bfa)' : 'var(--ka-7c3aed)' })) },
       { t: 'table', cols: ['Employee', 'Department', 'Overtime (h)'], rows: emps.map((e) => [{ text: e.name, av: e.initials, color: e.avatar }, e.dept, { text: String(e.overtime), cls: e.overtime > 14 ? 'pill red' : 'pill amber' }]) },
     ],
     actions: [{ label: 'View Recommendation', kind: 'nav', arg: '/ai-people-intelligence/recommendation-engine?id=RC-05' }, { label: 'Overtime Trend', kind: 'prompt', arg: 'Show overtime trend for the last 12 weeks' }],
@@ -163,7 +163,7 @@ function absenteeismAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: 'Absenteeism has risen for 3 weeks and is now 4.8% (8-week average 4.0%). Sales is 5% higher than last week, driven by Monday/Friday unplanned absences.' },
-      { t: 'line', labels: WEEKS, suffix: '%', series: [{ name: 'Absenteeism %', color: '#ef4444', values: ABSENTEEISM, area: true }] },
+      { t: 'line', labels: WEEKS, suffix: '%', series: [{ name: 'Absenteeism %', color: 'var(--ka-ef4444)', values: ABSENTEEISM, area: true }] },
     ],
     actions: [{ label: 'Open Anomaly', kind: 'nav', arg: '/ai-people-intelligence/anomaly-detection?id=AN-305' }, { label: 'Set Alert > 5%', kind: 'alert', arg: 'Absenteeism above 5% for any department' }],
   };
@@ -182,7 +182,7 @@ function contractorAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: `Contractor headcount increased by 12% this month to ${CONTRACTOR_TREND.at(-1)} (from ${CONTRACTOR_TREND.at(-2)}), mainly new Warehouse logistics crews for the Q4 peak.` },
-      { t: 'line', labels: MONTHS, series: [{ name: 'Contractors', color: '#ef4444', values: CONTRACTOR_TREND, area: true }] },
+      { t: 'line', labels: MONTHS, series: [{ name: 'Contractors', color: 'var(--ka-ef4444)', values: CONTRACTOR_TREND, area: true }] },
     ],
     actions: [{ label: 'Contractor Workforce', kind: 'nav', arg: '/contractor-vendor' }],
   };
@@ -210,7 +210,7 @@ function canteenAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: 'Canteen peak usage is between 12:00 and 1:00 PM, reaching 96% of seats (22% above usual). Average queue time is 11 minutes. Staggering lunch in three waves would reduce it to about 4 minutes.' },
-      { t: 'column', labels: ['11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00'], series: [{ name: 'Occupancy %', color: '#0891b2', values: [34, 58, 92, 96, 74, 40, 18] }] },
+      { t: 'column', labels: ['11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00'], series: [{ name: 'Occupancy %', color: 'var(--ka-0891b2)', values: [34, 58, 92, 96, 74, 40, 18] }] },
     ],
     actions: [{ label: 'Apply Staggered Slots', kind: 'nav', arg: '/ai-people-intelligence/recommendation-engine?id=RC-06' }],
   };
@@ -219,7 +219,7 @@ function leaveAnswer(): Answer {
   return {
     blocks: [
       { t: 'text', text: `${ATTENDANCE.leave} employees are on leave today. HR has the most (5), all planned annual leave. Next week 64 leave days are approved, peaking on Thursday.` },
-      { t: 'donut', center: 'On Leave', segs: DEPTS.filter((d) => d.leave >= 2).map((d, i) => ({ label: d.name, value: d.leave, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#0891b2', '#db2777'][i % 7] })) },
+      { t: 'donut', center: 'On Leave', segs: DEPTS.filter((d) => d.leave >= 2).map((d, i) => ({ label: d.name, value: d.leave, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-0891b2)', 'var(--ka-db2777)'][i % 7] })) },
     ],
     actions: [{ label: 'Leave Calendar', kind: 'nav', arg: '/leave-absence' }],
   };
@@ -234,8 +234,8 @@ function personAnswer(name: string): Answer {
 
 /** Extra canned answers reachable through "prompt" actions. */
 export function trendAnswer(q: string): Answer | null {
-  if (/overtime trend/.test(q)) return { blocks: [{ t: 'text', text: 'Overtime hours over the last 12 weeks. The trend is +30% since W31, accelerating in the last 3 weeks.' }, { t: 'line', labels: WEEKS, series: [{ name: 'Overtime (h)', color: '#7c3aed', values: OVERTIME_TREND, area: true }] }] };
-  if (/headcount trend/.test(q)) return { blocks: [{ t: 'text', text: 'Headcount grew steadily from 1,176 to 1,248 over 12 months (+6.1%).' }, { t: 'line', labels: MONTHS, series: [{ name: 'Employees', color: '#7c3aed', values: HEADCOUNT_TREND, area: true }, { name: 'Contractors', color: '#ef4444', values: CONTRACTOR_TREND }] }] };
+  if (/overtime trend/.test(q)) return { blocks: [{ t: 'text', text: 'Overtime hours over the last 12 weeks. The trend is +30% since W31, accelerating in the last 3 weeks.' }, { t: 'line', labels: WEEKS, series: [{ name: 'Overtime (h)', color: 'var(--ka-7c3aed)', values: OVERTIME_TREND, area: true }] }] };
+  if (/headcount trend/.test(q)) return { blocks: [{ t: 'text', text: 'Headcount grew steadily from 1,176 to 1,248 over 12 months (+6.1%).' }, { t: 'line', labels: MONTHS, series: [{ name: 'Employees', color: 'var(--ka-7c3aed)', values: HEADCOUNT_TREND, area: true }, { name: 'Contractors', color: 'var(--ka-ef4444)', values: CONTRACTOR_TREND }] }] };
   return null;
 }
 export const EXPIRING_LIST = EXPIRING;

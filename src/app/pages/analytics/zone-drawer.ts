@@ -17,7 +17,7 @@ import { FfLine } from './analytics-ui';
           <span [class]="z.status === 'Normal' ? 'tag green' : z.status === 'Busy' ? 'tag amber' : 'tag red'">{{ z.status }}</span>
           <button class="close-btn" (click)="closed.emit()">×</button></div>
         <div class="km">
-          <div><small>Occupancy now</small><b>{{ z.occ }} <em>/ {{ z.cap }}</em></b><div class="bar"><i [style.width.%]="z.pct" [style.background]="z.pct >= z.threshold ? '#ef4444' : z.color"></i></div></div>
+          <div><small>Occupancy now</small><b>{{ z.occ }} <em>/ {{ z.cap }}</em></b><div class="bar"><i [style.width.%]="z.pct" [style.background]="z.pct >= z.threshold ? 'var(--ka-ef4444)' : z.color"></i></div></div>
           <div><small>Entries</small><b>{{ n(z.entries) }}</b></div>
           <div><small>Exits</small><b>{{ n(z.exits) }}</b></div>
           <div><small>Avg. dwell</small><b>{{ m(z.dwell) }}</b></div>
@@ -45,7 +45,7 @@ import { FfLine } from './analytics-ui';
     .sw { width: 12px; height: 36px; border-radius: 4px; }
     .km { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
     .km > div { border: 1px solid var(--border); border-radius: 8px; padding: 9px 10px; } .km small { color: var(--muted); font-size: 11px; } .km b { display: block; font-size: 17px; margin-top: 2px; } .km em { font-style: normal; font-size: 12px; color: var(--muted); font-weight: 500; }
-    .bar { height: 5px; border-radius: 3px; background: #eef0f6; margin-top: 6px; overflow: hidden; } .bar i { display: block; height: 100%; }
+    .bar { height: 5px; border-radius: 3px; background: var(--kb-eef0f6); margin-top: 6px; overflow: hidden; } .bar i { display: block; height: 100%; }
     h4 { margin: 14px 0 8px; font-size: 13px; } .ok { font-size: 12px; margin-top: 10px; }
   `,
 })
@@ -74,7 +74,7 @@ export class ZoneDrawer {
     const share = (z.entries + z.exits) / 12482 / this.s.f();
     return [
       { name: 'Footfall', color: z.color, values: PEAK_TODAY.map((v, i) => Math.round(v * share * 1.6 * this.s.f() * (1 + ((i * 7 + z.id.charCodeAt(1)) % 5) / 20))), area: true },
-      { name: 'Last week', color: '#94a3b8', dashed: true, values: PEAK_TODAY.map((v) => Math.round(v * share * 1.35 * this.s.f())) },
+      { name: 'Last week', color: 'var(--ka-94a3b8)', dashed: true, values: PEAK_TODAY.map((v) => Math.round(v * share * 1.35 * this.s.f())) },
     ];
   });
   protected save() {

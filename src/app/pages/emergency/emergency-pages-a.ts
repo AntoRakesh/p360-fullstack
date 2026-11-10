@@ -42,7 +42,7 @@ const stTag = (s: string) => (s === 'Evacuated' ? 'tag green' : s === 'Missing' 
           <thead><tr><th>Floor</th><th>Remaining</th><th>Missing</th><th>Warden</th><th>Status</th><th></th></tr></thead>
           <tbody>
             @for (f of floors(); track f.floor) {
-              <tr><td><b>{{ f.floor }}</b></td><td>{{ f.yet }}</td><td [style.color]="f.missing ? '#dc2626' : ''">{{ f.missing }}</td><td>{{ f.warden }}</td>
+              <tr><td><b>{{ f.floor }}</b></td><td>{{ f.yet }}</td><td [style.color]="f.missing ? 'var(--ka-dc2626)' : ''">{{ f.missing }}</td><td>{{ f.warden }}</td>
                 <td><span class="tag" [class]="f.yet + f.missing === 0 ? 'tag green' : 'tag amber'">{{ f.yet + f.missing === 0 ? 'Cleared' : 'Sweeping' }}</span></td>
                 <td>@if (f.yet) {<button class="btn-ghost sm" (click)="sweep(f.floor)">Mark swept ({{ f.yet }} out)</button>}</td></tr>
             }
@@ -67,14 +67,14 @@ const stTag = (s: string) => (s === 'Evacuated' ? 'tag green' : s === 'Missing' 
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .hero { display: grid; grid-template-columns: minmax(0, 1.4fr) 140px minmax(0, 1.4fr) auto; gap: 20px; align-items: center; margin-bottom: 14px; border-left: 5px solid #ef4444; } .hero.done { border-left-color: #22c55e; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.4fr) 140px minmax(0, 1.4fr) auto; gap: 20px; align-items: center; margin-bottom: 14px; border-left: 5px solid var(--kl-ef4444); } .hero.done { border-left-color: var(--kl-22c55e); }
     .h1 { display: flex; gap: 12px; align-items: center; } .h1 div { display: flex; flex-direction: column; gap: 2px; font-size: 13px; } .h1 b { font-size: 16px; } .h1 small { color: var(--muted); }
-    .ic { width: 50px; height: 50px; border-radius: 12px; background: #ef4444; color: #fff; display: grid; place-items: center; flex: none; } .done .ic { background: #22c55e; }
+    .ic { width: 50px; height: 50px; border-radius: 12px; background: var(--kb-ef4444); color: var(--kf-ffffff); display: grid; place-items: center; flex: none; } .done .ic { background: var(--kb-22c55e); }
     .tm { display: flex; flex-direction: column; } .tm small { color: var(--muted); font-size: 12px; } .tm b { font-size: 26px; font-variant-numeric: tabular-nums; }
-    .pg small { color: var(--muted); font-size: 12px; } .bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: #eef0f6; margin-bottom: 6px; } .bar .g { background: #22c55e; } .bar .a { background: #f59e0b; } .bar .r { background: #ef4444; }
-    .btn-ok { display: inline-flex; gap: 6px; align-items: center; height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #16a34a; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
-    .log { list-style: none; margin: 0; padding: 0; max-height: 330px; overflow: auto; } .log li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
-    .log p { margin: 0; display: flex; flex-direction: column; } .log small { color: var(--muted); } .d { width: 24px; height: 24px; border-radius: 50%; color: #fff; display: grid; place-items: center; flex: none; }
+    .pg small { color: var(--muted); font-size: 12px; } .bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--kb-eef0f6); margin-bottom: 6px; } .bar .g { background: var(--kb-22c55e); } .bar .a { background: var(--kb-f59e0b); } .bar .r { background: var(--kb-ef4444); }
+    .btn-ok { display: inline-flex; gap: 6px; align-items: center; height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: var(--kb-16a34a); color: var(--kf-ffffff); font: inherit; font-weight: 600; cursor: pointer; }
+    .log { list-style: none; margin: 0; padding: 0; max-height: 330px; overflow: auto; } .log li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
+    .log p { margin: 0; display: flex; flex-direction: column; } .log small { color: var(--muted); } .d { width: 24px; height: 24px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; flex: none; }
     @media (max-width: 1200px) { .hero { grid-template-columns: 1fr; } }
   `,
 })
@@ -108,7 +108,7 @@ export class ActiveEvacuations {
   protected sweep(floor: string) {
     const ids = this.store.people().filter((p) => p.floor === floor && p.status === 'Yet to Evacuate').map((p) => p.id);
     this.store.markSafe(ids, `Warden ${this.wardens[floor]}`);
-    this.store.log(`${floor} swept & cleared`, floor, `Warden ${this.wardens[floor]}`, 'run', '#22c55e');
+    this.store.log(`${floor} swept & cleared`, floor, `Warden ${this.wardens[floor]}`, 'run', 'var(--ka-22c55e)');
     toast(this.msg, `${floor} swept · ${ids.length} people escorted out`);
   }
   protected clear() {
@@ -131,7 +131,7 @@ export class ActiveEvacuations {
         @let st = status(m);
         <div class="card mp" [class.on]="sel() === m.id" (click)="sel.set(m.id)">
           <div class="top"><span class="letter">{{ m.id }}</span><div><b>{{ m.name }}</b><small>{{ m.location }} · {{ m.lat }}</small></div><span class="tag" [class]="st === 'Complete' ? 'tag green' : st === 'In Progress' ? 'tag amber' : 'tag red'">{{ st }}</span></div>
-          <div class="mid"><app-ring [value]="ratio(m)" [color]="st === 'Complete' ? '#22c55e' : st === 'In Progress' ? '#f59e0b' : '#ef4444'" [size]="64" /><div><b>{{ m.present }}</b> / {{ m.expected }}<small>present / expected</small></div></div>
+          <div class="mid"><app-ring [value]="ratio(m)" [color]="st === 'Complete' ? 'var(--ka-22c55e)' : st === 'In Progress' ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'" [size]="64" /><div><b>{{ m.present }}</b> / {{ m.expected }}<small>present / expected</small></div></div>
           <div class="ft"><span><app-icon name="user-check" [size]="14" />{{ m.warden }}</span><span>Cap. {{ m.capacity }}</span></div>
           <button class="btn-ghost sm" (click)="$event.stopPropagation(); scan(m.id)">Badge check-in</button>
         </div>
@@ -160,7 +160,7 @@ export class ActiveEvacuations {
     .mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 14px; }
     .mp { display: flex; flex-direction: column; gap: 10px; cursor: pointer; } .mp.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .top { display: flex; gap: 10px; align-items: center; } .top div { flex: 1; display: flex; flex-direction: column; font-size: 13px; } .top small { color: var(--muted); font-size: 11.5px; }
-    .letter { width: 36px; height: 36px; border-radius: 50%; background: #16a34a; color: #fff; display: grid; place-items: center; font-weight: 700; }
+    .letter { width: 36px; height: 36px; border-radius: 50%; background: var(--kb-16a34a); color: var(--kf-ffffff); display: grid; place-items: center; font-weight: 700; }
     .mid { display: flex; gap: 14px; align-items: center; } .mid div { display: flex; flex-direction: column; font-size: 13px; } .mid b { font-size: 24px; } .mid small { color: var(--muted); }
     .ft { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); } .ft span { display: flex; gap: 4px; align-items: center; } .mp button { align-self: flex-start; }
   `,
@@ -208,10 +208,10 @@ export class MusterPoints {
   template: `
     <app-page-head title="Accountability" [parent]="parent" [parentLink]="link" subtitle="Live roll-call of everyone on site — mark people safe or missing." />
     <section class="kpi-row">
-      <app-kpi label="Accounted For" [value]="acc() + '%'" icon="user-check" color="#22c55e" [sub]="c().evac + ' of ' + c().total" />
-      <app-kpi label="Yet to Evacuate" [value]="c().yet" icon="run" color="#f59e0b" />
-      <app-kpi label="Missing" [value]="c().missing" icon="triangle-alert" color="#ef4444" />
-      <app-kpi label="Visitors & Contractors" [value]="vc()" icon="hard-hat" color="#7c3aed" [sub]="vcSafe() + ' safe'" />
+      <app-kpi label="Accounted For" [value]="acc() + '%'" icon="user-check" color="var(--ka-22c55e)" [sub]="c().evac + ' of ' + c().total" />
+      <app-kpi label="Yet to Evacuate" [value]="c().yet" icon="run" color="var(--ka-f59e0b)" />
+      <app-kpi label="Missing" [value]="c().missing" icon="triangle-alert" color="var(--ka-ef4444)" />
+      <app-kpi label="Visitors & Contractors" [value]="vc()" icon="hard-hat" color="var(--ka-7c3aed)" [sub]="vcSafe() + ' safe'" />
     </section>
     <div class="card">
       <app-data-table [rows]="store.people()" [columns]="cols" [filters]="filters" [actions]="actions" [bulkActions]="bulk" [selectable]="true" noun="people" [pageSize]="15"
@@ -277,7 +277,7 @@ export class Accountability {
       <div class="card">
         @if (sel(); as p) {
           <div class="card-head"><h3>Last known location · {{ p.floor }}</h3><span class="muted">{{ p.zone }}</span></div>
-          <app-floor-plan [zones]="zones" [building]="building" [markers]="marker()" [callout]="{ x: xy()[0], y: xy()[1], title: p.name, lines: ['Last seen ' + p.lastSeen + ' min ago', p.zone], initials: p.initials, color: '#ef4444' }" [height]="380" />
+          <app-floor-plan [zones]="zones" [building]="building" [markers]="marker()" [callout]="{ x: xy()[0], y: xy()[1], title: p.name, lines: ['Last seen ' + p.lastSeen + ' min ago', p.zone], initials: p.initials, color: 'var(--ka-ef4444)' }" [height]="380" />
           <div class="acts">
             <button class="btn-outline" (click)="call(p)"><app-icon name="phone" [size]="15" />Call {{ p.phone }}</button>
             <button class="btn-outline" (click)="dispatch(p)"><app-icon name="users" [size]="15" />Dispatch Search Team</button>
@@ -290,10 +290,10 @@ export class Accountability {
   `,
   styles: `
     .mp { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 14px; align-items: start; } .list { display: flex; flex-direction: column; gap: 8px; max-height: 560px; overflow: auto; }
-    .mc { display: flex; gap: 10px; align-items: center; padding: 12px; cursor: pointer; border-left: 4px solid #ef4444; } .mc.on { background: #fef2f2; }
-    .av { width: 40px; height: 40px; border-radius: 50%; background: #fee2e2; color: #dc2626; display: grid; place-items: center; font-weight: 700; flex: none; }
-    .info { display: flex; flex-direction: column; gap: 2px; font-size: 13px; } .info small { color: var(--muted); font-size: 11.5px; } .ls { display: flex; gap: 4px; align-items: center; color: #dc2626 !important; } .nt { color: #d97706 !important; }
-    .ok { color: #16a34a; font-weight: 600; } .acts { display: flex; gap: 10px; margin-top: 12px; justify-content: flex-end; }
+    .mc { display: flex; gap: 10px; align-items: center; padding: 12px; cursor: pointer; border-left: 4px solid var(--kl-ef4444); } .mc.on { background: var(--kb-fef2f2); }
+    .av { width: 40px; height: 40px; border-radius: 50%; background: var(--kb-fee2e2); color: var(--kf-dc2626); display: grid; place-items: center; font-weight: 700; flex: none; }
+    .info { display: flex; flex-direction: column; gap: 2px; font-size: 13px; } .info small { color: var(--muted); font-size: 11.5px; } .ls { display: flex; gap: 4px; align-items: center; color: var(--kf-dc2626) !important; } .nt { color: var(--kf-d97706) !important; }
+    .ok { color: var(--kf-16a34a); font-weight: 600; } .acts { display: flex; gap: 10px; margin-top: 12px; justify-content: flex-end; }
     @media (max-width: 1100px) { .mp { grid-template-columns: 1fr; } }
   `,
 })
@@ -308,18 +308,18 @@ export class MissingPersons {
   protected readonly selId = signal<string | null>(null);
   protected readonly sel = computed(() => this.missing().find((p) => p.id === this.selId()) ?? this.missing()[0] ?? null);
   protected readonly xy = computed(() => (this.sel() ? mapXY(this.sel()!) : [0, 0]));
-  protected readonly marker = computed(() => (this.sel() ? [{ id: 'm', x: this.xy()[0], y: this.xy()[1], color: '#ef4444', label: this.sel()!.initials, pulse: true, alert: true }] : []));
+  protected readonly marker = computed(() => (this.sel() ? [{ id: 'm', x: this.xy()[0], y: this.xy()[1], color: 'var(--ka-ef4444)', label: this.sel()!.initials, pulse: true, alert: true }] : []));
   protected call(p: EPerson) {
     toast(this.msg, `Calling ${p.name} on ${p.phone}… no answer, voicemail left`);
   }
   protected dispatch(p: EPerson) {
     this.store.people.update((l) => l.map((x) => (x.id === p.id ? { ...x, note: `Search team dispatched ${fmtClock(Date.now())}` } : x)));
-    this.store.log(`Search team dispatched for ${p.name}`, `${p.floor} · ${p.zone}`, 'Demo login', 'users', '#f59e0b');
+    this.store.log(`Search team dispatched for ${p.name}`, `${p.floor} · ${p.zone}`, 'Demo login', 'users', 'var(--ka-f59e0b)');
     toast(this.msg, `Search & rescue team sent to ${p.floor}, ${p.zone}`);
   }
   protected found(p: EPerson) {
     this.store.markSafe([p.id], 'Search team');
-    this.store.log(`${p.name} found safe`, `${p.floor} · ${p.zone}`, 'Search team', 'shield-check', '#22c55e');
+    this.store.log(`${p.name} found safe`, `${p.floor} · ${p.zone}`, 'Search team', 'shield-check', 'var(--ka-22c55e)');
     this.selId.set(null);
     toast(this.msg, `${p.name} found safe`);
   }
@@ -342,7 +342,7 @@ export class MissingPersons {
           <thead><tr><th>Floor</th><th>Zone</th><th>Primary exit</th><th>Muster</th><th>Remaining</th><th>Status</th><th></th></tr></thead>
           <tbody>
             @for (z of rows(); track z.key) {
-              <tr><td>{{ z.floor }}</td><td><b>{{ z.zone }}</b></td><td>{{ z.exit }}</td><td>MP {{ z.muster }}</td><td [style.color]="z.left ? '#d97706' : ''">{{ z.left }}</td>
+              <tr><td>{{ z.floor }}</td><td><b>{{ z.zone }}</b></td><td>{{ z.exit }}</td><td>MP {{ z.muster }}</td><td [style.color]="z.left ? 'var(--ka-d97706)' : ''">{{ z.left }}</td>
                 <td><span class="tag" [class]="z.left ? (z.missing ? 'tag red' : 'tag amber') : 'tag green'">{{ z.left ? (z.missing ? 'Missing person' : 'Not cleared') : 'Cleared' }}</span></td>
                 <td>@if (z.yet) {<button class="btn-ghost sm" (click)="clear(z.floor, z.zone)">Mark cleared</button>}</td></tr>
             }
@@ -374,13 +374,13 @@ export class EmergencyZones {
   protected readonly byFloor = computed(() => {
     const m = new Map<string, number>();
     this.rows().forEach((r) => m.set(r.floor, (m.get(r.floor) ?? 0) + r.left));
-    return [...m.entries()].map(([label, value]) => ({ label, value, display: String(value), color: value ? '#f59e0b' : '#22c55e' }));
+    return [...m.entries()].map(([label, value]) => ({ label, value, display: String(value), color: value ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' }));
   });
   protected readonly maxFloor = computed(() => Math.max(1, ...this.byFloor().map((r) => r.value)));
   protected clear(floor: string, zone: string) {
     const ids = this.store.people().filter((p) => p.floor === floor && p.zone === zone && p.status === 'Yet to Evacuate').map((p) => p.id);
     this.store.markSafe(ids, 'Zone warden');
-    this.store.log(`${zone} cleared`, floor, 'Zone warden', 'run', '#22c55e');
+    this.store.log(`${zone} cleared`, floor, 'Zone warden', 'run', 'var(--ka-22c55e)');
     toast(this.msg, `${floor} · ${zone} cleared (${ids.length} escorted)`);
   }
 }
@@ -425,7 +425,7 @@ export class WardensTeams {
   protected readonly msg = signal<string | null>(null);
   protected readonly list = signal<Warden[]>(
     ['Khalid Saeed', 'Tom Baker', 'Grace Park', 'Ravi Shankar', 'Aisha Bello', 'Kenji Sato', 'Dr. Sana Iqbal', 'Omar Khalid', 'Meera Iyer', 'Lucas Silva', 'Hannah Lee', 'Yusuf Rahman', 'Layla Haddad', 'Noah Brown', 'Zara Khan', 'Vikram Rao', 'Sofia Rossi', 'Ibrahim Musa', 'Chloe Martin', 'Daniel Kim'].map((name, i) => ({
-      id: `W${i}`, name, initials: name.replace('Dr. ', '').split(' ').map((x) => x[0]).join(''), avatar: ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#16a34a'][i % 6],
+      id: `W${i}`, name, initials: name.replace('Dr. ', '').split(' ').map((x) => x[0]).join(''), avatar: ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-16a34a)'][i % 6],
       role: i === 0 ? 'Chief Warden' : ROLES[1 + (i % 5)], floor: ['Ground Floor', 'Floor 1', 'Floor 2', 'Floor 3', 'Floor 4', 'Floor 5'][i % 6], status: i % 7 === 6 ? 'Off-site' : i % 3 === 0 ? 'Responding' : 'On duty',
       phone: `+971 55 ${210 + i} ${3000 + i * 11}`, radio: `CH-${1 + (i % 4)}`, trainingExpiry: new Date(Date.now() + (i % 5 === 4 ? 20 : 120 + i * 20) * 86400000).toISOString().slice(0, 10),
     })),

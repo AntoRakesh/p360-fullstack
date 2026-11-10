@@ -45,11 +45,11 @@ type PTab = 'live' | 'details' | 'history' | 'nearby';
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="People On-Site" [value]="people().length" icon="building" color="#7c3aed" change="6%" sub="vs. last hour" />
-      <app-kpi label="In Safe Zones" [value]="safe()" icon="shield-check" color="#22c55e" [sub]="pct(safe()) + '%'" />
-      <app-kpi label="In Restricted Zones" [value]="restricted()" icon="triangle-alert" color="#f59e0b" [change]="pct(restricted()) + '%'" [up]="false" [good]="false" sub=" " />
-      <app-kpi label="SOS / Alerts" [value]="critical()" icon="siren" color="#ef4444" [sub]="activeCritical() + ' active'" />
-      <app-kpi label="Avg. Dwell Time" [value]="avgDwell()" icon="clock" color="#3b82f6" change="12%" />
+      <app-kpi label="People On-Site" [value]="people().length" icon="building" color="var(--ka-7c3aed)" change="6%" sub="vs. last hour" />
+      <app-kpi label="In Safe Zones" [value]="safe()" icon="shield-check" color="var(--ka-22c55e)" [sub]="pct(safe()) + '%'" />
+      <app-kpi label="In Restricted Zones" [value]="restricted()" icon="triangle-alert" color="var(--ka-f59e0b)" [change]="pct(restricted()) + '%'" [up]="false" [good]="false" sub=" " />
+      <app-kpi label="SOS / Alerts" [value]="critical()" icon="siren" color="var(--ka-ef4444)" [sub]="activeCritical() + ' active'" />
+      <app-kpi label="Avg. Dwell Time" [value]="avgDwell()" icon="clock" color="var(--ka-3b82f6)" change="12%" />
     </section>
 
     <section class="lpl" [class.no-panel]="!sel()">
@@ -144,7 +144,7 @@ type PTab = 'live' | 'details' | 'history' | 'nearby';
             @case ('details') {
               <dl class="kv">
                 <dt>Type</dt><dd>{{ p.type }}</dd><dt>Department</dt><dd>{{ p.dept }}</dd><dt>Role</dt><dd>{{ p.role }}</dd><dt>Tag</dt><dd>{{ p.tag }}</dd>
-                <dt>Tag battery</dt><dd [style.color]="p.battery < 20 ? '#dc2626' : ''">{{ p.battery }}%</dd><dt>Phone</dt><dd>{{ p.phone }}</dd><dt>Floor</dt><dd>{{ p.floor }}</dd><dt>Zone</dt><dd>{{ p.zone }}</dd>
+                <dt>Tag battery</dt><dd [style.color]="p.battery < 20 ? 'var(--ka-dc2626)' : ''">{{ p.battery }}%</dd><dt>Phone</dt><dd>{{ p.phone }}</dd><dt>Floor</dt><dd>{{ p.floor }}</dd><dt>Zone</dt><dd>{{ p.zone }}</dd>
               </dl>
             }
             @case ('history') {
@@ -208,7 +208,7 @@ type PTab = 'live' | 'details' | 'history' | 'nearby';
               <tr class="clickable" (click)="alertClick(a.personId)">
                 <td>{{ a.time }}</td>
                 <td><span class="al"><i [class]="a.severity === 'Critical' ? 'crit' : 'warn'">!</i>{{ a.person }}</span></td>
-                <td><span class="al"><app-icon [name]="a.event.includes('SOS') ? 'siren' : a.event.includes('Prolonged') ? 'clock' : 'triangle-alert'" [size]="15" [style.color]="a.severity === 'Critical' ? '#ef4444' : '#f59e0b'" />{{ a.event }}</span></td>
+                <td><span class="al"><app-icon [name]="a.event.includes('SOS') ? 'siren' : a.event.includes('Prolonged') ? 'clock' : 'triangle-alert'" [size]="15" [style.color]="a.severity === 'Critical' ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)'" />{{ a.event }}</span></td>
                 <td>{{ a.location }}</td>
               </tr>
             }
@@ -219,48 +219,48 @@ type PTab = 'live' | 'details' | 'history' | 'nearby';
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .head-sel { width: auto; min-width: 170px; } .icon-only { padding: 0 10px; min-width: 38px; justify-content: center; } .btn-outline.on { color: var(--primary); border-color: var(--primary); background: #faf8ff; }
+    .head-sel { width: auto; min-width: 170px; } .icon-only { padding: 0 10px; min-width: 38px; justify-content: center; } .btn-outline.on { color: var(--primary); border-color: var(--primary); background: var(--kb-faf8ff); }
     .opts { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; min-width: 190px; font-size: 13px; } .opts label { display: flex; gap: 8px; align-items: center; } .opts input { accent-color: var(--primary); }
     .lpl { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 14px; align-items: start; margin-bottom: 14px; } .lpl.no-panel { grid-template-columns: 1fr; }
     .map-top { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
-    .seg { display: flex; gap: 8px; } .seg button { display: flex; gap: 5px; align-items: center; padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font: inherit; font-size: 13.5px; }
-    .seg button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .seg { display: flex; gap: 8px; } .seg button { display: flex; gap: 5px; align-items: center; padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font: inherit; font-size: 13.5px; }
+    .seg button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .srch { flex: 1; min-width: 220px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; color: var(--muted); }
     .srch input { border: 0; outline: 0; flex: 1; height: 36px; font: inherit; font-size: 13px; }
     .res { left: 0; right: 0; top: 40px; max-height: 280px; overflow: auto; } .res small { color: var(--muted); }
     .map-body { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 10px; }
     .floors { list-style: none; margin: 0; padding: 6px; border: 1px solid var(--border); border-radius: 10px; font-size: 12.5px; align-self: start; }
-    .floors li { display: flex; justify-content: space-between; padding: 9px 8px; border-radius: 7px; cursor: pointer; } .floors li:hover { background: #f6f5fb; }
+    .floors li { display: flex; justify-content: space-between; padding: 9px 8px; border-radius: 7px; cursor: pointer; } .floors li:hover { background: var(--kb-f6f5fb); }
     .floors li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; } .floors small { color: var(--muted); font-size: 10.5px; margin-left: 6px; }
-    .show { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; align-items: center; background: #fff; padding: 8px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); font-size: 12.5px; white-space: nowrap; }
-    .show label { display: flex; gap: 6px; align-items: center; cursor: pointer; } .show input { accent-color: var(--primary); } .show .red input { accent-color: #ef4444; } .trail-ic { color: #3b82f6; font-weight: 700; }
+    .show { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; align-items: center; background: var(--kb-ffffff); padding: 8px 14px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); font-size: 12.5px; white-space: nowrap; }
+    .show label { display: flex; gap: 6px; align-items: center; cursor: pointer; } .show input { accent-color: var(--primary); } .show .red input { accent-color: var(--kf-ef4444); } .trail-ic { color: var(--kf-3b82f6); font-weight: 700; }
     .note { margin: 8px 0 0; font-size: 12px; }
     .zgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
     .zc { border: 1px solid var(--border); border-left: 4px solid; border-radius: 10px; padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; } .zc small { color: var(--muted); }
     .zh { display: flex; justify-content: space-between; align-items: center; } .zn b { font-size: 20px; }
-    .bar { height: 7px; border-radius: 4px; background: #eef0f6; overflow: hidden; flex: 1; } .bar i { display: block; height: 100%; border-radius: 4px; }
+    .bar { height: 7px; border-radius: 4px; background: var(--kb-eef0f6); overflow: hidden; flex: 1; } .bar i { display: block; height: 100%; border-radius: 4px; }
     .pp { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 76px; }
     .pp-head { display: flex; gap: 14px; align-items: flex-start; }
-    .pav { width: 66px; height: 66px; border-radius: 12px; border: 3px solid; display: grid; place-items: center; font-size: 22px; font-weight: 700; background: #faf8ff; flex: none; }
-    .pinfo { flex: 1; display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: #4b5068; } .pinfo em { color: var(--border); font-style: normal; margin: 0 4px; }
-    .pn { display: flex; justify-content: space-between; align-items: center; gap: 8px; } .pn b { font-size: 18px; color: #1f2233; }
-    .ptabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); } .ptabs button { flex: 1; padding: 9px 2px; border: 0; background: none; cursor: pointer; font: inherit; font-size: 12.5px; color: #4b5068; border-bottom: 2px solid transparent; }
+    .pav { width: 66px; height: 66px; border-radius: 12px; border: 3px solid; display: grid; place-items: center; font-size: 22px; font-weight: 700; background: var(--kb-faf8ff); flex: none; }
+    .pinfo { flex: 1; display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--kf-4b5068); } .pinfo em { color: var(--border); font-style: normal; margin: 0 4px; }
+    .pn { display: flex; justify-content: space-between; align-items: center; gap: 8px; } .pn b { font-size: 18px; color: var(--kf-1f2233); }
+    .ptabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); } .ptabs button { flex: 1; padding: 9px 2px; border: 0; background: none; cursor: pointer; font: inherit; font-size: 12.5px; color: var(--kf-4b5068); border-bottom: 2px solid transparent; }
     .ptabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
-    .facts { border: 1px solid var(--border); border-radius: 10px; padding: 6px 14px; } .facts > div { display: flex; gap: 14px; padding: 10px 0; color: #4b5068; }
-    .facts p { margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; } .facts small { color: var(--muted); font-size: 12px; } .facts b { font-weight: 600; color: #1f2233; }
+    .facts { border: 1px solid var(--border); border-radius: 10px; padding: 6px 14px; } .facts > div { display: flex; gap: 14px; padding: 10px 0; color: var(--kf-4b5068); }
+    .facts p { margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13px; } .facts small { color: var(--muted); font-size: 12px; } .facts b { font-weight: 600; color: var(--kf-1f2233); }
     .kv { display: grid; grid-template-columns: 100px 1fr; gap: 8px; font-size: 13px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     .tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--border); max-height: 260px; overflow: auto; font-size: 12.5px; }
-    .tl li { position: relative; padding: 0 0 12px 10px; display: flex; flex-direction: column; } .tl li::before { content: ''; position: absolute; left: -20px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: #c4c7d4; }
+    .tl li { position: relative; padding: 0 0 12px 10px; display: flex; flex-direction: column; } .tl li::before { content: ''; position: absolute; left: -20px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--kb-c4c7d4); }
     .tl li.now::before { background: var(--primary); } .tl small { color: var(--muted); }
-    .near { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; } .near li { display: flex; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; cursor: pointer; font-size: 12.5px; }
+    .near { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; } .near li { display: flex; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; font-size: 12.5px; }
     .near p { margin: 0; flex: 1; display: flex; flex-direction: column; } .near small { color: var(--muted); } .near em { font-style: normal; color: var(--primary); font-weight: 600; }
-    .sav { width: 26px; height: 26px; border-radius: 50%; color: #fff; display: inline-grid; place-items: center; font-size: 10.5px; font-weight: 700; flex: none; }
+    .sav { width: 26px; height: 26px; border-radius: 50%; color: var(--kf-ffffff); display: inline-grid; place-items: center; font-size: 10.5px; font-weight: 700; flex: none; }
     .pp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .pp-btns button { justify-content: center; height: 42px; }
     .bottom { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1.05fr); gap: 14px; } .bottom > .card { min-width: 0; overflow-x: auto; }
     .mini { width: 100%; } .mini th, .mini td { font-size: 11.5px; padding: 8px 5px; white-space: nowrap; } .nm { display: flex; gap: 8px; align-items: center; font-weight: 600; }
     .ut { display: flex; gap: 8px; align-items: center; } .ut span { font-size: 11.5px; width: 32px; text-align: right; }
-    .al { display: flex; gap: 6px; align-items: center; } .al i { width: 15px; height: 15px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-size: 10px; font-style: normal; font-weight: 800; flex: none; }
-    .al .crit { background: #ef4444; } .al .warn { background: #f59e0b; }
+    .al { display: flex; gap: 6px; align-items: center; } .al i { width: 15px; height: 15px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 10px; font-style: normal; font-weight: 800; flex: none; }
+    .al .crit { background: var(--kb-ef4444); } .al .warn { background: var(--kb-f59e0b); }
     .dots { border: 0; background: none; cursor: pointer; font-size: 16px; }
     @media (max-width: 1300px) { .bottom { grid-template-columns: 1fr; } }
     @media (max-width: 1100px) { .lpl { grid-template-columns: 1fr; } .pp { position: static; } }
@@ -299,7 +299,7 @@ export class LiveLocation {
   protected readonly mapFloor = computed(() => (this.floor() === 'All' ? 'Floor 1' : this.floor()));
   protected readonly zones = computed(() => {
     const z = this.store.zones().filter((x) => x.floor === this.mapFloor());
-    return this.showZones() ? z : z.map((x) => ({ ...x, fill: 0, color: '#9aa0b4' }));
+    return this.showZones() ? z : z.map((x) => ({ ...x, fill: 0, color: 'var(--ka-9aa0b4)' }));
   });
   private readonly visible = computed(() => {
     const d = this.dept();
@@ -319,8 +319,8 @@ export class LiveLocation {
     const out: MapMarker[] = [];
     for (const p of this.onFloor()) {
       const [x, y] = pos.get(p.id)!;
-      if (p.featured || p.id === this.selId()) out.push({ id: p.id, x, y, color: al.has(p.id) ? '#ef4444' : p.color, label: p.initials, alert: al.has(p.id), title: `${p.name} · ${p.zone}` });
-      else if (this.dots()) out.push({ id: p.id, x, y, kind: 'dot', color: p.type === 'Contractor' ? '#f97316' : p.type === 'Visitor' ? '#0d9488' : '#8b5cf6', size: 4, title: `${p.name} · ${p.zone}` });
+      if (p.featured || p.id === this.selId()) out.push({ id: p.id, x, y, color: al.has(p.id) ? 'var(--ka-ef4444)' : p.color, label: p.initials, alert: al.has(p.id), title: `${p.name} · ${p.zone}` });
+      else if (this.dots()) out.push({ id: p.id, x, y, kind: 'dot', color: p.type === 'Contractor' ? 'var(--ka-f97316)' : p.type === 'Visitor' ? 'var(--ka-0d9488)' : 'var(--ka-8b5cf6)', size: 4, title: `${p.name} · ${p.zone}` });
     }
     return out.sort((a, b) => (a.kind === 'dot' ? -1 : 0) - (b.kind === 'dot' ? -1 : 0));
   });
@@ -329,7 +329,7 @@ export class LiveLocation {
     const t = this.state.tick();
     return this.onFloor()
       .filter((p) => p.featured)
-      .map((p) => ({ points: Array.from({ length: 9 }, (_, k) => positionAt(p, t - (8 - k) * 0.9)), color: p.id === this.selId() ? '#3b82f6' : '#60a5fa', dashed: true, width: p.id === this.selId() ? 3 : 2 }));
+      .map((p) => ({ points: Array.from({ length: 9 }, (_, k) => positionAt(p, t - (8 - k) * 0.9)), color: p.id === this.selId() ? 'var(--ka-3b82f6)' : 'var(--ka-60a5fa)', dashed: true, width: p.id === this.selId() ? 3 : 2 }));
   });
   protected readonly heat = computed(() => {
     const rows = 14;
@@ -424,7 +424,7 @@ export class LiveLocation {
     this.hidden.update((h) => (h.includes(t) ? h.filter((x) => x !== t) : [...h, t]));
   }
   protected utilColor(u: number) {
-    return u >= 100 ? '#ef4444' : u >= 80 ? '#22c55e' : u >= 70 ? '#f59e0b' : u >= 60 ? '#3b82f6' : '#8b5cf6';
+    return u >= 100 ? 'var(--ka-ef4444)' : u >= 80 ? 'var(--ka-22c55e)' : u >= 70 ? 'var(--ka-f59e0b)' : u >= 60 ? 'var(--ka-3b82f6)' : 'var(--ka-8b5cf6)';
   }
   protected fmt = fmtDur;
   protected time(d: Date) {

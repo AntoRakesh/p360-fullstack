@@ -48,10 +48,10 @@ export const ALERTS: ScreenAlert[] = [
 ];
 
 export const RULES: WatchRule[] = [
-  { id: 1, name: 'Internal Watchlist', icon: 'shield', color: '#7c3aed', on: true, trigger: 'Match with internal watchlist (name, document, or identifier)', action: 'Flag alert and require review', recipients: 'Security, Compliance' },
-  { id: 2, name: 'Restricted Visitors', icon: 'admin-lock', color: '#dc2626', on: true, trigger: 'Match with restricted visitor record', action: 'Block access and require security review', recipients: 'Security, Front Desk, Compliance' },
-  { id: 3, name: 'Expired Access', icon: 'clock', color: '#ea580c', on: true, trigger: 'Visitor with expired restriction or access period', action: 'Flag alert and deny access', recipients: 'Security, Front Desk' },
-  { id: 4, name: 'Document Mismatch', icon: 'file-text', color: '#7c3aed', on: true, trigger: 'Document number mismatch or unverifiable document', action: 'Flag for manual verification', recipients: 'Security, Compliance' },
+  { id: 1, name: 'Internal Watchlist', icon: 'shield', color: 'var(--ka-7c3aed)', on: true, trigger: 'Match with internal watchlist (name, document, or identifier)', action: 'Flag alert and require review', recipients: 'Security, Compliance' },
+  { id: 2, name: 'Restricted Visitors', icon: 'admin-lock', color: 'var(--ka-dc2626)', on: true, trigger: 'Match with restricted visitor record', action: 'Block access and require security review', recipients: 'Security, Front Desk, Compliance' },
+  { id: 3, name: 'Expired Access', icon: 'clock', color: 'var(--ka-ea580c)', on: true, trigger: 'Visitor with expired restriction or access period', action: 'Flag alert and deny access', recipients: 'Security, Front Desk' },
+  { id: 4, name: 'Document Mismatch', icon: 'file-text', color: 'var(--ka-7c3aed)', on: true, trigger: 'Document number mismatch or unverifiable document', action: 'Flag for manual verification', recipients: 'Security, Compliance' },
 ];
 
 export const REGISTRY: RegistryEntry[] = [

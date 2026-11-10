@@ -27,11 +27,11 @@ interface Ledger {
       <button class="btn-primary" (click)="yearEnd()"><app-icon name="refresh" [size]="16" />Run year-end carry forward</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Avg. Annual Leave Left" [value]="avgLeft() + ' days'" icon="tree" color="#16a34a" />
-      <app-kpi label="Unused > 20 days" [value]="high()" icon="triangle-alert" color="#f59e0b" sub="burnout risk / liability" />
-      <app-kpi label="Negative Balances" [value]="negative()" icon="ban" color="#ef4444" />
-      <app-kpi label="Carry-forward Expiring" [value]="expiring()" icon="clock" color="#8b5cf6" sub="on 31 Mar" />
-      <app-kpi label="Leave Liability" [value]="'AED ' + liability()" icon="trending-up" color="#3b82f6" sub="unused AL × daily rate" />
+      <app-kpi label="Avg. Annual Leave Left" [value]="avgLeft() + ' days'" icon="tree" color="var(--ka-16a34a)" />
+      <app-kpi label="Unused > 20 days" [value]="high()" icon="triangle-alert" color="var(--ka-f59e0b)" sub="burnout risk / liability" />
+      <app-kpi label="Negative Balances" [value]="negative()" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Carry-forward Expiring" [value]="expiring()" icon="clock" color="var(--ka-8b5cf6)" sub="on 31 Mar" />
+      <app-kpi label="Leave Liability" [value]="'AED ' + liability()" icon="trending-up" color="var(--ka-3b82f6)" sub="unused AL × daily rate" />
     </section>
     <section class="lb" [class.with-detail]="!!sel()">
       <div class="card">
@@ -45,7 +45,7 @@ interface Ledger {
           <div class="card-head"><div class="who"><span class="dt-av" [style.background]="b.avatar">{{ b.initials }}</span><div><b>{{ b.name }}</b><small>{{ b.id }} · {{ b.dept }}</small></div></div><button class="close-btn" (click)="selId.set(null)">×</button></div>
           @for (x of cards(b); track x.code) {
             <div class="bal">
-              <span class="ic" [style.background]="x.color + '1f'" [style.color]="x.color"><app-icon [name]="x.icon" [size]="16" /></span>
+              <span class="ic" [style.background]="'color-mix(in srgb, ' + x.color + ' 12%, transparent)'" [style.color]="x.color"><app-icon [name]="x.icon" [size]="16" /></span>
               <div><b>{{ x.name }}</b><small>{{ x.used }} used of {{ x.total }}</small></div>
               <span class="left" [class.neg]="x.left < 0">{{ x.left }}</span>
               <div class="track"><i [style.width.%]="min(100, (x.used / x.total) * 100)" [style.background]="x.color"></i></div>
@@ -83,9 +83,9 @@ interface Ledger {
     .bal .ic { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; grid-row: span 2; }
     .bal div:nth-child(2) { display: flex; flex-direction: column; font-size: 12.5px; } .bal small { color: var(--muted); }
     .left { font-size: 20px; font-weight: 700; color: var(--primary); } .left.neg { color: var(--red); }
-    .track { grid-column: 2 / -1; height: 6px; border-radius: 3px; background: #eef0f6; overflow: hidden; } .track i { display: block; height: 100%; }
+    .track { grid-column: 2 / -1; height: 6px; border-radius: 3px; background: var(--kb-eef0f6); overflow: hidden; } .track i { display: block; height: 100%; }
     h4 { margin: 6px 0 0; font-size: 13px; }
-    .ledger { list-style: none; margin: 0; padding: 0; font-size: 12px; } .ledger li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0f1f6; }
+    .ledger { list-style: none; margin: 0; padding: 0; font-size: 12px; } .ledger li { display: grid; grid-template-columns: 44px 1fr; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .ledger span { font-weight: 700; } .ledger div { display: flex; flex-direction: column; } .ledger small { color: var(--muted); }
     @media (max-width: 1100px) { .lb.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,
@@ -123,7 +123,7 @@ export class LeaveBalances {
   protected readonly liability = computed(() => `${((this.rows().reduce((a, b) => a + Math.max(0, b.alLeft), 0) * 420) / 1e6).toFixed(1)}M`);
   protected readonly buckets = computed(() => {
     const edges = [-Infinity, 0, 5, 10, 15, 20, 30, Infinity];
-    return [{ name: 'Employees', color: '#16a34a', values: edges.slice(0, -1).map((lo, i) => this.rows().filter((b) => b.alLeft >= lo && b.alLeft < edges[i + 1]).length) }];
+    return [{ name: 'Employees', color: 'var(--ka-16a34a)', values: edges.slice(0, -1).map((lo, i) => this.rows().filter((b) => b.alLeft >= lo && b.alLeft < edges[i + 1]).length) }];
   });
 
   protected cards(b: Balance) {
@@ -185,11 +185,11 @@ export class LeaveBalances {
       <button class="btn-primary" (click)="openForm()"><app-icon name="plus" [size]="16" />Apply Leave</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Pending" [value]="count('Pending')" icon="clock" color="#f59e0b" />
-      <app-kpi label="Approved (60 days)" [value]="count('Approved')" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Rejected" [value]="count('Rejected')" icon="ban" color="#ef4444" />
-      <app-kpi label="On Leave Today" [value]="onLeaveToday()" icon="calendar-x" color="#8b5cf6" />
-      <app-kpi label="Avg. Approval Time" value="9.4 h" icon="activity" color="#3b82f6" />
+      <app-kpi label="Pending" [value]="count('Pending')" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Approved (60 days)" [value]="count('Approved')" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Rejected" [value]="count('Rejected')" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="On Leave Today" [value]="onLeaveToday()" icon="calendar-x" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Avg. Approval Time" value="9.4 h" icon="activity" color="var(--ka-3b82f6)" />
     </section>
     <section class="la" [class.with-detail]="!!sel()">
       <div class="card">
@@ -200,7 +200,7 @@ export class LeaveBalances {
         <aside class="card detail">
           <div class="card-head"><h3>{{ a.id }}</h3><button class="close-btn" (click)="selId.set(null)">×</button></div>
           <div class="who"><span class="dt-av" [style.background]="a.avatar">{{ a.initials }}</span><div><b>{{ a.name }}</b><small>{{ a.empId }} · {{ a.dept }}</small></div></div>
-          <div class="lt" [style.background]="tcolor(a.type) + '14'" [style.border-color]="tcolor(a.type)">
+          <div class="lt" [style.background]="'color-mix(in srgb, ' + tcolor(a.type) + ' 8%, transparent)'" [style.border-color]="tcolor(a.type)">
             <b [style.color]="tcolor(a.type)">{{ tname(a.type) }}</b>
             <span>{{ short(a.from) }} → {{ short(a.to) }} · <b>{{ a.days }} working day(s)</b></span>
             <small>“{{ a.reason }}” · applied {{ short(a.applied) }}</small>
@@ -248,10 +248,10 @@ export class LeaveBalances {
     .la { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .la.with-detail { grid-template-columns: minmax(0, 1fr) 360px; }
     .detail { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .who { display: flex; gap: 10px; align-items: center; } .who div { display: flex; flex-direction: column; } .who small { color: var(--muted); }
-    .lt { display: flex; flex-direction: column; gap: 3px; padding: 10px; border: 1px solid; border-radius: 8px; font-size: 12.5px; } .lt small { color: #4b4f6b; }
+    .lt { display: flex; flex-direction: column; gap: 3px; padding: 10px; border: 1px solid; border-radius: 8px; font-size: 12.5px; } .lt small { color: var(--kf-4b4f6b); }
     .kv { display: grid; grid-template-columns: 110px 1fr; gap: 7px; font-size: 12.5px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     h4 { margin: 4px 0 0; font-size: 13px; } .overlap { list-style: none; margin: 0; padding: 0; font-size: 12px; } .overlap li { padding: 4px 0; }
-    .calc { display: flex; justify-content: space-between; margin-top: 12px; padding: 10px; border-radius: 8px; background: #f5f3ff; font-size: 12.5px; }
+    .calc { display: flex; justify-content: space-between; margin-top: 12px; padding: 10px; border-radius: 8px; background: var(--kb-f5f3ff); font-size: 12.5px; }
     .danger { color: var(--red); }
     @media (max-width: 1100px) { .la.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,
@@ -310,7 +310,7 @@ export class LeaveApplications {
     return s === 'Approved' ? 'tag green' : s === 'Pending' ? 'tag amber' : s === 'Rejected' ? 'tag red' : 'tag grey';
   }
   protected tcolor(c: string) {
-    return typeByCode(c)?.color ?? '#7c3aed';
+    return typeByCode(c)?.color ?? 'var(--ka-7c3aed)';
   }
   protected tname(c: string) {
     return typeByCode(c)?.name ?? c;
@@ -436,19 +436,19 @@ const ROLES = ['Line Manager', 'Department Head', 'HR Business Partner', 'HR Dir
     .wl { display: flex; flex-direction: column; gap: 6px; padding: 10px; }
     .wi { display: grid; grid-template-columns: 1fr auto; gap: 4px; padding: 10px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
     .wi div { display: flex; flex-direction: column; } .wi small { color: var(--muted); } .wi .meta { grid-column: 1 / -1; }
-    .wi:hover { background: #faf8ff; } .wi.on { border-color: var(--primary); background: #f5f3ff; }
+    .wi:hover { background: var(--kb-faf8ff); } .wi.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
     .title { font-size: 16px; font-weight: 600; flex: 1; } .sw { display: flex; align-items: center; gap: 6px; font-size: 13px; }
-    .lbl { font-size: 12px; color: #4b4f6b; margin: 14px 0 6px; }
+    .lbl { font-size: 12px; color: var(--kf-4b4f6b); margin: 14px 0 6px; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip-btn { padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: #fff; font-size: 12px; cursor: pointer; } .chip-btn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .chip-btn { padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--kb-ffffff); font-size: 12px; cursor: pointer; } .chip-btn.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); }
     .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-    .node { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: #fff; font-size: 12px; min-width: 170px; }
+    .node { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); font-size: 12px; min-width: 170px; }
     .node label { display: flex; align-items: center; gap: 4px; } .node .select { padding: 5px 24px 5px 8px; font-size: 12px; }
-    .node.start, .node.end { min-width: auto; background: #f5f3ff; color: var(--primary); font-weight: 600; } .node.end { background: #dcfce7; color: #15803d; }
+    .node.start, .node.end { min-width: auto; background: var(--kb-f5f3ff); color: var(--primary); font-weight: 600; } .node.end { background: var(--kb-dcfce7); color: var(--kf-15803d); }
     .node.add { min-width: auto; border-style: dashed; color: var(--primary); cursor: pointer; }
     .arr { color: var(--primary); font-size: 18px; }
     .n { width: 60px; padding: 4px 6px; } .danger { color: var(--red); }
-    .sim { margin-top: 18px; padding: 12px; border-radius: 10px; background: #fafafe; border: 1px solid var(--border); } .sim h4 { margin: 0 0 8px; font-size: 13px; }
+    .sim { margin-top: 18px; padding: 12px; border-radius: 10px; background: var(--kb-fafafe); border: 1px solid var(--border); } .sim h4 { margin: 0 0 8px; font-size: 13px; }
     .sim label { display: flex; align-items: center; gap: 6px; font-size: 12.5px; } .route { margin: 10px 0 0; font-size: 13px; font-weight: 600; color: var(--primary); }
     @media (max-width: 1000px) { .wf { grid-template-columns: 1fr; } }
   `,

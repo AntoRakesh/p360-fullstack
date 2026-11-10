@@ -16,9 +16,9 @@ export const PRINTERS = [
 ];
 
 export const TEMPLATES: BadgeTpl[] = [
-  { id: 'T1', name: 'Visitor Day Pass', desc: 'Standard visitor badge for general office visits.', band: 'VISITOR', color: '#6d28d9', type: 'Visitor Day Pass', photo: true, qr: true, host: true, expiry: 1 },
-  { id: 'T2', name: 'Contractor Badge', desc: 'For contractors and on-site service providers.', band: 'CONTRACTOR', color: '#ea580c', type: 'Contractor Badge', photo: true, qr: true, host: true, expiry: 7 },
-  { id: 'T3', name: 'Delivery Badge', desc: 'For deliveries, pickups, and logistics personnel.', band: 'DELIVERY', color: '#16a34a', type: 'Delivery Badge', photo: true, qr: true, host: false, expiry: 1 },
+  { id: 'T1', name: 'Visitor Day Pass', desc: 'Standard visitor badge for general office visits.', band: 'VISITOR', color: 'var(--ka-6d28d9)', type: 'Visitor Day Pass', photo: true, qr: true, host: true, expiry: 1 },
+  { id: 'T2', name: 'Contractor Badge', desc: 'For contractors and on-site service providers.', band: 'CONTRACTOR', color: 'var(--ka-ea580c)', type: 'Contractor Badge', photo: true, qr: true, host: true, expiry: 7 },
+  { id: 'T3', name: 'Delivery Badge', desc: 'For deliveries, pickups, and logistics personnel.', band: 'DELIVERY', color: 'var(--ka-16a34a)', type: 'Delivery Badge', photo: true, qr: true, host: false, expiry: 1 },
 ];
 export const tplFor = (type: string, l: BadgeTpl[]) => l.find((t) => t.type === type) ?? (type === 'Site Visit Badge' ? l.find((t) => t.id === 'T2') : null) ?? l[0];
 

@@ -69,11 +69,11 @@ interface Rules {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Shifts" [value]="shifts().length" icon="users" color="#8b5cf6" sub="Active shift definitions" />
-      <app-kpi label="Active Shifts" [value]="activeCount()" icon="clock" color="#22c55e" sub="In use across sites" />
-      <app-kpi label="Shift Templates" [value]="templates" icon="calendar-days" color="#f97316" sub="Rotation templates" />
-      <app-kpi label="Assigned Employees" value="8,920" icon="users" color="#3b82f6" sub="Across all shifts" />
-      <app-kpi label="Coverage" value="98.5%" icon="clock" color="#a855f7" sub="Current period" />
+      <app-kpi label="Total Shifts" [value]="shifts().length" icon="users" color="var(--ka-8b5cf6)" sub="Active shift definitions" />
+      <app-kpi label="Active Shifts" [value]="activeCount()" icon="clock" color="var(--ka-22c55e)" sub="In use across sites" />
+      <app-kpi label="Shift Templates" [value]="templates" icon="calendar-days" color="var(--ka-f97316)" sub="Rotation templates" />
+      <app-kpi label="Assigned Employees" value="8,920" icon="users" color="var(--ka-3b82f6)" sub="Across all shifts" />
+      <app-kpi label="Coverage" value="98.5%" icon="clock" color="var(--ka-a855f7)" sub="Current period" />
     </section>
 
     <section class="sm" [class.with-detail]="!!sel()">
@@ -181,7 +181,7 @@ interface Rules {
               </div>
               <div class="look">
                 <label>Shift Color
-                  <span class="color-in"><input type="color" [value]="s.color" (input)="patch({ color: $any($event.target).value })" /><b>{{ s.color.toUpperCase() }}</b></span>
+                  <span class="color-in"><input type="color" [value]="(s.color.startsWith('#') ? s.color : '#' + s.color.slice(-7, -1))" (input)="patch({ color: $any($event.target).value })" /><b>{{ (s.color.startsWith('#') ? s.color : '#' + s.color.slice(-7, -1)).toUpperCase() }}</b></span>
                 </label>
                 <label>Shift Icon
                   <span class="icon-in"><app-icon [name]="s.icon" [size]="20" />
@@ -280,48 +280,48 @@ interface Rules {
     .sm { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; }
     .sm.with-detail { grid-template-columns: minmax(0, 1.45fr) minmax(400px, 1fr); }
     .vt { display: flex; gap: 4px; }
-    .vt button { width: 34px; height: 32px; border: 1px solid var(--border); border-radius: 7px; background: #fff; display: grid; place-items: center; cursor: pointer; color: #4b4f6b; }
-    .vt button.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .vt button { width: 34px; height: 32px; border: 1px solid var(--border); border-radius: 7px; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; color: var(--kf-4b4f6b); }
+    .vt button.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); }
     .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .scard { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--border); border-top: 4px solid; border-radius: 10px; background: #fff; text-align: left; cursor: pointer; }
+    .scard { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--border); border-top: 4px solid; border-radius: 10px; background: var(--kb-ffffff); text-align: left; cursor: pointer; }
     .scard.on { box-shadow: 0 0 0 2px var(--primary-soft); border-color: var(--primary); }
     .sc-top { display: flex; gap: 8px; align-items: center; } .sc-top div { display: flex; flex-direction: column; font-size: 12.5px; } .sc-top small { color: var(--muted); }
-    .badge { width: 28px; height: 28px; border-radius: 7px; color: #fff; display: grid; place-items: center; font-weight: 700; }
+    .badge { width: 28px; height: 28px; border-radius: 7px; color: var(--kf-ffffff); display: grid; place-items: center; font-weight: 700; }
     .sc-time { font-size: 15px; font-weight: 600; } .sc-foot { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--muted); }
     .detail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; }
     .d-head { display: flex; align-items: center; gap: 10px; } .d-head h2 { margin: 0; font-size: 20px; } .d-head .close-btn { margin-left: auto; }
-    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 20px; background: #dcfce7; color: #15803d; font-size: 12px; }
-    .pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; } .pill.inactive { background: #f3f4f6; color: #6b7280; }
+    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 20px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 12px; }
+    .pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; } .pill.inactive { background: var(--kb-f3f4f6); color: var(--kf-6b7280); }
     .d-tabs { display: flex; gap: 16px; border-bottom: 1px solid var(--border); margin: 12px 0; overflow-x: auto; }
-    .d-tabs button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: #4b4f6b; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+    .d-tabs button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: var(--kf-4b4f6b); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
     .d-tabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
     .card-in { border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
-    .ov-top { display: flex; align-items: center; gap: 12px; } .ov-top div { display: flex; flex-direction: column; flex: 1; } .ov-top span { font-size: 12.5px; color: #4b4f6b; }
-    .big-badge { width: 44px; height: 44px; border-radius: 10px; color: #fff; display: grid; place-items: center; font-size: 20px; font-weight: 700; }
-    .desc { display: flex; flex-direction: column; font-size: 12.5px; margin: 12px 0; } .desc span { color: #4b4f6b; margin-bottom: 2px; }
+    .ov-top { display: flex; align-items: center; gap: 12px; } .ov-top div { display: flex; flex-direction: column; flex: 1; } .ov-top span { font-size: 12.5px; color: var(--kf-4b4f6b); }
+    .big-badge { width: 44px; height: 44px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 20px; font-weight: 700; }
+    .desc { display: flex; flex-direction: column; font-size: 12.5px; margin: 12px 0; } .desc span { color: var(--kf-4b4f6b); margin-bottom: 2px; }
     .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .facts dl { display: grid; grid-template-columns: auto 1fr; gap: 9px 10px; margin: 0; font-size: 11.5px; align-content: start; }
-    .facts dt { display: flex; align-items: center; gap: 6px; color: #3b3f5c; white-space: nowrap; } .facts dd { margin: 0; color: #4b4f6b; }
-    .facts .g { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; }
+    .facts dt { display: flex; align-items: center; gap: 6px; color: var(--kf-3b3f5c); white-space: nowrap; } .facts dd { margin: 0; color: var(--kf-4b4f6b); }
+    .facts .g { width: 9px; height: 9px; border-radius: 50%; background: var(--kb-22c55e); }
     .bh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; } .bh h4 { margin: 0; font-size: 13.5px; }
     .brk { font-size: 11.5px; } .brk th, .brk td { padding: 7px 5px; } .brk .input, .brk .select { padding: 4px 6px; font-size: 11.5px; width: 100%; }
-    .paid { color: #3b3f5c; }
-    .acts { display: flex; gap: 6px; } .acts button { border: 0; background: none; cursor: pointer; color: #4b4f6b; } .acts .del { color: var(--red); }
+    .paid { color: var(--kf-3b3f5c); }
+    .acts { display: flex; gap: 6px; } .acts button { border: 0; background: none; cursor: pointer; color: var(--kf-4b4f6b); } .acts .del { color: var(--red); }
     .look { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .look label { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 600; }
     .color-in, .icon-in { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; font-weight: 400; }
     .color-in input { width: 30px; height: 26px; border: 0; padding: 0; background: none; cursor: pointer; }
     .icon-in .select { border: 0; flex: 1; }
-    .tl { position: relative; height: 34px; border-radius: 8px; background: #f3f3f8; overflow: hidden; margin: 10px 0 4px; }
+    .tl { position: relative; height: 34px; border-radius: 8px; background: var(--kb-f3f3f8); overflow: hidden; margin: 10px 0 4px; }
     .seg { position: absolute; top: 0; bottom: 0; border-radius: 4px; }
-    .brk-seg { background: repeating-linear-gradient(45deg, #fbbf24, #fbbf24 4px, #fde68a 4px, #fde68a 8px); top: 6px; bottom: 6px; }
+    .brk-seg { background: repeating-linear-gradient(45deg, var(--kb-fbbf24), var(--kb-fbbf24) 4px, var(--kb-fde68a) 4px, var(--kb-fde68a) 8px); top: 6px; bottom: 6px; }
     .tl-axis { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); margin-bottom: 14px; }
     .kv { display: grid; grid-template-columns: 1fr auto; gap: 8px; font-size: 13px; } .kv dt { color: var(--muted); } .kv dd { margin: 0; font-weight: 600; }
     .chk { flex-direction: row !important; align-items: center; }
-    .members { list-style: none; margin: 0; padding: 0; } .members li { display: flex; gap: 10px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid #f0f1f6; }
+    .members { list-style: none; margin: 0; padding: 0; } .members li { display: flex; gap: 10px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid var(--kl-f0f1f6); }
     .members div { display: flex; flex-direction: column; } .members small { color: var(--muted); }
     h4 { font-size: 13px; margin: 14px 0 6px; }
-    .audit { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid #ede9fe; font-size: 12.5px; }
+    .audit { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--kl-ede9fe); font-size: 12.5px; }
     .audit li { position: relative; display: flex; flex-direction: column; padding: 0 0 12px 8px; } .audit small { color: var(--muted); }
     .audit li::before { content: ''; position: absolute; left: -21px; top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); }
     @media (max-width: 1250px) { .sm.with-detail { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
@@ -428,7 +428,7 @@ export class ShiftMaster {
     this.err.set('');
     this.editing.set(s?.name ?? null);
     this.form.set(
-      s ? { ...s } : { ...SHIFTS[0], id: 0, name: '', code: '', start: '09:00', end: '17:00', status: 'Draft', assigned: 0, description: '', breaks: [], color: '#7c3aed', from: new Date().toISOString().slice(0, 10) },
+      s ? { ...s } : { ...SHIFTS[0], id: 0, name: '', code: '', start: '09:00', end: '17:00', status: 'Draft', assigned: 0, description: '', breaks: [], color: 'var(--ka-7c3aed)', from: new Date().toISOString().slice(0, 10) },
     );
   }
   protected setF<K extends keyof Shift>(k: K, v: Shift[K]) {
@@ -544,7 +544,7 @@ export class ShiftMaster {
     for (const [name, code, start, end] of rows) {
       if (!name || !code || this.shifts().some((s) => s.code === code)) continue;
       const id = Math.max(...this.shifts().map((s) => s.id)) + 1;
-      this.shifts.update((l) => [{ ...SHIFTS[0], id, name, code, start, end, hours: hrsBetween(start, end), status: 'Draft', assigned: 0, breaks: [], description: 'Imported shift', color: '#64748b', from: new Date().toISOString().slice(0, 10) }, ...l]);
+      this.shifts.update((l) => [{ ...SHIFTS[0], id, name, code, start, end, hours: hrsBetween(start, end), status: 'Draft', assigned: 0, breaks: [], description: 'Imported shift', color: 'var(--ka-64748b)', from: new Date().toISOString().slice(0, 10) }, ...l]);
       n++;
     }
     this.notify(`${n} shift(s) imported as Draft`);

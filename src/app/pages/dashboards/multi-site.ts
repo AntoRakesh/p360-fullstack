@@ -37,11 +37,11 @@ const SITES: SiteRow[] = [
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Active Sites" value="6" icon="building" color="#8b5cf6" sub="all reporting" />
-      <app-kpi label="Total People" [value]="total().people" icon="users" color="#3b82f6" change="6%" />
-      <app-kpi label="Avg. Occupancy" [value]="total().occ + '%'" icon="activity" color="#22c55e" change="3%" />
-      <app-kpi label="Sites Needing Attention" [value]="total().attention" icon="triangle-alert" color="#f97316" sub="alerts ≥ 3" />
-      <app-kpi label="Open Alerts" [value]="total().alerts" icon="bell" color="#ef4444" change="30%" [up]="false" />
+      <app-kpi label="Active Sites" value="6" icon="building" color="var(--ka-8b5cf6)" sub="all reporting" />
+      <app-kpi label="Total People" [value]="total().people" icon="users" color="var(--ka-3b82f6)" change="6%" />
+      <app-kpi label="Avg. Occupancy" [value]="total().occ + '%'" icon="activity" color="var(--ka-22c55e)" change="3%" />
+      <app-kpi label="Sites Needing Attention" [value]="total().attention" icon="triangle-alert" color="var(--ka-f97316)" sub="alerts ≥ 3" />
+      <app-kpi label="Open Alerts" [value]="total().alerts" icon="bell" color="var(--ka-ef4444)" change="30%" [up]="false" />
     </section>
 
     @if (view() === 'cards') {
@@ -56,7 +56,7 @@ const SITES: SiteRow[] = [
               <span class="tag" [class.green]="s.alerts < 3" [class.amber]="s.alerts >= 3">{{ s.alerts < 3 ? 'Normal' : 'Attention' }}</span>
             </div>
             <div class="site-mid">
-              <app-ring [value]="s.occ" [size]="74" [color]="s.occ > 85 ? '#ef4444' : '#7c3aed'" />
+              <app-ring [value]="s.occ" [size]="74" [color]="s.occ > 85 ? 'var(--ka-ef4444)' : 'var(--ka-7c3aed)'" />
               <dl>
                 <dt>People</dt><dd>{{ s.peopleFmt }}</dd>
                 <dt>Attendance</dt><dd>{{ s.attendance }}%</dd>
@@ -125,9 +125,9 @@ const SITES: SiteRow[] = [
     .site-mid { display: flex; align-items: center; gap: 18px; }
     .site-mid dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: 12.5px; }
     .site-mid dt { color: var(--muted); } .site-mid dd { margin: 0; font-weight: 600; text-align: right; }
-    .site-foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #4b4f6b; border-top: 1px solid #f0f1f6; padding-top: 10px; }
-    .site-foot i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; margin-right: 6px; }
-    .site-foot i.bad-dot { background: #ef4444; }
+    .site-foot { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--kf-4b4f6b); border-top: 1px solid var(--kl-f0f1f6); padding-top: 10px; }
+    .site-foot i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); margin-right: 6px; }
+    .site-foot i.bad-dot { background: var(--kb-ef4444); }
   `,
 })
 export class MultiSite {
@@ -172,11 +172,11 @@ export class MultiSite {
     };
   });
   protected readonly capSeries = computed(() => [
-    { name: 'People on site', color: '#7c3aed', values: this.live().map((s) => s.people) },
-    { name: 'Capacity', color: '#ddd6fe', values: SITES.map((s) => s.capacity) },
+    { name: 'People on site', color: 'var(--ka-7c3aed)', values: this.live().map((s) => s.people) },
+    { name: 'Capacity', color: 'var(--ka-ddd6fe)', values: SITES.map((s) => s.capacity) },
   ]);
   protected readonly attRows = computed(() =>
-    SITES.map((s) => ({ label: s.name, value: s.attendance, display: `${s.attendance}%`, color: s.attendance < 95 ? '#f59e0b' : '#22c55e' })),
+    SITES.map((s) => ({ label: s.name, value: s.attendance, display: `${s.attendance}%`, color: s.attendance < 95 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' })),
   );
 
   protected sortBy(key: string) {

@@ -27,12 +27,12 @@ const sevTagG = (s: string) => (s === 'Critical' || s === 'High' ? 'tag red' : s
     </app-page-head>
 
     <section class="kpi-row kpi6">
-      <app-kpi label="Incidents (30 days)" [value]="month().length" icon="siren" color="#7c3aed" change="5%" [up]="false" sub="vs. prior 30 days" />
-      <app-kpi label="Active Incidents" [value]="store.active().length" icon="bell" color="#ef4444" sub="Needs response now" subColor="#dc2626" />
-      <app-kpi label="Under Investigation" [value]="count('Under Investigation')" icon="search" color="#f59e0b" sub="RCA in progress" />
-      <app-kpi label="Closed (30 days)" [value]="count('Closed')" icon="shield-check" color="#22c55e" [sub]="closedPct() + '% closure rate'" subColor="#16a34a" />
-      <app-kpi label="Injuries" [value]="injuries()" icon="s-first-aid" color="#3b82f6" sub="1 lost-time injury" />
-      <app-kpi label="Avg. Response Time" value="4.2 min" icon="clock" color="#14b8a6" change="12%" [up]="false" sub="vs. last month" />
+      <app-kpi label="Incidents (30 days)" [value]="month().length" icon="siren" color="var(--ka-7c3aed)" change="5%" [up]="false" sub="vs. prior 30 days" />
+      <app-kpi label="Active Incidents" [value]="store.active().length" icon="bell" color="var(--ka-ef4444)" sub="Needs response now" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Under Investigation" [value]="count('Under Investigation')" icon="search" color="var(--ka-f59e0b)" sub="RCA in progress" />
+      <app-kpi label="Closed (30 days)" [value]="count('Closed')" icon="shield-check" color="var(--ka-22c55e)" [sub]="closedPct() + '% closure rate'" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Injuries" [value]="injuries()" icon="s-first-aid" color="var(--ka-3b82f6)" sub="1 lost-time injury" />
+      <app-kpi label="Avg. Response Time" value="4.2 min" icon="clock" color="var(--ka-14b8a6)" change="12%" [up]="false" sub="vs. last month" />
     </section>
 
     <section class="grid3 mb">
@@ -68,10 +68,10 @@ const sevTagG = (s: string) => (s === 'Critical' || s === 'High' ? 'tag red' : s
   styles: [SF_STYLES, `
     .mb { margin-bottom: 12px; }
     .board { display: grid; grid-template-columns: repeat(6, minmax(200px, 1fr)); gap: 10px; overflow-x: auto; padding-bottom: 6px; }
-    .lane { background: #f3f2fa; border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
+    .lane { background: var(--kb-f3f2fa); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
     .lh { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px; }
-    .ic { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 9px; display: flex; flex-direction: column; gap: 3px; cursor: pointer; font-size: 12px; }
-    .ic:hover { border-color: #c4b5fd; } .ih { display: flex; gap: 6px; align-items: center; } .ih b { flex: 1; font-size: 12.5px; } .ic small { font-size: 11px; } .ic button { align-self: flex-start; margin-top: 4px; }
+    .ic { background: var(--kb-ffffff); border: 1px solid var(--border); border-radius: 8px; padding: 9px; display: flex; flex-direction: column; gap: 3px; cursor: pointer; font-size: 12px; }
+    .ic:hover { border-color: var(--kl-c4b5fd); } .ih { display: flex; gap: 6px; align-items: center; } .ih b { flex: 1; font-size: 12.5px; } .ic small { font-size: 11px; } .ic button { align-self: flex-start; margin-top: 4px; }
     .em { text-align: center; font-size: 12px; }
   `],
 })
@@ -84,9 +84,9 @@ export class IncidentManagement {
   protected readonly stCls = stCls;
   protected readonly view = signal<'table' | 'board'>('table');
   protected readonly monthly = [
-    { name: 'High', color: '#ef4444', values: MONTHLY.High },
-    { name: 'Medium', color: '#f59e0b', values: MONTHLY.Medium },
-    { name: 'Low', color: '#22c55e', values: MONTHLY.Low },
+    { name: 'High', color: 'var(--ka-ef4444)', values: MONTHLY.High },
+    { name: 'Medium', color: 'var(--ka-f59e0b)', values: MONTHLY.Medium },
+    { name: 'Low', color: 'var(--ka-22c55e)', values: MONTHLY.Low },
   ];
   protected readonly month = computed(() => this.store.incidents().filter((i) => i.daysAgo <= 30));
   protected readonly injuries = computed(() => this.month().reduce((a, i) => a + i.injured, 0));
@@ -101,8 +101,8 @@ export class IncidentManagement {
   protected readonly bySev = computed(() => {
     const c = (s: string) => this.month().filter((i) => i.severity === s).length;
     return [
-      { label: 'Critical', value: c('Critical'), color: '#7f1d1d' }, { label: 'High', value: c('High'), color: '#ef4444' },
-      { label: 'Medium', value: c('Medium'), color: '#f59e0b' }, { label: 'Low', value: c('Low'), color: '#22c55e' },
+      { label: 'Critical', value: c('Critical'), color: 'var(--ka-7f1d1d)' }, { label: 'High', value: c('High'), color: 'var(--ka-ef4444)' },
+      { label: 'Medium', value: c('Medium'), color: 'var(--ka-f59e0b)' }, { label: 'Low', value: c('Low'), color: 'var(--ka-22c55e)' },
     ];
   });
   protected readonly cols: Col[] = [
@@ -171,11 +171,11 @@ export class IncidentManagement {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="15" />Export Register</button>
     </app-page-head>
     <section class="kpi-row kpi5">
-      <app-kpi label="Open Hazards" [value]="open().length" icon="triangle-alert" color="#f59e0b" change="28%" [up]="false" sub="vs. last 24 hrs" />
-      <app-kpi label="High / Critical Risk" [value]="highRisk()" icon="flame" color="#ef4444" sub="score ≥ 10" subColor="#dc2626" />
-      <app-kpi label="Overdue Controls" [value]="overdue()" icon="clock" color="#dc2626" sub="past due date" />
-      <app-kpi label="Being Mitigated" [value]="mitigating()" icon="toolbox" color="#3b82f6" sub="controls in progress" />
-      <app-kpi label="Closed (30 days)" [value]="closed()" icon="shield-check" color="#22c55e" sub="verified & closed" subColor="#16a34a" />
+      <app-kpi label="Open Hazards" [value]="open().length" icon="triangle-alert" color="var(--ka-f59e0b)" change="28%" [up]="false" sub="vs. last 24 hrs" />
+      <app-kpi label="High / Critical Risk" [value]="highRisk()" icon="flame" color="var(--ka-ef4444)" sub="score ≥ 10" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Overdue Controls" [value]="overdue()" icon="clock" color="var(--ka-dc2626)" sub="past due date" />
+      <app-kpi label="Being Mitigated" [value]="mitigating()" icon="toolbox" color="var(--ka-3b82f6)" sub="controls in progress" />
+      <app-kpi label="Closed (30 days)" [value]="closed()" icon="shield-check" color="var(--ka-22c55e)" sub="verified & closed" subColor="var(--ka-16a34a)" />
     </section>
 
     <section class="split">
@@ -229,7 +229,7 @@ export class IncidentManagement {
         </div>
         @if (sel(); as h) {
           <div class="card">
-            <div class="dh"><span class="ic-sq" [style.background]="riskColor(score(h)) + '33'" [style.color]="riskColor(score(h))"><app-icon [name]="catIcon(h.category)" [size]="17" /></span><div><h3>{{ h.title }}</h3><small class="muted">{{ h.id }} · reported by {{ h.reportedBy }} · {{ h.daysAgo ? dayLabel(h.daysAgo) : 'today' }}</small></div></div>
+            <div class="dh"><span class="ic-sq" [style.background]="'color-mix(in srgb, ' + riskColor(score(h)) + ' 20%, transparent)'" [style.color]="riskColor(score(h))"><app-icon [name]="catIcon(h.category)" [size]="17" /></span><div><h3>{{ h.title }}</h3><small class="muted">{{ h.id }} · reported by {{ h.reportedBy }} · {{ h.daysAgo ? dayLabel(h.daysAgo) : 'today' }}</small></div></div>
             <dl class="dl">
               <dt>Location</dt><dd>{{ h.location }} · {{ h.floor }}</dd><dt>Category</dt><dd>{{ h.category }}</dd>
               <dt>Risk score</dt><dd><b>{{ score(h) }}</b> ({{ level(score(h)) }}) = L{{ h.likelihood }} × I{{ h.impact }}</dd>
@@ -277,14 +277,14 @@ export class IncidentManagement {
   styles: [SF_STYLES, `
     .mb { margin-bottom: 12px; } .foot { margin: 8px 0 0; font-size: 12px; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-    .chips button { display: inline-flex; gap: 6px; align-items: center; padding: 5px 10px; border: 1px solid var(--border); border-radius: 20px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; }
-    .chips button.on { background: var(--primary-soft); color: var(--primary); border-color: #c4b5fd; } .chips i { width: 8px; height: 8px; border-radius: 50%; }
+    .chips button { display: inline-flex; gap: 6px; align-items: center; padding: 5px 10px; border: 1px solid var(--border); border-radius: 20px; background: var(--kb-ffffff); font: inherit; font-size: 12px; cursor: pointer; }
+    .chips button.on { background: var(--primary-soft); color: var(--primary); border-color: var(--kl-c4b5fd); } .chips i { width: 8px; height: 8px; border-radius: 50%; }
     .cat { display: inline-flex; gap: 5px; align-items: center; white-space: nowrap; }
-    .risk { display: inline-grid; place-items: center; width: 26px; height: 22px; border-radius: 5px; color: #fff; font-weight: 700; font-size: 11.5px; }
+    .risk { display: inline-grid; place-items: center; width: 26px; height: 22px; border-radius: 5px; color: var(--kf-ffffff); font-weight: 700; font-size: 11.5px; }
     .mx { display: grid; grid-template-columns: 22px repeat(5, 1fr); gap: 4px; position: relative; padding-left: 16px; }
     .yl { position: absolute; left: -26px; top: 45%; transform: rotate(-90deg); font-size: 11px; color: var(--muted); } .xl { grid-column: 2 / -1; text-align: center; font-size: 11px; color: var(--muted); }
     .ax { display: grid; place-items: center; font-size: 11px; color: var(--muted); }
-    .cellb { height: 40px; border: 0; border-radius: 6px; color: #fff; font: inherit; font-weight: 700; cursor: pointer; } .cellb.zero { opacity: .45; } .cellb.on { outline: 3px solid #1e1b3a; }
+    .cellb { height: 40px; border: 0; border-radius: 6px; color: var(--kf-ffffff); font: inherit; font-weight: 700; cursor: pointer; } .cellb.zero { opacity: .45; } .cellb.on { outline: 3px solid var(--kl-1e1b3a); }
     .dh { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; } .dh h3 { font-size: 15px; } .dh div { display: flex; flex-direction: column; }
     .select.mini { height: 30px; font-size: 12px; }
     .ra { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; } .ra label { display: flex; flex-direction: column; gap: 4px; } .ra input { accent-color: var(--primary); }
@@ -339,7 +339,7 @@ export class HazardRisk {
     return H_CAT_ICON[H_CATS.indexOf(c)] ?? 'triangle-alert';
   }
   protected riskColor(s: number) {
-    return s >= 15 ? '#dc2626' : s >= 10 ? '#f97316' : s >= 5 ? '#f59e0b' : '#22c55e';
+    return s >= 15 ? 'var(--ka-dc2626)' : s >= 10 ? 'var(--ka-f97316)' : s >= 5 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)';
   }
   protected doneCount(h: Hazard) {
     return h.controls.filter((c) => c.done).length;
@@ -389,12 +389,12 @@ export class HazardRisk {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="15" />Export</button>
     </app-page-head>
     <section class="kpi-row kpi6">
-      <app-kpi label="Scheduled" [value]="c('Scheduled')" icon="calendar-days" color="#3b82f6" sub="next 14 days" />
-      <app-kpi label="In Progress" [value]="c('In Progress')" icon="s-clipboard" color="#7c3aed" sub="being performed" />
-      <app-kpi label="Overdue" [value]="c('Overdue')" icon="clock" color="#ef4444" sub="past due date" subColor="#dc2626" />
-      <app-kpi label="Completed (30 days)" [value]="c('Completed')" icon="shield-check" color="#22c55e" change="14%" sub="vs. last month" />
-      <app-kpi label="Avg. Score" [value]="avg() + '%'" icon="star" color="#f59e0b" change="3 pts" sub="vs. last month" />
-      <app-kpi label="Open Findings" [value]="findings()" icon="triangle-alert" color="#f97316" sub="raised to hazards" />
+      <app-kpi label="Scheduled" [value]="c('Scheduled')" icon="calendar-days" color="var(--ka-3b82f6)" sub="next 14 days" />
+      <app-kpi label="In Progress" [value]="c('In Progress')" icon="s-clipboard" color="var(--ka-7c3aed)" sub="being performed" />
+      <app-kpi label="Overdue" [value]="c('Overdue')" icon="clock" color="var(--ka-ef4444)" sub="past due date" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Completed (30 days)" [value]="c('Completed')" icon="shield-check" color="var(--ka-22c55e)" change="14%" sub="vs. last month" />
+      <app-kpi label="Avg. Score" [value]="avg() + '%'" icon="star" color="var(--ka-f59e0b)" change="3 pts" sub="vs. last month" />
+      <app-kpi label="Open Findings" [value]="findings()" icon="triangle-alert" color="var(--ka-f97316)" sub="raised to hazards" />
     </section>
     <section class="split">
       <div class="card">
@@ -405,9 +405,9 @@ export class HazardRisk {
         <div class="ins">
           @for (i of list(); track i.id) {
             <button class="in" [class.on]="sel()?.id === i.id" (click)="selId.set(i.id)">
-              <span class="ic-sq" [style.background]="col(i) + '1f'" [style.color]="col(i)"><app-icon name="s-clipboard" [size]="17" /></span>
+              <span class="ic-sq" [style.background]="'color-mix(in srgb, ' + col(i) + ' 12%, transparent)'" [style.color]="col(i)"><app-icon name="s-clipboard" [size]="17" /></span>
               <div><b>{{ i.title }}</b><small>{{ i.id }} · {{ i.inspector }} · {{ dueText(i) }}</small></div>
-              @if (i.score !== undefined) {<span class="score" [style.color]="i.score >= 90 ? '#16a34a' : i.score >= 75 ? '#d97706' : '#dc2626'">{{ i.score }}%</span>}
+              @if (i.score !== undefined) {<span class="score" [style.color]="i.score >= 90 ? 'var(--ka-16a34a)' : i.score >= 75 ? 'var(--ka-d97706)' : 'var(--ka-dc2626)'">{{ i.score }}%</span>}
               <span [class]="tag(i.status)">{{ i.status }}</span>
             </button>
           } @empty {<p class="muted">No inspections.</p>}
@@ -417,7 +417,7 @@ export class HazardRisk {
         @if (sel(); as i) {
           <div class="card">
             <div class="card-head"><div><h3>{{ i.title }}</h3><small class="muted">{{ i.id }} · {{ i.template }} · {{ i.inspector }}</small></div><span [class]="tag(i.status)">{{ i.status }}</span></div>
-            <div class="prog"><div class="bar"><i [style.width.%]="answered(i) / i.items.length * 100" style="background:#7c3aed"></i></div><small>{{ answered(i) }}/{{ i.items.length }} answered</small></div>
+            <div class="prog"><div class="bar"><i [style.width.%]="answered(i) / i.items.length * 100" style="background:var(--kb-7c3aed)"></i></div><small>{{ answered(i) }}/{{ i.items.length }} answered</small></div>
             @for (it of i.items; track $index; let k = $index) {
               <div class="q">
                 <span>{{ it.q }}</span>
@@ -460,15 +460,15 @@ export class HazardRisk {
   styles: [SF_STYLES, `
     .mt { margin-top: 12px; }
     .ins { display: flex; flex-direction: column; gap: 6px; }
-    .in { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: inherit; text-align: left; cursor: pointer; }
-    .in:hover { border-color: #c4b5fd; } .in.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .in { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); font: inherit; text-align: left; cursor: pointer; }
+    .in:hover { border-color: var(--kl-c4b5fd); } .in.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .in div { display: flex; flex-direction: column; font-size: 12.5px; min-width: 0; } .in b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .in small { color: var(--muted); font-size: 11.5px; }
     .score { font-weight: 700; font-size: 13px; }
     .prog { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; } .prog .bar { flex: 1; } .prog small { font-size: 11px; color: var(--muted); }
-    .q { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f2f7; font-size: 12.5px; }
-    .pf { display: flex; gap: 4px; flex: none; } .r { height: 28px; padding: 0 10px; border: 1px solid var(--border); background: #fff; border-radius: 6px; font: inherit; font-size: 11.5px; cursor: pointer; }
-    .r.pass { background: #16a34a; color: #fff; border-color: #16a34a; } .r.fail { background: #dc2626; color: #fff; border-color: #dc2626; } .r.na { background: #6b7280; color: #fff; }
-    .acts { display: flex; gap: 8px; margin: 14px 0 6px; } .done { font-size: 13px; color: #15803d; background: #f0fdf4; padding: 10px; border-radius: 8px; }
+    .q { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12.5px; }
+    .pf { display: flex; gap: 4px; flex: none; } .r { height: 28px; padding: 0 10px; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; font: inherit; font-size: 11.5px; cursor: pointer; }
+    .r.pass { background: var(--kb-16a34a); color: var(--kf-ffffff); border-color: var(--kl-16a34a); } .r.fail { background: var(--kb-dc2626); color: var(--kf-ffffff); border-color: var(--kl-dc2626); } .r.na { background: var(--kb-6b7280); color: var(--kf-ffffff); }
+    .acts { display: flex; gap: 8px; margin: 14px 0 6px; } .done { font-size: 13px; color: var(--kf-15803d); background: var(--kb-f0fdf4); padding: 10px; border-radius: 8px; }
   `],
 })
 export class SafetyInspections {
@@ -478,7 +478,7 @@ export class SafetyInspections {
   protected readonly locations = LOCATIONS;
   protected readonly officers = OFFICERS;
   protected readonly months = MONTHS;
-  protected readonly trend = [{ name: 'Avg score', color: '#7c3aed', values: [84, 86, 85, 88, 90, 91], area: true }];
+  protected readonly trend = [{ name: 'Avg score', color: 'var(--ka-7c3aed)', values: [84, 86, 85, 88, 90, 91], area: true }];
   protected readonly tab = signal('All');
   protected readonly tpl = signal('');
   protected readonly selId = signal<string | null>(null);
@@ -494,7 +494,7 @@ export class SafetyInspections {
     return this.store.inspections().filter((i) => i.status === s).length;
   }
   protected col(i: Inspection) {
-    return i.status === 'Overdue' ? '#ef4444' : i.status === 'Completed' ? '#16a34a' : i.status === 'In Progress' ? '#7c3aed' : '#3b82f6';
+    return i.status === 'Overdue' ? 'var(--ka-ef4444)' : i.status === 'Completed' ? 'var(--ka-16a34a)' : i.status === 'In Progress' ? 'var(--ka-7c3aed)' : 'var(--ka-3b82f6)';
   }
   protected tag(s: string) {
     return s === 'Overdue' ? 'tag red' : s === 'Completed' ? 'tag green' : s === 'In Progress' ? 'tag' : 'tag blue';
@@ -555,11 +555,11 @@ const P_LANES: PermitStatus[] = ['Requested', 'Approved', 'Active', 'Suspended',
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="15" />Export Log</button>
     </app-page-head>
     <section class="kpi-row kpi5">
-      <app-kpi label="Active Permits" [value]="n('Active')" icon="key-round" color="#22c55e" sub="work in progress" subColor="#16a34a" />
-      <app-kpi label="Pending Approval" [value]="n('Requested')" icon="clock" color="#f59e0b" sub="awaiting HSE sign-off" />
-      <app-kpi label="Approved / Upcoming" [value]="n('Approved')" icon="calendar-days" color="#3b82f6" sub="starting soon" />
-      <app-kpi label="Suspended" [value]="n('Suspended')" icon="ban" color="#ef4444" sub="stop-work in place" subColor="#dc2626" />
-      <app-kpi label="Workers Under Permit" [value]="workers()" icon="hard-hat" color="#7c3aed" sub="on active permits" />
+      <app-kpi label="Active Permits" [value]="n('Active')" icon="key-round" color="var(--ka-22c55e)" sub="work in progress" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Pending Approval" [value]="n('Requested')" icon="clock" color="var(--ka-f59e0b)" sub="awaiting HSE sign-off" />
+      <app-kpi label="Approved / Upcoming" [value]="n('Approved')" icon="calendar-days" color="var(--ka-3b82f6)" sub="starting soon" />
+      <app-kpi label="Suspended" [value]="n('Suspended')" icon="ban" color="var(--ka-ef4444)" sub="stop-work in place" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Workers Under Permit" [value]="workers()" icon="hard-hat" color="var(--ka-7c3aed)" sub="on active permits" />
     </section>
     <div class="chips">
       <button [class.on]="!type()" (click)="type.set(null)">All types</button>
@@ -623,12 +623,12 @@ const P_LANES: PermitStatus[] = ['Requested', 'Approved', 'Active', 'Suspended',
   `,
   styles: [SF_STYLES, `
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-    .chips button { padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; } .chips button.on { background: var(--primary-soft); color: var(--primary); border-color: #c4b5fd; }
+    .chips button { padding: 6px 12px; border: 1px solid var(--border); border-radius: 20px; background: var(--kb-ffffff); font: inherit; font-size: 12px; cursor: pointer; } .chips button.on { background: var(--primary-soft); color: var(--primary); border-color: var(--kl-c4b5fd); }
     .board { display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 8px; min-width: 0; overflow-x: auto; }
-    .lane { background: #f3f2fa; border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 300px; }
+    .lane { background: var(--kb-f3f2fa); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 300px; }
     .lh { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px; }
-    .pc { display: flex; flex-direction: column; gap: 3px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 9px; text-align: left; font: inherit; font-size: 12px; cursor: pointer; }
-    .pc:hover { border-color: #c4b5fd; } .pc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .pc { display: flex; flex-direction: column; gap: 3px; background: var(--kb-ffffff); border: 1px solid var(--border); border-radius: 8px; padding: 9px; text-align: left; font: inherit; font-size: 12px; cursor: pointer; }
+    .pc:hover { border-color: var(--kl-c4b5fd); } .pc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .ph { display: flex; gap: 6px; align-items: center; } .ic-sq.sm { width: 24px; height: 24px; background: var(--primary-soft); color: var(--primary); border-radius: 6px; }
     .tt { font-weight: 600; font-size: 12.5px; } .pc small { font-size: 11px; } .em { text-align: center; }
     .acts { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 6px; } .danger { color: var(--red); }
@@ -703,11 +703,11 @@ export class SafetyPermits {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="15" />Export Matrix</button>
     </app-page-head>
     <section class="kpi-row kpi5">
-      <app-kpi label="Talks Delivered (30 days)" [value]="done().length" icon="megaphone" color="#7c3aed" change="20%" sub="vs. last month" />
-      <app-kpi label="Attendance Rate" [value]="rate() + '%'" icon="user-check" color="#22c55e" change="4%" sub="vs. last month" />
-      <app-kpi label="Upcoming Talks" [value]="upcoming().length" icon="calendar-days" color="#3b82f6" sub="next 7 days" />
-      <app-kpi label="Training Compliance" [value]="compliance() + '%'" icon="graduation-cap" color="#f59e0b" sub="mandatory HSE courses" />
-      <app-kpi label="Certificates Expiring" [value]="certs.length" icon="id-card" color="#ef4444" sub="within 30 days" subColor="#dc2626" />
+      <app-kpi label="Talks Delivered (30 days)" [value]="done().length" icon="megaphone" color="var(--ka-7c3aed)" change="20%" sub="vs. last month" />
+      <app-kpi label="Attendance Rate" [value]="rate() + '%'" icon="user-check" color="var(--ka-22c55e)" change="4%" sub="vs. last month" />
+      <app-kpi label="Upcoming Talks" [value]="upcoming().length" icon="calendar-days" color="var(--ka-3b82f6)" sub="next 7 days" />
+      <app-kpi label="Training Compliance" [value]="compliance() + '%'" icon="graduation-cap" color="var(--ka-f59e0b)" sub="mandatory HSE courses" />
+      <app-kpi label="Certificates Expiring" [value]="certs.length" icon="id-card" color="var(--ka-ef4444)" sub="within 30 days" subColor="var(--ka-dc2626)" />
     </section>
     <section class="grid2">
       <div class="card">
@@ -717,7 +717,7 @@ export class SafetyPermits {
             <li>
               <span class="dt"><b>{{ dd(t) }}</b><small>{{ t.time }}</small></span>
               <div><b>{{ t.topic }}</b><small>{{ t.id }} · {{ t.presenter }} · {{ t.location }} · {{ t.duration }} min</small>
-                @if (t.status === 'Completed') {<div class="att"><div class="bar"><i [style.width.%]="t.attended / t.invited * 100" style="background:#22c55e"></i></div><small>{{ t.attended }}/{{ t.invited }} attended</small></div>}
+                @if (t.status === 'Completed') {<div class="att"><div class="bar"><i [style.width.%]="t.attended / t.invited * 100" style="background:var(--kb-22c55e)"></i></div><small>{{ t.attended }}/{{ t.invited }} attended</small></div>}
               </div>
               @if (t.status === 'Scheduled') {<button class="btn-primary sm" (click)="startAtt(t)">Take Attendance</button>}
               @else {<button class="btn-ghost sm" (click)="store.toast('Sign-in sheet for ' + t.id + ' downloaded')">Sign-in Sheet</button>}
@@ -730,7 +730,7 @@ export class SafetyPermits {
           <div class="card-head"><h3>Training Compliance by Department</h3></div>
           <ul class="tr">
             @for (d of training; track d.dept) {
-              <li><span>{{ d.dept }}</span><div class="bar"><i [style.width.%]="d.pct" [style.background]="d.pct >= 90 ? '#22c55e' : d.pct >= 85 ? '#f59e0b' : '#ef4444'"></i></div><b>{{ d.pct }}%</b><small [class.bad]="d.overdue > 3">{{ d.overdue }} overdue</small></li>
+              <li><span>{{ d.dept }}</span><div class="bar"><i [style.width.%]="d.pct" [style.background]="d.pct >= 90 ? 'var(--ka-22c55e)' : d.pct >= 85 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></div><b>{{ d.pct }}%</b><small [class.bad]="d.overdue > 3">{{ d.overdue }} overdue</small></li>
             }
           </ul>
         </div>
@@ -777,14 +777,14 @@ export class SafetyPermits {
   styles: [SF_STYLES, `
     .col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .tk, .tr, .ce { list-style: none; margin: 0; padding: 0; }
-    .tk li { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f2f7; font-size: 12.5px; }
+    .tk li { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12.5px; }
     .tk .dt { display: flex; flex-direction: column; align-items: center; padding: 6px 0; border-radius: 8px; background: var(--primary-soft); color: var(--primary); } .tk .dt b { font-size: 12px; } .tk .dt small { font-size: 10.5px; }
     .tk li > div { display: flex; flex-direction: column; min-width: 0; } .tk small { color: var(--muted); font-size: 11.5px; }
     .att { display: flex !important; flex-direction: row !important; gap: 8px; align-items: center; margin-top: 5px; } .att .bar { flex: 1; max-width: 160px; }
     .btn-primary.sm { padding: 6px 10px; font-size: 11.5px; }
-    .tr li { display: grid; grid-template-columns: 110px minmax(0, 1fr) 40px 70px; gap: 10px; align-items: center; padding: 7px 0; font-size: 12.5px; } .tr small { font-size: 11px; color: var(--muted); } .tr small.bad { color: #dc2626; }
-    .ce li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f1f2f7; font-size: 12.5px; } .ce div { display: flex; flex-direction: column; } .ce small { color: var(--muted); }
-    .lib { display: flex; flex-wrap: wrap; gap: 6px; } .lib button { padding: 6px 11px; border: 1px solid var(--border); background: #fff; border-radius: 20px; font: inherit; font-size: 12px; cursor: pointer; } .lib button:hover { background: var(--primary-soft); color: var(--primary); }
+    .tr li { display: grid; grid-template-columns: 110px minmax(0, 1fr) 40px 70px; gap: 10px; align-items: center; padding: 7px 0; font-size: 12.5px; } .tr small { font-size: 11px; color: var(--muted); } .tr small.bad { color: var(--kf-dc2626); }
+    .ce li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12.5px; } .ce div { display: flex; flex-direction: column; } .ce small { color: var(--muted); }
+    .lib { display: flex; flex-wrap: wrap; gap: 6px; } .lib button { padding: 6px 11px; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 20px; font: inherit; font-size: 12px; cursor: pointer; } .lib button:hover { background: var(--primary-soft); color: var(--primary); }
     .ppl { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; max-height: 360px; overflow: auto; } .ppl .av { width: 24px; height: 24px; font-size: 10px; }
     .grow { flex: 1; align-self: center; }
   `],

@@ -61,17 +61,17 @@ export interface NodeMeta {
   group: 'Basic Elements' | 'Actions';
 }
 export const NODE_META: Record<NodeType, NodeMeta> = {
-  start: { label: 'Start', icon: 'workflow-play', color: '#22c55e', typeLabel: 'Start', group: 'Basic Elements' },
-  end: { label: 'End', icon: 'workflow-stop', color: '#ef4444', typeLabel: 'End', group: 'Basic Elements' },
-  approval: { label: 'Task / Approval', icon: 'user', color: '#3b82f6', typeLabel: 'Approval', group: 'Basic Elements' },
-  condition: { label: 'Condition', icon: 'workflow-diamond', color: '#f59e0b', typeLabel: 'Condition', group: 'Basic Elements' },
-  parallel: { label: 'Parallel Branch', icon: 'workflow-fork', color: '#a855f7', typeLabel: 'Parallel', group: 'Basic Elements' },
-  delay: { label: 'Delay / Wait', icon: 'clock', color: '#475569', typeLabel: 'Delay', group: 'Basic Elements' },
-  notification: { label: 'Notification', icon: 'workflow-mail', color: '#ef4444', typeLabel: 'Action', group: 'Actions' },
-  update: { label: 'Update Record', icon: 'workflow-db', color: '#7c3aed', typeLabel: 'Action', group: 'Actions' },
-  task: { label: 'Create Task', icon: 'workflow-check-square', color: '#10b981', typeLabel: 'Task', group: 'Actions' },
-  integration: { label: 'Integration', icon: 'workflow-link', color: '#7c3aed', typeLabel: 'Integration', group: 'Actions' },
-  form: { label: 'Form', icon: 'workflow-form', color: '#8b5cf6', typeLabel: 'Form', group: 'Actions' },
+  start: { label: 'Start', icon: 'workflow-play', color: 'var(--ka-22c55e)', typeLabel: 'Start', group: 'Basic Elements' },
+  end: { label: 'End', icon: 'workflow-stop', color: 'var(--ka-ef4444)', typeLabel: 'End', group: 'Basic Elements' },
+  approval: { label: 'Task / Approval', icon: 'user', color: 'var(--ka-3b82f6)', typeLabel: 'Approval', group: 'Basic Elements' },
+  condition: { label: 'Condition', icon: 'workflow-diamond', color: 'var(--ka-f59e0b)', typeLabel: 'Condition', group: 'Basic Elements' },
+  parallel: { label: 'Parallel Branch', icon: 'workflow-fork', color: 'var(--ka-a855f7)', typeLabel: 'Parallel', group: 'Basic Elements' },
+  delay: { label: 'Delay / Wait', icon: 'clock', color: 'var(--ka-475569)', typeLabel: 'Delay', group: 'Basic Elements' },
+  notification: { label: 'Notification', icon: 'workflow-mail', color: 'var(--ka-ef4444)', typeLabel: 'Action', group: 'Actions' },
+  update: { label: 'Update Record', icon: 'workflow-db', color: 'var(--ka-7c3aed)', typeLabel: 'Action', group: 'Actions' },
+  task: { label: 'Create Task', icon: 'workflow-check-square', color: 'var(--ka-10b981)', typeLabel: 'Task', group: 'Actions' },
+  integration: { label: 'Integration', icon: 'workflow-link', color: 'var(--ka-7c3aed)', typeLabel: 'Integration', group: 'Actions' },
+  form: { label: 'Form', icon: 'workflow-form', color: 'var(--ka-8b5cf6)', typeLabel: 'Form', group: 'Actions' },
 };
 export const PALETTE: NodeType[] = ['start', 'end', 'approval', 'condition', 'parallel', 'delay', 'notification', 'update', 'task', 'integration'];
 export const STEP_KIND: Record<NodeType, string> = {
@@ -121,7 +121,7 @@ function leaveGraph(): { nodes: WfNode[]; edges: WfEdge[] } {
     makeNode('n4', 'approval', 'Manager Approval', 'Direct Manager', 474, 54, { w: 136 }, { description: 'Manager to review and approve the leave request.' }),
     makeNode('n6', 'approval', 'HR Approval', 'HR Department', 298, 169, { w: 125 }, { assignee: 'HR Department', approverType: 'HR Department', conditions: 'If Other / After Manager', description: 'HR validates special leave types (maternity, unpaid, study).' }),
     makeNode('n7', 'update', 'Update Records', 'Update Leave Balance', 800, 130, {}, { description: 'Deduct approved days from the leave balance and block the roster.' }),
-    makeNode('n8', 'notification', 'Send Notification', 'Notify Employee & Manager', 800, 206, { w: 176, color: '#22c55e' }, { description: 'Email + push confirmation and calendar invite to employee and manager.' }),
+    makeNode('n8', 'notification', 'Send Notification', 'Notify Employee & Manager', 800, 206, { w: 176, color: 'var(--ka-22c55e)' }, { description: 'Email + push confirmation and calendar invite to employee and manager.' }),
     makeNode('n11', 'end', 'End', 'Request Completed', 853, 284),
     makeNode('n5', 'condition', 'Approved?', 'Yes / No', 641, 46, { name: 'Approval Decision' }, { conditions: 'Yes / No', assignee: '-', description: 'Branch on the manager decision.' }),
     makeNode('n9', 'approval', 'HR Approval', 'HR Department', 800, 55, { w: 145, name: 'HR Approval (Final)' }, { assignee: 'HR Department', approverType: 'HR Department', conditions: 'If Approved', description: 'Final HR check of balance and policy compliance.' }),
@@ -208,33 +208,33 @@ export const CATEGORIES = ['Leave Request', 'Approval', 'Onboarding', 'Offboardi
 
 type Seed = [string, string, string, string, WfStatus, string, string, string, string, [NodeType, string, string][]];
 const DEF_SEEDS: Seed[] = [
-  ['Contract Extension', 'Contractor & Vendor Workforce', 'Approval', 'Extend a contractor engagement with procurement, manager and HR approval.', 'Active', 'v2.1', 'Grace Park', 'briefcase', '#0d9488',
+  ['Contract Extension', 'Contractor & Vendor Workforce', 'Approval', 'Extend a contractor engagement with procurement, manager and HR approval.', 'Active', 'v2.1', 'Grace Park', 'briefcase', 'var(--ka-0d9488)',
     [['form', 'Extension Request', 'Requester Form'], ['approval', 'Manager Approval', 'Direct Manager'], ['condition', 'Budget OK?', 'Cost Center'], ['approval', 'HR Approval', 'HR Department'], ['integration', 'Update SAP', 'SAP SuccessFactors'], ['notification', 'Notify Vendor', 'Email Vendor']]],
-  ['Training Request', 'Training, Skills & Compliance', 'Approval', 'Request external training or certification with budget check.', 'Active', 'v1.4', 'Meera Iyer', 'graduation-cap', '#ca8a04',
+  ['Training Request', 'Training, Skills & Compliance', 'Approval', 'Request external training or certification with budget check.', 'Active', 'v1.4', 'Meera Iyer', 'graduation-cap', 'var(--ka-ca8a04)',
     [['form', 'Training Request', 'Course & Cost'], ['approval', 'Manager Approval', 'Direct Manager'], ['condition', 'Cost > 2,000?', 'Budget Rule'], ['approval', 'L&D Approval', 'L&D Team'], ['task', 'Book Course', 'L&D Coordinator'], ['notification', 'Send Confirmation', 'Notify Employee']]],
-  ['Employee Onboarding', 'People & Identity Management', 'Onboarding', 'Pre-boarding to day-one checklist across HR, IT, facilities and security.', 'Active', 'v3.0', 'Hannah Lee', 'user-plus', '#2563eb',
+  ['Employee Onboarding', 'People & Identity Management', 'Onboarding', 'Pre-boarding to day-one checklist across HR, IT, facilities and security.', 'Active', 'v3.0', 'Hannah Lee', 'user-plus', 'var(--ka-2563eb)',
     [['form', 'New Hire Details', 'HR Form'], ['parallel', 'Parallel Setup', 'IT · Facilities · Security'], ['task', 'Create Accounts', 'IT Service Desk'], ['task', 'Issue Badge', 'Security'], ['task', 'Assign Desk', 'Facilities'], ['approval', 'HR Sign-off', 'HR Department'], ['notification', 'Welcome Email', 'Notify New Hire']]],
-  ['Employee Offboarding', 'People & Identity Management', 'Offboarding', 'Exit clearance: asset return, access revocation and final settlement.', 'Active', 'v2.2', 'Hannah Lee', 'user', '#475569',
+  ['Employee Offboarding', 'People & Identity Management', 'Offboarding', 'Exit clearance: asset return, access revocation and final settlement.', 'Active', 'v2.2', 'Hannah Lee', 'user', 'var(--ka-475569)',
     [['form', 'Resignation', 'Employee Form'], ['approval', 'Manager Approval', 'Direct Manager'], ['task', 'Asset Return', 'IT & Facilities'], ['integration', 'Revoke Access', 'Active Directory'], ['update', 'Final Settlement', 'Payroll'], ['notification', 'Exit Confirmation', 'Notify Employee']]],
-  ['Overtime Approval', 'Time & Attendance', 'Approval', 'Pre-approve or regularise overtime hours before payroll cut-off.', 'Active', 'v1.6', 'Vikram Rao', 'clock', '#ea580c',
+  ['Overtime Approval', 'Time & Attendance', 'Approval', 'Pre-approve or regularise overtime hours before payroll cut-off.', 'Active', 'v1.6', 'Vikram Rao', 'clock', 'var(--ka-ea580c)',
     [['form', 'Overtime Claim', 'Hours & Reason'], ['condition', 'Hours > 4?', 'Policy Rule'], ['approval', 'Manager Approval', 'Direct Manager'], ['update', 'Update Timesheet', 'T&A Records'], ['integration', 'Push to Payroll', 'ADP Payroll']]],
-  ['Shift Swap Request', 'Shift & Workforce Scheduling', 'Scheduling', 'Peer-to-peer shift swap with supervisor approval and rest-rule check.', 'Active', 'v1.2', 'Tom Baker', 'refresh', '#7c3aed',
+  ['Shift Swap Request', 'Shift & Workforce Scheduling', 'Scheduling', 'Peer-to-peer shift swap with supervisor approval and rest-rule check.', 'Active', 'v1.2', 'Tom Baker', 'refresh', 'var(--ka-7c3aed)',
     [['form', 'Swap Request', 'Requester'], ['approval', 'Peer Acceptance', 'Swap Partner'], ['condition', 'Rest Rule OK?', '11h Rest'], ['approval', 'Supervisor Approval', 'Shift Supervisor'], ['update', 'Update Roster', 'Scheduling'], ['notification', 'Notify Both', 'Push + Email']]],
-  ['Expense Claim', 'Employee Self-Service (ESS)', 'Finance', 'Submit receipts, manager approval, finance audit and reimbursement.', 'Active', 'v2.0', 'Fatima Ali', 'file-text', '#16a34a',
+  ['Expense Claim', 'Employee Self-Service (ESS)', 'Finance', 'Submit receipts, manager approval, finance audit and reimbursement.', 'Active', 'v2.0', 'Fatima Ali', 'file-text', 'var(--ka-16a34a)',
     [['form', 'Expense Claim', 'Receipts'], ['approval', 'Manager Approval', 'Direct Manager'], ['condition', 'Amount > 5,000?', 'Finance Rule'], ['approval', 'Finance Audit', 'Finance Team'], ['integration', 'Reimburse', 'ADP Payroll'], ['notification', 'Notify Employee', 'Email']]],
-  ['Visitor Pre-Approval', 'Visitor Management', 'Access', 'Host invites a visitor; security screens and issues a QR pass.', 'Active', 'v1.3', 'Omar Khalid', 'users', '#db2777',
+  ['Visitor Pre-Approval', 'Visitor Management', 'Access', 'Host invites a visitor; security screens and issues a QR pass.', 'Active', 'v1.3', 'Omar Khalid', 'users', 'var(--ka-db2777)',
     [['form', 'Visitor Invite', 'Host Form'], ['condition', 'Watchlist Clear?', 'Security Screening'], ['approval', 'Security Approval', 'Security Desk'], ['integration', 'Issue QR Pass', 'Access Control'], ['notification', 'Send Invite', 'Email + SMS']]],
-  ['Access Request (Restricted Area)', 'Physical Access Control', 'Access', 'Time-bound access to server rooms, labs and restricted zones.', 'Active', 'v1.1', 'Ali Hassan', 'key-round', '#dc2626',
+  ['Access Request (Restricted Area)', 'Physical Access Control', 'Access', 'Time-bound access to server rooms, labs and restricted zones.', 'Active', 'v1.1', 'Ali Hassan', 'key-round', 'var(--ka-dc2626)',
     [['form', 'Access Request', 'Zone & Period'], ['approval', 'Manager Approval', 'Direct Manager'], ['approval', 'Zone Owner Approval', 'Zone Owner'], ['integration', 'Grant Access', 'Access Control'], ['delay', 'Wait Until Expiry', 'Access Period'], ['integration', 'Revoke Access', 'Access Control']]],
-  ['Attendance Regularization', 'Time & Attendance', 'Approval', 'Correct missed punches with manager approval.', 'Active', 'v1.0', 'Vikram Rao', 'calendar-days', '#0284c7',
+  ['Attendance Regularization', 'Time & Attendance', 'Approval', 'Correct missed punches with manager approval.', 'Active', 'v1.0', 'Vikram Rao', 'calendar-days', 'var(--ka-0284c7)',
     [['form', 'Regularization Form', 'Missed Punch'], ['approval', 'Manager Approval', 'Direct Manager'], ['update', 'Update Attendance', 'T&A Records'], ['notification', 'Notify Employee', 'Push']]],
-  ['Asset Request', 'Workplace & Facility Services', 'Facility', 'Request laptops, monitors and furniture from facilities.', 'Inactive', 'v1.0', 'Kenji Sato', 'box', '#64748b',
+  ['Asset Request', 'Workplace & Facility Services', 'Facility', 'Request laptops, monitors and furniture from facilities.', 'Inactive', 'v1.0', 'Kenji Sato', 'box', 'var(--ka-64748b)',
     [['form', 'Asset Request', 'Catalog Item'], ['approval', 'Manager Approval', 'Direct Manager'], ['task', 'Fulfil Request', 'Facilities'], ['notification', 'Notify Employee', 'Email']]],
-  ['Incident Escalation', 'Emergency & Mustering', 'Incident', 'Escalate safety incidents to HSE, management and authorities.', 'Active', 'v1.5', 'Aisha Bello', 'triangle-alert', '#ef4444',
+  ['Incident Escalation', 'Emergency & Mustering', 'Incident', 'Escalate safety incidents to HSE, management and authorities.', 'Active', 'v1.5', 'Aisha Bello', 'triangle-alert', 'var(--ka-ef4444)',
     [['form', 'Incident Report', 'Reporter'], ['condition', 'Severity High?', 'Severity'], ['notification', 'Alert HSE', 'SMS + Push'], ['task', 'Investigate', 'HSE Officer'], ['approval', 'Close-out Approval', 'HSE Manager']]],
-  ['Document Verification', 'People & Identity Management', 'Compliance', 'Verify identity and right-to-work documents.', 'Draft', 'v0.3', 'Hannah Lee', 'file-check', '#8b5cf6',
+  ['Document Verification', 'People & Identity Management', 'Compliance', 'Verify identity and right-to-work documents.', 'Draft', 'v0.3', 'Hannah Lee', 'file-check', 'var(--ka-8b5cf6)',
     [['form', 'Upload Documents', 'Employee'], ['integration', 'OCR & Validate', 'ID Verification API'], ['approval', 'HR Review', 'HR Department'], ['update', 'Update Profile', 'People Records']]],
-  ['Remote Work Request', 'Employee Self-Service (ESS)', 'Approval', 'Ad-hoc and recurring work-from-home requests.', 'Archived', 'v1.0', 'Sara Khan', 'home', '#94a3b8',
+  ['Remote Work Request', 'Employee Self-Service (ESS)', 'Approval', 'Ad-hoc and recurring work-from-home requests.', 'Archived', 'v1.0', 'Sara Khan', 'home', 'var(--ka-94a3b8)',
     [['form', 'WFH Request', 'Dates'], ['approval', 'Manager Approval', 'Direct Manager'], ['notification', 'Notify Team', 'Teams']]],
 ];
 
@@ -242,7 +242,7 @@ const LEAVE_DEF = (): Workflow => ({
   id: 'WFD-001', name: 'Leave Request Approval Workflow', description: 'Employee leave request with manager and HR approval, notification and calendar update.',
   module: 'Leave & Absence Management', category: 'Leave Request', status: 'Draft', version: 'v1.0', validFrom: '2026-10-01', validTo: '2028-03-31',
   audit: true, manualTrigger: false, portal: true, owner: 'Rex Kumar', updated: '14 Oct 2026, 10:12 AM', trigger: 'Leave request submitted', slaHours: 72, priority: 'Medium',
-  icon: 'workflow-form', color: '#22c55e', ...leaveGraph(),
+  icon: 'workflow-form', color: 'var(--ka-22c55e)', ...leaveGraph(),
 });
 
 export function seedWorkflows(): Workflow[] {
@@ -465,20 +465,20 @@ export interface ConnCfg {
 }
 const tr = (seed: number, base: number) => { const r = rng(seed); return Array.from({ length: 12 }, () => Math.round(base * (0.7 + r() * 0.6))); };
 export const CONNECTORS_SEED: Connector[] = [
-  { id: 'C1', name: 'SAP SuccessFactors', vendor: 'SAP', category: 'HRIS', status: 'Connected', logo: 'SF', color: '#0a6ed1', calls24h: 18420, errors24h: 12, lastSync: '2 min ago', auth: 'OAuth 2.0 (SAML bearer)', endpoint: 'https://api4.successfactors.com/odata/v2', usedBy: ['Contract Extension', 'Employee Onboarding'], trend: tr(1, 1500) },
-  { id: 'C2', name: 'Microsoft 365 Calendar', vendor: 'Microsoft', category: 'Calendar', status: 'Connected', logo: 'O', color: '#0078d4', calls24h: 9240, errors24h: 3, lastSync: '1 min ago', auth: 'OAuth 2.0 (Entra ID)', endpoint: 'https://graph.microsoft.com/v1.0', usedBy: ['Leave Request Approval', 'Visitor Pre-Approval'], trend: tr(2, 770) },
-  { id: 'C3', name: 'Microsoft Teams', vendor: 'Microsoft', category: 'Collaboration', status: 'Connected', logo: 'T', color: '#5b5fc7', calls24h: 6310, errors24h: 0, lastSync: 'Just now', auth: 'OAuth 2.0 (Bot)', endpoint: 'https://graph.microsoft.com/v1.0/teams', usedBy: ['Leave Request Approval', 'Remote Work Request'], trend: tr(3, 520) },
-  { id: 'C4', name: 'ServiceNow', vendor: 'ServiceNow', category: 'ITSM', status: 'Error', logo: 'SN', color: '#293e40', calls24h: 1180, errors24h: 146, lastSync: '38 min ago', auth: 'Basic + mTLS', endpoint: 'https://people360.service-now.com/api/now', usedBy: ['Employee Onboarding', 'Incident Escalation'], trend: tr(4, 110) },
-  { id: 'C5', name: 'ADP Payroll', vendor: 'ADP', category: 'Payroll', status: 'Connected', logo: 'ADP', color: '#d0271d', calls24h: 2460, errors24h: 4, lastSync: '15 min ago', auth: 'mTLS certificate', endpoint: 'https://api.adp.com/hr/v2', usedBy: ['Overtime Approval', 'Expense Claim', 'Employee Offboarding'], trend: tr(5, 210) },
-  { id: 'C6', name: 'Active Directory', vendor: 'Microsoft', category: 'Identity', status: 'Connected', logo: 'AD', color: '#2563eb', calls24h: 4120, errors24h: 1, lastSync: '5 min ago', auth: 'LDAPS service account', endpoint: 'ldaps://dc01.people360.local:636', usedBy: ['Employee Offboarding', 'Employee Onboarding'], trend: tr(6, 340) },
-  { id: 'C7', name: 'Slack', vendor: 'Salesforce', category: 'Messaging', status: 'Not Connected', logo: 'S', color: '#4a154b', calls24h: 0, errors24h: 0, lastSync: '—', auth: 'OAuth 2.0', endpoint: 'https://slack.com/api', usedBy: [], trend: Array(12).fill(0) },
-  { id: 'C8', name: 'Twilio SMS', vendor: 'Twilio', category: 'Messaging', status: 'Connected', logo: 'Tw', color: '#f22f46', calls24h: 840, errors24h: 2, lastSync: '9 min ago', auth: 'API key', endpoint: 'https://api.twilio.com/2010-04-01', usedBy: ['Visitor Pre-Approval', 'Incident Escalation'], trend: tr(8, 70) },
-  { id: 'C9', name: 'SMTP Email Relay', vendor: 'People360', category: 'Messaging', status: 'Connected', logo: '@', color: '#7c3aed', calls24h: 12880, errors24h: 9, lastSync: 'Just now', auth: 'SMTP AUTH (TLS)', endpoint: 'smtp.people360.io:587', usedBy: ['All workflows'], trend: tr(9, 1070) },
-  { id: 'C10', name: 'Workday', vendor: 'Workday', category: 'HRIS', status: 'Paused', logo: 'W', color: '#f38b00', calls24h: 0, errors24h: 0, lastSync: '3 days ago', auth: 'OAuth 2.0', endpoint: 'https://wd5-services1.workday.com/ccx/service', usedBy: [], trend: tr(10, 60).map((v, i) => (i > 8 ? 0 : v)) },
-  { id: 'C11', name: 'Google Calendar', vendor: 'Google', category: 'Calendar', status: 'Not Connected', logo: 'G', color: '#34a853', calls24h: 0, errors24h: 0, lastSync: '—', auth: 'OAuth 2.0', endpoint: 'https://www.googleapis.com/calendar/v3', usedBy: [], trend: Array(12).fill(0) },
-  { id: 'C12', name: 'Jira Service Management', vendor: 'Atlassian', category: 'ITSM', status: 'Connected', logo: 'J', color: '#0052cc', calls24h: 620, errors24h: 0, lastSync: '22 min ago', auth: 'API token', endpoint: 'https://people360.atlassian.net/rest/api/3', usedBy: ['Asset Request'], trend: tr(12, 50) },
-  { id: 'C13', name: 'Generic Webhook', vendor: 'Custom', category: 'Custom', status: 'Connected', logo: '{ }', color: '#0f766e', calls24h: 1530, errors24h: 21, lastSync: '4 min ago', auth: 'HMAC signature', endpoint: 'https://hooks.people360.io/wf/inbound', usedBy: ['Incident Escalation', 'Document Verification'], trend: tr(13, 130) },
-  { id: 'C14', name: 'Access Control (Lenel)', vendor: 'LenelS2', category: 'Identity', status: 'Connected', logo: 'L', color: '#334155', calls24h: 2210, errors24h: 5, lastSync: '1 min ago', auth: 'REST API key', endpoint: 'https://onguard.people360.local/api', usedBy: ['Access Request (Restricted Area)', 'Visitor Pre-Approval'], trend: tr(14, 180) },
+  { id: 'C1', name: 'SAP SuccessFactors', vendor: 'SAP', category: 'HRIS', status: 'Connected', logo: 'SF', color: 'var(--ka-0a6ed1)', calls24h: 18420, errors24h: 12, lastSync: '2 min ago', auth: 'OAuth 2.0 (SAML bearer)', endpoint: 'https://api4.successfactors.com/odata/v2', usedBy: ['Contract Extension', 'Employee Onboarding'], trend: tr(1, 1500) },
+  { id: 'C2', name: 'Microsoft 365 Calendar', vendor: 'Microsoft', category: 'Calendar', status: 'Connected', logo: 'O', color: 'var(--ka-0078d4)', calls24h: 9240, errors24h: 3, lastSync: '1 min ago', auth: 'OAuth 2.0 (Entra ID)', endpoint: 'https://graph.microsoft.com/v1.0', usedBy: ['Leave Request Approval', 'Visitor Pre-Approval'], trend: tr(2, 770) },
+  { id: 'C3', name: 'Microsoft Teams', vendor: 'Microsoft', category: 'Collaboration', status: 'Connected', logo: 'T', color: 'var(--ka-5b5fc7)', calls24h: 6310, errors24h: 0, lastSync: 'Just now', auth: 'OAuth 2.0 (Bot)', endpoint: 'https://graph.microsoft.com/v1.0/teams', usedBy: ['Leave Request Approval', 'Remote Work Request'], trend: tr(3, 520) },
+  { id: 'C4', name: 'ServiceNow', vendor: 'ServiceNow', category: 'ITSM', status: 'Error', logo: 'SN', color: 'var(--ka-293e40)', calls24h: 1180, errors24h: 146, lastSync: '38 min ago', auth: 'Basic + mTLS', endpoint: 'https://people360.service-now.com/api/now', usedBy: ['Employee Onboarding', 'Incident Escalation'], trend: tr(4, 110) },
+  { id: 'C5', name: 'ADP Payroll', vendor: 'ADP', category: 'Payroll', status: 'Connected', logo: 'ADP', color: 'var(--ka-d0271d)', calls24h: 2460, errors24h: 4, lastSync: '15 min ago', auth: 'mTLS certificate', endpoint: 'https://api.adp.com/hr/v2', usedBy: ['Overtime Approval', 'Expense Claim', 'Employee Offboarding'], trend: tr(5, 210) },
+  { id: 'C6', name: 'Active Directory', vendor: 'Microsoft', category: 'Identity', status: 'Connected', logo: 'AD', color: 'var(--ka-2563eb)', calls24h: 4120, errors24h: 1, lastSync: '5 min ago', auth: 'LDAPS service account', endpoint: 'ldaps://dc01.people360.local:636', usedBy: ['Employee Offboarding', 'Employee Onboarding'], trend: tr(6, 340) },
+  { id: 'C7', name: 'Slack', vendor: 'Salesforce', category: 'Messaging', status: 'Not Connected', logo: 'S', color: 'var(--ka-4a154b)', calls24h: 0, errors24h: 0, lastSync: '—', auth: 'OAuth 2.0', endpoint: 'https://slack.com/api', usedBy: [], trend: Array(12).fill(0) },
+  { id: 'C8', name: 'Twilio SMS', vendor: 'Twilio', category: 'Messaging', status: 'Connected', logo: 'Tw', color: 'var(--ka-f22f46)', calls24h: 840, errors24h: 2, lastSync: '9 min ago', auth: 'API key', endpoint: 'https://api.twilio.com/2010-04-01', usedBy: ['Visitor Pre-Approval', 'Incident Escalation'], trend: tr(8, 70) },
+  { id: 'C9', name: 'SMTP Email Relay', vendor: 'People360', category: 'Messaging', status: 'Connected', logo: '@', color: 'var(--ka-7c3aed)', calls24h: 12880, errors24h: 9, lastSync: 'Just now', auth: 'SMTP AUTH (TLS)', endpoint: 'smtp.people360.io:587', usedBy: ['All workflows'], trend: tr(9, 1070) },
+  { id: 'C10', name: 'Workday', vendor: 'Workday', category: 'HRIS', status: 'Paused', logo: 'W', color: 'var(--ka-f38b00)', calls24h: 0, errors24h: 0, lastSync: '3 days ago', auth: 'OAuth 2.0', endpoint: 'https://wd5-services1.workday.com/ccx/service', usedBy: [], trend: tr(10, 60).map((v, i) => (i > 8 ? 0 : v)) },
+  { id: 'C11', name: 'Google Calendar', vendor: 'Google', category: 'Calendar', status: 'Not Connected', logo: 'G', color: 'var(--ka-34a853)', calls24h: 0, errors24h: 0, lastSync: '—', auth: 'OAuth 2.0', endpoint: 'https://www.googleapis.com/calendar/v3', usedBy: [], trend: Array(12).fill(0) },
+  { id: 'C12', name: 'Jira Service Management', vendor: 'Atlassian', category: 'ITSM', status: 'Connected', logo: 'J', color: 'var(--ka-0052cc)', calls24h: 620, errors24h: 0, lastSync: '22 min ago', auth: 'API token', endpoint: 'https://people360.atlassian.net/rest/api/3', usedBy: ['Asset Request'], trend: tr(12, 50) },
+  { id: 'C13', name: 'Generic Webhook', vendor: 'Custom', category: 'Custom', status: 'Connected', logo: '{ }', color: 'var(--ka-0f766e)', calls24h: 1530, errors24h: 21, lastSync: '4 min ago', auth: 'HMAC signature', endpoint: 'https://hooks.people360.io/wf/inbound', usedBy: ['Incident Escalation', 'Document Verification'], trend: tr(13, 130) },
+  { id: 'C14', name: 'Access Control (Lenel)', vendor: 'LenelS2', category: 'Identity', status: 'Connected', logo: 'L', color: 'var(--ka-334155)', calls24h: 2210, errors24h: 5, lastSync: '1 min ago', auth: 'REST API key', endpoint: 'https://onguard.people360.local/api', usedBy: ['Access Request (Restricted Area)', 'Visitor Pre-Approval'], trend: tr(14, 180) },
 ];
 export interface SyncLog {
   at: string;
@@ -603,7 +603,7 @@ export class WorkflowStore {
       assignee: done ? '-' : approverFor(inst.steps[next], next),
       log: [...inst.log, { at: demoNow(), text: `${inst.steps[inst.stepIdx]} completed`, by }],
     });
-    this.pushActivity(`${inst.id} · ${inst.steps[inst.stepIdx]} completed by ${by}`, done ? '#22c55e' : '#3b82f6');
+    this.pushActivity(`${inst.id} · ${inst.steps[inst.stepIdx]} completed by ${by}`, done ? 'var(--ka-22c55e)' : 'var(--ka-3b82f6)');
   }
   private newArrival() {
     const wfs = ['WFD-001', 'WFD-006', 'WFD-008', 'WFD-011'];
@@ -621,7 +621,7 @@ export class WorkflowStore {
       summary: '', mine: approverFor(steps[1], this.seq) === ME, log: [{ at: now, text: `Submitted ${wf.name.replace(' Workflow', '')}`, by: who }], ...p,
     };
     this.instances.update((l) => [inst, ...l]);
-    this.pushActivity(`${id} · ${inst.workflow} started by ${who}`, '#7c3aed');
+    this.pushActivity(`${id} · ${inst.workflow} started by ${who}`, 'var(--ka-7c3aed)');
     return inst;
   }
   patchInst(id: string, p: Partial<Instance>) {
@@ -646,7 +646,7 @@ export class WorkflowStore {
     else if (action === 'escalate') this.patchInst(id, { assignee: to || 'Department Head', mine: false, priority: 'High', dueAt: now + 24 * H, log: [...i.log, { at: now, text: `Escalated to ${to || 'Department Head'}`, by: ME }] });
     else if (action === 'delegate') this.patchInst(id, { assignee: to, delegated: to, mine: false, log: [...i.log, { at: now, text: `Delegated to ${to}${note ? ' · “' + note + '”' : ''}`, by: ME }] });
     else if (action === 'retry') this.patchInst(id, { status: 'In Progress', endedAt: undefined, assignee: approverFor(i.steps[i.stepIdx], 1), log: [...i.log, { at: now, text: `Restarted from ${i.steps[i.stepIdx]}`, by: ME }] });
-    this.pushActivity(`${id} · ${action} by ${ME}`, action === 'approve' ? '#22c55e' : action === 'reject' || action === 'cancel' ? '#ef4444' : '#f59e0b');
+    this.pushActivity(`${id} · ${action} by ${ME}`, action === 'approve' ? 'var(--ka-22c55e)' : action === 'reject' || action === 'cancel' ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)');
   }
 
   /** Live: an enabled rule fires and a connected integration makes a call. */
@@ -706,7 +706,7 @@ export class WorkflowStore {
   blank(name: string, module: string, category: string): Workflow {
     const start = makeNode('n1', 'start', 'Start', 'Request Submitted', 60, 120);
     const end = makeNode('n2', 'end', 'End', 'Completed', 520, 120);
-    return { ...LEAVE_DEF(), id: this.nextWfId(), name, module, category, description: '', status: 'Draft', version: 'v0.1', owner: ME, updated: 'Just now', trigger: 'Manual', icon: 'workflow', color: '#7c3aed', nodes: [start, end], edges: [{ id: 'e1', from: 'n1', to: 'n2', fp: 'r', tp: 'l' }] };
+    return { ...LEAVE_DEF(), id: this.nextWfId(), name, module, category, description: '', status: 'Draft', version: 'v0.1', owner: ME, updated: 'Just now', trigger: 'Manual', icon: 'workflow', color: 'var(--ka-7c3aed)', nodes: [start, end], edges: [{ id: 'e1', from: 'n1', to: 'n2', fp: 'r', tp: 'l' }] };
   }
   instancesOf(wfId: string) {
     return this.instances().filter((i) => i.wfId === wfId);

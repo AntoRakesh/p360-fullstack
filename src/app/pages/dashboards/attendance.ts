@@ -20,12 +20,12 @@ const DEPT_HEAD = [2840, 2210, 1120, 640, 310, 720, 1460, 540];
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Present" [value]="k().present" icon="user-check" color="#22c55e" change="1.4%" />
-      <app-kpi label="Absent" [value]="k().absent" icon="calendar-x" color="#ef4444" change="6%" [up]="false" />
-      <app-kpi label="Late Arrivals" [value]="k().late" icon="clock" color="#f97316" change="9%" [up]="false" />
-      <app-kpi label="On Leave" [value]="k().leave" icon="calendar-days" color="#3b82f6" change="2%" />
-      <app-kpi label="Attendance Rate" value="96.8%" icon="activity" color="#8b5cf6" change="1.2%" />
-      <app-kpi label="Missing Punches" [value]="k().missing" icon="fingerprint" color="#a855f7" change="11%" [up]="false" />
+      <app-kpi label="Present" [value]="k().present" icon="user-check" color="var(--ka-22c55e)" change="1.4%" />
+      <app-kpi label="Absent" [value]="k().absent" icon="calendar-x" color="var(--ka-ef4444)" change="6%" [up]="false" />
+      <app-kpi label="Late Arrivals" [value]="k().late" icon="clock" color="var(--ka-f97316)" change="9%" [up]="false" />
+      <app-kpi label="On Leave" [value]="k().leave" icon="calendar-days" color="var(--ka-3b82f6)" change="2%" />
+      <app-kpi label="Attendance Rate" value="96.8%" icon="activity" color="var(--ka-8b5cf6)" change="1.2%" />
+      <app-kpi label="Missing Punches" [value]="k().missing" icon="fingerprint" color="var(--ka-a855f7)" change="11%" [up]="false" />
     </section>
 
     <section class="dash">
@@ -64,7 +64,7 @@ const DEPT_HEAD = [2840, 2210, 1120, 640, 310, 720, 1460, 540];
                   <td class="num">{{ d.absent }}</td>
                   <td class="num">{{ d.late }}</td>
                   <td>
-                    <span class="mini-progress"><i [style.width.%]="d.rate" [style.background]="d.rate < 95 ? '#f59e0b' : '#22c55e'"></i></span>
+                    <span class="mini-progress"><i [style.width.%]="d.rate" [style.background]="d.rate < 95 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)'"></i></span>
                     <span [class.warn-t]="d.rate < 95">{{ d.rate }}%</span>
                   </td>
                 </tr>
@@ -128,16 +128,16 @@ export class AttendanceDashboard {
     return {
       labels: dayLabels(n, this.state.date()),
       series: [
-        { name: 'Attendance %', color: '#7c3aed', values: series(n, 96.4, 2.2, n * 7).map((v) => Math.min(99.5, v)), area: true },
-        { name: 'Target', color: '#22c55e', values: Array(n).fill(95), dashed: true },
+        { name: 'Attendance %', color: 'var(--ka-7c3aed)', values: series(n, 96.4, 2.2, n * 7).map((v) => Math.min(99.5, v)), area: true },
+        { name: 'Target', color: 'var(--ka-22c55e)', values: Array(n).fill(95), dashed: true },
       ],
     };
   });
   protected readonly status = computed(() => [
-    { label: 'Present', value: this.state.scale(9842), color: '#22c55e' },
-    { label: 'Late', value: this.state.scale(186), color: '#f97316' },
-    { label: 'On Leave', value: this.state.scale(421), color: '#3b82f6' },
-    { label: 'Absent', value: this.state.scale(312), color: '#ef4444' },
+    { label: 'Present', value: this.state.scale(9842), color: 'var(--ka-22c55e)' },
+    { label: 'Late', value: this.state.scale(186), color: 'var(--ka-f97316)' },
+    { label: 'On Leave', value: this.state.scale(421), color: 'var(--ka-3b82f6)' },
+    { label: 'Absent', value: this.state.scale(312), color: 'var(--ka-ef4444)' },
   ]);
   protected readonly depts = computed(() => {
     const mult = { Today: 1, 'This Week': 5, 'This Month': 21 }[this.metric()] ?? 1;
@@ -173,8 +173,8 @@ export class AttendanceDashboard {
   protected readonly shiftSeries = computed(() => {
     const sched = [2600, 4200, 1800, 1300, 900, 520].map((v) => this.state.scale(v));
     return [
-      { name: 'Scheduled', color: '#c4b5fd', values: sched },
-      { name: 'Present', color: '#7c3aed', values: sched.map((v, i) => Math.round(v * [0.97, 0.965, 0.95, 0.94, 0.92, 0.9][i])) },
+      { name: 'Scheduled', color: 'var(--ka-c4b5fd)', values: sched },
+      { name: 'Present', color: 'var(--ka-7c3aed)', values: sched.map((v, i) => Math.round(v * [0.97, 0.965, 0.95, 0.94, 0.92, 0.9][i])) },
     ];
   });
 

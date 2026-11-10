@@ -6,6 +6,7 @@ import { filter, map } from 'rxjs';
 import { AppModule, MODULES } from './modules';
 import { AppState } from './shared/app-state';
 import { Icon } from './shared/icon';
+import { ACCENTS, ThemeService } from './shared/theme';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, DatePipe],
@@ -16,8 +17,15 @@ import { Icon } from './shared/icon';
 export class App {
   private readonly router = inject(Router);
   protected readonly state = inject(AppState);
+  protected readonly theme = inject(ThemeService);
+  protected readonly accents = ACCENTS;
+  protected readonly modes = [
+    { id: 'light', name: 'Light', icon: 'th-sun' },
+    { id: 'dark', name: 'Dark', icon: 'th-moon' },
+    { id: 'system', name: 'System', icon: 'th-monitor' },
+  ] as const;
   /** Open top-bar dropdown. */
-  protected readonly menu = signal<'site' | 'notif' | 'apps' | 'profile' | null>(null);
+  protected readonly menu = signal<'site' | 'notif' | 'apps' | 'profile' | 'theme' | null>(null);
   protected readonly quickApps = [
     { title: 'Dashboard', icon: 'home', path: '/command-center' },
     { title: 'People', icon: 'users', path: '/people-identity' },
@@ -63,7 +71,7 @@ export class App {
     });
   }
 
-  protected toggleMenu(m: 'site' | 'notif' | 'apps' | 'profile') {
+  protected toggleMenu(m: 'site' | 'notif' | 'apps' | 'profile' | 'theme') {
     this.menu.update((cur) => (cur === m ? null : m));
   }
 

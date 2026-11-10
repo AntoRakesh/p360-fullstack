@@ -52,10 +52,10 @@ const two = (s: string) => s.split('|');
       </div>
 
       <section class="vm-kpis">
-        <vm-kpi label="Total Visitors" [value]="kpi().total" icon="users" color="#7c3aed" [delta]="kpi().d[0]" [up]="up(kpi().d[0])" [good]="up(kpi().d[0])" [clickable]="true" (pick)="setTab('Traffic')" />
-        <vm-kpi label="Avg. Visit Duration" [value]="kpi().dur" icon="clock" color="#16a34a" [delta]="kpi().d[1]" [up]="up(kpi().d[1])" [good]="up(kpi().d[1])" [clickable]="true" (pick)="setTab('Sites')" />
-        <vm-kpi label="Check-In Success" [value]="kpi().rate" icon="vm-c-check-circle" color="#16a34a" [delta]="kpi().d[2]" [up]="up(kpi().d[2])" [good]="up(kpi().d[2])" [clickable]="true" (pick)="setTab('Sites')" />
-        <vm-kpi label="Peak Occupancy" [value]="kpi().peak" icon="map-pin" color="#3b82f6" [badge]="kpi().peakAt" [clickable]="true" (pick)="setTab('Traffic')" />
+        <vm-kpi label="Total Visitors" [value]="kpi().total" icon="users" color="var(--ka-7c3aed)" [delta]="kpi().d[0]" [up]="up(kpi().d[0])" [good]="up(kpi().d[0])" [clickable]="true" (pick)="setTab('Traffic')" />
+        <vm-kpi label="Avg. Visit Duration" [value]="kpi().dur" icon="clock" color="var(--ka-16a34a)" [delta]="kpi().d[1]" [up]="up(kpi().d[1])" [good]="up(kpi().d[1])" [clickable]="true" (pick)="setTab('Sites')" />
+        <vm-kpi label="Check-In Success" [value]="kpi().rate" icon="vm-c-check-circle" color="var(--ka-16a34a)" [delta]="kpi().d[2]" [up]="up(kpi().d[2])" [good]="up(kpi().d[2])" [clickable]="true" (pick)="setTab('Sites')" />
+        <vm-kpi label="Peak Occupancy" [value]="kpi().peak" icon="map-pin" color="var(--ka-3b82f6)" [badge]="kpi().peakAt" [clickable]="true" (pick)="setTab('Traffic')" />
       </section>
 
       <div class="bar">
@@ -131,7 +131,7 @@ const two = (s: string) => s.split('|');
             <div class="vm-card">
               <div class="ch"><h2><app-icon name="map-pin" [size]="20" />Peak Occupancy by Site</h2><span class="sub">Today 11:00 AM</span></div>
               @for (s of sites(); track s.site) {
-                <div class="po"><span>{{ s.site }}</span><div class="trk big"><i [style.width.%]="s.peak / 1.2" [style.background]="'#3b82f6'"></i></div><b>{{ s.peak }}</b></div>
+                <div class="po"><span>{{ s.site }}</span><div class="trk big"><i [style.width.%]="s.peak / 1.2" [style.background]="'var(--ka-3b82f6)'"></i></div><b>{{ s.peak }}</b></div>
               }
               <p class="note">Capacity alerts trigger at 85% of the configured site capacity.</p>
             </div>
@@ -191,7 +191,7 @@ const two = (s: string) => s.split('|');
         <div class="ch"><h2><app-icon name="vm-h-trend" [size]="21" />Visitor Trend</h2><span class="sub">{{ rangeKey() === 'oct' ? 'Last 14 Days (01–15 Oct 2026)' : range().label }}</span></div>
         @let tr = trend();
         <svg [attr.viewBox]="'0 0 ' + W + ' ' + H" class="chart" (mousemove)="hoverTrend($event, tr.n)" (mouseleave)="trendHover.set(null)">
-          <defs><linearGradient id="vmhG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".28" /><stop offset="1" stop-color="#8b5cf6" stop-opacity="0" /></linearGradient></defs>
+          <defs><linearGradient id="vmhG" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--ka-8b5cf6)" stop-opacity=".28" /><stop offset="1" stop-color="var(--ka-8b5cf6)" stop-opacity="0" /></linearGradient></defs>
           @for (t of tr.ticks; track t.v) {<line [attr.x1]="L" [attr.x2]="W - R" [attr.y1]="t.y" [attr.y2]="t.y" class="gl" /><text [attr.x]="L - 8" [attr.y]="t.y + 4" class="ax" text-anchor="end">{{ t.v }}</text>}
           <text class="ax" transform="rotate(-90)" [attr.x]="-(TP + (H - TP - B) / 2)" y="11" text-anchor="middle">Visitors</text>
           @for (x of tr.xs; track $index) {<text [attr.x]="x.x" [attr.y]="H - B + 15" class="ax" text-anchor="middle">{{ x.a }}</text><text [attr.x]="x.x" [attr.y]="H - B + 27" class="ax" text-anchor="middle">{{ x.b }}</text>}
@@ -199,17 +199,17 @@ const two = (s: string) => s.split('|');
           <line [attr.x1]="tr.tip.x" [attr.x2]="tr.tip.x" [attr.y1]="tr.tip.y" [attr.y2]="H - B" class="vl" />
           @for (s of tr.series; track s.c) {
             <path [attr.d]="s.d" fill="none" [attr.stroke]="s.c" stroke-width="2.2" />
-            @for (p of s.pts; track $index) {<circle [attr.cx]="p.x" [attr.cy]="p.y" r="3.4" fill="#fff" [attr.stroke]="s.c" stroke-width="2" />}
+            @for (p of s.pts; track $index) {<circle [attr.cx]="p.x" [attr.cy]="p.y" r="3.4" fill="var(--ka-ffffff)" [attr.stroke]="s.c" stroke-width="2" />}
           }
-          <circle [attr.cx]="tr.tip.x" [attr.cy]="tr.tip.y" r="6" fill="#fff" stroke="#7c3aed" stroke-width="3" />
+          <circle [attr.cx]="tr.tip.x" [attr.cy]="tr.tip.y" r="6" fill="var(--ka-ffffff)" stroke="var(--kl-7c3aed)" stroke-width="3" />
           <g [attr.transform]="'translate(' + tr.tip.bx + ',' + (tr.tip.y - 36) + ')'">
-            <rect width="124" height="28" rx="5" fill="#6d28d9" /><text x="62" y="12" class="tt" text-anchor="middle">{{ tr.tip.l1 }}</text><text x="62" y="23" class="tt" text-anchor="middle">{{ tr.tip.l2 }}</text>
+            <rect width="124" height="28" rx="5" fill="var(--ka-6d28d9)" /><text x="62" y="12" class="tt" text-anchor="middle">{{ tr.tip.l1 }}</text><text x="62" y="23" class="tt" text-anchor="middle">{{ tr.tip.l2 }}</text>
           </g>
         </svg>
         <div class="lg c">
-          <span><i class="ln" style="--c:#8b3dff"></i>Total Visitors ({{ fmt(tr.sums[0]) }})</span>
-          <span><i class="ln" style="--c:#22a447"></i>Checked In ({{ fmt(tr.sums[1]) }})</span>
-          <span><i class="ln" style="--c:#3b82f6"></i>Checked Out ({{ fmt(tr.sums[2]) }})</span>
+          <span><i class="ln" style="--c:var(--ka-8b3dff)"></i>Total Visitors ({{ fmt(tr.sums[0]) }})</span>
+          <span><i class="ln" style="--c:var(--ka-22a447)"></i>Checked In ({{ fmt(tr.sums[1]) }})</span>
+          <span><i class="ln" style="--c:var(--ka-3b82f6)"></i>Checked Out ({{ fmt(tr.sums[2]) }})</span>
         </div>
       </div>
     </ng-template>
@@ -256,19 +256,19 @@ const two = (s: string) => s.split('|');
         <div class="ch"><h2><app-icon name="clock" [size]="21" />Peak Hours &amp; Occupancy</h2></div>
         @let pk = peak();
         <svg [attr.viewBox]="'0 0 ' + CW + ' ' + CH" class="chart" (mouseleave)="peakHover.set(null)">
-          <rect [attr.x]="pk.band.x" [attr.y]="CT - 4" [attr.width]="pk.band.w" [attr.height]="CH - CT - CB + 4" fill="#ede9fe" rx="3" />
+          <rect [attr.x]="pk.band.x" [attr.y]="CT - 4" [attr.width]="pk.band.w" [attr.height]="CH - CT - CB + 4" fill="var(--ka-ede9fe)" rx="3" />
           @for (t of pk.ticks; track t.v) {<line [attr.x1]="CL" [attr.x2]="CW - CR" [attr.y1]="t.y" [attr.y2]="t.y" class="gl" /><text [attr.x]="CL - 6" [attr.y]="t.y + 4" class="ax" text-anchor="end">{{ t.v }}</text><text [attr.x]="CW - CR + 6" [attr.y]="t.y + 4" class="ax">{{ t.v }}</text>}
           <text class="ax" transform="rotate(-90)" [attr.x]="-(CT + (CH - CT - CB) / 2)" y="10" text-anchor="middle">Arrivals</text>
           <text class="ax" transform="rotate(90)" [attr.x]="CT + (CH - CT - CB) / 2" [attr.y]="-(CW - 6)" text-anchor="middle">Occupancy</text>
           @for (b of pk.bars; track $index) {
-            <rect [attr.x]="b.x" [attr.y]="b.y" [attr.width]="b.w" [attr.height]="b.h" rx="2" [attr.fill]="b.hot ? '#8b3dff' : '#a78bfa'" [attr.opacity]="peakHover() === null || peakHover() === $index ? 1 : .55" (mouseenter)="peakHover.set($index)" class="bar-r" />
+            <rect [attr.x]="b.x" [attr.y]="b.y" [attr.width]="b.w" [attr.height]="b.h" rx="2" [attr.fill]="b.hot ? 'var(--ka-8b3dff)' : 'var(--ka-a78bfa)'" [attr.opacity]="peakHover() === null || peakHover() === $index ? 1 : .55" (mouseenter)="peakHover.set($index)" class="bar-r" />
             <text [attr.x]="b.cx" [attr.y]="CH - CB + 14" class="ax" text-anchor="middle">{{ b.a }}</text><text [attr.x]="b.cx" [attr.y]="CH - CB + 25" class="ax" text-anchor="middle">{{ b.b }}</text>
           }
-          <path [attr.d]="pk.line" fill="none" stroke="#f97316" stroke-width="2.2" />
-          @for (p of pk.pts; track $index) {<circle [attr.cx]="p.x" [attr.cy]="p.y" r="3" fill="#fff" stroke="#f97316" stroke-width="2" />}
-          <g [attr.transform]="'translate(' + pk.tip.x + ',4)'"><rect width="130" height="30" rx="5" fill="#6d28d9" /><text x="65" y="13" class="tt" text-anchor="middle">{{ pk.tip.l1 }}</text><text x="65" y="25" class="tt" text-anchor="middle">{{ pk.tip.l2 }}</text></g>
+          <path [attr.d]="pk.line" fill="none" stroke="var(--kl-f97316)" stroke-width="2.2" />
+          @for (p of pk.pts; track $index) {<circle [attr.cx]="p.x" [attr.cy]="p.y" r="3" fill="var(--ka-ffffff)" stroke="var(--kl-f97316)" stroke-width="2" />}
+          <g [attr.transform]="'translate(' + pk.tip.x + ',4)'"><rect width="130" height="30" rx="5" fill="var(--ka-6d28d9)" /><text x="65" y="13" class="tt" text-anchor="middle">{{ pk.tip.l1 }}</text><text x="65" y="25" class="tt" text-anchor="middle">{{ pk.tip.l2 }}</text></g>
         </svg>
-        <div class="lg c"><span><i style="background:#8b3dff"></i>Visitor Arrivals</span><span><i class="ln" style="--c:#f97316"></i>Occupancy (On-Site)</span></div>
+        <div class="lg c"><span><i style="background:var(--kb-8b3dff)"></i>Visitor Arrivals</span><span><i class="ln" style="--c:var(--ka-f97316)"></i>Occupancy (On-Site)</span></div>
       </div>
     </ng-template>
 
@@ -363,7 +363,7 @@ const two = (s: string) => s.split('|');
   styles: `
     .an { gap: 12px; }
     :host ::ng-deep vm-avatar { overflow: hidden; display: inline-block; flex: none; }
-    :host ::ng-deep vm-avatar svg > rect:not([fill]) { fill: #ece7ff; }
+    :host ::ng-deep vm-avatar svg > rect:not([fill]) { fill: var(--ka-ece7ff); }
     .crumb { display: flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--text); margin-bottom: 2px; }
     .crumb a { color: var(--text); text-decoration: none; display: inline-flex; } .crumb b { font-weight: 600; }
     .vm-head h1 { font-size: 30px; }
@@ -377,12 +377,12 @@ const two = (s: string) => s.split('|');
     :host ::ng-deep .vm-kpi-ic { width: 56px; height: 56px; }
     :host ::ng-deep .vm-kpi-val { font-size: 30px; }
     .bar { display: flex; align-items: center; gap: 7px; }
-    .range { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: inherit; font-size: 14.5px; font-weight: 700; cursor: pointer; white-space: nowrap; color: var(--text); }
-    .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 2px; }
+    .range { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); font: inherit; font-size: 14.5px; font-weight: 700; cursor: pointer; white-space: nowrap; color: var(--text); }
+    .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); padding: 2px; }
     .seg button { display: inline-flex; align-items: center; gap: 5px; border: 0; background: none; font: inherit; font-size: 13px; font-weight: 500; padding: 6px 9px; border-radius: 6px; cursor: pointer; color: var(--text); white-space: nowrap; }
     .seg button app-icon { color: var(--primary); }
-    .seg button.on { background: var(--primary); color: #fff; font-weight: 600; } .seg button.on app-icon { color: #fff; }
-    .seg button:not(.on):hover { background: #f5f0ff; }
+    .seg button.on { background: var(--primary); color: var(--kf-ffffff); font-weight: 600; } .seg button.on app-icon { color: var(--kf-ffffff); }
+    .seg button:not(.on):hover { background: var(--kb-f5f0ff); }
     .bar .vm-filter { height: 38px; font-size: 12.5px; flex: 0 1 auto; min-width: 0; gap: 4px; }
     .bar .vm-filter select { font-size: 12.5px; width: 84px; min-width: 0; } .bar .vm-filter:nth-of-type(3) select { width: 98px; }
     .bar .vm-icon-btn { height: 38px; width: 38px; }
@@ -399,55 +399,55 @@ const two = (s: string) => s.split('|');
     .ch h2 app-icon { color: var(--primary); }
     .sub { font-size: 12.5px; color: var(--text); white-space: nowrap; }
     .chart { width: 100%; height: auto; display: block; }
-    .gl { stroke: #ececf3; stroke-width: 1; } .vl { stroke: #7c3aed; stroke-dasharray: 3 3; }
-    .ax { font-size: 10.5px; fill: #333; }
-    .tt { font-size: 10.5px; fill: #fff; font-weight: 600; }
+    .gl { stroke: var(--kl-ececf3); stroke-width: 1; } .vl { stroke: var(--kl-7c3aed); stroke-dasharray: 3 3; }
+    .ax { font-size: 10.5px; fill: var(--ka-333333); }
+    .tt { font-size: 10.5px; fill: var(--ka-ffffff); font-weight: 600; }
     .lg { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; margin-top: 4px; } .lg.c { justify-content: center; }
     .lg span { display: inline-flex; align-items: center; gap: 6px; }
     .lg i { width: 12px; height: 10px; border-radius: 2px; display: inline-block; }
     .lg i.ln { width: 18px; height: 2px; background: var(--c); position: relative; }
-    .lg i.ln::after { content: ''; position: absolute; left: 5px; top: -3px; width: 6px; height: 6px; border-radius: 50%; border: 2px solid var(--c); background: #fff; box-sizing: border-box; }
+    .lg i.ln::after { content: ''; position: absolute; left: 5px; top: -3px; width: 6px; height: 6px; border-radius: 50%; border: 2px solid var(--c); background: var(--kb-ffffff); box-sizing: border-box; }
     .donut { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
     .donut svg { flex: none; }
     .seg-c { cursor: pointer; transition: opacity .15s; } .seg-c.dim { opacity: .3; }
-    .dl-t { font-size: 12px; font-weight: 700; fill: #fff; pointer-events: none; }
+    .dl-t { font-size: 12px; font-weight: 700; fill: var(--ka-ffffff); pointer-events: none; }
     .dc1 { font-size: 22px; font-weight: 800; fill: var(--text); } .dc2 { font-size: 13px; fill: var(--text); }
     .dleg { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
     .dleg button { display: grid; grid-template-columns: 10px 1fr auto; gap: 6px; align-items: center; border: 0; background: none; font: inherit; font-size: 12px; text-align: left; cursor: pointer; padding: 3px 4px; border-radius: 6px; color: var(--text); }
-    .dleg button:hover, .dleg button.on { background: #f5f0ff; }
+    .dleg button:hover, .dleg button.on { background: var(--kb-f5f0ff); }
     .dleg i { width: 11px; height: 11px; border-radius: 50%; } .dleg b { font-weight: 500; white-space: nowrap; }
     .pb { display: flex; flex-direction: column; gap: 4px; padding-top: 4px; }
     .pr { display: grid; grid-template-columns: 118px 1fr 40px; gap: 10px; align-items: center; border: 0; background: none; font: inherit; font-size: 13px; padding: 4px 4px; border-radius: 6px; cursor: pointer; text-align: left; color: var(--text); }
     .pr span { font-weight: 600; } .pr b { text-align: right; font-weight: 500; }
-    .pr:hover, .pr.on { background: #f5f0ff; } .pr.dim { opacity: .45; }
-    .trk { height: 10px; background: #eeeef4; border-radius: 6px; overflow: hidden; flex: 1; min-width: 30px; }
-    .trk i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #6d28d9, #8b5cf6); max-width: 100%; }
+    .pr:hover, .pr.on { background: var(--kb-f5f0ff); } .pr.dim { opacity: .45; }
+    .trk { height: 10px; background: var(--kb-eeeef4); border-radius: 6px; overflow: hidden; flex: 1; min-width: 30px; }
+    .trk i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--kb-6d28d9), var(--kb-8b5cf6)); max-width: 100%; }
     .trk.big { height: 14px; }
     .bar-r { cursor: pointer; }
     .vm-table th { padding: 7px 8px; font-size: 12.5px; }
     .vm-table td { padding: 7px 8px; font-size: 13px; }
     .st th, .st td { padding: 6px 5px; white-space: nowrap; font-size: 12.5px; }
     .sh { display: flex; align-items: center; gap: 8px; } .sh .trk { height: 9px; min-width: 36px; } .num { min-width: 28px; text-align: right; }
-    .rate { display: inline-block; padding: 2px 8px; border-radius: 6px; background: #dcfce7; color: #166534; font-weight: 600; font-size: 12.5px; }
-    .rate.warn { background: #ffedd5; color: #c2410c; }
-    .rk { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #ede9fe; color: #4c1d95; font-size: 12px; font-weight: 700; }
-    .rk[data-r='1'] { background: #fef3c7; color: #a16207; } .rk[data-r='2'] { background: #f1f5f9; color: #334155; } .rk[data-r='3'] { background: #ffedd5; color: #c2410c; }
+    .rate { display: inline-block; padding: 2px 8px; border-radius: 6px; background: var(--kb-dcfce7); color: var(--kf-166534); font-weight: 600; font-size: 12.5px; }
+    .rate.warn { background: var(--kb-ffedd5); color: var(--kf-c2410c); }
+    .rk { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--kb-ede9fe); color: var(--kf-4c1d95); font-size: 12px; font-weight: 700; }
+    .rk[data-r='1'] { background: var(--kb-fef3c7); color: var(--kf-a16207); } .rk[data-r='2'] { background: var(--kb-f1f5f9); color: var(--kf-334155); } .rk[data-r='3'] { background: var(--kb-ffedd5); color: var(--kf-c2410c); }
     .vm-person { gap: 8px; }
-    .rn { display: flex; align-items: center; gap: 8px; white-space: nowrap; } .rn app-icon { color: #334155; } .rn b { font-weight: 600; }
+    .rn { display: flex; align-items: center; gap: 8px; white-space: nowrap; } .rn app-icon { color: var(--kf-334155); } .rn b { font-weight: 600; }
     .reps .vm-acts { gap: 8px; } .reps .vm-mini { padding: 3px 12px; }
     .mx, .po { display: grid; grid-template-columns: 150px 1fr 40px; gap: 10px; align-items: center; font-size: 12.5px; padding: 7px 0; }
     .mx b, .po b { text-align: right; }
-    .stack { display: flex; height: 14px; border-radius: 6px; overflow: hidden; background: #eee; } .stack i { display: block; height: 100%; }
+    .stack { display: flex; height: 14px; border-radius: 6px; overflow: hidden; background: var(--kb-eeeeee); } .stack i { display: block; height: 100%; }
     .note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
     .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
-    .dl { color: #15803d; font-weight: 600; } .dl.neg { color: #dc2626; }
+    .dl { color: var(--kf-15803d); font-weight: 600; } .dl.neg { color: var(--kf-dc2626); }
     .meta { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; margin-bottom: 12px; } .meta b { display: block; font-size: 11.5px; color: var(--muted); font-weight: 500; }
     .mk { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
-    .mk div { background: #f6f4ff; border-radius: 10px; padding: 10px 12px; } .mk small { display: block; font-size: 12px; } .mk b { font-size: 20px; }
+    .mk div { background: var(--kb-f6f4ff); border-radius: 10px; padding: 10px 12px; } .mk small { display: block; font-size: 12px; } .mk b { font-size: 20px; }
     .tblw { max-height: 320px; overflow: auto; }
-    .lbl2 { font-size: 12px; color: #4b4f6b; margin: 14px 0 6px; }
+    .lbl2 { font-size: 12px; color: var(--kf-4b4f6b); margin: 14px 0 6px; }
     .chk { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 13px; } .chk label { display: flex; gap: 8px; align-items: center; } .chk input { accent-color: var(--primary); }
-    .err-t { color: #dc2626; font-size: 12.5px; margin: 8px 0 0; }
+    .err-t { color: var(--kf-dc2626); font-size: 12.5px; margin: 8px 0 0; }
     @media print { .bar, .vm-actions { display: none; } }
   `,
 })
@@ -505,7 +505,7 @@ export class VisitorAnalytics {
     const top = Math.max(6, Math.ceil((max * 1.1) / 6 / (max > 60 ? 10 : 1)) * (max > 60 ? 10 : 1) * 6);
     const step = (W - L - R) / (n - 1);
     const x = (i: number) => L + i * step, y = (v: number) => TP + (H - TP - B) * (1 - v / top);
-    const colors = ['#8b3dff', '#22a447', '#3b82f6'];
+    const colors = ['var(--ka-8b3dff)', 'var(--ka-22a447)', 'var(--ka-3b82f6)'];
     const series = data.map((a, j) => { const pts = a.map((v, i) => ({ x: x(i), y: y(v) })); return { c: colors[j], pts, d: pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ') }; });
     const area = `${series[0].d} L${x(n - 1)} ${H - B} L${x(0)} ${H - B} Z`;
     const peakI = data[0].indexOf(max);

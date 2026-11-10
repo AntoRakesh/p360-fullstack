@@ -22,11 +22,11 @@ const PRESETS: Record<string, Action[]> = { None: [], 'View only': ['View'], Con
     }
 
     <section class="kpi-row">
-      <app-kpi label="Roles" [value]="store.roles().length" icon="shield-check" color="#7c3aed" [sub]="systemCount() + ' system · ' + (store.roles().length - systemCount()) + ' custom'" />
-      <app-kpi label="Users with Admin Rights" [value]="adminUsers()" icon="key-round" color="#ef4444" sub="Super, Tenant & Site Admins" />
-      <app-kpi label="Permissions Granted" [value]="totalGranted()" icon="list-checks" color="#2563eb" [sub]="'of ' + store.roles().length * cells + ' possible'" />
-      <app-kpi label="Modules Covered" [value]="modules.length" icon="grid" color="#10b981" [sub]="actions.length + ' actions each'" />
-      <app-kpi label="Least-privilege Score" [value]="lpScore() + '%'" icon="shield" color="#f59e0b" sub="share of roles below Manage" />
+      <app-kpi label="Roles" [value]="store.roles().length" icon="shield-check" color="var(--ka-7c3aed)" [sub]="systemCount() + ' system · ' + (store.roles().length - systemCount()) + ' custom'" />
+      <app-kpi label="Users with Admin Rights" [value]="adminUsers()" icon="key-round" color="var(--ka-ef4444)" sub="Super, Tenant & Site Admins" />
+      <app-kpi label="Permissions Granted" [value]="totalGranted()" icon="list-checks" color="var(--ka-2563eb)" [sub]="'of ' + store.roles().length * cells + ' possible'" />
+      <app-kpi label="Modules Covered" [value]="modules.length" icon="grid" color="var(--ka-10b981)" [sub]="actions.length + ' actions each'" />
+      <app-kpi label="Least-privilege Score" [value]="lpScore() + '%'" icon="shield" color="var(--ka-f59e0b)" sub="share of roles below Manage" />
     </section>
 
     <section class="split left">
@@ -46,7 +46,7 @@ const PRESETS: Record<string, Action[]> = { None: [], 'View only': ['View'], Con
       @if (draft(); as r) {
         <div class="card">
           <div class="dh">
-            <span class="ri" [style.background]="r.color + '1f'" [style.color]="r.color"><app-icon name="shield-check" [size]="20" /></span>
+            <span class="ri" [style.background]="'color-mix(in srgb, ' + r.color + ' 12%, transparent)'" [style.color]="r.color"><app-icon name="shield-check" [size]="20" /></span>
             <div>
               @if (locked()) {<h3>{{ r.name }}</h3>} @else {<input class="input title-in" [value]="r.name" (input)="patch({ name: $any($event.target).value })" />}
               <small class="muted">{{ r.desc }}</small>
@@ -59,7 +59,7 @@ const PRESETS: Record<string, Action[]> = { None: [], 'View only': ['View'], Con
           </div>
           <div class="meta">
             <label class="field">Data scope<select class="select" [disabled]="locked()" [value]="r.scope" (change)="patch({ scope: $any($event.target).value })">@for (s of scopes; track s) {<option>{{ s }}</option>}</select></label>
-            <label class="field">Colour<input type="color" class="color" [disabled]="locked()" [value]="r.color" (input)="patch({ color: $any($event.target).value })" /></label>
+            <label class="field">Colour<input type="color" class="color" [disabled]="locked()" [value]="(r.color.startsWith('#') ? r.color : '#' + r.color.slice(-7, -1))" (input)="patch({ color: $any($event.target).value })" /></label>
             <div class="stat"><b>{{ granted(r) }} / {{ cells }}</b><small>permissions granted</small></div>
             <div class="stat"><b>{{ store.usersByRole().get(r.id) ?? 0 }}</b><small>users assigned</small></div>
           </div>
@@ -159,22 +159,22 @@ const PRESETS: Record<string, Action[]> = { None: [], 'View only': ['View'], Con
   styles: [ADMIN_CSS, `
     .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; } .dh .toolbar { flex-wrap: nowrap; }
     .title-in { font-size: 16px; font-weight: 700; padding: 4px 8px; }
-    .meta { display: grid; grid-template-columns: 180px 90px 1fr 1fr; gap: 10px; align-items: end; margin-bottom: 12px; } .color { height: 34px; width: 100%; padding: 2px; border: 1px solid var(--border); border-radius: 7px; background: #fff; }
+    .meta { display: grid; grid-template-columns: 180px 90px 1fr 1fr; gap: 10px; align-items: end; margin-bottom: 12px; } .color { height: 34px; width: 100%; padding: 2px; border: 1px solid var(--border); border-radius: 7px; background: var(--kb-ffffff); }
     .tabs-row { margin-bottom: 10px; } .cmp { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
     .mx-wrap { overflow: auto; max-height: 620px; border: 1px solid var(--border); border-radius: 10px; }
-    .mx { width: 100%; border-collapse: collapse; font-size: 12.5px; } .mx th { position: sticky; top: 0; background: #f8f7fd; z-index: 1; padding: 8px 6px; font-weight: 600; font-size: 12px; color: #4b4f6b; border-bottom: 1px solid var(--border); }
+    .mx { width: 100%; border-collapse: collapse; font-size: 12.5px; } .mx th { position: sticky; top: 0; background: var(--kb-f8f7fd); z-index: 1; padding: 8px 6px; font-weight: 600; font-size: 12px; color: var(--kf-4b4f6b); border-bottom: 1px solid var(--border); }
     .mx th button { border: 0; background: none; font: inherit; color: inherit; cursor: pointer; padding: 2px 6px; border-radius: 5px; } .mx th button:hover:not(:disabled) { background: var(--primary-soft); color: var(--primary); }
-    .mx td { padding: 5px 6px; border-bottom: 1px solid #f0f1f6; text-align: center; } .mx .mod { text-align: left; white-space: nowrap; } .mx td.mod { display: flex; align-items: center; gap: 8px; color: var(--text); } .mx td.mod app-icon { color: var(--primary); }
-    .mx tr:hover td { background: #faf9ff; } .mx tr.changed td { background: #fffbeb; }
-    .cb { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid #cfd3e0; display: inline-grid; place-items: center; cursor: pointer; color: transparent; background: #fff; }
-    .cb input { display: none; } .cb.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .mx td { padding: 5px 6px; border-bottom: 1px solid var(--kl-f0f1f6); text-align: center; } .mx .mod { text-align: left; white-space: nowrap; } .mx td.mod { display: flex; align-items: center; gap: 8px; color: var(--text); } .mx td.mod app-icon { color: var(--primary); }
+    .mx tr:hover td { background: var(--kb-faf9ff); } .mx tr.changed td { background: var(--kb-fffbeb); }
+    .cb { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--kl-cfd3e0); display: inline-grid; place-items: center; cursor: pointer; color: transparent; background: var(--kb-ffffff); }
+    .cb input { display: none; } .cb.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); }
     .cb:has(input:disabled) { cursor: default; opacity: 0.75; }
     .select.sm { padding-top: 4px; padding-bottom: 4px; font-size: 12px; }
-    .legend { display: flex; gap: 14px; align-items: center; font-size: 12px; margin-bottom: 8px; } .legend span { display: flex; align-items: center; gap: 5px; } .legend i, .cdot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; background: #eef0f5; }
-    .both { background: #22c55e !important; } .a { background: #7c3aed !important; } .b { background: #f59e0b !important; }
+    .legend { display: flex; gap: 14px; align-items: center; font-size: 12px; margin-bottom: 8px; } .legend span { display: flex; align-items: center; gap: 5px; } .legend i, .cdot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; background: var(--kb-eef0f5); }
+    .both { background: var(--kb-22c55e) !important; } .a { background: var(--kb-7c3aed) !important; } .b { background: var(--kb-f59e0b) !important; }
     .users { max-height: 560px; overflow: auto; } .users .select { width: 160px; }
-    .savebar { position: sticky; bottom: 12px; margin-top: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: #1e1b3a; color: #fff; font-size: 12.5px; box-shadow: 0 10px 30px rgba(20,20,60,.25); }
-    .savebar span { display: flex; align-items: center; gap: 8px; } .savebar .btn-ghost { background: transparent; color: #fff; border-color: #4b4775; }
+    .savebar { position: sticky; bottom: 12px; margin-top: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: var(--kb-1e1b3a); color: var(--kf-ffffff); font-size: 12.5px; box-shadow: 0 10px 30px rgba(20,20,60,.25); }
+    .savebar span { display: flex; align-items: center; gap: 8px; } .savebar .btn-ghost { background: transparent; color: var(--kf-ffffff); border-color: var(--kl-4b4775); }
     @media (max-width: 1100px) { .meta { grid-template-columns: 1fr 1fr; } }
   `],
 })
@@ -294,7 +294,7 @@ export class RolesPermissions {
     if (!n.name.trim()) return this.err.set('Role name is required.');
     if (this.store.roles().some((r) => r.name.toLowerCase() === n.name.trim().toLowerCase())) return this.err.set('A role with this name already exists.');
     const base = this.store.role(n.base);
-    const r: Role = { id: `r-${Date.now()}`, name: n.name.trim(), desc: n.desc || 'Custom role', type: 'Custom', color: '#0891b2', scope: n.scope, perms: base ? structuredClone(base.perms) : {} };
+    const r: Role = { id: `r-${Date.now()}`, name: n.name.trim(), desc: n.desc || 'Custom role', type: 'Custom', color: 'var(--ka-0891b2)', scope: n.scope, perms: base ? structuredClone(base.perms) : {} };
     this.store.saveRole(r, base ? `Created from ${base.name}` : 'Created blank');
     this.newRole.set(null);
     this.selId.set(r.id);

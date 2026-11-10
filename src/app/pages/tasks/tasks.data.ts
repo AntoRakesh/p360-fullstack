@@ -56,15 +56,15 @@ export interface Category {
 }
 /** Category roll-up from the reference image (published templates only = 118). */
 export const CATEGORIES: Category[] = [
-  { name: 'Housekeeping', count: 28, icon: 'tasks-broom', tint: '#22c55e', bar: '#f43f5e', completion: 92 },
-  { name: 'Security', count: 18, icon: 'shield', tint: '#10b981', bar: '#f59e0b', completion: 88 },
-  { name: 'Facility Maintenance', count: 16, icon: 'tasks-wrench', tint: '#22c55e', bar: '#10b981', completion: 84 },
-  { name: 'Safety', count: 12, icon: 'flame', tint: '#f97316', bar: '#f472b6', completion: 80 },
-  { name: 'IT Support', count: 10, icon: 'cpu', tint: '#8b5cf6', bar: '#3b82f6', completion: 78 },
-  { name: 'Canteen', count: 8, icon: 'utensils', tint: '#f97316', bar: '#c7c2ea', completion: 76 },
-  { name: 'Asset Management', count: 8, icon: 'box', tint: '#3b82f6', bar: '#7c3aed', completion: 70 },
-  { name: 'Facilities', count: 7, icon: 'building', tint: '#3b82f6', bar: '#cfcbe8', completion: 68 },
-  { name: 'Others', count: 11, icon: 'layers', tint: '#f59e0b', bar: '#c4cde0', completion: 62 },
+  { name: 'Housekeeping', count: 28, icon: 'tasks-broom', tint: 'var(--kb-22c55e)', bar: 'var(--ka-f43f5e)', completion: 92 },
+  { name: 'Security', count: 18, icon: 'shield', tint: 'var(--kb-10b981)', bar: 'var(--ka-f59e0b)', completion: 88 },
+  { name: 'Facility Maintenance', count: 16, icon: 'tasks-wrench', tint: 'var(--kb-22c55e)', bar: 'var(--ka-10b981)', completion: 84 },
+  { name: 'Safety', count: 12, icon: 'flame', tint: 'var(--kb-f97316)', bar: 'var(--ka-f472b6)', completion: 80 },
+  { name: 'IT Support', count: 10, icon: 'cpu', tint: 'var(--kb-8b5cf6)', bar: 'var(--ka-3b82f6)', completion: 78 },
+  { name: 'Canteen', count: 8, icon: 'utensils', tint: 'var(--kb-f97316)', bar: 'var(--ka-c7c2ea)', completion: 76 },
+  { name: 'Asset Management', count: 8, icon: 'box', tint: 'var(--kb-3b82f6)', bar: 'var(--ka-7c3aed)', completion: 70 },
+  { name: 'Facilities', count: 7, icon: 'building', tint: 'var(--kb-3b82f6)', bar: 'var(--ka-cfcbe8)', completion: 68 },
+  { name: 'Others', count: 11, icon: 'layers', tint: 'var(--kb-f59e0b)', bar: 'var(--ka-c4cde0)', completion: 62 },
 ];
 export const CAT_NAMES = CATEGORIES.map((c) => c.name);
 export const catOf = (category: string) => (CAT_NAMES.includes(category) && category !== 'Others' ? category : 'Others');
@@ -79,15 +79,15 @@ export const TAG_OPTIONS = ['Cleaning', 'Office', 'Patrol', 'Compliance', 'Inspe
 export const ESCALATION_ROLES = ['Shift Supervisor', 'Facility Manager', 'Security Manager', 'HSE Manager', 'IT Manager', 'Site Head', 'Operations Director'];
 
 const CAT_DEFAULTS: Record<string, { dept: string; role: string; icon: string; color: string; tags: string[]; esc: [string, string] }> = {
-  Housekeeping: { dept: 'Facilities', role: 'Cleaning Staff', icon: 'tasks-broom', color: '#64748b', tags: ['Cleaning', 'Hygiene'], esc: ['Shift Supervisor', 'Facility Manager'] },
-  Security: { dept: 'Security', role: 'Security Guards', icon: 'shield', color: '#2563eb', tags: ['Patrol', 'Compliance'], esc: ['Shift Supervisor', 'Security Manager'] },
-  'Facility Maintenance': { dept: 'Engineering', role: 'Technician', icon: 'tasks-wrench', color: '#1d4ed8', tags: ['Inspection'], esc: ['Shift Supervisor', 'Facility Manager'] },
-  Safety: { dept: 'HSE', role: 'Safety Team', icon: 'flame', color: '#ef4444', tags: ['Compliance', 'Critical'], esc: ['HSE Manager', 'Site Head'] },
-  'IT Support': { dept: 'IT', role: 'IT Team', icon: 'cpu', color: '#334155', tags: ['Inspection'], esc: ['IT Manager', 'Site Head'] },
-  Canteen: { dept: 'Food Services', role: 'Canteen Staff', icon: 'utensils', color: '#d97706', tags: ['Hygiene', 'Audit'], esc: ['Shift Supervisor', 'Facility Manager'] },
-  'Asset Management': { dept: 'Administration', role: 'Asset Team', icon: 'box', color: '#0d9488', tags: ['Audit'], esc: ['Facility Manager', 'Site Head'] },
-  Facilities: { dept: 'Facilities', role: 'Maintenance Team', icon: 'tree', color: '#65a30d', tags: ['Outdoor'], esc: ['Facility Manager', 'Site Head'] },
-  Others: { dept: 'Administration', role: 'Facility Staff', icon: 'layers', color: '#7c3aed', tags: ['Office'], esc: ['Shift Supervisor', 'Facility Manager'] },
+  Housekeeping: { dept: 'Facilities', role: 'Cleaning Staff', icon: 'tasks-broom', color: 'var(--ka-64748b)', tags: ['Cleaning', 'Hygiene'], esc: ['Shift Supervisor', 'Facility Manager'] },
+  Security: { dept: 'Security', role: 'Security Guards', icon: 'shield', color: 'var(--ka-2563eb)', tags: ['Patrol', 'Compliance'], esc: ['Shift Supervisor', 'Security Manager'] },
+  'Facility Maintenance': { dept: 'Engineering', role: 'Technician', icon: 'tasks-wrench', color: 'var(--ka-1d4ed8)', tags: ['Inspection'], esc: ['Shift Supervisor', 'Facility Manager'] },
+  Safety: { dept: 'HSE', role: 'Safety Team', icon: 'flame', color: 'var(--ka-ef4444)', tags: ['Compliance', 'Critical'], esc: ['HSE Manager', 'Site Head'] },
+  'IT Support': { dept: 'IT', role: 'IT Team', icon: 'cpu', color: 'var(--ka-334155)', tags: ['Inspection'], esc: ['IT Manager', 'Site Head'] },
+  Canteen: { dept: 'Food Services', role: 'Canteen Staff', icon: 'utensils', color: 'var(--ka-d97706)', tags: ['Hygiene', 'Audit'], esc: ['Shift Supervisor', 'Facility Manager'] },
+  'Asset Management': { dept: 'Administration', role: 'Asset Team', icon: 'box', color: 'var(--ka-0d9488)', tags: ['Audit'], esc: ['Facility Manager', 'Site Head'] },
+  Facilities: { dept: 'Facilities', role: 'Maintenance Team', icon: 'tree', color: 'var(--ka-65a30d)', tags: ['Outdoor'], esc: ['Facility Manager', 'Site Head'] },
+  Others: { dept: 'Administration', role: 'Facility Staff', icon: 'layers', color: 'var(--ka-7c3aed)', tags: ['Office'], esc: ['Shift Supervisor', 'Facility Manager'] },
 };
 
 const STEPS: Record<string, string[]> = {
@@ -115,18 +115,18 @@ const tpl = (id: number, name: string, category: string, frequency: string, dura
 
 /** The ten templates visible in the reference image, in its order. */
 const IMAGE_TEMPLATES: Template[] = [
-  tpl(1, 'General Cleaning', 'Housekeeping', 'Daily', 30, 'Cleaning Staff', 'Active', 'tasks-broom', '#64748b', '2026-10-14T09:12', 'John Doe', {
+  tpl(1, 'General Cleaning', 'Housekeeping', 'Daily', 30, 'Cleaning Staff', 'Active', 'tasks-broom', 'var(--ka-64748b)', '2026-10-14T09:12', 'John Doe', {
     description: 'Standard cleaning task for office areas including floors, desks and common areas.', tags: ['Cleaning', 'Office'], usage30: 612,
   }),
-  tpl(2, 'Security Patrol Check', 'Security', 'Hourly', 15, 'Security Guards', 'Active', 'shield', '#2563eb', '2026-10-13T17:48', 'Priya Sharma', { priority: 'High', usage30: 744, shift: '24x7 Rotation', days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] }),
-  tpl(3, 'HVAC Inspection', 'Facility Maintenance', 'Daily', 20, 'Technician', 'Active', 'tasks-wrench', '#1d4ed8', '2026-10-12T11:20', 'Ahmed Hassan', { usage30: 186 }),
-  tpl(4, 'Fire Safety Inspection', 'Safety', 'Weekly', 30, 'Safety Team', 'Active', 'flame', '#ef4444', '2026-10-11T15:30', 'Maria Santos', { priority: 'Critical', usage30: 64, verify: 'Photo + Supervisor' }),
-  tpl(5, 'IT Equipment Check', 'IT Support', 'Weekly', 20, 'IT Team', 'Active', 'cpu', '#334155', '2026-10-09T10:05', 'Kenji Sato', { usage30: 52 }),
-  tpl(6, 'Meeting Room Setup', 'Facility Services', 'On Demand', 15, 'Facility Staff', 'Active', 'tasks-presentation', '#92400e', '2026-10-10T13:15', 'Ramesh Kumar', { usage30: 238, assignMode: 'Nearest available' }),
-  tpl(7, 'Waste Disposal', 'Housekeeping', 'Daily', 10, 'Cleaning Staff', 'Active', 'tasks-recycle', '#16a34a', '2026-10-08T08:40', 'John Doe', { usage30: 318 }),
-  tpl(8, 'Asset Verification', 'Asset Management', 'Monthly', 25, 'Asset Team', 'Active', 'box', '#0d9488', '2026-10-06T16:10', 'Grace Park', { usage30: 41 }),
-  tpl(9, 'Landscape Maintenance', 'Facilities', 'Weekly', 45, 'Maintenance Team', 'Inactive', 'tree', '#65a30d', '2026-10-02T09:00', 'Tom Baker', { usage30: 0 }),
-  tpl(10, 'Canteen Hygiene Check', 'Canteen', 'Daily', 20, 'Canteen Staff', 'Active', 'utensils', '#d97706', '2026-10-05T07:45', 'Layla Haddad', { usage30: 96 }),
+  tpl(2, 'Security Patrol Check', 'Security', 'Hourly', 15, 'Security Guards', 'Active', 'shield', 'var(--ka-2563eb)', '2026-10-13T17:48', 'Priya Sharma', { priority: 'High', usage30: 744, shift: '24x7 Rotation', days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] }),
+  tpl(3, 'HVAC Inspection', 'Facility Maintenance', 'Daily', 20, 'Technician', 'Active', 'tasks-wrench', 'var(--ka-1d4ed8)', '2026-10-12T11:20', 'Ahmed Hassan', { usage30: 186 }),
+  tpl(4, 'Fire Safety Inspection', 'Safety', 'Weekly', 30, 'Safety Team', 'Active', 'flame', 'var(--ka-ef4444)', '2026-10-11T15:30', 'Maria Santos', { priority: 'Critical', usage30: 64, verify: 'Photo + Supervisor' }),
+  tpl(5, 'IT Equipment Check', 'IT Support', 'Weekly', 20, 'IT Team', 'Active', 'cpu', 'var(--ka-334155)', '2026-10-09T10:05', 'Kenji Sato', { usage30: 52 }),
+  tpl(6, 'Meeting Room Setup', 'Facility Services', 'On Demand', 15, 'Facility Staff', 'Active', 'tasks-presentation', 'var(--ka-92400e)', '2026-10-10T13:15', 'Ramesh Kumar', { usage30: 238, assignMode: 'Nearest available' }),
+  tpl(7, 'Waste Disposal', 'Housekeeping', 'Daily', 10, 'Cleaning Staff', 'Active', 'tasks-recycle', 'var(--ka-16a34a)', '2026-10-08T08:40', 'John Doe', { usage30: 318 }),
+  tpl(8, 'Asset Verification', 'Asset Management', 'Monthly', 25, 'Asset Team', 'Active', 'box', 'var(--ka-0d9488)', '2026-10-06T16:10', 'Grace Park', { usage30: 41 }),
+  tpl(9, 'Landscape Maintenance', 'Facilities', 'Weekly', 45, 'Maintenance Team', 'Inactive', 'tree', 'var(--ka-65a30d)', '2026-10-02T09:00', 'Tom Baker', { usage30: 0 }),
+  tpl(10, 'Canteen Hygiene Check', 'Canteen', 'Daily', 20, 'Canteen Staff', 'Active', 'utensils', 'var(--ka-d97706)', '2026-10-05T07:45', 'Layla Haddad', { usage30: 96 }),
 ];
 
 const NAME_POOLS: Record<string, [string[], string[]]> = {
@@ -198,7 +198,7 @@ const WNAMES = [
   'Samir Patel', 'Lina Haddad', 'Peter Okafor', 'Rosa Diaz', 'Hamza Ali', 'Julia Novak',
 ];
 const W_ROLES = ['Cleaning Staff', 'Cleaning Staff', 'Security Guards', 'Cleaning Staff', 'Technician', 'Security Guards', 'Facility Staff', 'Safety Team', 'Technician', 'Canteen Staff', 'IT Team', 'Cleaning Staff'];
-const PAL = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#16a34a', '#ea580c', '#475569'];
+const PAL = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-475569)'];
 export const TEAMS: Record<string, string> = {
   'Cleaning Staff': 'Housekeeping Team A', 'Security Guards': 'Security Team', Technician: 'MEP Technicians', 'Facility Staff': 'Facility Services',
   'Safety Team': 'HSE Team', 'Canteen Staff': 'Canteen Crew', 'IT Team': 'IT Field Support', 'Asset Team': 'Asset Control', 'Maintenance Team': 'Grounds Team',
@@ -216,15 +216,15 @@ export const SUPERVISORS = ['Rex Kumar', 'Grace Park', 'Ahmed Hassan', 'Maria Sa
 
 /* ---------- Checkpoints (Head Office – Floor 1 map, 1000 × 560) ---------- */
 export const TASK_ZONES: MapZone[] = [
-  { id: 'lob', name: 'Lobby & Reception', x: 40, y: 380, w: 250, h: 150, color: '#8b5cf6' },
-  { id: 'off', name: 'Open Office', x: 300, y: 40, w: 330, h: 230, color: '#3b82f6' },
-  { id: 'mtg', name: 'Meeting Rooms', x: 40, y: 40, w: 250, h: 160, color: '#06b6d4' },
-  { id: 'wc', name: 'Washrooms', x: 40, y: 210, w: 120, h: 160, color: '#22c55e' },
-  { id: 'can', name: 'Canteen', x: 640, y: 40, w: 330, h: 200, color: '#f59e0b' },
-  { id: 'srv', name: 'Server Room', x: 170, y: 210, w: 120, h: 160, color: '#64748b', kind: 'restricted' },
-  { id: 'plant', name: 'Plant / HVAC Room', x: 640, y: 250, w: 160, h: 150, color: '#ef4444', kind: 'hazard' },
-  { id: 'store', name: 'Store & Loading', x: 810, y: 250, w: 160, h: 280, color: '#94a3b8' },
-  { id: 'cor', name: 'Main Corridor', x: 300, y: 280, w: 330, h: 250, color: '#94a3b8', kind: 'open', fill: 0.05 },
+  { id: 'lob', name: 'Lobby & Reception', x: 40, y: 380, w: 250, h: 150, color: 'var(--ka-8b5cf6)' },
+  { id: 'off', name: 'Open Office', x: 300, y: 40, w: 330, h: 230, color: 'var(--ka-3b82f6)' },
+  { id: 'mtg', name: 'Meeting Rooms', x: 40, y: 40, w: 250, h: 160, color: 'var(--ka-06b6d4)' },
+  { id: 'wc', name: 'Washrooms', x: 40, y: 210, w: 120, h: 160, color: 'var(--ka-22c55e)' },
+  { id: 'can', name: 'Canteen', x: 640, y: 40, w: 330, h: 200, color: 'var(--ka-f59e0b)' },
+  { id: 'srv', name: 'Server Room', x: 170, y: 210, w: 120, h: 160, color: 'var(--ka-64748b)', kind: 'restricted' },
+  { id: 'plant', name: 'Plant / HVAC Room', x: 640, y: 250, w: 160, h: 150, color: 'var(--ka-ef4444)', kind: 'hazard' },
+  { id: 'store', name: 'Store & Loading', x: 810, y: 250, w: 160, h: 280, color: 'var(--ka-94a3b8)' },
+  { id: 'cor', name: 'Main Corridor', x: 300, y: 280, w: 330, h: 250, color: 'var(--ka-94a3b8)', kind: 'open', fill: 0.05 },
 ];
 export interface Checkpoint {
   id: string;
@@ -394,14 +394,14 @@ export class TaskStore {
   readonly checkpoints = signal<Checkpoint[]>(SEED_CHECKPOINTS.map((c) => ({ ...c })));
   readonly policies = signal<SlaPolicy[]>(SEED_POLICIES.map((p) => ({ ...p })));
   readonly events = signal<TaskEvent[]>([
-    { at: 623, text: 'Lighting Check – Block B escalated to L2 · Facility Manager', who: 'SLA Engine', icon: 'tasks-escalate', color: '#ef4444' },
-    { at: 621, text: 'Security Patrol Check completed · 6/6 checkpoints', who: 'Ali Hassan', icon: 'shield-check', color: '#22c55e' },
-    { at: 620, text: 'Pantry Cleaning – Lobby escalated to L2 · Facility Manager', who: 'SLA Engine', icon: 'tasks-escalate', color: '#ef4444' },
-    { at: 618, text: 'HVAC Inspection started at AHU-01 Plant Room', who: 'Chen Wei', icon: 'play', color: '#3b82f6' },
-    { at: 612, text: 'Photo evidence uploaded · Male Washroom', who: 'Arjun Mehta', icon: 'tasks-camera', color: '#7c3aed' },
-    { at: 605, text: 'Fire Panel checkpoint missed – escalated to HSE Manager', who: 'System', icon: 'tasks-escalate', color: '#ef4444' },
-    { at: 602, text: 'Fire Safety Inspection escalated to L2 · Site Head', who: 'SLA Engine', icon: 'tasks-escalate', color: '#ef4444' },
-    { at: 598, text: 'Meeting Room Setup requested via helpdesk', who: 'Front Desk', icon: 'tasks-clipboard', color: '#f59e0b' },
+    { at: 623, text: 'Lighting Check – Block B escalated to L2 · Facility Manager', who: 'SLA Engine', icon: 'tasks-escalate', color: 'var(--ka-ef4444)' },
+    { at: 621, text: 'Security Patrol Check completed · 6/6 checkpoints', who: 'Ali Hassan', icon: 'shield-check', color: 'var(--ka-22c55e)' },
+    { at: 620, text: 'Pantry Cleaning – Lobby escalated to L2 · Facility Manager', who: 'SLA Engine', icon: 'tasks-escalate', color: 'var(--ka-ef4444)' },
+    { at: 618, text: 'HVAC Inspection started at AHU-01 Plant Room', who: 'Chen Wei', icon: 'play', color: 'var(--ka-3b82f6)' },
+    { at: 612, text: 'Photo evidence uploaded · Male Washroom', who: 'Arjun Mehta', icon: 'tasks-camera', color: 'var(--ka-7c3aed)' },
+    { at: 605, text: 'Fire Panel checkpoint missed – escalated to HSE Manager', who: 'System', icon: 'tasks-escalate', color: 'var(--ka-ef4444)' },
+    { at: 602, text: 'Fire Safety Inspection escalated to L2 · Site Head', who: 'SLA Engine', icon: 'tasks-escalate', color: 'var(--ka-ef4444)' },
+    { at: 598, text: 'Meeting Room Setup requested via helpdesk', who: 'Front Desk', icon: 'tasks-clipboard', color: 'var(--ka-f59e0b)' },
   ]);
   readonly reports = signal<Report[]>([
     { id: 'R-311', name: 'Daily Task Completion Summary', format: 'PDF', range: '13 Oct 2026', by: 'Rex Kumar', at: '14 Oct 2026, 06:00 AM', size: '412 KB' },
@@ -463,41 +463,41 @@ export class TaskStore {
   start(id: string, who: string) {
     const t = this.tasks().find((x) => x.id === id)!;
     this.patchTask(id, { status: 'In Progress', startedAt: this.now(), stepsDone: Math.max(t.stepsDone, 0) });
-    this.log(`${t.title} started${t.checkpointId ? ' at ' + t.location : ''}`, who, 'play', '#3b82f6');
+    this.log(`${t.title} started${t.checkpointId ? ' at ' + t.location : ''}`, who, 'play', 'var(--ka-3b82f6)');
   }
   complete(id: string, who: string, auto = false) {
     const t = this.tasks().find((x) => x.id === id)!;
     this.patchTask(id, { status: 'Completed', stepsDone: t.steps, completedAt: this.now(), photos: Math.max(t.photos, 1) });
     if (t.checkpointId) this.scan(t.checkpointId, who, false);
-    this.log(`${t.title} completed · ${t.location}${auto ? '' : ' (manual)'}`, who, 'tasks-check-circle', '#22c55e');
+    this.log(`${t.title} completed · ${t.location}${auto ? '' : ' (manual)'}`, who, 'tasks-check-circle', 'var(--ka-22c55e)');
   }
   assign(id: string, workerId: string, by = 'Rex Kumar') {
     const t = this.tasks().find((x) => x.id === id)!;
     const w = workerById(workerId)!;
     this.patchTask(id, { assignee: workerId, status: t.status === 'Unassigned' ? 'Pending' : t.status });
-    this.log(`${t.title} assigned to ${w.name}`, by, 'user-check', '#7c3aed');
+    this.log(`${t.title} assigned to ${w.name}`, by, 'user-check', 'var(--ka-7c3aed)');
   }
   verify(id: string, ok: boolean, by: string, note?: string, rating = 5) {
     const t = this.tasks().find((x) => x.id === id)!;
     this.patchTask(id, ok ? { status: 'Verified', verifiedBy: by, rating, note } : { status: 'Rejected', verifiedBy: by, note: note || 'Rework required' });
-    this.log(`${t.title} ${ok ? 'verified' : 'rejected – sent for rework'}`, by, ok ? 'shield-check' : 'tasks-x', ok ? '#22c55e' : '#ef4444');
+    this.log(`${t.title} ${ok ? 'verified' : 'rejected – sent for rework'}`, by, ok ? 'shield-check' : 'tasks-x', ok ? 'var(--ka-22c55e)' : 'var(--ka-ef4444)');
   }
   rework(id: string) {
     const t = this.tasks().find((x) => x.id === id)!;
     this.patchTask(id, { status: 'Pending', stepsDone: 0, photos: 0, due: this.now() + 45, escalation: 0 });
-    this.log(`${t.title} re-opened for rework`, 'Rex Kumar', 'refresh', '#f59e0b');
+    this.log(`${t.title} re-opened for rework`, 'Rex Kumar', 'refresh', 'var(--ka-f59e0b)');
   }
   escalate(id: string, by = 'Rex Kumar') {
     const t = this.tasks().find((x) => x.id === id)!;
     const lvl = Math.min(t.escalation + 1, 2);
     const tp = this.templates().find((x) => x.id === t.templateId);
     this.patchTask(id, { escalation: lvl, priority: lvl === 2 ? 'Critical' : t.priority === 'Low' || t.priority === 'Medium' ? 'High' : t.priority });
-    this.log(`${t.title} escalated to L${lvl} · ${lvl === 1 ? tp?.escL1 : tp?.escL2}`, by, 'tasks-escalate', '#ef4444');
+    this.log(`${t.title} escalated to L${lvl} · ${lvl === 1 ? tp?.escL1 : tp?.escL2}`, by, 'tasks-escalate', 'var(--ka-ef4444)');
   }
   extend(id: string, mins: number) {
     const t = this.tasks().find((x) => x.id === id)!;
     this.patchTask(id, { due: Math.max(t.due, this.now()) + mins });
-    this.log(`${t.title} SLA extended by ${mins} mins`, 'Rex Kumar', 'clock', '#f59e0b');
+    this.log(`${t.title} SLA extended by ${mins} mins`, 'Rex Kumar', 'clock', 'var(--ka-f59e0b)');
   }
   addTask(tp: Template, ch: Partial<TaskItem>) {
     const now = this.now();
@@ -509,14 +509,14 @@ export class TaskStore {
     if (task.assignee && task.status === 'Unassigned') task.status = 'Pending';
     this.tasks.update((l) => [task, ...l]);
     this.templates.update((l) => l.map((t) => (t.id === tp.id ? { ...t, usage30: t.usage30 + 1 } : t)));
-    this.log(`${task.title} created${task.assignee ? ' for ' + workerById(task.assignee)?.name : ''}`, 'Rex Kumar', 'plus', '#7c3aed');
+    this.log(`${task.title} created${task.assignee ? ' for ' + workerById(task.assignee)?.name : ''}`, 'Rex Kumar', 'plus', 'var(--ka-7c3aed)');
     return task;
   }
   scan(cpId: string, who: string, log = true) {
     const cp = this.checkpoints().find((c) => c.id === cpId);
     if (!cp) return;
     this.checkpoints.update((l) => l.map((c) => (c.id === cpId ? { ...c, scans: Math.min(c.scans + 1, c.expected + 4), lastScan: this.now(), lastBy: who } : c)));
-    if (log) this.log(`Checkpoint scanned · ${cp.name} (${cp.tech})`, who, 'tasks-qr', '#0ea5e9');
+    if (log) this.log(`Checkpoint scanned · ${cp.name} (${cp.tech})`, who, 'tasks-qr', 'var(--ka-0ea5e9)');
   }
   saveTemplate(t: Template) {
     const exists = this.templates().some((x) => x.id === t.id);

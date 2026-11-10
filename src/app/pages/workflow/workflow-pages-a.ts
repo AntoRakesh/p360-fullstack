@@ -38,11 +38,11 @@ export function toast(sig: WritableSignal<string | null>, m: string) {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Workflows" [value]="store.workflows().length" icon="workflow" color="#7c3aed" [sub]="modulesUsed() + ' modules'" />
-      <app-kpi label="Active" [value]="count('Active')" icon="workflow-check" color="#22c55e" change="2" sub="published this month" />
-      <app-kpi label="Drafts" [value]="count('Draft')" icon="workflow-pencil" color="#f59e0b" sub="awaiting publish" />
-      <app-kpi label="Running Instances" [value]="store.running().length" icon="activity" color="#3b82f6" change="8%" sub="vs. last week" />
-      <app-kpi label="Avg. Completion" [value]="avgAll()" icon="workflow-timer" color="#0d9488" change="11%" [up]="false" sub="vs. last month" />
+      <app-kpi label="Total Workflows" [value]="store.workflows().length" icon="workflow" color="var(--ka-7c3aed)" [sub]="modulesUsed() + ' modules'" />
+      <app-kpi label="Active" [value]="count('Active')" icon="workflow-check" color="var(--ka-22c55e)" change="2" sub="published this month" />
+      <app-kpi label="Drafts" [value]="count('Draft')" icon="workflow-pencil" color="var(--ka-f59e0b)" sub="awaiting publish" />
+      <app-kpi label="Running Instances" [value]="store.running().length" icon="activity" color="var(--ka-3b82f6)" change="8%" sub="vs. last week" />
+      <app-kpi label="Avg. Completion" [value]="avgAll()" icon="workflow-timer" color="var(--ka-0d9488)" change="11%" [up]="false" sub="vs. last month" />
     </section>
 
     <nav class="cat-tabs">
@@ -58,7 +58,7 @@ export function toast(sig: WritableSignal<string | null>, m: string) {
       @if (sel(); as w) {
         <aside class="card detail">
           <div class="dh">
-            <span class="logo" [style.background]="w.color + '1a'" [style.color]="w.color"><app-icon [name]="w.icon" [size]="22" /></span>
+            <span class="logo" [style.background]="'color-mix(in srgb, ' + w.color + ' 10%, transparent)'" [style.color]="w.color"><app-icon [name]="w.icon" [size]="22" /></span>
             <div><h3>{{ w.name }}</h3><small class="muted">{{ w.id }} · {{ w.version }} · {{ w.module }}</small></div>
             <button class="close-btn" (click)="selId.set(null)">×</button>
           </div>
@@ -118,22 +118,22 @@ export function toast(sig: WritableSignal<string | null>, m: string) {
   styles: `
     .up { transform: rotate(180deg); }
     .cat-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
-    .cat-tabs button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 18px; border: 1px solid var(--border); background: #fff; font-size: 12.5px; cursor: pointer; color: #3b3f5c; }
-    .cat-tabs button span { font-size: 10.5px; padding: 0 6px; border-radius: 10px; background: #eef0f5; }
-    .cat-tabs button.on { background: var(--primary); border-color: var(--primary); color: #fff; } .cat-tabs button.on span { background: rgba(255,255,255,.25); }
+    .cat-tabs button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 18px; border: 1px solid var(--border); background: var(--kb-ffffff); font-size: 12.5px; cursor: pointer; color: var(--kf-3b3f5c); }
+    .cat-tabs button span { font-size: 10.5px; padding: 0 6px; border-radius: 10px; background: var(--kb-eef0f5); }
+    .cat-tabs button.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); } .cat-tabs button.on span { background: rgba(255,255,255,.25); }
     .wl { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .wl.with-detail { grid-template-columns: minmax(0, 1.6fr) minmax(380px, 1fr); }
     .detail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; display: flex; flex-direction: column; gap: 6px; }
     .dh { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; } .dh h3 { font-size: 16px; }
     .logo { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; }
-    .desc { margin: 4px 0; font-size: 12.5px; color: #3b3f5c; }
+    .desc { margin: 4px 0; font-size: 12.5px; color: var(--kf-3b3f5c); }
     .btns { display: flex; flex-wrap: wrap; gap: 8px; }
     h4 { margin: 10px 0 4px; font-size: 13px; }
     .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-    .fs { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 6px; font-size: 11px; background: color-mix(in srgb, var(--c) 10%, #fff); border: 1px solid color-mix(in srgb, var(--c) 40%, #fff); color: #1d1f3a; }
-    .fs app-icon { color: var(--c); } .arr { color: #a3a7c2; }
+    .fs { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 6px; font-size: 11px; background: color-mix(in srgb, var(--c) 10%, var(--kb-ffffff)); border: 1px solid color-mix(in srgb, var(--c) 40%, var(--kl-ffffff)); color: var(--kf-1d1f3a); }
+    .fs app-icon { color: var(--c); } .arr { color: var(--kf-a3a7c2); }
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
     .stats div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; } .stats b { font-size: 17px; } .stats small { font-size: 11px; color: var(--muted); }
-    .blue { color: #2563eb; } .green { color: #16a34a; } .red { color: #dc2626; }
+    .blue { color: var(--kf-2563eb); } .green { color: var(--kf-16a34a); } .red { color: var(--kf-dc2626); }
     .facts { display: grid; grid-template-columns: 110px 1fr; gap: 6px; font-size: 12.5px; margin: 0; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .errt { color: var(--red); }
     @media (max-width: 1250px) { .wl.with-detail { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
@@ -290,12 +290,12 @@ const INST_TABS = ['All', 'In Progress', 'Overdue', 'Approved', 'Rejected', 'Can
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Running" [value]="cnt('In Progress')" icon="activity" color="#3b82f6" change="8%" sub="vs. last week" />
-      <app-kpi label="Overdue" [value]="overdue()" icon="triangle-alert" color="#ef4444" change="3" [good]="false" sub="past SLA" />
-      <app-kpi label="Approved" [value]="cnt('Approved')" icon="workflow-check" color="#22c55e" [sub]="approvalRate() + '% approval rate'" />
-      <app-kpi label="Rejected" [value]="cnt('Rejected')" icon="workflow-x" color="#f97316" sub="last 30 days" />
-      <app-kpi label="Avg. Cycle Time" [value]="avg()" icon="workflow-timer" color="#7c3aed" change="11%" [up]="false" sub="vs. last month" />
-      <app-kpi label="SLA Compliance" [value]="sla() + '%'" icon="shield-check" color="#0d9488" change="1.8%" sub="vs. last month" />
+      <app-kpi label="Running" [value]="cnt('In Progress')" icon="activity" color="var(--ka-3b82f6)" change="8%" sub="vs. last week" />
+      <app-kpi label="Overdue" [value]="overdue()" icon="triangle-alert" color="var(--ka-ef4444)" change="3" [good]="false" sub="past SLA" />
+      <app-kpi label="Approved" [value]="cnt('Approved')" icon="workflow-check" color="var(--ka-22c55e)" [sub]="approvalRate() + '% approval rate'" />
+      <app-kpi label="Rejected" [value]="cnt('Rejected')" icon="workflow-x" color="var(--ka-f97316)" sub="last 30 days" />
+      <app-kpi label="Avg. Cycle Time" [value]="avg()" icon="workflow-timer" color="var(--ka-7c3aed)" change="11%" [up]="false" sub="vs. last month" />
+      <app-kpi label="SLA Compliance" [value]="sla() + '%'" icon="shield-check" color="var(--ka-0d9488)" change="1.8%" sub="vs. last month" />
     </section>
 
     <section class="ig">
@@ -343,7 +343,7 @@ const INST_TABS = ['All', 'In Progress', 'Overdue', 'Approved', 'Rejected', 'Can
     .side { display: flex; flex-direction: column; gap: 12px; }
     .st-tabs { margin-bottom: 10px; }
     .feed { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; }
-    .feed li { display: grid; grid-template-columns: 10px 1fr; gap: 9px; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .feed li { display: grid; grid-template-columns: 10px 1fr; gap: 9px; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .feed i { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; } .feed b { font-weight: 500; } .feed small { display: block; color: var(--muted); font-size: 11px; }
     @media (max-width: 1250px) { .ig { grid-template-columns: 1fr; } }
   `,
@@ -402,13 +402,13 @@ export class WorkflowInstances {
   protected readonly sla = computed(() => slaPct(this.store.instances()));
   protected readonly feed = computed(() => {
     const live = this.store.activity();
-    const seed = this.store.instances().slice(0, 10).map((i) => ({ at: fmtAgo(i.log[i.log.length - 1].at), text: `${i.id} · ${i.log[i.log.length - 1].text}`, color: i.status === 'Approved' ? '#22c55e' : i.status === 'Rejected' ? '#ef4444' : '#3b82f6' }));
+    const seed = this.store.instances().slice(0, 10).map((i) => ({ at: fmtAgo(i.log[i.log.length - 1].at), text: `${i.id} · ${i.log[i.log.length - 1].text}`, color: i.status === 'Approved' ? 'var(--ka-22c55e)' : i.status === 'Rejected' ? 'var(--ka-ef4444)' : 'var(--ka-3b82f6)' }));
     return [...live, ...seed].slice(0, 14);
   });
   protected readonly byWf = computed(() => {
     const m = new Map<string, number>();
     this.store.running().forEach((i) => m.set(i.workflow, (m.get(i.workflow) ?? 0) + 1));
-    return [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([label, value]) => ({ label, value, display: String(value), color: '#7c3aed' }));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7).map(([label, value]) => ({ label, value, display: String(value), color: 'var(--ka-7c3aed)' }));
   });
   protected readonly maxWf = computed(() => Math.max(1, ...this.byWf().map((r) => r.value)));
   protected readonly byStep = computed(() => {
@@ -418,7 +418,7 @@ export class WorkflowInstances {
       const k = /approval|review|sign-off|audit|acceptance/i.test(s) ? 'Approvals' : /form|request|claim|submission|upload|resignation|invite|report/i.test(s) ? 'Requester' : 'System / Tasks';
       m.set(k, (m.get(k) ?? 0) + 1);
     });
-    const colors: Record<string, string> = { Approvals: '#3b82f6', Requester: '#f59e0b', 'System / Tasks': '#7c3aed' };
+    const colors: Record<string, string> = { Approvals: 'var(--ka-3b82f6)', Requester: 'var(--ka-f59e0b)', 'System / Tasks': 'var(--ka-7c3aed)' };
     return [...m.entries()].map(([label, value]) => ({ label, value, color: colors[label] }));
   });
   protected readonly activeWfs = computed(() => this.store.workflows().filter((w) => w.status === 'Active' || w.status === 'Draft'));
@@ -466,11 +466,11 @@ const TASK_TABS = ['Pending', 'Overdue', 'Delegated', 'Completed'] as const;
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Pending My Approval" [value]="pending().length" icon="workflow-inbox" color="#7c3aed" sub="assigned to Rex Kumar" />
-      <app-kpi label="Due Today" [value]="dueToday()" icon="workflow-timer" color="#f59e0b" sub="within 24 h" />
-      <app-kpi label="Overdue" [value]="overdueList().length" icon="triangle-alert" color="#ef4444" [sub]="overdueList().length ? 'escalation pending' : 'all on time'" [subColor]="overdueList().length ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Completed by Me" [value]="completed().length" icon="workflow-check" color="#22c55e" change="14%" sub="vs. last month" />
-      <app-kpi label="Avg. Response" value="5.2 h" icon="clock" color="#3b82f6" change="0.8 h" [up]="false" sub="faster than team avg" />
+      <app-kpi label="Pending My Approval" [value]="pending().length" icon="workflow-inbox" color="var(--ka-7c3aed)" sub="assigned to Rex Kumar" />
+      <app-kpi label="Due Today" [value]="dueToday()" icon="workflow-timer" color="var(--ka-f59e0b)" sub="within 24 h" />
+      <app-kpi label="Overdue" [value]="overdueList().length" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="overdueList().length ? 'escalation pending' : 'all on time'" [subColor]="overdueList().length ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Completed by Me" [value]="completed().length" icon="workflow-check" color="var(--ka-22c55e)" change="14%" sub="vs. last month" />
+      <app-kpi label="Avg. Response" value="5.2 h" icon="clock" color="var(--ka-3b82f6)" change="0.8 h" [up]="false" sub="faster than team avg" />
     </section>
 
     <section class="mt">
@@ -547,11 +547,11 @@ const TASK_TABS = ['Pending', 'Overdue', 'Delegated', 'Completed'] as const;
   styles: `
     .mt { display: grid; grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.4fr); gap: 12px; align-items: start; }
     .inbox { display: flex; flex-direction: column; gap: 10px; }
-    .sb { width: 100%; } .all { font-size: 12px; color: #4b4f6b; display: flex; align-items: center; gap: 6px; }
+    .sb { width: 100%; } .all { font-size: 12px; color: var(--kf-4b4f6b); display: flex; align-items: center; gap: 6px; }
     .items { list-style: none; margin: 0; padding: 0; max-height: 640px; overflow: auto; }
-    .items li { display: grid; grid-template-columns: auto 32px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid #f0f1f6; }
-    .items li:hover { background: #faf8ff; } .items li.on { background: #f3efff; box-shadow: inset 3px 0 0 var(--primary); }
-    .it-b { display: flex; flex-direction: column; min-width: 0; font-size: 12.5px; } .it-b small { font-size: 11px; color: #4b4f6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .items li { display: grid; grid-template-columns: auto 32px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid var(--kl-f0f1f6); }
+    .items li:hover { background: var(--kb-faf8ff); } .items li.on { background: var(--kb-f3efff); box-shadow: inset 3px 0 0 var(--primary); }
+    .it-b { display: flex; flex-direction: column; min-width: 0; font-size: 12.5px; } .it-b small { font-size: 11px; color: var(--kf-4b4f6b); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .it-r { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; } .it-r small { font-size: 10.5px; color: var(--muted); white-space: nowrap; }
     .bad { color: var(--red) !important; font-weight: 600; }
     .empty { display: flex !important; justify-content: center; gap: 8px; color: var(--muted); cursor: default !important; padding: 30px !important; }
@@ -560,14 +560,14 @@ const TASK_TABS = ['Pending', 'Overdue', 'Delegated', 'Completed'] as const;
     .dt-av.big { width: 48px; height: 48px; font-size: 15px; }
     .req { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 6px; }
     .req div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; } .req small { font-size: 11px; color: var(--muted); } .req b { font-size: 13px; }
-    .ctx { display: flex; gap: 8px; align-items: center; padding: 9px 12px; border-radius: 8px; background: #fffbeb; color: #92400e; font-size: 12.5px; }
+    .ctx { display: flex; gap: 8px; align-items: center; padding: 9px 12px; border-radius: 8px; background: var(--kb-fffbeb); color: var(--kf-92400e); font-size: 12.5px; }
     h4 { margin: 8px 0 2px; font-size: 13px; }
     .path { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
-    .ps { padding: 4px 10px; border-radius: 14px; font-size: 11.5px; background: #eef0f5; color: #4b4f6b; }
-    .ps.done { background: #dcfce7; color: #15803d; } .ps.cur { background: #dbeafe; color: #1d4ed8; font-weight: 600; box-shadow: 0 0 0 2px #93c5fd; } .ps.rej { background: #fee2e2; color: #b91c1c; }
-    .arr { color: #a3a7c2; }
+    .ps { padding: 4px 10px; border-radius: 14px; font-size: 11.5px; background: var(--kb-eef0f5); color: var(--kf-4b4f6b); }
+    .ps.done { background: var(--kb-dcfce7); color: var(--kf-15803d); } .ps.cur { background: var(--kb-dbeafe); color: var(--kf-1d4ed8); font-weight: 600; box-shadow: 0 0 0 2px var(--kb-93c5fd); } .ps.rej { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
+    .arr { color: var(--kf-a3a7c2); }
     .log { list-style: none; margin: 0; padding: 0; max-height: 200px; overflow: auto; }
-    .log li { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; font-size: 12px; padding: 6px 0; border-bottom: 1px solid #f0f1f6; }
+    .log li { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; font-size: 12px; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .log i { width: 7px; height: 7px; border-radius: 50%; background: var(--primary); } .log b { font-weight: 500; } .log small { color: var(--muted); font-size: 11px; }
     textarea { width: 100%; resize: vertical; }
     .acts { display: flex; flex-wrap: wrap; gap: 8px; }

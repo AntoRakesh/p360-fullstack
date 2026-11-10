@@ -164,8 +164,8 @@ const SWAPS: SwapReq[] = (() => {
       <button class="btn-primary" (click)="form.set(true)"><app-icon name="plus" [size]="16" />New Request</button>
     </app-page-head>
     <section class="kpi-row">
-      @for (t of types; track t) {<app-kpi [label]="t + 's'" [value]="byType(t)" [icon]="icon(t)" color="#8b5cf6" sub="pending" />}
-      <app-kpi label="Auto-approved" value="62%" icon="sparkles" color="#22c55e" sub="passed all checks" />
+      @for (t of types; track t) {<app-kpi [label]="t + 's'" [value]="byType(t)" [icon]="icon(t)" color="var(--ka-8b5cf6)" sub="pending" />}
+      <app-kpi label="Auto-approved" value="62%" icon="sparkles" color="var(--ka-22c55e)" sub="passed all checks" />
     </section>
     <section class="sw" [class.with-detail]="!!sel()">
       <div class="card">
@@ -178,7 +178,7 @@ const SWAPS: SwapReq[] = (() => {
           <div class="pair">
             <div class="side"><span class="dt-av" [style.background]="q.avatar">{{ q.initials }}</span><b>{{ q.name }}</b><span class="chipc" [style.background]="color(q.from)">{{ q.from }}</span></div>
             <span class="arrow">⇄</span>
-            <div class="side"><span class="dt-av" style="background:#64748b">{{ q.with === '—' ? '—' : q.with.split(' ').map(first).join('') }}</span><b>{{ q.with === '—' ? 'New shift' : q.with }}</b><span class="chipc" [style.background]="q.to === 'OFF' ? '#9ca3af' : color(q.to)">{{ q.to }}</span></div>
+            <div class="side"><span class="dt-av" style="background:var(--kb-64748b)">{{ q.with === '—' ? '—' : q.with.split(' ').map(first).join('') }}</span><b>{{ q.with === '—' ? 'New shift' : q.with }}</b><span class="chipc" [style.background]="q.to === 'OFF' ? 'var(--ka-9ca3af)' : color(q.to)">{{ q.to }}</span></div>
           </div>
           <dl class="kv"><dt>Date</dt><dd>{{ short(q.date) }}</dd><dt>Reason</dt><dd>{{ q.reason }}</dd><dt>Status</dt><dd><span [class]="tag(q.status)">{{ q.status }}</span></dd></dl>
           <h4>Automatic checks</h4>
@@ -214,10 +214,10 @@ const SWAPS: SwapReq[] = (() => {
     .pair { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
     .side { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; text-align: center; flex: 1; }
     .arrow { font-size: 22px; color: var(--primary); }
-    .chipc { padding: 2px 8px; border-radius: 6px; color: #fff; font-weight: 700; font-size: 11px; }
+    .chipc { padding: 2px 8px; border-radius: 6px; color: var(--kf-ffffff); font-weight: 700; font-size: 11px; }
     .kv { display: grid; grid-template-columns: 70px 1fr; gap: 8px; font-size: 12.5px; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
     h4 { font-size: 13px; margin: 12px 0 6px; }
-    .checks { list-style: none; margin: 0 0 12px; padding: 0; font-size: 12.5px; } .checks li { padding: 4px 0; color: #15803d; } .checks li.fail { color: #b91c1c; }
+    .checks { list-style: none; margin: 0 0 12px; padding: 0; font-size: 12.5px; } .checks li { padding: 4px 0; color: var(--kf-15803d); } .checks li.fail { color: var(--kf-b91c1c); }
     .danger { color: var(--red); }
     @media (max-width: 1100px) { .sw.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,
@@ -322,10 +322,10 @@ const SLOTS: Slot[] = (() => {
       <button class="btn-primary" (click)="post()"><app-icon name="plus" [size]="16" />Post OT Slot</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Open Slots" [value]="open()" icon="clock" color="#f59e0b" />
-      <app-kpi label="Filled Slots" [value]="slots().length - open()" icon="shield-check" color="#22c55e" />
-      <app-kpi label="OT Hours Planned" [value]="planned()" icon="activity" color="#8b5cf6" sub="next 7 days" />
-      <app-kpi label="Budget Used" [value]="budgetPct() + '%'" icon="trending-up" [color]="budgetPct() > 90 ? '#ef4444' : '#3b82f6'" sub="of 1,200 h monthly" />
+      <app-kpi label="Open Slots" [value]="open()" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Filled Slots" [value]="slots().length - open()" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="OT Hours Planned" [value]="planned()" icon="activity" color="var(--ka-8b5cf6)" sub="next 7 days" />
+      <app-kpi label="Budget Used" [value]="budgetPct() + '%'" icon="trending-up" [color]="budgetPct() > 90 ? 'var(--ka-ef4444)' : 'var(--ka-3b82f6)'" sub="of 1,200 h monthly" />
     </section>
     <section class="dash">
       <div class="span-8 slots">
@@ -365,13 +365,13 @@ const SLOTS: Slot[] = (() => {
     .slots { display: flex; flex-direction: column; gap: 10px; }
     .slot { display: flex; flex-direction: column; gap: 10px; } .slot.filled { opacity: .8; }
     .slot-top { display: flex; align-items: center; gap: 10px; } .slot-top div { flex: 1; display: flex; flex-direction: column; font-size: 13px; } .slot-top small { color: var(--muted); }
-    .code { padding: 4px 8px; border-radius: 6px; color: #fff; font-weight: 700; font-size: 11px; }
+    .code { padding: 4px 8px; border-radius: 6px; color: var(--kf-ffffff); font-weight: 700; font-size: 11px; }
     .vols { display: flex; flex-wrap: wrap; gap: 6px; }
-    .vol { padding: 5px 10px; border: 1px solid var(--border); border-radius: 16px; background: #fff; font-size: 12px; cursor: pointer; }
-    .vol small { color: var(--muted); } .vol.on { background: var(--primary); border-color: var(--primary); color: #fff; } .vol.on small { color: #e9d5ff; }
+    .vol { padding: 5px 10px; border: 1px solid var(--border); border-radius: 16px; background: var(--kb-ffffff); font-size: 12px; cursor: pointer; }
+    .vol small { color: var(--muted); } .vol.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); } .vol.on small { color: var(--kf-e9d5ff); }
     .vol:disabled { opacity: .4; cursor: default; }
     .side { display: flex; flex-direction: column; gap: 12px; }
-    .gauge { height: 14px; border-radius: 7px; background: #eef0f6; overflow: hidden; } .gauge i { display: block; height: 100%; background: var(--primary); transition: width .3s; } .gauge i.over { background: var(--red); }
+    .gauge { height: 14px; border-radius: 7px; background: var(--kb-eef0f6); overflow: hidden; } .gauge i { display: block; height: 100%; background: var(--primary); transition: width .3s; } .gauge i.over { background: var(--red); }
   `,
 })
 export class OvertimeScheduling {
@@ -387,7 +387,7 @@ export class OvertimeScheduling {
   protected readonly budgetPct = computed(() => Math.round((this.used() / 1200) * 100));
   protected readonly fairness = computed(() => {
     const names = [...new Set(this.slots().flatMap((s) => s.volunteers))].slice(0, 8);
-    return names.map((n) => ({ label: n, value: this.otOf(n), display: `${this.otOf(n)} h`, color: this.otOf(n) > 28 ? '#f97316' : '#8b5cf6' })).sort((a, b) => b.value - a.value);
+    return names.map((n) => ({ label: n, value: this.otOf(n), display: `${this.otOf(n)} h`, color: this.otOf(n) > 28 ? 'var(--ka-f97316)' : 'var(--ka-8b5cf6)' })).sort((a, b) => b.value - a.value);
   });
 
   protected hours(code: string) {

@@ -22,11 +22,11 @@ const PLAY_TO = 22;
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Peak Occupancy" [value]="peak().value + '%'" icon="users" color="#7c3aed" [sub]="'at ' + hours[peak().hour] + ' · ' + floorName()" />
-      <app-kpi label="Avg Dwell Time" [value]="avgDwell() + ' min'" icon="clock" color="#2563eb" change="6%" sub="vs. last week" />
-      <app-kpi label="Hotspots" [value]="hot().length" icon="flame" color="#ef4444" [sub]="'above ' + threshold() + unit() + ' at ' + hours[hour()]" subColor="#dc2626" />
-      <app-kpi label="Under-used Zones" [value]="under()" icon="trending-up" color="#f59e0b" sub="below 30% utilization" />
-      <app-kpi label="Avg Temperature" [value]="avgTemp() + '°C'" icon="twin-thermo" color="#0ea5e9" sub="comfort band 21–25°C" />
+      <app-kpi label="Peak Occupancy" [value]="peak().value + '%'" icon="users" color="var(--ka-7c3aed)" [sub]="'at ' + hours[peak().hour] + ' · ' + floorName()" />
+      <app-kpi label="Avg Dwell Time" [value]="avgDwell() + ' min'" icon="clock" color="var(--ka-2563eb)" change="6%" sub="vs. last week" />
+      <app-kpi label="Hotspots" [value]="hot().length" icon="flame" color="var(--ka-ef4444)" [sub]="'above ' + threshold() + unit() + ' at ' + hours[hour()]" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Under-used Zones" [value]="under()" icon="trending-up" color="var(--ka-f59e0b)" sub="below 30% utilization" />
+      <app-kpi label="Avg Temperature" [value]="avgTemp() + '°C'" icon="twin-thermo" color="var(--ka-0ea5e9)" sub="comfort band 21–25°C" />
     </section>
 
     <section class="hm">
@@ -51,9 +51,9 @@ const PLAY_TO = 22;
           <button class="pl" (click)="toggle()" [title]="playing() ? 'Pause' : 'Play'"><app-icon [name]="playing() ? 'pause' : 'play'" [size]="18" /></button>
           <div class="tl">
             <svg viewBox="0 0 480 46" preserveAspectRatio="none" (click)="scrub($event)">
-              <path [attr.d]="curve().area" fill="#ede9fe" />
-              <path [attr.d]="curve().line" fill="none" stroke="#7c3aed" stroke-width="1.6" vector-effect="non-scaling-stroke" />
-              <line [attr.x1]="hour() * 20 + 10" [attr.x2]="hour() * 20 + 10" y1="0" y2="46" stroke="#ef4444" stroke-width="2" vector-effect="non-scaling-stroke" />
+              <path [attr.d]="curve().area" fill="var(--ka-ede9fe)" />
+              <path [attr.d]="curve().line" fill="none" stroke="var(--kl-7c3aed)" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+              <line [attr.x1]="hour() * 20 + 10" [attr.x2]="hour() * 20 + 10" y1="0" y2="46" stroke="var(--kl-ef4444)" stroke-width="2" vector-effect="non-scaling-stroke" />
             </svg>
             <input type="range" min="0" max="23" [value]="hour()" (input)="hour.set(+$any($event.target).value)" />
             <div class="ticks">@for (h of tickHours; track h) {<span>{{ hours[h] }}</span>}</div>
@@ -73,7 +73,7 @@ const PLAY_TO = 22;
             <dt>Threshold</dt><dd>{{ threshold() }}{{ unit() }} <span [class]="selVal() >= threshold() ? 'tag red' : 'tag green'">{{ selVal() >= threshold() ? 'Hotspot' : 'Normal' }}</span></dd>
           </dl>
           <h4>{{ metric() }} – 24 hours</h4>
-          <app-line-chart [labels]="hours" [series]="[{ name: z.name, color: '#7c3aed', values: selDay(), area: true }, { name: 'Threshold', color: '#ef4444', values: thrLine(), dashed: true }]" [height]="150" [legend]="false" [suffix]="unit()" />
+          <app-line-chart [labels]="hours" [series]="[{ name: z.name, color: 'var(--ka-7c3aed)', values: selDay(), area: true }, { name: 'Threshold', color: 'var(--ka-ef4444)', values: thrLine(), dashed: true }]" [height]="150" [legend]="false" [suffix]="unit()" />
           <div class="acts">
             <button class="btn-primary" (click)="raise(z)"><app-icon name="bell-ring" [size]="14" />Raise alert</button>
             <button class="btn-ghost" (click)="openSpace(z)"><app-icon name="map-floor" [size]="14" />Zone</button>
@@ -117,24 +117,24 @@ const PLAY_TO = 22;
   `,
   styles: `
     .hm { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; margin-bottom: 12px; align-items: start; }
-    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .stage { position: relative; } .stage app-floor-heat { display: block; }
-    .scale { position: absolute; left: 12px; bottom: 12px; background: rgba(255,255,255,0.94); border-radius: 8px; padding: 8px 10px; display: grid; grid-template-columns: 8px auto; grid-template-rows: auto auto 70px auto; column-gap: 8px; row-gap: 3px; font-size: 11px; color: #3b3f5c; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .scale b { grid-column: 1 / -1; font-size: 11.5px; } .scale i { grid-column: 1; grid-row: 2 / 5; border-radius: 4px; background: linear-gradient(#ef4444, #f59e0b, #facc15, #22c55e, #06b6d4, #3b82f6); }
+    .scale { position: absolute; left: 12px; bottom: 12px; background: color-mix(in srgb, var(--card) 94%, transparent); border-radius: 8px; padding: 8px 10px; display: grid; grid-template-columns: 8px auto; grid-template-rows: auto auto 70px auto; column-gap: 8px; row-gap: 3px; font-size: 11px; color: var(--kf-3b3f5c); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .scale b { grid-column: 1 / -1; font-size: 11.5px; } .scale i { grid-column: 1; grid-row: 2 / 5; border-radius: 4px; background: linear-gradient(var(--kb-ef4444), var(--kb-f59e0b), var(--kb-facc15), var(--kb-22c55e), var(--kb-06b6d4), var(--kb-3b82f6)); }
     .scale span { grid-column: 2; } .scale span:nth-of-type(2) { grid-row: 4; }
-    .player { display: grid; grid-template-columns: 44px minmax(0, 1fr) 120px auto; gap: 14px; align-items: center; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fafaff; }
-    .pl { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--primary); color: #fff; display: grid; place-items: center; cursor: pointer; }
-    .tl { position: relative; } .tl svg { width: 100%; height: 46px; display: block; cursor: pointer; } .tl input { width: 100%; margin: 2px 0 0; accent-color: #7c3aed; }
+    .player { display: grid; grid-template-columns: 44px minmax(0, 1fr) 120px auto; gap: 14px; align-items: center; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-fafaff); }
+    .pl { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--primary); color: var(--kf-ffffff); display: grid; place-items: center; cursor: pointer; }
+    .tl { position: relative; } .tl svg { width: 100%; height: 46px; display: block; cursor: pointer; } .tl input { width: 100%; margin: 2px 0 0; accent-color: var(--kf-7c3aed); }
     .ticks { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); }
     .now { display: flex; flex-direction: column; } .now b { font-size: 22px; } .now small { color: var(--muted); font-size: 11px; }
     .side { display: flex; flex-direction: column; gap: 10px; } .sh { display: flex; justify-content: space-between; align-items: baseline; }
     .rank { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-    .rank li { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center; padding: 7px 6px; border-radius: 8px; cursor: pointer; font-size: 12.5px; } .rank li:hover { background: #f5f3ff; }
-    .rank li.hot { background: #fef2f2; } .rank .n { width: 22px; height: 22px; border-radius: 50%; background: #eef0f6; display: grid; place-items: center; font-size: 11px; font-weight: 600; } .rank li.hot .n { background: #ef4444; color: #fff; }
+    .rank li { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center; padding: 7px 6px; border-radius: 8px; cursor: pointer; font-size: 12.5px; } .rank li:hover { background: var(--kb-f5f3ff); }
+    .rank li.hot { background: var(--kb-fef2f2); } .rank .n { width: 22px; height: 22px; border-radius: 50%; background: var(--kb-eef0f6); display: grid; place-items: center; font-size: 11px; font-weight: 600; } .rank li.hot .n { background: var(--kb-ef4444); color: var(--kf-ffffff); }
     .rank b { font-weight: 500; display: block; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-    .rank .v { text-align: right; font-weight: 600; display: flex; flex-direction: column; } .rank .v small { font-size: 10.5px; font-weight: 500; color: var(--muted); } .rank .v small.up { color: #dc2626; } .rank .v small.dn { color: #16a34a; }
-    .bar { display: block; height: 6px; border-radius: 6px; background: #e8eaf2; overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
-    .thr { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border); padding-top: 10px; font-size: 12.5px; } .thr label { display: flex; justify-content: space-between; } .thr input { accent-color: #ef4444; }
+    .rank .v { text-align: right; font-weight: 600; display: flex; flex-direction: column; } .rank .v small { font-size: 10.5px; font-weight: 500; color: var(--muted); } .rank .v small.up { color: var(--kf-dc2626); } .rank .v small.dn { color: var(--kf-16a34a); }
+    .bar { display: block; height: 6px; border-radius: 6px; background: var(--kb-e8eaf2); overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
+    .thr { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--border); padding-top: 10px; font-size: 12.5px; } .thr label { display: flex; justify-content: space-between; } .thr input { accent-color: var(--kf-ef4444); }
     .zh { display: grid; grid-template-columns: 14px 1fr auto; gap: 10px; align-items: center; } .zh .sw { width: 14px; height: 40px; border-radius: 4px; } .zh h3 { font-size: 16px; }
     .big { display: flex; align-items: baseline; gap: 10px; } .big b { font-size: 30px; } .big span { color: var(--muted); font-size: 12px; }
     .facts { display: grid; grid-template-columns: 90px 1fr; gap: 7px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; display: flex; gap: 6px; align-items: center; }
@@ -203,7 +203,7 @@ export class HeatmapsAnalytics {
       }),
   );
   protected readonly markers = computed<IsoMarker[]>(() => this.vals().map((r) => ({ id: r.z.id, x: center(r.z)[0], y: center(r.z)[1], color: heatColor(r.k), icon: 'flame', kind: 'value', label: this.fmt(r.v), title: `${r.z.name} · ${this.fmt(r.v)}` })));
-  protected readonly glows = computed<IsoGlow[]>(() => this.hot().map((r) => ({ x: center(r.z)[0], y: center(r.z)[1], r: Math.min(r.z.w, r.z.h) * 0.42, color: '#ef4444' })));
+  protected readonly glows = computed<IsoGlow[]>(() => this.hot().map((r) => ({ x: center(r.z)[0], y: center(r.z)[1], r: Math.min(r.z.w, r.z.h) * 0.42, color: 'var(--ka-ef4444)' })));
   protected readonly points = computed(() => {
     const out: { x: number; y: number; v: number }[] = [];
     for (const r of this.vals()) {
@@ -255,8 +255,8 @@ export class HeatmapsAnalytics {
       return Math.round((zs.reduce((a, z) => a + Math.min(1, zoneUtil(z, h, k)) * z.capacity, 0) / cap) * 100);
     };
     return [
-      { name: this.period(), color: '#7c3aed', values: FLOOR_TABS.map((f) => val(f.id, this.pf())) },
-      { name: '30-day avg', color: '#c4b5fd', values: FLOOR_TABS.map((f) => val(f.id, 0.79)) },
+      { name: this.period(), color: 'var(--ka-7c3aed)', values: FLOOR_TABS.map((f) => val(f.id, this.pf())) },
+      { name: '30-day avg', color: 'var(--ka-c4b5fd)', values: FLOOR_TABS.map((f) => val(f.id, 0.79)) },
     ];
   });
   protected readonly typeRows = computed(() => {

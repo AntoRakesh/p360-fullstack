@@ -47,12 +47,12 @@ const PEOPLE: Person[] = (() => {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="People on Site" [value]="k().onSite" icon="users" color="#8b5cf6" change="6%" />
-      <app-kpi label="Employees" [value]="k().emp" icon="square-user" color="#7c3aed" change="4%" />
-      <app-kpi label="Contractors" [value]="k().con" icon="hard-hat" color="#fb923c" change="4%" />
-      <app-kpi label="Visitors" [value]="k().vis" icon="user-plus" color="#3b82f6" change="12%" />
-      <app-kpi label="Peak Today" [value]="k().peak" icon="trending-up" color="#22c55e" sub="at 11:30 AM" />
-      <app-kpi label="Avg. Dwell Time" value="7h 42m" icon="clock" color="#06b6d4" change="3%" [up]="false" [good]="false" />
+      <app-kpi label="People on Site" [value]="k().onSite" icon="users" color="var(--ka-8b5cf6)" change="6%" />
+      <app-kpi label="Employees" [value]="k().emp" icon="square-user" color="var(--ka-7c3aed)" change="4%" />
+      <app-kpi label="Contractors" [value]="k().con" icon="hard-hat" color="var(--ka-fb923c)" change="4%" />
+      <app-kpi label="Visitors" [value]="k().vis" icon="user-plus" color="var(--ka-3b82f6)" change="12%" />
+      <app-kpi label="Peak Today" [value]="k().peak" icon="trending-up" color="var(--ka-22c55e)" sub="at 11:30 AM" />
+      <app-kpi label="Avg. Dwell Time" value="7h 42m" icon="clock" color="var(--ka-06b6d4)" change="3%" [up]="false" [good]="false" />
     </section>
 
     <section class="dash">
@@ -172,16 +172,16 @@ export class PeoplePresence {
     const arr = [420, 1850, 3900, 2600, 1300, 720, 510, 640, 380, 300, 260, 210, 160, 90, 50];
     const dep = [20, 60, 140, 210, 260, 330, 560, 480, 420, 610, 1350, 2400, 1900, 900, 420];
     return [
-      { name: 'Arrivals', color: '#7c3aed', values: arr.map((v) => Math.round(v * f)) },
-      { name: 'Departures', color: '#38bdf8', values: dep.map((v) => Math.round(v * f)) },
+      { name: 'Arrivals', color: 'var(--ka-7c3aed)', values: arr.map((v) => Math.round(v * f)) },
+      { name: 'Departures', color: 'var(--ka-38bdf8)', values: dep.map((v) => Math.round(v * f)) },
     ];
   });
   protected readonly byType = computed(() => [
-    { label: 'Employees', value: this.state.scale(8920), color: '#7c3aed' },
-    { label: 'Contractors', value: this.state.scale(1326), color: '#3b82f6' },
-    { label: 'Visitors', value: this.state.scale(284), color: '#22c1a0' },
-    { label: 'Temporary', value: this.state.scale(520), color: '#22c55e' },
-    { label: 'Others', value: this.state.scale(1430), color: '#c4c9d6' },
+    { label: 'Employees', value: this.state.scale(8920), color: 'var(--ka-7c3aed)' },
+    { label: 'Contractors', value: this.state.scale(1326), color: 'var(--ka-3b82f6)' },
+    { label: 'Visitors', value: this.state.scale(284), color: 'var(--ka-22c1a0)' },
+    { label: 'Temporary', value: this.state.scale(520), color: 'var(--ka-22c55e)' },
+    { label: 'Others', value: this.state.scale(1430), color: 'var(--ka-c4c9d6)' },
   ]);
   protected readonly bySite = computed(() => {
     this.state.tick();

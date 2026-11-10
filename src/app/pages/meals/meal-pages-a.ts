@@ -41,11 +41,11 @@ const EMOJIS = ['🍛', '🍗', '🥗', '🍜', '🍝', '🥙', '🌯', '🍲', 
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Menu Items" [value]="store.dishes().length" icon="m-cutlery" color="#7c3aed" change="4" sub="new this month" />
-      <app-kpi label="Available Today" [value]="available()" icon="shield-check" color="#22c55e" [sub]="store.dishes().length - available() + ' unavailable'" />
-      <app-kpi label="Dishes on Today's Menu" [value]="todayCount()" icon="m-cloche" color="#f59e0b" [sub]="canteenName() " />
-      <app-kpi label="Avg. Dish Rating" [value]="avgRating() + ' / 5'" icon="star" color="#ef4444" change="0.2" sub="vs. last month" />
-      <app-kpi label="Plant-based Options" [value]="vegan() + ' dishes'" icon="m-leaf" color="#2563eb" [sub]="pctVegan() + '% of catalogue'" subColor="#2563eb" />
+      <app-kpi label="Menu Items" [value]="store.dishes().length" icon="m-cutlery" color="var(--ka-7c3aed)" change="4" sub="new this month" />
+      <app-kpi label="Available Today" [value]="available()" icon="shield-check" color="var(--ka-22c55e)" [sub]="store.dishes().length - available() + ' unavailable'" />
+      <app-kpi label="Dishes on Today's Menu" [value]="todayCount()" icon="m-cloche" color="var(--ka-f59e0b)" [sub]="canteenName() " />
+      <app-kpi label="Avg. Dish Rating" [value]="avgRating() + ' / 5'" icon="star" color="var(--ka-ef4444)" change="0.2" sub="vs. last month" />
+      <app-kpi label="Plant-based Options" [value]="vegan() + ' dishes'" icon="m-leaf" color="var(--ka-2563eb)" [sub]="pctVegan() + '% of catalogue'" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="mm">
@@ -129,20 +129,20 @@ const EMOJIS = ['🍛', '🍗', '🥗', '🍜', '🍝', '🥙', '🌯', '🍲', 
     h3 { margin: 0; font-size: 15px; }
     .mm { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(360px, 1fr); gap: 12px; align-items: start; }
     .planner { display: grid; grid-template-columns: 92px repeat(7, minmax(0, 1fr)); gap: 5px; }
-    .ph { font-size: 12px; font-weight: 600; text-align: center; padding: 6px 0; border-radius: 6px; background: #f6f6fb; } .ph.today { background: var(--primary); color: #fff; } .ph em { font-style: normal; font-weight: 400; font-size: 10px; margin-left: 4px; }
+    .ph { font-size: 12px; font-weight: 600; text-align: center; padding: 6px 0; border-radius: 6px; background: var(--kb-f6f6fb); } .ph.today { background: var(--primary); color: var(--kf-ffffff); } .ph em { font-style: normal; font-weight: 400; font-size: 10px; margin-left: 4px; }
     .mh { display: flex; flex-direction: column; justify-content: center; font-size: 12px; } .mh small { color: var(--muted); font-size: 10px; }
-    .cell { border: 1px solid var(--border); border-radius: 8px; padding: 5px; min-height: 120px; display: flex; flex-direction: column; gap: 4px; min-width: 0; } .cell.today { border-color: #c4b5fd; background: #faf8ff; }
-    .mi { display: grid; grid-template-columns: 16px 1fr 10px; gap: 3px; align-items: center; background: #fff; border: 1px solid #eef0f6; border-radius: 6px; padding: 3px 4px; font-size: 10.5px; } .mi small { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 10px; line-height: 1.2; }
-    .mi.off { opacity: 0.45; text-decoration: line-through; } .mi button { border: 0; background: none; cursor: pointer; color: #9ca3af; padding: 0; } .mi button:hover { color: var(--red); }
-    .add { margin-top: auto; border: 1px dashed #c4b5fd; background: none; border-radius: 6px; color: var(--primary); font-size: 10.5px; padding: 3px; cursor: pointer; }
+    .cell { border: 1px solid var(--border); border-radius: 8px; padding: 5px; min-height: 120px; display: flex; flex-direction: column; gap: 4px; min-width: 0; } .cell.today { border-color: var(--kl-c4b5fd); background: var(--kb-faf8ff); }
+    .mi { display: grid; grid-template-columns: 16px 1fr 10px; gap: 3px; align-items: center; background: var(--kb-ffffff); border: 1px solid var(--kl-eef0f6); border-radius: 6px; padding: 3px 4px; font-size: 10.5px; } .mi small { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 10px; line-height: 1.2; }
+    .mi.off { opacity: 0.45; text-decoration: line-through; } .mi button { border: 0; background: none; cursor: pointer; color: var(--kf-9ca3af); padding: 0; } .mi button:hover { color: var(--red); }
+    .add { margin-top: auto; border: 1px dashed var(--kl-c4b5fd); background: none; border-radius: 6px; color: var(--primary); font-size: 10.5px; padding: 3px; cursor: pointer; }
     .cat .tabs { margin-bottom: 10px; } .dishes { list-style: none; margin: 0; padding: 0; max-height: 640px; overflow: auto; }
-    .dishes li { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 9px 2px; border-bottom: 1px solid #f0f1f6; } .dishes li.off { opacity: 0.55; }
+    .dishes li { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 9px 2px; border-bottom: 1px solid var(--kl-f0f1f6); } .dishes li.off { opacity: 0.55; }
     .dn, .dr { display: flex; flex-direction: column; gap: 2px; min-width: 0; font-size: 12.5px; } .dn small, .dr small { color: var(--muted); font-size: 11px; } .dr { align-items: flex-end; }
     .tags { display: flex; flex-wrap: wrap; gap: 3px; } .tags .tag { font-size: 10px; padding: 1px 6px; } .acts { display: flex; gap: 10px; align-items: center; }
-    .tgl { width: 30px; height: 17px; border-radius: 10px; border: 0; background: #d1d5db; position: relative; cursor: pointer; padding: 0; } .tgl i { position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: #fff; transition: left 0.15s; } .tgl.on { background: #22c55e; } .tgl.on i { left: 15px; }
-    .pick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; } .pk { display: flex; gap: 10px; align-items: center; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; text-align: left; } .pk:hover { border-color: var(--primary); } .pk:disabled { opacity: 0.4; cursor: default; }
+    .tgl { width: 30px; height: 17px; border-radius: 10px; border: 0; background: var(--kb-d1d5db); position: relative; cursor: pointer; padding: 0; } .tgl i { position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%; background: var(--kb-ffffff); transition: left 0.15s; } .tgl.on { background: var(--kb-22c55e); } .tgl.on i { left: 15px; }
+    .pick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; } .pk { display: flex; gap: 10px; align-items: center; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; text-align: left; } .pk:hover { border-color: var(--primary); } .pk:disabled { opacity: 0.4; cursor: default; }
     .pk span { display: flex; flex-direction: column; font-size: 12.5px; } .pk small { color: var(--muted); }
-    .emo { display: flex; flex-wrap: wrap; gap: 4px; } .emo button { font-size: 20px; border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 2px 5px; cursor: pointer; } .emo button.on { border-color: var(--primary); background: var(--primary-soft); }
+    .emo { display: flex; flex-wrap: wrap; gap: 4px; } .emo button { font-size: 20px; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; padding: 2px 5px; cursor: pointer; } .emo button.on { border-color: var(--primary); background: var(--primary-soft); }
     .chk { display: flex !important; flex-direction: row !important; flex-wrap: wrap; gap: 6px 14px !important; align-items: center; } .chk > span { width: 100%; } .chk label { flex-direction: row !important; align-items: center; gap: 5px !important; color: var(--text) !important; }
     @media (max-width: 1350px) { .mm { grid-template-columns: 1fr; } }
   `,
@@ -202,7 +202,7 @@ export class MenuManagement extends MealPage {
   }
   protected openDish(x?: Dish) {
     this.err.set('');
-    this.form.set(x ? structuredClone(x) : { id: `D${String(this.store.dishes().length + 101)}`, name: '', emoji: '🍛', bg: '#fde68a', category: 'Lunch', cuisine: 'International', kcal: 500, protein: 20, carbs: 60, fat: 15, allergens: [], diets: ['Halal'], price: 15, rating: 0, available: true, orders: 0 });
+    this.form.set(x ? structuredClone(x) : { id: `D${String(this.store.dishes().length + 101)}`, name: '', emoji: '🍛', bg: 'var(--kb-fde68a)', category: 'Lunch', cuisine: 'International', kcal: 500, protein: 20, carbs: 60, fat: 15, allergens: [], diets: ['Halal'], price: 15, rating: 0, available: true, orders: 0 });
   }
   protected setF<K extends keyof Dish>(k: K, v: Dish[K]) {
     this.form.update((f) => (f ? { ...f, [k]: v } : f));
@@ -236,11 +236,11 @@ export class MenuManagement extends MealPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Canteen Locations" [value]="store.canteens().length" icon="m-store" color="#7c3aed" [sub]="onsite() + ' on-site | ' + (store.canteens().length - onsite()) + ' partner'" subColor="#2563eb" />
-      <app-kpi label="Meals Served Today" [value]="fmt(store.servedToday())" icon="m-cloche" color="#22c55e" [sub]="'of 1,932 daily average'" />
-      <app-kpi label="Total Seating" [value]="fmt(seats())" icon="users" color="#f59e0b" [sub]="occupiedTotal() + ' seats occupied now'" />
-      <app-kpi label="Avg. Queue Time" [value]="avgWait() + ' min'" icon="clock" color="#ef4444" change="12%" [up]="false" sub="vs. last week" />
-      <app-kpi label="Avg. Rating" [value]="avgRating() + ' / 5'" icon="star" color="#2563eb" change="0.1" sub="vs. last month" />
+      <app-kpi label="Canteen Locations" [value]="store.canteens().length" icon="m-store" color="var(--ka-7c3aed)" [sub]="onsite() + ' on-site | ' + (store.canteens().length - onsite()) + ' partner'" subColor="var(--ka-2563eb)" />
+      <app-kpi label="Meals Served Today" [value]="fmt(store.servedToday())" icon="m-cloche" color="var(--ka-22c55e)" [sub]="'of 1,932 daily average'" />
+      <app-kpi label="Total Seating" [value]="fmt(seats())" icon="users" color="var(--ka-f59e0b)" [sub]="occupiedTotal() + ' seats occupied now'" />
+      <app-kpi label="Avg. Queue Time" [value]="avgWait() + ' min'" icon="clock" color="var(--ka-ef4444)" change="12%" [up]="false" sub="vs. last week" />
+      <app-kpi label="Avg. Rating" [value]="avgRating() + ' / 5'" icon="star" color="var(--ka-2563eb)" change="0.1" sub="vs. last month" />
     </section>
 
     <section class="cards">
@@ -320,17 +320,17 @@ export class MenuManagement extends MealPage {
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 12px; }
     .ct { text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 12px; font: inherit; } .ct.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .ct-h { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .ct-h div { display: flex; flex-direction: column; } .ct-h small { color: var(--muted); font-size: 11.5px; }
-    .ci { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; color: #fff; }
+    .ci { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .ct-b { display: flex; gap: 16px; align-items: center; } .ct-b dl { display: grid; grid-template-columns: auto auto; gap: 3px 14px; margin: 0; font-size: 12px; } .ct-b dt { color: var(--muted); } .ct-b dd { margin: 0; font-weight: 600; }
-    .ct-f { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); border-top: 1px solid #f0f1f6; padding-top: 8px; }
+    .ct-f { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted); border-top: 1px solid var(--kl-f0f1f6); padding-top: 8px; }
     .det { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 320px; gap: 12px; align-items: start; }
-    .seats { display: grid; grid-template-columns: repeat(30, 1fr); gap: 3px; } .seats i { aspect-ratio: 1; border-radius: 3px; background: #eef0f6; }
+    .seats { display: grid; grid-template-columns: repeat(30, 1fr); gap: 3px; } .seats i { aspect-ratio: 1; border-radius: 3px; background: var(--kb-eef0f6); }
     .tm { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; } .tm div { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; } .tm small { width: 64px; color: var(--muted); }
     .tmi { display: inline-flex; gap: 5px; align-items: center; font-size: 11.5px; border: 1px solid var(--border); border-radius: 16px; padding: 1px 8px 1px 1px; }
     button.tag { border: 0; cursor: pointer; }
     .facts { display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; font-size: 12.5px; margin: 12px 0; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .btns { display: flex; flex-direction: column; gap: 8px; } .btns button { justify-content: flex-start; }
-    .chip.live i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 5px; }
+    .chip.live i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--kb-22c55e); margin-right: 5px; }
     @media (max-width: 1400px) { .det { grid-template-columns: 1fr 1fr; } }
   `,
 })
@@ -373,7 +373,7 @@ export class CanteenLocations extends MealPage {
     const nowH = new Date().getHours();
     return [
       { name: 'Today', color: c.color, area: true, values: shape.map((f, i) => (6 + i <= nowH ? Math.round(c.usage * f * 1.1) : NaN)) },
-      { name: 'Avg. (last 4 weeks)', color: '#94a3b8', dashed: true, values: shape.map((f) => Math.round(c.usage * f)) },
+      { name: 'Avg. (last 4 weeks)', color: 'var(--ka-94a3b8)', dashed: true, values: shape.map((f) => Math.round(c.usage * f)) },
     ];
   }
   protected counters(c: Canteen) {
@@ -408,7 +408,7 @@ export class CanteenLocations extends MealPage {
     const a = this.add()!;
     if (!a.name.trim()) return this.err.set('Canteen name is required.');
     const id = `CT-${String(this.store.canteens().length + 1).padStart(2, '0')}`;
-    const c: Canteen = { id, name: a.name.trim(), site: a.site, type: a.type, operator: a.operator, usage: 0, capacity: a.seats * 4, seats: a.seats, counters: 3, hours: '07:00 - 21:00', rating: 0, manager: 'Unassigned', status: 'Open', color: '#14b8a6', floor: a.site, wait: 1 };
+    const c: Canteen = { id, name: a.name.trim(), site: a.site, type: a.type, operator: a.operator, usage: 0, capacity: a.seats * 4, seats: a.seats, counters: 3, hours: '07:00 - 21:00', rating: 0, manager: 'Unassigned', status: 'Open', color: 'var(--ka-14b8a6)', floor: a.site, wait: 1 };
     this.store.canteens.update((l) => [...l, c]);
     this.store.menu.update((m) => ({ ...m, [id]: structuredClone(m['CT-01']) }));
     this.selId.set(id);
@@ -456,11 +456,11 @@ interface BookingRow {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Pre-orders Today" [value]="today().length" icon="calendar-days" color="#7c3aed" change="9%" sub="vs. last week" />
-      <app-kpi label="Collected" [value]="count(today(), 'Collected')" icon="shield-check" color="#22c55e" [sub]="pct(count(today(), 'Collected'), today().length) + '% of today'" />
-      <app-kpi label="Awaiting Collection" [value]="count(today(), 'Confirmed')" icon="clock" color="#f59e0b" sub="live" />
-      <app-kpi label="No-shows (Yesterday)" [value]="noShows()" icon="m-xcircle" color="#ef4444" change="2" [up]="false" sub="vs. day before" />
-      <app-kpi label="Tomorrow's Pre-orders" [value]="tomorrow().length" icon="m-cloche" color="#2563eb" [sub]="'cut-off ' + cutoff().replace(' before meal time', '').replace(' hours', 'h').replace(' hour', 'h') + ' before'" subColor="#2563eb" />
+      <app-kpi label="Pre-orders Today" [value]="today().length" icon="calendar-days" color="var(--ka-7c3aed)" change="9%" sub="vs. last week" />
+      <app-kpi label="Collected" [value]="count(today(), 'Collected')" icon="shield-check" color="var(--ka-22c55e)" [sub]="pct(count(today(), 'Collected'), today().length) + '% of today'" />
+      <app-kpi label="Awaiting Collection" [value]="count(today(), 'Confirmed')" icon="clock" color="var(--ka-f59e0b)" sub="live" />
+      <app-kpi label="No-shows (Yesterday)" [value]="noShows()" icon="m-xcircle" color="var(--ka-ef4444)" change="2" [up]="false" sub="vs. day before" />
+      <app-kpi label="Tomorrow's Pre-orders" [value]="tomorrow().length" icon="m-cloche" color="var(--ka-2563eb)" [sub]="'cut-off ' + cutoff().replace(' before meal time', '').replace(' hours', 'h').replace(' hour', 'h') + ' before'" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="mb">
@@ -472,7 +472,7 @@ interface BookingRow {
         <div class="card">
           <h3>Today's Slot Capacity</h3>
           @for (s of slots(); track s.label) {
-            <div class="slot"><span>{{ s.label }}</span><div class="trk"><i [style.width.%]="s.pct" [style.background]="s.pct > 85 ? '#ef4444' : s.pct > 60 ? '#f59e0b' : '#22c55e'"></i></div><b>{{ s.booked }}/{{ s.cap }}</b></div>
+            <div class="slot"><span>{{ s.label }}</span><div class="trk"><i [style.width.%]="s.pct" [style.background]="s.pct > 85 ? 'var(--ka-ef4444)' : s.pct > 60 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)'"></i></div><b>{{ s.booked }}/{{ s.cap }}</b></div>
           }
         </div>
         <div class="card">
@@ -519,11 +519,11 @@ interface BookingRow {
     h3 { margin: 0 0 10px; font-size: 15px; }
     .mb { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; align-items: start; } .side { display: flex; flex-direction: column; gap: 12px; }
     .slot { display: grid; grid-template-columns: 92px 1fr 52px; gap: 8px; align-items: center; font-size: 12px; margin-bottom: 7px; } .slot b { text-align: right; font-weight: 500; }
-    .trk { height: 8px; border-radius: 5px; background: #f1f2f7; overflow: hidden; } .trk i { display: block; height: 100%; border-radius: 5px; }
+    .trk { height: 8px; border-radius: 5px; background: var(--kb-f1f2f7); overflow: hidden; } .trk i { display: block; height: 100%; border-radius: 5px; }
     .pop { list-style: none; margin: 0; padding: 0; } .pop li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 6px 0; font-size: 12.5px; } .pop span { display: flex; flex-direction: column; } .pop small { color: var(--muted); } .pop em { font-style: normal; font-weight: 600; color: var(--primary); }
     .pol p { display: flex; gap: 6px; align-items: center; font-size: 12px; margin: 0 0 8px; flex-wrap: wrap; }
     .dishpick { display: grid !important; grid-template-columns: repeat(2, 1fr); gap: 6px !important; max-height: 230px; overflow: auto; }
-    .dishpick button { display: flex; gap: 8px; align-items: center; padding: 6px; border: 1px solid var(--border); border-radius: 8px; background: #fff; text-align: left; cursor: pointer; } .dishpick button.on { border-color: var(--primary); background: var(--primary-soft); }
+    .dishpick button { display: flex; gap: 8px; align-items: center; padding: 6px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); text-align: left; cursor: pointer; } .dishpick button.on { border-color: var(--primary); background: var(--primary-soft); }
     .dishpick span { display: flex; flex-direction: column; font-size: 12px; color: var(--text); } .dishpick small { color: var(--muted); }
     @media (max-width: 1300px) { .mb { grid-template-columns: 1fr; } }
   `,
@@ -661,11 +661,11 @@ interface WalletRow extends Diner {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Active Wallets" [value]="fmt(store.diners().length)" icon="m-wallet" color="#7c3aed" change="12%" sub="vs. last month" />
-      <app-kpi label="Total Wallet Balance" [value]="'AED ' + fmt(Math.round(totalCash()))" icon="m-coin" color="#22c55e" sub="prepaid top-ups" />
-      <app-kpi label="Meal Credits Used (MTD)" [value]="fmt(used())" icon="m-cloche" color="#f59e0b" [sub]="usedPct() + '% of entitlement'" />
-      <app-kpi label="Low Balance" [value]="low()" icon="triangle-alert" color="#ef4444" sub="below AED 20" subColor="#ef4444" />
-      <app-kpi label="Blocked (No-show)" [value]="blocked()" icon="ban" color="#2563eb" sub="per No Show Policy" subColor="#2563eb" />
+      <app-kpi label="Active Wallets" [value]="fmt(store.diners().length)" icon="m-wallet" color="var(--ka-7c3aed)" change="12%" sub="vs. last month" />
+      <app-kpi label="Total Wallet Balance" [value]="'AED ' + fmt(Math.round(totalCash()))" icon="m-coin" color="var(--ka-22c55e)" sub="prepaid top-ups" />
+      <app-kpi label="Meal Credits Used (MTD)" [value]="fmt(used())" icon="m-cloche" color="var(--ka-f59e0b)" [sub]="usedPct() + '% of entitlement'" />
+      <app-kpi label="Low Balance" [value]="low()" icon="triangle-alert" color="var(--ka-ef4444)" sub="below AED 20" subColor="var(--ka-ef4444)" />
+      <app-kpi label="Blocked (No-show)" [value]="blocked()" icon="ban" color="var(--ka-2563eb)" sub="per No Show Policy" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="mw" [class.with]="!!sel()">
@@ -731,16 +731,16 @@ interface WalletRow extends Diner {
     .mw { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .mw.with { grid-template-columns: minmax(0, 1.7fr) minmax(360px, 1fr); } :host ::ng-deep .dt-person b { white-space: nowrap; }
     .det { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .dh { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; } .dh div { display: flex; flex-direction: column; } .lg { width: 48px; height: 48px; font-size: 16px; }
-    .wallet { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; border-radius: 12px; color: #fff; background: linear-gradient(120deg, #5b21b6, #7c3aed 55%, #a855f7); }
+    .wallet { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px; border-radius: 12px; color: var(--kf-ffffff); background: linear-gradient(120deg, var(--kb-5b21b6), var(--kb-7c3aed) 55%, var(--kb-a855f7)); }
     .wallet div { display: flex; flex-direction: column; } .wallet small { opacity: 0.8; font-size: 11.5px; } .wallet b { font-size: 22px; } .wallet em { font-style: normal; font-size: 13px; opacity: 0.8; }
     .plan { position: absolute; top: 10px; right: 12px; font-size: 10.5px; background: rgba(255, 255, 255, 0.2); padding: 2px 8px; border-radius: 10px; }
-    .prog { display: flex; justify-content: space-between; font-size: 12px; } .trk { height: 8px; background: #f1f2f7; border-radius: 5px; overflow: hidden; } .trk i { display: block; height: 100%; background: var(--primary); }
+    .prog { display: flex; justify-content: space-between; font-size: 12px; } .trk { height: 8px; background: var(--kb-f1f2f7); border-radius: 5px; overflow: hidden; } .trk i { display: block; height: 100%; background: var(--primary); }
     .ent { display: flex; flex-direction: column; gap: 4px; font-size: 12px; } .ent span { display: flex; gap: 10px; } .ent b { width: 70px; font-weight: 500; }
     .btns { display: flex; gap: 8px; flex-wrap: wrap; }
-    .tx { list-style: none; margin: 0; padding: 0; } .tx li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .tx { list-style: none; margin: 0; padding: 0; } .tx li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .tx div { display: flex; flex-direction: column; min-width: 0; } .tx small { color: var(--muted); font-size: 11px; } .tx em { font-style: normal; font-weight: 600; white-space: nowrap; }
-    .ti { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: #f3e8ff; color: var(--primary); } .ti.Top-up, .ti.Refund { background: #dcfce7; color: #16a34a; } .ti.Credit { background: #dbeafe; color: #2563eb; }
-    .amts { display: flex; gap: 8px; margin-bottom: 12px; } .amts button { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font-weight: 600; } .amts button.on { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
+    .ti { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: var(--kb-f3e8ff); color: var(--primary); } .ti.Top-up, .ti.Refund { background: var(--kb-dcfce7); color: var(--kf-16a34a); } .ti.Credit { background: var(--kb-dbeafe); color: var(--kf-2563eb); }
+    .amts { display: flex; gap: 8px; margin-bottom: 12px; } .amts button { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font-weight: 600; } .amts button.on { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
     @media (max-width: 1300px) { .mw.with { grid-template-columns: 1fr; } .det { position: static; } }
   `,
 })

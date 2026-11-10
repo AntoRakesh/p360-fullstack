@@ -23,10 +23,10 @@ const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Active Rules" [value]="active()" icon="workflow-bolt" color="#7c3aed" [sub]="store.rules().length + ' rules total'" />
-      <app-kpi label="Executions (30 days)" [value]="runs().toLocaleString()" icon="activity" color="#3b82f6" change="12%" sub="vs. previous 30 days" />
-      <app-kpi label="Success Rate" [value]="success() + '%'" icon="shield-check" color="#22c55e" change="0.4%" sub="vs. previous 30 days" />
-      <app-kpi label="Manual Work Saved" [value]="saved() + ' h'" icon="workflow-timer" color="#f59e0b" sub="≈ 3 min per execution" />
+      <app-kpi label="Active Rules" [value]="active()" icon="workflow-bolt" color="var(--ka-7c3aed)" [sub]="store.rules().length + ' rules total'" />
+      <app-kpi label="Executions (30 days)" [value]="runs().toLocaleString()" icon="activity" color="var(--ka-3b82f6)" change="12%" sub="vs. previous 30 days" />
+      <app-kpi label="Success Rate" [value]="success() + '%'" icon="shield-check" color="var(--ka-22c55e)" change="0.4%" sub="vs. previous 30 days" />
+      <app-kpi label="Manual Work Saved" [value]="saved() + ' h'" icon="workflow-timer" color="var(--ka-f59e0b)" sub="≈ 3 min per execution" />
     </section>
 
     <section class="ar">
@@ -114,24 +114,24 @@ const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
   styles: `
     .ar { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 12px; align-items: start; }
     .rl { display: flex; flex-direction: column; gap: 10px; } .rl ul { list-style: none; margin: 0; padding: 0; }
-    .rl li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid #f0f1f6; }
-    .rl li:hover { background: #faf8ff; } .rl li.on { background: #f3efff; box-shadow: inset 3px 0 0 var(--primary); }
+    .rl li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid var(--kl-f0f1f6); }
+    .rl li:hover { background: var(--kb-faf8ff); } .rl li.on { background: var(--kb-f3efff); box-shadow: inset 3px 0 0 var(--primary); }
     .rl li div { display: flex; flex-direction: column; min-width: 0; font-size: 12.5px; } .rl small { color: var(--muted); font-size: 11px; }
-    .ric { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: #ede9fe; color: #7c3aed; } .ric.off { background: #eef0f5; color: #94a3b8; }
+    .ric { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: var(--kb-ede9fe); color: var(--kf-7c3aed); } .ric.off { background: var(--kb-eef0f5); color: var(--kf-94a3b8); }
     .builder { display: flex; flex-direction: column; gap: 10px; }
     .bh { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; } .title { font-size: 16px; font-weight: 600; flex: 1; min-width: 260px; } .sm { font-size: 11.5px; }
     .blk { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 6px; font-size: 13px; }
-    .kw { padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 12px; letter-spacing: .5px; background: #dbeafe; color: #1d4ed8; }
-    .kw.if { background: #fef3c7; color: #b45309; } .kw.then { background: #dcfce7; color: #15803d; }
+    .kw { padding: 4px 12px; border-radius: 6px; font-weight: 800; font-size: 12px; letter-spacing: .5px; background: var(--kb-dbeafe); color: var(--kf-1d4ed8); }
+    .kw.if { background: var(--kb-fef3c7); color: var(--kf-b45309); } .kw.then { background: var(--kb-dcfce7); color: var(--kf-15803d); }
     .blk .input { min-width: 220px; }
-    .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; } .seg button { border: 0; background: #fff; padding: 5px 12px; font-size: 11.5px; font-weight: 700; cursor: pointer; } .seg button.on { background: var(--primary); color: #fff; }
+    .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; } .seg button { border: 0; background: var(--kb-ffffff); padding: 5px 12px; font-size: 11.5px; font-weight: 700; cursor: pointer; } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
     .row { display: grid; grid-template-columns: 44px 1fr 150px 1fr 30px; gap: 8px; align-items: center; } .row.act { grid-template-columns: 44px 1fr 1.3fr 30px; }
-    .join { font-size: 11px; font-weight: 700; color: #b45309; text-align: center; } .join.num { color: #15803d; }
-    .ib { border: 0; background: none; cursor: pointer; color: #6b7090; } .ib:hover { color: var(--red); }
+    .join { font-size: 11px; font-weight: 700; color: var(--kf-b45309); text-align: center; } .join.num { color: var(--kf-15803d); }
+    .ib { border: 0; background: none; cursor: pointer; color: var(--kf-6b7090); } .ib:hover { color: var(--red); }
     .add { border: 0; background: none; cursor: pointer; text-align: left; padding: 0 0 0 52px; }
-    .summary { display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; background: #f5f3ff; border-radius: 8px; font-size: 12.5px; color: #4c1d95; }
+    .summary { display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; background: var(--kb-f5f3ff); border-radius: 8px; font-size: 12.5px; color: var(--kf-4c1d95); }
     .foot { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; } .sp { flex: 1; } .danger { color: var(--red); }
-    .test { border: 1px solid #bbf7d0; background: #f0fdf4; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: #166534; } .test.miss { border-color: #fecaca; background: #fef2f2; color: #991b1b; }
+    .test { border: 1px solid var(--kl-bbf7d0); background: var(--kb-f0fdf4); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: var(--kf-166534); } .test.miss { border-color: var(--kl-fecaca); background: var(--kb-fef2f2); color: var(--kf-991b1b); }
     .test ul { margin: 6px 0 0; padding-left: 18px; }
     h4 { margin: 8px 0 0; font-size: 13px; }
     @media (max-width: 1100px) { .ar { grid-template-columns: 1fr; } }
@@ -267,10 +267,10 @@ const CONN_CATS = ['All', 'HRIS', 'Payroll', 'Identity', 'Calendar', 'Collaborat
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Connected" [value]="cnt('Connected')" icon="workflow-link" color="#22c55e" [sub]="store.connectors().length + ' available'" />
-      <app-kpi label="API Calls (24 h)" [value]="calls().toLocaleString()" icon="activity" color="#3b82f6" change="6%" sub="vs. yesterday" />
-      <app-kpi label="Error Rate" [value]="errRate() + '%'" icon="triangle-alert" color="#ef4444" [sub]="errors() + ' failed calls'" [subColor]="'#dc2626'" />
-      <app-kpi label="Needs Attention" [value]="cnt('Error') + cnt('Paused')" icon="plug" color="#f59e0b" sub="error or paused" />
+      <app-kpi label="Connected" [value]="cnt('Connected')" icon="workflow-link" color="var(--ka-22c55e)" [sub]="store.connectors().length + ' available'" />
+      <app-kpi label="API Calls (24 h)" [value]="calls().toLocaleString()" icon="activity" color="var(--ka-3b82f6)" change="6%" sub="vs. yesterday" />
+      <app-kpi label="Error Rate" [value]="errRate() + '%'" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="errors() + ' failed calls'" [subColor]="'var(--ka-dc2626)'" />
+      <app-kpi label="Needs Attention" [value]="cnt('Error') + cnt('Paused')" icon="plug" color="var(--ka-f59e0b)" sub="error or paused" />
     </section>
 
     <div class="bar">
@@ -284,7 +284,7 @@ const CONN_CATS = ['All', 'HRIS', 'Payroll', 'Identity', 'Calendar', 'Collaborat
           <div class="ch"><span class="lg" [style.background]="c.color">{{ c.logo }}</span><div><b>{{ c.name }}</b><small>{{ c.vendor }} · {{ c.category }}</small></div>
             <app-wf-toggle [on]="c.status === 'Connected' || c.status === 'Error'" (changed)="toggle(c, $event)" /></div>
           <div class="st"><span [class]="tag(c.status)">{{ c.status }}</span><small>Last sync {{ c.lastSync }}</small></div>
-          <app-sparkline [values]="c.trend" [color]="c.status === 'Error' ? '#ef4444' : c.color" />
+          <app-sparkline [values]="c.trend" [color]="c.status === 'Error' ? 'var(--ka-ef4444)' : c.color" />
           <div class="nums"><span><b>{{ c.calls24h.toLocaleString() }}</b> calls</span><span [class.bad]="c.errors24h > 20"><b>{{ c.errors24h }}</b> errors</span><span><b>{{ c.usedBy.length }}</b> workflows</span></div>
           <div class="cb"><button class="btn-ghost sm" (click)="openCfg(c)">Configure</button><button class="btn-ghost sm" [disabled]="c.status !== 'Connected' && c.status !== 'Error'" (click)="sync(c)">Sync now</button></div>
         </div>
@@ -327,7 +327,7 @@ const CONN_CATS = ['All', 'HRIS', 'Payroll', 'Identity', 'Calendar', 'Collaborat
         <p class="muted">Pick a disconnected connector to set up, or create a custom webhook.</p>
         <div class="pick">
           @for (c of disconnected(); track c.id) {<button (click)="addOpen.set(false); openCfg(c)"><span class="lg" [style.background]="c.color">{{ c.logo }}</span>{{ c.name }}</button>}
-          <button (click)="custom()"><span class="lg" style="background:#0f766e">{{ '{ }' }}</span>Custom webhook</button>
+          <button (click)="custom()"><span class="lg" style="background:var(--kb-0f766e)">{{ '{ }' }}</span>Custom webhook</button>
         </div>
       </div>
     }
@@ -336,19 +336,19 @@ const CONN_CATS = ['All', 'HRIS', 'Payroll', 'Identity', 'Calendar', 'Collaborat
   styles: `
     .bar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; } .bar .search-box { width: 260px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; margin-bottom: 12px; }
-    .cc { display: flex; flex-direction: column; gap: 8px; } .cc.err { border-color: #fecaca; }
+    .cc { display: flex; flex-direction: column; gap: 8px; } .cc.err { border-color: var(--kl-fecaca); }
     .ch { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; } .ch div { display: flex; flex-direction: column; font-size: 13px; } .ch small { color: var(--muted); font-size: 11px; }
-    .lg { width: 38px; height: 38px; border-radius: 9px; color: #fff; display: inline-grid; place-items: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+    .lg { width: 38px; height: 38px; border-radius: 9px; color: var(--kf-ffffff); display: inline-grid; place-items: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
     .st { display: flex; justify-content: space-between; align-items: center; } .st small { color: var(--muted); font-size: 11px; }
-    .nums { display: flex; justify-content: space-between; font-size: 11.5px; color: #4b4f6b; } .bad { color: var(--red); }
+    .nums { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--kf-4b4f6b); } .bad { color: var(--red); }
     .cb { display: flex; gap: 6px; }
-    code { font-size: 11px; background: #f5f5fb; padding: 1px 5px; border-radius: 4px; }
+    code { font-size: 11px; background: var(--kb-f5f5fb); padding: 1px 5px; border-radius: 4px; }
     .logs .table-wrap { max-height: 380px; }
     h4 { margin: 16px 0 6px; font-size: 13px; } .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tc { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 12.5px; } .ok { color: #15803d; } .ko { color: #b91c1c; }
+    .tc { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 12.5px; } .ok { color: var(--kf-15803d); } .ko { color: var(--kf-b91c1c); }
     .danger { color: var(--red); }
-    .pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .pick button { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font-size: 12.5px; text-align: left; }
-    .pick button:hover { border-color: #c4b5fd; }
+    .pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .pick button { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font-size: 12.5px; text-align: left; }
+    .pick button:hover { border-color: var(--kl-c4b5fd); }
   `,
 })
 export class IntegrationsConnectors {
@@ -425,7 +425,7 @@ export class IntegrationsConnectors {
   protected custom() {
     this.addOpen.set(false);
     const id = `C${this.store.connectors().length + 1}`;
-    const c: Connector = { id, name: 'Custom Webhook ' + id, vendor: 'Custom', category: 'Custom', status: 'Not Connected', logo: '{ }', color: '#0f766e', calls24h: 0, errors24h: 0, lastSync: '—', auth: 'HMAC signature', endpoint: 'https://', usedBy: [], trend: Array(12).fill(0) };
+    const c: Connector = { id, name: 'Custom Webhook ' + id, vendor: 'Custom', category: 'Custom', status: 'Not Connected', logo: '{ }', color: 'var(--ka-0f766e)', calls24h: 0, errors24h: 0, lastSync: '—', auth: 'HMAC signature', endpoint: 'https://', usedBy: [], trend: Array(12).fill(0) };
     this.store.connectors.update((l) => [...l, c]);
     this.openCfg(c);
   }
@@ -448,11 +448,11 @@ type Period = keyof typeof PERIODS;
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Instances Started" [value]="started().toLocaleString()" icon="workflow-play" color="#7c3aed" change="9%" sub="vs. previous period" />
-      <app-kpi label="Completed" [value]="completed().toLocaleString()" icon="workflow-check" color="#22c55e" change="7%" sub="vs. previous period" />
-      <app-kpi label="Avg. Cycle Time" value="1.6 d" icon="workflow-timer" color="#3b82f6" change="11%" [up]="false" sub="faster vs. previous" />
-      <app-kpi label="SLA Compliance" value="93.4%" icon="shield-check" color="#0d9488" change="1.8%" sub="vs. previous period" />
-      <app-kpi label="Automated Decisions" [value]="auto().toLocaleString()" icon="workflow-bolt" color="#f59e0b" sub="by automation rules" />
+      <app-kpi label="Instances Started" [value]="started().toLocaleString()" icon="workflow-play" color="var(--ka-7c3aed)" change="9%" sub="vs. previous period" />
+      <app-kpi label="Completed" [value]="completed().toLocaleString()" icon="workflow-check" color="var(--ka-22c55e)" change="7%" sub="vs. previous period" />
+      <app-kpi label="Avg. Cycle Time" value="1.6 d" icon="workflow-timer" color="var(--ka-3b82f6)" change="11%" [up]="false" sub="faster vs. previous" />
+      <app-kpi label="SLA Compliance" value="93.4%" icon="shield-check" color="var(--ka-0d9488)" change="1.8%" sub="vs. previous period" />
+      <app-kpi label="Automated Decisions" [value]="auto().toLocaleString()" icon="workflow-bolt" color="var(--ka-f59e0b)" sub="by automation rules" />
     </section>
 
     <section class="dash">
@@ -477,7 +477,7 @@ type Period = keyof typeof PERIODS;
     </section>
   `,
   styles: `
-    .hint { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #92400e; background: #fffbeb; border-radius: 8px; padding: 8px 10px; margin: 10px 0 0; }
+    .hint { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--kf-92400e); background: var(--kb-fffbeb); border-radius: 8px; padding: 8px 10px; margin: 10px 0 0; }
   `,
 })
 export class WorkflowAnalytics {
@@ -497,9 +497,9 @@ export class WorkflowAnalytics {
     const s = this.store.instances();
     const k = this.k() * 14;
     return [
-      { label: 'Approved', value: Math.round(s.filter((i) => i.status === 'Approved').length * k), color: '#22c55e' },
-      { label: 'Rejected', value: Math.round(s.filter((i) => i.status === 'Rejected').length * k), color: '#ef4444' },
-      { label: 'Cancelled', value: Math.round(s.filter((i) => i.status === 'Cancelled').length * k), color: '#94a3b8' },
+      { label: 'Approved', value: Math.round(s.filter((i) => i.status === 'Approved').length * k), color: 'var(--ka-22c55e)' },
+      { label: 'Rejected', value: Math.round(s.filter((i) => i.status === 'Rejected').length * k), color: 'var(--ka-ef4444)' },
+      { label: 'Cancelled', value: Math.round(s.filter((i) => i.status === 'Cancelled').length * k), color: 'var(--ka-94a3b8)' },
     ];
   });
   protected readonly closedTotal = computed(() => this.mix().reduce((a, m) => a + m.value, 0));
@@ -510,17 +510,17 @@ export class WorkflowAnalytics {
     const r = rng(n * 13);
     const base = (p === '7 days' ? 62 : p === '30 days' ? 185 : 142 * 1.0) * this.app.factor();
     const s = labels.map((_, i) => Math.round(base * (0.8 + r() * 0.4) * (labels[i] === 'Sat' || labels[i] === 'Sun' ? 0.3 : 1)));
-    return { labels, series: [{ name: 'Started', color: '#7c3aed', values: s, area: true }, { name: 'Completed', color: '#22c55e', values: s.map((v) => Math.round(v * (0.86 + r() * 0.1))) }] };
+    return { labels, series: [{ name: 'Started', color: 'var(--ka-7c3aed)', values: s, area: true }, { name: 'Completed', color: 'var(--ka-22c55e)', values: s.map((v) => Math.round(v * (0.86 + r() * 0.1))) }] };
   });
   protected readonly cycle = computed(() => {
     const ws = ['Leave Request', 'Overtime', 'Expense Claim', 'Shift Swap', 'Training', 'Onboarding', 'Visitor'];
-    return { labels: ws, series: [{ name: 'Avg. cycle', color: '#3b82f6', values: [26, 14, 41, 9, 52, 96, 4] }, { name: 'SLA', color: '#f59e0b', values: [72, 24, 48, 24, 72, 120, 8], line: true }] };
+    return { labels: ws, series: [{ name: 'Avg. cycle', color: 'var(--ka-3b82f6)', values: [26, 14, 41, 9, 52, 96, 4] }, { name: 'SLA', color: 'var(--ka-f59e0b)', values: [72, 24, 48, 24, 72, 120, 8], line: true }] };
   });
   protected readonly bottlenecks = computed(() => {
     const m = new Map<string, number>();
     this.store.running().forEach((i) => m.set(currentStep(i), (m.get(currentStep(i)) ?? 0) + 1));
     const rows = [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6);
-    return rows.map(([label, n], i) => ({ label: `${label} (${n})`, value: Math.max(3, 34 - i * 5), display: `${Math.max(3, 34 - i * 5)} h`, color: i === 0 ? '#ef4444' : i < 3 ? '#f59e0b' : '#7c3aed' }));
+    return rows.map(([label, n], i) => ({ label: `${label} (${n})`, value: Math.max(3, 34 - i * 5), display: `${Math.max(3, 34 - i * 5)} h`, color: i === 0 ? 'var(--ka-ef4444)' : i < 3 ? 'var(--ka-f59e0b)' : 'var(--ka-7c3aed)' }));
   });
   protected readonly heat = computed(() => {
     const r = rng(5);

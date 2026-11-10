@@ -73,8 +73,8 @@ const STEPS = ['Loading demand forecast', 'Reading availability & preferences', 
     .setup { display: flex; flex-direction: column; gap: 10px; } .setup label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
     .setup h4 { margin: 8px 0 0; font-size: 13px; } .slider input { accent-color: var(--primary); } .chk { flex-direction: row !important; align-items: center; gap: 8px !important; }
     .run { justify-content: center; margin-top: 8px; }
-    .progress .bar { height: 10px; border-radius: 5px; background: #eef0f6; overflow: hidden; margin-bottom: 14px; } .progress .bar i { display: block; height: 100%; background: var(--primary); transition: width .4s; }
-    .progress ol { list-style: none; padding: 0; margin: 0; font-size: 13px; } .progress li { padding: 5px 0; color: var(--muted); } .progress .done { color: #16a34a; } .progress .cur { color: var(--primary); font-weight: 600; }
+    .progress .bar { height: 10px; border-radius: 5px; background: var(--kb-eef0f6); overflow: hidden; margin-bottom: 14px; } .progress .bar i { display: block; height: 100%; background: var(--primary); transition: width .4s; }
+    .progress ol { list-style: none; padding: 0; margin: 0; font-size: 13px; } .progress li { padding: 5px 0; color: var(--muted); } .progress .done { color: var(--kf-16a34a); } .progress .cur { color: var(--primary); font-weight: 600; }
     .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 12px; }
     .cm { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; } .cm div { font-size: 18px; } .cm s { color: var(--muted); font-size: 14px; } .cm small { color: var(--muted); }
     .idle { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 50px 30px; color: var(--primary); } .idle h3 { color: var(--text); }
@@ -204,11 +204,11 @@ export class AiOptimization {
       <div class="tabs">@for (p of periods; track p) {<button [class.on]="period() === p" (click)="period.set(p)">{{ p }}</button>}</div>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Schedule Adherence" value="94.6%" icon="shield-check" color="#22c55e" change="1.1%" />
-      <app-kpi label="Coverage Achieved" value="98.5%" icon="activity" color="#8b5cf6" change="0.4%" />
-      <app-kpi label="Overtime Share" value="6.8%" icon="clock" color="#f97316" change="0.9%" [good]="false" />
-      <app-kpi label="Last-minute Changes" value="142" icon="refresh" color="#ef4444" change="12%" [up]="false" sub="< 48 h notice" />
-      <app-kpi label="Roster Publish Lead" value="9.2 days" icon="calendar-days" color="#3b82f6" sub="avg. before start" />
+      <app-kpi label="Schedule Adherence" value="94.6%" icon="shield-check" color="var(--ka-22c55e)" change="1.1%" />
+      <app-kpi label="Coverage Achieved" value="98.5%" icon="activity" color="var(--ka-8b5cf6)" change="0.4%" />
+      <app-kpi label="Overtime Share" value="6.8%" icon="clock" color="var(--ka-f97316)" change="0.9%" [good]="false" />
+      <app-kpi label="Last-minute Changes" value="142" icon="refresh" color="var(--ka-ef4444)" change="12%" [up]="false" sub="< 48 h notice" />
+      <app-kpi label="Roster Publish Lead" value="9.2 days" icon="calendar-days" color="var(--ka-3b82f6)" sub="avg. before start" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -238,20 +238,20 @@ export class RosterAnalytics {
   protected readonly hours = computed(() => {
     const s = series(this.n(), 71000, 2500, this.n());
     return [
-      { name: 'Scheduled', color: '#c4b5fd', values: s, area: true },
-      { name: 'Actual', color: '#7c3aed', values: s.map((v, i) => Math.round(v * (0.93 + ((i * 7) % 5) / 100))) },
+      { name: 'Scheduled', color: 'var(--ka-c4b5fd)', values: s, area: true },
+      { name: 'Actual', color: 'var(--ka-7c3aed)', values: s.map((v, i) => Math.round(v * (0.93 + ((i * 7) % 5) / 100))) },
     ];
   });
   protected readonly mix = (() => {
     const groups: Record<string, number> = {};
     SHIFTS.filter((s) => s.assigned).forEach((s) => (groups[s.type] = (groups[s.type] ?? 0) + s.assigned));
-    const colors = ['#7c3aed', '#0284c7', '#dc2626', '#2563eb', '#4338ca', '#65a30d'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-0284c7)', 'var(--ka-dc2626)', 'var(--ka-2563eb)', 'var(--ka-4338ca)', 'var(--ka-65a30d)'];
     return Object.entries(groups).map(([label, value], i) => ({ label, value, color: colors[i % colors.length] }));
   })();
   protected readonly adherence = TEAMS.map((t, i) => {
     const v = [96.2, 93.8, 97.9, 91.4, 92.6, 98.8][i];
-    return { label: t.name, value: v, display: `${v}%`, color: v < 93 ? '#f59e0b' : '#22c55e' };
+    return { label: t.name, value: v, display: `${v}%`, color: v < 93 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' };
   });
   protected readonly reasons = ['Sickness', 'Swap', 'Demand spike', 'No-show', 'Training', 'Other'];
-  protected readonly changes = computed(() => [{ name: 'Changes', color: '#8b5cf6', values: [48, 37, 22, 15, 11, 9].map((v) => Math.round((v * this.n()) / 4)) }]);
+  protected readonly changes = computed(() => [{ name: 'Changes', color: 'var(--ka-8b5cf6)', values: [48, 37, 22, 15, 11, 9].map((v) => Math.round((v * this.n()) / 4)) }]);
 }

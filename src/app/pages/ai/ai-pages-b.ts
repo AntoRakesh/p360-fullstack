@@ -25,7 +25,7 @@ interface Report {
   source: string;
   generated: string;
 }
-const PALETTE = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#0891b2', '#db2777', '#64748b', '#9333ea', '#16a34a'];
+const PALETTE = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-0891b2)', 'var(--ka-db2777)', 'var(--ka-64748b)', 'var(--ka-9333ea)', 'var(--ka-16a34a)'];
 const EXAMPLES = [
   'Overtime hours by department this month',
   'Attendance rate by department this week',
@@ -61,10 +61,10 @@ export function buildReport(raw: string): Report {
       labels,
       series: [{ name: metric, color, values, area: chart === 'Line' }],
       kpis: [
-        { label: unit === '%' ? 'Average' : 'Total', value: unit === '%' ? avg.toFixed(1) + '%' : fmtN(total) + (unit ? ' ' + unit : ''), color: '#7c3aed' },
-        { label: 'Highest', value: `${labels[maxI]} · ${fmtN(values[maxI])}${unit === '%' ? '%' : ''}`, color: '#ef4444' },
-        { label: 'Lowest', value: `${labels[minI]} · ${fmtN(values[minI])}${unit === '%' ? '%' : ''}`, color: '#22c55e' },
-        { label: 'Data points', value: String(values.length), color: '#3b82f6' },
+        { label: unit === '%' ? 'Average' : 'Total', value: unit === '%' ? avg.toFixed(1) + '%' : fmtN(total) + (unit ? ' ' + unit : ''), color: 'var(--ka-7c3aed)' },
+        { label: 'Highest', value: `${labels[maxI]} · ${fmtN(values[maxI])}${unit === '%' ? '%' : ''}`, color: 'var(--ka-ef4444)' },
+        { label: 'Lowest', value: `${labels[minI]} · ${fmtN(values[minI])}${unit === '%' ? '%' : ''}`, color: 'var(--ka-22c55e)' },
+        { label: 'Data points', value: String(values.length), color: 'var(--ka-3b82f6)' },
       ],
       cols: extraCols?.cols ?? [dim === 'time' ? 'Period' : dim === 'employee' ? 'Employee' : dim === 'location' ? 'Location' : 'Department', metric],
       rows: extraCols?.rows ?? labels.map((l, i) => [l, values[i]]),
@@ -72,43 +72,43 @@ export function buildReport(raw: string): Report {
   };
 
   if (/certif|licen|expir/.test(q))
-    return mk('Certifications Expiring (30 days)', 'Days left', EXPIRING.map((e) => e.name), EXPIRING.map((e) => e.cert!.days), 'days', '#8b5cf6', 'Bar',
+    return mk('Certifications Expiring (30 days)', 'Days left', EXPIRING.map((e) => e.name), EXPIRING.map((e) => e.cert!.days), 'days', 'var(--ka-8b5cf6)', 'Bar',
       [`${EXPIRING.length} employees hold certifications expiring within 30 days.`, `${EXPIRING.filter((e) => e.cert!.days <= 7).length} expire within a week — Ahmed Hassan (First Aid) is first.`, 'Safety-critical: First Aid, Fire Safety, Work at Height and Forklift.'],
       'Training, Skills & Compliance', { cols: ['Employee', 'Department', 'Certification', 'Days left'], rows: EXPIRING.map((e) => [e.name, e.dept, e.cert!.name, e.cert!.days]) });
   if (/overtime/.test(q)) {
-    if (dim === 'time') return mk('Overtime Trend by Week', 'Overtime (h)', WEEKS, OVERTIME_TREND, 'h', '#f97316', 'Line', ['Overtime has grown 30% over 12 weeks.', 'The last 3 weeks show acceleration driven by Operations night shifts.', 'Forecast for next week: ~5,300 h.'], 'Time & Attendance · overtime ledger');
+    if (dim === 'time') return mk('Overtime Trend by Week', 'Overtime (h)', WEEKS, OVERTIME_TREND, 'h', 'var(--ka-f97316)', 'Line', ['Overtime has grown 30% over 12 weeks.', 'The last 3 weeks show acceleration driven by Operations night shifts.', 'Forecast for next week: ~5,300 h.'], 'Time & Attendance · overtime ledger');
     if (dim === 'employee') {
       const l = [...emps].sort((a, b) => b.overtime - a.overtime).slice(0, 10);
-      return mk(`Overtime by Employee${dept ? ' · ' + dept.name : ''}`, 'Overtime (h)', l.map((e) => e.name), l.map((e) => Math.round(e.overtime * f)), 'h', '#f97316', 'Bar', [`Top ${l.length} employees by overtime ${periodTxt}.`, `${l.filter((e) => e.overtime > 12).length} exceed the 12 h weekly guideline.`], 'Time & Attendance', { cols: ['Employee', 'Department', 'Role', 'Overtime (h)'], rows: l.map((e) => [e.name, e.dept, e.role, Math.round(e.overtime * f)]) });
+      return mk(`Overtime by Employee${dept ? ' · ' + dept.name : ''}`, 'Overtime (h)', l.map((e) => e.name), l.map((e) => Math.round(e.overtime * f)), 'h', 'var(--ka-f97316)', 'Bar', [`Top ${l.length} employees by overtime ${periodTxt}.`, `${l.filter((e) => e.overtime > 12).length} exceed the 12 h weekly guideline.`], 'Time & Attendance', { cols: ['Employee', 'Department', 'Role', 'Overtime (h)'], rows: l.map((e) => [e.name, e.dept, e.role, Math.round(e.overtime * f)]) });
     }
-    return mk(`Overtime Hours by Department · ${cap(periodTxt)}`, 'Overtime (h)', DEPTS.map((d) => d.name), DEPTS.map((d) => Math.round(d.overtime * f)), 'h', '#f97316', 'Bar', ['Operations accounts for 42% of all overtime hours.', 'Operations overtime is 31% above its 8-week baseline.', 'HR and Finance are well within limits.'], 'Time & Attendance · overtime ledger');
+    return mk(`Overtime Hours by Department · ${cap(periodTxt)}`, 'Overtime (h)', DEPTS.map((d) => d.name), DEPTS.map((d) => Math.round(d.overtime * f)), 'h', 'var(--ka-f97316)', 'Bar', ['Operations accounts for 42% of all overtime hours.', 'Operations overtime is 31% above its 8-week baseline.', 'HR and Finance are well within limits.'], 'Time & Attendance · overtime ledger');
   }
   if (/late/.test(q)) {
     if (dim === 'employee' || dept) {
       const l = [...emps].sort((a, b) => b.late - a.late).slice(0, 10);
-      return mk(`Late Arrivals by Employee${dept ? ' · ' + dept.name : ''}`, 'Late arrivals', l.map((e) => e.name), l.map((e) => e.late), '', '#f59e0b', 'Bar', [`${dept ? dept.name : 'Company'} late arrivals ${periodTxt}: ${dept ? dept.late : 76} today.`, `${l.filter((e) => e.late >= 5).length} employees were late 5+ times this month.`, 'Mondays account for 31% of late minutes.'], 'Time & Attendance', { cols: ['Employee', 'Department', 'Site', 'Late (month)'], rows: l.map((e) => [e.name, e.dept, e.site, e.late]) });
+      return mk(`Late Arrivals by Employee${dept ? ' · ' + dept.name : ''}`, 'Late arrivals', l.map((e) => e.name), l.map((e) => e.late), '', 'var(--ka-f59e0b)', 'Bar', [`${dept ? dept.name : 'Company'} late arrivals ${periodTxt}: ${dept ? dept.late : 76} today.`, `${l.filter((e) => e.late >= 5).length} employees were late 5+ times this month.`, 'Mondays account for 31% of late minutes.'], 'Time & Attendance', { cols: ['Employee', 'Department', 'Site', 'Late (month)'], rows: l.map((e) => [e.name, e.dept, e.site, e.late]) });
     }
-    return mk('Late Arrivals by Department', 'Late', DEPTS.map((d) => d.name), DEPTS.map((d) => d.late), '', '#f59e0b', 'Bar', ['76 late arrivals today (6.1% of employees).', 'Operations (28) and Logistics (18) lead; Sales has the highest rate (7.9%).'], 'Time & Attendance');
+    return mk('Late Arrivals by Department', 'Late', DEPTS.map((d) => d.name), DEPTS.map((d) => d.late), '', 'var(--ka-f59e0b)', 'Bar', ['76 late arrivals today (6.1% of employees).', 'Operations (28) and Logistics (18) lead; Sales has the highest rate (7.9%).'], 'Time & Attendance');
   }
   if (/absent|absentee/.test(q)) {
-    if (dim === 'time') return mk('Absenteeism Trend by Week', 'Absenteeism %', WEEKS, ABSENTEEISM, '%', '#ef4444', 'Line', ['Absenteeism reached 4.8%, a 12-week high.', 'Three consecutive weeks of increase.'], 'Time & Attendance · Leave & Absence');
-    return mk('Absences by Department', 'Absent', DEPTS.map((d) => d.name), DEPTS.map((d) => d.absent), '', '#ef4444', 'Bar', ['60 employees absent today (4.8%).', 'Operations has the most absences; HR has the highest rate.'], 'Time & Attendance');
+    if (dim === 'time') return mk('Absenteeism Trend by Week', 'Absenteeism %', WEEKS, ABSENTEEISM, '%', 'var(--ka-ef4444)', 'Line', ['Absenteeism reached 4.8%, a 12-week high.', 'Three consecutive weeks of increase.'], 'Time & Attendance · Leave & Absence');
+    return mk('Absences by Department', 'Absent', DEPTS.map((d) => d.name), DEPTS.map((d) => d.absent), '', 'var(--ka-ef4444)', 'Bar', ['60 employees absent today (4.8%).', 'Operations has the most absences; HR has the highest rate.'], 'Time & Attendance');
   }
-  if (/contractor/.test(q)) return mk('Contractor Headcount by Month', 'Contractors', MONTHS, CONTRACTOR_TREND, '', '#ef4444', 'Line', ['Contractors increased 12% this month to 349.', 'Growth driven by Warehouse logistics crews for Q4.'], 'Contractor & Vendor Workforce');
+  if (/contractor/.test(q)) return mk('Contractor Headcount by Month', 'Contractors', MONTHS, CONTRACTOR_TREND, '', 'var(--ka-ef4444)', 'Line', ['Contractors increased 12% this month to 349.', 'Growth driven by Warehouse logistics crews for Q4.'], 'Contractor & Vendor Workforce');
   if (/headcount|employees by|staff/.test(q)) {
-    if (dim === 'time') return mk('Headcount Trend by Month', 'Employees', MONTHS, HEADCOUNT_TREND, '', '#7c3aed', 'Line', ['Headcount grew 6.1% in 12 months to 1,248.', 'Net +72 employees; hiring concentrated in Operations and Logistics.'], 'People & Identity');
-    if (dim === 'location') return mk('Headcount by Location', 'People', LOCATIONS.map((l) => l.name), LOCATIONS.map((l) => l.count), '', '#3b82f6', 'Bar', ['Head Office hosts 34% of people.', '20% work remotely.'], 'Real-Time Location');
-    return mk('Headcount by Department', 'Employees', DEPTS.map((d) => d.name), DEPTS.map((d) => d.headcount), '', '#7c3aed', 'Donut', [`${fmtN(TOTAL_EMPLOYEES)} employees across ${DEPTS.length} departments.`, 'Operations is the largest department (31%).'], 'People & Identity');
+    if (dim === 'time') return mk('Headcount Trend by Month', 'Employees', MONTHS, HEADCOUNT_TREND, '', 'var(--ka-7c3aed)', 'Line', ['Headcount grew 6.1% in 12 months to 1,248.', 'Net +72 employees; hiring concentrated in Operations and Logistics.'], 'People & Identity');
+    if (dim === 'location') return mk('Headcount by Location', 'People', LOCATIONS.map((l) => l.name), LOCATIONS.map((l) => l.count), '', 'var(--ka-3b82f6)', 'Bar', ['Head Office hosts 34% of people.', '20% work remotely.'], 'Real-Time Location');
+    return mk('Headcount by Department', 'Employees', DEPTS.map((d) => d.name), DEPTS.map((d) => d.headcount), '', 'var(--ka-7c3aed)', 'Donut', [`${fmtN(TOTAL_EMPLOYEES)} employees across ${DEPTS.length} departments.`, 'Operations is the largest department (31%).'], 'People & Identity');
   }
-  if (/location|site|where|right now|on.?site/.test(q) && !/asset|utili/.test(q)) return mk('People by Location · Right Now', 'People', LOCATIONS.map((l) => l.name), LOCATIONS.map((l) => l.count), '', '#3b82f6', 'Bar', ['1,242 people are checked in right now.', 'Head Office 428 · Warehouse 312 · Remote 248.'], 'Real-Time Location (RTLS)');
-  if (/asset|utili|equipment/.test(q)) return mk('Asset Utilization by Site', 'Utilization %', ASSET_UTIL.map((a) => a.site), ASSET_UTIL.map((a) => a.util), '%', '#7c3aed', 'Bar', ['Warehouse runs hottest at 84%.', 'Site B (58%) has spare capacity — 420 assets.'], 'Device & Edge Management', { cols: ['Site', 'Assets', 'Utilization %'], rows: ASSET_UTIL.map((a) => [a.site, a.assets, a.util]) });
-  if (/attrition|risk|turnover/.test(q)) return mk('High Attrition Risk by Department', 'High-risk employees', DEPTS.map((d) => d.name), DEPTS.map((d) => d.highRisk), '', '#db2777', 'Bar', ['23 employees above 60% attrition risk.', 'Operations (8) and Logistics (4) concentrate 52% of the risk.'], 'Predictive Analytics · model AR-3.2');
-  if (/engage/.test(q)) return mk('Engagement Score by Department', 'Engagement', DEPTS.map((d) => d.name), DEPTS.map((d) => d.engagement), '', '#3b82f6', 'Bar', ['Company engagement averages 76/100.', 'Sales (68) and Operations (71) are below target.'], 'Pulse surveys');
+  if (/location|site|where|right now|on.?site/.test(q) && !/asset|utili/.test(q)) return mk('People by Location · Right Now', 'People', LOCATIONS.map((l) => l.name), LOCATIONS.map((l) => l.count), '', 'var(--ka-3b82f6)', 'Bar', ['1,242 people are checked in right now.', 'Head Office 428 · Warehouse 312 · Remote 248.'], 'Real-Time Location (RTLS)');
+  if (/asset|utili|equipment/.test(q)) return mk('Asset Utilization by Site', 'Utilization %', ASSET_UTIL.map((a) => a.site), ASSET_UTIL.map((a) => a.util), '%', 'var(--ka-7c3aed)', 'Bar', ['Warehouse runs hottest at 84%.', 'Site B (58%) has spare capacity — 420 assets.'], 'Device & Edge Management', { cols: ['Site', 'Assets', 'Utilization %'], rows: ASSET_UTIL.map((a) => [a.site, a.assets, a.util]) });
+  if (/attrition|risk|turnover/.test(q)) return mk('High Attrition Risk by Department', 'High-risk employees', DEPTS.map((d) => d.name), DEPTS.map((d) => d.highRisk), '', 'var(--ka-db2777)', 'Bar', ['23 employees above 60% attrition risk.', 'Operations (8) and Logistics (4) concentrate 52% of the risk.'], 'Predictive Analytics · model AR-3.2');
+  if (/engage/.test(q)) return mk('Engagement Score by Department', 'Engagement', DEPTS.map((d) => d.name), DEPTS.map((d) => d.engagement), '', 'var(--ka-3b82f6)', 'Bar', ['Company engagement averages 76/100.', 'Sales (68) and Operations (71) are below target.'], 'Pulse surveys');
   if (/attendance|present/.test(q)) {
-    if (dim === 'time') return mk('Attendance Rate Trend by Week', 'Attendance %', WEEKS, ATTENDANCE_RATE, '%', '#22c55e', 'Line', ['Attendance declined 4 weeks in a row to 86.7%.', 'Sales and HR drive most of the decline.'], 'Time & Attendance');
-    return mk(`Attendance Rate by Department · ${cap(periodTxt)}`, 'Attendance %', DEPTS.map((d) => d.name), DEPTS.map((d) => pct(d.present, d.headcount)), '%', '#22c55e', 'Bar', ['Company attendance is 86.7% (1,082 of 1,248 on time).', 'IT leads with 93.9%; HR is lowest at 76.2% due to planned leave.'], 'Time & Attendance');
+    if (dim === 'time') return mk('Attendance Rate Trend by Week', 'Attendance %', WEEKS, ATTENDANCE_RATE, '%', 'var(--ka-22c55e)', 'Line', ['Attendance declined 4 weeks in a row to 86.7%.', 'Sales and HR drive most of the decline.'], 'Time & Attendance');
+    return mk(`Attendance Rate by Department · ${cap(periodTxt)}`, 'Attendance %', DEPTS.map((d) => d.name), DEPTS.map((d) => pct(d.present, d.headcount)), '%', 'var(--ka-22c55e)', 'Bar', ['Company attendance is 86.7% (1,082 of 1,248 on time).', 'IT leads with 93.9%; HR is lowest at 76.2% due to planned leave.'], 'Time & Attendance');
   }
-  return mk('Workforce Overview by Department', 'Employees', DEPTS.map((d) => d.name), DEPTS.map((d) => d.headcount), '', '#7c3aed', 'Bar', [`I wasn't sure which metric you meant in "${raw}", so here is a headcount overview.`, 'Try: overtime, attendance, late arrivals, absenteeism, headcount, certifications, assets or attrition risk.'], 'People & Identity');
+  return mk('Workforce Overview by Department', 'Employees', DEPTS.map((d) => d.name), DEPTS.map((d) => d.headcount), '', 'var(--ka-7c3aed)', 'Bar', [`I wasn't sure which metric you meant in "${raw}", so here is a headcount overview.`, 'Try: overtime, attendance, late arrivals, absenteeism, headcount, certifications, assets or attrition risk.'], 'People & Identity');
 }
 
 @Component({
@@ -215,36 +215,36 @@ export function buildReport(raw: string): Report {
   styles: `
     .nl { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 12px; align-items: start; }
     .main { display: flex; flex-direction: column; gap: 12px; min-width: 0; } .side { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 76px; }
-    .ask { background: linear-gradient(115deg, #f1ecff, #faf8ff 60%, #efe8ff); border-color: #e4dcfb; }
-    .ask-row { display: flex; gap: 10px; align-items: center; background: #fff; border: 1px solid #e4def6; border-radius: 10px; padding: 6px 6px 6px 14px; }
+    .ask { background: linear-gradient(115deg, var(--kb-f1ecff), var(--kb-faf8ff) 60%, var(--kb-efe8ff)); border-color: var(--kl-e4dcfb); }
+    .ask-row { display: flex; gap: 10px; align-items: center; background: var(--kb-ffffff); border: 1px solid var(--kl-e4def6); border-radius: 10px; padding: 6px 6px 6px 14px; }
     .ask-row input { flex: 1; border: 0; outline: 0; font: inherit; font-size: 14px; padding: 8px 0; min-width: 0; } .spk { color: var(--primary); }
     .ex { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center; font-size: 12px; }
-    .ex button, .refine button { border: 1px solid #ddd6fe; background: #fff; color: #6d28d9; border-radius: 14px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; }
-    .ex button:hover, .refine button:hover { background: #f5f3ff; }
+    .ex button, .refine button { border: 1px solid var(--kl-ddd6fe); background: var(--kb-ffffff); color: var(--kf-6d28d9); border-radius: 14px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; }
+    .ex button:hover, .refine button:hover { background: var(--kb-f5f3ff); }
     .steps { display: flex; flex-direction: column; gap: 10px; }
-    .step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #8a8fa8; } .step span { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: grid; place-items: center; font-size: 11px; }
+    .step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--kf-8a8fa8); } .step span { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: grid; place-items: center; font-size: 11px; }
     .step.on { color: var(--text); font-weight: 600; } .step.on span { border-color: var(--primary); color: var(--primary); animation: pulse 1s infinite; }
-    .step.done { color: #15803d; } .step.done span { background: #22c55e; border-color: #22c55e; color: #fff; }
+    .step.done { color: var(--kf-15803d); } .step.done span { background: var(--kb-22c55e); border-color: var(--kl-22c55e); color: var(--kf-ffffff); }
     @keyframes pulse { 50% { opacity: 0.4; } }
-    .bar { height: 5px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .bar i { display: block; height: 100%; background: var(--primary); transition: width 0.4s; }
+    .bar { height: 5px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .bar i { display: block; height: 100%; background: var(--primary); transition: width 0.4s; }
     .rep { display: flex; flex-direction: column; gap: 12px; }
     .rep-h { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; } .rep-h h2 { margin: 0 0 2px; font-size: 20px; } .rep-h .muted { font-size: 12px; }
     .rep-btns { display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-start; }
-    .ai-box { display: flex; gap: 10px; padding: 10px 12px; background: #f7f4ff; border-radius: 10px; color: var(--primary); } .ai-box ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: #3d3570; line-height: 1.6; }
+    .ai-box { display: flex; gap: 10px; padding: 10px 12px; background: var(--kb-f7f4ff); border-radius: 10px; color: var(--primary); } .ai-box ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--kf-3d3570); line-height: 1.6; }
     .rk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; } .rk div { border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; display: flex; flex-direction: column; min-width: 0; }
     .rk small { font-size: 11px; color: var(--muted); } .rk b { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .viz-h { display: flex; justify-content: space-between; align-items: center; } .viz-h h3, .dt-h { margin: 0; font-size: 14px; }
     .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-    .seg button { border: 0; background: #fff; padding: 6px 12px; font-size: 12px; cursor: pointer; } .seg button + button { border-left: 1px solid var(--border); } .seg button.on { background: var(--primary); color: #fff; }
+    .seg button { border: 0; background: var(--kb-ffffff); padding: 6px 12px; font-size: 12px; cursor: pointer; } .seg button + button { border-left: 1px solid var(--border); } .seg button.on { background: var(--primary); color: var(--kf-ffffff); }
     .dn { display: flex; justify-content: center; padding: 8px 0; }
     .refine { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; }
     .empty { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 60px 20px; color: var(--primary); text-align: center; } .empty b { color: var(--text); }
     .saved, .recent { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-    .saved li { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; } .saved li.on { border-color: var(--primary); background: #faf8ff; }
+    .saved li { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; } .saved li.on { border-color: var(--primary); background: var(--kb-faf8ff); }
     .s-main { flex: 1; border: 0; background: none; text-align: left; padding: 8px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .s-main b { font-size: 12.5px; } .s-main small { font-size: 11px; color: var(--muted); } .sch { color: var(--primary); display: inline-flex; gap: 3px; align-items: center; }
-    .x { border: 0; background: none; color: #8a8fa8; cursor: pointer; padding: 6px 8px; } .x:hover { color: var(--red); }
-    .recent button { border: 0; background: none; cursor: pointer; display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: #3d4060; padding: 4px 0; text-align: left; } .recent button:hover { color: var(--primary); }
+    .x { border: 0; background: none; color: var(--kf-8a8fa8); cursor: pointer; padding: 6px 8px; } .x:hover { color: var(--red); }
+    .recent button { border: 0; background: none; cursor: pointer; display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--kf-3d4060); padding: 4px 0; text-align: left; } .recent button:hover { color: var(--primary); }
     @media (max-width: 1200px) { .nl { grid-template-columns: 1fr; } .side { position: static; } }
   `,
 })
@@ -381,11 +381,11 @@ const REASONS = ['Not relevant for my sites', 'Already handled', 'Data looks wro
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Open Recommendations" [value]="n('Open')" icon="lightbulb" color="#8b5cf6" [sub]="highOpen() + ' high impact'" />
-      <app-kpi label="In Progress" [value]="n('In Progress')" icon="activity" color="#f97316" sub="being actioned" />
-      <app-kpi label="Completed (30 days)" [value]="n('Done') + 14" icon="shield-check" color="#22c55e" change="22%" sub="vs. previous 30 days" />
-      <app-kpi label="Est. Monthly Savings (open)" [value]="'AED ' + fmt(savings())" icon="ai-chart-up" color="#3b82f6" sub="if all open items are accepted" />
-      <app-kpi label="Acceptance Rate" [value]="acceptRate() + '%'" icon="ai-thumb-up" color="#0891b2" [sub]="'avg confidence ' + avgConf() + '%'" />
+      <app-kpi label="Open Recommendations" [value]="n('Open')" icon="lightbulb" color="var(--ka-8b5cf6)" [sub]="highOpen() + ' high impact'" />
+      <app-kpi label="In Progress" [value]="n('In Progress')" icon="activity" color="var(--ka-f97316)" sub="being actioned" />
+      <app-kpi label="Completed (30 days)" [value]="n('Done') + 14" icon="shield-check" color="var(--ka-22c55e)" change="22%" sub="vs. previous 30 days" />
+      <app-kpi label="Est. Monthly Savings (open)" [value]="'AED ' + fmt(savings())" icon="ai-chart-up" color="var(--ka-3b82f6)" sub="if all open items are accepted" />
+      <app-kpi label="Acceptance Rate" [value]="acceptRate() + '%'" icon="ai-thumb-up" color="var(--ka-0891b2)" [sub]="'avg confidence ' + avgConf() + '%'" />
     </section>
 
     <section class="re">
@@ -456,22 +456,22 @@ const REASONS = ['Not relevant for my sites', 'Already handled', 'Data looks wro
   styles: `
     .re { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 12px; align-items: start; }
     .tabs-r { display: flex; gap: 16px; border-bottom: 1px solid var(--border); margin-bottom: 10px; overflow-x: auto; }
-    .tabs-r button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: #4b4f6b; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; } .tabs-r button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
+    .tabs-r button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: var(--kf-4b4f6b); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; } .tabs-r button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
     .sts { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
-    .sts button { border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; display: inline-flex; gap: 5px; } .sts button.on { background: var(--primary); border-color: var(--primary); color: #fff; } .sts em { font-style: normal; opacity: 0.75; font-size: 10.5px; }
+    .sts button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; display: inline-flex; gap: 5px; } .sts button.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); } .sts em { font-style: normal; opacity: 0.75; font-size: 10.5px; }
     .list ul { list-style: none; margin: 0; padding: 0; }
-    .list li { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 11px 8px; border-bottom: 1px solid #f3f2f8; border-radius: 8px; cursor: pointer; }
-    .list li:hover { background: #faf8ff; } .list li.on { background: #f3eeff; } .list li.empty { display: block; cursor: default; }
-    .r-ic { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; }
+    .list li { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 11px 8px; border-bottom: 1px solid var(--kl-f3f2f8); border-radius: 8px; cursor: pointer; }
+    .list li:hover { background: var(--kb-faf8ff); } .list li.on { background: var(--kb-f3eeff); } .list li.empty { display: block; cursor: default; }
+    .r-ic { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .r-m { min-width: 0; display: flex; flex-direction: column; gap: 4px; } .r-m b { font-size: 13px; } .r-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 11.5px; }
     .btn-primary.sm { padding: 6px 12px; font-size: 12px; white-space: nowrap; }
     .det { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 76px; }
     .d-h { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: center; } .d-h h2 { margin: 0; font-size: 18px; } .d-h div { display: flex; flex-direction: column; }
-    .d-ic { width: 46px; height: 46px; border-radius: 10px; display: grid; place-items: center; color: #fff; }
+    .d-ic { width: 46px; height: 46px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .d-k { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; } .d-k div { border: 1px solid var(--border); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center; }
     .d-k b { font-size: 17px; } .d-k small { font-size: 11px; color: var(--muted); }
-    .red-t { color: #dc2626; } .amber-t { color: #b45309; } .grey-t { color: #4b5563; }
-    .ai-box { display: flex; gap: 10px; padding: 10px 12px; background: #f7f4ff; border-radius: 10px; color: var(--primary); } .ai-box b { font-size: 12.5px; color: var(--text); } .ai-box p { margin: 2px 0 0; font-size: 12.5px; color: #3d3570; line-height: 1.45; }
+    .red-t { color: var(--kf-dc2626); } .amber-t { color: var(--kf-b45309); } .grey-t { color: var(--kf-4b5563); }
+    .ai-box { display: flex; gap: 10px; padding: 10px 12px; background: var(--kb-f7f4ff); border-radius: 10px; color: var(--primary); } .ai-box b { font-size: 12.5px; color: var(--text); } .ai-box p { margin: 2px 0 0; font-size: 12.5px; color: var(--kf-3d3570); line-height: 1.45; }
     h4 { margin: 0; font-size: 13px; }
     .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; } .steps label { display: flex; gap: 8px; align-items: center; font-size: 12.5px; cursor: pointer; } .steps input { accent-color: var(--primary); }
     .steps .done { text-decoration: line-through; color: var(--muted); }

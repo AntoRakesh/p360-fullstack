@@ -25,7 +25,7 @@ export function rng(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const AV = ['#7c3aed', '#2563eb', '#16a34a', '#ea580c', '#db2777', '#0891b2', '#9333ea', '#ca8a04', '#dc2626', '#4f46e5'];
+const AV = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-db2777)', 'var(--ka-0891b2)', 'var(--ka-9333ea)', 'var(--ka-ca8a04)', 'var(--ka-dc2626)', 'var(--ka-4f46e5)'];
 export const avColor = (n: string) => AV[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % AV.length];
 export const initials = (n: string) => n.split(' ').map((p) => p[0]).slice(0, 2).join('').toUpperCase();
 
@@ -41,17 +41,17 @@ export type DeskType = 'Standard Desk' | 'Hot Desk' | 'Focus Desk' | 'Collaborat
 export type ZoneKey = 'focus' | 'collab' | 'open' | 'quiet' | 'team';
 export const DESK_TYPES: DeskType[] = ['Standard Desk', 'Hot Desk', 'Focus Desk', 'Collaboration Area'];
 export const AMENITIES = ['Monitor', 'Dual Monitor', 'Power', 'LAN', 'Standing Desk', 'Docking Station', 'Near Window'];
-export const STATUS_COLOR: Record<DeskStatus, string> = { available: '#22c55e', occupied: '#ef4444', reserved: '#9ca3af', maintenance: '#f59e0b' };
+export const STATUS_COLOR: Record<DeskStatus, string> = { available: 'var(--ka-22c55e)', occupied: 'var(--ka-ef4444)', reserved: 'var(--ka-9ca3af)', maintenance: 'var(--ka-f59e0b)' };
 export const STATUS_LABEL: Record<DeskStatus, string> = { available: 'Available', occupied: 'Occupied', reserved: 'Reserved', maintenance: 'Maintenance' };
 
 export interface ZoneDef { key: ZoneKey; name: string; letter: string; type: DeskType; x: number; y: number; w: number; h: number; fill: string; stroke: string }
 /** Floor-plan zones, SVG viewBox 600 × 372. */
 export const ZONES: ZoneDef[] = [
-  { key: 'focus', name: 'Focus Zone', letter: 'F', type: 'Focus Desk', x: 10, y: 10, w: 172, h: 138, fill: '#e4e6fb', stroke: '#c7cbf3' },
-  { key: 'collab', name: 'Collaboration Area', letter: 'C', type: 'Collaboration Area', x: 184, y: 10, w: 176, h: 104, fill: '#fdf1dc', stroke: '#f6d9a8' },
-  { key: 'open', name: 'Open Workspace', letter: 'A', type: 'Standard Desk', x: 362, y: 10, w: 228, h: 146, fill: '#dff6e6', stroke: '#b6e8c5' },
-  { key: 'quiet', name: 'Quiet Zone', letter: 'Q', type: 'Focus Desk', x: 10, y: 208, w: 290, h: 154, fill: '#dbeafe', stroke: '#b9d4fb' },
-  { key: 'team', name: 'Team Area', letter: 'T', type: 'Hot Desk', x: 302, y: 248, w: 288, h: 114, fill: '#fde4e6', stroke: '#f8c4c9' },
+  { key: 'focus', name: 'Focus Zone', letter: 'F', type: 'Focus Desk', x: 10, y: 10, w: 172, h: 138, fill: 'var(--kb-e4e6fb)', stroke: 'var(--ka-c7cbf3)' },
+  { key: 'collab', name: 'Collaboration Area', letter: 'C', type: 'Collaboration Area', x: 184, y: 10, w: 176, h: 104, fill: 'var(--kb-fdf1dc)', stroke: 'var(--ka-f6d9a8)' },
+  { key: 'open', name: 'Open Workspace', letter: 'A', type: 'Standard Desk', x: 362, y: 10, w: 228, h: 146, fill: 'var(--kb-dff6e6)', stroke: 'var(--ka-b6e8c5)' },
+  { key: 'quiet', name: 'Quiet Zone', letter: 'Q', type: 'Focus Desk', x: 10, y: 208, w: 290, h: 154, fill: 'var(--kb-dbeafe)', stroke: 'var(--ka-b9d4fb)' },
+  { key: 'team', name: 'Team Area', letter: 'T', type: 'Hot Desk', x: 302, y: 248, w: 288, h: 114, fill: 'var(--kb-fde4e6)', stroke: 'var(--ka-f8c4c9)' },
 ];
 interface Slot { zone: ZoneKey; n: number; x: number; y: number; shape: 'desk' | 'cubicle' | 'table' | 'round' }
 const SLOTS: Slot[] = [
@@ -139,19 +139,19 @@ function buildDesks(): Desk[] {
 /* ---------------- Rooms ---------------- */
 export interface Room { id: string; name: string; kind: 'Meeting Room' | 'Focus Room' | 'Collaboration Area' | 'Board Room' | 'Training Room'; site: string; floor: string; capacity: number; equipment: string[]; approval?: boolean; color: string }
 export const ROOMS: Room[] = [
-  { id: 'R1', name: 'Meeting Room A', kind: 'Meeting Room', site: 'Head Office', floor: 'Floor 5', capacity: 8, equipment: ['Display', 'Video Conf', 'Whiteboard'], color: '#ef4444' },
-  { id: 'R2', name: 'Meeting Room B', kind: 'Meeting Room', site: 'Head Office', floor: 'Floor 5', capacity: 6, equipment: ['Display', 'Whiteboard'], color: '#ef4444' },
-  { id: 'R3', name: 'Focus Room 1', kind: 'Focus Room', site: 'Head Office', floor: 'Floor 5', capacity: 2, equipment: ['Display'], color: '#3b82f6' },
-  { id: 'R4', name: 'Focus Room 2', kind: 'Focus Room', site: 'Head Office', floor: 'Floor 5', capacity: 2, equipment: ['Display'], color: '#3b82f6' },
-  { id: 'R5', name: 'Board Room', kind: 'Board Room', site: 'Head Office', floor: 'Floor 8', capacity: 16, equipment: ['Display', 'Video Conf', 'Catering', 'Recording'], approval: true, color: '#7c3aed' },
-  { id: 'R6', name: 'Innovation Lab', kind: 'Collaboration Area', site: 'Head Office', floor: 'Floor 6', capacity: 12, equipment: ['Display', 'Whiteboard', 'Video Conf'], color: '#f59e0b' },
-  { id: 'R7', name: 'Training Room', kind: 'Training Room', site: 'Head Office', floor: 'Floor 2', capacity: 24, equipment: ['Projector', 'Video Conf', 'Recording'], approval: true, color: '#16a34a' },
-  { id: 'R8', name: 'Huddle 3A', kind: 'Meeting Room', site: 'Head Office', floor: 'Floor 3', capacity: 4, equipment: ['Display'], color: '#ef4444' },
-  { id: 'R9', name: 'Orion', kind: 'Meeting Room', site: 'Tech Park', floor: 'Floor 2', capacity: 10, equipment: ['Display', 'Video Conf'], color: '#ef4444' },
-  { id: 'R10', name: 'Vega', kind: 'Meeting Room', site: 'Tech Park', floor: 'Floor 1', capacity: 6, equipment: ['Display', 'Whiteboard'], color: '#ef4444' },
-  { id: 'R11', name: 'Focus Pod T1', kind: 'Focus Room', site: 'Tech Park', floor: 'Floor 1', capacity: 1, equipment: ['Power'], color: '#3b82f6' },
-  { id: 'R12', name: 'Harbor', kind: 'Meeting Room', site: 'Downtown Hub', floor: 'Floor 1', capacity: 8, equipment: ['Display', 'Video Conf'], color: '#ef4444' },
-  { id: 'R13', name: 'Skyline Hub', kind: 'Collaboration Area', site: 'Downtown Hub', floor: 'Floor 1', capacity: 14, equipment: ['Display', 'Whiteboard'], color: '#f59e0b' },
+  { id: 'R1', name: 'Meeting Room A', kind: 'Meeting Room', site: 'Head Office', floor: 'Floor 5', capacity: 8, equipment: ['Display', 'Video Conf', 'Whiteboard'], color: 'var(--ka-ef4444)' },
+  { id: 'R2', name: 'Meeting Room B', kind: 'Meeting Room', site: 'Head Office', floor: 'Floor 5', capacity: 6, equipment: ['Display', 'Whiteboard'], color: 'var(--ka-ef4444)' },
+  { id: 'R3', name: 'Focus Room 1', kind: 'Focus Room', site: 'Head Office', floor: 'Floor 5', capacity: 2, equipment: ['Display'], color: 'var(--ka-3b82f6)' },
+  { id: 'R4', name: 'Focus Room 2', kind: 'Focus Room', site: 'Head Office', floor: 'Floor 5', capacity: 2, equipment: ['Display'], color: 'var(--ka-3b82f6)' },
+  { id: 'R5', name: 'Board Room', kind: 'Board Room', site: 'Head Office', floor: 'Floor 8', capacity: 16, equipment: ['Display', 'Video Conf', 'Catering', 'Recording'], approval: true, color: 'var(--ka-7c3aed)' },
+  { id: 'R6', name: 'Innovation Lab', kind: 'Collaboration Area', site: 'Head Office', floor: 'Floor 6', capacity: 12, equipment: ['Display', 'Whiteboard', 'Video Conf'], color: 'var(--ka-f59e0b)' },
+  { id: 'R7', name: 'Training Room', kind: 'Training Room', site: 'Head Office', floor: 'Floor 2', capacity: 24, equipment: ['Projector', 'Video Conf', 'Recording'], approval: true, color: 'var(--ka-16a34a)' },
+  { id: 'R8', name: 'Huddle 3A', kind: 'Meeting Room', site: 'Head Office', floor: 'Floor 3', capacity: 4, equipment: ['Display'], color: 'var(--ka-ef4444)' },
+  { id: 'R9', name: 'Orion', kind: 'Meeting Room', site: 'Tech Park', floor: 'Floor 2', capacity: 10, equipment: ['Display', 'Video Conf'], color: 'var(--ka-ef4444)' },
+  { id: 'R10', name: 'Vega', kind: 'Meeting Room', site: 'Tech Park', floor: 'Floor 1', capacity: 6, equipment: ['Display', 'Whiteboard'], color: 'var(--ka-ef4444)' },
+  { id: 'R11', name: 'Focus Pod T1', kind: 'Focus Room', site: 'Tech Park', floor: 'Floor 1', capacity: 1, equipment: ['Power'], color: 'var(--ka-3b82f6)' },
+  { id: 'R12', name: 'Harbor', kind: 'Meeting Room', site: 'Downtown Hub', floor: 'Floor 1', capacity: 8, equipment: ['Display', 'Video Conf'], color: 'var(--ka-ef4444)' },
+  { id: 'R13', name: 'Skyline Hub', kind: 'Collaboration Area', site: 'Downtown Hub', floor: 'Floor 1', capacity: 14, equipment: ['Display', 'Whiteboard'], color: 'var(--ka-f59e0b)' },
 ];
 export const HOURS = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
 export const toMin = (t: string) => {
@@ -339,18 +339,18 @@ function seedCleaning(): CleanTask[] {
 /* ---------------- Service catalog ---------------- */
 export interface Service { id: string; name: string; category: string; icon: string; color: string; desc: string; slaH: number; approval: boolean; team: string; popular?: boolean; requests: number; rating: number }
 export const SERVICES: Service[] = [
-  { id: 'S01', name: 'Meeting Catering', category: 'Hospitality', icon: 'coffee', color: '#f59e0b', desc: 'Tea, coffee, snacks or lunch delivered to your meeting room.', slaH: 24, approval: true, team: 'Pantry Services', popular: true, requests: 148, rating: 4.6 },
-  { id: 'S02', name: 'New Joiner Workstation Setup', category: 'Workplace', icon: 'w-desk', color: '#7c3aed', desc: 'Desk, chair, monitor, docking and access card for a new employee.', slaH: 48, approval: true, team: 'Facilities Team A', popular: true, requests: 62, rating: 4.7 },
-  { id: 'S03', name: 'AV Support for Event', category: 'IT & AV', icon: 'w-projector', color: '#3b82f6', desc: 'Technician on standby for town halls, workshops and hybrid meetings.', slaH: 24, approval: false, team: 'IT Service Desk', popular: true, requests: 91, rating: 4.5 },
-  { id: 'S04', name: 'Furniture Move / Re-arrange', category: 'Workplace', icon: 'w-chair', color: '#7c3aed', desc: 'Move desks, cabinets or re-arrange a team area.', slaH: 72, approval: true, team: 'Facilities Team B', requests: 37, rating: 4.2 },
-  { id: 'S05', name: 'Locker Allocation', category: 'Workplace', icon: 'key-round', color: '#7c3aed', desc: 'Request a personal day or permanent locker near your zone.', slaH: 8, approval: false, team: 'Facilities Team A', requests: 120, rating: 4.8 },
-  { id: 'S06', name: 'Deep Cleaning Request', category: 'Housekeeping', icon: 'w-broom', color: '#16a34a', desc: 'Ad-hoc deep clean for a room, pantry or spill.', slaH: 4, approval: false, team: 'Housekeeping', popular: true, requests: 205, rating: 4.4 },
-  { id: 'S07', name: 'Courier & Mail Pickup', category: 'Logistics', icon: 'w-package', color: '#0891b2', desc: 'Internal mail, courier dispatch and parcel collection.', slaH: 8, approval: false, team: 'Mailroom', requests: 176, rating: 4.6 },
-  { id: 'S08', name: 'Stationery Supplies', category: 'Logistics', icon: 'file-text', color: '#0891b2', desc: 'Notebooks, pens, printer paper and toner delivered to your desk.', slaH: 24, approval: false, team: 'Stores', requests: 233, rating: 4.3 },
-  { id: 'S09', name: 'Visitor Parking Pass', category: 'Parking', icon: 'w-car', color: '#db2777', desc: 'Reserve a visitor bay and send a QR pass to your guest.', slaH: 2, approval: false, team: 'Security Desk', requests: 158, rating: 4.7 },
-  { id: 'S10', name: 'Temperature Adjustment', category: 'Building', icon: 'w-thermo', color: '#ef4444', desc: 'Too hot or cold? Request a zone set-point change.', slaH: 4, approval: false, team: 'MEP Contractor', requests: 312, rating: 4.1 },
-  { id: 'S11', name: 'Event Space Booking', category: 'Hospitality', icon: 'users', color: '#f59e0b', desc: 'Book the atrium or training hall for events over 30 people.', slaH: 72, approval: true, team: 'Workplace Experience', requests: 24, rating: 4.5 },
-  { id: 'S12', name: 'Signage & Printing', category: 'Logistics', icon: 'megaphone', color: '#0891b2', desc: 'Banners, door signage and large-format printing.', slaH: 72, approval: true, team: 'Stores', requests: 19, rating: 4.0 },
+  { id: 'S01', name: 'Meeting Catering', category: 'Hospitality', icon: 'coffee', color: 'var(--ka-f59e0b)', desc: 'Tea, coffee, snacks or lunch delivered to your meeting room.', slaH: 24, approval: true, team: 'Pantry Services', popular: true, requests: 148, rating: 4.6 },
+  { id: 'S02', name: 'New Joiner Workstation Setup', category: 'Workplace', icon: 'w-desk', color: 'var(--ka-7c3aed)', desc: 'Desk, chair, monitor, docking and access card for a new employee.', slaH: 48, approval: true, team: 'Facilities Team A', popular: true, requests: 62, rating: 4.7 },
+  { id: 'S03', name: 'AV Support for Event', category: 'IT & AV', icon: 'w-projector', color: 'var(--ka-3b82f6)', desc: 'Technician on standby for town halls, workshops and hybrid meetings.', slaH: 24, approval: false, team: 'IT Service Desk', popular: true, requests: 91, rating: 4.5 },
+  { id: 'S04', name: 'Furniture Move / Re-arrange', category: 'Workplace', icon: 'w-chair', color: 'var(--ka-7c3aed)', desc: 'Move desks, cabinets or re-arrange a team area.', slaH: 72, approval: true, team: 'Facilities Team B', requests: 37, rating: 4.2 },
+  { id: 'S05', name: 'Locker Allocation', category: 'Workplace', icon: 'key-round', color: 'var(--ka-7c3aed)', desc: 'Request a personal day or permanent locker near your zone.', slaH: 8, approval: false, team: 'Facilities Team A', requests: 120, rating: 4.8 },
+  { id: 'S06', name: 'Deep Cleaning Request', category: 'Housekeeping', icon: 'w-broom', color: 'var(--ka-16a34a)', desc: 'Ad-hoc deep clean for a room, pantry or spill.', slaH: 4, approval: false, team: 'Housekeeping', popular: true, requests: 205, rating: 4.4 },
+  { id: 'S07', name: 'Courier & Mail Pickup', category: 'Logistics', icon: 'w-package', color: 'var(--ka-0891b2)', desc: 'Internal mail, courier dispatch and parcel collection.', slaH: 8, approval: false, team: 'Mailroom', requests: 176, rating: 4.6 },
+  { id: 'S08', name: 'Stationery Supplies', category: 'Logistics', icon: 'file-text', color: 'var(--ka-0891b2)', desc: 'Notebooks, pens, printer paper and toner delivered to your desk.', slaH: 24, approval: false, team: 'Stores', requests: 233, rating: 4.3 },
+  { id: 'S09', name: 'Visitor Parking Pass', category: 'Parking', icon: 'w-car', color: 'var(--ka-db2777)', desc: 'Reserve a visitor bay and send a QR pass to your guest.', slaH: 2, approval: false, team: 'Security Desk', requests: 158, rating: 4.7 },
+  { id: 'S10', name: 'Temperature Adjustment', category: 'Building', icon: 'w-thermo', color: 'var(--ka-ef4444)', desc: 'Too hot or cold? Request a zone set-point change.', slaH: 4, approval: false, team: 'MEP Contractor', requests: 312, rating: 4.1 },
+  { id: 'S11', name: 'Event Space Booking', category: 'Hospitality', icon: 'users', color: 'var(--ka-f59e0b)', desc: 'Book the atrium or training hall for events over 30 people.', slaH: 72, approval: true, team: 'Workplace Experience', requests: 24, rating: 4.5 },
+  { id: 'S12', name: 'Signage & Printing', category: 'Logistics', icon: 'megaphone', color: 'var(--ka-0891b2)', desc: 'Banners, door signage and large-format printing.', slaH: 72, approval: true, team: 'Stores', requests: 19, rating: 4.0 },
 ];
 
 /* ---------------- Utilization analytics (shared by desk page, space utilization, reports) ---------------- */
@@ -358,12 +358,12 @@ export const TOP_ZONES = [
   { label: 'Open Workspace', value: 92 }, { label: 'Collaboration Area', value: 78 }, { label: 'Team Area', value: 68 },
   { label: 'Focus Zone', value: 54 }, { label: 'Quiet Zone', value: 46 }, { label: 'Executive Area', value: 32 },
 ];
-export const zoneColor = (v: number) => (v >= 85 ? '#ef4444' : v >= 60 ? '#f59e0b' : v >= 40 ? '#3b82f6' : '#22c55e');
+export const zoneColor = (v: number) => (v >= 85 ? 'var(--ka-ef4444)' : v >= 60 ? 'var(--ka-f59e0b)' : v >= 40 ? 'var(--ka-3b82f6)' : 'var(--ka-22c55e)');
 export const USAGE_7D = { labels: ['8 Oct', '9 Oct', '10 Oct', '11 Oct', '12 Oct', '13 Oct', '14 Oct'], occ: [68, 82, 72, 64, 79, 76, 80], avail: [44, 35, 30, 33, 52, 45, 55] };
 export const USAGE_PREV = { labels: ['1 Oct', '2 Oct', '3 Oct', '4 Oct', '5 Oct', '6 Oct', '7 Oct'], occ: [62, 71, 74, 58, 49, 66, 73], avail: [48, 40, 36, 52, 61, 44, 39] };
 export const INSIGHTS = [
-  { label: 'Standard Desk', value: 210, color: '#7c3aed' }, { label: 'Hot Desk', value: 84, color: '#3b82f6' }, { label: 'Focus Desk', value: 63, color: '#22c55e' },
-  { label: 'Collaboration Area', value: 42, color: '#f59e0b' }, { label: 'Others', value: 21, color: '#a1a1aa' },
+  { label: 'Standard Desk', value: 210, color: 'var(--ka-7c3aed)' }, { label: 'Hot Desk', value: 84, color: 'var(--ka-3b82f6)' }, { label: 'Focus Desk', value: 63, color: 'var(--ka-22c55e)' },
+  { label: 'Collaboration Area', value: 42, color: 'var(--ka-f59e0b)' }, { label: 'Others', value: 21, color: 'var(--ka-a1a1aa)' },
 ];
 export const UTIL_HOURS = ['8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5 PM', '6 PM'];
 export const FLOOR_HEAT: number[][] = [8, 7, 6, 5, 4, 3, 2, 1].map((f) => UTIL_HOURS.map((_, h) => {

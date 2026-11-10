@@ -6,7 +6,7 @@ import { DualChart, Plate } from './meal-ui';
 import { AVG12, COST12, COST_SCALE, DAYS, fmt, fmtDay, GROUPS, MEAL_TIMES, MEAL_TYPES, MealPlan, MealStore, MealType, MONTHS12, PLAN_SEED, PLAN_TYPES, POLICY_SEED, Policy, SITES } from './meals.data';
 
 const FORM_TABS = ['Basic Details', 'Meal Entitlement', 'Eligibility', 'Pricing', 'Policy Rules'] as const;
-const PLATE: Record<MealType, { e: string; bg: string; k: 'breakfast' | 'lunch' | 'dinner' }> = { Breakfast: { e: '🍳', bg: '#fcd34d', k: 'breakfast' }, Lunch: { e: '🥗', bg: '#86efac', k: 'lunch' }, Dinner: { e: '🍲', bg: '#fdba74', k: 'dinner' } };
+const PLATE: Record<MealType, { e: string; bg: string; k: 'breakfast' | 'lunch' | 'dinner' }> = { Breakfast: { e: '🍳', bg: 'var(--kb-fcd34d)', k: 'breakfast' }, Lunch: { e: '🥗', bg: 'var(--kb-86efac)', k: 'lunch' }, Dinner: { e: '🍲', bg: 'var(--kb-fdba74)', k: 'dinner' } };
 
 @Component({
   selector: 'app-meal-plans-policies',
@@ -32,11 +32,11 @@ const PLATE: Record<MealType, { e: string; bg: string; k: 'breakfast' | 'lunch' 
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Active Meal Plans" [value]="store.plans().length" icon="m-cutlery" color="#7c3aed" change="20%" sub="vs. last quarter" />
-      <app-kpi label="Total Users Enrolled" [value]="fmt(store.enrolled())" icon="users" color="#22c55e" change="12%" sub="vs. last month" />
-      <app-kpi label="Daily Average Meals" value="1,932" icon="m-cloche" color="#f59e0b" change="8%" sub="vs. last week" />
-      <app-kpi label="Monthly Meal Cost" value="AED 46,850" icon="m-coin" color="#ef4444" change="5%" [up]="false" [good]="false" sub="vs. last month" />
-      <app-kpi label="Canteen Locations" [value]="store.canteens().length" icon="m-store" color="#2563eb" sub="3 on-site | 1 partner" subColor="#2563eb" />
+      <app-kpi label="Active Meal Plans" [value]="store.plans().length" icon="m-cutlery" color="var(--ka-7c3aed)" change="20%" sub="vs. last quarter" />
+      <app-kpi label="Total Users Enrolled" [value]="fmt(store.enrolled())" icon="users" color="var(--ka-22c55e)" change="12%" sub="vs. last month" />
+      <app-kpi label="Daily Average Meals" value="1,932" icon="m-cloche" color="var(--ka-f59e0b)" change="8%" sub="vs. last week" />
+      <app-kpi label="Monthly Meal Cost" value="AED 46,850" icon="m-coin" color="var(--ka-ef4444)" change="5%" [up]="false" [good]="false" sub="vs. last month" />
+      <app-kpi label="Canteen Locations" [value]="store.canteens().length" icon="m-store" color="var(--ka-2563eb)" sub="3 on-site | 1 partner" subColor="var(--ka-2563eb)" />
     </section>
 
     <section class="mp-grid">
@@ -288,44 +288,44 @@ const PLATE: Record<MealType, { e: string; bg: string; k: 'breakfast' | 'lunch' 
     .mp-grid { display: grid; grid-template-columns: minmax(0, 1fr) 394px; gap: 12px; align-items: start; }
     .col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .t-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; } .t-head h3 { margin-right: auto; }
-    .seg { display: flex; gap: 6px; } .seg button { padding: 7px 18px; border: 1px solid var(--border); background: #fff; border-radius: 6px; font-size: 12px; color: #3b3f5c; cursor: pointer; }
-    .seg button.on { background: var(--primary); border-color: var(--primary); color: #fff; } .seg.sm button { padding: 6px 15px; background: #f4f4fa; border-color: #f4f4fa; } .seg.sm button.on { background: var(--primary); }
+    .seg { display: flex; gap: 6px; } .seg button { padding: 7px 18px; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; font-size: 12px; color: var(--kf-3b3f5c); cursor: pointer; }
+    .seg button.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); } .seg.sm button { padding: 6px 15px; background: var(--kb-f4f4fa); border-color: var(--kl-f4f4fa); } .seg.sm button.on { background: var(--primary); }
     .site { width: 132px; } .srch { width: 266px; } .srch input { width: 100%; }
-    .pt th { background: #fff; font-weight: 500; color: #3b3f5c; font-size: 11.5px; border-bottom: 0; padding: 7px 5px; } .pt td { padding: 8px 5px; font-size: 11.5px; color: #3b3f5c; border-bottom: 0; }
+    .pt th { background: var(--kb-ffffff); font-weight: 500; color: var(--kf-3b3f5c); font-size: 11.5px; border-bottom: 0; padding: 7px 5px; } .pt td { padding: 8px 5px; font-size: 11.5px; color: var(--kf-3b3f5c); border-bottom: 0; }
     .pt .c { text-align: center; } .pname { display: inline-flex; align-items: center; gap: 10px; color: var(--text); } .pname b { font-weight: 600; }
-    .pi { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: #fff; }
-    .st { display: inline-flex; align-items: center; gap: 7px; padding: 3px 12px 3px 8px; border-radius: 4px; background: #e8f9ee; color: #15803d; min-width: 70px; } .st i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; }
-    .st.off { background: #fde8e8; color: #b91c1c; } .st.off i { background: #ef4444; }
+    .pi { width: 22px; height: 22px; border-radius: 5px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .st { display: inline-flex; align-items: center; gap: 7px; padding: 3px 12px 3px 8px; border-radius: 4px; background: var(--kb-e8f9ee); color: var(--kf-15803d); min-width: 70px; } .st i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-22c55e); }
+    .st.off { background: var(--kb-fde8e8); color: var(--kf-b91c1c); } .st.off i { background: var(--kb-ef4444); }
     .dots { font-size: 11px; letter-spacing: -1px; font-weight: 700; } .empty { text-align: center; color: var(--muted); padding: 24px; }
-    .e-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; } .for { font-weight: 400; color: #3b3f5c; font-size: 14px; }
+    .e-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; } .for { font-weight: 400; color: var(--kf-3b3f5c); font-size: 14px; }
     .week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
     .day { border: 1px solid var(--border); border-radius: 6px; padding: 6px 4px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-    .dh { display: flex; align-items: center; gap: 10px; font-size: 11.5px; padding: 2px 4px; cursor: pointer; } .dh input { accent-color: #22c55e; width: 15px; height: 15px; margin: 0; }
+    .dh { display: flex; align-items: center; gap: 10px; font-size: 11.5px; padding: 2px 4px; cursor: pointer; } .dh input { accent-color: var(--kf-22c55e); width: 15px; height: 15px; margin: 0; }
     .meal { display: flex; align-items: center; gap: 6px; border: 0; background: none; text-align: left; padding: 3px 2px; border-radius: 6px; cursor: pointer; min-height: 56px; min-width: 0; }
-    .meal:hover { background: #f6f3ff; } .meal span { display: flex; flex-direction: column; min-width: 0; } .meal b { font-size: 10.5px; font-weight: 600; } .meal small { font-size: 9px; color: var(--muted); white-space: nowrap; }
-    .meal.none { justify-content: center; color: #9ca3af; gap: 8px; } .meal.none span { font-size: 10px; color: #6b7090; }
-    .mtab td, .mtab th { font-size: 12px; padding: 7px 8px; } .mtab .tot td { font-weight: 600; background: #fafafe; } .note { font-size: 12px; margin: 10px 0 0; }
-    .cal-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; } .lg { display: flex; gap: 12px; font-size: 11.5px; color: #4b4f6b; } .lg span { display: inline-flex; gap: 5px; align-items: center; }
+    .meal:hover { background: var(--kb-f6f3ff); } .meal span { display: flex; flex-direction: column; min-width: 0; } .meal b { font-size: 10.5px; font-weight: 600; } .meal small { font-size: 9px; color: var(--muted); white-space: nowrap; }
+    .meal.none { justify-content: center; color: var(--kf-9ca3af); gap: 8px; } .meal.none span { font-size: 10px; color: var(--kf-6b7090); }
+    .mtab td, .mtab th { font-size: 12px; padding: 7px 8px; } .mtab .tot td { font-weight: 600; background: var(--kb-fafafe); } .note { font-size: 12px; margin: 10px 0 0; }
+    .cal-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; } .lg { display: flex; gap: 12px; font-size: 11.5px; color: var(--kf-4b4f6b); } .lg span { display: inline-flex; gap: 5px; align-items: center; }
     .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; } .cw { font-size: 11px; color: var(--muted); text-align: center; }
     .cc { border: 1px solid var(--border); border-radius: 6px; height: 40px; padding: 3px 6px; display: flex; flex-direction: column; justify-content: space-between; font-size: 11px; } .cc.blank { border: 0; } .cc.today { border-color: var(--primary); background: var(--primary-soft); }
-    .cds { display: flex; gap: 3px; } .cd { width: 8px; height: 8px; border-radius: 50%; display: inline-block; } .cd.Breakfast { background: #f59e0b; } .cd.Lunch { background: #22c55e; } .cd.Dinner { background: #7c3aed; }
+    .cds { display: flex; gap: 3px; } .cd { width: 8px; height: 8px; border-radius: 50%; display: inline-block; } .cd.Breakfast { background: var(--kb-f59e0b); } .cd.Lunch { background: var(--kb-22c55e); } .cd.Dinner { background: var(--kb-7c3aed); }
     .bottom { display: grid; grid-template-columns: minmax(0, 0.97fr) minmax(0, 1.03fr); gap: 12px; } .bottom h3 { margin-bottom: 8px; }
     .enr { display: flex; align-items: center; gap: 10px; } .enr app-donut { flex-shrink: 0; }
-    :host ::ng-deep .enr .donut-mid b { font-size: 21px; } :host ::ng-deep .enr .donut-mid span { font-size: 11.5px; color: #3b3f5c; }
+    :host ::ng-deep .enr .donut-mid b { font-size: 21px; } :host ::ng-deep .enr .donut-mid span { font-size: 11.5px; color: var(--kf-3b3f5c); }
     .dl { list-style: none; margin: 0; padding: 0; flex: 1; display: flex; flex-direction: column; gap: 9px; min-width: 0; }
-    .dl li { display: grid; grid-template-columns: 9px 1fr auto 50px; gap: 6px; white-space: nowrap; align-items: center; font-size: 11.5px; color: #3b3f5c; } .dl i { width: 9px; height: 9px; border-radius: 50%; } .dl b { font-weight: 500; text-align: right; } .dl em { font-style: normal; text-align: right; }
+    .dl li { display: grid; grid-template-columns: 9px 1fr auto 50px; gap: 6px; white-space: nowrap; align-items: center; font-size: 11.5px; color: var(--kf-3b3f5c); } .dl i { width: 9px; height: 9px; border-radius: 50%; } .dl b { font-weight: 500; text-align: right; } .dl em { font-style: normal; text-align: right; }
     .mc-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; } .mc-head h3 { margin: 0 !important; } .mc-head .select { padding: 5px 28px 5px 10px; font-size: 11.5px; }
-    .form h3 { display: flex; align-items: center; gap: 8px; } .new-tag { font-size: 10.5px; font-weight: 500; padding: 1px 7px; border-radius: 8px; background: #dcfce7; color: #15803d; }
+    .form h3 { display: flex; align-items: center; gap: 8px; } .new-tag { font-size: 10.5px; font-weight: 500; padding: 1px 7px; border-radius: 8px; background: var(--kb-dcfce7); color: var(--kf-15803d); }
     .ftabs { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); margin: 12px 0 12px; }
-    .ftabs button { border: 0; background: none; padding: 6px 6px; font-size: 11px; color: #3b3f5c; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; } .ftabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 500; background: #f6f3ff; border-radius: 4px 4px 0 0; }
-    .fl { display: flex; flex-direction: column; gap: 5px; font-size: 11.5px; color: #4b4f6b; margin-bottom: 10px; min-width: 0; } .fl em { color: var(--red); font-style: normal; } .fl .input, .fl .select { font-size: 11.5px; width: 100%; }
+    .ftabs button { border: 0; background: none; padding: 6px 6px; font-size: 11px; color: var(--kf-3b3f5c); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; } .ftabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 500; background: var(--kb-f6f3ff); border-radius: 4px 4px 0 0; }
+    .fl { display: flex; flex-direction: column; gap: 5px; font-size: 11.5px; color: var(--kf-4b4f6b); margin-bottom: 10px; min-width: 0; } .fl em { color: var(--red); font-style: normal; } .fl .input, .fl .select { font-size: 11.5px; width: 100%; }
     textarea.input { resize: vertical; font-family: inherit; min-height: 44px; }
     .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; } .row2.tight { gap: 8px; } .row2 > .fl { margin-bottom: 10px; } .row2.tight > * { min-width: 0; }
-    .tgl { width: 36px; height: 20px; border-radius: 12px; border: 0; background: #d1d5db; position: relative; cursor: pointer; padding: 0; margin-top: 4px; } .tgl i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left 0.15s; }
-    .tgl.on { background: #22c55e; } .tgl.on i { left: 18px; } .fl > .tgl { align-self: flex-start; } .fl:has(> .tgl) { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; } .fl:has(> .tgl) > :first-child { grid-column: 1 / -1; }
+    .tgl { width: 36px; height: 20px; border-radius: 12px; border: 0; background: var(--kb-d1d5db); position: relative; cursor: pointer; padding: 0; margin-top: 4px; } .tgl i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: left 0.15s; }
+    .tgl.on { background: var(--kb-22c55e); } .tgl.on i { left: 18px; } .fl > .tgl { align-self: flex-start; } .fl:has(> .tgl) { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; } .fl:has(> .tgl) > :first-child { grid-column: 1 / -1; }
     .tgl-l { font-size: 12px; color: var(--text); margin-top: 4px; } .row-t { display: flex !important; flex-direction: row !important; justify-content: space-between; align-items: center; }
-    .date { position: relative; display: flex; justify-content: space-between; align-items: center; text-align: left; cursor: pointer; padding: 8px 10px; } .date app-icon { color: #3b3f5c; } .date input { position: absolute; left: 0; bottom: 0; width: 100%; height: 0; opacity: 0; border: 0; padding: 0; pointer-events: none; }
-    .ms { width: 100%; text-align: left; } .chipx { display: inline-flex; gap: 4px; align-items: center; background: #eef2ff; color: #4338ca; border-radius: 4px; padding: 0 6px; font-size: 10px; } .chipx b { cursor: pointer; }
+    .date { position: relative; display: flex; justify-content: space-between; align-items: center; text-align: left; cursor: pointer; padding: 8px 10px; } .date app-icon { color: var(--kf-3b3f5c); } .date input { position: absolute; left: 0; bottom: 0; width: 100%; height: 0; opacity: 0; border: 0; padding: 0; pointer-events: none; }
+    .ms { width: 100%; text-align: left; } .chipx { display: inline-flex; gap: 4px; align-items: center; background: var(--kb-eef2ff); color: var(--kf-4338ca); border-radius: 4px; padding: 0 6px; font-size: 10px; } .chipx b { cursor: pointer; }
     .sd { left: 0; right: auto; min-width: 170px; } .sd input { margin: 0; }
     .ck { display: flex; align-items: center; gap: 6px; color: var(--text); }
     .factions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; } .factions button { padding: 7px 18px; font-weight: 500; }
@@ -335,10 +335,10 @@ const PLATE: Record<MealType, { e: string; bg: string; k: 'breakfast' | 'lunch' 
     .calc { display: grid; grid-template-columns: 1fr auto; gap: 6px; font-size: 12px; margin: 0 0 10px; } .calc dd { margin: 0; text-align: right; }
     .ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; } .ph .link { display: inline-flex; gap: 5px; align-items: center; font-size: 12px; }
     .pr { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-    .pr li { display: grid; grid-template-columns: 20px 124px 1fr; gap: 4px; align-items: center; font-size: 11px; color: #1f2240; min-height: 17px; } .pr.mini li { grid-template-columns: 20px 1fr 1.2fr; font-size: 11px; margin-bottom: 4px; }
+    .pr li { display: grid; grid-template-columns: 20px 124px 1fr; gap: 4px; align-items: center; font-size: 11px; color: var(--kf-1f2240); min-height: 17px; } .pr.mini li { grid-template-columns: 20px 1fr 1.2fr; font-size: 11px; margin-bottom: 4px; }
     .tc { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
-    .tc li { display: grid; grid-template-columns: 140px 1fr 44px 40px; gap: 8px; align-items: center; font-size: 11.5px; color: #1f2240; cursor: pointer; } .tc b { font-weight: 500; text-align: right; } .tc em { font-style: normal; text-align: right; }
-    .trk { height: 14px; background: #f1f2f7; border-radius: 2px; overflow: hidden; } .trk i { display: block; height: 100%; }
+    .tc li { display: grid; grid-template-columns: 140px 1fr 44px 40px; gap: 8px; align-items: center; font-size: 11.5px; color: var(--kf-1f2240); cursor: pointer; } .tc b { font-weight: 500; text-align: right; } .tc em { font-style: normal; text-align: right; }
+    .trk { height: 14px; background: var(--kb-f1f2f7); border-radius: 2px; overflow: hidden; } .trk i { display: block; height: 100%; }
     .pol-form { display: flex; flex-direction: column; gap: 10px; } .pol-form label { display: grid; grid-template-columns: 200px 1fr; gap: 10px; align-items: center; font-size: 12.5px; } .pol-form span { display: inline-flex; gap: 8px; align-items: center; }
     @media (max-width: 1300px) { .mp-grid { grid-template-columns: 1fr; } .bottom { grid-template-columns: 1fr; } }
   `,
@@ -359,7 +359,7 @@ export class MealPlans {
   protected readonly times = MEAL_TIMES;
   protected readonly plate = PLATE;
   protected readonly formTabs = FORM_TABS;
-  protected readonly barColors = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b'];
+  protected readonly barColors = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)'];
   private readonly entEl = viewChild<ElementRef<HTMLElement>>('ent');
 
   protected readonly tab = signal('All Plans');
@@ -550,7 +550,7 @@ export class MealPlans {
   protected newPlan() {
     this.draft.set({
       id: this.store.nextPlanId(), name: '', desc: '', eligibility: 'All Employees', sites: 'All Sites', siteList: [...SITES], price: 15, status: 'Active', enrolled: 0,
-      icon: 'm-cutlery', color: '#14b8a6', donut: '#94a3b8', type: 'Employee Plan', from: new Date().toISOString().slice(0, 10), to: '2027-12-31',
+      icon: 'm-cutlery', color: 'var(--ka-14b8a6)', donut: 'var(--ka-94a3b8)', type: 'Employee Plan', from: new Date().toISOString().slice(0, 10), to: '2027-12-31',
       meals: { Breakfast: [true, true, true, true, true, false, false], Lunch: [true, true, true, true, true, false, false], Dinner: Array(7).fill(false) }, subsidy: 50, grades: ['All'], carryForward: false, maxPerSlot: 1,
     });
     this.ftab.set('Basic Details');

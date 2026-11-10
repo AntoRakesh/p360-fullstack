@@ -3,7 +3,7 @@ import { UI } from '../../shared/ui';
 import { AdminStore, Translation } from './admin.data';
 import { ADMIN_CSS, AdminLogo, AdminSwitch, AdminToast } from './admin-ui';
 
-const PRESETS = ['#7c3aed', '#2563eb', '#0891b2', '#16a34a', '#ea580c', '#db2777', '#1e293b', '#b45309'];
+const PRESETS = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0891b2)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-db2777)', 'var(--ka-1e293b)', 'var(--ka-b45309)'];
 const LANGS = [
   { name: 'English (US)', code: 'en', locale: 'en-US', rtl: false }, { name: 'Arabic', code: 'ar', locale: 'ar-AE', rtl: true },
   { name: 'Hindi', code: 'hi', locale: 'hi-IN', rtl: false }, { name: 'French', code: 'fr', locale: 'fr-FR', rtl: false },
@@ -20,10 +20,10 @@ const LANGS = [
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Languages Enabled" [value]="loc().languages.length" icon="admin-languages" color="#0d9488" [sub]="loc().rtl ? 'RTL supported' : 'LTR only'" />
-      <app-kpi label="Translation Coverage" [value]="coverage() + '%'" icon="admin-globe" color="#7c3aed" [sub]="store.missingTranslations() + ' strings missing'" [subColor]="store.missingTranslations() ? '#d97706' : '#16a34a'" />
-      <app-kpi label="Primary Colour" [value]="b().primary.toUpperCase()" icon="admin-palette" [color]="b().primary" [sub]="contrastOk() ? 'AA contrast with white' : 'low contrast'" />
-      <app-kpi label="Default Language" [value]="store.org().language" icon="message" color="#2563eb" [sub]="store.org().timeZone" />
+      <app-kpi label="Languages Enabled" [value]="loc().languages.length" icon="admin-languages" color="var(--ka-0d9488)" [sub]="loc().rtl ? 'RTL supported' : 'LTR only'" />
+      <app-kpi label="Translation Coverage" [value]="coverage() + '%'" icon="admin-globe" color="var(--ka-7c3aed)" [sub]="store.missingTranslations() + ' strings missing'" [subColor]="store.missingTranslations() ? 'var(--ka-d97706)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Primary Colour" [value]="(b().primary.startsWith('#') ? b().primary : '#' + b().primary.slice(-7, -1)).toUpperCase()" icon="admin-palette" [color]="b().primary" [sub]="contrastOk() ? 'AA contrast with white' : 'low contrast'" />
+      <app-kpi label="Default Language" [value]="store.org().language" icon="message" color="var(--ka-2563eb)" [sub]="store.org().timeZone" />
     </section>
 
     <section class="split">
@@ -34,8 +34,8 @@ const LANGS = [
             <div class="logo"><app-admin-logo [src]="logo()" [size]="34" [color]="b().primary" />
               <label class="btn-ghost sm">Upload<input type="file" accept="image/*" hidden (change)="upload($event)" /></label>
               @if (logo()) {<button class="btn-ghost sm" (click)="logoDraft.set('')">Use default</button>}</div></div>
-          <div class="field"><span>Primary colour</span><div class="sws">@for (c of presets; track c) {<button class="sw" [class.on]="b().primary === c" [style.background]="c" (click)="set('primary', c)" [attr.aria-label]="c"></button>}<input type="color" [value]="b().primary" (input)="set('primary', $any($event.target).value)" /></div></div>
-          <div class="field"><span>Accent colour</span><div class="sws">@for (c of presets.slice(1, 6); track c) {<button class="sw" [class.on]="b().accent === c" [style.background]="c" (click)="set('accent', c)" [attr.aria-label]="c"></button>}<input type="color" [value]="b().accent" (input)="set('accent', $any($event.target).value)" /></div></div>
+          <div class="field"><span>Primary colour</span><div class="sws">@for (c of presets; track c) {<button class="sw" [class.on]="b().primary === c" [style.background]="c" (click)="set('primary', c)" [attr.aria-label]="c"></button>}<input type="color" [value]="(b().primary.startsWith('#') ? b().primary : '#' + b().primary.slice(-7, -1))" (input)="set('primary', $any($event.target).value)" /></div></div>
+          <div class="field"><span>Accent colour</span><div class="sws">@for (c of presets.slice(1, 6); track c) {<button class="sw" [class.on]="b().accent === c" [style.background]="c" (click)="set('accent', c)" [attr.aria-label]="c"></button>}<input type="color" [value]="(b().accent.startsWith('#') ? b().accent : '#' + b().accent.slice(-7, -1))" (input)="set('accent', $any($event.target).value)" /></div></div>
           <label class="field">Sidebar style<select class="select" [value]="b().sidebar" (change)="set('sidebar', $any($event.target).value)"><option>Dark purple</option><option>Midnight</option><option>Light</option></select></label>
           <label class="field">Corner radius<input type="range" min="4" max="18" [value]="b().radius" (input)="set('radius', +$any($event.target).value)" /></label>
           <label class="field">Font<select class="select" [value]="b().font" (change)="set('font', $any($event.target).value)"><option>Inter</option><option>Roboto</option><option>Georgia</option><option>system-ui</option></select></label>
@@ -48,7 +48,7 @@ const LANGS = [
       <div class="card">
         <div class="ch"><h3>Live Preview</h3><div class="seg">@for (l of enabledLangs(); track l.code) {<button [class.on]="pv() === l.code" (click)="pv.set(l.code)">{{ l.code.toUpperCase() }}</button>}</div></div>
         <div class="pv" [style.font-family]="b().font" [attr.dir]="pvLang().rtl && loc().rtl ? 'rtl' : 'ltr'" [style.--r.px]="b().radius">
-          <div class="pside" [style.background]="sideBg()"><app-admin-logo [src]="logo()" [size]="18" color="#fff" />
+          <div class="pside" [style.background]="sideBg()"><app-admin-logo [src]="logo()" [size]="18" color="var(--ka-ffffff)" />
             @for (k of ['nav.commandCenter', 'nav.people', 'nav.attendance', 'nav.visitors', 'nav.emergency']; track k; let i = $index) {<span [class.on]="i === 3" [style.background]="i === 3 ? b().primary : null">{{ tr(k) }}</span>}</div>
           <div class="pmain">
             <div class="ptop"><b>{{ b().appName }}</b><span class="pav" [style.background]="b().accent">DL</span></div>
@@ -57,7 +57,7 @@ const LANGS = [
             <div class="palert">⚠ {{ tr('alert.evacuate') }}</div>
           </div>
         </div>
-        <div class="login" [style.background]="'linear-gradient(135deg,' + b().primary + ',' + b().accent + ')'"><div><app-admin-logo [src]="logo()" [size]="22" color="#fff" /><b>{{ b().loginTitle }}</b><span>Sign in with SSO</span></div></div>
+        <div class="login" [style.background]="'linear-gradient(135deg,' + b().primary + ',' + b().accent + ')'"><div><app-admin-logo [src]="logo()" [size]="22" color="var(--ka-ffffff)" /><b>{{ b().loginTitle }}</b><span>Sign in with SSO</span></div></div>
         <small class="muted">Preview only — the live app changes after you publish.</small>
       </div>
     </section>
@@ -89,17 +89,17 @@ const LANGS = [
   `,
   styles: [ADMIN_CSS, `
     .logo { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px dashed var(--border); border-radius: 9px; } .logo app-admin-logo { margin-right: auto; }
-    .sws { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; } .sw { width: 24px; height: 24px; border-radius: 6px; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--border); cursor: pointer; } .sw.on { box-shadow: 0 0 0 2px var(--text); }
+    .sws { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; } .sw { width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--kl-ffffff); box-shadow: 0 0 0 1px var(--border); cursor: pointer; } .sw.on { box-shadow: 0 0 0 2px var(--text); }
     .sws input { width: 34px; height: 26px; border: 0; padding: 0; background: none; }
     .pv { display: grid; grid-template-columns: 130px 1fr; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; height: 230px; margin-bottom: 10px; }
-    .pside { display: flex; flex-direction: column; gap: 4px; padding: 10px 8px; color: #fff; font-size: 10.5px; } .pside span { padding: 5px 7px; border-radius: calc(var(--r) / 2); opacity: 0.85; } .pside span.on { opacity: 1; font-weight: 600; } .pside app-admin-logo { margin-bottom: 6px; }
-    .pmain { background: #f5f5fb; padding: 10px; display: flex; flex-direction: column; gap: 8px; } .ptop { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-    .pav { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 9px; display: grid; place-items: center; }
-    .pcard { background: #fff; border-radius: var(--r); padding: 10px; display: flex; flex-direction: column; gap: 2px; font-size: 11px; } .pcard b { font-size: 20px; } .pcard small { color: var(--muted); }
-    .pbtns { display: flex; gap: 6px; margin-top: 6px; } .pbtns span { color: #fff; padding: 5px 10px; border-radius: calc(var(--r) / 1.5); font-size: 11px; font-weight: 600; } .pbtns .ghost { background: #fff; border: 1px solid; }
-    .palert { background: #fef2f2; color: #b91c1c; border-radius: var(--r); padding: 7px 10px; font-size: 11px; }
-    .login { border-radius: 10px; height: 90px; display: grid; place-items: center; margin-bottom: 8px; } .login div { background: rgba(255,255,255,.14); color: #fff; padding: 8px 14px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; } .login span { font-size: 10.5px; opacity: .85; }
-    .tw { overflow: auto; max-height: 480px; } .mono { font-family: ui-monospace, monospace; font-size: 11px; white-space: nowrap; } .ti { width: 100%; min-width: 140px; padding: 5px 8px; font-size: 12px; font-weight: 400; } .ti.miss { border-color: #fbbf24; background: #fffbeb; }
+    .pside { display: flex; flex-direction: column; gap: 4px; padding: 10px 8px; color: var(--kf-ffffff); font-size: 10.5px; } .pside span { padding: 5px 7px; border-radius: calc(var(--r) / 2); opacity: 0.85; } .pside span.on { opacity: 1; font-weight: 600; } .pside app-admin-logo { margin-bottom: 6px; }
+    .pmain { background: var(--kb-f5f5fb); padding: 10px; display: flex; flex-direction: column; gap: 8px; } .ptop { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .pav { width: 22px; height: 22px; border-radius: 50%; color: var(--kf-ffffff); font-size: 9px; display: grid; place-items: center; }
+    .pcard { background: var(--kb-ffffff); border-radius: var(--r); padding: 10px; display: flex; flex-direction: column; gap: 2px; font-size: 11px; } .pcard b { font-size: 20px; } .pcard small { color: var(--muted); }
+    .pbtns { display: flex; gap: 6px; margin-top: 6px; } .pbtns span { color: var(--kf-ffffff); padding: 5px 10px; border-radius: calc(var(--r) / 1.5); font-size: 11px; font-weight: 600; } .pbtns .ghost { background: var(--kb-ffffff); border: 1px solid; }
+    .palert { background: var(--kb-fef2f2); color: var(--kf-b91c1c); border-radius: var(--r); padding: 7px 10px; font-size: 11px; }
+    .login { border-radius: 10px; height: 90px; display: grid; place-items: center; margin-bottom: 8px; } .login div { background: rgba(255,255,255,.14); color: var(--kf-ffffff); padding: 8px 14px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; } .login span { font-size: 10.5px; opacity: .85; }
+    .tw { overflow: auto; max-height: 480px; } .mono { font-family: ui-monospace, monospace; font-size: 11px; white-space: nowrap; } .ti { width: 100%; min-width: 140px; padding: 5px 8px; font-size: 12px; font-weight: 400; } .ti.miss { border-color: var(--kl-fbbf24); background: var(--kb-fffbeb); }
     .ck { display: flex; align-items: center; gap: 5px; font-size: 12px; } .fgrid { margin: 10px 0; }
   `],
 })
@@ -128,9 +128,10 @@ export class BrandingLocalization {
     return Math.round(((total - this.store.missingTranslations()) / total) * 100);
   });
   protected readonly rows = computed(() => this.store.translations().filter((t) => !this.onlyMissing() || this.transLangs().some((l) => !this.val(t, l.code))));
-  protected readonly sideBg = computed(() => (this.b().sidebar === 'Light' ? '#64748b' : this.b().sidebar === 'Midnight' ? '#0f172a' : `linear-gradient(180deg, #2a1065, ${this.b().primary})`));
+  protected readonly sideBg = computed(() => (this.b().sidebar === 'Light' ? 'var(--ka-64748b)' : this.b().sidebar === 'Midnight' ? 'var(--ka-0f172a)' : `linear-gradient(180deg, var(--ka-2a1065), ${this.b().primary})`));
   protected readonly contrastOk = computed(() => {
-    const h = this.b().primary.replace('#', '');
+    const p = this.b().primary;
+    const h = p.startsWith('#') ? p.slice(1) : p.slice(-7, -1);
     const [r, g, bl] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
     return 1.05 / (0.2126 * r + 0.7152 * g + 0.0722 * bl + 0.05) >= 4.5;
   });

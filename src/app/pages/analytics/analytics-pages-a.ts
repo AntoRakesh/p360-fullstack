@@ -19,12 +19,12 @@ function toaster() {
    Dwell Time & Movement
    ========================================================= */
 const PATHS = [
-  { id: 'P1', route: ['Z1', 'Z3', 'Z2'], share: 24, avg: 96, color: '#7c3aed' },
-  { id: 'P2', route: ['Z4', 'Z1', 'Z7'], share: 17, avg: 152, color: '#3b82f6' },
-  { id: 'P3', route: ['Z1', 'Z2', 'Z8'], share: 13, avg: 88, color: '#f97316' },
-  { id: 'P4', route: ['Z1', 'Z6', 'Z3', 'Z5'], share: 11, avg: 74, color: '#ec4899' },
-  { id: 'P5', route: ['Z4', 'Z2', 'Z5'], share: 9, avg: 61, color: '#22c55e' },
-  { id: 'P6', route: ['Z1', 'Z3', 'Z1'], share: 8, avg: 34, color: '#eab308' },
+  { id: 'P1', route: ['Z1', 'Z3', 'Z2'], share: 24, avg: 96, color: 'var(--ka-7c3aed)' },
+  { id: 'P2', route: ['Z4', 'Z1', 'Z7'], share: 17, avg: 152, color: 'var(--ka-3b82f6)' },
+  { id: 'P3', route: ['Z1', 'Z2', 'Z8'], share: 13, avg: 88, color: 'var(--ka-f97316)' },
+  { id: 'P4', route: ['Z1', 'Z6', 'Z3', 'Z5'], share: 11, avg: 74, color: 'var(--ka-ec4899)' },
+  { id: 'P5', route: ['Z4', 'Z2', 'Z5'], share: 9, avg: 61, color: 'var(--ka-22c55e)' },
+  { id: 'P6', route: ['Z1', 'Z3', 'Z1'], share: 8, avg: 34, color: 'var(--ka-eab308)' },
 ];
 const VTYPES = ['All Visitors', 'Customers', 'Staff', 'Visitors'] as const;
 const VT_MUL: Record<string, number> = { 'All Visitors': 1, Customers: 1.12, Staff: 2.9, Visitors: 0.82 };
@@ -40,11 +40,11 @@ const VT_MUL: Record<string, number> = { 'All Visitors': 1, Customers: 1.12, Sta
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Avg. Dwell Time" [value]="m(avg())" icon="clock" color="#f59e0b" change="18%" sub="vs. last week" />
-      <app-kpi label="Median Dwell Time" [value]="m(avg() * 0.69)" icon="a-timer" color="#7c3aed" change="7%" sub="vs. last week" />
-      <app-kpi label="Long Stays (> 2h)" [value]="n(1126 * s.fr())" icon="users" color="#3b82f6" change="11%" sub="vs. last week" />
-      <app-kpi label="Quick Visits (< 5 min)" value="9.8%" icon="a-log-out" color="#ef4444" change="1.4%" [up]="false" sub="vs. last week" />
-      <app-kpi label="Avg. Zones per Visit" value="3.4" icon="map-floor" color="#22c55e" change="0.3" sub="vs. last week" />
+      <app-kpi label="Avg. Dwell Time" [value]="m(avg())" icon="clock" color="var(--ka-f59e0b)" change="18%" sub="vs. last week" />
+      <app-kpi label="Median Dwell Time" [value]="m(avg() * 0.69)" icon="a-timer" color="var(--ka-7c3aed)" change="7%" sub="vs. last week" />
+      <app-kpi label="Long Stays (> 2h)" [value]="n(1126 * s.fr())" icon="users" color="var(--ka-3b82f6)" change="11%" sub="vs. last week" />
+      <app-kpi label="Quick Visits (< 5 min)" value="9.8%" icon="a-log-out" color="var(--ka-ef4444)" change="1.4%" [up]="false" sub="vs. last week" />
+      <app-kpi label="Avg. Zones per Visit" value="3.4" icon="map-floor" color="var(--ka-22c55e)" change="0.3" sub="vs. last week" />
     </section>
 
     <div class="note"><app-icon name="lightbulb" [size]="16" /><span>Visitors who pass through <b>Food Court</b> stay <b>38 min longer</b> on average. Path <b>Main Entrance → Retail Zone → Food Court</b> is the most common journey ({{ paths[0].share }}%).</span><span class="sp"></span>
@@ -53,7 +53,7 @@ const VT_MUL: Record<string, number> = { 'All Visitors': 1, Customers: 1.12, Sta
     <section class="row c2 eq">
       <div class="card">
         <div class="ch"><h3>Dwell Time Distribution</h3><span class="muted">{{ vt() }} · share of visits</span></div>
-        <div class="chart-legend"><span><i style="background:#7c3aed"></i>This week</span><span><i style="background:#c4b5fd"></i>Last week</span></div>
+        <div class="chart-legend"><span><i style="background:var(--kb-7c3aed)"></i>This week</span><span><i style="background:var(--kb-c4b5fd)"></i>Last week</span></div>
         <app-ff-bars [labels]="buckets" [series]="dist()" [height]="236" [max]="24" [values]="false" yLabel="% of visits" />
       </div>
       <div class="card">
@@ -126,13 +126,13 @@ export class DwellTime {
     const shifted = base.map((v, i) => +(v * (i < 3 ? 1 / k : k)).toFixed(1));
     const t = shifted.reduce((a, b) => a + b, 0);
     return [
-      { name: 'This week', color: '#7c3aed', values: shifted.map((v) => +((v / t) * 100).toFixed(1)) },
-      { name: 'Last week', color: '#c4b5fd', values: [11.6, 13.8, 17.1, 21.0, 20.2, 10.4, 5.9] },
+      { name: 'This week', color: 'var(--ka-7c3aed)', values: shifted.map((v) => +((v / t) * 100).toFixed(1)) },
+      { name: 'Last week', color: 'var(--ka-c4b5fd)', values: [11.6, 13.8, 17.1, 21.0, 20.2, 10.4, 5.9] },
     ];
   });
   protected readonly byZone = computed(() => [...this.s.zonesNow()].map((z) => ({ ...z, dw: z.dwell * VT_MUL[this.vt()] })).sort((a, b) => b.dw - a.dw));
   protected readonly maxDw = computed(() => Math.max(...this.byZone().map((z) => z.dw)));
-  protected readonly mapZones = computed(() => this.s.zonesNow().map((z) => ({ id: z.id, name: z.name, x: z.x, y: z.y, w: z.w, h: z.h, color: '#94a3b8', pct: z.pct })));
+  protected readonly mapZones = computed(() => this.s.zonesNow().map((z) => ({ id: z.id, name: z.name, x: z.x, y: z.y, w: z.w, h: z.h, color: 'var(--ka-94a3b8)', pct: z.pct })));
   protected readonly tracks = computed<Track[]>(() => {
     const zs = this.s.zones();
     return PATHS.map((p, k) => {
@@ -157,8 +157,8 @@ export class DwellTime {
     const k = VT_MUL[this.vt()];
     const base = [62, 70, 76, 82, 88, 96, 104, 98, 92, 90, 94, 102, 110, 96, 78, 54];
     return [
-      { name: 'Avg. dwell (min)', color: '#f59e0b', values: base.map((v) => Math.round(v * k)), area: true },
-      { name: 'Last week', color: '#94a3b8', values: base.map((v, i) => Math.round(v * k * (0.86 + (i % 3) * 0.03))) },
+      { name: 'Avg. dwell (min)', color: 'var(--ka-f59e0b)', values: base.map((v) => Math.round(v * k)), area: true },
+      { name: 'Last week', color: 'var(--ka-94a3b8)', values: base.map((v, i) => Math.round(v * k * (0.86 + (i % 3) * 0.03))) },
     ];
   });
   protected routeName(r: string[]) {
@@ -177,7 +177,7 @@ export class DwellTime {
    Zone & Area Analytics
    ========================================================= */
 const ZTYPES: ZoneType[] = ['Entrance', 'Retail', 'Dining', 'Parking', 'Leisure', 'Event'];
-const ZCOLORS = ['#7c3aed', '#3b82f6', '#f97316', '#22c55e', '#ec4899', '#14b8a6', '#eab308', '#ef4444'];
+const ZCOLORS = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-f97316)', 'var(--ka-22c55e)', 'var(--ka-ec4899)', 'var(--ka-14b8a6)', 'var(--ka-eab308)', 'var(--ka-ef4444)'];
 interface ZForm { name: string; type: ZoneType; floor: string; capacity: number; threshold: number; }
 
 @Component({
@@ -192,11 +192,11 @@ interface ZForm { name: string; type: ZoneType; floor: string; capacity: number;
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Monitored Zones" [value]="s.zones().length" icon="map-floor" color="#7c3aed" sub="across 4 floors" />
-      <app-kpi label="Current Occupancy" [value]="n(s.occupancy())" icon="a-occupancy" color="#2563eb" [sub]="s.occPct() + '% of ' + n(s.capacity()) + ' capacity'" />
-      <app-kpi label="Busiest Zone" [value]="busiest().name" icon="flame" color="#f97316" [sub]="busiest().pct + '% of capacity'" subColor="#ea580c" />
-      <app-kpi label="Over Threshold" [value]="over()" icon="triangle-alert" color="#ef4444" [sub]="over() ? 'action needed' : 'all zones normal'" [subColor]="over() ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Avg. Conversion" [value]="avgConv() + '%'" icon="a-target" color="#22c55e" change="2.1%" sub="vs. last week" />
+      <app-kpi label="Monitored Zones" [value]="s.zones().length" icon="map-floor" color="var(--ka-7c3aed)" sub="across 4 floors" />
+      <app-kpi label="Current Occupancy" [value]="n(s.occupancy())" icon="a-occupancy" color="var(--ka-2563eb)" [sub]="s.occPct() + '% of ' + n(s.capacity()) + ' capacity'" />
+      <app-kpi label="Busiest Zone" [value]="busiest().name" icon="flame" color="var(--ka-f97316)" [sub]="busiest().pct + '% of capacity'" subColor="var(--ka-ea580c)" />
+      <app-kpi label="Over Threshold" [value]="over()" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="over() ? 'action needed' : 'all zones normal'" [subColor]="over() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Avg. Conversion" [value]="avgConv() + '%'" icon="a-target" color="var(--ka-22c55e)" change="2.1%" sub="vs. last week" />
     </section>
 
     <section class="row c32 eq">
@@ -204,7 +204,7 @@ interface ZForm { name: string; type: ZoneType; floor: string; capacity: number;
         <div class="ch"><h3>Live Zone Map</h3>
           <div class="seg"><button [class.on]="layer() === 'occ'" (click)="layer.set('occ')">Occupancy</button><button [class.on]="layer() === 'heat'" (click)="layer.set('heat')">Heat</button></div></div>
         <app-mall-map class="map" [zones]="mapZones()" [blobs]="layer() === 'heat' ? blobs() : []" [showHeat]="layer() === 'heat'" [showZones]="layer() === 'occ'" [selected]="selId()" [labelSize]="20" (zoneClick)="selId.set($event)" />
-        <div class="legend"><span><i style="background:#22c55e"></i>Normal</span><span><i style="background:#f59e0b"></i>Busy</span><span><i style="background:#ef4444"></i>Over threshold</span><span class="muted">Click a zone to inspect</span></div>
+        <div class="legend"><span><i style="background:var(--kb-22c55e)"></i>Normal</span><span><i style="background:var(--kb-f59e0b)"></i>Busy</span><span><i style="background:var(--kb-ef4444)"></i>Over threshold</span><span class="muted">Click a zone to inspect</span></div>
       </div>
       <div class="card">
         <div class="ch"><h3>Capacity Utilisation</h3><span class="muted">live · updates every few seconds</span></div>
@@ -285,8 +285,8 @@ export class ZoneAnalytics {
   protected readonly blobs = computed(() => zoneBlobs(this.s.zonesNow(), this.s.tick() % 2));
   protected readonly shortNames = computed(() => this.s.zones().map((z) => ({ 'Main Entrance': 'Entrance', 'Food Court': 'Food Ct', 'Retail Zone': 'Retail', 'Parking Entry': 'Pk In', 'Parking Exit': 'Pk Out', 'Event Area': 'Event', 'Kids Zone': 'Kids' } as Record<string, string>)[z.name] ?? z.name.slice(0, 8)));
   protected readonly ioSeries = computed<Series[]>(() => [
-    { name: 'Entries', color: '#7c3aed', values: this.s.zonesNow().map((z) => z.entries) },
-    { name: 'Exits', color: '#3b82f6', values: this.s.zonesNow().map((z) => z.exits) },
+    { name: 'Entries', color: 'var(--ka-7c3aed)', values: this.s.zonesNow().map((z) => z.entries) },
+    { name: 'Exits', color: 'var(--ka-3b82f6)', values: this.s.zonesNow().map((z) => z.exits) },
   ]);
   protected readonly rows = computed(() => this.s.zonesNow().map((z) => ({ ...z, occText: `${z.occ} / ${z.cap}`, dwellText: fmtMin(z.dwell) })));
   protected readonly cols: Col[] = [
@@ -309,7 +309,7 @@ export class ZoneAnalytics {
   ];
   private readonly router = inject(Router);
   protected statusColor(s: string) {
-    return s === 'Normal' ? '#22c55e' : s === 'Busy' ? '#f59e0b' : '#ef4444';
+    return s === 'Normal' ? 'var(--ka-22c55e)' : s === 'Busy' ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)';
   }
   protected tagCls(s: string) {
     return s === 'Normal' ? 'tag green' : s === 'Busy' ? 'tag amber' : 'tag red';
@@ -368,11 +368,11 @@ const GROUPS = [{ label: 'Solo', value: 38 }, { label: 'Couples', value: 27 }, {
     <div class="note"><app-icon name="shield-check" [size]="16" /><span>Privacy mode <b>{{ blur() ? 'ON' : 'OFF' }}</b> · faces blurred at the edge, only aggregated attributes leave the camera · retention {{ retention() }} days · GDPR / PDPL compliant.</span><span class="sp"></span><button class="toggle" [class.on]="blur()" (click)="toggleBlur()"></button></div>
 
     <section class="kpi-row">
-      <app-kpi label="Profiles Analysed" [value]="n(profiles())" icon="a-scan" color="#7c3aed" change="14%" sub="vs. last week" />
-      <app-kpi label="Female" [value]="female() + '%'" icon="user" color="#ec4899" sub="of analysed visitors" />
-      <app-kpi label="Male" [value]="(100 - female()) + '%'" icon="user" color="#3b82f6" sub="of analysed visitors" />
-      <app-kpi label="Avg. Estimated Age" [value]="avgAge()" icon="calendar-days" color="#f59e0b" change="0.6 yrs" [up]="false" sub="vs. last week" />
-      <app-kpi label="Dominant Group" value="25–34" icon="users" color="#22c55e" sub="33.9% of visitors" />
+      <app-kpi label="Profiles Analysed" [value]="n(profiles())" icon="a-scan" color="var(--ka-7c3aed)" change="14%" sub="vs. last week" />
+      <app-kpi label="Female" [value]="female() + '%'" icon="user" color="var(--ka-ec4899)" sub="of analysed visitors" />
+      <app-kpi label="Male" [value]="(100 - female()) + '%'" icon="user" color="var(--ka-3b82f6)" sub="of analysed visitors" />
+      <app-kpi label="Avg. Estimated Age" [value]="avgAge()" icon="calendar-days" color="var(--ka-f59e0b)" change="0.6 yrs" [up]="false" sub="vs. last week" />
+      <app-kpi label="Dominant Group" value="25–34" icon="users" color="var(--ka-22c55e)" sub="33.9% of visitors" />
     </section>
 
     <section class="row c3 eq">
@@ -391,7 +391,7 @@ const GROUPS = [{ label: 'Solo', value: 38 }, { label: 'Couples', value: 27 }, {
       <div class="card"><div class="ch"><h3>Live Detections</h3><span class="chip live"><i></i>Live</span></div>
         <ul class="list feed">
           @for (d of feed(); track d.id) {
-            <li><span class="ic" [style.background]="d.g === 'F' ? '#fce7f3' : '#dbeafe'" [style.color]="d.g === 'F' ? '#db2777' : '#2563eb'"><app-icon name="user" [size]="16" /></span>
+            <li><span class="ic" [style.background]="d.g === 'F' ? 'var(--ka-fce7f3)' : 'var(--ka-dbeafe)'" [style.color]="d.g === 'F' ? 'var(--ka-db2777)' : 'var(--ka-2563eb)'"><app-icon name="user" [size]="16" /></span>
               <div class="col"><b>{{ d.g === 'F' ? 'Female' : 'Male' }} · {{ d.age }}</b><small>{{ d.zone }} · {{ d.group }} · #{{ d.id }}</small></div>
               <span class="muted">{{ d.conf }}%</span></li>
           }
@@ -405,7 +405,7 @@ const GROUPS = [{ label: 'Solo', value: 38 }, { label: 'Couples', value: 27 }, {
         <tbody>
           @for (r of byZone(); track r.name) {
             <tr class="clickable" [class.selected]="zone() === r.name" (click)="zone.set(zone() === r.name ? 'All' : r.name)"><td>{{ r.name }}</td><td class="num">{{ n(r.profiles) }}</td><td class="num">{{ r.f }}%</td><td class="num">{{ 100 - r.f }}%</td><td>{{ r.age }}</td><td class="num">{{ r.fam }}%</td>
-              <td><div class="mix"><i [style.width.%]="r.f" style="background:#ec4899"></i><i [style.width.%]="100 - r.f" style="background:#3b82f6"></i></div></td></tr>
+              <td><div class="mix"><i [style.width.%]="r.f" style="background:var(--kb-ec4899)"></i><i [style.width.%]="100 - r.f" style="background:var(--kb-3b82f6)"></i></div></td></tr>
           }
         </tbody>
       </table>
@@ -452,17 +452,17 @@ export class Demographics {
   protected readonly female = computed(() => 52 + this.zf().bias);
   protected readonly avgAge = computed(() => (31.4 + this.zf().bias * 0.8).toFixed(1));
   protected readonly gender = computed(() => [
-    { label: 'Female', value: Math.round((this.profiles() * this.female()) / 100), color: '#ec4899' },
-    { label: 'Male', value: Math.round((this.profiles() * (100 - this.female())) / 100), color: '#3b82f6' },
+    { label: 'Female', value: Math.round((this.profiles() * this.female()) / 100), color: 'var(--ka-ec4899)' },
+    { label: 'Male', value: Math.round((this.profiles() * (100 - this.female())) / 100), color: 'var(--ka-3b82f6)' },
   ]);
   protected readonly ageSeries = computed<Series[]>(() => {
     const b = this.zf().bias;
     return [
-      { name: 'Female', color: '#ec4899', values: AGE_F.map((v, i) => +(v * (1 + (i === 2 ? b * 0.04 : -b * 0.01))).toFixed(1)) },
-      { name: 'Male', color: '#3b82f6', values: AGE_M.map((v, i) => +(v * (1 + (i === 3 ? b * 0.03 : 0))).toFixed(1)) },
+      { name: 'Female', color: 'var(--ka-ec4899)', values: AGE_F.map((v, i) => +(v * (1 + (i === 2 ? b * 0.04 : -b * 0.01))).toFixed(1)) },
+      { name: 'Male', color: 'var(--ka-3b82f6)', values: AGE_M.map((v, i) => +(v * (1 + (i === 3 ? b * 0.03 : 0))).toFixed(1)) },
     ];
   });
-  protected readonly groupRows = computed(() => GROUPS.map((g, i) => ({ label: g.label, value: g.value + (i === 2 ? this.zf().bias : 0), display: `${g.value + (i === 2 ? this.zf().bias : 0)}%`, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b'][i] })));
+  protected readonly groupRows = computed(() => GROUPS.map((g, i) => ({ label: g.label, value: g.value + (i === 2 ? this.zf().bias : 0), display: `${g.value + (i === 2 ? this.zf().bias : 0)}%`, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)'][i] })));
   protected readonly hm = {
     cols: ['8a', '10a', '12p', '2p', '4p', '6p', '8p'],
     data: [[8, 12, 22, 31, 38, 26, 12], [14, 18, 36, 44, 52, 61, 48], [22, 41, 68, 72, 64, 70, 58], [18, 34, 52, 48, 42, 46, 30], [12, 26, 30, 26, 22, 18, 10], [9, 22, 18, 14, 12, 8, 4]],
@@ -503,11 +503,11 @@ const REP_D = [256, 392, 401, 397, 761, 551, 381];
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="New Visitors" [value]="n(newV())" icon="user-plus" color="#7c3aed" change="6%" sub="vs. last week" />
-      <app-kpi label="Repeat Visitors" [value]="n(repV())" icon="a-repeat" color="#3b82f6" [extra]="repPct() + '%'" change="9%" sub="vs. last week" />
-      <app-kpi label="Avg. Visit Frequency" value="3.2 / mo" icon="calendar-days" color="#22c55e" change="0.4" sub="vs. last month" />
-      <app-kpi label="Loyalty Members Seen" [value]="n(2860 * s.fr())" icon="star" color="#f59e0b" change="12%" sub="vs. last week" />
-      <app-kpi label="At-Risk Members" [value]="atRisk()" icon="a-trending-down" color="#ef4444" sub="no visit in 30+ days" subColor="#dc2626" />
+      <app-kpi label="New Visitors" [value]="n(newV())" icon="user-plus" color="var(--ka-7c3aed)" change="6%" sub="vs. last week" />
+      <app-kpi label="Repeat Visitors" [value]="n(repV())" icon="a-repeat" color="var(--ka-3b82f6)" [extra]="repPct() + '%'" change="9%" sub="vs. last week" />
+      <app-kpi label="Avg. Visit Frequency" value="3.2 / mo" icon="calendar-days" color="var(--ka-22c55e)" change="0.4" sub="vs. last month" />
+      <app-kpi label="Loyalty Members Seen" [value]="n(2860 * s.fr())" icon="star" color="var(--ka-f59e0b)" change="12%" sub="vs. last week" />
+      <app-kpi label="At-Risk Members" [value]="atRisk()" icon="a-trending-down" color="var(--ka-ef4444)" sub="no visit in 30+ days" subColor="var(--ka-dc2626)" />
     </section>
 
     <section class="row c3 eq">
@@ -555,7 +555,7 @@ const REP_D = [256, 392, 401, 397, 761, 551, 381];
   `,
   styles: [A_CSS, `
     .dh { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; margin-bottom: 14px; }
-    .av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; }
+    .av { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); font-weight: 700; }
     .km { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; } .km div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; } .km small { color: var(--muted); font-size: 11px; } .km b { display: block; font-size: 15px; }
     .vh { grid-template-columns: 18px 1fr auto; } .vh app-icon { color: var(--primary); }
   `],
@@ -576,15 +576,15 @@ export class RepeatVisitors {
   protected readonly repPct = computed(() => Math.round((this.repV() / Math.max(1, this.s.total())) * 100));
   protected readonly atRisk = computed(() => fmtN(318 * this.s.site().factor));
   protected readonly daily = computed<Series[]>(() => [
-    { name: 'New', color: '#7c3aed', values: NEW_D.map((v) => Math.round(v * this.s.f())) },
-    { name: 'Repeat', color: '#3b82f6', values: REP_D.map((v) => Math.round(v * this.s.f())) },
+    { name: 'New', color: 'var(--ka-7c3aed)', values: NEW_D.map((v) => Math.round(v * this.s.f())) },
+    { name: 'Repeat', color: 'var(--ka-3b82f6)', values: REP_D.map((v) => Math.round(v * this.s.f())) },
   ]);
   protected readonly freq = computed(() => [
-    { label: '1 visit', value: 41, display: '41%', color: '#c4b5fd' },
-    { label: '2–3 visits', value: 29, display: '29%', color: '#a78bfa' },
-    { label: '4–6 visits', value: 17, display: '17%', color: '#8b5cf6' },
-    { label: '7–10 visits', value: 9, display: '9%', color: '#7c3aed' },
-    { label: '10+ visits', value: 4, display: '4%', color: '#5b21b6' },
+    { label: '1 visit', value: 41, display: '41%', color: 'var(--ka-c4b5fd)' },
+    { label: '2–3 visits', value: 29, display: '29%', color: 'var(--ka-a78bfa)' },
+    { label: '4–6 visits', value: 17, display: '17%', color: 'var(--ka-8b5cf6)' },
+    { label: '7–10 visits', value: 9, display: '9%', color: 'var(--ka-7c3aed)' },
+    { label: '10+ visits', value: 4, display: '4%', color: 'var(--ka-5b21b6)' },
   ]);
   protected readonly cohorts = {
     rows: ['W37', 'W38', 'W39', 'W40', 'W41'],
@@ -645,12 +645,12 @@ export class RepeatVisitors {
    Heatmaps & Trajectories
    ========================================================= */
 const TRAJ = [
-  { id: 'T1', name: 'Entrance → Retail → Food Court', count: 2984, color: '#7c3aed', pts: [[120, 290], [140, 186], [180, 110], [330, 182], [700, 184], [800, 110]] },
-  { id: 'T2', name: 'Parking → Cinema', count: 2116, color: '#3b82f6', pts: [[856, 300], [840, 186], [600, 184], [520, 110]] },
-  { id: 'T3', name: 'Entrance → Event Area', count: 1424, color: '#ec4899', pts: [[90, 300], [200, 186], [480, 186], [520, 250]] },
-  { id: 'T4', name: 'Food Court → Kids Zone', count: 1198, color: '#f97316', pts: [[880, 110], [860, 184], [740, 186], [740, 260]] },
-  { id: 'T5', name: 'Retail loop', count: 986, color: '#eab308', pts: [[90, 60], [270, 60], [270, 140], [90, 140], [90, 70]] },
-  { id: 'T6', name: 'Event Area → Parking Exit', count: 744, color: '#22c55e', pts: [[600, 260], [620, 188], [920, 186], [934, 290]] },
+  { id: 'T1', name: 'Entrance → Retail → Food Court', count: 2984, color: 'var(--ka-7c3aed)', pts: [[120, 290], [140, 186], [180, 110], [330, 182], [700, 184], [800, 110]] },
+  { id: 'T2', name: 'Parking → Cinema', count: 2116, color: 'var(--ka-3b82f6)', pts: [[856, 300], [840, 186], [600, 184], [520, 110]] },
+  { id: 'T3', name: 'Entrance → Event Area', count: 1424, color: 'var(--ka-ec4899)', pts: [[90, 300], [200, 186], [480, 186], [520, 250]] },
+  { id: 'T4', name: 'Food Court → Kids Zone', count: 1198, color: 'var(--ka-f97316)', pts: [[880, 110], [860, 184], [740, 186], [740, 260]] },
+  { id: 'T5', name: 'Retail loop', count: 986, color: 'var(--ka-eab308)', pts: [[90, 60], [270, 60], [270, 140], [90, 140], [90, 70]] },
+  { id: 'T6', name: 'Event Area → Parking Exit', count: 744, color: 'var(--ka-22c55e)', pts: [[600, 260], [620, 188], [920, 186], [934, 290]] },
 ] as { id: string; name: string; count: number; color: string; pts: [number, number][] }[];
 const LAYERS = ['Combined', 'Heat', 'Trajectories', 'Zones'] as const;
 type Layer = (typeof LAYERS)[number];
@@ -689,7 +689,7 @@ const HOUR_MUL = [0.15, 0.22, 0.3, 0.38, 0.48, 0.6, 0.72, 0.82, 0.92, 1.12, 1.04
           <div class="ch"><h3>Hotspots · {{ hours[hour()] }}</h3></div>
           <ul class="list hs">
             @for (z of hot(); track z.id; let i = $index) {
-              <li class="click" [class.on]="selZone() === z.id" (click)="selZone.set(z.id)"><span class="rk">{{ i + 1 }}</span><div class="col"><b>{{ z.name }}</b><small>{{ z.people }} people</small></div><b [style.color]="z.d > 85 ? '#dc2626' : z.d > 65 ? '#ea580c' : '#16a34a'">{{ z.d }}%</b></li>
+              <li class="click" [class.on]="selZone() === z.id" (click)="selZone.set(z.id)"><span class="rk">{{ i + 1 }}</span><div class="col"><b>{{ z.name }}</b><small>{{ z.people }} people</small></div><b [style.color]="z.d > 85 ? 'var(--ka-dc2626)' : z.d > 65 ? 'var(--ka-ea580c)' : 'var(--ka-16a34a)'">{{ z.d }}%</b></li>
             }
           </ul>
         </div>
@@ -715,8 +715,8 @@ const HOUR_MUL = [0.15, 0.22, 0.3, 0.38, 0.48, 0.6, 0.72, 0.82, 0.92, 1.12, 1.04
     .map { height: 330px; border-radius: 8px; overflow: hidden; }
     .side { display: flex; flex-direction: column; gap: 12px; }
     .timeline { display: flex; align-items: center; gap: 12px; margin-top: 12px; } .timeline input { flex: 1; accent-color: var(--primary); } .timeline b { width: 74px; font-size: 13px; }
-    .play { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--primary); color: #fff; display: grid; place-items: center; cursor: pointer; }
-    .scale { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); } .scale i { width: 90px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #4f46e5, #3b82f6, #22d3ee, #22c55e, #facc15, #f97316, #ef4444); }
+    .play { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--primary); color: var(--kf-ffffff); display: grid; place-items: center; cursor: pointer; }
+    .scale { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); } .scale i { width: 90px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--kb-4f46e5), var(--kb-3b82f6), var(--kb-22d3ee), var(--kb-22c55e), var(--kb-facc15), var(--kb-f97316), var(--kb-ef4444)); }
     .hs li { grid-template-columns: 22px 1fr auto; padding: 7px 4px; } .rk { width: 22px; height: 22px; border-radius: 6px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; font-size: 11px; font-weight: 700; }
     .tj li { grid-template-columns: 10px 1fr auto; padding: 7px 4px; }
     @media (max-width: 1200px) { .c32b { grid-template-columns: 1fr; } }
@@ -755,8 +755,8 @@ export class AnalyticsHeatmaps {
     const z = this.s.zonesNow().find((x) => x.id === this.selZone());
     const base = z ? z.pct : this.s.occPct();
     return [
-      { name: 'Today', color: '#7c3aed', values: HOUR_MUL.map((k) => Math.min(99, Math.round(base * k))), area: true },
-      { name: 'Last week', color: '#3b82f6', values: HOUR_MUL.map((k, i) => Math.min(99, Math.round(base * k * (0.84 + (i % 4) * 0.02)))) },
+      { name: 'Today', color: 'var(--ka-7c3aed)', values: HOUR_MUL.map((k) => Math.min(99, Math.round(base * k))), area: true },
+      { name: 'Last week', color: 'var(--ka-3b82f6)', values: HOUR_MUL.map((k, i) => Math.min(99, Math.round(base * k * (0.84 + (i % 4) * 0.02)))) },
     ];
   });
   protected pickTrack(id: string) {

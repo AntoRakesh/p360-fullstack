@@ -89,11 +89,11 @@ export class GuardForm implements OnInit {
   `,
   styles: `
     .call { width: min(360px, calc(100vw - 32px)); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    h3 { margin: 10px 0 0; } p { margin: 0; font-size: 13px; } .st { margin-top: 6px; color: #b45309; font-weight: 600; } .st.live { color: #16a34a; }
-    .via { display: flex; gap: 4px; margin: 12px 0; } .via button { border: 1px solid var(--border); background: #fff; border-radius: 20px; padding: 4px 10px; font-size: 12px; cursor: pointer; } .via button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    h3 { margin: 10px 0 0; } p { margin: 0; font-size: 13px; } .st { margin-top: 6px; color: var(--kf-b45309); font-weight: 600; } .st.live { color: var(--kf-16a34a); }
+    .via { display: flex; gap: 4px; margin: 12px 0; } .via button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 20px; padding: 4px 10px; font-size: 12px; cursor: pointer; } .via button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .btns { display: flex; gap: 18px; margin-top: 6px; }
-    .rnd { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--border); background: #fff; display: grid; place-items: center; cursor: pointer; } .rnd.on { background: #eef0f5; }
-    .rnd.red { background: #ef4444; border-color: #ef4444; color: #fff; } .rnd.red app-icon { transform: rotate(135deg); }
+    .rnd { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--border); background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; } .rnd.on { background: var(--kb-eef0f5); }
+    .rnd.red { background: var(--kb-ef4444); border-color: var(--kl-ef4444); color: var(--kf-ffffff); } .rnd.red app-icon { transform: rotate(135deg); }
   `,
 })
 export class CallModal {
@@ -134,7 +134,7 @@ export class CallModal {
   styles: `
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; } .chip-s { border: 0; cursor: pointer; }
     .ta { width: 100%; height: auto; padding: 10px; resize: vertical; font: inherit; }
-    .ch { display: flex; gap: 14px; align-items: center; margin-top: 10px; font-size: 12.5px; color: #4b4f6b; } .ch label { display: inline-flex; gap: 5px; align-items: center; }
+    .ch { display: flex; gap: 14px; align-items: center; margin-top: 10px; font-size: 12.5px; color: var(--kf-4b4f6b); } .ch label { display: inline-flex; gap: 5px; align-items: center; }
   `,
 })
 export class MessageModal {

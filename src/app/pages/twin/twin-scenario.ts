@@ -117,7 +117,7 @@ const today = () => new Date().toLocaleDateString('en-GB', { day: '2-digit', mon
             <span class="tag grey">Not run yet · press Run</span>
           }
         </div>
-        <app-iso-view [zones]="zones()" [floor]="floor()" [markers]="markers()" [paths]="paths()" [glows]="glows()" [heat]="heat()" [tint]="tint()" [selectedZone]="p().type === 'Layout Change' ? p().zone : null" [shirts]="p().type === 'Evacuation' ? [] : ['#2563eb', '#16a34a', '#f59e0b']" [zoneLabels]="true" aspect="1000 / 540" (markerClick)="markerPick($event)" (zoneClick)="zonePick($event)" />
+        <app-iso-view [zones]="zones()" [floor]="floor()" [markers]="markers()" [paths]="paths()" [glows]="glows()" [heat]="heat()" [tint]="tint()" [selectedZone]="p().type === 'Layout Change' ? p().zone : null" [shirts]="p().type === 'Evacuation' ? [] : ['var(--ka-2563eb)', 'var(--ka-16a34a)', 'var(--ka-f59e0b)']" [zoneLabels]="true" aspect="1000 / 540" (markerClick)="markerPick($event)" (zoneClick)="zonePick($event)" />
       </div>
     </section>
 
@@ -175,28 +175,28 @@ const today = () => new Date().toLocaleDateString('en-GB', { day: '2-digit', mon
   styles: `
     .types { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .ty { display: flex; gap: 12px; align-items: center; text-align: left; cursor: pointer; border: 1px solid var(--border); font: inherit; }
-    .ty .ic { width: 42px; height: 42px; border-radius: 10px; background: #f1edff; color: var(--primary); display: grid; place-items: center; flex-shrink: 0; }
-    .ty b { display: block; font-size: 14px; } .ty small { color: var(--muted); font-size: 12px; } .ty.on { border-color: var(--primary); box-shadow: 0 0 0 3px #ede9fe; } .ty.on .ic { background: var(--primary); color: #fff; }
+    .ty .ic { width: 42px; height: 42px; border-radius: 10px; background: var(--kb-f1edff); color: var(--primary); display: grid; place-items: center; flex-shrink: 0; }
+    .ty b { display: block; font-size: 14px; } .ty small { color: var(--muted); font-size: 12px; } .ty.on { border-color: var(--primary); box-shadow: 0 0 0 3px var(--kb-ede9fe); } .ty.on .ic { background: var(--primary); color: var(--kf-ffffff); }
     .sim { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: start; }
     .params { display: flex; flex-direction: column; gap: 14px; } .params h3 { margin: 0; }
-    .rng { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; } .rng span { display: flex; justify-content: space-between; } .rng input { accent-color: #7c3aed; }
+    .rng { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; } .rng span { display: flex; justify-content: space-between; } .rng input { accent-color: var(--kf-7c3aed); }
     .fld { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; } .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; } .two .input, .two .select { width: 100%; min-width: 0; box-sizing: border-box; }
-    .exits { display: flex; flex-wrap: wrap; gap: 5px; } .exits button { display: inline-flex; gap: 5px; align-items: center; border: 1px solid #bbf7d0; background: #f0fdf4; color: #15803d; border-radius: 14px; padding: 4px 9px; font-size: 11.5px; cursor: pointer; }
-    .exits button.off { border-color: #fecaca; background: #fef2f2; color: #dc2626; text-decoration: line-through; }
-    .pc { display: flex; justify-content: space-between; align-items: center; background: #f5f3ff; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; } .pc b { font-size: 18px; color: var(--primary); }
+    .exits { display: flex; flex-wrap: wrap; gap: 5px; } .exits button { display: inline-flex; gap: 5px; align-items: center; border: 1px solid var(--kl-bbf7d0); background: var(--kb-f0fdf4); color: var(--kf-15803d); border-radius: 14px; padding: 4px 9px; font-size: 11.5px; cursor: pointer; }
+    .exits button.off { border-color: var(--kl-fecaca); background: var(--kb-fef2f2); color: var(--kf-dc2626); text-decoration: line-through; }
+    .pc { display: flex; justify-content: space-between; align-items: center; background: var(--kb-f5f3ff); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; } .pc b { font-size: 18px; color: var(--primary); }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; }
-    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     .prog { display: grid; grid-template-columns: auto 220px auto; gap: 10px; align-items: center; font-size: 12px; } .prog b { color: var(--primary); }
-    .bar { display: block; height: 8px; border-radius: 6px; background: #e8eaf2; overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #7c3aed, #a78bfa); transition: width 0.1s; }
+    .bar { display: block; height: 8px; border-radius: 6px; background: var(--kb-e8eaf2); overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--kb-7c3aed), var(--kb-a78bfa)); transition: width 0.1s; }
     .cmp { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
-    .kc { display: flex; flex-direction: column; gap: 6px; } .kl { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #4b4f6b; }
-    .kv { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; } .kv b { font-size: 22px; white-space: nowrap; } .kv span { font-size: 12px; font-weight: 600; } .kv .good { color: #16a34a; } .kv .bad { color: #dc2626; } .kv .flat { color: var(--muted); }
+    .kc { display: flex; flex-direction: column; gap: 6px; } .kl { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--kf-4b4f6b); }
+    .kv { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; } .kv b { font-size: 22px; white-space: nowrap; } .kv span { font-size: 12px; font-weight: 600; } .kv .good { color: var(--kf-16a34a); } .kv .bad { color: var(--kf-dc2626); } .kv .flat { color: var(--muted); }
     .row2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px; }
     .recs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-    .recs li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 10px; border-radius: 10px; background: #f8fafc; border-left: 3px solid #94a3b8; }
+    .recs li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 10px; border-radius: 10px; background: var(--kb-f8fafc); border-left: 3px solid var(--kl-94a3b8); }
     .recs li.empty { display: block; background: none; border: none; padding: 20px 0; text-align: center; }
-    .recs li.high { background: #fef2f2; border-color: #ef4444; } .recs li.med { background: #fffbeb; border-color: #f59e0b; } .recs li.ok { background: #f0fdf4; border-color: #22c55e; }
-    .ri { width: 34px; height: 34px; border-radius: 8px; background: #fff; display: grid; place-items: center; } .recs b { display: block; font-size: 13px; font-weight: 600; } .recs small { color: #4b4f6b; font-size: 12px; }
+    .recs li.high { background: var(--kb-fef2f2); border-color: var(--kl-ef4444); } .recs li.med { background: var(--kb-fffbeb); border-color: var(--kl-f59e0b); } .recs li.ok { background: var(--kb-f0fdf4); border-color: var(--kl-22c55e); }
+    .ri { width: 34px; height: 34px; border-radius: 8px; background: var(--kb-ffffff); display: grid; place-items: center; } .recs b { display: block; font-size: 13px; font-weight: 600; } .recs small { color: var(--kf-4b4f6b); font-size: 12px; }
     @media (max-width: 1280px) { .sim, .row2 { grid-template-columns: 1fr; } .cmp { grid-template-columns: repeat(3, 1fr); } .types { grid-template-columns: repeat(2, 1fr); } }
   `,
 })
@@ -311,9 +311,9 @@ export class ScenarioSimulation {
       const k = clamp(t * speed * 1.25, 0, 1);
       const x = e.x + (ex.x - e.x) * k;
       const y = e.y + (ex.y - e.y) * k;
-      return { id: e.id, x, y, color: k >= 1 ? '#16a34a' : t > 0 ? '#f59e0b' : '#2563eb', icon: 'user', kind: 'chip', title: e.name, dim: k >= 1 } as IsoMarker;
+      return { id: e.id, x, y, color: k >= 1 ? 'var(--ka-16a34a)' : t > 0 ? 'var(--ka-f59e0b)' : 'var(--ka-2563eb)', icon: 'user', kind: 'chip', title: e.name, dim: k >= 1 } as IsoMarker;
     });
-    const ex = EXITS.map((e) => ({ id: e.id, x: e.x, y: e.y, color: blocked.includes(e.id) ? '#ef4444' : '#16a34a', icon: blocked.includes(e.id) ? 'ban' : 'twin-exit', kind: 'pin', title: `${e.name}${blocked.includes(e.id) ? ' · BLOCKED' : ''} (click to toggle)` }) as IsoMarker);
+    const ex = EXITS.map((e) => ({ id: e.id, x: e.x, y: e.y, color: blocked.includes(e.id) ? 'var(--ka-ef4444)' : 'var(--ka-16a34a)', icon: blocked.includes(e.id) ? 'ban' : 'twin-exit', kind: 'pin', title: `${e.name}${blocked.includes(e.id) ? ' · BLOCKED' : ''} (click to toggle)` }) as IsoMarker);
     return [...people, ...ex];
   });
   protected readonly paths = computed<IsoPath[]>(() => {
@@ -325,7 +325,7 @@ export class ScenarioSimulation {
       const e = this.nearestExit(cx, cy, p.blocked);
       if (!used.has(z.id)) used.set(z.id, [[cx, cy], [cx, (cy + e.y) / 2], [e.x, (cy + e.y) / 2], [e.x, e.y]]);
     }
-    return [...used.values()].map((pts) => ({ points: pts, color: '#16a34a', dashed: true }));
+    return [...used.values()].map((pts) => ({ points: pts, color: 'var(--ka-16a34a)', dashed: true }));
   });
   protected readonly glows = computed<IsoGlow[]>(() => {
     const p = this.p();
@@ -336,10 +336,10 @@ export class ScenarioSimulation {
         const x = this.nearestExit(e.x, e.y, p.blocked);
         load.set(x.id, (load.get(x.id) ?? 0) + 1);
       }
-      return EXITS.filter((e) => (load.get(e.id) ?? 0) > this.ppl().length / 3.2).map((e) => ({ x: e.x, y: e.y, r: 55, color: '#ef4444' }));
+      return EXITS.filter((e) => (load.get(e.id) ?? 0) > this.ppl().length / 3.2).map((e) => ({ x: e.x, y: e.y, r: 55, color: 'var(--ka-ef4444)' }));
     }
     const u = this.ranUtil();
-    return this.zones().filter((z) => z.capacity && (u.get(z.id) ?? 0) > 1).map((z) => ({ x: center(z)[0], y: center(z)[1], r: Math.min(z.w, z.h) * 0.4, color: '#ef4444' }));
+    return this.zones().filter((z) => z.capacity && (u.get(z.id) ?? 0) > 1).map((z) => ({ x: center(z)[0], y: center(z)[1], r: Math.min(z.w, z.h) * 0.4, color: 'var(--ka-ef4444)' }));
   });
   private readonly ranUtil = computed(() => {
     const p = this.ranP() ?? this.p();
@@ -366,7 +366,7 @@ export class ScenarioSimulation {
       const t = +l / r.evacMin;
       return t >= 1 ? 0 : Math.round(r.headcount * (1 - (3 * t * t - 2 * t * t * t)));
     });
-    return { labels, series: [{ name: 'Baseline (people inside)', color: '#94a3b8', values: rem(b), dashed: true }, { name: 'Scenario', color: '#7c3aed', values: rem(a), area: true }] };
+    return { labels, series: [{ name: 'Baseline (people inside)', color: 'var(--ka-94a3b8)', values: rem(b), dashed: true }, { name: 'Scenario', color: 'var(--ka-7c3aed)', values: rem(a), area: true }] };
   });
   protected readonly floorUtil = computed(() => {
     const b = this.base();
@@ -377,8 +377,8 @@ export class ScenarioSimulation {
         return Math.round(fl.util * (r.util / 68));
       });
     return [
-      { name: 'Baseline', color: '#c4b5fd', values: vals(b) },
-      { name: 'Scenario', color: '#7c3aed', values: vals(a) },
+      { name: 'Baseline', color: 'var(--ka-c4b5fd)', values: vals(b) },
+      { name: 'Scenario', color: 'var(--ka-7c3aed)', values: vals(a) },
     ];
   });
   protected readonly recs = computed(() => {
@@ -479,7 +479,7 @@ export class ScenarioSimulation {
     const id = `SC-${String(this.store.scenarios().length + 1).padStart(2, '0')}${Date.now() % 100}`;
     const s: SavedScenario = { id, name: this.name().trim(), occupancy: p.occupancy, blockedExits: p.type === 'Evacuation' ? p.blocked.length : 0, hvacSetpoint: p.setpoint, outsideTemp: p.outside, shift: p.shift, evacMin: r.evacMin, energyKwh: r.energyKwh, comfort: r.comfort, congestion: r.congestion, created: today(), by: 'Rex Kumar', type: p.type, growth: p.growth, util: r.util, seatGap: r.seatGap };
     this.store.scenarios.update((l) => [s, ...l]);
-    this.store.log({ icon: 'twin-save', color: '#7c3aed', who: s.name, what: 'Scenario saved' });
+    this.store.log({ icon: 'twin-save', color: 'var(--ka-7c3aed)', who: s.name, what: 'Scenario saved' });
     this.saving.set(false);
     this.toast$(`Saved “${s.name}”`);
   }
@@ -517,10 +517,10 @@ export class ScenarioSimulation {
       const p = this.ranP()!;
       const z = this.store.zones().find((x) => x.id === p.zone) as TZone;
       this.store.upsertZone({ ...z, type: p.zoneType, capacity: p.zoneCap, occupancy: Math.min(z.occupancy, p.zoneCap) });
-      this.store.log({ icon: 'map-floor', color: '#7c3aed', who: z.name, what: `Layout applied · ${tl(p.zoneType)}, ${p.zoneCap} seats`, ref: z.id, floor: z.floor });
+      this.store.log({ icon: 'map-floor', color: 'var(--ka-7c3aed)', who: z.name, what: `Layout applied · ${tl(p.zoneType)}, ${p.zoneCap} seats`, ref: z.id, floor: z.floor });
       return this.toast$(`${z.name} updated in the digital twin`);
     }
-    this.store.log({ icon: 'twin-wrench', color: '#f59e0b', who: 'Scenario action', what: r.title });
+    this.store.log({ icon: 'twin-wrench', color: 'var(--ka-f59e0b)', who: 'Scenario action', what: r.title });
     this.toast$(`Task created: ${r.title}`);
   }
   protected exportCsv() {

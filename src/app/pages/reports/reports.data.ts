@@ -33,16 +33,16 @@ interface CatDef {
 
 // Category → module, icon, colour and report names. Counts: 28+16+18+14+16+14+12+12+8+4 = 142.
 const CATS: CatDef[] = [
-  { category: 'Attendance', module: 'Time & Attendance', icon: 'calendar-days', color: '#7c3aed', desc: 'attendance, punctuality and working-hour insights', names: ['Employee Attendance Summary', 'Daily Attendance Register', 'Late Arrivals Report', 'Early Departures Report', 'Overtime Summary', 'Absenteeism Analysis', 'Work From Home Summary', 'Shift Adherence Report', 'Missed Punch Report', 'Attendance Regularization Log', 'Working Hours by Employee', 'Monthly Attendance Muster', 'Attendance Exceptions', 'Night Shift Attendance', 'Weekend Attendance', 'Holiday Work Report', 'Attendance by Department', 'Attendance by Site', 'Punctuality Scorecard', 'Break Duration Analysis', 'Overtime Cost Report', 'Attendance Trend (12 Months)', 'Biometric Device Punches', 'Geo-fenced Mobile Check-ins', 'First-In Last-Out Report', 'Absent Without Leave', 'Timesheet Approval Status', 'Payroll Attendance Export'] },
-  { category: 'Leave', module: 'Leave & Absence', icon: 'calendar-x', color: '#f59e0b', desc: 'leave balances, applications and absence patterns', names: ['Leave Balance Report', 'Leave Applications Register', 'Leave Liability Report', 'Sick Leave Analysis', 'Annual Leave Utilization', 'Leave Approval Turnaround', 'Unplanned Absence Report', 'Return to Work Report', 'Leave Encashment Summary', 'Carry Forward Balances', 'Leave by Department', 'Holiday Calendar Coverage', 'Maternity & Paternity Leave', 'Leave Trend Analysis', 'Bradford Factor Report', 'Pending Leave Approvals'] },
-  { category: 'Security', module: 'Physical Access Control', icon: 'shield', color: '#3b82f6', desc: 'door events, access rights and security exceptions', names: ['Access Control Events', 'Denied Access Attempts', 'Door Held Open Alarms', 'Forced Door Events', 'Access Rights Review', 'Anti-Passback Violations', 'Badge Issuance Report', 'Lost & Inactive Badges', 'After-Hours Access', 'Restricted Zone Entries', 'Tailgating Detections', 'Door Usage Statistics', 'Reader Health Report', 'Access Level Changes', 'Guard Patrol Summary', 'Checkpoint Compliance', 'Patrol Incident Log', 'Guard Attendance Report'] },
-  { category: 'Visitors', module: 'Visitor Management', icon: 'users', color: '#22c55e', desc: 'visitor volumes, hosts, dwell time and pre-registrations', names: ['Visitor Trend Analysis', 'Daily Visitor Log', 'Visitors by Host', 'Visitor Dwell Time', 'Pre-Registration Report', 'Watchlist Hits', 'Visitor Badge Returns', 'Vehicle Entry Log', 'VIP Visits Summary', 'Visitor Feedback', 'No-Show Visitors', 'Visitor Peak Hours', 'Visitors by Purpose', 'Visitor NDA Compliance'] },
-  { category: 'Workforce', module: 'Contractor Management', icon: 'hard-hat', color: '#f97316', desc: 'contractor and workforce headcount, compliance and deployment', names: ['Contractor Headcount', 'Contractor Compliance Status', 'Work Permit Register', 'Vendor Performance', 'Contractor On-Site Hours', 'Contract Expiry Report', 'Headcount by Department', 'New Joiners Report', 'Leavers & Attrition', 'Workforce Demographics', 'Span of Control', 'Shift Roster Coverage', 'Task Completion Report', 'Workforce Productivity', 'Contractor Induction Status', 'Manpower Cost Report'] },
-  { category: 'Facilities', module: 'Digital Twin & Spatial', icon: 'building', color: '#7c3aed', desc: 'utilization insights for desks, meeting rooms and collaboration spaces across sites', names: ['Space Utilization Report', 'Desk Booking Report', 'Meeting Room Usage', 'Occupancy by Floor', 'Peak Occupancy Report', 'No-Show Bookings', 'Hot Desk Utilization', 'Facility Service Requests', 'Cleaning Schedule Compliance', 'Asset Utilization', 'Energy vs Occupancy', 'Parking Utilization', 'Space Cost per Employee', 'Zone Dwell Time'] },
-  { category: 'Training', module: 'Training, Skills & Compliance', icon: 'graduation-cap', color: '#10b981', desc: 'mandatory training, certifications and skill coverage', names: ['Training Compliance Report', 'Certification Expiry', 'Course Completion Rates', 'Skills Matrix Report', 'Mandatory Training Gaps', 'Training Hours by Employee', 'Trainer Effectiveness', 'Induction Completion', 'Safety Training Status', 'Assessment Scores', 'Training Cost Report', 'Learning Path Progress'] },
-  { category: 'Safety', module: 'Workplace Safety', icon: 'triangle-alert', color: '#ef4444', desc: 'incidents, near misses and safety observations', names: ['Safety Incident Report', 'Near Miss Report', 'Lost Time Injury Rate', 'PPE Compliance', 'Safety Observations', 'Risk Assessment Status', 'Corrective Actions Tracker', 'Emergency Drill Report', 'Muster Accountability', 'Hazard Register', 'Lone Worker Alerts', 'Wellbeing Check-ins'] },
-  { category: 'Canteen', module: 'Meal & Canteen', icon: 'utensils', color: '#f59e0b', desc: 'meal consumption, wastage and canteen spend', names: ['Meal Consumption Report', 'Meal Wastage Analysis', 'Canteen Spend by Department', 'Meal Pre-Orders', 'Menu Popularity', 'Meal Subsidy Report', 'Canteen Footfall', 'Special Diet Requests'] },
-  { category: 'Emergency', module: 'Emergency & Mustering', icon: 'siren', color: '#dc2626', desc: 'evacuations, mustering and emergency readiness', names: ['Evacuation Summary', 'Muster Point Report', 'Warden Coverage', 'Emergency Response Times'] },
+  { category: 'Attendance', module: 'Time & Attendance', icon: 'calendar-days', color: 'var(--ka-7c3aed)', desc: 'attendance, punctuality and working-hour insights', names: ['Employee Attendance Summary', 'Daily Attendance Register', 'Late Arrivals Report', 'Early Departures Report', 'Overtime Summary', 'Absenteeism Analysis', 'Work From Home Summary', 'Shift Adherence Report', 'Missed Punch Report', 'Attendance Regularization Log', 'Working Hours by Employee', 'Monthly Attendance Muster', 'Attendance Exceptions', 'Night Shift Attendance', 'Weekend Attendance', 'Holiday Work Report', 'Attendance by Department', 'Attendance by Site', 'Punctuality Scorecard', 'Break Duration Analysis', 'Overtime Cost Report', 'Attendance Trend (12 Months)', 'Biometric Device Punches', 'Geo-fenced Mobile Check-ins', 'First-In Last-Out Report', 'Absent Without Leave', 'Timesheet Approval Status', 'Payroll Attendance Export'] },
+  { category: 'Leave', module: 'Leave & Absence', icon: 'calendar-x', color: 'var(--ka-f59e0b)', desc: 'leave balances, applications and absence patterns', names: ['Leave Balance Report', 'Leave Applications Register', 'Leave Liability Report', 'Sick Leave Analysis', 'Annual Leave Utilization', 'Leave Approval Turnaround', 'Unplanned Absence Report', 'Return to Work Report', 'Leave Encashment Summary', 'Carry Forward Balances', 'Leave by Department', 'Holiday Calendar Coverage', 'Maternity & Paternity Leave', 'Leave Trend Analysis', 'Bradford Factor Report', 'Pending Leave Approvals'] },
+  { category: 'Security', module: 'Physical Access Control', icon: 'shield', color: 'var(--ka-3b82f6)', desc: 'door events, access rights and security exceptions', names: ['Access Control Events', 'Denied Access Attempts', 'Door Held Open Alarms', 'Forced Door Events', 'Access Rights Review', 'Anti-Passback Violations', 'Badge Issuance Report', 'Lost & Inactive Badges', 'After-Hours Access', 'Restricted Zone Entries', 'Tailgating Detections', 'Door Usage Statistics', 'Reader Health Report', 'Access Level Changes', 'Guard Patrol Summary', 'Checkpoint Compliance', 'Patrol Incident Log', 'Guard Attendance Report'] },
+  { category: 'Visitors', module: 'Visitor Management', icon: 'users', color: 'var(--ka-22c55e)', desc: 'visitor volumes, hosts, dwell time and pre-registrations', names: ['Visitor Trend Analysis', 'Daily Visitor Log', 'Visitors by Host', 'Visitor Dwell Time', 'Pre-Registration Report', 'Watchlist Hits', 'Visitor Badge Returns', 'Vehicle Entry Log', 'VIP Visits Summary', 'Visitor Feedback', 'No-Show Visitors', 'Visitor Peak Hours', 'Visitors by Purpose', 'Visitor NDA Compliance'] },
+  { category: 'Workforce', module: 'Contractor Management', icon: 'hard-hat', color: 'var(--ka-f97316)', desc: 'contractor and workforce headcount, compliance and deployment', names: ['Contractor Headcount', 'Contractor Compliance Status', 'Work Permit Register', 'Vendor Performance', 'Contractor On-Site Hours', 'Contract Expiry Report', 'Headcount by Department', 'New Joiners Report', 'Leavers & Attrition', 'Workforce Demographics', 'Span of Control', 'Shift Roster Coverage', 'Task Completion Report', 'Workforce Productivity', 'Contractor Induction Status', 'Manpower Cost Report'] },
+  { category: 'Facilities', module: 'Digital Twin & Spatial', icon: 'building', color: 'var(--ka-7c3aed)', desc: 'utilization insights for desks, meeting rooms and collaboration spaces across sites', names: ['Space Utilization Report', 'Desk Booking Report', 'Meeting Room Usage', 'Occupancy by Floor', 'Peak Occupancy Report', 'No-Show Bookings', 'Hot Desk Utilization', 'Facility Service Requests', 'Cleaning Schedule Compliance', 'Asset Utilization', 'Energy vs Occupancy', 'Parking Utilization', 'Space Cost per Employee', 'Zone Dwell Time'] },
+  { category: 'Training', module: 'Training, Skills & Compliance', icon: 'graduation-cap', color: 'var(--ka-10b981)', desc: 'mandatory training, certifications and skill coverage', names: ['Training Compliance Report', 'Certification Expiry', 'Course Completion Rates', 'Skills Matrix Report', 'Mandatory Training Gaps', 'Training Hours by Employee', 'Trainer Effectiveness', 'Induction Completion', 'Safety Training Status', 'Assessment Scores', 'Training Cost Report', 'Learning Path Progress'] },
+  { category: 'Safety', module: 'Workplace Safety', icon: 'triangle-alert', color: 'var(--ka-ef4444)', desc: 'incidents, near misses and safety observations', names: ['Safety Incident Report', 'Near Miss Report', 'Lost Time Injury Rate', 'PPE Compliance', 'Safety Observations', 'Risk Assessment Status', 'Corrective Actions Tracker', 'Emergency Drill Report', 'Muster Accountability', 'Hazard Register', 'Lone Worker Alerts', 'Wellbeing Check-ins'] },
+  { category: 'Canteen', module: 'Meal & Canteen', icon: 'utensils', color: 'var(--ka-f59e0b)', desc: 'meal consumption, wastage and canteen spend', names: ['Meal Consumption Report', 'Meal Wastage Analysis', 'Canteen Spend by Department', 'Meal Pre-Orders', 'Menu Popularity', 'Meal Subsidy Report', 'Canteen Footfall', 'Special Diet Requests'] },
+  { category: 'Emergency', module: 'Emergency & Mustering', icon: 'siren', color: 'var(--ka-dc2626)', desc: 'evacuations, mustering and emergency readiness', names: ['Evacuation Summary', 'Muster Point Report', 'Warden Coverage', 'Emergency Response Times'] },
 ];
 
 // The first ten rows of the library exactly as on the reference (module labels per screenshot).
@@ -59,16 +59,16 @@ const PINNED: [string, string, string][] = [
   ['Guard Patrol Summary', 'Security Patrol', '2026-09-30'],
 ];
 const PINNED_ICON: Record<string, [string, string]> = {
-  'Employee Attendance Summary': ['calendar-days', '#7c3aed'],
-  'Leave Balance Report': ['calendar-x', '#f59e0b'],
-  'Access Control Events': ['shield', '#3b82f6'],
-  'Visitor Trend Analysis': ['users', '#16a34a'],
-  'Contractor Headcount': ['hard-hat', '#f59e0b'],
-  'Space Utilization Report': ['building', '#7c3aed'],
-  'Training Compliance Report': ['graduation-cap', '#22c55e'],
-  'Safety Incident Report': ['triangle-alert', '#ef4444'],
-  'Meal Consumption Report': ['utensils', '#f59e0b'],
-  'Guard Patrol Summary': ['shield-check', '#6d28d9'],
+  'Employee Attendance Summary': ['calendar-days', 'var(--ka-7c3aed)'],
+  'Leave Balance Report': ['calendar-x', 'var(--ka-f59e0b)'],
+  'Access Control Events': ['shield', 'var(--ka-3b82f6)'],
+  'Visitor Trend Analysis': ['users', 'var(--ka-16a34a)'],
+  'Contractor Headcount': ['hard-hat', 'var(--ka-f59e0b)'],
+  'Space Utilization Report': ['building', 'var(--ka-7c3aed)'],
+  'Training Compliance Report': ['graduation-cap', 'var(--ka-22c55e)'],
+  'Safety Incident Report': ['triangle-alert', 'var(--ka-ef4444)'],
+  'Meal Consumption Report': ['utensils', 'var(--ka-f59e0b)'],
+  'Guard Patrol Summary': ['shield-check', 'var(--ka-6d28d9)'],
 };
 const AUTHORS = ['Priya Nair', 'Omar Haddad', 'Sara Khan', 'Daniel Brooks', 'Aisha Rahman', ME, 'Lina Farouk', 'Rahul Mehta'];
 
@@ -142,7 +142,7 @@ export const rnd = (seed: number) => {
   let s = seed % 2147483647 || 1;
   return () => (s = (s * 16807) % 2147483647) / 2147483647;
 };
-const AV = ['#7c3aed', '#3b82f6', '#22c55e', '#f97316', '#ef4444', '#06b6d4', '#ec4899', '#64748b'];
+const AV = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ef4444)', 'var(--ka-06b6d4)', 'var(--ka-ec4899)', 'var(--ka-64748b)'];
 export const avatarOf = (name: string) => AV[hash(name) % AV.length];
 export const initials = (name: string) => name.split(' ').map((p) => p[0]).join('').slice(0, 2).toUpperCase();
 
@@ -178,7 +178,7 @@ const TPL: Record<string, Tpl> = {
   Canteen: { tabs: ['Summary', 'Consumption Trend', 'Meal Type Analysis', 'Site-wise Analysis', 'Department-wise Consumption', 'Heatmap View'], donut: ['Meal Consumption', 'Consumed', 'Consumed', 'Wasted', 'Total Meals', 5280, 92], trend: ['Consumption Trend', ['Breakfast', 'Lunch', 'Dinner']], breakdown: ['Consumption by Meal Type', ['Lunch', 'Breakfast', 'Snacks', 'Dinner', 'Beverages', 'Special Diet']], heat: 'Canteen Footfall Heatmap', unit: 'meals' },
   Emergency: { tabs: ['Summary', 'Muster Trend', 'Muster Point Analysis', 'Site-wise Analysis', 'Department-wise Accountability', 'Heatmap View'], donut: ['Accountability', 'Accounted', 'Accounted', 'Missing', 'Total People', 842, 97], trend: ['Muster Time Trend', ['< 3 min', '3-6 min', '> 6 min']], breakdown: ['Accountability by Muster Point', ['Muster A', 'Muster B', 'Muster C', 'Muster D', 'Muster E', 'Muster F']], heat: 'Evacuation Flow Heatmap', unit: 'people' },
 };
-export const BREAK_COLORS = ['#10b981', '#2563eb', '#f59e0b', '#7c3aed', '#f43f5e', '#9ca3af'];
+export const BREAK_COLORS = ['var(--ka-10b981)', 'var(--ka-2563eb)', 'var(--ka-f59e0b)', 'var(--ka-7c3aed)', 'var(--ka-f43f5e)', 'var(--ka-9ca3af)'];
 const SPACE_PCTS = [78, 65, 54, 62, 48, 36];
 const SITE_F: Record<string, number> = { 'Head Office': 1, Manufacturing: 0.84, Warehouse: 0.55, 'Logistics Hub': 0.32, 'Retail Stores': 0.2, 'Data Center': 0.08, 'All Sites': 2.9 };
 
@@ -219,13 +219,13 @@ export function previewFor(r: Report, p: PreviewParams): Preview {
     [66, 42, 60, 36, 58, 44, 62, 40, 64, 46, 60, 38, 64, 44, 58, 42, 66, 46],
     [44, 18, 40, 22, 38, 16, 46, 20, 42, 18, 40, 24, 46, 20, 44, 18, 42, 22],
   ];
-  const colors = ['#2563eb', '#7c3aed', '#10b981'];
+  const colors = ['var(--ka-2563eb)', 'var(--ka-7c3aed)', 'var(--ka-10b981)'];
   const series = t.trend[1].map((name, si) => ({
     name,
     color: colors[si],
     values: exact ? exactVals[si] : labels.map((_, i) => Math.max(4, Math.min(98, Math.round(base[si] + (i % 2 ? -12 : 10) + (R() - 0.5) * 18)))),
   }));
-  if (p.compare) series.push({ name: 'Previous Period', color: '#94a3b8', values: series[0].values.map((v) => Math.max(3, v - 6 + Math.round(R() * 8))), dashed: true } as never);
+  if (p.compare) series.push({ name: 'Previous Period', color: 'var(--ka-94a3b8)', values: series[0].values.map((v) => Math.max(3, v - 6 + Math.round(R() * 8))), dashed: true } as never);
   const rows = t.breakdown[1].map((label, i) => ({ label, pct: exact || r.category === 'Facilities' ? Math.max(10, Math.min(99, SPACE_PCTS[i] + (exact ? 0 : Math.round((R() - 0.5) * 12)))) : Math.round(30 + R() * 65), color: BREAK_COLORS[i] }));
   const floors = ['Ground', 'Floor 1', 'Floor 2', 'Floor 3', 'Floor 4', 'Floor 5', 'Floor 6'].map((label) => ({ label, pct: Math.round(40 + R() * 50) }));
   const departments = DEPARTMENTS.map((label) => ({ label, pct: Math.round(35 + R() * 60) }));
@@ -354,15 +354,15 @@ function buildAudit(): AuditEvent[] {
 }
 
 export const DATASETS = [
-  { id: 'employees', name: 'Employees', module: 'People & Identity', icon: 'users', color: '#7c3aed', records: 12480 },
-  { id: 'attendance', name: 'Attendance Records', module: 'Time & Attendance', icon: 'calendar-days', color: '#3b82f6', records: 268420 },
-  { id: 'access', name: 'Access Events', module: 'Physical Access Control', icon: 'shield', color: '#0ea5e9', records: 1284600 },
-  { id: 'visitors', name: 'Visitor Log', module: 'Visitor Management', icon: 'user-plus', color: '#22c55e', records: 48210 },
-  { id: 'spaces', name: 'Space Bookings', module: 'Digital Twin & Spatial', icon: 'building', color: '#a855f7', records: 92840 },
-  { id: 'leave', name: 'Leave Applications', module: 'Leave & Absence', icon: 'calendar-x', color: '#f59e0b', records: 22610 },
-  { id: 'training', name: 'Training Records', module: 'Training, Skills & Compliance', icon: 'graduation-cap', color: '#10b981', records: 24360 },
-  { id: 'incidents', name: 'Safety Incidents', module: 'Workplace Safety', icon: 'triangle-alert', color: '#ef4444', records: 1862 },
-  { id: 'meals', name: 'Meal Transactions', module: 'Meal & Canteen', icon: 'utensils', color: '#f97316', records: 158300 },
+  { id: 'employees', name: 'Employees', module: 'People & Identity', icon: 'users', color: 'var(--ka-7c3aed)', records: 12480 },
+  { id: 'attendance', name: 'Attendance Records', module: 'Time & Attendance', icon: 'calendar-days', color: 'var(--ka-3b82f6)', records: 268420 },
+  { id: 'access', name: 'Access Events', module: 'Physical Access Control', icon: 'shield', color: 'var(--ka-0ea5e9)', records: 1284600 },
+  { id: 'visitors', name: 'Visitor Log', module: 'Visitor Management', icon: 'user-plus', color: 'var(--ka-22c55e)', records: 48210 },
+  { id: 'spaces', name: 'Space Bookings', module: 'Digital Twin & Spatial', icon: 'building', color: 'var(--ka-a855f7)', records: 92840 },
+  { id: 'leave', name: 'Leave Applications', module: 'Leave & Absence', icon: 'calendar-x', color: 'var(--ka-f59e0b)', records: 22610 },
+  { id: 'training', name: 'Training Records', module: 'Training, Skills & Compliance', icon: 'graduation-cap', color: 'var(--ka-10b981)', records: 24360 },
+  { id: 'incidents', name: 'Safety Incidents', module: 'Workplace Safety', icon: 'triangle-alert', color: 'var(--ka-ef4444)', records: 1862 },
+  { id: 'meals', name: 'Meal Transactions', module: 'Meal & Canteen', icon: 'utensils', color: 'var(--ka-f97316)', records: 158300 },
 ];
 
 function buildExports(): ExportJob[] {
@@ -445,12 +445,12 @@ export const WIDGET_LIBRARY: Omit<Widget, 'id'>[] = [
 const W = (ids: number[]) => ids.map((i, k) => ({ ...WIDGET_LIBRARY[i], id: `w${i}-${k}` }));
 function buildDashboards(): Dash[] {
   return [
-    { id: 'D1', name: 'Executive People Overview', owner: 'System', shared: true, isDefault: true, updated: '2026-10-12', views: 1284, color: '#7c3aed', widgets: W([0, 1, 2, 3, 6, 7, 8, 9, 10]) },
-    { id: 'D2', name: 'Facilities & Space', owner: 'Priya Nair', shared: true, isDefault: false, updated: '2026-10-09', views: 642, color: '#a855f7', widgets: W([1, 2, 7, 9, 10]) },
-    { id: 'D3', name: 'HR Attendance & Leave', owner: 'Sara Khan', shared: true, isDefault: false, updated: '2026-10-11', views: 905, color: '#3b82f6', widgets: W([0, 4, 6, 8, 13]) },
-    { id: 'D4', name: 'Security Operations', owner: 'Omar Haddad', shared: true, isDefault: false, updated: '2026-10-08', views: 588, color: '#0ea5e9', widgets: W([5, 3, 2, 10, 12, 11]) },
-    { id: 'D5', name: 'Safety & Compliance', owner: 'Aisha Rahman', shared: false, isDefault: false, updated: '2026-10-02', views: 214, color: '#ef4444', widgets: W([3, 4, 12, 13, 6]) },
-    { id: 'D6', name: 'My Weekly Snapshot', owner: ME, shared: false, isDefault: false, updated: '2026-10-13', views: 57, color: '#22c55e', widgets: W([0, 1, 14, 8]) },
+    { id: 'D1', name: 'Executive People Overview', owner: 'System', shared: true, isDefault: true, updated: '2026-10-12', views: 1284, color: 'var(--ka-7c3aed)', widgets: W([0, 1, 2, 3, 6, 7, 8, 9, 10]) },
+    { id: 'D2', name: 'Facilities & Space', owner: 'Priya Nair', shared: true, isDefault: false, updated: '2026-10-09', views: 642, color: 'var(--ka-a855f7)', widgets: W([1, 2, 7, 9, 10]) },
+    { id: 'D3', name: 'HR Attendance & Leave', owner: 'Sara Khan', shared: true, isDefault: false, updated: '2026-10-11', views: 905, color: 'var(--ka-3b82f6)', widgets: W([0, 4, 6, 8, 13]) },
+    { id: 'D4', name: 'Security Operations', owner: 'Omar Haddad', shared: true, isDefault: false, updated: '2026-10-08', views: 588, color: 'var(--ka-0ea5e9)', widgets: W([5, 3, 2, 10, 12, 11]) },
+    { id: 'D5', name: 'Safety & Compliance', owner: 'Aisha Rahman', shared: false, isDefault: false, updated: '2026-10-02', views: 214, color: 'var(--ka-ef4444)', widgets: W([3, 4, 12, 13, 6]) },
+    { id: 'D6', name: 'My Weekly Snapshot', owner: ME, shared: false, isDefault: false, updated: '2026-10-13', views: 57, color: 'var(--ka-22c55e)', widgets: W([0, 1, 14, 8]) },
   ];
 }
 

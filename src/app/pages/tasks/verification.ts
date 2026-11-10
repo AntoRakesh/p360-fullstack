@@ -10,7 +10,7 @@ import { CAT_NAMES, catMeta, catOf, hhmm, prioCls, statusCls, SUPERVISORS, TaskI
 type Tab = 'Completed' | 'Verified' | 'Rejected';
 const REASONS = ['Area not cleaned to standard', 'Photo evidence unclear / missing', 'Checklist step skipped', 'Wrong location scanned', 'Completed outside SLA window', 'Safety issue observed'];
 const SCENES = [
-  ['#475569', '#94a3b8'], ['#0f766e', '#5eead4'], ['#6d28d9', '#c4b5fd'], ['#b45309', '#fcd34d'], ['#1d4ed8', '#93c5fd'], ['#be123c', '#fda4af'],
+  ['var(--ka-475569)', 'var(--ka-94a3b8)'], ['var(--ka-0f766e)', 'var(--ka-5eead4)'], ['var(--ka-6d28d9)', 'var(--ka-c4b5fd)'], ['var(--ka-b45309)', 'var(--ka-fcd34d)'], ['var(--ka-1d4ed8)', 'var(--ka-93c5fd)'], ['var(--ka-be123c)', 'var(--ka-fda4af)'],
 ];
 
 @Component({
@@ -26,11 +26,11 @@ const SCENES = [
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="Awaiting Review" [value]="byStatus().Completed.length" icon="file-check" color="#f59e0b" [pct]="oldest() + ' min'" pctColor="#b45309" sub="oldest in queue" />
-      <app-tkpi label="Verified Today" [value]="byStatus().Verified.length" icon="shield-check" color="#22c55e" change="9%" sub="vs. last Wed" />
-      <app-tkpi label="Rejected / Rework" [value]="byStatus().Rejected.length" icon="tasks-x" color="#ef4444" [pct]="reworkOpen() + ''" pctColor="#b91c1c" sub="rework in progress" />
-      <app-tkpi label="First-pass Approval" [value]="firstPass() + '%'" icon="tasks-award" color="#7c3aed" sub="approved without rework" />
-      <app-tkpi label="Avg Rating" [value]="avgRating() + ' ★'" icon="star" color="#2563eb" [sub]="'across ' + byStatus().Verified.length + ' reviews'" />
+      <app-tkpi label="Awaiting Review" [value]="byStatus().Completed.length" icon="file-check" color="var(--ka-f59e0b)" [pct]="oldest() + ' min'" pctColor="var(--ka-b45309)" sub="oldest in queue" />
+      <app-tkpi label="Verified Today" [value]="byStatus().Verified.length" icon="shield-check" color="var(--ka-22c55e)" change="9%" sub="vs. last Wed" />
+      <app-tkpi label="Rejected / Rework" [value]="byStatus().Rejected.length" icon="tasks-x" color="var(--ka-ef4444)" [pct]="reworkOpen() + ''" pctColor="var(--ka-b91c1c)" sub="rework in progress" />
+      <app-tkpi label="First-pass Approval" [value]="firstPass() + '%'" icon="tasks-award" color="var(--ka-7c3aed)" sub="approved without rework" />
+      <app-tkpi label="Avg Rating" [value]="avgRating() + ' ★'" icon="star" color="var(--ka-2563eb)" [sub]="'across ' + byStatus().Verified.length + ' reviews'" />
     </section>
 
     <section class="grid">
@@ -84,7 +84,7 @@ const SCENES = [
 
           <div class="who">
             @if (w) {<span class="av" [style.background]="w.color">{{ w.initials }}</span><div><b>{{ w.name }}</b><small>{{ w.role }} · {{ w.team }} · quality {{ w.quality }}%</small></div>}
-            <div class="tm"><span>Window<b>{{ hhmm(t.start) }} – {{ hhmm(t.due) }}</b></span><span>Started<b>{{ t.startedAt != null ? hhmm(t.startedAt) : '—' }}</b></span><span>Completed<b [style.color]="late(t) ? '#b91c1c' : ''">{{ t.completedAt != null ? hhmm(t.completedAt) : '—' }}</b></span><span>Duration<b>{{ dur(t) }} min</b></span></div>
+            <div class="tm"><span>Window<b>{{ hhmm(t.start) }} – {{ hhmm(t.due) }}</b></span><span>Started<b>{{ t.startedAt != null ? hhmm(t.startedAt) : '—' }}</b></span><span>Completed<b [style.color]="late(t) ? 'var(--ka-b91c1c)' : ''">{{ t.completedAt != null ? hhmm(t.completedAt) : '—' }}</b></span><span>Duration<b>{{ dur(t) }} min</b></span></div>
           </div>
 
           <h4>Photo Evidence <small>{{ t.photos }} photo{{ t.photos === 1 ? '' : 's' }} · tap to enlarge</small></h4>
@@ -115,7 +115,7 @@ const SCENES = [
               </div>
               <h4>Worker Signature</h4>
               <div class="sig">
-                <svg viewBox="0 0 220 60"><path [attr.d]="sigPath()" fill="none" stroke="#1e1b3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                <svg viewBox="0 0 220 60"><path [attr.d]="sigPath()" fill="none" stroke="var(--kl-1e1b3a)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
                 <small>{{ w?.name }} · signed {{ t.completedAt != null ? hhmm(t.completedAt) : '' }}</small>
               </div>
             </div>
@@ -216,49 +216,49 @@ const SCENES = [
     .grid { display: grid; grid-template-columns: 340px minmax(0, 1fr) 300px; gap: 12px; align-items: start; }
     .ql .card-head { margin-bottom: 10px; } .ql .tabs { width: 100%; } .ql .tabs button { flex: 1; padding: 5px 6px; }
     .flt { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; } .flt .search-box { grid-column: 1 / -1; } .flt .search-box input { width: 100%; } .flt .select { font-size: 12px; min-width: 0; }
-    .all { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #4b4f6b; padding: 4px 6px 8px; border-bottom: 1px solid var(--border); }
+    .all { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--kf-4b4f6b); padding: 4px 6px 8px; border-bottom: 1px solid var(--border); }
     input[type='checkbox'] { accent-color: var(--primary); }
     .ql ul { list-style: none; margin: 0; padding: 0; max-height: 820px; overflow: auto; }
-    .ql li { display: grid; grid-template-columns: auto 24px 1fr auto; gap: 8px; align-items: center; padding: 9px 6px; border-bottom: 1px solid #f1f2f7; cursor: pointer; border-radius: 6px; }
+    .ql li { display: grid; grid-template-columns: auto 24px 1fr auto; gap: 8px; align-items: center; padding: 9px 6px; border-bottom: 1px solid var(--kl-f1f2f7); cursor: pointer; border-radius: 6px; }
     .ql li:not(:has(input)) { grid-template-columns: 24px 1fr auto; }
-    .ql li.on { background: #f5f3ff; box-shadow: inset 3px 0 0 var(--primary); } .ql li:hover:not(.on) { background: #fafafe; }
-    .ci { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; color: #fff; }
+    .ql li.on { background: var(--kb-f5f3ff); box-shadow: inset 3px 0 0 var(--primary); } .ql li:hover:not(.on) { background: var(--kb-fafafe); }
+    .ci { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .tx { display: flex; flex-direction: column; min-width: 0; gap: 1px; } .tx b { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tx small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .mt { display: flex; gap: 8px; font-size: 10.5px; color: #4b4f6b; } .mt span { display: inline-flex; align-items: center; gap: 3px; } .mt .lt { color: #b91c1c; font-weight: 600; }
+    .mt { display: flex; gap: 8px; font-size: 10.5px; color: var(--kf-4b4f6b); } .mt span { display: inline-flex; align-items: center; gap: 3px; } .mt .lt { color: var(--kf-b91c1c); font-weight: 600; }
     .age { display: flex; flex-direction: column; align-items: flex-end; font-size: 11.5px; font-weight: 600; white-space: nowrap; } .age small { font-weight: 400; color: var(--muted); font-size: 10.5px; }
-    .empty { display: flex !important; justify-content: center; gap: 8px; color: #16a34a; font-size: 12.5px; padding: 24px !important; cursor: default !important; }
+    .empty { display: flex !important; justify-content: center; gap: 8px; color: var(--kf-16a34a); font-size: 12.5px; padding: 24px !important; cursor: default !important; }
     .more { display: flex !important; justify-content: center; cursor: default !important; }
     .rv { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .rv.none { align-items: center; justify-content: center; text-align: center; min-height: 420px; color: var(--muted); gap: 10px; } .rv.none b { color: var(--text); }
     .rh { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; } .rh h3 { font-size: 17px; } .rh small { color: var(--muted); font-size: 12px; }
-    .cil { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; color: #fff; }
-    .who { display: flex; gap: 10px; align-items: center; margin: 12px 0 4px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fafafe; flex-wrap: wrap; }
+    .cil { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .who { display: flex; gap: 10px; align-items: center; margin: 12px 0 4px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-fafafe); flex-wrap: wrap; }
     .who > div:not(.tm) { display: flex; flex-direction: column; } .who small { color: var(--muted); font-size: 11.5px; }
-    .av { width: 36px; height: 36px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 600; }
+    .av { width: 36px; height: 36px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 12px; font-weight: 600; }
     .tm { margin-left: auto; display: flex; gap: 16px; } .tm span { display: flex; flex-direction: column; font-size: 11px; color: var(--muted); } .tm b { font-size: 12.5px; color: var(--text); }
     h4 { margin: 14px 0 8px; font-size: 13px; display: flex; justify-content: space-between; } h4 small { color: var(--muted); font-weight: 500; }
     .photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
     .ph { position: relative; height: 110px; border-radius: 10px; border: 0; color: rgba(255, 255, 255, 0.9); display: grid; place-items: center; cursor: zoom-in; overflow: hidden; }
     .ph:hover { filter: brightness(1.06); }
-    .stamp { position: absolute; left: 6px; bottom: 6px; font-size: 9.5px; background: rgba(0, 0, 0, 0.45); color: #fff; padding: 2px 5px; border-radius: 4px; }
-    .lbl { position: absolute; top: 6px; left: 6px; font-size: 10px; font-weight: 600; background: rgba(255, 255, 255, 0.88); color: #1e1b3a; padding: 2px 6px; border-radius: 4px; }
+    .stamp { position: absolute; left: 6px; bottom: 6px; font-size: 9.5px; background: rgba(0, 0, 0, 0.45); color: var(--kf-ffffff); padding: 2px 5px; border-radius: 4px; }
+    .lbl { position: absolute; top: 6px; left: 6px; font-size: 10px; font-weight: 600; background: rgba(255, 255, 255, 0.88); color: var(--kf-1e1b3a); padding: 2px 6px; border-radius: 4px; }
     .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
-    .cl { list-style: none; margin: 0; padding: 0; } .cl li { display: grid; grid-template-columns: 16px 1fr auto auto; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px dashed #eef0f5; color: #94a3b8; }
-    .cl li.ok { color: var(--text); } .cl li.ok > app-icon:first-child { color: #16a34a; } .cl small { color: var(--muted); font-size: 11px; } .pc { color: var(--primary); }
-    .proof { display: flex; gap: 10px; align-items: center; padding: 10px; border-radius: 10px; background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; } .proof div { display: flex; flex-direction: column; } .proof small { color: #4b4f6b; font-size: 11px; }
-    .sig { border: 1px dashed #c9cdd8; border-radius: 10px; padding: 6px 10px; background: #fff; } .sig svg { width: 100%; height: 60px; display: block; } .sig small { color: var(--muted); font-size: 11px; }
+    .cl { list-style: none; margin: 0; padding: 0; } .cl li { display: grid; grid-template-columns: 16px 1fr auto auto; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; border-bottom: 1px dashed var(--kl-eef0f5); color: var(--kf-94a3b8); }
+    .cl li.ok { color: var(--text); } .cl li.ok > app-icon:first-child { color: var(--kf-16a34a); } .cl small { color: var(--muted); font-size: 11px; } .pc { color: var(--primary); }
+    .proof { display: flex; gap: 10px; align-items: center; padding: 10px; border-radius: 10px; background: var(--kb-f0fdf4); color: var(--kf-15803d); border: 1px solid var(--kl-bbf7d0); } .proof div { display: flex; flex-direction: column; } .proof small { color: var(--kf-4b4f6b); font-size: 11px; }
+    .sig { border: 1px dashed var(--kl-c9cdd8); border-radius: 10px; padding: 6px 10px; background: var(--kb-ffffff); } .sig svg { width: 100%; height: 60px; display: block; } .sig small { color: var(--muted); font-size: 11px; }
     .decide { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; }
-    .rate { display: flex; align-items: center; gap: 2px; font-size: 12px; color: #4b4f6b; } .rate button { border: 0; background: none; font-size: 20px; color: #d5d8e4; cursor: pointer; padding: 0 1px; } .rate button.on { color: #f59e0b; } .rate button:first-of-type { margin-left: 6px; }
+    .rate { display: flex; align-items: center; gap: 2px; font-size: 12px; color: var(--kf-4b4f6b); } .rate button { border: 0; background: none; font-size: 20px; color: var(--kf-d5d8e4); cursor: pointer; padding: 0 1px; } .rate button.on { color: var(--kf-f59e0b); } .rate button:first-of-type { margin-left: 6px; }
     .btns { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; } .btns .link { margin-left: auto; }
-    .approve { background: #16a34a !important; border-color: #16a34a !important; }
+    .approve { background: var(--kb-16a34a) !important; border-color: var(--kl-16a34a) !important; }
     .danger { color: var(--red); }
-    .decided { margin-top: 16px; display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: #f0fdf4; color: #15803d; } .decided.rej { background: #fef2f2; color: #b91c1c; }
-    .decided div { display: flex; flex-direction: column; flex: 1; } .decided small { color: #4b4f6b; font-size: 12px; }
+    .decided { margin-top: 16px; display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 10px; background: var(--kb-f0fdf4); color: var(--kf-15803d); } .decided.rej { background: var(--kb-fef2f2); color: var(--kf-b91c1c); }
+    .decided div { display: flex; flex-direction: column; flex: 1; } .decided small { color: var(--kf-4b4f6b); font-size: 12px; }
     .side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
     .lb .big { position: relative; height: 480px; border-radius: 12px; display: grid; place-items: center; color: rgba(255, 255, 255, 0.85); } .lb .stamp { font-size: 12px; left: 12px; bottom: 12px; padding: 4px 8px; }
     .sum { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
     .red { background: var(--red) !important; border-color: var(--red) !important; }
-    .rules { list-style: none; margin: 0; padding: 0; } .rules li { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f2f7; } .rules div { display: flex; flex-direction: column; } .rules b { font-size: 13px; } .rules small { color: var(--muted); font-size: 12px; }
+    .rules { list-style: none; margin: 0; padding: 0; } .rules li { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f1f2f7); } .rules div { display: flex; flex-direction: column; } .rules b { font-size: 13px; } .rules small { color: var(--muted); font-size: 12px; }
     @media (max-width: 1400px) { .grid { grid-template-columns: 320px minmax(0, 1fr); } .side { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   `,
@@ -347,17 +347,17 @@ export class TaskVerificationApprovals {
     return (l.reduce((a, t) => a + t.rating!, 0) / Math.max(l.length, 1)).toFixed(1);
   });
   protected readonly outcomes = computed(() => [
-    { label: 'Approved', value: this.byStatus().Verified.length, color: '#22c55e' },
-    { label: 'Rejected', value: this.byStatus().Rejected.length, color: '#ef4444' },
-    { label: 'Sent for rework', value: this.reworkOpen(), color: '#f59e0b' },
-    { label: 'Awaiting', value: this.byStatus().Completed.length, color: '#c4b5fd' },
+    { label: 'Approved', value: this.byStatus().Verified.length, color: 'var(--ka-22c55e)' },
+    { label: 'Rejected', value: this.byStatus().Rejected.length, color: 'var(--ka-ef4444)' },
+    { label: 'Sent for rework', value: this.reworkOpen(), color: 'var(--ka-f59e0b)' },
+    { label: 'Awaiting', value: this.byStatus().Completed.length, color: 'var(--ka-c4b5fd)' },
   ]);
   protected readonly bySup = computed(() => {
     const names = [...SUPERVISORS, 'Auto-approval'];
     return names
       .map((s, i) => {
         const v = this.store.tasks().filter((t) => t.verifiedBy === s).length;
-        return { label: s, value: v, display: String(v), color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#06b6d4'][i] };
+        return { label: s, value: v, display: String(v), color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-06b6d4)'][i] };
       })
       .sort((a, b) => b.value - a.value);
   });
@@ -368,7 +368,7 @@ export class TaskVerificationApprovals {
       const a = this.age(t);
       b[a < 15 ? 0 : a < 30 ? 1 : a < 60 ? 2 : a < 120 ? 3 : 4]++;
     }
-    return [{ name: 'Tasks', color: '#a78bfa', values: b }];
+    return [{ name: 'Tasks', color: 'var(--ka-a78bfa)', values: b }];
   });
   protected readonly allPicked = computed(() => this.list().length > 0 && this.list().every((t) => this.picked().has(t.id)));
   protected readonly autoMatches = computed(() =>

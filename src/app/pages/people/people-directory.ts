@@ -11,7 +11,7 @@ import { DEPTS, PEOPLE, Person, PERSON_TYPES, PersonType, SITES, typeTag } from 
 
 const TAB_LABEL: Record<string, string> = { All: 'All People', Employee: 'Employees', Contractor: 'Contractors', Visitor: 'Visitors', Temporary: 'Temporary', Other: 'Others' };
 const PREFIX: Record<PersonType, string> = { Employee: 'EMP', Contractor: 'CON', Visitor: 'VIS', Temporary: 'TMP', Other: 'OTH' };
-const COLORS = ['#7c3aed', '#2563eb', '#0d9488', '#ca8a04', '#db2777', '#475569'];
+const COLORS = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0d9488)', 'var(--ka-ca8a04)', 'var(--ka-db2777)', 'var(--ka-475569)'];
 
 type Draft = Pick<Person, 'name' | 'email' | 'phone' | 'type' | 'dept' | 'designation' | 'site' | 'status'>;
 const EMPTY: Draft = { name: '', email: '', phone: '', type: 'Employee', dept: 'IT', designation: '', site: 'Head Office', status: 'Active' };
@@ -160,16 +160,16 @@ const EMPTY: Draft = { name: '', email: '', phone: '', type: 'Employee', dept: '
     .dir.with-profile { grid-template-columns: minmax(0, 1.5fr) minmax(390px, 1fr); }
     .list ::ng-deep .dt-person small { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .profile { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; }
-    .type-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin-bottom: 14px; border-radius: 8px; background: #f6f6fa; }
-    .type-tabs button { border: 0; background: none; padding: 7px 9px; border-radius: 6px; font-size: 12px; color: #4b4f6b; cursor: pointer; }
-    .type-tabs button.on { background: #fff; color: var(--primary); font-weight: 600; box-shadow: inset 0 -2px 0 var(--primary); }
+    .type-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; margin-bottom: 14px; border-radius: 8px; background: var(--kb-f6f6fa); }
+    .type-tabs button { border: 0; background: none; padding: 7px 9px; border-radius: 6px; font-size: 12px; color: var(--kf-4b4f6b); cursor: pointer; }
+    .type-tabs button.on { background: var(--kb-ffffff); color: var(--primary); font-weight: 600; box-shadow: inset 0 -2px 0 var(--primary); }
     .split { display: flex; }
     .split .btn-primary:first-child { border-radius: 8px 0 0 8px; }
     .caret { border-radius: 0 8px 8px 0 !important; padding: 8px 9px !important; border-left: 1px solid rgba(255,255,255,0.3) !important; }
     .up { transform: rotate(180deg); }
     .btn-ghost.on { background: var(--primary-soft); color: var(--primary); }
     .preview { max-height: 260px; margin-top: 12px; }
-    code { background: #f3f3f8; padding: 1px 5px; border-radius: 4px; }
+    code { background: var(--kb-f3f3f8); padding: 1px 5px; border-radius: 4px; }
     @media (max-width: 1250px) { .dir.with-profile { grid-template-columns: 1fr; } .profile { position: static; max-height: none; } }
   `,
 })

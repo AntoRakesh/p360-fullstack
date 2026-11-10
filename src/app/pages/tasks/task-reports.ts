@@ -25,14 +25,14 @@ interface Preview {
   rows: (string | number)[][];
 }
 const DEFS: Def[] = [
-  { id: 'completion', name: 'Daily Task Completion Summary', desc: 'Created vs completed tasks with completion rate by category.', icon: 'tasks-check-circle', color: '#22c55e', group: 'Operations' },
-  { id: 'sla', name: 'SLA Breach Report', desc: 'On-time vs late closures and every open breach with owner.', icon: 'tasks-timer', color: '#ef4444', group: 'SLA' },
-  { id: 'escalation', name: 'Overdue & Escalation Report', desc: 'Overdue tasks, escalation level and escalation contact.', icon: 'tasks-escalate', color: '#f97316', group: 'SLA' },
-  { id: 'checkpoint', name: 'Checkpoint Scan Compliance', desc: 'Scans vs expected per checkpoint, technology and zone.', icon: 'tasks-qr', color: '#0ea5e9', group: 'Compliance' },
-  { id: 'verification', name: 'Verification & Quality Report', desc: 'Approval outcomes, ratings and reviews per supervisor.', icon: 'file-check', color: '#7c3aed', group: 'Compliance' },
-  { id: 'productivity', name: 'Worker Productivity Scorecard', desc: 'Tasks completed, on-time rate and quality per worker.', icon: 'tasks-award', color: '#f59e0b', group: 'Workforce' },
-  { id: 'team', name: 'Team Workload Distribution', desc: 'Open, in-progress and completed workload by team.', icon: 'users', color: '#2563eb', group: 'Workforce' },
-  { id: 'template', name: 'Template Usage Report', desc: 'Most used task templates in the last 30 days.', icon: 'tasks-clipboard', color: '#64748b', group: 'Operations' },
+  { id: 'completion', name: 'Daily Task Completion Summary', desc: 'Created vs completed tasks with completion rate by category.', icon: 'tasks-check-circle', color: 'var(--ka-22c55e)', group: 'Operations' },
+  { id: 'sla', name: 'SLA Breach Report', desc: 'On-time vs late closures and every open breach with owner.', icon: 'tasks-timer', color: 'var(--ka-ef4444)', group: 'SLA' },
+  { id: 'escalation', name: 'Overdue & Escalation Report', desc: 'Overdue tasks, escalation level and escalation contact.', icon: 'tasks-escalate', color: 'var(--ka-f97316)', group: 'SLA' },
+  { id: 'checkpoint', name: 'Checkpoint Scan Compliance', desc: 'Scans vs expected per checkpoint, technology and zone.', icon: 'tasks-qr', color: 'var(--ka-0ea5e9)', group: 'Compliance' },
+  { id: 'verification', name: 'Verification & Quality Report', desc: 'Approval outcomes, ratings and reviews per supervisor.', icon: 'file-check', color: 'var(--ka-7c3aed)', group: 'Compliance' },
+  { id: 'productivity', name: 'Worker Productivity Scorecard', desc: 'Tasks completed, on-time rate and quality per worker.', icon: 'tasks-award', color: 'var(--ka-f59e0b)', group: 'Workforce' },
+  { id: 'team', name: 'Team Workload Distribution', desc: 'Open, in-progress and completed workload by team.', icon: 'users', color: 'var(--ka-2563eb)', group: 'Workforce' },
+  { id: 'template', name: 'Template Usage Report', desc: 'Most used task templates in the last 30 days.', icon: 'tasks-clipboard', color: 'var(--ka-64748b)', group: 'Operations' },
 ];
 const RANGES = ['Today', 'Last 7 days', 'Last 30 days', 'This month'];
 const GROUPS = ['All', 'Operations', 'SLA', 'Workforce', 'Compliance'];
@@ -49,11 +49,11 @@ const GROUPS = ['All', 'Operations', 'SLA', 'Workforce', 'Compliance'];
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="Report Templates" [value]="defs.length" icon="file-chart" color="#7c3aed" [sub]="favs().size + ' favourites'" />
-      <app-tkpi label="Generated This Month" [value]="38 + store.reports().length" icon="file-text" color="#2563eb" change="14%" sub="vs. last month" />
-      <app-tkpi label="Scheduled Reports" [value]="activeSchedules()" icon="calendar-days" color="#22c55e" [sub]="'of ' + store.schedules().length + ' schedules active'" />
-      <app-tkpi label="Tasks in Scope" [value]="scoped().length" icon="tasks-clipboard" color="#f59e0b" [sub]="site() + ' · ' + (cat() === 'All' ? 'all categories' : cat())" />
-      <app-tkpi label="Data Freshness" value="Live" icon="refresh" color="#06b6d4" [sub]="'updated ' + hhmm(store.now())" />
+      <app-tkpi label="Report Templates" [value]="defs.length" icon="file-chart" color="var(--ka-7c3aed)" [sub]="favs().size + ' favourites'" />
+      <app-tkpi label="Generated This Month" [value]="38 + store.reports().length" icon="file-text" color="var(--ka-2563eb)" change="14%" sub="vs. last month" />
+      <app-tkpi label="Scheduled Reports" [value]="activeSchedules()" icon="calendar-days" color="var(--ka-22c55e)" [sub]="'of ' + store.schedules().length + ' schedules active'" />
+      <app-tkpi label="Tasks in Scope" [value]="scoped().length" icon="tasks-clipboard" color="var(--ka-f59e0b)" [sub]="site() + ' · ' + (cat() === 'All' ? 'all categories' : cat())" />
+      <app-tkpi label="Data Freshness" value="Live" icon="refresh" color="var(--ka-06b6d4)" [sub]="'updated ' + hhmm(store.now())" />
     </section>
 
     <section class="grid">
@@ -164,22 +164,22 @@ const GROUPS = ['All', 'Operations', 'SLA', 'Workforce', 'Compliance'];
     .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 12px; align-items: start; }
     .grp { margin-bottom: 10px; display: flex; } .grp button { flex: 1; padding: 5px 4px; }
     .cat ul { list-style: none; margin: 0; padding: 0; }
-    .cat li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid #f1f2f7; }
-    .cat li:hover { background: #fafafe; } .cat li.on { background: #f5f3ff; box-shadow: inset 3px 0 0 var(--primary); }
+    .cat li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 10px 8px; border-radius: 8px; cursor: pointer; border-bottom: 1px solid var(--kl-f1f2f7); }
+    .cat li:hover { background: var(--kb-fafafe); } .cat li.on { background: var(--kb-f5f3ff); box-shadow: inset 3px 0 0 var(--primary); }
     .cat li div { display: flex; flex-direction: column; min-width: 0; } .cat b { font-size: 12.5px; } .cat small { font-size: 11px; color: var(--muted); }
-    .ri { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: #fff; } .ri.sm { width: 26px; height: 26px; border-radius: 7px; display: inline-grid; vertical-align: middle; margin-right: 8px; }
-    .star { border: 0; background: none; font-size: 17px; color: #d5d8e4; cursor: pointer; } .star.on { color: #f59e0b; }
+    .ri { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: var(--kf-ffffff); } .ri.sm { width: 26px; height: 26px; border-radius: 7px; display: inline-grid; vertical-align: middle; margin-right: 8px; }
+    .star { border: 0; background: none; font-size: 17px; color: var(--kf-d5d8e4); cursor: pointer; } .star.on { color: var(--kf-f59e0b); }
     .pv h3 { display: flex; align-items: center; }
     .btn-primary.sm { padding: 6px 10px; font-size: 12px; }
-    .filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; } .filters label { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: #4b4f6b; }
+    .filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; } .filters label { display: flex; flex-direction: column; gap: 4px; font-size: 11.5px; color: var(--kf-4b4f6b); }
     .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
-    .stats span { display: flex; flex-direction: column; gap: 2px; font-size: 11.5px; color: var(--muted); padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: #fafafe; } .stats b { font-size: 18px; color: var(--text); }
+    .stats span { display: flex; flex-direction: column; gap: 2px; font-size: 11.5px; color: var(--muted); padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-fafafe); } .stats b { font-size: 18px; color: var(--text); }
     .chart { margin-bottom: 12px; min-height: 120px; }
     .center { text-align: center; padding: 20px !important; }
     .more { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
-    .fmt { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: #eef0f5; } .fmt.pdf { background: #fee2e2; color: #b91c1c; } .fmt.xlsx { background: #dcfce7; color: #15803d; } .fmt.csv { background: #dbeafe; color: #1d4ed8; }
+    .fmt { font-size: 10.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: var(--kb-eef0f5); } .fmt.pdf { background: var(--kb-fee2e2); color: var(--kf-b91c1c); } .fmt.xlsx { background: var(--kb-dcfce7); color: var(--kf-15803d); } .fmt.csv { background: var(--kb-dbeafe); color: var(--kf-1d4ed8); }
     td.acts { white-space: nowrap; text-align: right; } td.acts button + button { margin-left: 4px; }
-    .sch { list-style: none; margin: 0; padding: 0; } .sch li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f2f7; }
+    .sch { list-style: none; margin: 0; padding: 0; } .sch li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f1f2f7); }
     .sch li.off { opacity: 0.6; } .sch div { display: flex; flex-direction: column; min-width: 0; } .sch b { font-size: 12.5px; } .sch small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .sa { display: flex; align-items: center; gap: 4px; }
     @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid, .grid2 { grid-template-columns: 1fr; } }
@@ -235,9 +235,9 @@ export class TasksReportsAnalytics {
         return {
           kind: 'donut',
           segs: [
-            { label: 'On time', value: Math.round((done.length - late.length) * k), color: '#22c55e' },
-            { label: 'Closed late', value: Math.round(late.length * k), color: '#f59e0b' },
-            { label: 'Open breach', value: breached.length, color: '#ef4444' },
+            { label: 'On time', value: Math.round((done.length - late.length) * k), color: 'var(--ka-22c55e)' },
+            { label: 'Closed late', value: Math.round(late.length * k), color: 'var(--ka-f59e0b)' },
+            { label: 'Open breach', value: breached.length, color: 'var(--ka-ef4444)' },
           ],
           stats: [['SLA compliance', pct(done.length - late.length, done.length + breached.length)], ['Closed late', sc(late.length)], ['Open breaches', String(breached.length)], ['Escalated', String(l.filter((t) => t.escalation).length)]],
           head: ['Task ID', 'Task', 'Category', 'Assignee', 'Due', 'Late by (min)', 'Escalation'],
@@ -249,8 +249,8 @@ export class TasksReportsAnalytics {
           kind: 'column',
           labels: CAT_NAMES,
           series: [
-            { name: 'Overdue', color: '#f59e0b', values: CAT_NAMES.map((c) => esc.filter((t) => catOf(t.category) === c && !t.escalation).length) },
-            { name: 'Escalated', color: '#ef4444', values: CAT_NAMES.map((c) => esc.filter((t) => catOf(t.category) === c && t.escalation).length) },
+            { name: 'Overdue', color: 'var(--ka-f59e0b)', values: CAT_NAMES.map((c) => esc.filter((t) => catOf(t.category) === c && !t.escalation).length) },
+            { name: 'Escalated', color: 'var(--ka-ef4444)', values: CAT_NAMES.map((c) => esc.filter((t) => catOf(t.category) === c && t.escalation).length) },
           ],
           stats: [['Overdue open', String(esc.length)], ['Escalated L1', String(esc.filter((t) => t.escalation === 1).length)], ['Escalated L2', String(esc.filter((t) => t.escalation === 2).length)], ['Avg overdue', Math.round(esc.reduce((a, t) => a + Math.max(0, now - t.due), 0) / Math.max(esc.length, 1)) + ' min']],
           head: ['Task ID', 'Task', 'Site', 'Assignee', 'Due', 'Overdue (min)', 'Level'],
@@ -261,7 +261,7 @@ export class TasksReportsAnalytics {
         const cps = this.store.checkpoints().filter((c) => c.active);
         return {
           kind: 'bars',
-          bars: cps.map((c) => ({ label: c.name, value: Math.min(100, Math.round((c.scans / c.expected) * 100)), display: `${c.scans}/${c.expected}`, color: c.scans >= c.expected * 0.6 ? '#22c55e' : c.scans ? '#f59e0b' : '#ef4444' })).sort((a, b) => a.value - b.value).slice(0, 10),
+          bars: cps.map((c) => ({ label: c.name, value: Math.min(100, Math.round((c.scans / c.expected) * 100)), display: `${c.scans}/${c.expected}`, color: c.scans >= c.expected * 0.6 ? 'var(--ka-22c55e)' : c.scans ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)' })).sort((a, b) => a.value - b.value).slice(0, 10),
           stats: [['Checkpoints', String(cps.length)], ['Scans', sc(cps.reduce((a, c) => a + c.scans, 0))], ['Expected', sc(cps.reduce((a, c) => a + c.expected, 0))], ['Never scanned', String(cps.filter((c) => !c.scans).length)]],
           head: ['Checkpoint', 'Zone', 'Technology', 'Scans', 'Expected', 'Compliance', 'Last scan', 'Last by'],
           rows: cps.map((c) => [c.name, TASK_ZONES.find((z) => z.id === c.zone)?.name ?? c.zone, c.tech, c.scans, c.expected, pct(c.scans, c.expected), c.lastScan >= 0 ? hhmm(c.lastScan) : '—', c.lastBy || '—']),
@@ -275,9 +275,9 @@ export class TasksReportsAnalytics {
         return {
           kind: 'donut',
           segs: [
-            { label: 'Verified', value: v.length, color: '#22c55e' },
-            { label: 'Rejected', value: r.length, color: '#ef4444' },
-            { label: 'Awaiting', value: a.length, color: '#c4b5fd' },
+            { label: 'Verified', value: v.length, color: 'var(--ka-22c55e)' },
+            { label: 'Rejected', value: r.length, color: 'var(--ka-ef4444)' },
+            { label: 'Awaiting', value: a.length, color: 'var(--ka-c4b5fd)' },
           ],
           stats: [['Verified', sc(v.length)], ['Rejected', sc(r.length)], ['First-pass rate', pct(v.length, v.length + r.length)], ['Avg rating', (v.reduce((s, t) => s + (t.rating ?? 0), 0) / Math.max(v.length, 1)).toFixed(1) + '★']],
           head: ['Supervisor', 'Verified', 'Rejected', 'Approval rate', 'Avg rating'],
@@ -299,8 +299,8 @@ export class TasksReportsAnalytics {
           kind: 'column',
           labels: per.slice(0, 10).map((x) => x.w.name.split(' ')[0]),
           series: [
-            { name: 'Assigned', color: '#c4b5fd', values: per.slice(0, 10).map((x) => Math.round(x.total * k)) },
-            { name: 'Completed', color: '#7c3aed', values: per.slice(0, 10).map((x) => Math.round(x.done * k)) },
+            { name: 'Assigned', color: 'var(--ka-c4b5fd)', values: per.slice(0, 10).map((x) => Math.round(x.total * k)) },
+            { name: 'Completed', color: 'var(--ka-7c3aed)', values: per.slice(0, 10).map((x) => Math.round(x.done * k)) },
           ],
           stats: [['Workers', String(per.length)], ['Tasks completed', sc(done.length)], ['Avg per worker', (done.length / Math.max(per.length, 1)).toFixed(1)], ['On-time', pct(done.length - late.length, done.length)]],
           head: ['Employee', 'Team', 'Assigned', 'Completed', 'Completion', 'On-time', 'Quality'],
@@ -314,9 +314,9 @@ export class TasksReportsAnalytics {
           kind: 'column',
           labels: teams.map((t) => t.replace('Housekeeping Team', 'HK').replace(' Technicians', '').replace('IT Field Support', 'IT').replace(' Team', '').replace(' Crew', '')),
           series: [
-            { name: 'Pending', color: '#a78bfa', values: teams.map((t) => of(t).filter((x) => x.status === 'Pending').length) },
-            { name: 'In progress', color: '#3b82f6', values: teams.map((t) => of(t).filter((x) => x.status === 'In Progress').length) },
-            { name: 'Completed', color: '#22c55e', values: teams.map((t) => of(t).filter((x) => !isOpen(x)).length) },
+            { name: 'Pending', color: 'var(--ka-a78bfa)', values: teams.map((t) => of(t).filter((x) => x.status === 'Pending').length) },
+            { name: 'In progress', color: 'var(--ka-3b82f6)', values: teams.map((t) => of(t).filter((x) => x.status === 'In Progress').length) },
+            { name: 'Completed', color: 'var(--ka-22c55e)', values: teams.map((t) => of(t).filter((x) => !isOpen(x)).length) },
           ],
           stats: [['Teams', String(teams.length)], ['Open tasks', String(l.filter(isOpen).length)], ['Unassigned', String(l.filter((t) => !t.assignee).length)], ['Workers', String(WORKERS.length)]],
           head: ['Team', 'Members', 'Pending', 'In progress', 'Completed', 'Open per member'],
@@ -332,7 +332,7 @@ export class TasksReportsAnalytics {
         const tp = this.store.published().filter((t) => this.cat() === 'All' || catOf(t.category) === this.cat()).sort((a, b) => b.usage30 - a.usage30);
         return {
           kind: 'bars',
-          bars: tp.slice(0, 10).map((t, i) => ({ label: t.name, value: t.usage30, display: String(t.usage30), color: i < 3 ? '#7c3aed' : '#a78bfa' })),
+          bars: tp.slice(0, 10).map((t, i) => ({ label: t.name, value: t.usage30, display: String(t.usage30), color: i < 3 ? 'var(--ka-7c3aed)' : 'var(--ka-a78bfa)' })),
           stats: [['Published', String(tp.length)], ['Active', String(tp.filter((t) => t.status === 'Active').length)], ['Uses (30 d)', tp.reduce((a, t) => a + t.usage30, 0).toLocaleString('en-US')], ['Unused', String(tp.filter((t) => !t.usage30).length)]],
           head: ['Template', 'Category', 'Frequency', 'Duration', 'Uses (30 d)', 'Status'],
           rows: tp.map((t) => [t.name, t.category, t.frequency, t.duration + ' min', t.usage30, t.status]),
@@ -348,8 +348,8 @@ export class TasksReportsAnalytics {
           kind: 'line',
           labels,
           series: [
-            { name: 'Created', color: '#7c3aed', values: cv, area: true },
-            { name: 'Completed', color: '#22c55e', values: dv },
+            { name: 'Created', color: 'var(--ka-7c3aed)', values: cv, area: true },
+            { name: 'Completed', color: 'var(--ka-22c55e)', values: dv },
           ],
           stats: [['Created', sc(l.length)], ['Completed', sc(done.length)], ['Completion rate', pct(done.length, l.length)], ['Open now', String(l.filter(isOpen).length)]],
           head: ['Category', 'Created', 'Completed', 'Open', 'Completion', 'On-time'],

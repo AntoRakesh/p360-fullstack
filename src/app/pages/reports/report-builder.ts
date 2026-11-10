@@ -132,35 +132,35 @@ const PRESETS: { name: string; ds: string; fields: string[]; rules: FilterRule[]
   `,
   styles: `
     .presets { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px; font-size: 12px; color: var(--muted); }
-    .chip-b { border: 1px solid #ddd6fe; background: #faf8ff; color: var(--primary); border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; } .chip-b:hover { background: var(--primary-soft); }
+    .chip-b { border: 1px solid var(--kl-ddd6fe); background: var(--kb-faf8ff); color: var(--primary); border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; } .chip-b:hover { background: var(--primary-soft); }
     .bld { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 14px; align-items: start; }
     .steps { display: flex; flex-direction: column; gap: 10px; } .st { padding: 12px; }
     h4 { margin: 0 0 10px; font-size: 13px; display: flex; align-items: center; gap: 8px; } h4 small { color: var(--muted); font-weight: 400; } h4 .link { margin-left: auto; }
-    .n { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: #fff; display: grid; place-items: center; font-size: 11px; }
+    .n { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); color: var(--kf-ffffff); display: grid; place-items: center; font-size: 11px; }
     .dsl { display: grid; grid-template-columns: 1fr; gap: 5px; max-height: 250px; overflow: auto; }
-    .dsl button { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; text-align: left; }
-    .dsl button.on { border-color: var(--primary); background: #f5f3ff; } .dsl div { display: flex; flex-direction: column; font-size: 12px; } .dsl small { color: var(--muted); font-size: 11px; }
-    .di { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .dsl button { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; text-align: left; }
+    .dsl button.on { border-color: var(--primary); background: var(--kb-f5f3ff); } .dsl div { display: flex; flex-direction: column; font-size: 12px; } .dsl small { color: var(--muted); font-size: 11px; }
+    .di { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
     .fl { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 10px; } .fl label { display: flex; align-items: center; gap: 6px; font-size: 12px; } .fl em { margin-left: auto; font-size: 10px; color: var(--muted); font-style: normal; }
     .fl input, .cbx input { accent-color: var(--primary); }
     .rule { display: grid; grid-template-columns: 1fr 74px 1fr 20px; gap: 5px; margin-bottom: 6px; align-items: center; } .rule .select, .rule .input { font-size: 11.5px; padding: 5px 6px; min-width: 0; width: 100%; }
     .x { border: 0; background: none; font-size: 18px; cursor: pointer; color: var(--muted); }
-    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; } .g3 label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #4b4f6b; } .g3 .select { font-size: 11.5px; padding: 5px 6px; min-width: 0; }
+    .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; } .g3 label { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: var(--kf-4b4f6b); } .g3 .select { font-size: 11.5px; padding: 5px 6px; min-width: 0; }
     .ct { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-    .ct button { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 4px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font-size: 11.5px; cursor: pointer; color: #3b3f5c; }
-    .ct button.on { border-color: var(--primary); background: #f5f3ff; color: var(--primary); } .ct button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .ct button { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 9px 4px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); font-size: 11.5px; cursor: pointer; color: var(--kf-3b3f5c); }
+    .ct button.on { border-color: var(--primary); background: var(--kb-f5f3ff); color: var(--primary); } .ct button:disabled { opacity: 0.4; cursor: not-allowed; }
     .sm { font-size: 11.5px; margin: 6px 0 0; } .muted { color: var(--muted); }
     .pvw { min-height: 600px; position: sticky; top: 76px; }
     .ph { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; } .tt { display: flex; flex-direction: column; flex: 1; } .tt small { color: var(--muted); font-size: 12px; }
-    .title-in { border: 0; border-bottom: 1px dashed transparent; font: inherit; font-size: 19px; font-weight: 700; padding: 2px 0; outline: 0; width: 100%; } .title-in:hover, .title-in:focus { border-bottom-color: #c4b5fd; }
-    .live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #16a34a; background: #dcfce7; padding: 3px 10px; border-radius: 20px; } .live i { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; animation: pl 1.4s infinite; }
+    .title-in { border: 0; border-bottom: 1px dashed transparent; font: inherit; font-size: 19px; font-weight: 700; padding: 2px 0; outline: 0; width: 100%; } .title-in:hover, .title-in:focus { border-bottom-color: var(--kl-c4b5fd); }
+    .live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--kf-16a34a); background: var(--kb-dcfce7); padding: 3px 10px; border-radius: 20px; } .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-16a34a); animation: pl 1.4s infinite; }
     @keyframes pl { 50% { opacity: 0.3; } }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; } .chip-s { background: #f3f3f8; border-radius: 20px; padding: 4px 10px; font-size: 12px; color: #3b3f5c; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; } .chip-s { background: var(--kb-f3f3f8); border-radius: 20px; padding: 4px 10px; font-size: 12px; color: var(--kf-3b3f5c); }
     .chart { border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
     .tw { max-height: 520px; border: 1px solid var(--border); border-radius: 10px; }
-    .share { height: 8px; background: #eef0f6; border-radius: 4px; width: 160px; overflow: hidden; } .share i { display: block; height: 100%; background: var(--primary); }
+    .share { height: 8px; background: var(--kb-eef0f6); border-radius: 4px; width: 160px; overflow: hidden; } .share i { display: block; height: 100%; background: var(--primary); }
     .cbx { flex-direction: row !important; align-items: center; gap: 8px; }
-    .tl { border: 0; background: none; color: #c4b5fd; font: inherit; cursor: pointer; text-decoration: underline; }
+    .tl { border: 0; background: none; color: var(--kf-c4b5fd); font: inherit; cursor: pointer; text-decoration: underline; }
     @media (max-width: 1250px) { .bld { grid-template-columns: 1fr; } .pvw { position: static; } }
   `,
 })
@@ -218,12 +218,12 @@ export class CustomReportBuilder {
   protected readonly maxG = computed(() => Math.max(1, ...this.grouped().map((g) => g.value)));
   protected readonly rawPage = computed(() => this.filtered().slice(this.rp() * 15, (this.rp() + 1) * 15));
   protected readonly chartLabels = computed(() => this.grouped().slice(0, 14).map((g) => (g.key.length > 14 ? g.key.slice(0, 13) + '…' : g.key)));
-  protected readonly chartSeries = computed(() => [{ name: this.labelOf(this.measure()), color: '#7c3aed', values: this.grouped().slice(0, 14).map((g) => g.value), area: true }]);
+  protected readonly chartSeries = computed(() => [{ name: this.labelOf(this.measure()), color: 'var(--ka-7c3aed)', values: this.grouped().slice(0, 14).map((g) => g.value), area: true }]);
   protected readonly donutSegs = computed(() => {
     const g = this.grouped();
     const top = g.slice(0, 5).map((x, i) => ({ label: x.key, value: x.value, color: BREAK_COLORS[i] }));
     const rest = g.slice(5).reduce((a, x) => a + x.value, 0);
-    return rest ? [...top, { label: 'Others', value: +rest.toFixed(1), color: '#9ca3af' }] : top;
+    return rest ? [...top, { label: 'Others', value: +rest.toFixed(1), color: 'var(--ka-9ca3af)' }] : top;
   });
 
   protected labelOf(k: string) {

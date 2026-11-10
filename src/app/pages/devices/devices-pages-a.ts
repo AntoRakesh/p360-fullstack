@@ -25,11 +25,11 @@ const P = '/device-edge-management';
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Fleet Health Score" [value]="fleet().score" icon="activity" color="#7c3aed" change="1.8%" sub="vs. last week" />
-      <app-kpi label="Availability (24h)" [value]="fleet().avail + '%'" icon="devices-check" color="#10b981" change="0.3%" />
-      <app-kpi label="Devices at Risk" [value]="atRisk().length" icon="triangle-alert" color="#f97316" change="4" [up]="false" sub="vs. yesterday" />
-      <app-kpi label="Avg CPU Load" [value]="fleet().cpu + '%'" icon="devices-chip" color="#3b82f6" [sub]="'peak ' + (fleet().cpu + 31) + '% at 09:00'" />
-      <app-kpi label="Avg Temperature" [value]="fleet().temp + '°C'" icon="devices-thermo" color="#ef4444" sub="3 devices above 55°C" subColor="#dc2626" />
+      <app-kpi label="Fleet Health Score" [value]="fleet().score" icon="activity" color="var(--ka-7c3aed)" change="1.8%" sub="vs. last week" />
+      <app-kpi label="Availability (24h)" [value]="fleet().avail + '%'" icon="devices-check" color="var(--ka-10b981)" change="0.3%" />
+      <app-kpi label="Devices at Risk" [value]="atRisk().length" icon="triangle-alert" color="var(--ka-f97316)" change="4" [up]="false" sub="vs. yesterday" />
+      <app-kpi label="Avg CPU Load" [value]="fleet().cpu + '%'" icon="devices-chip" color="var(--ka-3b82f6)" [sub]="'peak ' + (fleet().cpu + 31) + '% at 09:00'" />
+      <app-kpi label="Avg Temperature" [value]="fleet().temp + '°C'" icon="devices-thermo" color="var(--ka-ef4444)" sub="3 devices above 55°C" subColor="var(--ka-dc2626)" />
     </section>
 
     <section class="g3">
@@ -83,14 +83,14 @@ const P = '/device-edge-management';
   styles: `
     .g3 { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 12px; margin-bottom: 12px; } .g2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; margin-bottom: 12px; }
     h3 { margin: 0; font-size: 15px; } .sm { font-size: 11.5px; }
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; } .chip-b { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; } .chip-b { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 3px 10px; font-size: 11.5px; cursor: pointer; }
     .chip-b.on { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); } .chip-b i { width: 8px; height: 8px; border-radius: 50%; }
-    .live { display: inline-flex; gap: 6px; align-items: center; color: #16a34a; font-size: 12px; font-weight: 600; } .live i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 1.4s infinite; }
+    .live { display: inline-flex; gap: 6px; align-items: center; color: var(--kf-16a34a); font-size: 12px; font-weight: 600; } .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); animation: pulse 1.4s infinite; }
     @keyframes pulse { 50% { opacity: .3; } }
-    .note { display: flex; gap: 6px; align-items: center; margin-top: 12px; font-size: 12px; color: #b45309; background: #fffbeb; padding: 7px 10px; border-radius: 8px; }
+    .note { display: flex; gap: 6px; align-items: center; margin-top: 12px; font-size: 12px; color: var(--kf-b45309); background: var(--kb-fffbeb); padding: 7px 10px; border-radius: 8px; }
     .tele { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; } .tm { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; }
     .tm small { color: var(--muted); font-size: 11px; } .tm b { font-size: 18px; } .tm app-sparkline { height: 28px; display: block; }
-    .con { background: #0f172a; color: #a7f3d0; font-size: 11px; padding: 10px; border-radius: 8px; margin: 10px 0 0; white-space: pre-wrap; }
+    .con { background: var(--kb-0f172a); color: var(--kf-a7f3d0); font-size: 11px; padding: 10px; border-radius: 8px; margin: 10px 0 0; white-space: pre-wrap; }
     @media (max-width: 1300px) { .g3, .g2 { grid-template-columns: 1fr; } }
   `,
 })
@@ -147,9 +147,9 @@ export class DeviceHealthMonitoring {
   protected readonly dist = computed(() => {
     const a = this.active();
     return [
-      { label: 'Healthy', value: a.filter((d) => d.health >= 80).length, color: '#22c55e' },
-      { label: 'Warning', value: a.filter((d) => d.health >= 50 && d.health < 80).length, color: '#f59e0b' },
-      { label: 'Critical', value: a.filter((d) => d.health < 50).length, color: '#ef4444' },
+      { label: 'Healthy', value: a.filter((d) => d.health >= 80).length, color: 'var(--ka-22c55e)' },
+      { label: 'Warning', value: a.filter((d) => d.health >= 50 && d.health < 80).length, color: 'var(--ka-f59e0b)' },
+      { label: 'Critical', value: a.filter((d) => d.health < 50).length, color: 'var(--ka-ef4444)' },
     ];
   });
   protected readonly labels = computed(() => (this.range() === 'Last 24 hours' ? HOURS : this.range() === 'Last 7 days' ? ['Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed'] : Array.from({ length: 30 }, (_, i) => `${i + 15} Sep`.replace(/^(\d+) Sep/, (m, d) => (+d > 30 ? `${+d - 30} Oct` : m)))));
@@ -159,15 +159,15 @@ export class DeviceHealthMonitoring {
     const cpu = Array.from({ length: n }, (_, i) => Math.round(34 + 18 * Math.sin(((i + t * 0.3) / n) * Math.PI * 2 - 1.2) + (i % 3)));
     const mem = Array.from({ length: n }, (_, i) => Math.round(52 + 8 * Math.sin(((i + t * 0.2) / n) * Math.PI * 2) + (i % 2)));
     return [
-      { name: 'CPU', color: '#7c3aed', values: cpu, area: true },
-      { name: 'Memory', color: '#10b981', values: mem },
+      { name: 'CPU', color: 'var(--ka-7c3aed)', values: cpu, area: true },
+      { name: 'Memory', color: 'var(--ka-10b981)', values: mem },
     ];
   });
   protected readonly siteAvail = computed(() =>
     SITES.map((s) => {
       const l = this.active().filter((d) => d.site === s);
       const v = +(97.4 + ((l.filter((d) => d.status === 'Online').length / (l.length || 1)) - 0.9) * 20 + (s === 'Factory' ? -1.9 : 0.6)).toFixed(1);
-      return { label: s, value: Math.min(99.9, v), display: Math.min(99.9, v) + '%', color: v < 97 ? '#f59e0b' : '#22c55e' };
+      return { label: s, value: Math.min(99.9, v), display: Math.min(99.9, v) + '%', color: v < 97 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' };
     }),
   );
   protected readonly heat = computed(() =>
@@ -195,12 +195,12 @@ export class DeviceHealthMonitoring {
     const on = d.status === 'Online';
     const s = (base: number, amp: number, k: number) => Array.from({ length: 20 }, (_, i) => Math.max(0, Math.round(base + Math.sin((i + t + k) / 2.3) * amp)));
     return [
-      { k: 'CPU', v: on ? `${d.cpu + this.state.wobble(d.id + 'c', 5)}%` : '—', c: '#7c3aed', s: s(d.cpu || 3, on ? 8 : 1, 1) },
-      { k: 'Memory', v: on ? `${d.mem}%` : '—', c: '#10b981', s: s(d.mem || 3, on ? 4 : 1, 3) },
-      { k: 'Temperature', v: `${d.temp + this.state.wobble(d.id + 't', 1)}°C`, c: d.temp > 55 ? '#ef4444' : '#f59e0b', s: s(d.temp, 2, 5) },
-      { k: 'Latency', v: on ? `${d.latency} ms` : 'timeout', c: '#3b82f6', s: s(d.latency, 5, 7) },
-      { k: 'Signal', v: `${d.rssi} dBm`, c: '#0ea5e9', s: s(-d.rssi, 3, 2) },
-      { k: 'Health', v: String(d.health), c: d.health >= 80 ? '#16a34a' : d.health >= 50 ? '#d97706' : '#dc2626', s: s(d.health, 3, 9) },
+      { k: 'CPU', v: on ? `${d.cpu + this.state.wobble(d.id + 'c', 5)}%` : '—', c: 'var(--ka-7c3aed)', s: s(d.cpu || 3, on ? 8 : 1, 1) },
+      { k: 'Memory', v: on ? `${d.mem}%` : '—', c: 'var(--ka-10b981)', s: s(d.mem || 3, on ? 4 : 1, 3) },
+      { k: 'Temperature', v: `${d.temp + this.state.wobble(d.id + 't', 1)}°C`, c: d.temp > 55 ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)', s: s(d.temp, 2, 5) },
+      { k: 'Latency', v: on ? `${d.latency} ms` : 'timeout', c: 'var(--ka-3b82f6)', s: s(d.latency, 5, 7) },
+      { k: 'Signal', v: `${d.rssi} dBm`, c: 'var(--ka-0ea5e9)', s: s(-d.rssi, 3, 2) },
+      { k: 'Health', v: String(d.health), c: d.health >= 80 ? 'var(--ka-16a34a)' : d.health >= 50 ? 'var(--ka-d97706)' : 'var(--ka-dc2626)', s: s(d.health, 3, 9) },
     ];
   }
   protected ping(d: Device) {
@@ -246,11 +246,11 @@ interface Job { id: string; profile: string; total: number; done: number; failed
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Config Profiles" [value]="store.profiles().length" icon="sliders" color="#7c3aed" sub="across 6 device types" />
-      <app-kpi label="Managed Devices" [value]="fmt(managed())" icon="devices-chip" color="#3b82f6" [sub]="pctManaged() + '% of fleet'" />
-      <app-kpi label="Compliant" [value]="compliance() + '%'" icon="devices-check" color="#10b981" change="1.2%" sub="vs. last week" />
-      <app-kpi label="Config Drift" [value]="drift()" icon="triangle-alert" color="#f97316" sub="devices differ from profile" subColor="#c2410c" />
-      <app-kpi label="Push Jobs Running" [value]="running()" icon="workflow" color="#06b6d4" [sub]="jobs().length + ' jobs today'" />
+      <app-kpi label="Config Profiles" [value]="store.profiles().length" icon="sliders" color="var(--ka-7c3aed)" sub="across 6 device types" />
+      <app-kpi label="Managed Devices" [value]="fmt(managed())" icon="devices-chip" color="var(--ka-3b82f6)" [sub]="pctManaged() + '% of fleet'" />
+      <app-kpi label="Compliant" [value]="compliance() + '%'" icon="devices-check" color="var(--ka-10b981)" change="1.2%" sub="vs. last week" />
+      <app-kpi label="Config Drift" [value]="drift()" icon="triangle-alert" color="var(--ka-f97316)" sub="devices differ from profile" subColor="var(--ka-c2410c)" />
+      <app-kpi label="Push Jobs Running" [value]="running()" icon="workflow" color="var(--ka-06b6d4)" [sub]="jobs().length + ' jobs today'" />
     </section>
 
     <section class="cfg">
@@ -259,7 +259,7 @@ interface Job { id: string; profile: string; total: number; done: number; failed
         <ul>
           @for (p of profiles(); track p.id) {
             <li [class.on]="sel()?.id === p.id" (click)="pick(p)">
-              <span class="ic" [style.background]="meta(p.type).color + '1f'" [style.color]="meta(p.type).color"><app-icon [name]="meta(p.type).icon" [size]="17" /></span>
+              <span class="ic" [style.background]="'color-mix(in srgb, ' + meta(p.type).color + ' 12%, transparent)'" [style.color]="meta(p.type).color"><app-icon [name]="meta(p.type).icon" [size]="17" /></span>
               <div><b>{{ p.name }}</b><small>v{{ p.version }} · {{ p.devices }} devices · {{ p.updated }}</small></div>
               @if (p.drift) {<span class="tag amber">{{ p.drift }} drift</span>} @else {<span class="tag green">In sync</span>}
             </li>
@@ -296,7 +296,7 @@ interface Job { id: string; profile: string; total: number; done: number; failed
               <h4>Drifted Devices <span class="muted">({{ p.drift }})</span></h4>
               @if (driftDevs(p).length) {
                 <ul class="dl">
-                  @for (d of driftDevs(p); track d.id) {<li><span class="dot-sm" style="background:#f59e0b"></span><div><b>{{ d.name }}</b><small>{{ d.site }} · {{ diffFor(p, $index) }}</small></div><button class="link" (click)="remediate(p, d)">Remediate</button></li>}
+                  @for (d of driftDevs(p); track d.id) {<li><span class="dot-sm" style="background:var(--kb-f59e0b)"></span><div><b>{{ d.name }}</b><small>{{ d.site }} · {{ diffFor(p, $index) }}</small></div><button class="link" (click)="remediate(p, d)">Remediate</button></li>}
                 </ul>
                 <button class="btn-ghost sm" (click)="remediateAll(p)">Remediate all</button>
               } @else {<p class="muted ok"><app-icon name="devices-check" [size]="15" />All devices match this profile.</p>}
@@ -319,7 +319,7 @@ interface Job { id: string; profile: string; total: number; done: number; failed
         <tbody>
           @for (j of jobs(); track j.id) {
             <tr><td>{{ j.id }}</td><td>{{ j.profile }}</td><td>{{ j.started }}</td>
-              <td><span class="mini-progress"><i [style.width.%]="(j.done / j.total) * 100" style="background:#7c3aed"></i></span>{{ Math.round((j.done / j.total) * 100) }}%</td>
+              <td><span class="mini-progress"><i [style.width.%]="(j.done / j.total) * 100" style="background:var(--kb-7c3aed)"></i></span>{{ Math.round((j.done / j.total) * 100) }}%</td>
               <td class="num">{{ j.done - j.failed }}</td><td class="num">{{ j.failed }}</td>
               <td><span [class]="j.done >= j.total ? (j.failed ? 'tag amber' : 'tag green') : 'tag blue'">{{ j.done >= j.total ? (j.failed ? 'Completed with errors' : 'Completed') : 'In progress' }}</span></td>
               <td>@if (j.failed && j.done >= j.total) {<button class="link" (click)="retry(j)">Retry failed</button>}</td></tr>
@@ -347,14 +347,14 @@ interface Job { id: string; profile: string; total: number; done: number; failed
     .cfg { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: start; }
     .list ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
     .list li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 9px; border: 1px solid var(--border); border-radius: 9px; cursor: pointer; font-size: 12.5px; }
-    .list li.on { border-color: var(--primary); background: #faf8ff; } .list li div { display: flex; flex-direction: column; } .list small { color: var(--muted); font-size: 11px; }
+    .list li.on { border-color: var(--primary); background: var(--kb-faf8ff); } .list li div { display: flex; flex-direction: column; } .list small { color: var(--muted); font-size: 11px; }
     .ic { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; }
-    label.chg { color: var(--primary); font-weight: 600; } label.chg .input, label.chg .select { border-color: #c4b5fd; background-color: #faf8ff; }
+    label.chg { color: var(--primary); font-weight: 600; } label.chg .input, label.chg .select { border-color: var(--kl-c4b5fd); background-color: var(--kb-faf8ff); }
     .diff { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--primary); background: var(--primary-soft); padding: 7px 10px; border-radius: 8px; }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .dl, .hist { list-style: none; margin: 0 0 8px; padding: 0; } .dl li, .hist li { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
-    .dl div, .hist div { display: flex; flex-direction: column; } .dl small, .hist small { color: var(--muted); font-size: 11px; } .ok { display: flex; gap: 6px; align-items: center; color: #16a34a; }
-    .mini-progress { display: inline-block; width: 120px; height: 6px; border-radius: 4px; background: #eef0f5; margin-right: 8px; overflow: hidden; vertical-align: middle; } .mini-progress i { display: block; height: 100%; transition: width .5s; }
+    .dl, .hist { list-style: none; margin: 0 0 8px; padding: 0; } .dl li, .hist li { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
+    .dl div, .hist div { display: flex; flex-direction: column; } .dl small, .hist small { color: var(--muted); font-size: 11px; } .ok { display: flex; gap: 6px; align-items: center; color: var(--kf-16a34a); }
+    .mini-progress { display: inline-block; width: 120px; height: 6px; border-radius: 4px; background: var(--kb-eef0f5); margin-right: 8px; overflow: hidden; vertical-align: middle; } .mini-progress i { display: block; height: 100%; transition: width .5s; }
     @media (max-width: 1250px) { .cfg { grid-template-columns: 1fr; } }
   `,
 })
@@ -512,11 +512,11 @@ export class DeviceConfiguration {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Up to Date" [value]="upPct() + '%'" icon="devices-check" color="#10b981" change="4.1%" sub="vs. last month" />
-      <app-kpi label="Updates Available" [value]="fmt(store.outdated())" icon="devices-export" color="#7c3aed" sub="devices on older firmware" />
-      <app-kpi label="Active Rollouts" [value]="active()" icon="workflow" color="#3b82f6" [sub]="paused() + ' paused'" />
-      <app-kpi label="Failed Updates" [value]="failed()" icon="triangle-alert" color="#ef4444" sub="auto-retry in next window" subColor="#dc2626" />
-      <app-kpi label="Next Window" value="22:00" icon="clock" color="#f97316" sub="Tonight · 7 h 36 m" />
+      <app-kpi label="Up to Date" [value]="upPct() + '%'" icon="devices-check" color="var(--ka-10b981)" change="4.1%" sub="vs. last month" />
+      <app-kpi label="Updates Available" [value]="fmt(store.outdated())" icon="devices-export" color="var(--ka-7c3aed)" sub="devices on older firmware" />
+      <app-kpi label="Active Rollouts" [value]="active()" icon="workflow" color="var(--ka-3b82f6)" [sub]="paused() + ' paused'" />
+      <app-kpi label="Failed Updates" [value]="failed()" icon="triangle-alert" color="var(--ka-ef4444)" sub="auto-retry in next window" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Next Window" value="22:00" icon="clock" color="var(--ka-f97316)" sub="Tonight · 7 h 36 m" />
     </section>
 
     <section class="card">
@@ -552,7 +552,7 @@ export class DeviceConfiguration {
 
     <section class="g2">
       <div class="card">
-        <div class="card-head"><h3>Firmware Versions by Type</h3><span class="chart-legend"><span><i style="background:#10b981"></i>Latest</span><span><i style="background:#f59e0b"></i>Older</span></span></div>
+        <div class="card-head"><h3>Firmware Versions by Type</h3><span class="chart-legend"><span><i style="background:var(--kb-10b981)"></i>Latest</span><span><i style="background:var(--kb-f59e0b)"></i>Older</span></span></div>
         <app-column-chart [labels]="shortTypes" [series]="versions()" [stacked]="true" [height]="240" [legend]="false" />
       </div>
       <div class="card">
@@ -591,15 +591,15 @@ export class DeviceConfiguration {
   styles: `
     h3 { margin: 0; font-size: 15px; } .danger { color: var(--red); }
     .camps { display: flex; flex-direction: column; gap: 10px; }
-    .camp { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; } .camp.done { background: #fbfdfb; }
+    .camp { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; } .camp.done { background: var(--kb-fbfdfb); }
     .ch { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .ch div { display: flex; flex-direction: column; font-size: 13px; } .ch small { color: var(--muted); font-size: 11.5px; }
-    .ic { width: 36px; height: 36px; border-radius: 9px; color: #fff; display: grid; place-items: center; }
+    .ic { width: 36px; height: 36px; border-radius: 9px; color: var(--kf-ffffff); display: grid; place-items: center; }
     .stages { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0; margin: 12px 0 8px; }
-    .stages li { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); } .stages i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #d4d7e3; display: grid; place-items: center; font-style: normal; font-size: 11px; flex-shrink: 0; }
+    .stages li { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); } .stages i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--kl-d4d7e3); display: grid; place-items: center; font-style: normal; font-size: 11px; flex-shrink: 0; }
     .stages span { display: flex; flex-direction: column; } .stages small { font-size: 10.5px; }
-    .stages li.ok { color: #15803d; } .stages li.ok i { background: #22c55e; border-color: #22c55e; color: #fff; } .stages li.cur { color: var(--primary); font-weight: 600; } .stages li.cur i { border-color: var(--primary); }
-    .prog { display: flex; gap: 10px; align-items: center; font-size: 12px; } .bar { position: relative; flex: 1; height: 8px; border-radius: 5px; background: #eef0f5; }
-    .bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, #7c3aed, #3b82f6); transition: width .6s; } .bar em { position: absolute; top: -3px; width: 2px; height: 14px; background: #1e1b4b; opacity: .5; }
+    .stages li.ok { color: var(--kf-15803d); } .stages li.ok i { background: var(--kb-22c55e); border-color: var(--kl-22c55e); color: var(--kf-ffffff); } .stages li.cur { color: var(--primary); font-weight: 600; } .stages li.cur i { border-color: var(--primary); }
+    .prog { display: flex; gap: 10px; align-items: center; font-size: 12px; } .bar { position: relative; flex: 1; height: 8px; border-radius: 5px; background: var(--kb-eef0f5); }
+    .bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--kb-7c3aed), var(--kb-3b82f6)); transition: width .6s; } .bar em { position: absolute; top: -3px; width: 2px; height: 14px; background: var(--kb-1e1b4b); opacity: .5; }
     .cf { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 8px; font-size: 12px; flex-wrap: wrap; }
     .g2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 12px; margin-top: 12px; } .chk { flex-direction: row !important; align-items: center; gap: 8px !important; } .g2 > .card { min-width: 0; overflow-x: auto; }
     @media (max-width: 1250px) { .g2 { grid-template-columns: 1fr; } }
@@ -633,8 +633,8 @@ export class FirmwareUpdates {
       return [latest, l.length - latest];
     });
     return [
-      { name: 'Latest', color: '#10b981', values: per.map((p) => p[0]) },
-      { name: 'Older', color: '#f59e0b', values: per.map((p) => p[1]) },
+      { name: 'Latest', color: 'var(--ka-10b981)', values: per.map((p) => p[0]) },
+      { name: 'Older', color: 'var(--ka-f59e0b)', values: per.map((p) => p[1]) },
     ];
   });
 
@@ -713,11 +713,11 @@ export class FirmwareUpdates {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Edge Nodes" [value]="gws().length" icon="devices-gateway" color="#7c3aed" [sub]="typeCount() + ' gateway devices total'" />
-      <app-kpi label="Online" [value]="online()" icon="devices-check" color="#10b981" [sub]="(gws().length - online()) + ' need attention'" />
-      <app-kpi label="Connected Devices" [value]="fmt(connected())" icon="devices-link" color="#3b82f6" change="3%" sub="vs. last week" />
-      <app-kpi label="Edge Apps Running" [value]="appsRunning()" icon="devices-server" color="#06b6d4" [sub]="appsTotal() + ' deployed'" />
-      <app-kpi label="Buffered Messages" [value]="fmt(buffered())" icon="devices-cloud" color="#f97316" sub="awaiting cloud sync" subColor="#c2410c" />
+      <app-kpi label="Edge Nodes" [value]="gws().length" icon="devices-gateway" color="var(--ka-7c3aed)" [sub]="typeCount() + ' gateway devices total'" />
+      <app-kpi label="Online" [value]="online()" icon="devices-check" color="var(--ka-10b981)" [sub]="(gws().length - online()) + ' need attention'" />
+      <app-kpi label="Connected Devices" [value]="fmt(connected())" icon="devices-link" color="var(--ka-3b82f6)" change="3%" sub="vs. last week" />
+      <app-kpi label="Edge Apps Running" [value]="appsRunning()" icon="devices-server" color="var(--ka-06b6d4)" [sub]="appsTotal() + ' deployed'" />
+      <app-kpi label="Buffered Messages" [value]="fmt(buffered())" icon="devices-cloud" color="var(--ka-f97316)" sub="awaiting cloud sync" subColor="var(--ka-c2410c)" />
     </section>
 
     <section class="eg">
@@ -726,9 +726,9 @@ export class FirmwareUpdates {
           <button class="gw card" [class.on]="selId() === g.id" (click)="selId.set(g.id)">
             <div class="gh"><b>{{ g.name }}</b><span [class]="'tag ' + cls(g.status)">{{ g.status }}</span></div>
             <small class="muted">{{ g.site }} · {{ g.location }}</small>
-            <div class="m"><span>CPU</span><i><em [style.width.%]="g.cpu" [style.background]="g.cpu > 80 ? '#ef4444' : '#7c3aed'"></em></i><b>{{ g.cpu }}%</b></div>
-            <div class="m"><span>Mem</span><i><em [style.width.%]="g.mem" style="background:#10b981"></em></i><b>{{ g.mem }}%</b></div>
-            <div class="m"><span>Disk</span><i><em [style.width.%]="g.disk" style="background:#3b82f6"></em></i><b>{{ g.disk }}%</b></div>
+            <div class="m"><span>CPU</span><i><em [style.width.%]="g.cpu" [style.background]="g.cpu > 80 ? 'var(--ka-ef4444)' : 'var(--ka-7c3aed)'"></em></i><b>{{ g.cpu }}%</b></div>
+            <div class="m"><span>Mem</span><i><em [style.width.%]="g.mem" style="background:var(--kb-10b981)"></em></i><b>{{ g.mem }}%</b></div>
+            <div class="m"><span>Disk</span><i><em [style.width.%]="g.disk" style="background:var(--kb-3b82f6)"></em></i><b>{{ g.disk }}%</b></div>
             <div class="gf"><span><app-icon name="devices-link" [size]="13" />{{ g.devices }}</span><span><app-icon name="devices-server" [size]="13" />{{ running(g) }}/{{ g.apps.length }}</span><span>{{ g.uplink }}</span></div>
           </button>
         }
@@ -796,14 +796,14 @@ export class FirmwareUpdates {
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
     .gw { text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 6px; font: inherit; color: inherit; padding: 12px; } .gw.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .gh { display: flex; justify-content: space-between; align-items: center; } .gw small { font-size: 11px; }
-    .m { display: grid; grid-template-columns: 34px 1fr 36px; gap: 6px; align-items: center; font-size: 11px; } .m i { height: 6px; border-radius: 4px; background: #eef0f5; overflow: hidden; } .m em { display: block; height: 100%; transition: width .6s; } .m b { text-align: right; }
-    .gf { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); border-top: 1px solid #f0f1f6; padding-top: 6px; } .gf span { display: inline-flex; gap: 4px; align-items: center; }
+    .m { display: grid; grid-template-columns: 34px 1fr 36px; gap: 6px; align-items: center; font-size: 11px; } .m i { height: 6px; border-radius: 4px; background: var(--kb-eef0f5); overflow: hidden; } .m em { display: block; height: 100%; transition: width .6s; } .m b { text-align: right; }
+    .gf { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); border-top: 1px solid var(--kl-f0f1f6); padding-top: 6px; } .gf span { display: inline-flex; gap: 4px; align-items: center; }
     .det { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; }
     .dh { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; } .dh div { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; }
     .st4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; } .st4 div { border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; display: flex; flex-direction: column; } .st4 small { color: var(--muted); font-size: 11px; }
     .acts { display: flex; gap: 6px; } .det .table td, .det .table th { padding: 7px 5px; font-size: 11.5px; } .det { min-width: 0; }
     .tg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .tg label { display: flex; gap: 6px; align-items: center; font-size: 12.5px; } .tg label.off { opacity: .45; } .tg small { color: var(--muted); }
-    .con { background: #0f172a; color: #a7f3d0; font-size: 12px; padding: 12px; border-radius: 8px; height: 320px; overflow: auto; white-space: pre-wrap; margin: 0; }
+    .con { background: var(--kb-0f172a); color: var(--kf-a7f3d0); font-size: 12px; padding: 12px; border-radius: 8px; height: 320px; overflow: auto; white-space: pre-wrap; margin: 0; }
     .cmd { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-family: monospace; font-size: 12px; } .cmd .input { flex: 1; font-family: monospace; }
     @media (max-width: 1300px) { .eg { grid-template-columns: 1fr; } .det { position: static; max-height: none; } }
   `,
@@ -838,8 +838,8 @@ export class EdgeGatewayManagement {
     const t = this.state.tick();
     const on = g.status !== 'Offline';
     return [
-      { name: 'CPU', color: '#7c3aed', values: this.mins.map((_, i) => (on ? Math.max(3, Math.round(g.cpu + Math.sin((i + t) / 1.7) * 9)) : 0)), area: true },
-      { name: 'Memory', color: '#10b981', values: this.mins.map((_, i) => (on ? Math.round(g.mem + Math.cos((i + t) / 3) * 3) : 0)) },
+      { name: 'CPU', color: 'var(--ka-7c3aed)', values: this.mins.map((_, i) => (on ? Math.max(3, Math.round(g.cpu + Math.sin((i + t) / 1.7) * 9)) : 0)), area: true },
+      { name: 'Memory', color: 'var(--ka-10b981)', values: this.mins.map((_, i) => (on ? Math.round(g.mem + Math.cos((i + t) / 3) * 3) : 0)) },
     ];
   }
   private upd(id: string, f: (g: EdgeGw) => EdgeGw) {

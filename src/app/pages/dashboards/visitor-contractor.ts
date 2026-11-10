@@ -32,12 +32,12 @@ const GUEST_COS = ['Acme Corp', 'Globex', 'Initech', 'Umbrella Ltd', 'Stark Indu
     <app-page-head title="Visitor &amp; Contractor Dashboard" />
 
     <section class="kpi-row">
-      <app-kpi label="Visitors on Site" [value]="counts().onSite" icon="user-plus" color="#3b82f6" change="12%" />
-      <app-kpi label="Expected Today" [value]="counts().expected" icon="calendar-days" color="#8b5cf6" sub="pre-registered" />
-      <app-kpi label="Checked Out" [value]="counts().out" icon="door-open" color="#22c55e" sub="so far today" />
-      <app-kpi label="Overstays" [value]="counts().over" icon="clock" color="#ef4444" sub="past expected exit" />
-      <app-kpi label="Contractors on Site" [value]="contractors()" icon="hard-hat" color="#fb923c" change="4%" />
-      <app-kpi label="Permits Expiring" [value]="permits.length" icon="key-round" color="#f59e0b" sub="next 7 days" />
+      <app-kpi label="Visitors on Site" [value]="counts().onSite" icon="user-plus" color="var(--ka-3b82f6)" change="12%" />
+      <app-kpi label="Expected Today" [value]="counts().expected" icon="calendar-days" color="var(--ka-8b5cf6)" sub="pre-registered" />
+      <app-kpi label="Checked Out" [value]="counts().out" icon="door-open" color="var(--ka-22c55e)" sub="so far today" />
+      <app-kpi label="Overstays" [value]="counts().over" icon="clock" color="var(--ka-ef4444)" sub="past expected exit" />
+      <app-kpi label="Contractors on Site" [value]="contractors()" icon="hard-hat" color="var(--ka-fb923c)" change="4%" />
+      <app-kpi label="Permits Expiring" [value]="permits.length" icon="key-round" color="var(--ka-f59e0b)" sub="next 7 days" />
     </section>
 
     <section class="dash">
@@ -178,19 +178,19 @@ export class VisitorContractor {
     const f = this.state.factor();
     const base = [2, 12, 38, 61, 54, 40, 22, 30, 36, 28, 18, 10, 6, 3, 1];
     return [
-      { name: 'Today', color: '#3b82f6', values: base.map((v) => Math.round(v * f * 1.1)), area: true },
-      { name: 'Last week avg', color: '#c4b5fd', values: base.map((v, i) => Math.round(v * f * (0.85 + (i % 3) * 0.05))), dashed: true },
+      { name: 'Today', color: 'var(--ka-3b82f6)', values: base.map((v) => Math.round(v * f * 1.1)), area: true },
+      { name: 'Last week avg', color: 'var(--ka-c4b5fd)', values: base.map((v, i) => Math.round(v * f * (0.85 + (i % 3) * 0.05))), dashed: true },
     ];
   });
   protected readonly purpose = computed(() =>
-    PURPOSES.map((label, i) => ({ label, value: this.state.scale([118, 34, 52, 41, 18, 21][i]), color: ['#7c3aed', '#3b82f6', '#22c1a0', '#f59e0b', '#ef4444', '#9ca3af'][i] })),
+    PURPOSES.map((label, i) => ({ label, value: this.state.scale([118, 34, 52, 41, 18, 21][i]), color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c1a0)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-9ca3af)'][i] })),
   );
   protected readonly byCompany = computed(() =>
-    COMPANIES.map((label, i) => ({ label, value: this.state.scale([412, 286, 231, 188, 126, 83][i]), color: '#fb923c' })),
+    COMPANIES.map((label, i) => ({ label, value: this.state.scale([412, 286, 231, 188, 126, 83][i]), color: 'var(--ka-fb923c)' })),
   );
   protected readonly bySite = computed(() => [
-    { name: 'Visitors', color: '#3b82f6', values: [118, 64, 41, 32, 22, 7].map((v) => this.state.scale(v)) },
-    { name: 'Contractors', color: '#fb923c', values: [286, 512, 304, 138, 52, 34].map((v) => this.state.scale(v)) },
+    { name: 'Visitors', color: 'var(--ka-3b82f6)', values: [118, 64, 41, 32, 22, 7].map((v) => this.state.scale(v)) },
+    { name: 'Contractors', color: 'var(--ka-fb923c)', values: [286, 512, 304, 138, 52, 34].map((v) => this.state.scale(v)) },
   ]);
   protected readonly shown = computed(() => {
     const q = this.q().trim().toLowerCase();

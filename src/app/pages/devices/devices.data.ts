@@ -42,16 +42,16 @@ export interface Device {
 export const DEMO_NOW = new Date(2026, 9, 14, 10, 24);
 export const TYPES: DType[] = ['Access Point', 'Switch', 'Camera', 'IoT Sensor', 'Gateway', 'Other'];
 export const TYPE_META: Record<DType, { color: string; icon: string; short: string; plural: string; prefix: string; models: string[]; vendor: string; latest: string }> = {
-  'Access Point': { color: '#3b82f6', icon: 'devices-ap', short: 'AP', plural: 'Access Points', prefix: 'AP', models: ['AP4060', 'AP5020', 'AP305C', 'AP650'], vendor: 'Extreme Networks', latest: '10.4.2' },
-  Switch: { color: '#22c55e', icon: 'devices-switch', short: 'Switch', plural: 'Switches', prefix: 'SW', models: ['S3528', 'S4220', 'S5520'], vendor: 'Extreme Networks', latest: '8.6.1' },
-  Camera: { color: '#f97316', icon: 'devices-camera', short: 'Camera', plural: 'Cameras', prefix: 'CAM', models: ['MS-C536', 'MS-C296', 'MS-C8165'], vendor: 'Milesight', latest: '5.2.0' },
-  'IoT Sensor': { color: '#f59e0b', icon: 'devices-thermo', short: 'IoT Sensor', plural: 'IoT Sensors', prefix: 'TEMP', models: ['EM300-TH', 'AM307', 'WS301'], vendor: 'Milesight IoT', latest: '1.3.4' },
-  Gateway: { color: '#8b5cf6', icon: 'devices-gateway', short: 'Gateway', plural: 'Gateways', prefix: 'GW', models: ['UG63', 'UG65', 'UG67'], vendor: 'Milesight IoT', latest: '60.0.0.44' },
-  Other: { color: '#94a3b8', icon: 'devices-chip', short: 'Other', plural: 'Other', prefix: 'DEV', models: ['RDR-200', 'KSK-10', 'PNL-4'], vendor: 'Various', latest: '2.1.0' },
+  'Access Point': { color: 'var(--ka-3b82f6)', icon: 'devices-ap', short: 'AP', plural: 'Access Points', prefix: 'AP', models: ['AP4060', 'AP5020', 'AP305C', 'AP650'], vendor: 'Extreme Networks', latest: '10.4.2' },
+  Switch: { color: 'var(--ka-22c55e)', icon: 'devices-switch', short: 'Switch', plural: 'Switches', prefix: 'SW', models: ['S3528', 'S4220', 'S5520'], vendor: 'Extreme Networks', latest: '8.6.1' },
+  Camera: { color: 'var(--ka-f97316)', icon: 'devices-camera', short: 'Camera', plural: 'Cameras', prefix: 'CAM', models: ['MS-C536', 'MS-C296', 'MS-C8165'], vendor: 'Milesight', latest: '5.2.0' },
+  'IoT Sensor': { color: 'var(--ka-f59e0b)', icon: 'devices-thermo', short: 'IoT Sensor', plural: 'IoT Sensors', prefix: 'TEMP', models: ['EM300-TH', 'AM307', 'WS301'], vendor: 'Milesight IoT', latest: '1.3.4' },
+  Gateway: { color: 'var(--ka-8b5cf6)', icon: 'devices-gateway', short: 'Gateway', plural: 'Gateways', prefix: 'GW', models: ['UG63', 'UG65', 'UG67'], vendor: 'Milesight IoT', latest: '60.0.0.44' },
+  Other: { color: 'var(--ka-94a3b8)', icon: 'devices-chip', short: 'Other', plural: 'Other', prefix: 'DEV', models: ['RDR-200', 'KSK-10', 'PNL-4'], vendor: 'Various', latest: '2.1.0' },
 };
 /** Donut colours exactly as the reference (AP blue, Switch purple, Camera teal, IoT orange, Gateway red, Other salmon). */
 export const DONUT_COLORS: Record<DType, string> = {
-  'Access Point': '#2f80ed', Switch: '#7c3aed', Camera: '#10b981', 'IoT Sensor': '#f59e0b', Gateway: '#ef4444', Other: '#f4a28c',
+  'Access Point': 'var(--ka-2f80ed)', Switch: 'var(--ka-7c3aed)', Camera: 'var(--ka-10b981)', 'IoT Sensor': 'var(--ka-f59e0b)', Gateway: 'var(--ka-ef4444)', Other: 'var(--ka-f4a28c)',
 };
 export const SITES = ['HQ', 'Warehouse', 'Factory', 'Branch', 'Parking', 'Office'];
 export const DEPTS = ['IT', 'Security', 'Facilities', 'Operations'];

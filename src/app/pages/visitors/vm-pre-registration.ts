@@ -246,14 +246,14 @@ type SortKey = 'name' | 'company' | 'purpose' | 'host' | 'site' | 'when' | 'stat
   `,
   styles: [VMA_CSS, `
     :host { display: block; }
-    .vm-bar .vm-tabs { background: #f6f4ff; border-radius: 9px; padding: 3px; gap: 2px; }
+    .vm-bar .vm-tabs { background: var(--kb-f6f4ff); border-radius: 9px; padding: 3px; gap: 2px; }
     .vm-bar { flex-wrap: nowrap; }
     .vm-bar .vm-tabs { flex-wrap: nowrap; flex: none; }
     .vm-bar .vm-tabs button { border: 0; background: transparent; padding: 7px 18px; font-size: 13.5px; }
     .vm-bar .vm-tabs button.on { background: var(--primary); }
     .vm-bar .vm-search { max-width: 320px; min-width: 150px; }
     .vm-filter { min-width: 0; flex: 0 1 150px; } .vm-filter select { flex: 1; min-width: 0; }
-    .vm-icon-btn.act { border-color: var(--primary); color: var(--primary); background: #f5f0ff; }
+    .vm-icon-btn.act { border-color: var(--primary); color: var(--primary); background: var(--kb-f5f0ff); }
     .fpop { width: 240px; display: flex; flex-direction: column; gap: 10px; padding: 12px; }
     .top { display: grid; grid-template-columns: minmax(0, 1fr) 336px; gap: 14px; align-items: start; }
     .form-card { padding: 14px 10px 10px; }

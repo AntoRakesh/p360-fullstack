@@ -45,7 +45,7 @@ export interface Invoice { id: string; date: string; period: string; amount: num
 
 /* ---------------- Helpers ---------------- */
 export const ACTIONS: Action[] = ['View', 'Create', 'Edit', 'Delete', 'Approve', 'Export'];
-export const AV_COLORS = ['#7c3aed', '#2563eb', '#0891b2', '#16a34a', '#ea580c', '#db2777', '#9333ea', '#0d9488', '#4f46e5', '#ca8a04'];
+export const AV_COLORS = ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0891b2)', 'var(--ka-16a34a)', 'var(--ka-ea580c)', 'var(--ka-db2777)', 'var(--ka-9333ea)', 'var(--ka-0d9488)', 'var(--ka-4f46e5)', 'var(--ka-ca8a04)'];
 export const initialsOf = (n: string) => n.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).slice(0, 2).join('') || n.slice(0, 2).toUpperCase();
 export const colorOf = (n: string) => AV_COLORS[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % AV_COLORS.length];
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -79,11 +79,11 @@ export const CURRENCIES = ['AED - UAE Dirham', 'KWD - Kuwaiti Dinar', 'OMR - Oma
 export const RETENTION_OPTIONS = [90, 180, 365, 730, 1095, 2555];
 
 export const BUS: BusinessUnit[] = [
-  { id: 'bu-uae', name: 'UAE Business Unit', code: 'BU-UAE', country: 'United Arab Emirates', flag: '🇦🇪', head: 'Khalid Al Mansoori', status: 'Active', created: '2024-02-01', color: '#7c3aed' },
-  { id: 'bu-kw', name: 'Kuwait Business Unit', code: 'BU-KWT', country: 'Kuwait', flag: '🇰🇼', head: 'Faisal Al Sabah', status: 'Active', created: '2024-06-15', color: '#2563eb' },
-  { id: 'bu-om', name: 'Oman Business Unit', code: 'BU-OMN', country: 'Oman', flag: '🇴🇲', head: 'Said Al Busaidi', status: 'Active', created: '2024-09-01', color: '#16a34a' },
-  { id: 'bu-bh', name: 'Bahrain Business Unit', code: 'BU-BHR', country: 'Bahrain', flag: '🇧🇭', head: 'Hamad Al Khalifa', status: 'Active', created: '2025-01-10', color: '#ea580c' },
-  { id: 'bu-qa', name: 'Qatar Business Unit', code: 'BU-QAT', country: 'Qatar', flag: '🇶🇦', head: 'Tamim Al Thani', status: 'Active', created: '2025-04-20', color: '#db2777' },
+  { id: 'bu-uae', name: 'UAE Business Unit', code: 'BU-UAE', country: 'United Arab Emirates', flag: '🇦🇪', head: 'Khalid Al Mansoori', status: 'Active', created: '2024-02-01', color: 'var(--ka-7c3aed)' },
+  { id: 'bu-kw', name: 'Kuwait Business Unit', code: 'BU-KWT', country: 'Kuwait', flag: '🇰🇼', head: 'Faisal Al Sabah', status: 'Active', created: '2024-06-15', color: 'var(--ka-2563eb)' },
+  { id: 'bu-om', name: 'Oman Business Unit', code: 'BU-OMN', country: 'Oman', flag: '🇴🇲', head: 'Said Al Busaidi', status: 'Active', created: '2024-09-01', color: 'var(--ka-16a34a)' },
+  { id: 'bu-bh', name: 'Bahrain Business Unit', code: 'BU-BHR', country: 'Bahrain', flag: '🇧🇭', head: 'Hamad Al Khalifa', status: 'Active', created: '2025-01-10', color: 'var(--ka-ea580c)' },
+  { id: 'bu-qa', name: 'Qatar Business Unit', code: 'BU-QAT', country: 'Qatar', flag: '🇶🇦', head: 'Tamim Al Thani', status: 'Active', created: '2025-04-20', color: 'var(--ka-db2777)' },
 ];
 
 const S = (id: string, name: string, buId: string, city: string, type: Site['type'], lon: number, lat: number, floors: number, capacity: number, manager: string, address: string): Site => ({
@@ -160,17 +160,17 @@ const SECURITY = ['physical-access-control', 'visitor-management', 'contractor-v
 const PEOPLE = ['people-identity', 'time-attendance', 'shift-workforce', 'leave-absence', 'employee-self-service', 'manager-self-service', 'training-skills-compliance', 'ai-people-intelligence'];
 
 export const ROLES: Role[] = [
-  { id: 'r-super', name: 'Super Admin', desc: 'Unrestricted platform access including tenant, billing and security configuration.', type: 'System', color: '#7c3aed', scope: 'Tenant', perms: lvl(ALL, FULL) },
-  { id: 'r-tenant', name: 'Tenant Admin', desc: 'Manages organization structure, users, roles and module configuration.', type: 'System', color: '#4f46e5', scope: 'Tenant', perms: merge(lvl(ALL, MANAGE), lvl(['administration-configuration', 'people-identity'], FULL)) },
-  { id: 'r-site', name: 'Site Admin', desc: 'Administers a single site: devices, zones, access and local users.', type: 'System', color: '#2563eb', scope: 'Site', perms: merge(lvl(ALL, VIEW), lvl(SECURITY, MANAGE), lvl(['command-center', 'reports-analytics'], ['View', 'Export'])) },
-  { id: 'r-hr', name: 'HR Manager', desc: 'People, attendance, leave and training administration.', type: 'Custom', color: '#db2777', scope: 'Business Unit', perms: merge(lvl(['command-center', 'reports-analytics'], ['View', 'Export']), lvl(PEOPLE, MANAGE), lvl(['people-identity'], FULL)) },
-  { id: 'r-sec', name: 'Security Manager', desc: 'Access control, visitors, patrols and emergency response.', type: 'Custom', color: '#dc2626', scope: 'Business Unit', perms: merge(lvl(['command-center', 'reports-analytics', 'digital-twin'], ['View', 'Export']), lvl(SECURITY, FULL)) },
-  { id: 'r-dept', name: 'Department Head', desc: 'Approves leave, shifts and tasks for their department.', type: 'Custom', color: '#ea580c', scope: 'Department', perms: merge(lvl(SELF, ['View', 'Create']), lvl(['manager-self-service', 'shift-workforce', 'tasks-workforce-operations', 'leave-absence'], ['View', 'Create', 'Edit', 'Approve']), lvl(['reports-analytics'], ['View', 'Export'])) },
-  { id: 'r-sup', name: 'Supervisor', desc: 'Day-to-day team supervision, rosters and task assignment.', type: 'Custom', color: '#ca8a04', scope: 'Department', perms: merge(lvl(SELF, ['View', 'Create']), lvl(['shift-workforce', 'tasks-workforce-operations', 'manager-self-service'], ['View', 'Create', 'Edit'])) },
-  { id: 'r-rec', name: 'Receptionist', desc: 'Visitor check-in, badges and front-desk operations.', type: 'Custom', color: '#0891b2', scope: 'Site', perms: merge(lvl(SELF, VIEW), lvl(['visitor-management'], ['View', 'Create', 'Edit', 'Approve']), lvl(['contractor-vendor'], VIEW)) },
-  { id: 'r-guard', name: 'Security Guard', desc: 'Patrol tours, incident reporting and alarm response.', type: 'Custom', color: '#475569', scope: 'Site', perms: merge(lvl(SELF, VIEW), lvl(['patrol-guard-management', 'emergency-mustering', 'safety-wellbeing'], ['View', 'Create', 'Edit']), lvl(['physical-access-control', 'visitor-management'], VIEW)) },
-  { id: 'r-aud', name: 'Auditor', desc: 'Read-only access to every module plus export of reports and logs.', type: 'System', color: '#0d9488', scope: 'Tenant', perms: lvl(ALL, ['View', 'Export']) },
-  { id: 'r-emp', name: 'Employee', desc: 'Self-service: attendance, leave, meals, bookings and training.', type: 'System', color: '#16a34a', scope: 'Self', perms: merge(lvl(SELF, ['View', 'Create'])) },
+  { id: 'r-super', name: 'Super Admin', desc: 'Unrestricted platform access including tenant, billing and security configuration.', type: 'System', color: 'var(--ka-7c3aed)', scope: 'Tenant', perms: lvl(ALL, FULL) },
+  { id: 'r-tenant', name: 'Tenant Admin', desc: 'Manages organization structure, users, roles and module configuration.', type: 'System', color: 'var(--ka-4f46e5)', scope: 'Tenant', perms: merge(lvl(ALL, MANAGE), lvl(['administration-configuration', 'people-identity'], FULL)) },
+  { id: 'r-site', name: 'Site Admin', desc: 'Administers a single site: devices, zones, access and local users.', type: 'System', color: 'var(--ka-2563eb)', scope: 'Site', perms: merge(lvl(ALL, VIEW), lvl(SECURITY, MANAGE), lvl(['command-center', 'reports-analytics'], ['View', 'Export'])) },
+  { id: 'r-hr', name: 'HR Manager', desc: 'People, attendance, leave and training administration.', type: 'Custom', color: 'var(--ka-db2777)', scope: 'Business Unit', perms: merge(lvl(['command-center', 'reports-analytics'], ['View', 'Export']), lvl(PEOPLE, MANAGE), lvl(['people-identity'], FULL)) },
+  { id: 'r-sec', name: 'Security Manager', desc: 'Access control, visitors, patrols and emergency response.', type: 'Custom', color: 'var(--ka-dc2626)', scope: 'Business Unit', perms: merge(lvl(['command-center', 'reports-analytics', 'digital-twin'], ['View', 'Export']), lvl(SECURITY, FULL)) },
+  { id: 'r-dept', name: 'Department Head', desc: 'Approves leave, shifts and tasks for their department.', type: 'Custom', color: 'var(--ka-ea580c)', scope: 'Department', perms: merge(lvl(SELF, ['View', 'Create']), lvl(['manager-self-service', 'shift-workforce', 'tasks-workforce-operations', 'leave-absence'], ['View', 'Create', 'Edit', 'Approve']), lvl(['reports-analytics'], ['View', 'Export'])) },
+  { id: 'r-sup', name: 'Supervisor', desc: 'Day-to-day team supervision, rosters and task assignment.', type: 'Custom', color: 'var(--ka-ca8a04)', scope: 'Department', perms: merge(lvl(SELF, ['View', 'Create']), lvl(['shift-workforce', 'tasks-workforce-operations', 'manager-self-service'], ['View', 'Create', 'Edit'])) },
+  { id: 'r-rec', name: 'Receptionist', desc: 'Visitor check-in, badges and front-desk operations.', type: 'Custom', color: 'var(--ka-0891b2)', scope: 'Site', perms: merge(lvl(SELF, VIEW), lvl(['visitor-management'], ['View', 'Create', 'Edit', 'Approve']), lvl(['contractor-vendor'], VIEW)) },
+  { id: 'r-guard', name: 'Security Guard', desc: 'Patrol tours, incident reporting and alarm response.', type: 'Custom', color: 'var(--ka-475569)', scope: 'Site', perms: merge(lvl(SELF, VIEW), lvl(['patrol-guard-management', 'emergency-mustering', 'safety-wellbeing'], ['View', 'Create', 'Edit']), lvl(['physical-access-control', 'visitor-management'], VIEW)) },
+  { id: 'r-aud', name: 'Auditor', desc: 'Read-only access to every module plus export of reports and logs.', type: 'System', color: 'var(--ka-0d9488)', scope: 'Tenant', perms: lvl(ALL, ['View', 'Export']) },
+  { id: 'r-emp', name: 'Employee', desc: 'Self-service: attendance, leave, meals, bookings and training.', type: 'System', color: 'var(--ka-16a34a)', scope: 'Self', perms: merge(lvl(SELF, ['View', 'Create'])) },
 ];
 
 /* ---------------- Users ---------------- */
@@ -237,27 +237,27 @@ export const GROUP_RULES: Record<string, Rule> = {
 };
 const pick = (pred: (u: AppUser, i: number) => boolean) => USERS.filter(pred).map((u) => u.id);
 export const GROUPS: Group[] = [
-  { id: 'g-ops', name: 'Operations Team', desc: 'All operations staff across business units — receives shift and incident broadcasts.', type: 'Dynamic', rule: 'ops', members: [], roleIds: ['r-sup'], owner: 'Mohammed Tariq', color: '#ef4444', created: '2026-10-13' },
-  { id: 'g-sec', name: 'Security Team', desc: 'Guards and security managers — patrol, alarm and emergency notifications.', type: 'Dynamic', rule: 'sec', members: [], roleIds: ['r-guard'], owner: 'Tariq Saleh', color: '#475569', created: '2025-03-02' },
-  { id: 'g-heads', name: 'Department Heads', desc: 'Approvers for leave, overtime and access requests.', type: 'Dynamic', rule: 'heads', members: [], roleIds: ['r-dept'], owner: 'Aisha Al Hashimi', color: '#ea580c', created: '2024-02-05' },
-  { id: 'g-sites', name: 'Site Administrators', desc: 'Local administrators for each of the 18 sites.', type: 'Dynamic', rule: 'sites', members: [], roleIds: ['r-site'], owner: 'Rex Kumar', color: '#2563eb', created: '2024-02-05' },
-  { id: 'g-uae', name: 'All Staff - UAE', desc: 'Everyone in the UAE business unit.', type: 'Dynamic', rule: 'uae', members: [], roleIds: [], owner: 'Rex Kumar', color: '#7c3aed', created: '2024-02-05' },
-  { id: 'g-field', name: 'Field & Warehouse Crew', desc: 'Lone-worker and PPE policy applies.', type: 'Dynamic', rule: 'field', members: [], roleIds: [], owner: 'Ali Hassan', color: '#ca8a04', created: '2025-06-18' },
-  { id: 'g-nomfa', name: 'MFA Not Enrolled', desc: 'Users who still need to enrol in multi-factor authentication.', type: 'Dynamic', rule: 'nomfa', members: [], roleIds: [], owner: 'Sara Ahmed', color: '#dc2626', created: '2026-08-01' },
-  { id: 'g-it', name: 'IT Admins', desc: 'Platform and infrastructure administrators.', type: 'Static', rule: '', members: pick((u) => u.deptId === 'd-it' && (u.roleId === 'r-super' || u.roleId === 'r-tenant')), roleIds: ['r-tenant'], owner: 'Vikram Mehta', color: '#4f46e5', created: '2024-02-01' },
-  { id: 'g-fin', name: 'Finance Approvers', desc: 'Approve purchase orders, meal subsidies and contractor invoices.', type: 'Static', rule: '', members: pick((u, i) => u.deptId === 'd-fin' && i % 3 === 0), roleIds: [], owner: 'Rajesh Kumar', color: '#0d9488', created: '2024-05-12' },
-  { id: 'g-ert', name: 'Emergency Response Team', desc: 'Fire wardens and first aiders across all sites.', type: 'Static', rule: '', members: pick((_, i) => i % 26 === 4), roleIds: [], owner: 'Tariq Saleh', color: '#db2777', created: '2024-11-20' },
-  { id: 'g-front', name: 'Visitor Desk', desc: 'Receptionists and front-desk backup.', type: 'Static', rule: '', members: pick((u) => u.roleId === 'r-rec'), roleIds: ['r-rec'], owner: 'Reem Al Zaabi', color: '#0891b2', created: '2025-01-15' },
+  { id: 'g-ops', name: 'Operations Team', desc: 'All operations staff across business units — receives shift and incident broadcasts.', type: 'Dynamic', rule: 'ops', members: [], roleIds: ['r-sup'], owner: 'Mohammed Tariq', color: 'var(--ka-ef4444)', created: '2026-10-13' },
+  { id: 'g-sec', name: 'Security Team', desc: 'Guards and security managers — patrol, alarm and emergency notifications.', type: 'Dynamic', rule: 'sec', members: [], roleIds: ['r-guard'], owner: 'Tariq Saleh', color: 'var(--ka-475569)', created: '2025-03-02' },
+  { id: 'g-heads', name: 'Department Heads', desc: 'Approvers for leave, overtime and access requests.', type: 'Dynamic', rule: 'heads', members: [], roleIds: ['r-dept'], owner: 'Aisha Al Hashimi', color: 'var(--ka-ea580c)', created: '2024-02-05' },
+  { id: 'g-sites', name: 'Site Administrators', desc: 'Local administrators for each of the 18 sites.', type: 'Dynamic', rule: 'sites', members: [], roleIds: ['r-site'], owner: 'Rex Kumar', color: 'var(--ka-2563eb)', created: '2024-02-05' },
+  { id: 'g-uae', name: 'All Staff - UAE', desc: 'Everyone in the UAE business unit.', type: 'Dynamic', rule: 'uae', members: [], roleIds: [], owner: 'Rex Kumar', color: 'var(--ka-7c3aed)', created: '2024-02-05' },
+  { id: 'g-field', name: 'Field & Warehouse Crew', desc: 'Lone-worker and PPE policy applies.', type: 'Dynamic', rule: 'field', members: [], roleIds: [], owner: 'Ali Hassan', color: 'var(--ka-ca8a04)', created: '2025-06-18' },
+  { id: 'g-nomfa', name: 'MFA Not Enrolled', desc: 'Users who still need to enrol in multi-factor authentication.', type: 'Dynamic', rule: 'nomfa', members: [], roleIds: [], owner: 'Sara Ahmed', color: 'var(--ka-dc2626)', created: '2026-08-01' },
+  { id: 'g-it', name: 'IT Admins', desc: 'Platform and infrastructure administrators.', type: 'Static', rule: '', members: pick((u) => u.deptId === 'd-it' && (u.roleId === 'r-super' || u.roleId === 'r-tenant')), roleIds: ['r-tenant'], owner: 'Vikram Mehta', color: 'var(--ka-4f46e5)', created: '2024-02-01' },
+  { id: 'g-fin', name: 'Finance Approvers', desc: 'Approve purchase orders, meal subsidies and contractor invoices.', type: 'Static', rule: '', members: pick((u, i) => u.deptId === 'd-fin' && i % 3 === 0), roleIds: [], owner: 'Rajesh Kumar', color: 'var(--ka-0d9488)', created: '2024-05-12' },
+  { id: 'g-ert', name: 'Emergency Response Team', desc: 'Fire wardens and first aiders across all sites.', type: 'Static', rule: '', members: pick((_, i) => i % 26 === 4), roleIds: [], owner: 'Tariq Saleh', color: 'var(--ka-db2777)', created: '2024-11-20' },
+  { id: 'g-front', name: 'Visitor Desk', desc: 'Receptionists and front-desk backup.', type: 'Static', rule: '', members: pick((u) => u.roleId === 'r-rec'), roleIds: ['r-rec'], owner: 'Reem Al Zaabi', color: 'var(--ka-0891b2)', created: '2025-01-15' },
 ];
 
 /* ---------------- Audit log ---------------- */
 export const ADMINS = [
-  { name: 'Rex Kumar', initials: 'RK', color: '#7c3aed' },
-  { name: 'Sara Ahmed', initials: 'SA', color: '#2563eb' },
-  { name: 'Mohammed Tariq', initials: 'MT', color: '#7c3aed' },
-  { name: 'Priya Nair', initials: 'PN', color: '#db2777' },
-  { name: 'Omar Khalid', initials: 'OK', color: '#0891b2' },
-  { name: 'System', initials: 'SY', color: '#64748b' },
+  { name: 'Rex Kumar', initials: 'RK', color: 'var(--ka-7c3aed)' },
+  { name: 'Sara Ahmed', initials: 'SA', color: 'var(--ka-2563eb)' },
+  { name: 'Mohammed Tariq', initials: 'MT', color: 'var(--ka-7c3aed)' },
+  { name: 'Priya Nair', initials: 'PN', color: 'var(--ka-db2777)' },
+  { name: 'Omar Khalid', initials: 'OK', color: 'var(--ka-0891b2)' },
+  { name: 'System', initials: 'SY', color: 'var(--ka-64748b)' },
 ];
 const at = (y: number, mo: number, d: number, h: number, mi: number) => new Date(y, mo - 1, d, h, mi).getTime();
 const A = (a: (typeof ADMINS)[number]) => ({ actor: a.name, initials: a.initials, color: a.color });
@@ -267,7 +267,7 @@ function buildAudit(): AuditEntry[] {
     { id: 'AU-9005', at: at(2026, 10, 14, 9, 42), ...A(RK), action: 'Created', entity: 'Department', target: 'Facilities - UAE', detail: 'Department created under Head Office (UAE Business Unit)', category: 'Organization', severity: 'Info', ip: '10.12.4.21', after: 'name: Facilities\nsite: Head Office\nhead: Imran Qureshi' },
     { id: 'AU-9004', at: at(2026, 10, 14, 9, 15), ...A(SA), action: 'Updated', entity: 'Site', target: 'Abu Dhabi Office', detail: 'Address and capacity updated', category: 'Organization', severity: 'Info', ip: '10.12.8.44', before: 'capacity: 120\naddress: Al Reem Island, Abu Dhabi', after: 'capacity: 140\naddress: Al Maryah Island, ADGM Square, Abu Dhabi' },
     { id: 'AU-9003', at: at(2026, 10, 13, 17, 30), ...A(MT), action: 'Created', entity: 'User Group', target: 'Operations Team', detail: 'Dynamic group: Department name contains "Operations"', category: 'Users & Roles', severity: 'Info', ip: '10.14.2.9', after: 'type: Dynamic\nrule: department contains "Operations"' },
-    { id: 'AU-9002', at: at(2026, 10, 13, 11, 20), ...A(RK), action: 'Updated', entity: 'Branding', target: 'Logo and Theme', detail: 'Logo replaced and primary colour set to #7C3AED', category: 'Branding', severity: 'Info', ip: '10.12.4.21', before: 'primary: #6D28D9', after: 'primary: #7C3AED' },
+    { id: 'AU-9002', at: at(2026, 10, 13, 11, 20), ...A(RK), action: 'Updated', entity: 'Branding', target: 'Logo and Theme', detail: 'Logo replaced and primary colour set to var(--ka-7c3aed)', category: 'Branding', severity: 'Info', ip: '10.12.4.21', before: 'primary: var(--ka-6d28d9)', after: 'primary: var(--ka-7c3aed)' },
     { id: 'AU-9001', at: at(2026, 10, 12, 16, 10), ...A(SA), action: 'Configured', entity: 'SSO Configuration', target: 'SAML settings updated', detail: 'Azure AD SAML certificate rotated, signing algorithm SHA-256', category: 'Security', severity: 'Warning', ip: '10.12.8.44', before: 'certificate: expires 30 Oct 2026', after: 'certificate: expires 12 Oct 2028' },
   ];
   const tpl: [string, string, string, AuditEntry['category'], AuditEntry['severity']][] = [
@@ -343,11 +343,11 @@ export const PII_FIELDS = [
   { id: 'plate', label: 'Vehicle plate', sample: 'Dubai A 12345', masked: false, roles: 'Security Manager' },
 ];
 export const CONSENTS = [
-  { label: 'Biometric (face / fingerprint)', given: 1104, color: '#7c3aed' },
-  { label: 'Location tracking (RTLS)', given: 1012, color: '#2563eb' },
-  { label: 'CCTV analytics', given: 1186, color: '#0891b2' },
-  { label: 'Wellbeing surveys', given: 842, color: '#16a34a' },
-  { label: 'Marketing communications', given: 388, color: '#ea580c' },
+  { label: 'Biometric (face / fingerprint)', given: 1104, color: 'var(--ka-7c3aed)' },
+  { label: 'Location tracking (RTLS)', given: 1012, color: 'var(--ka-2563eb)' },
+  { label: 'CCTV analytics', given: 1186, color: 'var(--ka-0891b2)' },
+  { label: 'Wellbeing surveys', given: 842, color: 'var(--ka-16a34a)' },
+  { label: 'Marketing communications', given: 388, color: 'var(--ka-ea580c)' },
 ];
 
 /* ---------------- Localization ---------------- */
@@ -430,7 +430,7 @@ export class AdminStore {
   });
   /** Per-site opt-outs: module path → site ids where the module is switched off. */
   readonly moduleSiteOff = signal<Record<string, string[]>>({ 'meal-canteen-management': ['s-ahm', 's-dqm', 's-rlf', 's-kdc'], 'workplace-facility-services': ['s-shw', 's-ahm', 's-sll', 's-dqm', 's-str', 's-rlf', 's-msd'], 'patrol-guard-management': ['s-dxb', 's-lus'], 'real-time-location': ['s-auh', 's-mct', 's-mnm', 's-doh', 's-lus'] });
-  readonly branding = signal({ primary: '#7c3aed', accent: '#2563eb', sidebar: 'Dark purple', radius: 12, font: 'Inter', loginTitle: 'Welcome to DCS People360', emailFooter: 'DCS Group · Office 101, Business Tower, Dubai, UAE', favicon: true, appName: 'People360' });
+  readonly branding = signal({ primary: 'var(--ka-7c3aed)', accent: 'var(--ka-2563eb)', sidebar: 'Dark purple', radius: 12, font: 'Inter', loginTitle: 'Welcome to DCS People360', emailFooter: 'DCS Group · Office 101, Business Tower, Dubai, UAE', favicon: true, appName: 'People360' });
   readonly localization = signal({ languages: ['English (US)', 'Arabic', 'Hindi', 'French'], defaultLanguage: 'English (US)', rtl: true, dateFormat: 'DD MMM YYYY', timeFormat: '12-hour', numberFormat: '1,234.56', firstDay: 'Sunday', calendar: 'Gregorian' });
   readonly translations = signal<Translation[]>(TRANSLATIONS.map((t) => ({ ...t })));
   readonly retention = signal<RetentionPolicy[]>(RETENTION.map((r) => ({ ...r })));
@@ -493,7 +493,7 @@ export class AdminStore {
 
   /* ----- mutations ----- */
   log(action: string, entity: string, target: string, detail: string, category: AuditEntry['category'], severity: AuditEntry['severity'] = 'Info', before?: string, after?: string) {
-    this.audit.update((l) => [{ id: `AU-${9006 + this.audit().length}`, at: Date.now(), actor: 'Demo Login', initials: 'DL', color: '#7c3aed', action, entity, target, detail, category, severity, ip: '10.12.4.77', before, after }, ...l]);
+    this.audit.update((l) => [{ id: `AU-${9006 + this.audit().length}`, at: Date.now(), actor: 'Demo Login', initials: 'DL', color: 'var(--ka-7c3aed)', action, entity, target, detail, category, severity, ip: '10.12.4.77', before, after }, ...l]);
   }
   toast(m: string) {
     this.toastMsg.set(m);

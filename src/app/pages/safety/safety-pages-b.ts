@@ -24,11 +24,11 @@ const PARENT = 'Workplace Safety &amp; Wellbeing';
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="15" />Export Violations</button>
     </app-page-head>
     <section class="kpi-row kpi5">
-      <app-kpi label="PPE Compliance" [value]="store.ppePct() + '%'" icon="hard-hat" color="#7c3aed" change="5%" sub="vs. last week" />
-      <app-kpi label="Violations Today" [value]="today().length" icon="triangle-alert" color="#ef4444" sub="AI detections" subColor="#dc2626" />
-      <app-kpi label="Awaiting Review" [value]="newCount()" icon="eye" color="#f59e0b" sub="new detections" />
-      <app-kpi label="AI Cameras Online" [value]="cams.length + '/' + cams.length" icon="s-camera" color="#22c55e" sub="all streams healthy" subColor="#16a34a" />
-      <app-kpi label="PPE Issued (Month)" [value]="issued()" icon="box" color="#3b82f6" sub="items to 312 people" />
+      <app-kpi label="PPE Compliance" [value]="store.ppePct() + '%'" icon="hard-hat" color="var(--ka-7c3aed)" change="5%" sub="vs. last week" />
+      <app-kpi label="Violations Today" [value]="today().length" icon="triangle-alert" color="var(--ka-ef4444)" sub="AI detections" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Awaiting Review" [value]="newCount()" icon="eye" color="var(--ka-f59e0b)" sub="new detections" />
+      <app-kpi label="AI Cameras Online" [value]="cams.length + '/' + cams.length" icon="s-camera" color="var(--ka-22c55e)" sub="all streams healthy" subColor="var(--ka-16a34a)" />
+      <app-kpi label="PPE Issued (Month)" [value]="issued()" icon="box" color="var(--ka-3b82f6)" sub="items to 312 people" />
     </section>
 
     <section class="card mb">
@@ -47,7 +47,7 @@ const PARENT = 'Workplace Safety &amp; Wellbeing';
 
     <section class="grid3 mb">
       <div class="card"><div class="card-head"><h3>Compliance by PPE Type</h3></div>
-        <ul class="pt">@for (t of types(); track t.name) {<li><app-icon [name]="t.icon" [size]="17" /><span>{{ t.name }}</span><div class="bar"><i [style.width.%]="t.pct" [style.background]="t.pct >= 92 ? '#22c55e' : t.pct >= 87 ? '#f59e0b' : '#ef4444'"></i></div><b>{{ t.pct }}%</b></li>}</ul>
+        <ul class="pt">@for (t of types(); track t.name) {<li><app-icon [name]="t.icon" [size]="17" /><span>{{ t.name }}</span><div class="bar"><i [style.width.%]="t.pct" [style.background]="t.pct >= 92 ? 'var(--ka-22c55e)' : t.pct >= 87 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"></i></div><b>{{ t.pct }}%</b></li>}</ul>
       </div>
       <div class="card"><div class="card-head"><h3>Compliance by Zone</h3></div>
         <app-bar-list [rows]="zoneRows()" [max]="100" />
@@ -116,7 +116,7 @@ const PARENT = 'Workplace Safety &amp; Wellbeing';
     .cams { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
     .cam { display: flex; flex-direction: column; gap: 6px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; text-align: left; }
     .cam app-sf-cam { aspect-ratio: 155 / 120; border-radius: 6px; } .cam.on app-sf-cam, .cam:hover app-sf-cam { outline: 2px solid var(--primary); }
-    .cam span { display: flex; justify-content: space-between; gap: 6px; font-size: 11.5px; } .cam b { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .cam em { color: #dc2626; font-style: normal; white-space: nowrap; } .cam i { color: #16a34a; font-style: normal; }
+    .cam span { display: flex; justify-content: space-between; gap: 6px; font-size: 11.5px; } .cam b { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .cam em { color: var(--kf-dc2626); font-style: normal; white-space: nowrap; } .cam i { color: var(--kf-16a34a); font-style: normal; }
     .pt { list-style: none; margin: 0; padding: 0; } .pt li { display: grid; grid-template-columns: 22px 110px minmax(0, 1fr) 40px; gap: 8px; align-items: center; padding: 7px 0; font-size: 12.5px; } .pt app-icon { color: var(--primary); }
     .ra { white-space: nowrap; } .ra button { margin-left: 3px; } .danger { color: var(--red); } .it { display: inline-flex; gap: 7px; align-items: center; }
     .segs button { padding: 6px 8px; font-size: 11.5px; }
@@ -131,7 +131,7 @@ export class PpeCompliance {
   protected readonly people = PEOPLE;
   protected readonly dayLabel = dayLabel;
   protected readonly days = ['Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed'];
-  protected readonly trend = [{ name: 'Compliance', color: '#7c3aed', values: [87, 88, 90, 89, 91, 90, 92], area: true }, { name: 'Target', color: '#22c55e', values: [95, 95, 95, 95, 95, 95, 95], dashed: true }];
+  protected readonly trend = [{ name: 'Compliance', color: 'var(--ka-7c3aed)', values: [87, 88, 90, 89, 91, 90, 92], area: true }, { name: 'Target', color: 'var(--ka-22c55e)', values: [95, 95, 95, 95, 95, 95, 95], dashed: true }];
   protected readonly zone = signal('');
   protected readonly camSel = signal<string | null>(null);
   protected readonly vf = signal('All');
@@ -148,7 +148,7 @@ export class PpeCompliance {
     this.store.ppeEvents().filter((e) => (this.vf() === 'All' || e.status === this.vf()) && (!this.camSel() || e.cam === this.camSel()) && (!this.zone() || e.zone === this.zone())),
   );
   protected readonly types = computed(() => PPE_TYPES.map((t) => ({ ...t, pct: t.pct + (this.zone() ? ((t.name.length + this.zone().length) % 5) - 2 : 0) })));
-  protected readonly zoneRows = computed(() => PPE_ZONES.map((z) => ({ label: z.zone, value: z.pct, display: `${z.pct}%`, color: z.pct >= 92 ? '#22c55e' : z.pct >= 88 ? '#f59e0b' : '#ef4444' })));
+  protected readonly zoneRows = computed(() => PPE_ZONES.map((z) => ({ label: z.zone, value: z.pct, display: `${z.pct}%`, color: z.pct >= 92 ? 'var(--ka-22c55e)' : z.pct >= 88 ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)' })));
   protected tag(s: string) {
     return s === 'New' ? 'tag red' : s === 'Acknowledged' ? 'tag amber' : s === 'Warning Issued' ? 'tag blue' : s === 'Incident Raised' ? 'tag' : 'tag grey';
   }
@@ -188,12 +188,12 @@ const O_FLOW: Observation['status'][] = ['Reported', 'Reviewed', 'Action Assigne
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="15" />Export</button>
     </app-page-head>
     <section class="kpi-row kpi6">
-      <app-kpi label="Observations (Month)" [value]="month().length" icon="activity" color="#7c3aed" change="18%" sub="vs. last month" />
-      <app-kpi label="Near Misses" [value]="k('Near Miss')" icon="triangle-alert" color="#f59e0b" sub="potential incidents" />
-      <app-kpi label="Unsafe Acts" [value]="k('Unsafe Act')" icon="user" color="#ef4444" sub="behavioural" />
-      <app-kpi label="Unsafe Conditions" [value]="k('Unsafe Condition')" icon="s-cog" color="#3b82f6" sub="physical / environment" />
-      <app-kpi label="Closed" [value]="closedPct() + '%'" icon="shield-check" color="#22c55e" sub="of this month's reports" subColor="#16a34a" />
-      <app-kpi label="Safe Behaviours" [value]="k('Safe Behaviour')" icon="star" color="#14b8a6" sub="recognitions" />
+      <app-kpi label="Observations (Month)" [value]="month().length" icon="activity" color="var(--ka-7c3aed)" change="18%" sub="vs. last month" />
+      <app-kpi label="Near Misses" [value]="k('Near Miss')" icon="triangle-alert" color="var(--ka-f59e0b)" sub="potential incidents" />
+      <app-kpi label="Unsafe Acts" [value]="k('Unsafe Act')" icon="user" color="var(--ka-ef4444)" sub="behavioural" />
+      <app-kpi label="Unsafe Conditions" [value]="k('Unsafe Condition')" icon="s-cog" color="var(--ka-3b82f6)" sub="physical / environment" />
+      <app-kpi label="Closed" [value]="closedPct() + '%'" icon="shield-check" color="var(--ka-22c55e)" sub="of this month's reports" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Safe Behaviours" [value]="k('Safe Behaviour')" icon="star" color="var(--ka-14b8a6)" sub="recognitions" />
     </section>
     <section class="split">
       <div class="card">
@@ -208,7 +208,7 @@ const O_FLOW: Observation['status'][] = ['Reported', 'Reviewed', 'Action Assigne
         <ul class="feed">
           @for (o of shown(); track o.id) {
             <li>
-              <span class="ic-sq" [style.background]="catColor(o.category) + '22'" [style.color]="catColor(o.category)"><app-icon [name]="catIcon(o.category)" [size]="16" /></span>
+              <span class="ic-sq" [style.background]="'color-mix(in srgb, ' + catColor(o.category) + ' 13%, transparent)'" [style.color]="catColor(o.category)"><app-icon [name]="catIcon(o.category)" [size]="16" /></span>
               <div class="bd">
                 <div class="r1"><b>{{ o.text }}</b><span [class]="kindTag(o.kind)">{{ o.kind }}</span>@if (o.potential === 'High') {<span class="tag red">High potential</span>}</div>
                 <small>{{ o.id }} · {{ o.category }} · {{ o.location }} · {{ o.anonymous ? 'Anonymous' : o.by }} · {{ o.daysAgo ? dayLabel(o.daysAgo) : 'Today' }}</small>
@@ -246,11 +246,11 @@ const O_FLOW: Observation['status'][] = ['Reported', 'Reviewed', 'Action Assigne
   `,
   styles: [SF_STYLES, `
     .mb { margin-bottom: 12px; }
-    .feed { list-style: none; margin: 0; padding: 0; } .feed li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 0; border-bottom: 1px solid #f1f2f7; }
+    .feed { list-style: none; margin: 0; padding: 0; } .feed li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: start; padding: 10px 0; border-bottom: 1px solid var(--kl-f1f2f7); }
     .bd { display: flex; flex-direction: column; gap: 3px; min-width: 0; font-size: 12.5px; } .r1 { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; } .bd small { color: var(--muted); font-size: 11.5px; }
-    .flow { display: flex; gap: 3px; margin-top: 3px; } .flow span { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #f1f2f7; color: #9ca3af; } .flow span.on { background: #ede9fe; color: #6d28d9; }
+    .flow { display: flex; gap: 3px; margin-top: 3px; } .flow span { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--kb-f1f2f7); color: var(--kf-9ca3af); } .flow span.on { background: var(--kb-ede9fe); color: var(--kf-6d28d9); }
     .oa { display: flex; flex-direction: column; gap: 4px; align-items: stretch; } .more { width: 100%; justify-content: center; margin-top: 10px; }
-    .kinds { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; } .kinds button { height: 34px; border: 1px solid var(--border); border-radius: 8px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; }
+    .kinds { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; } .kinds button { height: 34px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); font: inherit; font-size: 12px; cursor: pointer; }
     .kinds button.on { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); font-weight: 600; }
     .ta { height: 70px; padding-top: 8px; } .anon { flex-direction: row !important; align-items: center; gap: 6px !important; align-self: end; padding-bottom: 8px; }
     .lb { list-style: none; margin: 0; padding: 0; } .lb li { display: grid; grid-template-columns: 18px 30px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; } .lb em { font-style: normal; color: var(--muted); }
@@ -294,7 +294,7 @@ export class SafetyObservations {
     return this.month().filter((o) => o.kind === kind).length;
   }
   protected catColor(c: string) {
-    return H_CAT_COLOR[H_CATS.indexOf(c)] ?? '#9ca3af';
+    return H_CAT_COLOR[H_CATS.indexOf(c)] ?? 'var(--ka-9ca3af)';
   }
   protected catIcon(c: string) {
     return H_CAT_ICON[H_CATS.indexOf(c)] ?? 'triangle-alert';
@@ -345,12 +345,12 @@ const WBGT = [
       <a class="btn-ghost" routerLink="/safety-wellbeing/reports-analytics"><app-icon name="file-chart" [size]="15" />Reports</a>
     </app-page-head>
     <section class="kpi-row kpi6">
-      <app-kpi label="Wellbeing Alerts" [value]="store.openWAlerts().length" icon="heart" color="#3b82f6" change="200%" [good]="false" sub="vs. last 24 hrs" />
-      <app-kpi label="Medical Attention" [value]="medical().length" icon="s-first-aid" color="#ef4444" sub="people right now" subColor="#dc2626" />
-      <app-kpi label="First Aid Cases (Month)" value="14" icon="s-first-aid" color="#22c55e" change="8%" [up]="false" sub="vs. last month" />
-      <app-kpi label="Heat Stress Zones" [value]="hot()" icon="s-thermo" color="#f97316" sub="WBGT ≥ 30 °C" />
-      <app-kpi label="Wellbeing Index" value="7.4/10" icon="s-brain" color="#7c3aed" change="0.3" sub="pulse survey" />
-      <app-kpi label="EAP Sessions (Month)" [value]="eap()" icon="message" color="#14b8a6" sub="confidential" />
+      <app-kpi label="Wellbeing Alerts" [value]="store.openWAlerts().length" icon="heart" color="var(--ka-3b82f6)" change="200%" [good]="false" sub="vs. last 24 hrs" />
+      <app-kpi label="Medical Attention" [value]="medical().length" icon="s-first-aid" color="var(--ka-ef4444)" sub="people right now" subColor="var(--ka-dc2626)" />
+      <app-kpi label="First Aid Cases (Month)" value="14" icon="s-first-aid" color="var(--ka-22c55e)" change="8%" [up]="false" sub="vs. last month" />
+      <app-kpi label="Heat Stress Zones" [value]="hot()" icon="s-thermo" color="var(--ka-f97316)" sub="WBGT ≥ 30 °C" />
+      <app-kpi label="Wellbeing Index" value="7.4/10" icon="s-brain" color="var(--ka-7c3aed)" change="0.3" sub="pulse survey" />
+      <app-kpi label="EAP Sessions (Month)" [value]="eap()" icon="message" color="var(--ka-14b8a6)" sub="confidential" />
     </section>
     <section class="grid2 mb">
       <div class="card">
@@ -358,7 +358,7 @@ const WBGT = [
         <ul class="al">
           @for (a of alerts(); track a.id) {
             <li [class.res]="a.status === 'Resolved'">
-              <span class="ic-sq" [style.background]="lvl(a.level) + '1f'" [style.color]="lvl(a.level)"><app-icon [name]="a.icon" [size]="17" /></span>
+              <span class="ic-sq" [style.background]="'color-mix(in srgb, ' + lvl(a.level) + ' 12%, transparent)'" [style.color]="lvl(a.level)"><app-icon [name]="a.icon" [size]="17" /></span>
               <div><b>{{ a.kind }} · {{ a.person }}</b><small>{{ a.detail }}</small><small class="muted">{{ a.id }} · {{ a.time }} · <span [class]="a.status === 'Open' ? 'bad' : a.status === 'Acknowledged' ? 'warn-t' : 'good'">{{ a.status }}</span></small></div>
               <div class="aa">
                 @if (a.status === 'Open') {<button class="btn-ghost sm" (click)="setA(a, 'Acknowledged', 'Alert acknowledged · supervisor notified')">Acknowledge</button>}
@@ -396,7 +396,7 @@ const WBGT = [
         <div class="card-head"><h3>Wellbeing Programmes</h3></div>
         <ul class="pg">
           @for (g of programs(); track g.name) {
-            <li><span class="ic-sq" [style.background]="g.color + '1f'" [style.color]="g.color"><app-icon [name]="g.icon" [size]="16" /></span><div><b>{{ g.name }}</b><small>{{ g.when }} · {{ g.n }} enrolled</small></div>
+            <li><span class="ic-sq" [style.background]="'color-mix(in srgb, ' + g.color + ' 12%, transparent)'" [style.color]="g.color"><app-icon [name]="g.icon" [size]="16" /></span><div><b>{{ g.name }}</b><small>{{ g.when }} · {{ g.n }} enrolled</small></div>
               <button class="btn-ghost sm" [class.on]="g.joined" (click)="join(g.name)">{{ g.joined ? 'Enrolled ✓' : 'Promote' }}</button></li>
           }
         </ul>
@@ -407,12 +407,12 @@ const WBGT = [
   styles: [SF_STYLES, `
     .mb { margin-bottom: 12px; } a.btn-ghost { text-decoration: none; }
     .al, .hs, .pg { list-style: none; margin: 0; padding: 0; }
-    .al li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f2f7; font-size: 12.5px; } .al li.res { opacity: .55; }
-    .al li > div:not(.aa) { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .al small { font-size: 11.5px; color: #4b4f6b; }
+    .al li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12.5px; } .al li.res { opacity: .55; }
+    .al li > div:not(.aa) { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .al small { font-size: 11.5px; color: var(--kf-4b4f6b); }
     .aa { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; max-width: 270px; } .btn-primary.sm { padding: 4px 9px; font-size: 11.5px; }
-    .hs li { display: grid; grid-template-columns: minmax(0, 1fr) 60px 74px; gap: 4px 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f1f2f7; font-size: 12.5px; } .hs small { grid-column: 1 / -1; color: var(--muted); font-size: 11px; }
+    .hs li { display: grid; grid-template-columns: minmax(0, 1fr) 60px 74px; gap: 4px 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12.5px; } .hs small { grid-column: 1 / -1; color: var(--muted); font-size: 11px; }
     .pg li { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 0; font-size: 12.5px; } .pg div { display: flex; flex-direction: column; } .pg small { color: var(--muted); }
-    .btn-ghost.on { color: #15803d; border-color: #bbf7d0; background: #f0fdf4; }
+    .btn-ghost.on { color: var(--kf-15803d); border-color: var(--kl-bbf7d0); background: var(--kb-f0fdf4); }
   `],
 })
 export class HealthWellbeing {
@@ -422,9 +422,9 @@ export class HealthWellbeing {
   protected readonly initials = initials;
   protected readonly avatarColor = avatarColor;
   protected readonly pulse = [
-    { name: 'Wellbeing', color: '#7c3aed', values: [7.0, 7.1, 6.9, 7.2, 7.1, 7.4], area: true },
-    { name: 'Workload', color: '#f59e0b', values: [6.4, 6.2, 6.0, 6.5, 6.6, 6.8] },
-    { name: 'Psych. safety', color: '#22c55e', values: [7.6, 7.7, 7.8, 7.7, 7.9, 8.1] },
+    { name: 'Wellbeing', color: 'var(--ka-7c3aed)', values: [7.0, 7.1, 6.9, 7.2, 7.1, 7.4], area: true },
+    { name: 'Workload', color: 'var(--ka-f59e0b)', values: [6.4, 6.2, 6.0, 6.5, 6.6, 6.8] },
+    { name: 'Psych. safety', color: 'var(--ka-22c55e)', values: [7.6, 7.7, 7.8, 7.7, 7.9, 8.1] },
   ];
   protected readonly showAll = signal(false);
   protected readonly joined = signal<string[]>([]);
@@ -435,15 +435,15 @@ export class HealthWellbeing {
   protected readonly hot = computed(() => WBGT.filter((z) => z.wbgt >= 30).length);
   protected readonly programs = computed(() =>
     [
-      { name: 'Mental Health First Aiders', icon: 's-brain', color: '#7c3aed', when: '12 trained aiders', n: 12 },
-      { name: 'Hydration Challenge', icon: 's-droplet', color: '#3b82f6', when: 'Summer · daily', n: 214 },
-      { name: 'Back Care & Ergonomics', icon: 'user', color: '#f59e0b', when: 'Tue 1:00 PM', n: 48 },
-      { name: 'Sleep & Fatigue Clinic', icon: 's-moon', color: '#0d9488', when: 'Thu 3:00 PM', n: 31 },
-      { name: 'Quit Smoking Support', icon: 's-heart-pulse', color: '#ef4444', when: 'Monthly', n: 17 },
+      { name: 'Mental Health First Aiders', icon: 's-brain', color: 'var(--ka-7c3aed)', when: '12 trained aiders', n: 12 },
+      { name: 'Hydration Challenge', icon: 's-droplet', color: 'var(--ka-3b82f6)', when: 'Summer · daily', n: 214 },
+      { name: 'Back Care & Ergonomics', icon: 'user', color: 'var(--ka-f59e0b)', when: 'Tue 1:00 PM', n: 48 },
+      { name: 'Sleep & Fatigue Clinic', icon: 's-moon', color: 'var(--ka-0d9488)', when: 'Thu 3:00 PM', n: 31 },
+      { name: 'Quit Smoking Support', icon: 's-heart-pulse', color: 'var(--ka-ef4444)', when: 'Monthly', n: 17 },
     ].map((g) => ({ ...g, joined: this.joined().includes(g.name), n: g.n + (this.joined().includes(g.name) ? 25 : 0) })),
   );
   protected lvl(l: Sev) {
-    return l === 'High' || l === 'Critical' ? '#ef4444' : l === 'Medium' ? '#f59e0b' : '#3b82f6';
+    return l === 'High' || l === 'Critical' ? 'var(--ka-ef4444)' : l === 'Medium' ? 'var(--ka-f59e0b)' : 'var(--ka-3b82f6)';
   }
   protected setA(a: WAlert, s: WAlert['status'], msg: string) {
     this.store.wAlerts.update((l) => l.map((x) => (x.id === a.id ? { ...x, status: s } : x)));
@@ -468,14 +468,14 @@ export class HealthWellbeing {
    ===================================================================== */
 interface Rep { id: string; name: string; icon: string; desc: string; color: string }
 const REPORTS: Rep[] = [
-  { id: 'hse', name: 'Monthly HSE Report', icon: 'file-chart', desc: 'KPIs, incidents, hazards, inspections & training', color: '#7c3aed' },
-  { id: 'inc', name: 'Incident Register', icon: 'siren', desc: 'All incidents with severity, status & root cause', color: '#ef4444' },
-  { id: 'hz', name: 'Hazard Register', icon: 'triangle-alert', desc: 'Open & closed hazards with risk scores', color: '#f59e0b' },
-  { id: 'ppe', name: 'PPE Compliance', icon: 'hard-hat', desc: 'AI detections and compliance by zone', color: '#8b5cf6' },
-  { id: 'ins', name: 'Inspection Summary', icon: 's-clipboard', desc: 'Scores, findings and overdue inspections', color: '#3b82f6' },
-  { id: 'ptw', name: 'Permit-to-Work Log', icon: 'key-round', desc: 'All permits with approvals & durations', color: '#0d9488' },
-  { id: 'obs', name: 'Observations & Near Miss', icon: 'activity', desc: 'Leading indicator report by category', color: '#f97316' },
-  { id: 'wb', name: 'Wellbeing Summary', icon: 'heart', desc: 'Alerts, medical cases & programme uptake', color: '#22c55e' },
+  { id: 'hse', name: 'Monthly HSE Report', icon: 'file-chart', desc: 'KPIs, incidents, hazards, inspections & training', color: 'var(--ka-7c3aed)' },
+  { id: 'inc', name: 'Incident Register', icon: 'siren', desc: 'All incidents with severity, status & root cause', color: 'var(--ka-ef4444)' },
+  { id: 'hz', name: 'Hazard Register', icon: 'triangle-alert', desc: 'Open & closed hazards with risk scores', color: 'var(--ka-f59e0b)' },
+  { id: 'ppe', name: 'PPE Compliance', icon: 'hard-hat', desc: 'AI detections and compliance by zone', color: 'var(--ka-8b5cf6)' },
+  { id: 'ins', name: 'Inspection Summary', icon: 's-clipboard', desc: 'Scores, findings and overdue inspections', color: 'var(--ka-3b82f6)' },
+  { id: 'ptw', name: 'Permit-to-Work Log', icon: 'key-round', desc: 'All permits with approvals & durations', color: 'var(--ka-0d9488)' },
+  { id: 'obs', name: 'Observations & Near Miss', icon: 'activity', desc: 'Leading indicator report by category', color: 'var(--ka-f97316)' },
+  { id: 'wb', name: 'Wellbeing Summary', icon: 'heart', desc: 'Alerts, medical cases & programme uptake', color: 'var(--ka-22c55e)' },
 ];
 @Component({
   selector: 'app-reports-analytics',
@@ -488,12 +488,12 @@ const REPORTS: Rep[] = [
       <button class="btn-primary" (click)="download(reports[0])"><app-icon name="download" [size]="15" />Download HSE Pack</button>
     </app-page-head>
     <section class="kpi-row kpi6">
-      <app-kpi label="TRIR" [value]="(0.82 * f()).toFixed(2)" icon="activity" color="#7c3aed" change="11%" [up]="false" sub="per 200k hrs" />
-      <app-kpi label="LTIFR" [value]="(0.21 * f()).toFixed(2)" icon="s-first-aid" color="#ef4444" change="25%" [up]="false" sub="per 1M hrs" />
-      <app-kpi label="Days Since Last LTI" [value]="days()" icon="calendar-days" color="#22c55e" sub="record: 214 days" subColor="#16a34a" />
-      <app-kpi label="Near Miss : Incident" [value]="ratio() + ' : 1'" icon="triangle-alert" color="#f59e0b" sub="healthy reporting culture" />
-      <app-kpi label="Inspections On Time" value="89%" icon="s-clipboard" color="#3b82f6" change="4%" sub="vs. last period" />
-      <app-kpi label="Training Compliance" value="90%" icon="graduation-cap" color="#14b8a6" change="2%" sub="vs. last period" />
+      <app-kpi label="TRIR" [value]="(0.82 * f()).toFixed(2)" icon="activity" color="var(--ka-7c3aed)" change="11%" [up]="false" sub="per 200k hrs" />
+      <app-kpi label="LTIFR" [value]="(0.21 * f()).toFixed(2)" icon="s-first-aid" color="var(--ka-ef4444)" change="25%" [up]="false" sub="per 1M hrs" />
+      <app-kpi label="Days Since Last LTI" [value]="days()" icon="calendar-days" color="var(--ka-22c55e)" sub="record: 214 days" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Near Miss : Incident" [value]="ratio() + ' : 1'" icon="triangle-alert" color="var(--ka-f59e0b)" sub="healthy reporting culture" />
+      <app-kpi label="Inspections On Time" value="89%" icon="s-clipboard" color="var(--ka-3b82f6)" change="4%" sub="vs. last period" />
+      <app-kpi label="Training Compliance" value="90%" icon="graduation-cap" color="var(--ka-14b8a6)" change="2%" sub="vs. last period" />
     </section>
     <section class="grid2 mb">
       <div class="card"><div class="card-head"><h3>Incidents by Month &amp; Severity</h3></div><app-column-chart [labels]="months()" [series]="monthly()" [stacked]="true" [height]="230" /></div>
@@ -509,7 +509,7 @@ const REPORTS: Rep[] = [
         <div class="card-head"><h3>Report Library</h3></div>
         <div class="lib">
           @for (r of reports; track r.id) {
-            <div class="rp"><span class="ic-sq" [style.background]="r.color + '1f'" [style.color]="r.color"><app-icon [name]="r.icon" [size]="17" /></span><div><b>{{ r.name }}</b><small>{{ r.desc }}</small></div>
+            <div class="rp"><span class="ic-sq" [style.background]="'color-mix(in srgb, ' + r.color + ' 12%, transparent)'" [style.color]="r.color"><app-icon [name]="r.icon" [size]="17" /></span><div><b>{{ r.name }}</b><small>{{ r.desc }}</small></div>
               <div class="rb"><button class="btn-ghost sm" (click)="preview.set(r)">Preview</button><button class="btn-ghost sm" (click)="download(r)"><app-icon name="download" [size]="13" />CSV</button></div></div>
           }
         </div>
@@ -550,7 +550,7 @@ const REPORTS: Rep[] = [
     .rp { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 12.5px; }
     .rp div:not(.rb) { display: flex; flex-direction: column; } .rp small { color: var(--muted); font-size: 11.5px; } .rb { grid-column: 2; display: flex; gap: 6px; margin-top: 4px; }
     .sw { position: relative; display: inline-block; width: 34px; height: 19px; } .sw input { opacity: 0; width: 0; height: 0; }
-    .sw i { position: absolute; inset: 0; border-radius: 20px; background: #d1d5db; cursor: pointer; transition: .2s; } .sw i::before { content: ''; position: absolute; left: 2px; top: 2px; width: 15px; height: 15px; border-radius: 50%; background: #fff; transition: .2s; }
+    .sw i { position: absolute; inset: 0; border-radius: 20px; background: var(--kb-d1d5db); cursor: pointer; transition: .2s; } .sw i::before { content: ''; position: absolute; left: 2px; top: 2px; width: 15px; height: 15px; border-radius: 50%; background: var(--kb-ffffff); transition: .2s; }
     .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
     .pv { max-height: 55vh; overflow: auto; }
   `],
@@ -576,30 +576,30 @@ export class SafetyReports {
     return Array.from({ length: n }, (_, i) => Math.round((i >= n - v.length ? v[i - (n - v.length)] : v[(i * 5) % v.length] * (0.9 + (i % 3) * 0.06)) * this.f()));
   }
   protected readonly monthly = computed(() => [
-    { name: 'High', color: '#ef4444', values: this.ext(MONTHLY.High) },
-    { name: 'Medium', color: '#f59e0b', values: this.ext(MONTHLY.Medium) },
-    { name: 'Low', color: '#22c55e', values: this.ext(MONTHLY.Low) },
+    { name: 'High', color: 'var(--ka-ef4444)', values: this.ext(MONTHLY.High) },
+    { name: 'Medium', color: 'var(--ka-f59e0b)', values: this.ext(MONTHLY.Medium) },
+    { name: 'Low', color: 'var(--ka-22c55e)', values: this.ext(MONTHLY.Low) },
   ]);
   protected readonly leadLag = computed(() => [
-    { name: 'Observations (leading)', color: '#7c3aed', values: this.ext([71, 78, 82, 88, 90, 96]), area: true },
-    { name: 'Incidents (lagging)', color: '#ef4444', values: this.ext(MONTHLY.Total) },
-    { name: 'Inspections', color: '#3b82f6', values: this.ext([22, 24, 26, 25, 28, 30]) },
+    { name: 'Observations (leading)', color: 'var(--ka-7c3aed)', values: this.ext([71, 78, 82, 88, 90, 96]), area: true },
+    { name: 'Incidents (lagging)', color: 'var(--ka-ef4444)', values: this.ext(MONTHLY.Total) },
+    { name: 'Inspections', color: 'var(--ka-3b82f6)', values: this.ext([22, 24, 26, 25, 28, 30]) },
   ]);
   protected readonly ratio = computed(() => (this.store.observations().length / Math.max(1, this.store.incidents().filter((i) => i.daysAgo <= 30).length)).toFixed(1));
-  protected readonly bySite = computed(() => SITES.map((s, i) => ({ label: s, value: Math.round([96, 71, 52, 37][i] * (this.site() === 'All Sites' || this.site() === s ? 1 : 0.3)), color: ['#7c3aed', '#3b82f6', '#f59e0b', '#14b8a6'][i] })));
+  protected readonly bySite = computed(() => SITES.map((s, i) => ({ label: s, value: Math.round([96, 71, 52, 37][i] * (this.site() === 'All Sites' || this.site() === s ? 1 : 0.3)), color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-f59e0b)', 'var(--ka-14b8a6)'][i] })));
   protected readonly siteMax = computed(() => Math.max(...this.bySite().map((r) => r.value)) * 1.1);
   protected readonly roots = computed(() => {
     const m = new Map<string, number>();
     this.store.incidents().filter((i) => i.rootCause).forEach((i) => m.set(i.rootCause!, (m.get(i.rootCause!) ?? 0) + 1));
-    const pal = ['#7c3aed', '#3b82f6', '#f59e0b', '#ef4444', '#22c55e', '#14b8a6', '#ec4899', '#64748b', '#a3a3a3'];
+    const pal = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-22c55e)', 'var(--ka-14b8a6)', 'var(--ka-ec4899)', 'var(--ka-64748b)', 'var(--ka-a3a3a3)'];
     return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, value], i) => ({ label, value, color: pal[i % pal.length] }));
   });
   protected readonly riskProfile = computed(() => {
     const o = this.store.openHazards();
     const c = (a: number, b: number) => o.filter((h) => riskScore(h) >= a && riskScore(h) < b).length;
     return [
-      { label: 'Critical (15+)', value: c(15, 99), color: '#dc2626' }, { label: 'High (10-14)', value: c(10, 15), color: '#f97316' },
-      { label: 'Medium (5-9)', value: c(5, 10), color: '#f59e0b' }, { label: 'Low (1-4)', value: c(1, 5), color: '#22c55e' },
+      { label: 'Critical (15+)', value: c(15, 99), color: 'var(--ka-dc2626)' }, { label: 'High (10-14)', value: c(10, 15), color: 'var(--ka-f97316)' },
+      { label: 'Medium (5-9)', value: c(5, 10), color: 'var(--ka-f59e0b)' }, { label: 'Low (1-4)', value: c(1, 5), color: 'var(--ka-22c55e)' },
     ];
   });
   protected rows(r: Rep): (string | number)[][] {

@@ -65,11 +65,11 @@ export class AppState {
   }
 
   readonly notifications = signal<AppNotification[]>([
-    { id: 1, title: 'Restricted Zone Alert', text: 'Unidentified person in Server Room - Floor 1', time: '10:21 AM', icon: 'triangle-alert', color: '#ef4444', read: false },
-    { id: 2, title: 'Panic Alert (Wearable)', text: 'Ali Hassan · Warehouse - Zone B', time: '10:16 AM', icon: 'shield', color: '#ef4444', read: false },
-    { id: 3, title: 'Visitor waiting', text: 'Ahmed Al Mansoori at Reception - Head Office', time: '10:12 AM', icon: 'user-plus', color: '#3b82f6', read: false },
-    { id: 4, title: 'Permit expiring', text: '3 contractor work permits expire today', time: '09:40 AM', icon: 'key-round', color: '#f97316', read: false },
-    { id: 5, title: 'Firmware update ready', text: '12 access readers can be updated', time: '08:05 AM', icon: 'download', color: '#8b5cf6', read: true },
+    { id: 1, title: 'Restricted Zone Alert', text: 'Unidentified person in Server Room - Floor 1', time: '10:21 AM', icon: 'triangle-alert', color: 'var(--ka-ef4444)', read: false },
+    { id: 2, title: 'Panic Alert (Wearable)', text: 'Ali Hassan · Warehouse - Zone B', time: '10:16 AM', icon: 'shield', color: 'var(--ka-ef4444)', read: false },
+    { id: 3, title: 'Visitor waiting', text: 'Ahmed Al Mansoori at Reception - Head Office', time: '10:12 AM', icon: 'user-plus', color: 'var(--ka-3b82f6)', read: false },
+    { id: 4, title: 'Permit expiring', text: '3 contractor work permits expire today', time: '09:40 AM', icon: 'key-round', color: 'var(--ka-f97316)', read: false },
+    { id: 5, title: 'Firmware update ready', text: '12 access readers can be updated', time: '08:05 AM', icon: 'download', color: 'var(--ka-8b5cf6)', read: true },
   ]);
   /** Badge count: unread in this list plus older unread items not shown. */
   readonly unread = computed(() => {

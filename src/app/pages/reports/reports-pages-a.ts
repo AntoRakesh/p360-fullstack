@@ -34,11 +34,11 @@ const toast = () => {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Standard Reports" [value]="std().length" icon="file-text" color="#2563eb" sub="validated by People360" />
-      <app-kpi label="Modules Covered" [value]="modulesCovered()" icon="layers" color="#16a34a" sub="of 25 modules" />
-      <app-kpi label="Standard Runs (This Month)" [value]="fmt(stdRuns())" icon="play" color="#f59e0b" change="16%" sub="vs. last month" />
-      <app-kpi label="Most Run Report" [value]="topRun().runs" icon="trending-up" color="#7c3aed" [sub]="topRun().name" />
-      <app-kpi label="Avg. Generation Time" value="2.4s" icon="clock" color="#ef4444" change="0.6s" [up]="false" sub="faster than last month" />
+      <app-kpi label="Standard Reports" [value]="std().length" icon="file-text" color="var(--ka-2563eb)" sub="validated by People360" />
+      <app-kpi label="Modules Covered" [value]="modulesCovered()" icon="layers" color="var(--ka-16a34a)" sub="of 25 modules" />
+      <app-kpi label="Standard Runs (This Month)" [value]="fmt(stdRuns())" icon="play" color="var(--ka-f59e0b)" change="16%" sub="vs. last month" />
+      <app-kpi label="Most Run Report" [value]="topRun().runs" icon="trending-up" color="var(--ka-7c3aed)" [sub]="topRun().name" />
+      <app-kpi label="Avg. Generation Time" value="2.4s" icon="clock" color="var(--ka-ef4444)" change="0.6s" [up]="false" sub="faster than last month" />
     </section>
 
     <section class="sr">
@@ -101,26 +101,26 @@ const toast = () => {
   styles: `
     .sr { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 14px; align-items: start; }
     .cats { display: flex; flex-direction: column; gap: 2px; padding: 12px; position: sticky; top: 76px; } .cats h4 { margin: 0 0 8px; font-size: 13px; }
-    .cats button { display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 12.5px; text-align: left; color: #3b3f5c; }
+    .cats button { display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 12.5px; text-align: left; color: var(--kf-3b3f5c); }
     .cats button span:not(.cd) { flex: 1; } .cats button b { font-size: 11.5px; color: var(--muted); font-weight: 500; } .cats button.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
     .cd { width: 8px; height: 8px; border-radius: 50%; }
     .bar { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; } .bar .search-box { flex: 1; max-width: 360px; } .fo { display: flex; gap: 6px; align-items: center; font-size: 12.5px; } .muted { color: var(--muted); font-size: 12.5px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; }
-    .rc { display: flex; flex-direction: column; gap: 8px; padding: 14px; } .rc:hover { border-color: #c4b5fd; }
+    .rc { display: flex; flex-direction: column; gap: 8px; padding: 14px; } .rc:hover { border-color: var(--kl-c4b5fd); }
     .rh { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .rh div { display: flex; flex-direction: column; min-width: 0; } .rh b { font-size: 13.5px; } .rh small { color: var(--muted); font-size: 11.5px; }
-    .ri { width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; color: #fff; }
-    .star { border: 0; background: none; cursor: pointer; color: #9ca3af; } .star.on { color: #f59e0b; }
-    .rc p { margin: 0; font-size: 12px; color: #4b4f6b; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 35px; }
+    .ri { width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .star { border: 0; background: none; cursor: pointer; color: var(--kf-9ca3af); } .star.on { color: var(--kf-f59e0b); }
+    .rc p { margin: 0; font-size: 12px; color: var(--kf-4b4f6b); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 35px; }
     .meta { display: flex; gap: 12px; align-items: center; font-size: 11.5px; color: var(--muted); } .meta span { display: inline-flex; gap: 4px; align-items: center; }
     .acts { display: flex; gap: 6px; margin-top: 2px; }
     .run.g-modal { width: min(1100px, calc(100vw - 32px)); }
     .mh { display: flex; gap: 10px; align-items: center; } .mh h3 { margin: 0; }
-    .prm { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; padding: 10px; background: #fafafe; border-radius: 10px; margin-bottom: 12px; }
-    .prm label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: #4b4f6b; } .prm label.cb { flex-direction: row; align-items: center; gap: 6px; padding-bottom: 8px; }
-    .ptabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; } .ptabs button { border: 1px solid var(--border); background: #fff; border-radius: 5px; padding: 5px 12px; font-size: 11.5px; cursor: pointer; }
-    .ptabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .ready { display: flex; gap: 10px; align-items: center; justify-content: center; min-height: 240px; color: #4b4f6b; font-size: 13px; }
-    .spinner { width: 18px; height: 18px; border-radius: 50%; border: 3px solid #ddd6fe; border-top-color: var(--primary); animation: sp 0.8s linear infinite; } @keyframes sp { to { transform: rotate(360deg); } }
+    .prm { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; padding: 10px; background: var(--kb-fafafe); border-radius: 10px; margin-bottom: 12px; }
+    .prm label { display: flex; flex-direction: column; gap: 3px; font-size: 11.5px; color: var(--kf-4b4f6b); } .prm label.cb { flex-direction: row; align-items: center; gap: 6px; padding-bottom: 8px; }
+    .ptabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; } .ptabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 5px; padding: 5px 12px; font-size: 11.5px; cursor: pointer; }
+    .ptabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
+    .ready { display: flex; gap: 10px; align-items: center; justify-content: center; min-height: 240px; color: var(--kf-4b4f6b); font-size: 13px; }
+    .spinner { width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--kl-ddd6fe); border-top-color: var(--primary); animation: sp 0.8s linear infinite; } @keyframes sp { to { transform: rotate(360deg); } }
   `,
 })
 export class StandardReports {
@@ -150,7 +150,7 @@ export class StandardReports {
   protected readonly catCounts = computed(() =>
     CATEGORIES.map((name) => {
       const l = this.std().filter((r) => r.category === name);
-      return { name, count: l.length, color: l[0]?.color ?? '#9ca3af' };
+      return { name, count: l.length, color: l[0]?.color ?? 'var(--ka-9ca3af)' };
     }).filter((c) => c.count),
   );
   protected readonly list = computed(() => {
@@ -224,11 +224,11 @@ interface SchedRow extends Schedule {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Scheduled Reports" [value]="store.schedules().length" icon="calendar-days" color="#7c3aed" sub="across all modules" />
-      <app-kpi label="Active Schedules" [value]="active()" icon="play" color="#16a34a" [sub]="paused() + ' paused'" />
-      <app-kpi label="Due Today" [value]="dueToday()" icon="clock" color="#f59e0b" sub="active schedules running today" />
-      <app-kpi label="Deliveries (This Month)" [value]="fmt(1184 + delivered())" icon="reports-mail" color="#2563eb" change="9%" sub="vs. last month" />
-      <app-kpi label="Failed Deliveries" [value]="failed()" icon="triangle-alert" color="#ef4444" sub="needs attention" [subColor]="failed() ? '#dc2626' : undefined" />
+      <app-kpi label="Scheduled Reports" [value]="store.schedules().length" icon="calendar-days" color="var(--ka-7c3aed)" sub="across all modules" />
+      <app-kpi label="Active Schedules" [value]="active()" icon="play" color="var(--ka-16a34a)" [sub]="paused() + ' paused'" />
+      <app-kpi label="Due Today" [value]="dueToday()" icon="clock" color="var(--ka-f59e0b)" sub="active schedules running today" />
+      <app-kpi label="Deliveries (This Month)" [value]="fmt(1184 + delivered())" icon="reports-mail" color="var(--ka-2563eb)" change="9%" sub="vs. last month" />
+      <app-kpi label="Failed Deliveries" [value]="failed()" icon="triangle-alert" color="var(--ka-ef4444)" sub="needs attention" [subColor]="failed() ? 'var(--ka-dc2626)' : undefined" />
     </section>
 
     <section class="sc">
@@ -273,18 +273,18 @@ interface SchedRow extends Schedule {
     .sc { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 12px; align-items: start; }
     .side { position: sticky; top: 76px; } h4 { margin: 0 0 10px; font-size: 13px; }
     .days { display: flex; flex-direction: column; gap: 8px; max-height: 640px; overflow: auto; }
-    .day { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid #f0f1f6; }
+    .day { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--kl-f0f1f6); }
     .dl { display: flex; flex-direction: column; font-size: 12px; } .dl small { color: var(--muted); }
-    .items { display: flex; flex-direction: column; gap: 4px; } .it { display: flex; gap: 8px; text-align: left; border: 1px solid var(--border); border-left: 3px solid; border-radius: 6px; background: #fff; padding: 5px 8px; font-size: 11.5px; cursor: pointer; }
-    .it span { color: var(--muted); font-variant-numeric: tabular-nums; } .it:hover { background: #faf8ff; } .muted { color: var(--muted); font-size: 11.5px; }
+    .items { display: flex; flex-direction: column; gap: 4px; } .it { display: flex; gap: 8px; text-align: left; border: 1px solid var(--border); border-left: 3px solid; border-radius: 6px; background: var(--kb-ffffff); padding: 5px 8px; font-size: 11.5px; cursor: pointer; }
+    .it span { color: var(--muted); font-variant-numeric: tabular-nums; } .it:hover { background: var(--kb-faf8ff); } .muted { color: var(--muted); font-size: 11.5px; }
     .det { display: flex; flex-direction: column; gap: 12px; } .dh { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .dh div { display: flex; flex-direction: column; } .dh small { color: var(--muted); font-size: 11.5px; }
-    .ri { width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; color: #fff; }
+    .ri { width: 36px; height: 36px; border-radius: 8px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .sw { display: flex; justify-content: space-between; align-items: center; }
-    .tog { width: 38px; height: 21px; border-radius: 11px; border: 0; background: #d1d5db; position: relative; cursor: pointer; } .tog i { position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: 0.2s; }
+    .tog { width: 38px; height: 21px; border-radius: 11px; border: 0; background: var(--kb-d1d5db); position: relative; cursor: pointer; } .tog i { position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: var(--kb-ffffff); transition: 0.2s; }
     .tog.on { background: var(--primary); } .tog.on i { left: 19px; }
     .ba { display: flex; gap: 6px; } .danger { color: var(--red); }
-    .hist { list-style: none; margin: 0; padding: 0; } .hist li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
-    .hist div { display: flex; flex-direction: column; } .hist small { color: var(--muted); } .dot { width: 8px; height: 8px; border-radius: 50%; } .dot.g { background: #22c55e; } .dot.r { background: #ef4444; }
+    .hist { list-style: none; margin: 0; padding: 0; } .hist li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
+    .hist div { display: flex; flex-direction: column; } .hist small { color: var(--muted); } .dot { width: 8px; height: 8px; border-radius: 50%; } .dot.g { background: var(--kb-22c55e); } .dot.r { background: var(--kb-ef4444); }
     @media (max-width: 1300px) { .sc { grid-template-columns: 1fr; } .side { position: static; } }
   `,
 })
@@ -327,7 +327,7 @@ export class ScheduledReports {
     const m = this.store.byId();
     return this.store.schedules().map((s) => {
       const r = m.get(s.reportId);
-      return { ...s, name: r?.name ?? s.reportId, icon: r?.icon ?? 'file-text', color: r?.color ?? '#7c3aed', when: `${s.day} · ${s.time}`, nextLabel: this.nextLabel(s), recip: `${s.recipients[0]}${s.recipients.length > 1 ? ' +' + (s.recipients.length - 1) : ''}`, state: s.active ? 'Active' : 'Paused' };
+      return { ...s, name: r?.name ?? s.reportId, icon: r?.icon ?? 'file-text', color: r?.color ?? 'var(--ka-7c3aed)', when: `${s.day} · ${s.time}`, nextLabel: this.nextLabel(s), recip: `${s.recipients[0]}${s.recipients.length > 1 ? ' +' + (s.recipients.length - 1) : ''}`, state: s.active ? 'Active' : 'Paused' };
     });
   });
   protected readonly sel = computed(() => this.rows().find((r) => r.id === this.selId()) ?? null);
@@ -499,19 +499,19 @@ export class ScheduledReports {
     .dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 12px; }
     .dc { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; text-align: left; cursor: pointer; padding: 10px; font: inherit; color: inherit; }
     .dc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .dc b { font-size: 13px; display: flex; align-items: center; gap: 5px; } .dc small { color: var(--muted); font-size: 11px; }
-    .def { color: #f59e0b; }
+    .def { color: var(--kf-f59e0b); }
     .thumb { width: 100%; height: 54px; display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 1fr; gap: 3px; margin-bottom: 4px; } .thumb i { border-radius: 3px; }
     .dh { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; } .dh h2 { margin: 0; font-size: 18px; } .muted { color: var(--muted); font-size: 12px; }
-    .lv { display: inline-flex; gap: 5px; align-items: center; color: #16a34a; } .lv i { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; }
+    .lv { display: inline-flex; gap: 5px; align-items: center; color: var(--kf-16a34a); } .lv i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-16a34a); }
     .danger { color: var(--red); }
-    .wg { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; } .wg.edit .w { outline: 2px dashed #c4b5fd; outline-offset: -2px; }
+    .wg { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; } .wg.edit .w { outline: 2px dashed var(--kl-c4b5fd); outline-offset: -2px; }
     .w { min-height: 120px; } .wh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 6px; } .wh h4 { margin: 0; font-size: 13px; }
-    .wt { display: flex; gap: 3px; } .wt button { border: 1px solid var(--border); background: #fff; border-radius: 5px; font-size: 11px; padding: 2px 7px; cursor: pointer; } .wt .rm { color: var(--red); }
+    .wt { display: flex; gap: 3px; } .wt button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 5px; font-size: 11px; padding: 2px 7px; cursor: pointer; } .wt .rm { color: var(--red); }
     .kv { display: flex; align-items: baseline; gap: 10px; } .kv b { font-size: 26px; } .kv span { font-size: 12px; font-weight: 600; }
     .empty { grid-column: span 12; text-align: center; color: var(--muted); padding: 40px; }
     .lib { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .lib button { display: grid; grid-template-columns: 22px 1fr; gap: 2px 8px; text-align: left; border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 10px; cursor: pointer; color: var(--primary); }
-    .lib button:hover { background: #faf8ff; border-color: #c4b5fd; } .lib b { color: var(--text); font-size: 12.5px; } .lib small { grid-column: 2; color: var(--muted); font-size: 11px; text-transform: capitalize; }
+    .lib button { display: grid; grid-template-columns: 22px 1fr; gap: 2px 8px; text-align: left; border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 8px; padding: 10px; cursor: pointer; color: var(--primary); }
+    .lib button:hover { background: var(--kb-faf8ff); border-color: var(--kl-c4b5fd); } .lib b { color: var(--text); font-size: 12.5px; } .lib small { grid-column: 2; color: var(--muted); font-size: 11px; text-transform: capitalize; }
     @media (max-width: 1250px) { .w { grid-column: span 6 !important; } }
   `,
 })
@@ -613,7 +613,7 @@ export class RptDashboards {
     if (!name) return;
     const src = this.store.dashboards().find((d) => d.id === this.tpl());
     const widgets = src ? src.widgets.map((w, i) => ({ ...w, id: `n${i}${Date.now()}` })) : this.tpl() === 'kpi' ? [0, 1, 2, 3, 6].map((i, k) => ({ ...WIDGET_LIBRARY[i], id: `n${k}${Date.now()}` })) : [];
-    const d: Dash = { id: `D${Date.now()}`, name, owner: ME, shared: false, isDefault: false, updated: TODAY, views: 0, color: '#7c3aed', widgets };
+    const d: Dash = { id: `D${Date.now()}`, name, owner: ME, shared: false, isDefault: false, updated: TODAY, views: 0, color: 'var(--ka-7c3aed)', widgets };
     this.store.dashboards.update((l) => [...l, d]);
     this.store.log('Create', `${name} (dashboard)`, `Dashboard created with ${widgets.length} widgets`);
     this.selId.set(d.id);

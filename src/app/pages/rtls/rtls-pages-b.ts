@@ -42,7 +42,7 @@ function hourFactor(z: Pick<RZone, 'name' | 'kind'>, h: number) {
         <div class="slider">
           <button class="btn-primary sm" (click)="toggle()">{{ playing() ? 'Pause' : 'Play day' }}</button>
           <input type="range" min="0" [max]="hours.length - 1" [value]="hour()" (input)="hour.set(+$any($event.target).value)" />
-          <div class="legend"><i style="background:#22c55e"></i>Low<i style="background:#facc15"></i><i style="background:#f97316"></i><i style="background:#ef4444"></i>High</div>
+          <div class="legend"><i style="background:var(--kb-22c55e)"></i>Low<i style="background:var(--kb-facc15)"></i><i style="background:var(--kb-f97316)"></i><i style="background:var(--kb-ef4444)"></i>High</div>
         </div>
       </div>
       <div class="card span-4">
@@ -106,10 +106,10 @@ export class RtlsHeatmaps {
       .map((z) => ({ z, n: this.occ(z, +HOURS[this.hour()]) }))
       .sort((a, b) => b.n - a.n)
       .slice(0, 7)
-      .map(({ z, n }) => ({ label: z.name, value: Math.round((n / z.capacity) * 100), display: `${n} / ${z.capacity}`, color: n / z.capacity > 0.9 ? '#ef4444' : n / z.capacity > 0.6 ? '#f59e0b' : '#22c55e' })),
+      .map(({ z, n }) => ({ label: z.name, value: Math.round((n / z.capacity) * 100), display: `${n} / ${z.capacity}`, color: n / z.capacity > 0.9 ? 'var(--ka-ef4444)' : n / z.capacity > 0.6 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' })),
   );
   protected readonly lines = computed(() => {
-    const colors = ['#7c3aed', '#22c55e', '#f59e0b', '#3b82f6'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-3b82f6)'];
     return this.zones()
       .filter((z) => PEOPLE.some((p) => p.zoneId === z.id))
       .sort((a, b) => b.capacity - a.capacity)
@@ -169,10 +169,10 @@ interface Encounter {
       <label>Period<select class="input" [value]="days()" (change)="days.set(+$any($event.target).value)"><option value="1">Today</option><option value="7">Last 7 days</option><option value="14">Last 14 days</option></select></label>
     </div>
     <section class="kpi-row">
-      <app-kpi label="Encounters" [value]="list().length" icon="users" color="#7c3aed" />
-      <app-kpi label="Unique Contacts" [value]="unique()" icon="user-check" color="#3b82f6" />
-      <app-kpi label="Close Contacts (&lt;1 m, 15 min+)" [value]="close()" icon="triangle-alert" color="#ef4444" />
-      <app-kpi label="Total Contact Time" [value]="total()" icon="clock" color="#f59e0b" />
+      <app-kpi label="Encounters" [value]="list().length" icon="users" color="var(--ka-7c3aed)" />
+      <app-kpi label="Unique Contacts" [value]="unique()" icon="user-check" color="var(--ka-3b82f6)" />
+      <app-kpi label="Close Contacts (&lt;1 m, 15 min+)" [value]="close()" icon="triangle-alert" color="var(--ka-ef4444)" />
+      <app-kpi label="Total Contact Time" [value]="total()" icon="clock" color="var(--ka-f59e0b)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -235,7 +235,7 @@ export class RtlsProximity {
     const max = Math.max(1, ...m.values());
     return [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6).map(([label, v]) => ({ label, value: Math.round((v / max) * 100), display: String(v) }));
   });
-  protected readonly byHour = computed(() => [{ name: 'Breaches', color: '#ef4444', values: this.hrs.map((_, i) => this.list().filter((e) => e.distance < 1 && (hash(e.id) & 0xff) % this.hrs.length === i).length) }]);
+  protected readonly byHour = computed(() => [{ name: 'Breaches', color: 'var(--ka-ef4444)', values: this.hrs.map((_, i) => this.list().filter((e) => e.distance < 1 && (hash(e.id) & 0xff) % this.hrs.length === i).length) }]);
   protected label() {
     return `${this.person().id} · ${this.person().name}`;
   }
@@ -276,10 +276,10 @@ const SOS_RE = /SOS|Fall|Lone|Panic/;
       <button class="btn-outline danger" (click)="simulate()"><app-icon name="siren" [size]="16" />Simulate SOS</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Active SOS" [value]="active().length" icon="siren" color="#ef4444" />
-      <app-kpi label="Responders On Duty" [value]="responders.length" icon="shield-plus" color="#22c55e" />
-      <app-kpi label="Avg. Response Time" value="2m 40s" icon="clock" color="#3b82f6" change="18%" [up]="false" />
-      <app-kpi label="Resolved (30 d)" [value]="history().length + 41" icon="shield-check" color="#7c3aed" />
+      <app-kpi label="Active SOS" [value]="active().length" icon="siren" color="var(--ka-ef4444)" />
+      <app-kpi label="Responders On Duty" [value]="responders.length" icon="shield-plus" color="var(--ka-22c55e)" />
+      <app-kpi label="Avg. Response Time" value="2m 40s" icon="clock" color="var(--ka-3b82f6)" change="18%" [up]="false" />
+      <app-kpi label="Resolved (30 d)" [value]="history().length + 41" icon="shield-check" color="var(--ka-7c3aed)" />
     </section>
     <section class="sos">
       <div class="card list">
@@ -294,14 +294,14 @@ const SOS_RE = /SOS|Fall|Lone|Panic/;
       <div class="card">
         @if (sel(); as a) {
           <div class="card-head"><h3>{{ a.event }} · {{ a.floor }}</h3><span class="muted">{{ a.location }}</span></div>
-          <app-floor-plan [zones]="zones()" [markers]="markers()" [paths]="route()" [callout]="{ x: a.x, y: a.y, title: a.person, lines: [a.event, a.time], icon: 'siren', color: '#ef4444' }" [height]="400" />
+          <app-floor-plan [zones]="zones()" [markers]="markers()" [paths]="route()" [callout]="{ x: a.x, y: a.y, title: a.person, lines: [a.event, a.time], icon: 'siren', color: 'var(--ka-ef4444)' }" [height]="400" />
         } @else {<p class="muted">Select an alert</p>}
       </div>
       <div class="card resp">
         @if (sel(); as a) {
           <div class="card-head"><h3>Nearest Responders</h3></div>
           @for (r of ranked(); track r.id; let i = $index) {
-            <div class="rr"><span class="sav" [style.background]="i === 0 ? '#22c55e' : '#94a3b8'">{{ r.name[0] }}</span><p><b>{{ r.name }}</b><small>{{ r.team }} · {{ r.m }} m · ETA {{ r.eta }}</small></p>
+            <div class="rr"><span class="sav" [style.background]="i === 0 ? 'var(--ka-22c55e)' : 'var(--ka-94a3b8)'">{{ r.name[0] }}</span><p><b>{{ r.name }}</b><small>{{ r.team }} · {{ r.m }} m · ETA {{ r.eta }}</small></p>
               <button class="btn-ghost sm" (click)="dispatch(a, r)">Dispatch</button></div>
           }
           @if (a.note) {<div class="note">{{ a.note }}</div>}
@@ -320,13 +320,13 @@ const SOS_RE = /SOS|Fall|Lone|Panic/;
   `,
   styles: `
     .sos { display: grid; grid-template-columns: 260px minmax(0, 1fr) 300px; gap: 14px; margin-bottom: 14px; align-items: start; }
-    .sc { display: flex; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 12.5px; } .sc.on { border-color: #ef4444; background: #fef2f2; }
-    .sc div { display: flex; flex-direction: column; gap: 2px; } .sc small { color: var(--muted); } .sc em { font-style: normal; font-weight: 600; } .sc .r { color: #dc2626; } .sc .a { color: #d97706; }
-    .ic { width: 34px; height: 34px; border-radius: 9px; background: #ef4444; color: #fff; display: grid; place-items: center; flex: none; }
-    .rr { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; } .rr p { margin: 0; flex: 1; display: flex; flex-direction: column; } .rr small { color: var(--muted); }
-    .sav { width: 30px; height: 30px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-weight: 700; flex: none; }
-    .note { margin: 10px 0; padding: 8px 10px; border-radius: 8px; background: #fffbeb; color: #92400e; font-size: 12.5px; }
-    .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; } .acts button { justify-content: center; } .danger { color: var(--red); border-color: #fecaca; }
+    .sc { display: flex; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; cursor: pointer; font-size: 12.5px; } .sc.on { border-color: var(--kl-ef4444); background: var(--kb-fef2f2); }
+    .sc div { display: flex; flex-direction: column; gap: 2px; } .sc small { color: var(--muted); } .sc em { font-style: normal; font-weight: 600; } .sc .r { color: var(--kf-dc2626); } .sc .a { color: var(--kf-d97706); }
+    .ic { width: 34px; height: 34px; border-radius: 9px; background: var(--kb-ef4444); color: var(--kf-ffffff); display: grid; place-items: center; flex: none; }
+    .rr { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; } .rr p { margin: 0; flex: 1; display: flex; flex-direction: column; } .rr small { color: var(--muted); }
+    .sav { width: 30px; height: 30px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-weight: 700; flex: none; }
+    .note { margin: 10px 0; padding: 8px 10px; border-radius: 8px; background: var(--kb-fffbeb); color: var(--kf-92400e); font-size: 12.5px; }
+    .acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; } .acts button { justify-content: center; } .danger { color: var(--red); border-color: var(--kl-fecaca); }
     @media (max-width: 1300px) { .sos { grid-template-columns: 1fr; } }
   `,
 })
@@ -353,14 +353,14 @@ export class RtlsSos {
     const a = this.sel();
     if (!a) return [];
     return [
-      ...this.ranked().map((r, i) => ({ id: r.id, x: r.x, y: r.y, color: i === 0 ? '#22c55e' : '#64748b', label: r.name[0], title: `${r.name} (${r.team})` })),
-      { id: 'sos', x: a.x, y: a.y, kind: 'icon' as const, icon: 'siren', color: '#ef4444', pulse: true, size: 15 },
+      ...this.ranked().map((r, i) => ({ id: r.id, x: r.x, y: r.y, color: i === 0 ? 'var(--ka-22c55e)' : 'var(--ka-64748b)', label: r.name[0], title: `${r.name} (${r.team})` })),
+      { id: 'sos', x: a.x, y: a.y, kind: 'icon' as const, icon: 'siren', color: 'var(--ka-ef4444)', pulse: true, size: 15 },
     ];
   });
   protected readonly route = computed<MapPath[]>(() => {
     const a = this.sel();
     const r = this.ranked()[0];
-    return a && r ? [{ points: [[r.x, r.y], [r.x, a.y], [a.x, a.y]], color: '#22c55e', dashed: true, arrow: true }] : [];
+    return a && r ? [{ points: [[r.x, r.y], [r.x, a.y], [a.x, a.y]], color: 'var(--ka-22c55e)', dashed: true, arrow: true }] : [];
   });
   protected readonly cols: Col[] = [
     { key: 'time', label: 'Time' },
@@ -398,10 +398,10 @@ export class RtlsSos {
   template: `
     <app-page-head title="Reports &amp; Analytics" [parent]="parent" [parentLink]="link" subtitle="On-site trends, zone utilisation, alerts and tag health." />
     <section class="kpi-row">
-      <app-kpi label="Peak On-Site (today)" value="412" icon="users" color="#7c3aed" sub="at 11:00" />
-      <app-kpi label="Avg. Zone Utilisation" [value]="avgUtil() + '%'" icon="map-floor" color="#22c55e" />
-      <app-kpi label="Alerts (today)" [value]="alerts().length" icon="bell" color="#f59e0b" />
-      <app-kpi label="Tag Coverage" value="99.2%" icon="id-card" color="#3b82f6" sub="people carrying tags" />
+      <app-kpi label="Peak On-Site (today)" value="412" icon="users" color="var(--ka-7c3aed)" sub="at 11:00" />
+      <app-kpi label="Avg. Zone Utilisation" [value]="avgUtil() + '%'" icon="map-floor" color="var(--ka-22c55e)" />
+      <app-kpi label="Alerts (today)" [value]="alerts().length" icon="bell" color="var(--ka-f59e0b)" />
+      <app-kpi label="Tag Coverage" value="99.2%" icon="id-card" color="var(--ka-3b82f6)" sub="people carrying tags" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -432,8 +432,8 @@ export class RtlsReports {
   private readonly store = inject(RtlsStore);
   protected readonly hours = HOURS;
   protected readonly onsite = [
-    { name: 'Today', color: '#7c3aed', values: [42, 118, 296, 388, 386, 412, 371, 352, 398, 401, 380, 310, 160, 74, 31], area: true },
-    { name: '7-day avg', color: '#94a3b8', values: [38, 110, 281, 370, 379, 395, 360, 349, 384, 390, 366, 296, 151, 70, 29], dashed: true },
+    { name: 'Today', color: 'var(--ka-7c3aed)', values: [42, 118, 296, 388, 386, 412, 371, 352, 398, 401, 380, 310, 160, 74, 31], area: true },
+    { name: '7-day avg', color: 'var(--ka-94a3b8)', values: [38, 110, 281, 370, 379, 395, 360, 349, 384, 390, 366, 296, 151, 70, 29], dashed: true },
   ];
   protected readonly reports = [
     { id: 'onsite', name: 'On-Site Register', desc: 'Everyone on site now with zone & tag' },
@@ -445,7 +445,7 @@ export class RtlsReports {
   protected readonly byType = computed(() => {
     const m = new Map<string, number>();
     this.alerts().forEach((a) => m.set(a.event, (m.get(a.event) ?? 0) + 1));
-    const c = ['#ef4444', '#f59e0b', '#7c3aed', '#3b82f6', '#22c55e', '#06b6d4', '#ec4899', '#64748b', '#f97316', '#0d9488'];
+    const c = ['var(--ka-ef4444)', 'var(--ka-f59e0b)', 'var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-06b6d4)', 'var(--ka-ec4899)', 'var(--ka-64748b)', 'var(--ka-f97316)', 'var(--ka-0d9488)'];
     return [...m.entries()].map(([label, value], i) => ({ label, value, color: c[i % c.length] }));
   });
   private readonly zoneRows = computed(() => this.store.zones().map((z) => ({ z, n: PEOPLE.filter((p) => p.zoneId === z.id).length })));

@@ -55,12 +55,12 @@ const DRILLS = [
     </div>
 
     <section class="kpi-row">
-      <app-kpi label="People to Account" [value]="fmt(total())" icon="users" color="#8b5cf6" sub="on site now" />
-      <app-kpi label="Muster Points" value="6 / 6" icon="map-pin" color="#3b82f6" sub="operational" />
-      <app-kpi label="Wardens on Duty" value="24" icon="shield-check" color="#22c55e" sub="2 per floor min." />
-      <app-kpi label="Open Incidents" value="5" icon="triangle-alert" color="#f97316" change="2" [up]="false" />
-      <app-kpi label="Days Without LTI" value="146" icon="star" color="#a855f7" sub="lost-time injury" />
-      <app-kpi label="Emergency Devices" value="100%" icon="siren" color="#ef4444" sub="online" />
+      <app-kpi label="People to Account" [value]="fmt(total())" icon="users" color="var(--ka-8b5cf6)" sub="on site now" />
+      <app-kpi label="Muster Points" value="6 / 6" icon="map-pin" color="var(--ka-3b82f6)" sub="operational" />
+      <app-kpi label="Wardens on Duty" value="24" icon="shield-check" color="var(--ka-22c55e)" sub="2 per floor min." />
+      <app-kpi label="Open Incidents" value="5" icon="triangle-alert" color="var(--ka-f97316)" change="2" [up]="false" />
+      <app-kpi label="Days Without LTI" value="146" icon="star" color="var(--ka-a855f7)" sub="lost-time injury" />
+      <app-kpi label="Emergency Devices" value="100%" icon="siren" color="var(--ka-ef4444)" sub="online" />
     </section>
 
     <section class="dash">
@@ -69,7 +69,7 @@ const DRILLS = [
         <div class="muster-grid">
           @for (m of muster(); track m.name) {
             <div class="muster">
-              <app-ring [value]="m.pct" [color]="m.pct > 90 ? '#ef4444' : '#7c3aed'" />
+              <app-ring [value]="m.pct" [color]="m.pct > 90 ? 'var(--ka-ef4444)' : 'var(--ka-7c3aed)'" />
               <div>
                 <b>{{ m.name }}</b>
                 <span>{{ m.count | number }} / {{ m.cap | number }}</span>
@@ -144,24 +144,24 @@ const DRILLS = [
     </section>
   `,
   styles: `
-    .status { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; border-left: 5px solid #22c55e; flex-wrap: wrap; }
-    .status.alarm { border-left-color: #ef4444; background: #fff7f7; animation: flash 1.4s infinite; }
-    @keyframes flash { 50% { background: #fff; } }
-    .status-icon { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; background: #22c55e; color: #fff; }
-    .alarm .status-icon { background: #ef4444; }
+    .status { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; border-left: 5px solid var(--kl-22c55e); flex-wrap: wrap; }
+    .status.alarm { border-left-color: var(--kl-ef4444); background: var(--kb-fff7f7); animation: flash 1.4s infinite; }
+    @keyframes flash { 50% { background: var(--kb-ffffff); } }
+    .status-icon { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; background: var(--kb-22c55e); color: var(--kf-ffffff); }
+    .alarm .status-icon { background: var(--kb-ef4444); }
     .status-text { display: flex; flex-direction: column; flex: 1; }
-    .status-text b { font-size: 19px; color: #16a34a; } .alarm .status-text b { color: #dc2626; }
+    .status-text b { font-size: 19px; color: var(--kf-16a34a); } .alarm .status-text b { color: var(--kf-dc2626); }
     .status-text span { font-size: 13px; color: var(--muted); }
     .acc { min-width: 260px; display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
     .acc b { font-size: 18px; }
-    .acc-bar { height: 8px; border-radius: 4px; background: #fde2e2; overflow: hidden; }
-    .acc-bar i { display: block; height: 100%; background: #22c55e; transition: width 0.8s ease; }
+    .acc-bar { height: 8px; border-radius: 4px; background: var(--kb-fde2e2); overflow: hidden; }
+    .acc-bar i { display: block; height: 100%; background: var(--kb-22c55e); transition: width 0.8s ease; }
     .muster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
     .muster { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; }
     .muster div { display: flex; flex-direction: column; font-size: 12px; }
     .muster b { font-size: 12.5px; } .muster span { font-size: 15px; font-weight: 600; } .muster small { color: var(--muted); }
     .missing { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; }
-    .missing li { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; }
+    .missing li { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; }
     .missing .link { margin-left: auto; }
   `,
 })
@@ -174,7 +174,7 @@ export class EmergencySafety {
   protected readonly sevClass: Record<string, string> = { Critical: 'tag red', High: 'tag amber', Medium: 'tag blue', Low: 'tag grey' };
   protected readonly coverage = ['F4', 'F3', 'F2', 'F1', 'G', 'B1'].map((label, i) => {
     const v = [100, 100, 83, 100, 92, 67][i];
-    return { label: `Floor ${label}`, value: v, display: `${v}%`, color: v < 80 ? '#f59e0b' : '#22c55e' };
+    return { label: `Floor ${label}`, value: v, display: `${v}%`, color: v < 80 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)' };
   });
 
   protected readonly drill = signal(false);
@@ -208,10 +208,10 @@ export class EmergencySafety {
     return NAMES.slice(4, 4 + Math.min(left, 12)).filter((n) => !this.safe().has(n));
   });
   protected readonly incidents = computed(() => [
-    { name: 'Near miss', color: '#f59e0b', values: [14, 11, 16, 12, 9, 6].map((v) => Math.round(v * Math.sqrt(this.state.factor()))) },
-    { name: 'First aid', color: '#3b82f6', values: [6, 8, 5, 7, 4, 3].map((v) => Math.round(v * Math.sqrt(this.state.factor()))) },
-    { name: 'Property damage', color: '#8b5cf6', values: [3, 2, 4, 2, 3, 1] },
-    { name: 'Security', color: '#ef4444', values: [2, 3, 1, 4, 2, 2] },
+    { name: 'Near miss', color: 'var(--ka-f59e0b)', values: [14, 11, 16, 12, 9, 6].map((v) => Math.round(v * Math.sqrt(this.state.factor()))) },
+    { name: 'First aid', color: 'var(--ka-3b82f6)', values: [6, 8, 5, 7, 4, 3].map((v) => Math.round(v * Math.sqrt(this.state.factor()))) },
+    { name: 'Property damage', color: 'var(--ka-8b5cf6)', values: [3, 2, 4, 2, 3, 1] },
+    { name: 'Security', color: 'var(--ka-ef4444)', values: [2, 3, 1, 4, 2, 2] },
   ]);
   protected readonly drills = computed(() => {
     const s = this.state.site();

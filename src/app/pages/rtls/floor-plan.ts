@@ -56,20 +56,20 @@ const H = 560;
     <div class="fp" [style.height.px]="height()" [class.grab]="dragging()" [class.draw]="drawMode()">
       <svg [attr.viewBox]="'0 0 ' + w + ' ' + h" preserveAspectRatio="xMidYMid meet" (pointerdown)="down($event)" (pointermove)="move($event)" (pointerup)="up($event)" (pointerleave)="dragging.set(false)" (wheel)="wheel($event)">
         <defs>
-          <pattern id="fp-tiles" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#e9ebf2" stroke-width="0.6" /></pattern>
+          <pattern id="fp-tiles" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="var(--kl-e9ebf2)" stroke-width="0.6" /></pattern>
           <marker id="fp-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke" /></marker>
         </defs>
         <g [attr.transform]="transform()">
           @if (outdoor()) {
-            <rect x="-400" y="-300" width="1800" height="1160" fill="#eef3ea" />
-            <path [attr.d]="'M' + (b().x + b().w + 40) + ' -300V860'" stroke="#d9dde6" stroke-width="26" fill="none" />
-            @for (t of trees; track $index) {<circle [attr.cx]="t[0]" [attr.cy]="t[1]" [attr.r]="t[2]" fill="#9bc79a" opacity="0.75" /><circle [attr.cx]="t[0] - 2" [attr.cy]="t[1] - 2" [attr.r]="t[2] * 0.5" fill="#b7dab4" />}
+            <rect x="-400" y="-300" width="1800" height="1160" fill="var(--ka-eef3ea)" />
+            <path [attr.d]="'M' + (b().x + b().w + 40) + ' -300V860'" stroke="var(--kl-d9dde6)" stroke-width="26" fill="none" />
+            @for (t of trees; track $index) {<circle [attr.cx]="t[0]" [attr.cy]="t[1]" [attr.r]="t[2]" fill="var(--ka-9bc79a)" opacity="0.75" /><circle [attr.cx]="t[0] - 2" [attr.cy]="t[1] - 2" [attr.r]="t[2] * 0.5" fill="var(--ka-b7dab4)" />}
           }
-          <rect [attr.x]="b().x" [attr.y]="b().y" [attr.width]="b().w" [attr.height]="b().h" fill="#fbfbfd" />
-          <rect [attr.x]="b().x" [attr.y]="b().y" [attr.width]="b().w" [attr.height]="b().h" fill="url(#fp-tiles)" stroke="#3f4457" stroke-width="5" />
+          <rect [attr.x]="b().x" [attr.y]="b().y" [attr.width]="b().w" [attr.height]="b().h" fill="var(--ka-fbfbfd)" />
+          <rect [attr.x]="b().x" [attr.y]="b().y" [attr.width]="b().w" [attr.height]="b().h" fill="url(#fp-tiles)" stroke="var(--kl-3f4457)" stroke-width="5" />
           <!-- furniture -->
-          @for (d of desks(); track $index) {<rect [attr.x]="d[0]" [attr.y]="d[1]" [attr.width]="d[2]" [attr.height]="d[3]" rx="1.5" fill="#e3e6ee" stroke="#c9cdd8" stroke-width="0.7" />}
-          @for (p of plants(); track $index) {<circle [attr.cx]="p[0]" [attr.cy]="p[1]" r="6" fill="#86c387" stroke="#5fa862" stroke-width="1" />}
+          @for (d of desks(); track $index) {<rect [attr.x]="d[0]" [attr.y]="d[1]" [attr.width]="d[2]" [attr.height]="d[3]" rx="1.5" fill="var(--ka-e3e6ee)" stroke="var(--kl-c9cdd8)" stroke-width="0.7" />}
+          @for (p of plants(); track $index) {<circle [attr.cx]="p[0]" [attr.cy]="p[1]" r="6" fill="var(--ka-86c387)" stroke="var(--kl-5fa862)" stroke-width="1" />}
           @if (heat(); as hm) {
             @for (row of hm; track ri; let ri = $index) {
               @for (v of row; track ci; let ci = $index) {
@@ -82,27 +82,27 @@ const H = 560;
               <g class="zone" [class.sel]="z.id === selectedZone()" (click)="zoneClick.emit(z.id)">
                 <rect [attr.x]="z.x" [attr.y]="z.y" [attr.width]="z.w" [attr.height]="z.h" [attr.fill]="z.color" [attr.fill-opacity]="z.fill ?? 0.16" [attr.stroke]="z.color" [attr.stroke-width]="z.id === selectedZone() ? 4 : 2.4" [attr.stroke-dasharray]="z.dashed ? '8 5' : null" rx="2" />
                 @if (showLabels()) {
-                  <rect [attr.x]="z.x + z.w / 2 - lw(z.name) / 2" [attr.y]="z.y + z.h - 30" [attr.width]="lw(z.name)" height="20" rx="4" fill="#fff" fill-opacity="0.92" />
+                  <rect [attr.x]="z.x + z.w / 2 - lw(z.name) / 2" [attr.y]="z.y + z.h - 30" [attr.width]="lw(z.name)" height="20" rx="4" fill="var(--ka-ffffff)" fill-opacity="0.92" />
                   <text [attr.x]="z.x + z.w / 2" [attr.y]="z.y + z.h - 16" text-anchor="middle" class="zl">{{ z.name }}</text>
                 }
               </g>
             }
           } @else {
-            @for (z of zones(); track z.id) {<rect [attr.x]="z.x" [attr.y]="z.y" [attr.width]="z.w" [attr.height]="z.h" fill="none" stroke="#7d8396" stroke-width="2" />}
+            @for (z of zones(); track z.id) {<rect [attr.x]="z.x" [attr.y]="z.y" [attr.width]="z.w" [attr.height]="z.h" fill="none" stroke="var(--kl-7d8396)" stroke-width="2" />}
           }
           @for (p of paths(); track $index) {
             <polyline [attr.points]="pts(p.points)" fill="none" [attr.stroke]="p.color" [attr.stroke-width]="p.width ?? 3" [attr.stroke-dasharray]="p.dashed ? '9 7' : null" stroke-linecap="round" stroke-linejoin="round" [attr.marker-end]="p.arrow ? 'url(#fp-arrow)' : null" />
           }
-          @if (draft(); as d) {<rect [attr.x]="d.x" [attr.y]="d.y" [attr.width]="d.w" [attr.height]="d.h" fill="#7c3aed" fill-opacity="0.12" stroke="#7c3aed" stroke-width="2" stroke-dasharray="6 4" />}
+          @if (draft(); as d) {<rect [attr.x]="d.x" [attr.y]="d.y" [attr.width]="d.w" [attr.height]="d.h" fill="var(--ka-7c3aed)" fill-opacity="0.12" stroke="var(--kl-7c3aed)" stroke-width="2" stroke-dasharray="6 4" />}
           @for (m of markers(); track m.id) {
             @let s = (m.size ?? (m.kind === 'dot' ? 5 : 17));
             <g class="mk" [attr.transform]="'translate(' + m.x + ',' + m.y + ')'" (click)="$event.stopPropagation(); markerClick.emit(m.id)">
               @if (m.title) {<title>{{ m.title }}</title>}
               @switch (m.kind ?? 'avatar') {
-                @case ('dot') {<circle [attr.r]="s" [attr.fill]="m.color" fill-opacity="0.75" stroke="#fff" stroke-width="1.2" />}
+                @case ('dot') {<circle [attr.r]="s" [attr.fill]="m.color" fill-opacity="0.75" stroke="var(--kl-ffffff)" stroke-width="1.2" />}
                 @case ('icon') {
                   @if (m.pulse) {<circle [attr.r]="s + 6" [attr.fill]="m.color" opacity="0.25" class="pulse" />}
-                  <rect [attr.x]="-s" [attr.y]="-s" [attr.width]="s * 2" [attr.height]="s * 2" [attr.rx]="m.label ? s : 5" [attr.fill]="m.color" stroke="#fff" stroke-width="2" />
+                  <rect [attr.x]="-s" [attr.y]="-s" [attr.width]="s * 2" [attr.height]="s * 2" [attr.rx]="m.label ? s : 5" [attr.fill]="m.color" stroke="var(--kl-ffffff)" stroke-width="2" />
                   <foreignObject [attr.x]="-s" [attr.y]="-s" [attr.width]="s * 2" [attr.height]="s * 2"><div class="fo-ic"><app-icon [name]="m.icon ?? 'map-pin'" [size]="s * 1.15" /></div></foreignObject>
                 }
                 @case ('pill') {
@@ -112,10 +112,10 @@ const H = 560;
                 @default {
                   @if (m.pulse || m.id === selectedId()) {<circle [attr.r]="s + 7" [attr.fill]="m.color" opacity="0.22" class="pulse" />}
                   <path [attr.d]="'M0 ' + (s + 9) + 'L-6 ' + (s - 1) + 'H6Z'" [attr.fill]="m.color" />
-                  <circle [attr.r]="s" fill="#fff" [attr.stroke]="m.color" [attr.stroke-width]="m.id === selectedId() ? 4.5 : 3.2" />
+                  <circle [attr.r]="s" fill="var(--ka-ffffff)" [attr.stroke]="m.color" [attr.stroke-width]="m.id === selectedId() ? 4.5 : 3.2" />
                   <circle [attr.r]="s - 4" [attr.fill]="m.color" fill-opacity="0.14" />
                   <text y="4.5" text-anchor="middle" class="ini" [attr.fill]="m.color">{{ m.label }}</text>
-                  @if (m.alert) {<g [attr.transform]="'translate(' + (s * 0.85) + ',' + -(s * 0.85) + ')'"><circle r="8.5" fill="#ef4444" stroke="#fff" stroke-width="2" /><text y="4" text-anchor="middle" class="ex">!</text></g>}
+                  @if (m.alert) {<g [attr.transform]="'translate(' + (s * 0.85) + ',' + -(s * 0.85) + ')'"><circle r="8.5" fill="var(--ka-ef4444)" stroke="var(--kl-ffffff)" stroke-width="2" /><text y="4" text-anchor="middle" class="ex">!</text></g>}
                 }
               }
             </g>
@@ -124,8 +124,8 @@ const H = 560;
             <g [attr.transform]="'translate(' + cx(c.x) + ',' + cy(c.y) + ')'">
               <foreignObject x="0" y="0" width="190" height="86">
                 <div class="co">
-                  @if (c.icon) {<span class="co-ic" [style.background]="c.color ?? '#ef4444'"><app-icon [name]="c.icon" [size]="18" /></span>}
-                  @else if (c.initials) {<span class="co-av" [style.border-color]="c.color ?? '#7c3aed'" [style.color]="c.color ?? '#7c3aed'">{{ c.initials }}</span>}
+                  @if (c.icon) {<span class="co-ic" [style.background]="c.color ?? 'var(--ka-ef4444)'"><app-icon [name]="c.icon" [size]="18" /></span>}
+                  @else if (c.initials) {<span class="co-av" [style.border-color]="c.color ?? 'var(--ka-7c3aed)'" [style.color]="c.color ?? 'var(--ka-7c3aed)'">{{ c.initials }}</span>}
                   <div><b>{{ c.title }}</b>@for (l of c.lines; track $index) {<small>{{ l }}</small>}</div>
                 </div>
               </foreignObject>
@@ -147,24 +147,24 @@ const H = 560;
   `,
   styles: `
     :host { display: block; }
-    .fp { position: relative; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: #f4f5f9; touch-action: none; }
+    .fp { position: relative; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--kb-f4f5f9); touch-action: none; }
     .fp:fullscreen { border-radius: 0; height: 100vh !important; }
     .fp.grab { cursor: grabbing; } .fp.draw { cursor: crosshair; }
     svg { width: 100%; height: 100%; display: block; user-select: none; }
     .zone { cursor: pointer; } .zone:hover rect:first-child { fill-opacity: 0.28; }
-    .zl { font: 600 12.5px Inter, sans-serif; fill: #1f2233; pointer-events: none; }
-    .pl { font: 700 13px Inter, sans-serif; fill: #fff; }
-    .mk { cursor: pointer; transition: transform 2.4s linear; } .ini { font: 700 11px Inter, sans-serif; } .ex { font: 800 11px Inter, sans-serif; fill: #fff; }
+    .zl { font: 600 12.5px Inter, sans-serif; fill: var(--ka-1f2233); pointer-events: none; }
+    .pl { font: 700 13px Inter, sans-serif; fill: var(--ka-ffffff); }
+    .mk { cursor: pointer; transition: transform 2.4s linear; } .ini { font: 700 11px Inter, sans-serif; } .ex { font: 800 11px Inter, sans-serif; fill: var(--ka-ffffff); }
     .pulse { animation: pulse 1.6s ease-out infinite; transform-box: fill-box; transform-origin: center; }
     @keyframes pulse { 0% { transform: scale(0.6); opacity: 0.5; } 100% { transform: scale(1.5); opacity: 0; } }
-    .fo-ic { width: 100%; height: 100%; display: grid; place-items: center; color: #fff; }
-    .co { display: flex; gap: 8px; align-items: center; padding: 8px 10px; background: #fff; border-radius: 10px; box-shadow: 0 6px 18px rgba(20, 20, 50, 0.18); font: 12px Inter, sans-serif; margin: 2px; }
-    .co div { display: flex; flex-direction: column; } .co b { font-size: 12.5px; } .co small { color: #555a70; font-size: 11px; }
-    .co-ic { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: #fff; flex: none; }
+    .fo-ic { width: 100%; height: 100%; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .co { display: flex; gap: 8px; align-items: center; padding: 8px 10px; background: var(--kb-ffffff); border-radius: 10px; box-shadow: 0 6px 18px rgba(20, 20, 50, 0.18); font: 12px Inter, sans-serif; margin: 2px; }
+    .co div { display: flex; flex-direction: column; } .co b { font-size: 12.5px; } .co small { color: var(--kf-555a70); font-size: 11px; }
+    .co-ic { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: var(--kf-ffffff); flex: none; }
     .co-av { width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid; display: grid; place-items: center; font-weight: 700; flex: none; }
     .tools { position: absolute; top: 12px; right: 12px; display: flex; flex-direction: column; gap: 8px; }
-    .tools button { width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--border); background: #fff; display: grid; place-items: center; cursor: pointer; color: #333; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); }
-    .tools button.on { color: var(--primary); } .tools button:hover { background: #faf8ff; }
+    .tools button { width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--border); background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; color: var(--kf-333333); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06); }
+    .tools button.on { color: var(--primary); } .tools button:hover { background: var(--kb-faf8ff); }
   `,
 })
 export class FloorPlan {
@@ -231,7 +231,7 @@ export class FloorPlan {
     return Math.min(Math.max(y - 70, 0), 470);
   }
   protected heatColor(v: number) {
-    return v > 0.75 ? '#ef4444' : v > 0.5 ? '#f97316' : v > 0.3 ? '#facc15' : '#22c55e';
+    return v > 0.75 ? 'var(--ka-ef4444)' : v > 0.5 ? 'var(--ka-f97316)' : v > 0.3 ? 'var(--ka-facc15)' : 'var(--ka-22c55e)';
   }
 
   zoomBy(f: number) {

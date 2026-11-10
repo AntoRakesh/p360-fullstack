@@ -57,11 +57,11 @@ const REQS: Req[] = (() => {
       <button class="btn-primary" (click)="form.set(true)"><app-icon name="plus" [size]="16" />New Request</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Pending" [value]="count('Pending')" icon="clock" color="#f59e0b" sub="awaiting manager" />
-      <app-kpi label="Approved (30 days)" [value]="count('Approved')" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Rejected (30 days)" [value]="count('Rejected')" icon="ban" color="#ef4444" />
-      <app-kpi label="Avg. Approval Time" value="5.2 h" icon="activity" color="#3b82f6" />
-      <app-kpi label="Top Reason" value="Missed punch" icon="fingerprint" color="#8b5cf6" sub="38% of requests" />
+      <app-kpi label="Pending" [value]="count('Pending')" icon="clock" color="var(--ka-f59e0b)" sub="awaiting manager" />
+      <app-kpi label="Approved (30 days)" [value]="count('Approved')" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Rejected (30 days)" [value]="count('Rejected')" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Avg. Approval Time" value="5.2 h" icon="activity" color="var(--ka-3b82f6)" />
+      <app-kpi label="Top Reason" value="Missed punch" icon="fingerprint" color="var(--ka-8b5cf6)" sub="38% of requests" />
     </section>
     <section class="reg" [class.with-detail]="!!sel()">
       <div class="card">
@@ -115,7 +115,7 @@ const REQS: Req[] = (() => {
     .detail { position: sticky; top: 76px; display: flex; flex-direction: column; gap: 10px; }
     .who { display: flex; gap: 10px; align-items: center; } .who div { display: flex; flex-direction: column; } .who small { color: var(--muted); }
     .kv { display: grid; grid-template-columns: 90px 1fr; gap: 8px; font-size: 12.5px; margin: 0; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
-    .orig { color: #b91c1c; text-decoration: line-through; } .req { color: #15803d; font-weight: 600; }
+    .orig { color: var(--kf-b91c1c); text-decoration: line-through; } .req { color: var(--kf-15803d); font-weight: 600; }
     .danger { color: var(--red); }
     @media (max-width: 1100px) { .reg.with-detail { grid-template-columns: 1fr; } .detail { position: static; } }
   `,
@@ -251,9 +251,9 @@ const LEAVE_TYPES = ['Sick Leave', 'Annual Leave', 'Emergency Leave', 'Unpaid Le
   `,
   styles: `
     .exc-types { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 12px; }
-    .et { display: flex; flex-direction: column; gap: 2px; text-align: left; cursor: pointer; font-family: inherit; border-left: 4px solid #f59e0b; }
+    .et { display: flex; flex-direction: column; gap: 2px; text-align: left; cursor: pointer; font-family: inherit; border-left: 4px solid var(--kl-f59e0b); }
     .et.on { box-shadow: 0 0 0 2px var(--primary-soft); border-color: var(--primary); }
-    .et span { font-size: 12px; color: #4b4f6b; } .et b { font-size: 24px; } .et small { color: var(--muted); font-size: 11px; }
+    .et span { font-size: 12px; color: var(--kf-4b4f6b); } .et b { font-size: 24px; } .et small { color: var(--muted); font-size: 11px; }
   `,
 })
 export class AbsenceExceptions {
@@ -261,7 +261,7 @@ export class AbsenceExceptions {
   protected readonly types = EXC_TYPES;
   protected readonly leaveTypes = LEAVE_TYPES;
   protected readonly labels = dayLabels(30, new Date());
-  protected readonly rate = [{ name: 'Absenteeism %', color: '#ef4444', values: series(30, 3.6, 1.1, 21), area: true }, { name: 'Target', color: '#22c55e', values: Array(30).fill(3), dashed: true }];
+  protected readonly rate = [{ name: 'Absenteeism %', color: 'var(--ka-ef4444)', values: series(30, 3.6, 1.1, 21), area: true }, { name: 'Target', color: 'var(--ka-22c55e)', values: Array(30).fill(3), dashed: true }];
   protected readonly bradford = [
     { name: 'Tom Baker', s: 6, d: 9 }, { name: 'Lucas Silva', s: 5, d: 11 }, { name: 'Zara Khan', s: 5, d: 7 }, { name: 'Omar Iyer', s: 4, d: 12 }, { name: 'Mina Joseph', s: 4, d: 8 }, { name: 'Karan Gupta', s: 3, d: 14 },
   ].map((b) => ({ ...b, score: b.s * b.s * b.d }));
@@ -429,8 +429,8 @@ const REPORTS: ReportDef[] = [
     .preview { margin-bottom: 12px; }
     .rng { display: flex; align-items: center; gap: 5px; font-size: 12px; } .rng .input { padding: 5px 8px; }
     .sw input { display: none; } .sw { cursor: pointer; }
-    .switch { position: relative; display: inline-block; width: 34px; height: 20px; border-radius: 10px; background: #d4d7e2; }
-    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; }
+    .switch { position: relative; display: inline-block; width: 34px; height: 20px; border-radius: 10px; background: var(--kb-d4d7e2); }
+    .switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: transform .15s; }
     .sw input:checked + .switch { background: var(--primary); } .sw input:checked + .switch::after { transform: translateX(14px); }
     .danger { color: var(--red); }
   `,
@@ -440,8 +440,8 @@ export class AttendanceReports {
   protected readonly reports = REPORTS;
   protected readonly weeks = Array.from({ length: 12 }, (_, i) => `W${i + 34}`);
   protected readonly punctuality = [
-    { name: 'On-time %', color: '#7c3aed', values: series(12, 94, 2.5, 8), area: true },
-    { name: 'Attendance %', color: '#22c55e', values: series(12, 96.5, 1.2, 9) },
+    { name: 'On-time %', color: 'var(--ka-7c3aed)', values: series(12, 94, 2.5, 8), area: true },
+    { name: 'Attendance %', color: 'var(--ka-22c55e)', values: series(12, 96.5, 1.2, 9) },
   ];
   protected readonly hmRows = DEPTS.filter((d) => d !== '—').slice(0, 7);
   protected readonly hmCols = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];

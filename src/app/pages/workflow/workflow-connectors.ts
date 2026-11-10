@@ -31,12 +31,12 @@ type TestStep = { label: string; detail: string; state: 'pend' | 'run' | 'ok' | 
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Connected" [value]="byStatus('Connected') + ' / ' + store.connectors().length" icon="plug" color="#22c55e" [sub]="byStatus('Not Connected') + ' available to connect'" />
-      <app-kpi label="API Calls (24 h)" [value]="calls().toLocaleString()" icon="activity" color="#3b82f6" change="6%" sub="vs. yesterday" />
-      <app-kpi label="Error Rate" [value]="errRate() + '%'" icon="triangle-alert" color="#ef4444" [sub]="errors() + ' failed calls'" [subColor]="errRate() > 1 ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Avg. Latency" [value]="latency() + ' ms'" icon="workflow-timer" color="#f59e0b" change="18 ms" [up]="false" sub="vs. last week" />
-      <app-kpi label="Used in Workflows" [value]="wfUsing()" icon="workflow" color="#7c3aed" [sub]="stepUses() + ' integration steps'" />
-      <app-kpi label="Needs Attention" [value]="attention().length" icon="workflow-unplug" color="#f97316" [sub]="attention().length ? attention()[0].name + (attention().length > 1 ? ' +' + (attention().length - 1) : '') : 'all healthy'" />
+      <app-kpi label="Connected" [value]="byStatus('Connected') + ' / ' + store.connectors().length" icon="plug" color="var(--ka-22c55e)" [sub]="byStatus('Not Connected') + ' available to connect'" />
+      <app-kpi label="API Calls (24 h)" [value]="calls().toLocaleString()" icon="activity" color="var(--ka-3b82f6)" change="6%" sub="vs. yesterday" />
+      <app-kpi label="Error Rate" [value]="errRate() + '%'" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="errors() + ' failed calls'" [subColor]="errRate() > 1 ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Avg. Latency" [value]="latency() + ' ms'" icon="workflow-timer" color="var(--ka-f59e0b)" change="18 ms" [up]="false" sub="vs. last week" />
+      <app-kpi label="Used in Workflows" [value]="wfUsing()" icon="workflow" color="var(--ka-7c3aed)" [sub]="stepUses() + ' integration steps'" />
+      <app-kpi label="Needs Attention" [value]="attention().length" icon="workflow-unplug" color="var(--ka-f97316)" [sub]="attention().length ? attention()[0].name + (attention().length > 1 ? ' +' + (attention().length - 1) : '') : 'all healthy'" />
     </section>
 
     @if (attention().length) {
@@ -65,7 +65,7 @@ type TestStep = { label: string; detail: string; state: 'pend' | 'run' | 'ok' | 
               <p class="nc">Not connected yet. Connect to use it in workflow steps.</p>
               <button class="btn-primary sm conn" (click)="$event.stopPropagation(); openCfg(c)"><app-icon name="plug" [size]="14" />Connect</button>
             } @else {
-              <app-sparkline [values]="c.trend" [color]="c.status === 'Error' ? '#ef4444' : c.color" />
+              <app-sparkline [values]="c.trend" [color]="c.status === 'Error' ? 'var(--ka-ef4444)' : c.color" />
               <div class="cs">
                 <div><b>{{ c.calls24h | number }}</b><small>calls 24 h</small></div>
                 <div><b [class.red]="c.errors24h > 20">{{ c.errors24h }}</b><small>errors</small></div>
@@ -130,14 +130,14 @@ type TestStep = { label: string; detail: string; state: 'pend' | 'run' | 'ok' | 
 
           @if (c.status !== 'Not Connected') {
             <h4>Calls · last 12 h</h4>
-            <app-column-chart [labels]="hours" [series]="[{ name: 'Calls', color: c.status === 'Error' ? '#ef4444' : c.color, values: c.trend }]" [height]="130" [legend]="false" />
+            <app-column-chart [labels]="hours" [series]="[{ name: 'Calls', color: c.status === 'Error' ? 'var(--ka-ef4444)' : c.color, values: c.trend }]" [height]="130" [legend]="false" />
           }
 
           <h4>Used by workflows <span class="muted">({{ usage(c).length }})</span></h4>
           <ul class="uses">
             @for (u of usage(c); track u.name) {
               <li>
-                <span class="ui" [style.background]="u.wf ? u.wf.color + '1a' : '#eef0f5'" [style.color]="u.wf?.color ?? '#6b7090'"><app-icon [name]="u.wf?.icon ?? 'workflow'" [size]="14" /></span>
+                <span class="ui" [style.background]="u.wf ? 'color-mix(in srgb, ' + u.wf.color + ' 10%, transparent)' : 'var(--ka-eef0f5)'" [style.color]="u.wf?.color ?? 'var(--ka-6b7090)'"><app-icon [name]="u.wf?.icon ?? 'workflow'" [size]="14" /></span>
                 <div><b>{{ u.name }}</b><small>{{ u.steps.length ? 'Step: ' + u.steps.join(', ') : 'Notifications / lookups' }}</small></div>
                 @if (u.wf) {<button class="link" (click)="openWf(u.wf)">Open →</button>}
               </li>
@@ -243,29 +243,29 @@ type TestStep = { label: string; detail: string; state: 'pend' | 'run' | 'ok' | 
     @if (toastS()) {<div class="g-toast">{{ toastS() }}</div>}
   `,
   styles: `
-    .alert { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; font-size: 12.5px; margin-bottom: 12px; }
+    .alert { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: var(--kb-fef2f2); border: 1px solid var(--kl-fecaca); color: var(--kf-991b1b); font-size: 12.5px; margin-bottom: 12px; }
     .alert span { flex: 1; }
     .tb { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
     .cats { display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 auto; }
-    .cats button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 18px; border: 1px solid var(--border); background: #fff; font-size: 12.5px; cursor: pointer; color: #3b3f5c; }
-    .cats button span { font-size: 10.5px; padding: 0 6px; border-radius: 10px; background: #eef0f5; }
-    .cats button.on { background: var(--primary); border-color: var(--primary); color: #fff; } .cats button.on span { background: rgba(255,255,255,.25); }
+    .cats button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 18px; border: 1px solid var(--border); background: var(--kb-ffffff); font-size: 12.5px; cursor: pointer; color: var(--kf-3b3f5c); }
+    .cats button span { font-size: 10.5px; padding: 0 6px; border-radius: 10px; background: var(--kb-eef0f5); }
+    .cats button.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); } .cats button.on span { background: rgba(255,255,255,.25); }
     .sb { width: 240px; }
     .cl { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; margin-bottom: 12px; }
     .cl.with-detail { grid-template-columns: minmax(0, 1.5fr) minmax(400px, 1fr); }
     .grid-c { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
     .cc { cursor: pointer; display: flex; flex-direction: column; gap: 10px; padding: 14px; transition: box-shadow .15s, border-color .15s; border: 1px solid transparent; }
-    .cc:hover { border-color: #d8cff9; } .cc.on { border-color: var(--primary); box-shadow: 0 0 0 3px #ede9fe; }
-    .cc.dim { background: #fbfbfd; }
+    .cc:hover { border-color: var(--kl-d8cff9); } .cc.on { border-color: var(--primary); box-shadow: 0 0 0 3px var(--kb-ede9fe); }
+    .cc.dim { background: var(--kb-fbfbfd); }
     .ch { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; }
-    .logo { width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 12.5px; flex-shrink: 0; }
+    .logo { width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; color: var(--kf-ffffff); font-weight: 700; font-size: 12.5px; flex-shrink: 0; }
     .logo.big { width: 44px; height: 44px; font-size: 14px; }
     .nm { min-width: 0; display: flex; flex-direction: column; } .nm b { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .nm small { font-size: 11px; color: var(--muted); }
     .nc { margin: 0; font-size: 12px; color: var(--muted); flex: 1; } .conn { align-self: flex-start; }
     .cs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .cs div { display: flex; flex-direction: column; } .cs b { font-size: 13px; white-space: nowrap; } .cs small { font-size: 10.5px; color: var(--muted); }
-    .red { color: #dc2626; }
-    .cf { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f1f6; padding-top: 8px; font-size: 11.5px; }
+    .red { color: var(--kf-dc2626); }
+    .cf { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--kl-f0f1f6); padding-top: 8px; font-size: 11.5px; }
     .cf .muted { display: inline-flex; gap: 4px; align-items: center; } .acts { display: flex; gap: 6px; }
     .empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 40px; }
     .detail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; display: flex; flex-direction: column; gap: 8px; }
@@ -273,33 +273,33 @@ type TestStep = { label: string; detail: string; state: 'pend' | 'run' | 'ok' | 
     .sline { display: flex; gap: 10px; align-items: center; font-size: 12px; }
     .btns { display: flex; flex-wrap: wrap; gap: 6px; }
     h4 { margin: 8px 0 2px; font-size: 13px; } h4 .muted { font-weight: 400; }
-    .test { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: #fcfcff; }
+    .test { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--kb-fcfcff); }
     .test h4 { margin-top: 0; }
     .ts { display: grid; grid-template-columns: 22px 1fr; gap: 10px; padding: 5px 0; font-size: 12.5px; }
-    .ts i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 700; background: #eef0f5; color: #6b7090; }
-    .ts.ok i { background: #22c55e; color: #fff; } .ts.bad i { background: #ef4444; color: #fff; } .ts.run i { background: #3b82f6; color: #fff; animation: pulse 1s infinite; } .ts.pend { opacity: .5; }
+    .ts i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 700; background: var(--kb-eef0f5); color: var(--kf-6b7090); }
+    .ts.ok i { background: var(--kb-22c55e); color: var(--kf-ffffff); } .ts.bad i { background: var(--kb-ef4444); color: var(--kf-ffffff); } .ts.run i { background: var(--kb-3b82f6); color: var(--kf-ffffff); animation: pulse 1s infinite; } .ts.pend { opacity: .5; }
     .ts small { display: block; color: var(--muted); font-size: 11px; }
-    @keyframes pulse { 50% { box-shadow: 0 0 0 5px #bfdbfe; } }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 5px var(--kb-bfdbfe); } }
     .verdict { margin: 6px 0; padding: 7px 10px; border-radius: 7px; font-size: 12.5px; font-weight: 600; }
-    .verdict.ok { background: #dcfce7; color: #15803d; } .verdict.bad { background: #fee2e2; color: #b91c1c; }
+    .verdict.ok { background: var(--kb-dcfce7); color: var(--kf-15803d); } .verdict.bad { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .facts { display: grid; grid-template-columns: 120px 1fr; gap: 6px; font-size: 12.5px; margin: 4px 0 0; } .facts dt { color: var(--muted); } .facts dd { margin: 0; word-break: break-all; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; }
     .cp { border: 0; background: none; cursor: pointer; color: var(--muted); padding: 2px; }
     .uses, .calls { list-style: none; margin: 0; padding: 0; }
-    .uses li { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .uses li { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .uses .ui { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; } .uses small { display: block; color: var(--muted); font-size: 11px; }
     .uses li.muted, .calls li.muted { display: block; border: 0; }
     .link { border: 0; background: none; cursor: pointer; }
-    .calls li { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .calls li { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .calls small { color: var(--muted); font-size: 11px; white-space: nowrap; }
     .bot { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; align-items: start; }
     .side { display: flex; flex-direction: column; gap: 12px; } .sm { font-size: 12px; }
     .mh { display: flex; gap: 12px; align-items: center; }
     .tg { margin: 14px 0 4px; }
-    .oauth { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: #eff6ff; color: #1e3a8a; font-size: 12.5px; } .oauth span { flex: 1; }
+    .oauth { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--kb-eff6ff); color: var(--kf-1e3a8a); font-size: 12.5px; } .oauth span { flex: 1; }
     .errt { color: var(--red); font-size: 12.5px; } .dangerb { background: var(--red) !important; border-color: var(--red) !important; }
     .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 8px; }
-    .cat-it { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; text-align: left; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: #fff; cursor: pointer; font: inherit; }
+    .cat-it { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: center; text-align: left; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); cursor: pointer; font: inherit; }
     .cat-it:hover { border-color: var(--primary); } .cat-it small { display: block; color: var(--muted); font-size: 11px; } .cat-it b { font-size: 12.5px; }
     @media (max-width: 1250px) { .cl.with-detail, .bot { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
   `,
@@ -394,14 +394,14 @@ export class IntegrationsConnectors {
   protected readonly available = computed(() => this.store.connectors().filter((c) => c.status === 'Not Connected' || c.status === 'Paused'));
   protected readonly byConn = computed(() => {
     const top = [...this.store.connectors()].filter((c) => c.calls24h).sort((a, b) => b.calls24h - a.calls24h).slice(0, 7);
-    return top.map((c) => ({ label: c.name, value: c.calls24h, display: c.calls24h.toLocaleString(), color: c.status === 'Error' ? '#ef4444' : c.color }));
+    return top.map((c) => ({ label: c.name, value: c.calls24h, display: c.calls24h.toLocaleString(), color: c.status === 'Error' ? 'var(--ka-ef4444)' : c.color }));
   });
   protected readonly byConnMax = computed(() => Math.max(1, ...this.byConn().map((r) => r.value)));
   protected readonly health = computed(() => [
-    { label: 'Connected', value: this.byStatus('Connected'), color: '#22c55e' },
-    { label: 'Error', value: this.byStatus('Error'), color: '#ef4444' },
-    { label: 'Paused', value: this.byStatus('Paused'), color: '#f59e0b' },
-    { label: 'Not connected', value: this.byStatus('Not Connected'), color: '#cbd0dd' },
+    { label: 'Connected', value: this.byStatus('Connected'), color: 'var(--ka-22c55e)' },
+    { label: 'Error', value: this.byStatus('Error'), color: 'var(--ka-ef4444)' },
+    { label: 'Paused', value: this.byStatus('Paused'), color: 'var(--ka-f59e0b)' },
+    { label: 'Not connected', value: this.byStatus('Not Connected'), color: 'var(--ka-cbd0dd)' },
   ]);
 
   protected readonly logCols: Col[] = [
@@ -471,7 +471,7 @@ export class IntegrationsConnectors {
     this.store.patchConn(c.id, { status: 'Connected', lastSync: 'Just now' });
     const failed = this.store.syncLogs().filter((l) => l.connector === c.name && l.status !== 'Success');
     this.store.syncLogs.update((l) => l.map((x) => (x.connector === c.name && x.status !== 'Success' ? { ...x, status: 'Success' } : x)));
-    this.store.pushActivity(`${c.name} re-authenticated · ${failed.length} calls replayed`, '#22c55e');
+    this.store.pushActivity(`${c.name} re-authenticated · ${failed.length} calls replayed`, 'var(--ka-22c55e)');
     this.msg(`${c.name} re-authenticated · ${failed.length} failed calls replayed`);
     this.runTest({ ...c, status: 'Connected' });
   }
@@ -488,7 +488,7 @@ export class IntegrationsConnectors {
   protected pause(c: Connector) {
     const s: ConnStatus = c.status === 'Paused' ? 'Connected' : 'Paused';
     this.store.patchConn(c.id, { status: s, lastSync: s === 'Connected' ? 'Just now' : c.lastSync });
-    this.store.pushActivity(`${c.name} ${s === 'Paused' ? 'paused' : 'resumed'}`, s === 'Paused' ? '#f59e0b' : '#22c55e');
+    this.store.pushActivity(`${c.name} ${s === 'Paused' ? 'paused' : 'resumed'}`, s === 'Paused' ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)');
     this.msg(`${c.name} ${s === 'Paused' ? 'paused — calls will queue' : 'resumed'}`);
   }
   protected readonly discConn = computed(() => this.store.connectors().find((c) => c.id === this.discId()) ?? null);
@@ -530,7 +530,7 @@ export class IntegrationsConnectors {
     this.cfgId.set(null);
     this.selId.set(c.id);
     if (connecting) {
-      this.store.pushActivity(`${c.name} connected`, '#22c55e');
+      this.store.pushActivity(`${c.name} connected`, 'var(--ka-22c55e)');
       this.store.logSync(c.id, 'GET /health (connect)', false);
       this.msg(`${c.name} connected — now available as an Integration step in the Designer`);
     } else this.msg(`${c.name} configuration saved`);
@@ -540,7 +540,7 @@ export class IntegrationsConnectors {
     if (!h.name.trim() || !/^https?:\/\/\S+$/.test(h.url.trim())) return this.hookErr.set('Enter a name and a valid http(s) URL.');
     const id = `C${Math.max(...this.store.connectors().map((c) => +c.id.slice(1))) + 1}`;
     const c: Connector = {
-      id, name: h.name.trim(), vendor: 'Custom', category: 'Custom', status: 'Connected', logo: '{ }', color: '#0891b2', calls24h: 0, errors24h: 0, lastSync: 'Just now',
+      id, name: h.name.trim(), vendor: 'Custom', category: 'Custom', status: 'Connected', logo: '{ }', color: 'var(--ka-0891b2)', calls24h: 0, errors24h: 0, lastSync: 'Just now',
       auth: h.auth, endpoint: `${h.method} ${h.url.trim()}`, usedBy: [], trend: Array(12).fill(0),
     };
     this.store.connectors.update((l) => [...l, c]);

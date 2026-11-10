@@ -10,7 +10,7 @@ import { Checkpoint, hhmm, isOpen, statusCls, TASK_ZONES, TaskItem, TaskStore, w
 type CpState = 'OK' | 'Due' | 'Missed' | 'Disabled';
 const TECHS: Checkpoint['tech'][] = ['QR', 'NFC', 'BLE Beacon', 'Geo-fence'];
 const TECH_ICON: Record<string, string> = { QR: 'tasks-qr', NFC: 'tasks-nfc', 'BLE Beacon': 'bluetooth', 'Geo-fence': 'locate' };
-const STATE_COLOR: Record<CpState, string> = { OK: '#16a34a', Due: '#f59e0b', Missed: '#ef4444', Disabled: '#94a3b8' };
+const STATE_COLOR: Record<CpState, string> = { OK: 'var(--ka-16a34a)', Due: 'var(--ka-f59e0b)', Missed: 'var(--ka-ef4444)', Disabled: 'var(--ka-94a3b8)' };
 const DAY0 = 360; // scanning day starts 06:00
 const GRACE = 15;
 
@@ -35,11 +35,11 @@ interface ScanRow {
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="Active Checkpoints" [value]="activeCount() + ' / ' + store.checkpoints().length" icon="map-pin" color="#7c3aed" [sub]="zonesCovered() + ' zones covered'" />
-      <app-tkpi label="Scans Today" [value]="totalScans()" icon="tasks-qr" color="#2563eb" [pct]="lastHour() + ''" pctColor="#2563eb" sub="in the last hour" />
-      <app-tkpi label="Scan Compliance" [value]="compliance() + '%'" icon="shield-check" color="#22c55e" [sub]="'target-to-date ' + targetSoFar()" />
-      <app-tkpi label="Missed Checkpoints" [value]="missed().length" icon="triangle-alert" color="#ef4444" [pct]="due().length + ''" pctColor="#d97706" sub="due within 15 min" />
-      <app-tkpi label="Geo-fenced Tasks Open" [value]="geoOpen()" icon="locate" color="#06b6d4" [pct]="fenceAlerts() + ''" pctColor="#ef4444" sub="out-of-fence alerts" />
+      <app-tkpi label="Active Checkpoints" [value]="activeCount() + ' / ' + store.checkpoints().length" icon="map-pin" color="var(--ka-7c3aed)" [sub]="zonesCovered() + ' zones covered'" />
+      <app-tkpi label="Scans Today" [value]="totalScans()" icon="tasks-qr" color="var(--ka-2563eb)" [pct]="lastHour() + ''" pctColor="var(--ka-2563eb)" sub="in the last hour" />
+      <app-tkpi label="Scan Compliance" [value]="compliance() + '%'" icon="shield-check" color="var(--ka-22c55e)" [sub]="'target-to-date ' + targetSoFar()" />
+      <app-tkpi label="Missed Checkpoints" [value]="missed().length" icon="triangle-alert" color="var(--ka-ef4444)" [pct]="due().length + ''" pctColor="var(--ka-d97706)" sub="due within 15 min" />
+      <app-tkpi label="Geo-fenced Tasks Open" [value]="geoOpen()" icon="locate" color="var(--ka-06b6d4)" [pct]="fenceAlerts() + ''" pctColor="var(--ka-ef4444)" sub="out-of-fence alerts" />
     </section>
 
     <section class="grid">
@@ -110,7 +110,7 @@ interface ScanRow {
             <ul>
               @for (c of missed(); track c.id) {
                 <li>
-                  <span class="ti" style="background:#ef4444"><app-icon [name]="techIcon[c.tech]" [size]="13" /></span>
+                  <span class="ti" style="background:var(--kb-ef4444)"><app-icon [name]="techIcon[c.tech]" [size]="13" /></span>
                   <div (click)="select(c.id)"><b>{{ c.name }}</b><small>{{ zoneName(c.zone) }} · last {{ c.lastScan >= 0 ? hhmm(c.lastScan) : 'never' }} · {{ lateBy(c) }} min late</small></div>
                   <button class="btn-ghost sm" (click)="dispatch(c)">Dispatch</button>
                 </li>
@@ -178,7 +178,7 @@ interface ScanRow {
         <ul>
           @for (s of scanLog().slice(0, 8); track $index) {
             <li>
-              <span class="ti" [style.background]="s.result === 'Verified' ? '#16a34a' : s.result === 'Late' ? '#f59e0b' : '#ef4444'"><app-icon [name]="techIcon[s.cp.tech]" [size]="12" /></span>
+              <span class="ti" [style.background]="s.result === 'Verified' ? 'var(--ka-16a34a)' : s.result === 'Late' ? 'var(--ka-f59e0b)' : 'var(--ka-ef4444)'"><app-icon [name]="techIcon[s.cp.tech]" [size]="12" /></span>
               <div><b>{{ s.cp.name }}</b><small>{{ s.who }} · {{ s.method }}</small></div>
               <span class="r"><span [class]="s.result === 'Verified' ? 'tag green' : s.result === 'Late' ? 'tag amber' : 'tag red'">{{ s.result }}</span><small>{{ hhmm(s.at) }}</small></span>
             </li>
@@ -238,30 +238,30 @@ interface ScanRow {
     .grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; margin-bottom: 12px; align-items: start; }
     .reg, .geo { margin-bottom: 12px; }
     .grid3 { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 12px; margin-bottom: 12px; align-items: start; }
-    .ck { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #3b3f5c; } .ck input { accent-color: var(--primary); }
-    .legend { display: flex; gap: 16px; padding: 10px 2px 0; font-size: 12px; color: #3b3f5c; flex-wrap: wrap; }
+    .ck { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--kf-3b3f5c); } .ck input { accent-color: var(--primary); }
+    .legend { display: flex; gap: 16px; padding: 10px 2px 0; font-size: 12px; color: var(--kf-3b3f5c); flex-wrap: wrap; }
     .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
     .side { display: flex; flex-direction: column; gap: 12px; }
-    .ti { width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; color: #fff; flex: none; vertical-align: middle; margin-right: 8px; }
+    .ti { width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; color: var(--kf-ffffff); flex: none; vertical-align: middle; margin-right: 8px; }
     .det h3 { font-size: 15px; display: flex; align-items: center; }
     .ring-row { display: flex; gap: 14px; align-items: center; margin-bottom: 12px; } .ring-row div { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; } .ring-row small { color: var(--muted); font-size: 12px; }
     .facts { display: grid; grid-template-columns: 105px 1fr; gap: 7px; font-size: 12px; margin-bottom: 10px; } .facts span { color: var(--muted); } .facts b { font-weight: 500; }
-    .fl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; margin-bottom: 10px; }
+    .fl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); margin-bottom: 10px; }
     .row { display: flex; gap: 6px; flex-wrap: wrap; }
     .btn-primary.sm { padding: 6px 10px; font-size: 12px; }
-    .mini { list-style: none; margin: 12px 0 0; padding: 0; border-top: 1px solid var(--border); } .mini li { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; padding: 7px 0; border-bottom: 1px solid #f1f2f7; cursor: pointer; font-size: 12px; align-items: center; }
+    .mini { list-style: none; margin: 12px 0 0; padding: 0; border-top: 1px solid var(--border); } .mini li { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); cursor: pointer; font-size: 12px; align-items: center; }
     .mini small { grid-column: 2; color: var(--muted); font-size: 11px; }
-    .count { font-size: 11px; padding: 1px 8px; border-radius: 10px; background: #fee2e2; color: #b91c1c; margin-left: 6px; }
+    .count { font-size: 11px; padding: 1px 8px; border-radius: 10px; background: var(--kb-fee2e2); color: var(--kf-b91c1c); margin-left: 6px; }
     .ms ul, .due, .log ul { list-style: none; margin: 0; padding: 0; }
-    .ms li { display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f2f7; } .ms .ti { margin: 0; }
+    .ms li { display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f1f2f7); } .ms .ti { margin: 0; }
     .ms li div { cursor: pointer; display: flex; flex-direction: column; min-width: 0; } .ms b { font-size: 12.5px; } .ms small { font-size: 11px; color: var(--muted); }
-    .empty { display: flex !important; gap: 8px; color: #16a34a; font-size: 12.5px; justify-content: center; padding: 18px 0 !important; }
-    .due li { display: grid; grid-template-columns: 70px 1fr auto; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f1f2f7; font-size: 12px; cursor: pointer; } .due .tm { color: var(--primary); font-weight: 600; } .due small { color: var(--muted); }
-    .log li { display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f1f2f7; font-size: 12px; } .log .ti { margin: 0; }
+    .empty { display: flex !important; gap: 8px; color: var(--kf-16a34a); font-size: 12.5px; justify-content: center; padding: 18px 0 !important; }
+    .due li { display: grid; grid-template-columns: 70px 1fr auto; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12px; cursor: pointer; } .due .tm { color: var(--primary); font-weight: 600; } .due small { color: var(--muted); }
+    .log li { display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12px; } .log .ti { margin: 0; }
     .log li div { display: flex; flex-direction: column; min-width: 0; } .log small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .log .r { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
     .tech { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-    tr.sel td { background: #faf8ff; }
+    tr.sel td { background: var(--kb-faf8ff); }
     .center { text-align: center; padding: 20px !important; }
     td.acts { white-space: nowrap; } td.acts button + button { margin-left: 4px; }
     .sum { font-size: 12px; color: var(--muted); margin: 12px 0 0; }
@@ -341,10 +341,10 @@ export class CheckpointLocationTasks {
     const out: MapPath[] = [];
     if (this.showFences())
       for (const c of this.store.checkpoints().filter((x) => x.tech === 'Geo-fence' || x.tech === 'BLE Beacon'))
-        out.push({ points: Array.from({ length: 33 }, (_, i) => [c.x + 36 * Math.cos((i / 32) * 2 * Math.PI), c.y + 36 * Math.sin((i / 32) * 2 * Math.PI)] as [number, number]), color: c.tech === 'Geo-fence' ? '#0ea5e9' : '#6366f1', dashed: true, width: 2 });
+        out.push({ points: Array.from({ length: 33 }, (_, i) => [c.x + 36 * Math.cos((i / 32) * 2 * Math.PI), c.y + 36 * Math.sin((i / 32) * 2 * Math.PI)] as [number, number]), color: c.tech === 'Geo-fence' ? 'var(--ka-0ea5e9)' : 'var(--ka-6366f1)', dashed: true, width: 2 });
     if (!this.showRoute()) return out;
     const route = this.store.checkpoints().filter((c) => c.templateId === 'TPL-0002' && c.active);
-    if (route.length > 1) out.push({ points: route.map((c) => [c.x, c.y] as [number, number]), color: '#7c3aed', dashed: true, arrow: true, width: 2.5 });
+    if (route.length > 1) out.push({ points: route.map((c) => [c.x, c.y] as [number, number]), color: 'var(--ka-7c3aed)', dashed: true, arrow: true, width: 2.5 });
     return out;
   });
   protected readonly callout = computed<MapCallout | null>(() => {
@@ -358,7 +358,7 @@ export class CheckpointLocationTasks {
       const exp = l.reduce((a, c) => a + this.expectedSoFar(c), 0);
       const got = l.reduce((a, c) => a + Math.min(c.scans, this.expectedSoFar(c)), 0);
       const v = exp ? Math.round((got / exp) * 100) : 100;
-      return { label: `${t} (${l.length})`, value: l.length ? v : 0, display: l.length ? v + '%' : 'n/a', color: ['#7c3aed', '#2563eb', '#6366f1', '#0ea5e9'][i] };
+      return { label: `${t} (${l.length})`, value: l.length ? v : 0, display: l.length ? v + '%' : 'n/a', color: ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-6366f1)', 'var(--ka-0ea5e9)'][i] };
     }),
   );
   protected readonly scanLog = computed<ScanRow[]>(() => {
@@ -387,8 +387,8 @@ export class CheckpointLocationTasks {
     const plan = act.map((_, i) => Math.round(perHour * (i % 4 === 2 ? 1.2 : 1)));
     const nowH = Math.floor((this.store.now() - DAY0) / 60);
     return [
-      { name: 'Scans', color: '#7c3aed', values: act.map((v, i) => (i > nowH ? 0 : v)) },
-      { name: 'Planned', color: '#c4b5fd', values: plan, line: true },
+      { name: 'Scans', color: 'var(--ka-7c3aed)', values: act.map((v, i) => (i > nowH ? 0 : v)) },
+      { name: 'Planned', color: 'var(--ka-c4b5fd)', values: plan, line: true },
     ];
   });
   private readonly geoAll = computed(() => this.store.tasks().filter((t) => t.checkpointId));
@@ -481,7 +481,7 @@ export class CheckpointLocationTasks {
   }
   protected toggleActive(c: Checkpoint) {
     this.store.checkpoints.update((l) => l.map((x) => (x.id === c.id ? { ...x, active: !x.active } : x)));
-    this.store.log(`Checkpoint ${c.name} ${c.active ? 'disabled' : 'enabled'}`, 'Rex Kumar', 'map-pin', '#64748b');
+    this.store.log(`Checkpoint ${c.name} ${c.active ? 'disabled' : 'enabled'}`, 'Rex Kumar', 'map-pin', 'var(--ka-64748b)');
     this.say(`${c.name} ${c.active ? 'disabled' : 'enabled'}`);
   }
   protected openAdd() {
@@ -497,7 +497,7 @@ export class CheckpointLocationTasks {
       templateId: this.fTpl(), expected: Math.max(1, this.fExp()), scans: 0, lastScan: -1, lastBy: '', active: true,
     };
     this.store.checkpoints.update((l) => [...l, cp]);
-    this.store.log(`Checkpoint ${cp.name} added (${cp.tech})`, 'Rex Kumar', 'map-pin', '#7c3aed');
+    this.store.log(`Checkpoint ${cp.name} added (${cp.tech})`, 'Rex Kumar', 'map-pin', 'var(--ka-7c3aed)');
     this.addOpen.set(false);
     this.selId.set(id);
     this.say(`${cp.name} added · tag ${id} ready to print`);

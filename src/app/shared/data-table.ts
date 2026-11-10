@@ -103,14 +103,14 @@ export function statusTag(v: unknown) {
                   @switch (c.kind) {
                     @case ('person') {
                       <div class="dt-person">
-                        <span class="dt-av" [style.background]="row.avatar ?? '#7c3aed'">{{ row.initials ?? '' }}</span>
+                        <span class="dt-av" [style.background]="row.avatar ?? 'var(--ka-7c3aed)'">{{ row.initials ?? '' }}</span>
                         <div><b>{{ val(c, row) }}</b>@if (c.sub) {<small>{{ row[c.sub] }}</small>}</div>
                       </div>
                     }
                     @case ('tag') { <span [class]="c.tag ? c.tag(row) : 'tag'">{{ val(c, row) }}</span> }
                     @case ('status') { <span class="dt-status" [class]="statusClass(row[c.key])"><i></i>{{ val(c, row) }}</span> }
                     @case ('progress') {
-                      <span class="mini-progress"><i [style.width.%]="row[c.key]" [style.background]="row[c.key] < 60 ? '#f59e0b' : '#7c3aed'"></i></span>{{ row[c.key] }}%
+                      <span class="mini-progress"><i [style.width.%]="row[c.key]" [style.background]="row[c.key] < 60 ? 'var(--ka-f59e0b)' : 'var(--ka-7c3aed)'"></i></span>{{ row[c.key] }}%
                     }
                     @case ('chips') {
                       @for (x of row[c.key]; track x) {<span class="chip-s">{{ x }}</span>}
@@ -119,10 +119,10 @@ export function statusTag(v: unknown) {
                       <span [class]="row[c.key] ? 'good' : 'muted'">{{ row[c.key] ? '✓' : '—' }}</span>
                     }
                     @case ('swatch') {
-                      <div class="dt-swatch"><span [style.background]="row.color ?? '#7c3aed'">{{ String(row[c.key] ?? '?')[0] }}</span><b>{{ val(c, row) }}</b></div>
+                      <div class="dt-swatch"><span [style.background]="row.color ?? 'var(--ka-7c3aed)'">{{ String(row[c.key] ?? '?')[0] }}</span><b>{{ val(c, row) }}</b></div>
                     }
                     @case ('icon') {
-                      <div class="dt-swatch"><span class="ic" [style.background]="(row.color ?? '#7c3aed') + '22'" [style.color]="row.color ?? '#7c3aed'"><app-icon [name]="row.icon ?? 'file-text'" [size]="16" /></span><b>{{ val(c, row) }}</b></div>
+                      <div class="dt-swatch"><span class="ic" [style.background]="'color-mix(in srgb, ' + (row.color ?? 'var(--ka-7c3aed)') + ' 13%, transparent)'" [style.color]="row.color ?? 'var(--ka-7c3aed)'"><app-icon [name]="row.icon ?? 'file-text'" [size]="16" /></span><b>{{ val(c, row) }}</b></div>
                     }
                     @case ('lines') {
                       @for (l of String(val(c, row) ?? '').split('\n'); track $index) {<div class="dt-line">{{ l }}</div>}

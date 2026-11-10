@@ -50,12 +50,12 @@ const FLOOR_SEEDS: Record<string, number> = { Roof: 2, 'Floor 5': 7, 'Floor 4': 
     @if (store.lockdown()) {<div class="banner"><app-icon name="s-lock" [size]="16" />LOCKDOWN ACTIVE — Production Area (Floor 2) doors locked, access restricted to ERT. <button class="lnk" (click)="emg('lockdown')">Lift lockdown</button></div>}
 
     <section class="kpi-row kpis">
-      <app-kpi label="Active Incidents" [value]="store.active().length" icon="bell" color="#ef4444" change="67%" [good]="false" sub="vs. last 24 hrs" routerLink="/safety-wellbeing/incident-management" />
-      <app-kpi label="Open Hazards" [value]="store.openHazards().length" icon="triangle-alert" color="#f59e0b" change="28%" [up]="false" sub="vs. last 24 hrs" routerLink="/safety-wellbeing/hazard-risk-management" />
-      <app-kpi label="People On-Site" [value]="p().total" icon="users" color="#22c55e" [sub]="pctOf(p().safe) + '%'" subColor="#16a34a" (click)="peopleOpen.set('Safe')" class="ppl" />
-      <app-kpi label="PPE Compliance" [value]="store.ppePct() + '%'" icon="hard-hat" color="#7c3aed" change="5%" sub="vs. last week" routerLink="/safety-wellbeing/ppe-compliance" />
-      <app-kpi label="Wellbeing Alerts" [value]="store.openWAlerts().length" icon="heart" color="#3b82f6" change="200%" [good]="false" sub="vs. last 24 hrs" routerLink="/safety-wellbeing/health-wellbeing" />
-      <app-kpi label="Environment Alerts" [value]="store.openEnvAlerts().length" icon="s-leaf" color="#14b8a6" change="50%" [good]="false" sub="vs. last 24 hrs" (click)="envOpen.set(true)" />
+      <app-kpi label="Active Incidents" [value]="store.active().length" icon="bell" color="var(--ka-ef4444)" change="67%" [good]="false" sub="vs. last 24 hrs" routerLink="/safety-wellbeing/incident-management" />
+      <app-kpi label="Open Hazards" [value]="store.openHazards().length" icon="triangle-alert" color="var(--ka-f59e0b)" change="28%" [up]="false" sub="vs. last 24 hrs" routerLink="/safety-wellbeing/hazard-risk-management" />
+      <app-kpi label="People On-Site" [value]="p().total" icon="users" color="var(--ka-22c55e)" [sub]="pctOf(p().safe) + '%'" subColor="var(--ka-16a34a)" (click)="peopleOpen.set('Safe')" class="ppl" />
+      <app-kpi label="PPE Compliance" [value]="store.ppePct() + '%'" icon="hard-hat" color="var(--ka-7c3aed)" change="5%" sub="vs. last week" routerLink="/safety-wellbeing/ppe-compliance" />
+      <app-kpi label="Wellbeing Alerts" [value]="store.openWAlerts().length" icon="heart" color="var(--ka-3b82f6)" change="200%" [good]="false" sub="vs. last 24 hrs" routerLink="/safety-wellbeing/health-wellbeing" />
+      <app-kpi label="Environment Alerts" [value]="store.openEnvAlerts().length" icon="s-leaf" color="var(--ka-14b8a6)" change="50%" [good]="false" sub="vs. last 24 hrs" (click)="envOpen.set(true)" />
     </section>
 
     <section class="top">
@@ -159,17 +159,17 @@ const FLOOR_SEEDS: Record<string, number> = { Roof: 2, 'Floor 5': 7, 'Floor 4': 
         <div class="tc" (mouseleave)="hov.set(null)">
           <svg viewBox="0 0 320 168">
             @for (k of [0, 5, 10, 15, 20]; track k) {
-              <line x1="26" x2="314" [attr.y1]="ty(k)" [attr.y2]="ty(k)" stroke="#eef0f5" />
+              <line x1="26" x2="314" [attr.y1]="ty(k)" [attr.y2]="ty(k)" stroke="var(--kl-eef0f5)" />
               <text x="18" [attr.y]="ty(k) + 3.5" text-anchor="end" class="ax">{{ k * trendScale() }}</text>
             }
             @for (l of trendX(); track $index) {@if (l.show) {<text [attr.x]="l.x" y="163" text-anchor="middle" class="ax">{{ l.t }}</text>}}
-            <defs><linearGradient id="sf-tg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".45" /><stop offset="1" stop-color="#8b5cf6" stop-opacity=".04" /></linearGradient></defs>
+            <defs><linearGradient id="sf-tg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--ka-8b5cf6)" stop-opacity=".45" /><stop offset="1" stop-color="var(--ka-8b5cf6)" stop-opacity=".04" /></linearGradient></defs>
             @for (s of trendLines(); track s.name) {
               @if (s.name === 'Total') {<path [attr.d]="s.area" fill="url(#sf-tg)" />}
               <path [attr.d]="s.d" fill="none" [attr.stroke]="s.color" stroke-width="1.8" />
-              @for (pt of s.pts; track $index) {<circle [attr.cx]="pt[0]" [attr.cy]="pt[1]" [attr.r]="hov() === $index ? 3.6 : 2.6" [attr.fill]="s.color" stroke="#fff" stroke-width="1" />}
+              @for (pt of s.pts; track $index) {<circle [attr.cx]="pt[0]" [attr.cy]="pt[1]" [attr.r]="hov() === $index ? 3.6 : 2.6" [attr.fill]="s.color" stroke="var(--kl-ffffff)" stroke-width="1" />}
             }
-            @if (hov() !== null) {<line [attr.x1]="trendX()[hov()!].x" [attr.x2]="trendX()[hov()!].x" y1="8" y2="148" stroke="#c4b5fd" stroke-dasharray="3 3" />}
+            @if (hov() !== null) {<line [attr.x1]="trendX()[hov()!].x" [attr.x2]="trendX()[hov()!].x" y1="8" y2="148" stroke="var(--kl-c4b5fd)" stroke-dasharray="3 3" />}
             @for (l of trendX(); track $index) {<rect [attr.x]="l.x - 12" y="6" width="24" height="144" fill="transparent" (mouseenter)="hov.set($index)" />}
           </svg>
           @if (hov() !== null) {
@@ -233,7 +233,7 @@ const FLOOR_SEEDS: Record<string, number> = { Roof: 2, 'Floor 5': 7, 'Floor 4': 
         <div class="modal-head"><h3>Environment Alerts</h3><button class="close-btn" (click)="envOpen.set(false)">×</button></div>
         <ul class="plist">
           @for (a of store.envAlerts(); track a.id) {
-            <li [class.done]="a.ack"><span class="ic-sq" style="background:#ccfbf1;color:#0f766e"><app-icon [name]="a.icon" [size]="16" /></span><div><b>{{ a.text }}</b><small>{{ a.time }} · {{ a.zone }}</small></div>
+            <li [class.done]="a.ack"><span class="ic-sq" style="background:var(--kb-ccfbf1);color:var(--kf-0f766e)"><app-icon [name]="a.icon" [size]="16" /></span><div><b>{{ a.text }}</b><small>{{ a.time }} · {{ a.zone }}</small></div>
               <div class="pa">@if (!a.ack) {<button class="btn-ghost sm" (click)="ackEnv(a.id)">Acknowledge</button>} @else {<span class="tag green">Acknowledged</span>}</div></li>
           }
         </ul>
@@ -281,8 +281,8 @@ const FLOOR_SEEDS: Record<string, number> = { Roof: 2, 'Floor 5': 7, 'Floor 4': 
     :host { display: block; }
     :host ::ng-deep .page-head h1 { font-size: 31px; }
     :host ::ng-deep .page-head { position: relative; margin-bottom: 14px; } :host ::ng-deep .page-head .head-btns { position: absolute; right: 0; top: 24px; }
-    .hb { height: 40px; padding: 0 14px; font-size: 13px; color: #1f2233; text-decoration: none; } .sq { width: 40px; justify-content: center; padding: 0; }
-    .banner { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; padding: 10px 14px; border-radius: 10px; background: repeating-linear-gradient(45deg, #fee2e2, #fee2e2 12px, #fecaca 12px, #fecaca 24px); color: #991b1b; font-weight: 600; font-size: 13px; }
+    .hb { height: 40px; padding: 0 14px; font-size: 13px; color: var(--kf-1f2233); text-decoration: none; } .sq { width: 40px; justify-content: center; padding: 0; }
+    .banner { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; padding: 10px 14px; border-radius: 10px; background: repeating-linear-gradient(45deg, var(--kb-fee2e2), var(--kb-fee2e2) 12px, var(--kb-fecaca) 12px, var(--kb-fecaca) 24px); color: var(--kf-991b1b); font-weight: 600; font-size: 13px; }
     .kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     .kpis app-kpi { cursor: pointer; padding: 12px 12px; align-items: center; transition: box-shadow .15s; } .kpis app-kpi:hover { box-shadow: 0 4px 16px rgba(124, 58, 237, .14); }
     .kpis ::ng-deep .kpi-icon { width: 50px; height: 50px; border-radius: 10px; } .kpis ::ng-deep .kpi-icon svg { width: 27px; height: 27px; }
@@ -294,56 +294,56 @@ const FLOOR_SEEDS: Record<string, number> = { Roof: 2, 'Floor 5': 7, 'Floor 4': 
     .map-card { padding: 12px 14px; } .map-card:fullscreen { overflow: auto; }
     .mh { margin-bottom: 10px; } .mh h3 { font-size: 17px; } .hsel { display: flex; gap: 10px; align-items: center; }
     .hsel .select { height: 34px; min-width: 128px; font-size: 12.5px; } .hsel .select.lay { min-width: 106px; display: inline-flex; gap: 6px; align-items: center; cursor: pointer; text-align: left; }
-    .fs { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 8px; background: #fff; display: grid; place-items: center; cursor: pointer; }
+    .fs { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; }
     .opts { padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; min-width: 180px; font-size: 13px; } .opts label { display: flex; gap: 8px; align-items: center; cursor: pointer; } .opts input { accent-color: var(--primary); }
     .map-body { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; align-items: start; }
     .floors { list-style: none; margin: 0; padding: 4px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; }
-    .floors li { padding: 9px 8px; border-radius: 6px; cursor: pointer; color: #2a2d40; white-space: nowrap; } .floors li + li { margin-top: 2px; }
-    .floors li:hover { background: #f6f5fb; } .floors li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; border-left: 3px solid var(--primary); }
-    .pcard { position: absolute; left: 28px; bottom: 12px; display: flex; gap: 10px; align-items: center; padding: 8px 30px 8px 8px; background: #fff; border-radius: 8px; box-shadow: 0 6px 20px rgba(20, 20, 50, .18); min-width: 180px; }
-    .pav { width: 46px; height: 46px; border-radius: 6px; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px; }
-    .pcard div { display: flex; flex-direction: column; font-size: 11.5px; } .pcard b { font-size: 12.5px; } .pcard small { color: #4b4f6b; } .pcard em { font-style: normal; color: #16a34a; font-weight: 500; margin-top: 2px; }
-    .pcard em.red { color: #dc2626; } .pcard em.amb { color: #d97706; }
-    .live-dot { position: absolute; right: 12px; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px #dcfce7; }
-    .pcard .x { position: absolute; right: 2px; top: 0; border: 0; background: none; color: #9ca3af; cursor: pointer; font-size: 14px; }
+    .floors li { padding: 9px 8px; border-radius: 6px; cursor: pointer; color: var(--kf-2a2d40); white-space: nowrap; } .floors li + li { margin-top: 2px; }
+    .floors li:hover { background: var(--kb-f6f5fb); } .floors li.on { background: var(--primary-soft); color: var(--primary); font-weight: 600; border-left: 3px solid var(--primary); }
+    .pcard { position: absolute; left: 28px; bottom: 12px; display: flex; gap: 10px; align-items: center; padding: 8px 30px 8px 8px; background: var(--kb-ffffff); border-radius: 8px; box-shadow: 0 6px 20px rgba(20, 20, 50, .18); min-width: 180px; }
+    .pav { width: 46px; height: 46px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); font-weight: 700; font-size: 15px; }
+    .pcard div { display: flex; flex-direction: column; font-size: 11.5px; } .pcard b { font-size: 12.5px; } .pcard small { color: var(--kf-4b4f6b); } .pcard em { font-style: normal; color: var(--kf-16a34a); font-weight: 500; margin-top: 2px; }
+    .pcard em.red { color: var(--kf-dc2626); } .pcard em.amb { color: var(--kf-d97706); }
+    .live-dot { position: absolute; right: 12px; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); box-shadow: 0 0 0 3px var(--kb-dcfce7); }
+    .pcard .x { position: absolute; right: 2px; top: 0; border: 0; background: none; color: var(--kf-9ca3af); cursor: pointer; font-size: 14px; }
     .legend { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11.5px; }
     .legend button { display: flex; gap: 6px; align-items: center; border: 0; background: none; font: inherit; font-size: 11.5px; cursor: pointer; padding: 2px 0; color: var(--text); } .legend button.off { opacity: .4; text-decoration: line-through; }
-    .lg { width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center; color: #fff; } .lg.g { background: #22c55e; } .lg.r { background: #ef4444; } .lg.a { background: #f59e0b; } .lg.b { background: #3b82f6; }
-    .lg.gs { background: #16a34a; border-radius: 4px; } .lg.rz { background: #ef4444; opacity: .85; } .route { color: #16a34a; letter-spacing: 1px; font-size: 11px; }
+    .lg { width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); } .lg.g { background: var(--kb-22c55e); } .lg.r { background: var(--kb-ef4444); } .lg.a { background: var(--kb-f59e0b); } .lg.b { background: var(--kb-3b82f6); }
+    .lg.gs { background: var(--kb-16a34a); border-radius: 4px; } .lg.rz { background: var(--kb-ef4444); opacity: .85; } .route { color: var(--kf-16a34a); letter-spacing: 1px; font-size: 11px; }
     .ri { width: 100%; border-collapse: collapse; font-size: 12px; }
-    .ri th { text-align: left; font-weight: 500; color: #3b3f5c; padding: 7px 6px; background: #f8f8fc; font-size: 11.5px; } .ri td { padding: 6.5px 6px; border-bottom: 1px solid #f1f2f7; white-space: nowrap; font-size: 11.5px; }
+    .ri th { text-align: left; font-weight: 500; color: var(--kf-3b3f5c); padding: 7px 6px; background: var(--kb-f8f8fc); font-size: 11.5px; } .ri td { padding: 6.5px 6px; border-bottom: 1px solid var(--kl-f1f2f7); white-space: nowrap; font-size: 11.5px; }
     .ri .sev { min-width: 50px; padding: 3px 8px; } .ri .st { padding: 3px 7px; font-size: 11px; }
-    .ri tbody tr { cursor: pointer; } .ri tbody tr:hover { background: #faf8ff; } .ri .t { color: #3b3f5c; }
+    .ri tbody tr { cursor: pointer; } .ri tbody tr:hover { background: var(--kb-faf8ff); } .ri .t { color: var(--kf-3b3f5c); }
     .it { display: inline-flex; gap: 7px; align-items: center; }
     .cams { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .cam { display: flex; flex-direction: column; gap: 6px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; text-align: left; }
-    .cam app-sf-cam { aspect-ratio: 155 / 128; border-radius: 4px; } .cam:hover app-sf-cam { outline: 2px solid var(--primary); } .cam span { font-size: 11.5px; color: #3b3f5c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cam app-sf-cam { aspect-ratio: 155 / 128; border-radius: 4px; } .cam:hover app-sf-cam { outline: 2px solid var(--primary); } .cam span { font-size: 11.5px; color: var(--kf-3b3f5c); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .bottom { display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(0, 1.16fr) minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
     .bottom .card { padding: 14px; } .bottom h3 { font-size: 15px; letter-spacing: -.2px; white-space: nowrap; } .bottom .card-head { margin-bottom: 10px; flex-wrap: nowrap; }
     .select.sm { height: 30px; font-size: 11.5px; width: auto; padding-right: 24px; flex: none; }
     .pss { display: flex; gap: 8px; align-items: center; } .pss app-donut { flex: none; }
-    .pss ::ng-deep .donut-mid b { font-size: 22px; } .pss ::ng-deep .donut-mid span { font-size: 12px; color: #3b3f5c; }
+    .pss ::ng-deep .donut-mid b { font-size: 22px; } .pss ::ng-deep .donut-mid span { font-size: 12px; color: var(--kf-3b3f5c); }
     .pss ul { list-style: none; margin: 0; padding: 0; flex: 1; min-width: 0; font-size: 10.5px; }
-    .pss li { display: flex; gap: 5px; align-items: center; padding: 9px 0; cursor: pointer; border-radius: 6px; } .pss li:hover { background: #f8f7fd; }
-    .pss li i { width: 9px; height: 9px; border-radius: 50%; flex: none; } .pss li em { flex: 1; font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .pss li b { font-weight: 600; } .pss li span { color: #4b4f6b; width: 36px; text-align: right; }
+    .pss li { display: flex; gap: 5px; align-items: center; padding: 9px 0; cursor: pointer; border-radius: 6px; } .pss li:hover { background: var(--kb-f8f7fd); }
+    .pss li i { width: 9px; height: 9px; border-radius: 50%; flex: none; } .pss li em { flex: 1; font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .pss li b { font-weight: 600; } .pss li span { color: var(--kf-4b4f6b); width: 36px; text-align: right; }
     .tleg { display: flex; gap: 14px; justify-content: center; font-size: 11px; margin-bottom: 2px; } .tleg button { display: flex; gap: 5px; align-items: center; border: 0; background: none; font: inherit; font-size: 11px; cursor: pointer; } .tleg button.off { opacity: .35; }
     .tleg i { width: 9px; height: 9px; border-radius: 50%; }
-    .tc { position: relative; } .tc svg { width: 100%; display: block; } .ax { font: 9px Inter, sans-serif; fill: #3b3f5c; }
-    .tip { position: absolute; top: 0; transform: translateX(-50%); background: #1e1b3a; color: #fff; border-radius: 6px; padding: 6px 8px; font-size: 11px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; white-space: nowrap; }
+    .tc { position: relative; } .tc svg { width: 100%; display: block; } .ax { font: 9px Inter, sans-serif; fill: var(--ka-3b3f5c); }
+    .tip { position: absolute; top: 0; transform: translateX(-50%); background: var(--kb-1e1b3a); color: var(--kf-ffffff); border-radius: 6px; padding: 6px 8px; font-size: 11px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; white-space: nowrap; }
     .tip i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; }
     .hz { list-style: none; margin: 0; padding: 0; } .hz li { display: grid; grid-template-columns: minmax(0, 1fr) 26px 100px; gap: 10px; align-items: center; padding: 6.5px 0; font-size: 11.5px; cursor: pointer; border-radius: 4px; }
     .hz li:hover span { color: var(--primary); } .hz li span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .hz b { text-align: right; } .hz .bar { height: 13px; border-radius: 2px; } .hz .bar i { border-radius: 2px; }
-    .livechip { display: inline-flex; gap: 6px; align-items: center; padding: 4px 10px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font: inherit; font-size: 11.5px; cursor: pointer; }
-    .livechip i { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; } .livechip.paused i { background: #9ca3af; }
+    .livechip { display: inline-flex; gap: 6px; align-items: center; padding: 4px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--kb-ffffff); font: inherit; font-size: 11.5px; cursor: pointer; }
+    .livechip i { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); } .livechip.paused i { background: var(--kb-9ca3af); }
     .env { list-style: none; margin: 0; padding: 0; } .env li { display: grid; grid-template-columns: 24px minmax(0, 1fr) 64px 58px; gap: 8px; align-items: center; padding: 8px 2px; font-size: 11.5px; cursor: pointer; border-radius: 6px; }
-    .env li:hover, .env li.open { background: #f8f7fd; } .env b { font-weight: 500; font-size: 12px; white-space: nowrap; } .env span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .env em { font-style: normal; text-align: center; padding: 3px 0; border-radius: 4px; background: #dcfce7; color: #15803d; font-size: 11px; } .env em.warn { background: #fef3c7; color: #b45309; }
+    .env li:hover, .env li.open { background: var(--kb-f8f7fd); } .env b { font-weight: 500; font-size: 12px; white-space: nowrap; } .env span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .env em { font-style: normal; text-align: center; padding: 3px 0; border-radius: 4px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 11px; } .env em.warn { background: var(--kb-fef3c7); color: var(--kf-b45309); }
     .env li.spk { display: block; cursor: default; padding: 2px 6px 8px; } .env li.spk app-sparkline { display: block; height: 30px; } .env li.spk small { color: var(--muted); font-size: 10.5px; }
     .wrap { flex-wrap: wrap; margin-bottom: 12px; display: flex; } .segs.wrap button { font-size: 11.5px; padding: 6px 9px; }
-    .plist { list-style: none; margin: 0; padding: 0; } .plist li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #f1f2f7; font-size: 12.5px; }
-    .plist li.done { opacity: .6; } .plist div { display: flex; flex-direction: column; } .plist small { color: var(--muted); font-size: 11.5px; } .plist .nt { color: #b45309; } .pa { flex-direction: row !important; gap: 6px; }
+    .plist { list-style: none; margin: 0; padding: 0; } .plist li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--kl-f1f2f7); font-size: 12.5px; }
+    .plist li.done { opacity: .6; } .plist div { display: flex; flex-direction: column; } .plist small { color: var(--muted); font-size: 11.5px; } .plist .nt { color: var(--kf-b45309); } .pa { flex-direction: row !important; gap: 6px; }
     .camv { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; } .bigcam { aspect-ratio: 16 / 11; border-radius: 8px; }
-    .det { display: flex; gap: 10px; padding: 10px; border-radius: 8px; background: #fef2f2; color: #b91c1c; } .det div { display: flex; flex-direction: column; font-size: 12.5px; } .det small { color: #7f1d1d; }
+    .det { display: flex; gap: 10px; padding: 10px; border-radius: 8px; background: var(--kb-fef2f2); color: var(--kf-b91c1c); } .det div { display: flex; flex-direction: column; font-size: 12.5px; } .det small { color: var(--kf-7f1d1d); }
     .cbtn { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .ta { height: 90px; padding-top: 8px; }
     @media (max-width: 1500px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .top { grid-template-columns: 1fr; } .bottom { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -368,7 +368,7 @@ export class SafetyCommandCenter {
   protected readonly labels = [
     { t: 'Production Area', x: 168, y: 104 }, { t: 'Warehouse', x: 372, y: 150 }, { t: 'Server Room', x: 500, y: 160 }, { t: 'Main Entrance', x: 345, y: 352 }, { t: 'Office Area', x: 82, y: 362 },
   ];
-  protected readonly tints: [number, number, number, number, string][] = [[300, 92, 140, 118, '#f59e0b'], [440, 120, 120, 90, '#3b82f6'], [300, 260, 90, 114, '#22c55e']];
+  protected readonly tints: [number, number, number, number, string][] = [[300, 92, 140, 118, 'var(--ka-f59e0b)'], [440, 120, 120, 90, 'var(--ka-3b82f6)'], [300, 260, 90, 114, 'var(--ka-22c55e)']];
 
   protected readonly menu = signal<string | null>(null);
   protected readonly site = signal('Head Office');
@@ -443,7 +443,7 @@ export class SafetyCommandCenter {
           x += (h % 50) - 25 + this.app.wobble(ps.id, 3);
           y += ((h * 7) % 40) - 20;
         }
-        out.push({ id: ps.id, x, y, kind: 'person', color: ps.status === 'Medical Attention' ? '#3b82f6' : '#22c55e', sel: this.selPerson() === ps.id, title: `${ps.name} · ${ps.note}` });
+        out.push({ id: ps.id, x, y, kind: 'person', color: ps.status === 'Medical Attention' ? 'var(--ka-3b82f6)' : 'var(--ka-22c55e)', sel: this.selPerson() === ps.id, title: `${ps.name} · ${ps.note}` });
       }
     }
     if (this.on('Hazard')) {
@@ -477,10 +477,10 @@ export class SafetyCommandCenter {
 
   /* ---------- widgets ---------- */
   protected readonly donut = computed(() => [
-    { label: 'Safe', value: this.p().safe, color: '#22c55e' },
-    { label: 'In Hazard Zone', value: this.p().zone, color: '#f59e0b' },
-    { label: 'Missing', value: this.p().missing, color: '#ef4444' },
-    { label: 'Medical Attention', value: this.p().medical, color: '#dc2626' },
+    { label: 'Safe', value: this.p().safe, color: 'var(--ka-22c55e)' },
+    { label: 'In Hazard Zone', value: this.p().zone, color: 'var(--ka-f59e0b)' },
+    { label: 'Missing', value: this.p().missing, color: 'var(--ka-ef4444)' },
+    { label: 'Medical Attention', value: this.p().medical, color: 'var(--ka-dc2626)' },
   ]);
   protected readonly trendScale = computed(() => (this.trendRange() === 'Last 24 Hours' ? 1 : this.trendRange() === 'Last 7 Days' ? 2 : 5));
   protected readonly trendSeries = computed(() => {
@@ -490,10 +490,10 @@ export class SafetyCommandCenter {
     const pick = (v: number[], m: number) => (k === 'Last 24 Hours' ? v : Array.from({ length: n }, (_, i) => Math.round(v[(i * 3 + 2) % v.length] * m * (0.8 + ((i * 7) % 5) / 10))));
     const m = this.trendScale();
     return [
-      { name: 'Total', color: '#8b5cf6', vals: pick(TREND.Total, m), labels },
-      { name: 'High', color: '#ef4444', vals: pick(TREND.High, m), labels },
-      { name: 'Medium', color: '#f59e0b', vals: pick(TREND.Medium, m), labels },
-      { name: 'Low', color: '#22c55e', vals: pick(TREND.Low, m), labels },
+      { name: 'Total', color: 'var(--ka-8b5cf6)', vals: pick(TREND.Total, m), labels },
+      { name: 'High', color: 'var(--ka-ef4444)', vals: pick(TREND.High, m), labels },
+      { name: 'Medium', color: 'var(--ka-f59e0b)', vals: pick(TREND.Medium, m), labels },
+      { name: 'Low', color: 'var(--ka-22c55e)', vals: pick(TREND.Low, m), labels },
     ];
   });
   protected readonly trendX = computed(() => {

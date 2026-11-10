@@ -9,19 +9,19 @@ import {
 type Range = 'Last 12 months' | 'Last 6 months' | 'Last 3 months';
 const RANGE_N: Record<Range, number> = { 'Last 12 months': 12, 'Last 6 months': 6, 'Last 3 months': 3 };
 const MODE_SPLIT = [
-  { name: 'Classroom', color: '#7c3aed', share: [0.44, 0.43, 0.41, 0.42, 0.4, 0.41, 0.39, 0.38, 0.4, 0.41, 0.39, 0.38] },
-  { name: 'E-learning', color: '#3b82f6', share: [0.26, 0.27, 0.28, 0.27, 0.29, 0.29, 0.31, 0.32, 0.3, 0.3, 0.31, 0.33] },
-  { name: 'Blended', color: '#f59e0b', share: [0.18, 0.18, 0.19, 0.19, 0.18, 0.18, 0.18, 0.18, 0.18, 0.17, 0.18, 0.17] },
-  { name: 'On-the-job', color: '#22c55e', share: [0.12, 0.12, 0.12, 0.12, 0.13, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12] },
+  { name: 'Classroom', color: 'var(--ka-7c3aed)', share: [0.44, 0.43, 0.41, 0.42, 0.4, 0.41, 0.39, 0.38, 0.4, 0.41, 0.39, 0.38] },
+  { name: 'E-learning', color: 'var(--ka-3b82f6)', share: [0.26, 0.27, 0.28, 0.27, 0.29, 0.29, 0.31, 0.32, 0.3, 0.3, 0.31, 0.33] },
+  { name: 'Blended', color: 'var(--ka-f59e0b)', share: [0.18, 0.18, 0.19, 0.19, 0.18, 0.18, 0.18, 0.18, 0.18, 0.17, 0.18, 0.17] },
+  { name: 'On-the-job', color: 'var(--ka-22c55e)', share: [0.12, 0.12, 0.12, 0.12, 0.13, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12] },
 ];
 /** Training intensity per department relative to head-count share. */
 const DEPT_INTENSITY: Record<string, number> = { Operations: 1.05, Maintenance: 1.35, Security: 1.1, Logistics: 1.0, Facilities: 0.8, HSE: 1.6, Production: 0.95, Administration: 0.45 };
 const COST_PER_HOUR = 21.5;
 const SPEND_CAT = [
-  { label: 'Safety', share: 0.46, color: '#ef4444' },
-  { label: 'Technical', share: 0.31, color: '#7c3aed' },
-  { label: 'Soft Skills', share: 0.15, color: '#3b82f6' },
-  { label: 'Compliance', share: 0.08, color: '#0d9488' },
+  { label: 'Safety', share: 0.46, color: 'var(--ka-ef4444)' },
+  { label: 'Technical', share: 0.31, color: 'var(--ka-7c3aed)' },
+  { label: 'Soft Skills', share: 0.15, color: 'var(--ka-3b82f6)' },
+  { label: 'Compliance', share: 0.08, color: 'var(--ka-0d9488)' },
 ];
 const QUARTER_BUDGET = [148000, 156000, 152000, 164000];
 
@@ -35,18 +35,18 @@ interface ReportDef {
   last: string;
 }
 const REPORTS: ReportDef[] = [
-  { id: 'hours', name: 'Training Hours Summary', cat: 'Training', icon: 'clock', color: '#7c3aed', desc: 'Monthly learning hours by delivery mode and department.', last: iso(-1) },
-  { id: 'spend', name: 'Training Spend by Category', cat: 'Finance', icon: 'chart-line', color: '#0d9488', desc: 'Actual spend vs budget by month, category and cost centre.', last: iso(-6) },
-  { id: 'completion', name: 'Course Completion Report', cat: 'Training', icon: 'training-check', color: '#22c55e', desc: 'All enrolments with status, progress, due date and score.', last: iso(0) },
-  { id: 'compliance', name: 'Mandatory Compliance Report', cat: 'Compliance', icon: 'shield-check', color: '#16a34a', desc: 'Compliance % and open gaps for every regulatory requirement.', last: iso(-3) },
-  { id: 'gaps', name: 'Non-Compliance Detail', cat: 'Compliance', icon: 'triangle-alert', color: '#ef4444', desc: 'Employee-level list of open gaps with reason and age.', last: iso(-3) },
-  { id: 'expiry', name: 'Certification Expiry (90 days)', cat: 'Compliance', icon: 'id-card', color: '#f59e0b', desc: 'Certificates and licences expiring in the next 90 days.', last: iso(-1) },
-  { id: 'gap', name: 'Skill Gap Analysis', cat: 'Skills', icon: 'training-target', color: '#db2777', desc: 'Employees below required proficiency per skill with linked course.', last: iso(-14) },
-  { id: 'matrix', name: 'Competency Matrix Export', cat: 'Skills', icon: 'training-matrix', color: '#4f46e5', desc: 'Full skills matrix with levels for every tracked employee.', last: iso(-8) },
-  { id: 'assess', name: 'Assessment Results', cat: 'Skills', icon: 'training-quiz', color: '#2563eb', desc: 'Quiz attempts, scores and pass / fail outcomes.', last: iso(-2) },
-  { id: 'paths', name: 'Learning Path Progress', cat: 'Training', icon: 'workflow', color: '#ca8a04', desc: 'Learner progress through each structured learning path.', last: iso(-10) },
-  { id: 'trainer', name: 'Trainer & Session Utilisation', cat: 'Training', icon: 'users', color: '#475569', desc: 'Upcoming sessions, seats booked and fill rate per trainer.', last: iso(-5) },
-  { id: 'record', name: 'Individual Training Record', cat: 'Training', icon: 'file-text', color: '#6d28d9', desc: 'Complete history of courses, certificates and skills for one employee.', last: iso(-4) },
+  { id: 'hours', name: 'Training Hours Summary', cat: 'Training', icon: 'clock', color: 'var(--ka-7c3aed)', desc: 'Monthly learning hours by delivery mode and department.', last: iso(-1) },
+  { id: 'spend', name: 'Training Spend by Category', cat: 'Finance', icon: 'chart-line', color: 'var(--ka-0d9488)', desc: 'Actual spend vs budget by month, category and cost centre.', last: iso(-6) },
+  { id: 'completion', name: 'Course Completion Report', cat: 'Training', icon: 'training-check', color: 'var(--ka-22c55e)', desc: 'All enrolments with status, progress, due date and score.', last: iso(0) },
+  { id: 'compliance', name: 'Mandatory Compliance Report', cat: 'Compliance', icon: 'shield-check', color: 'var(--ka-16a34a)', desc: 'Compliance % and open gaps for every regulatory requirement.', last: iso(-3) },
+  { id: 'gaps', name: 'Non-Compliance Detail', cat: 'Compliance', icon: 'triangle-alert', color: 'var(--ka-ef4444)', desc: 'Employee-level list of open gaps with reason and age.', last: iso(-3) },
+  { id: 'expiry', name: 'Certification Expiry (90 days)', cat: 'Compliance', icon: 'id-card', color: 'var(--ka-f59e0b)', desc: 'Certificates and licences expiring in the next 90 days.', last: iso(-1) },
+  { id: 'gap', name: 'Skill Gap Analysis', cat: 'Skills', icon: 'training-target', color: 'var(--ka-db2777)', desc: 'Employees below required proficiency per skill with linked course.', last: iso(-14) },
+  { id: 'matrix', name: 'Competency Matrix Export', cat: 'Skills', icon: 'training-matrix', color: 'var(--ka-4f46e5)', desc: 'Full skills matrix with levels for every tracked employee.', last: iso(-8) },
+  { id: 'assess', name: 'Assessment Results', cat: 'Skills', icon: 'training-quiz', color: 'var(--ka-2563eb)', desc: 'Quiz attempts, scores and pass / fail outcomes.', last: iso(-2) },
+  { id: 'paths', name: 'Learning Path Progress', cat: 'Training', icon: 'workflow', color: 'var(--ka-ca8a04)', desc: 'Learner progress through each structured learning path.', last: iso(-10) },
+  { id: 'trainer', name: 'Trainer & Session Utilisation', cat: 'Training', icon: 'users', color: 'var(--ka-475569)', desc: 'Upcoming sessions, seats booked and fill rate per trainer.', last: iso(-5) },
+  { id: 'record', name: 'Individual Training Record', cat: 'Training', icon: 'file-text', color: 'var(--ka-6d28d9)', desc: 'Complete history of courses, certificates and skills for one employee.', last: iso(-4) },
 ];
 
 @Component({
@@ -61,11 +61,11 @@ const REPORTS: ReportDef[] = [
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Training Hours" [value]="fmt(k().hours)" icon="clock" color="#7c3aed" [change]="k().hoursChg + '%'" [up]="k().hoursChg >= 0" sub="vs. prior period" />
-      <app-kpi label="Training Spend" [value]="'$' + fmt(k().spend)" icon="chart-line" color="#0d9488" [sub]="k().budgetPct + '% of budget · $' + k().cph + '/hour'" [subColor]="k().budgetPct > 100 ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Completion Rate" [value]="k().completion + '%'" icon="training-check" color="#22c55e" [change]="k().compChg + ' pts'" sub="vs. start of period" />
-      <app-kpi label="Hours / Employee" [value]="k().perEmp" icon="users" color="#3b82f6" [sub]="fmt(k().heads) + ' employees in scope'" />
-      <app-kpi label="Compliance" [value]="store.compliancePct() + '%'" icon="shield-check" color="#f59e0b" sub="live · target 95%" />
+      <app-kpi label="Training Hours" [value]="fmt(k().hours)" icon="clock" color="var(--ka-7c3aed)" [change]="k().hoursChg + '%'" [up]="k().hoursChg >= 0" sub="vs. prior period" />
+      <app-kpi label="Training Spend" [value]="'$' + fmt(k().spend)" icon="chart-line" color="var(--ka-0d9488)" [sub]="k().budgetPct + '% of budget · $' + k().cph + '/hour'" [subColor]="k().budgetPct > 100 ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Completion Rate" [value]="k().completion + '%'" icon="training-check" color="var(--ka-22c55e)" [change]="k().compChg + ' pts'" sub="vs. start of period" />
+      <app-kpi label="Hours / Employee" [value]="k().perEmp" icon="users" color="var(--ka-3b82f6)" [sub]="fmt(k().heads) + ' employees in scope'" />
+      <app-kpi label="Compliance" [value]="store.compliancePct() + '%'" icon="shield-check" color="var(--ka-f59e0b)" sub="live · target 95%" />
     </section>
 
     <section class="dash">
@@ -132,7 +132,7 @@ const REPORTS: ReportDef[] = [
           @for (r of shown(); track r.id) {
             <article class="rc">
               <div class="rh">
-                <span class="ri" [style.background]="r.color + '1c'" [style.color]="r.color"><app-icon [name]="r.icon" [size]="18" /></span>
+                <span class="ri" [style.background]="'color-mix(in srgb, ' + r.color + ' 11%, transparent)'" [style.color]="r.color"><app-icon [name]="r.icon" [size]="18" /></span>
                 <div><b>{{ r.name }}</b><small>{{ r.cat }} · last run {{ fd(lastRun()[r.id] ?? r.last) }}@if (isScheduled(r.id)) { · <em class="sch">scheduled</em>}</small></div>
                 <button class="star" [class.on]="favs().includes(r.id)" (click)="toggleFav(r.id)" [title]="favs().includes(r.id) ? 'Unpin' : 'Pin'">★</button>
               </div>
@@ -203,9 +203,9 @@ const REPORTS: ReportDef[] = [
     .hd { list-style: none; margin: 0; padding: 0; }
     .hd li { display: grid; grid-template-columns: 100px 1fr 54px 64px; gap: 8px; align-items: center; padding: 5px 6px; border-radius: 6px; font-size: 12px; cursor: pointer; }
     .hd li:hover, .hd li.on { background: var(--primary-soft); } .hd b { text-align: right; } .hd small { color: var(--muted); font-size: 10.5px; text-align: right; }
-    .hb { height: 7px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .hb i { display: block; height: 100%; background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+    .hb { height: 7px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .hb i { display: block; height: 100%; background: linear-gradient(90deg, var(--kb-8b5cf6), var(--kb-6d28d9)); }
     .tc { font-size: 12.5px; border-collapse: collapse; } .tc th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11.5px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
-    .tc td { padding: 7px 8px; border-bottom: 1px solid #f0f1f6; } .tc .num { text-align: right; } .tc small { color: var(--muted); }
+    .tc td { padding: 7px 8px; border-bottom: 1px solid var(--kl-f0f1f6); } .tc .num { text-align: right; } .tc small { color: var(--muted); }
     .cd { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
     .rep { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; align-items: start; }
     .rbar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -213,15 +213,15 @@ const REPORTS: ReportDef[] = [
     .rc { border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow .15s; } .rc:hover { box-shadow: 0 4px 14px rgba(40, 30, 90, .08); }
     .rh { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .rh > div { display: flex; flex-direction: column; min-width: 0; } .rh b { font-size: 13px; } .rh small { color: var(--muted); font-size: 11px; }
     .ri { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; }
-    .star { border: 0; background: none; font-size: 17px; color: #d8dbe6; cursor: pointer; } .star.on { color: #f59e0b; }
-    .rc p { margin: 0; font-size: 12px; color: #4b4f6b; flex: 1; }
-    .ra { display: flex; gap: 6px; justify-content: flex-end; align-items: center; flex-wrap: wrap; } .sch { font-style: normal; color: #2563eb; font-weight: 600; } .rh b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ra button { display: inline-flex; align-items: center; gap: 4px; }
-    .sl { list-style: none; margin: 0; padding: 0; } .sl li { display: flex; justify-content: space-between; gap: 8px; padding: 9px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .star { border: 0; background: none; font-size: 17px; color: var(--kf-d8dbe6); cursor: pointer; } .star.on { color: var(--kf-f59e0b); }
+    .rc p { margin: 0; font-size: 12px; color: var(--kf-4b4f6b); flex: 1; }
+    .ra { display: flex; gap: 6px; justify-content: flex-end; align-items: center; flex-wrap: wrap; } .sch { font-style: normal; color: var(--kf-2563eb); font-weight: 600; } .rh b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ra button { display: inline-flex; align-items: center; gap: 4px; }
+    .sl { list-style: none; margin: 0; padding: 0; } .sl li { display: flex; justify-content: space-between; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .sl li.off { opacity: .55; } .sl li > div:first-child { display: flex; flex-direction: column; min-width: 0; } .sl small { color: var(--muted); font-size: 11px; }
     .sa { display: flex; flex-direction: column; gap: 2px; align-items: flex-end; } .danger { color: var(--red) !important; }
     .pvw { overflow: auto; max-height: 52vh; border: 1px solid var(--border); border-radius: 8px; }
-    .pvw table { border-collapse: collapse; font-size: 12px; } .pvw th { position: sticky; top: 0; background: #f7f7fb; text-align: left; padding: 7px 9px; font-weight: 600; white-space: nowrap; }
-    .pvw td { padding: 6px 9px; border-top: 1px solid #f0f1f6; white-space: nowrap; }
+    .pvw table { border-collapse: collapse; font-size: 12px; } .pvw th { position: sticky; top: 0; background: var(--kb-f7f7fb); text-align: left; padding: 7px 9px; font-weight: 600; white-space: nowrap; }
+    .pvw td { padding: 6px 9px; border-top: 1px solid var(--kl-f0f1f6); white-space: nowrap; }
     .emp { display: flex; flex-direction: column; gap: 4px; font-size: 12px; max-width: 320px; margin-bottom: 10px; }
     @media (max-width: 1250px) { .rep { grid-template-columns: 1fr; } }
   `,
@@ -277,9 +277,9 @@ export class TrnReportsAnalytics extends TrnPage {
   protected readonly trendSeries = computed<Series[]>(() => {
     const n = this.n();
     return [
-      { name: 'Completion', color: '#22c55e', area: true, values: COMPLETION_TREND.slice(12 - n) },
-      { name: 'Compliance', color: '#7c3aed', values: [...COMPLIANCE_TREND.slice(0, 11), this.store.compliancePct()].slice(12 - n) },
-      { name: 'Target', color: '#94a3b8', dashed: true, values: Array(n).fill(95) },
+      { name: 'Completion', color: 'var(--ka-22c55e)', area: true, values: COMPLETION_TREND.slice(12 - n) },
+      { name: 'Compliance', color: 'var(--ka-7c3aed)', values: [...COMPLIANCE_TREND.slice(0, 11), this.store.compliancePct()].slice(12 - n) },
+      { name: 'Target', color: 'var(--ka-94a3b8)', dashed: true, values: Array(n).fill(95) },
     ];
   });
   protected readonly gapRows = computed(() =>
@@ -297,7 +297,7 @@ export class TrnReportsAnalytics extends TrnPage {
     const h = HOURS_BY_MONTH;
     const f = this.factor();
     const actual = [0, 1, 2, 3].map((q) => Math.round(h.slice(q * 3, q * 3 + 3).reduce((a, x) => a + x, 0) * COST_PER_HOUR * f));
-    return [{ name: 'Budget', color: '#c4b5fd', values: QUARTER_BUDGET.map((b) => Math.round(b * f)) }, { name: 'Actual', color: '#7c3aed', values: actual }];
+    return [{ name: 'Budget', color: 'var(--ka-c4b5fd)', values: QUARTER_BUDGET.map((b) => Math.round(b * f)) }, { name: 'Actual', color: 'var(--ka-7c3aed)', values: actual }];
   });
   protected readonly topCourses = computed(() => {
     const d = this.dept();

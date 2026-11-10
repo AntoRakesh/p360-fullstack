@@ -7,27 +7,27 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
   template: `
     <svg viewBox="0 0 320 240" preserveAspectRatio="xMidYMid slice">
       <rect width="320" height="240" [attr.fill]="sky()" />
-      <rect width="320" height="22" fill="#4b5563" />
-      <g stroke="#5b6573" stroke-width="4" opacity=".85">
+      <rect width="320" height="22" fill="var(--ka-4b5563)" />
+      <g stroke="var(--kl-5b6573)" stroke-width="4" opacity=".85">
         @for (x of posts(); track x) {<path [attr.d]="'M' + x + ' 22v128'" />}
         <path d="M0 80h320" />
       </g>
       <path d="M0 150h320v90H0z" [attr.fill]="floor()" />
-      <path d="M0 240 130 150h60l130 90" fill="#cbd2da" opacity=".5" />
+      <path d="M0 240 130 150h60l130 90" fill="var(--ka-cbd2da)" opacity=".5" />
       @if (variant() % 2 === 0) {
-        <g fill="#3f7d4a"><ellipse cx="6" cy="110" rx="22" ry="60" /><ellipse cx="314" cy="104" rx="20" ry="62" /></g>
+        <g fill="var(--ka-3f7d4a)"><ellipse cx="6" cy="110" rx="22" ry="60" /><ellipse cx="314" cy="104" rx="20" ry="62" /></g>
       }
       @if (variant() === 1 || variant() === 4) {
-        <g fill="#9ca3af"><rect x="40" y="165" width="70" height="22" rx="3" /><rect x="210" y="165" width="70" height="22" rx="3" /></g>
+        <g fill="var(--ka-9ca3af)"><rect x="40" y="165" width="70" height="22" rx="3" /><rect x="210" y="165" width="70" height="22" rx="3" /></g>
       }
-      <g fill="#1f2937" [attr.transform]="'translate(' + shift() + ' 0)'">
+      <g fill="var(--ka-1f2937)" [attr.transform]="'translate(' + shift() + ' 0)'">
         @for (p of people(); track $index) {
           <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="p.s" />
           <rect [attr.x]="p.x - p.s * 1.25" [attr.y]="p.y + p.s + 1" [attr.width]="p.s * 2.5" [attr.height]="p.s * 6" [attr.rx]="p.s" />
         }
       </g>
       @if (box()) {
-        <rect [attr.x]="people()[0].x - people()[0].s * 1.6 + shift()" [attr.y]="people()[0].y - people()[0].s * 1.5" [attr.width]="people()[0].s * 3.2" [attr.height]="people()[0].s * 3.4" fill="none" stroke="#22c55e" stroke-width="2.5" />
+        <rect [attr.x]="people()[0].x - people()[0].s * 1.6 + shift()" [attr.y]="people()[0].y - people()[0].s * 1.5" [attr.width]="people()[0].s * 3.2" [attr.height]="people()[0].s * 3.4" fill="none" stroke="var(--kl-22c55e)" stroke-width="2.5" />
       }
     </svg>
   `,
@@ -37,9 +37,9 @@ export class CamScene {
   readonly variant = input(0);
   readonly box = input(false);
   readonly tick = input(0);
-  private readonly tints = ['#9fb7c8', '#b8a58a', '#9aa6b8', '#a9b9a3', '#b3a8c9'];
+  private readonly tints = ['var(--ka-9fb7c8)', 'var(--ka-b8a58a)', 'var(--ka-9aa6b8)', 'var(--ka-a9b9a3)', 'var(--ka-b3a8c9)'];
   protected readonly sky = computed(() => this.tints[this.variant() % this.tints.length]);
-  protected readonly floor = computed(() => ['#aab3bd', '#b9b2a6', '#9ea7b2', '#aab4a6', '#b0aac0'][this.variant() % 5]);
+  protected readonly floor = computed(() => ['var(--ka-aab3bd)', 'var(--ka-b9b2a6)', 'var(--ka-9ea7b2)', 'var(--ka-aab4a6)', 'var(--ka-b0aac0)'][this.variant() % 5]);
   protected readonly posts = computed(() => (this.variant() % 2 ? [40, 120, 200, 280] : [30, 110, 190, 270]));
   protected readonly shift = computed(() => (this.tick() % 6) - 3);
   protected readonly people = computed(() => {

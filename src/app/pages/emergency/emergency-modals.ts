@@ -47,8 +47,8 @@ export const TEMPLATES: Record<string, string> = {
     @if (msg()) {<div class="g-toast">{{ msg() }}</div>}
   `,
   styles: `
-    .warn { padding: 10px 12px; border-radius: 8px; background: #fef3c7; color: #92400e; font-size: 13px; margin-bottom: 10px; }
-    .btn-danger { height: 38px; padding: 0 18px; border: 0; border-radius: 8px; background: #e11d2e; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+    .warn { padding: 10px 12px; border-radius: 8px; background: var(--kb-fef3c7); color: var(--kf-92400e); font-size: 13px; margin-bottom: 10px; }
+    .btn-danger { height: 38px; padding: 0 18px; border: 0; border-radius: 8px; background: var(--kb-e11d2e); color: var(--kf-ffffff); font: inherit; font-weight: 600; cursor: pointer; }
     textarea.input { height: auto; padding: 8px 10px; font: inherit; resize: vertical; }
     .chs { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; margin: 10px 0; } .chs label { display: flex; gap: 6px; align-items: center; } .chs input { accent-color: var(--primary); }
   `,

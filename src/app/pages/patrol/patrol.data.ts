@@ -55,21 +55,21 @@ export interface Guard {
 }
 
 export const CERT_TYPES: CertType[] = [
-  { key: 'sira', name: 'SIRA Security License', color: '#ef4444', shape: 'shield', icon: 'shield-check', validity: 24, mandatory: true },
-  { key: 'cctv', name: 'CCTV Operator Certificate', color: '#3b82f6', shape: 'circle', icon: 'eye', validity: 24, mandatory: false },
-  { key: 'firstaid', name: 'First Aid Certification', color: '#22c55e', shape: 'circle', icon: 'plus', validity: 24, mandatory: true },
-  { key: 'fire', name: 'Fire Safety Training', color: '#f43f5e', shape: 'circle', icon: 'flame', validity: 12, mandatory: true },
-  { key: 'health', name: 'Health & Fitness Certificate', color: '#f59e0b', shape: 'shield', icon: 'heart', validity: 12, mandatory: true },
-  { key: 'crowd', name: 'Crowd Management', color: '#7c3aed', shape: 'shield', icon: 'users', validity: 36, mandatory: false },
-  { key: 'tactics', name: 'Defensive Tactics', color: '#2563eb', shape: 'circle', icon: 'star', validity: 24, mandatory: false },
+  { key: 'sira', name: 'SIRA Security License', color: 'var(--ka-ef4444)', shape: 'shield', icon: 'shield-check', validity: 24, mandatory: true },
+  { key: 'cctv', name: 'CCTV Operator Certificate', color: 'var(--ka-3b82f6)', shape: 'circle', icon: 'eye', validity: 24, mandatory: false },
+  { key: 'firstaid', name: 'First Aid Certification', color: 'var(--ka-22c55e)', shape: 'circle', icon: 'plus', validity: 24, mandatory: true },
+  { key: 'fire', name: 'Fire Safety Training', color: 'var(--ka-f43f5e)', shape: 'circle', icon: 'flame', validity: 12, mandatory: true },
+  { key: 'health', name: 'Health & Fitness Certificate', color: 'var(--ka-f59e0b)', shape: 'shield', icon: 'heart', validity: 12, mandatory: true },
+  { key: 'crowd', name: 'Crowd Management', color: 'var(--ka-7c3aed)', shape: 'shield', icon: 'users', validity: 36, mandatory: false },
+  { key: 'tactics', name: 'Defensive Tactics', color: 'var(--ka-2563eb)', shape: 'circle', icon: 'star', validity: 24, mandatory: false },
 ];
 export const certType = (k: string) => CERT_TYPES.find((c) => c.key === k)!;
 
 export const SHIFTS: Record<ShiftKey, { label: string; time: string; color: string; code: string }> = {
-  Day: { label: 'Day Shift', time: '06:00 - 14:00', color: '#f59e0b', code: 'D' },
-  Evening: { label: 'Evening Shift', time: '14:00 - 22:00', color: '#8b5cf6', code: 'E' },
-  Night: { label: 'Night Shift', time: '22:00 - 06:00', color: '#3b82f6', code: 'N' },
-  Rotational: { label: 'Rotational', time: '', color: '#14b8a6', code: 'R' },
+  Day: { label: 'Day Shift', time: '06:00 - 14:00', color: 'var(--ka-f59e0b)', code: 'D' },
+  Evening: { label: 'Evening Shift', time: '14:00 - 22:00', color: 'var(--ka-8b5cf6)', code: 'E' },
+  Night: { label: 'Night Shift', time: '22:00 - 06:00', color: 'var(--ka-3b82f6)', code: 'N' },
+  Rotational: { label: 'Rotational', time: '', color: 'var(--ka-14b8a6)', code: 'R' },
 };
 
 export interface SecCompany {
@@ -94,14 +94,14 @@ export interface SecCompany {
   status: 'Active' | 'Under Review' | 'Renewal Due';
 }
 export const SEC_COMPANIES: SecCompany[] = [
-  { name: 'SecureTech', short: 'ST', color: '#7c3aed', guards: 96, type: 'Contract', contractNo: 'SC-2024-011', start: '2024-01-01', end: '2027-12-31', rate: 38, monthly: 612000, sla: 97.4, slaTarget: 95, contact: 'Omar Haddad', phone: '+971 4 331 2200', email: 'ops@securetech.ae', license: 'SIRA-CO-1182', licenseExpiry: '2027-06-30', rating: 4.6, status: 'Active' },
-  { name: 'Falcon Security', short: 'FS', color: '#2563eb', guards: 68, type: 'Contract', contractNo: 'SC-2023-027', start: '2023-07-01', end: '2026-12-31', rate: 36, monthly: 412000, sla: 94.1, slaTarget: 95, contact: 'Grace Park', phone: '+971 4 288 9010', email: 'control@falconsec.ae', license: 'SIRA-CO-0947', licenseExpiry: '2027-02-28', rating: 4.2, status: 'Renewal Due' },
-  { name: 'Alpha Security', short: 'AS', color: '#0d9488', guards: 52, type: 'Contract', contractNo: 'SC-2025-004', start: '2025-03-01', end: '2028-02-29', rate: 35, monthly: 305000, sla: 96.2, slaTarget: 95, contact: 'Ravi Shankar', phone: '+971 4 445 1180', email: 'hello@alphasecurity.ae', license: 'SIRA-CO-1420', licenseExpiry: '2027-09-30', rating: 4.4, status: 'Active' },
-  { name: 'Guardian Shield', short: 'GS', color: '#ea580c', guards: 20, type: 'Licensed Vendor', contractNo: 'SC-2026-002', start: '2026-02-01', end: '2027-01-31', rate: 40, monthly: 132000, sla: 91.8, slaTarget: 95, contact: 'Layla Haddad', phone: '+971 4 512 7700', email: 'desk@guardianshield.ae', license: 'SIRA-CO-1566', licenseExpiry: '2026-12-15', rating: 3.9, status: 'Under Review' },
-  { name: 'Eagle Eye Services', short: 'EE', color: '#db2777', guards: 12, type: 'Licensed Vendor', contractNo: 'SC-2026-009', start: '2026-06-01', end: '2027-05-31', rate: 42, monthly: 83000, sla: 98.1, slaTarget: 95, contact: 'Kenji Sato', phone: '+971 4 360 4411', email: 'ops@eagleeye.ae', license: 'SIRA-CO-1603', licenseExpiry: '2028-01-31', rating: 4.7, status: 'Active' },
+  { name: 'SecureTech', short: 'ST', color: 'var(--ka-7c3aed)', guards: 96, type: 'Contract', contractNo: 'SC-2024-011', start: '2024-01-01', end: '2027-12-31', rate: 38, monthly: 612000, sla: 97.4, slaTarget: 95, contact: 'Omar Haddad', phone: '+971 4 331 2200', email: 'ops@securetech.ae', license: 'SIRA-CO-1182', licenseExpiry: '2027-06-30', rating: 4.6, status: 'Active' },
+  { name: 'Falcon Security', short: 'FS', color: 'var(--ka-2563eb)', guards: 68, type: 'Contract', contractNo: 'SC-2023-027', start: '2023-07-01', end: '2026-12-31', rate: 36, monthly: 412000, sla: 94.1, slaTarget: 95, contact: 'Grace Park', phone: '+971 4 288 9010', email: 'control@falconsec.ae', license: 'SIRA-CO-0947', licenseExpiry: '2027-02-28', rating: 4.2, status: 'Renewal Due' },
+  { name: 'Alpha Security', short: 'AS', color: 'var(--ka-0d9488)', guards: 52, type: 'Contract', contractNo: 'SC-2025-004', start: '2025-03-01', end: '2028-02-29', rate: 35, monthly: 305000, sla: 96.2, slaTarget: 95, contact: 'Ravi Shankar', phone: '+971 4 445 1180', email: 'hello@alphasecurity.ae', license: 'SIRA-CO-1420', licenseExpiry: '2027-09-30', rating: 4.4, status: 'Active' },
+  { name: 'Guardian Shield', short: 'GS', color: 'var(--ka-ea580c)', guards: 20, type: 'Licensed Vendor', contractNo: 'SC-2026-002', start: '2026-02-01', end: '2027-01-31', rate: 40, monthly: 132000, sla: 91.8, slaTarget: 95, contact: 'Layla Haddad', phone: '+971 4 512 7700', email: 'desk@guardianshield.ae', license: 'SIRA-CO-1566', licenseExpiry: '2026-12-15', rating: 3.9, status: 'Under Review' },
+  { name: 'Eagle Eye Services', short: 'EE', color: 'var(--ka-db2777)', guards: 12, type: 'Licensed Vendor', contractNo: 'SC-2026-009', start: '2026-06-01', end: '2027-05-31', rate: 42, monthly: 83000, sla: 98.1, slaTarget: 95, contact: 'Kenji Sato', phone: '+971 4 360 4411', email: 'ops@eagleeye.ae', license: 'SIRA-CO-1603', licenseExpiry: '2028-01-31', rating: 4.7, status: 'Active' },
 ];
 export const COMPANY_NAMES = SEC_COMPANIES.map((c) => c.name);
-export const companyColor = (n: string) => SEC_COMPANIES.find((c) => c.name === n)?.color ?? '#64748b';
+export const companyColor = (n: string) => SEC_COMPANIES.find((c) => c.name === n)?.color ?? 'var(--ka-64748b)';
 
 /* ---------- Site & posts (campus map 1000 × 560) ---------- */
 export const SITE_NAMES = ['Head Office', 'Manufacturing Plant', 'Warehouse', 'Logistics Hub', 'Data Center'];
@@ -118,22 +118,22 @@ export interface Post {
   risk: 'High' | 'Medium' | 'Low';
 }
 export const POSTS: Post[] = [
-  { id: 'wg', name: 'West Gate', site: 'Head Office', x: 40, y: 40, w: 100, h: 150, color: '#3b82f6', required: 3, risk: 'Medium' },
-  { id: 'ho', name: 'Head Office', site: 'Head Office', x: 150, y: 40, w: 220, h: 150, color: '#7c3aed', required: 8, risk: 'Medium' },
-  { id: 'ew', name: 'East Wing', site: 'Head Office', x: 380, y: 40, w: 160, h: 150, color: '#8b5cf6', required: 4, risk: 'Low' },
-  { id: 'dc', name: 'Data Center', site: 'Data Center', x: 560, y: 40, w: 160, h: 150, color: '#ef4444', required: 6, risk: 'High' },
-  { id: 'sh', name: 'Server Hall', site: 'Data Center', x: 730, y: 40, w: 120, h: 150, color: '#f43f5e', required: 3, risk: 'High' },
-  { id: 'mg', name: 'Main Gate', site: 'Head Office', x: 40, y: 210, w: 100, h: 150, color: '#3b82f6', required: 6, risk: 'High' },
-  { id: 'rc', name: 'Reception', site: 'Head Office', x: 150, y: 210, w: 110, h: 150, color: '#8b5cf6', required: 3, risk: 'Low' },
-  { id: 'pk', name: 'Parking Area', site: 'Head Office', x: 270, y: 210, w: 270, h: 150, color: '#94a3b8', required: 5, risk: 'Medium' },
-  { id: 'pa', name: 'Production Area', site: 'Manufacturing Plant', x: 560, y: 210, w: 290, h: 150, color: '#f59e0b', required: 9, risk: 'Medium' },
-  { id: 'cr', name: 'Control Room', site: 'Head Office', x: 860, y: 40, w: 100, h: 320, color: '#22c55e', required: 4, risk: 'High' },
-  { id: 'me', name: 'Main Entrance', site: 'Manufacturing Plant', x: 40, y: 380, w: 100, h: 150, color: '#3b82f6', required: 4, risk: 'Medium' },
-  { id: 'wh', name: 'Warehouse', site: 'Warehouse', x: 150, y: 380, w: 220, h: 150, color: '#0d9488', required: 7, risk: 'Medium' },
-  { id: 'cs', name: 'Cold Store', site: 'Warehouse', x: 380, y: 380, w: 160, h: 150, color: '#06b6d4', required: 2, risk: 'Low' },
-  { id: 'lb', name: 'Loading Bay', site: 'Manufacturing Plant', x: 560, y: 380, w: 130, h: 150, color: '#f97316', required: 3, risk: 'Medium' },
-  { id: 'ly', name: 'Logistics Yard', site: 'Logistics Hub', x: 700, y: 380, w: 150, h: 150, color: '#ea580c', required: 5, risk: 'Medium' },
-  { id: 'fg', name: 'Fleet Gate', site: 'Logistics Hub', x: 860, y: 380, w: 100, h: 150, color: '#3b82f6', required: 3, risk: 'Medium' },
+  { id: 'wg', name: 'West Gate', site: 'Head Office', x: 40, y: 40, w: 100, h: 150, color: 'var(--ka-3b82f6)', required: 3, risk: 'Medium' },
+  { id: 'ho', name: 'Head Office', site: 'Head Office', x: 150, y: 40, w: 220, h: 150, color: 'var(--ka-7c3aed)', required: 8, risk: 'Medium' },
+  { id: 'ew', name: 'East Wing', site: 'Head Office', x: 380, y: 40, w: 160, h: 150, color: 'var(--ka-8b5cf6)', required: 4, risk: 'Low' },
+  { id: 'dc', name: 'Data Center', site: 'Data Center', x: 560, y: 40, w: 160, h: 150, color: 'var(--ka-ef4444)', required: 6, risk: 'High' },
+  { id: 'sh', name: 'Server Hall', site: 'Data Center', x: 730, y: 40, w: 120, h: 150, color: 'var(--ka-f43f5e)', required: 3, risk: 'High' },
+  { id: 'mg', name: 'Main Gate', site: 'Head Office', x: 40, y: 210, w: 100, h: 150, color: 'var(--ka-3b82f6)', required: 6, risk: 'High' },
+  { id: 'rc', name: 'Reception', site: 'Head Office', x: 150, y: 210, w: 110, h: 150, color: 'var(--ka-8b5cf6)', required: 3, risk: 'Low' },
+  { id: 'pk', name: 'Parking Area', site: 'Head Office', x: 270, y: 210, w: 270, h: 150, color: 'var(--ka-94a3b8)', required: 5, risk: 'Medium' },
+  { id: 'pa', name: 'Production Area', site: 'Manufacturing Plant', x: 560, y: 210, w: 290, h: 150, color: 'var(--ka-f59e0b)', required: 9, risk: 'Medium' },
+  { id: 'cr', name: 'Control Room', site: 'Head Office', x: 860, y: 40, w: 100, h: 320, color: 'var(--ka-22c55e)', required: 4, risk: 'High' },
+  { id: 'me', name: 'Main Entrance', site: 'Manufacturing Plant', x: 40, y: 380, w: 100, h: 150, color: 'var(--ka-3b82f6)', required: 4, risk: 'Medium' },
+  { id: 'wh', name: 'Warehouse', site: 'Warehouse', x: 150, y: 380, w: 220, h: 150, color: 'var(--ka-0d9488)', required: 7, risk: 'Medium' },
+  { id: 'cs', name: 'Cold Store', site: 'Warehouse', x: 380, y: 380, w: 160, h: 150, color: 'var(--ka-06b6d4)', required: 2, risk: 'Low' },
+  { id: 'lb', name: 'Loading Bay', site: 'Manufacturing Plant', x: 560, y: 380, w: 130, h: 150, color: 'var(--ka-f97316)', required: 3, risk: 'Medium' },
+  { id: 'ly', name: 'Logistics Yard', site: 'Logistics Hub', x: 700, y: 380, w: 150, h: 150, color: 'var(--ka-ea580c)', required: 5, risk: 'Medium' },
+  { id: 'fg', name: 'Fleet Gate', site: 'Logistics Hub', x: 860, y: 380, w: 100, h: 150, color: 'var(--ka-3b82f6)', required: 3, risk: 'Medium' },
 ];
 export const postByName = (n: string) => POSTS.find((p) => p.name === n) ?? POSTS[1];
 export const POST_ZONES: MapZone[] = POSTS.map((p) => ({ id: p.id, name: p.name, x: p.x, y: p.y, w: p.w, h: p.h, color: p.color, fill: 0.12, kind: p.id === 'pk' || p.id === 'ly' ? 'open' : undefined }));
@@ -326,13 +326,13 @@ export interface PatrolRoute {
   compliance: number;
 }
 export const ROUTES_SEED: PatrolRoute[] = [
-  { id: 'RT-01', name: 'Perimeter Patrol', site: 'Head Office', checkpoints: ['CP-01', 'CP-02', 'CP-03', 'CP-16', 'CP-17', 'CP-21', 'CP-23', 'CP-22'], frequency: 'Every 2 hours', duration: 45, shift: 'All', color: '#7c3aed', active: true, compliance: 96 },
-  { id: 'RT-02', name: 'Head Office Internal', site: 'Head Office', checkpoints: ['CP-04', 'CP-24', 'CP-05', 'CP-06', 'CP-10'], frequency: 'Hourly', duration: 25, shift: 'Day', color: '#3b82f6', active: true, compliance: 98 },
-  { id: 'RT-03', name: 'Data Center Secure Round', site: 'Data Center', checkpoints: ['CP-07', 'CP-08', 'CP-09', 'CP-15'], frequency: 'Every 30 min', duration: 15, shift: 'All', color: '#ef4444', active: true, compliance: 99 },
-  { id: 'RT-04', name: 'Production & Chemicals', site: 'Manufacturing Plant', checkpoints: ['CP-13', 'CP-14', 'CP-19', 'CP-18'], frequency: 'Every 2 hours', duration: 30, shift: 'All', color: '#f59e0b', active: true, compliance: 91 },
-  { id: 'RT-05', name: 'Parking & Reception', site: 'Head Office', checkpoints: ['CP-10', 'CP-11', 'CP-12'], frequency: 'Hourly', duration: 20, shift: 'Evening', color: '#14b8a6', active: true, compliance: 94 },
-  { id: 'RT-06', name: 'Logistics Night Sweep', site: 'Logistics Hub', checkpoints: ['CP-19', 'CP-20', 'CP-21', 'CP-22', 'CP-23'], frequency: 'Every 3 hours', duration: 35, shift: 'Night', color: '#ea580c', active: true, compliance: 88 },
-  { id: 'RT-07', name: 'Warehouse Stock Check', site: 'Warehouse', checkpoints: ['CP-16', 'CP-17', 'CP-18'], frequency: 'Every 4 hours', duration: 20, shift: 'Night', color: '#0d9488', active: false, compliance: 0 },
+  { id: 'RT-01', name: 'Perimeter Patrol', site: 'Head Office', checkpoints: ['CP-01', 'CP-02', 'CP-03', 'CP-16', 'CP-17', 'CP-21', 'CP-23', 'CP-22'], frequency: 'Every 2 hours', duration: 45, shift: 'All', color: 'var(--ka-7c3aed)', active: true, compliance: 96 },
+  { id: 'RT-02', name: 'Head Office Internal', site: 'Head Office', checkpoints: ['CP-04', 'CP-24', 'CP-05', 'CP-06', 'CP-10'], frequency: 'Hourly', duration: 25, shift: 'Day', color: 'var(--ka-3b82f6)', active: true, compliance: 98 },
+  { id: 'RT-03', name: 'Data Center Secure Round', site: 'Data Center', checkpoints: ['CP-07', 'CP-08', 'CP-09', 'CP-15'], frequency: 'Every 30 min', duration: 15, shift: 'All', color: 'var(--ka-ef4444)', active: true, compliance: 99 },
+  { id: 'RT-04', name: 'Production & Chemicals', site: 'Manufacturing Plant', checkpoints: ['CP-13', 'CP-14', 'CP-19', 'CP-18'], frequency: 'Every 2 hours', duration: 30, shift: 'All', color: 'var(--ka-f59e0b)', active: true, compliance: 91 },
+  { id: 'RT-05', name: 'Parking & Reception', site: 'Head Office', checkpoints: ['CP-10', 'CP-11', 'CP-12'], frequency: 'Hourly', duration: 20, shift: 'Evening', color: 'var(--ka-14b8a6)', active: true, compliance: 94 },
+  { id: 'RT-06', name: 'Logistics Night Sweep', site: 'Logistics Hub', checkpoints: ['CP-19', 'CP-20', 'CP-21', 'CP-22', 'CP-23'], frequency: 'Every 3 hours', duration: 35, shift: 'Night', color: 'var(--ka-ea580c)', active: true, compliance: 88 },
+  { id: 'RT-07', name: 'Warehouse Stock Check', site: 'Warehouse', checkpoints: ['CP-16', 'CP-17', 'CP-18'], frequency: 'Every 4 hours', duration: 20, shift: 'Night', color: 'var(--ka-0d9488)', active: false, compliance: 0 },
 ];
 
 /** Live patrol run assigned to an on-duty guard. */
@@ -540,12 +540,12 @@ export function baseRoster(g: Guard, week = 0): RCode[] {
   });
 }
 export const RCODE: Record<RCode, { label: string; bg: string; fg: string }> = {
-  D: { label: 'Day 06–14', bg: '#fef3c7', fg: '#b45309' },
-  E: { label: 'Eve 14–22', bg: '#ede9fe', fg: '#6d28d9' },
-  N: { label: 'Night 22–06', bg: '#dbeafe', fg: '#1d4ed8' },
-  OFF: { label: 'Off', bg: '#f3f4f6', fg: '#6b7280' },
-  L: { label: 'Leave', bg: '#fee2e2', fg: '#b91c1c' },
-  T: { label: 'Training', bg: '#cffafe', fg: '#0e7490' },
+  D: { label: 'Day 06–14', bg: 'var(--kb-fef3c7)', fg: 'var(--kf-b45309)' },
+  E: { label: 'Eve 14–22', bg: 'var(--kb-ede9fe)', fg: 'var(--kf-6d28d9)' },
+  N: { label: 'Night 22–06', bg: 'var(--kb-dbeafe)', fg: 'var(--kf-1d4ed8)' },
+  OFF: { label: 'Off', bg: 'var(--kb-f3f4f6)', fg: 'var(--kf-6b7280)' },
+  L: { label: 'Leave', bg: 'var(--kb-fee2e2)', fg: 'var(--kf-b91c1c)' },
+  T: { label: 'Training', bg: 'var(--kb-cffafe)', fg: 'var(--kf-0e7490)' },
 };
 
 export interface OpenShift {

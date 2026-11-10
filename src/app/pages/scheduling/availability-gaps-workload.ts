@@ -63,10 +63,10 @@ type Av = 0 | 1 | 2; // 0 unavailable, 1 available, 2 preferred
     .av { display: grid; grid-template-columns: 260px minmax(0, 1fr) 320px; gap: 12px; align-items: start; }
     .people { display: flex; flex-direction: column; gap: 4px; padding: 8px; max-height: 640px; overflow: auto; }
     .p { display: flex; gap: 8px; align-items: center; padding: 7px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
-    .p div { display: flex; flex-direction: column; } .p small { color: var(--muted); } .p.on { border-color: var(--primary); background: #f5f3ff; }
-    .grid { width: 100%; border-collapse: separate; border-spacing: 4px; font-size: 12px; } .grid th { color: #4b4f6b; font-weight: 600; }
-    .slot { width: 100%; height: 40px; border: 0; border-radius: 8px; cursor: pointer; font-size: 11px; background: #fee2e2; color: #b91c1c; }
-    .slot[data-v='1'] { background: #dcfce7; color: #15803d; } .slot[data-v='2'] { background: #7c3aed; color: #fff; font-weight: 600; }
+    .p div { display: flex; flex-direction: column; } .p small { color: var(--muted); } .p.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
+    .grid { width: 100%; border-collapse: separate; border-spacing: 4px; font-size: 12px; } .grid th { color: var(--kf-4b4f6b); font-weight: 600; }
+    .slot { width: 100%; height: 40px; border: 0; border-radius: 8px; cursor: pointer; font-size: 11px; background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
+    .slot[data-v='1'] { background: var(--kb-dcfce7); color: var(--kf-15803d); } .slot[data-v='2'] { background: var(--kb-7c3aed); color: var(--kf-ffffff); font-weight: 600; }
     h4 { font-size: 13px; margin: 16px 0 8px; } .chk { flex-direction: row !important; align-items: center; gap: 8px; }
     @media (max-width: 1300px) { .av { grid-template-columns: 240px 1fr; } .team { grid-column: 1 / -1; } }
   `,
@@ -133,10 +133,10 @@ interface Gap {
   template: `
     <app-page-head title="Coverage Gap Detection" parent="Shift &amp; Workforce Scheduling" parentLink="/shift-workforce" subtitle="Shifts scheduled below minimum staffing for the next 7 days, with ways to fix them." />
     <section class="kpi-row">
-      <app-kpi label="Open Gaps" [value]="count('Open')" icon="triangle-alert" color="#ef4444" sub="next 7 days" />
-      <app-kpi label="People Short" [value]="short()" icon="users" color="#f97316" />
-      <app-kpi label="Overall Coverage" [value]="coverage() + '%'" icon="activity" color="#8b5cf6" />
-      <app-kpi label="Resolved Today" [value]="resolved()" icon="shield-check" color="#22c55e" />
+      <app-kpi label="Open Gaps" [value]="count('Open')" icon="triangle-alert" color="var(--ka-ef4444)" sub="next 7 days" />
+      <app-kpi label="People Short" [value]="short()" icon="users" color="var(--ka-f97316)" />
+      <app-kpi label="Overall Coverage" [value]="coverage() + '%'" icon="activity" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Resolved Today" [value]="resolved()" icon="shield-check" color="var(--ka-22c55e)" />
     </section>
     <section class="dash">
       <div class="card span-12">
@@ -193,8 +193,8 @@ interface Gap {
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
   styles: `
-    .code { padding: 3px 7px; border-radius: 5px; color: #fff; font-weight: 700; font-size: 10.5px; }
-    .cands { list-style: none; margin: 0; padding: 0; } .cands li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; }
+    .code { padding: 3px 7px; border-radius: 5px; color: var(--kf-ffffff); font-weight: 700; font-size: 10.5px; }
+    .cands { list-style: none; margin: 0; padding: 0; } .cands li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .cands div { display: flex; flex-direction: column; font-size: 13px; } .cands small { color: var(--muted); }
   `,
 })
@@ -277,10 +277,10 @@ export class CoverageGaps {
       <select class="select" [value]="teamId()" (change)="teamId.set($any($event.target).value); moved.set({})">@for (t of teams; track t.id) {<option [value]="t.id">{{ t.name }}</option>}</select>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Avg Hours / Person" [value]="avg()" icon="clock" color="#8b5cf6" sub="next 4 weeks, per week" />
-      <app-kpi label="Spread (max − min)" [value]="spread() + ' h'" icon="activity" [color]="spread() > 12 ? '#ef4444' : '#22c55e'" />
-      <app-kpi label="Fairness Index" [value]="fairness()" icon="star" color="#3b82f6" sub="1.00 = perfectly even" />
-      <app-kpi label="Overloaded" [value]="overloaded()" icon="triangle-alert" color="#f97316" sub="> 48 h in any week" />
+      <app-kpi label="Avg Hours / Person" [value]="avg()" icon="clock" color="var(--ka-8b5cf6)" sub="next 4 weeks, per week" />
+      <app-kpi label="Spread (max − min)" [value]="spread() + ' h'" icon="activity" [color]="spread() > 12 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" />
+      <app-kpi label="Fairness Index" [value]="fairness()" icon="star" color="var(--ka-3b82f6)" sub="1.00 = perfectly even" />
+      <app-kpi label="Overloaded" [value]="overloaded()" icon="triangle-alert" color="var(--ka-f97316)" sub="> 48 h in any week" />
     </section>
     <section class="dash">
       <div class="card span-7">
@@ -306,7 +306,7 @@ export class CoverageGaps {
     </section>
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
-  styles: `.sug { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }`,
+  styles: `.sug { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }`,
 })
 export class Workload {
   protected readonly teams = TEAMS;
@@ -325,7 +325,7 @@ export class Workload {
     });
   });
   protected readonly hoursRows = computed(() =>
-    [...this.people()].sort((a, b) => b.avg - a.avg).map((p) => ({ label: p.name, value: p.avg, display: `${p.avg} h`, color: p.avg > 44 ? '#f97316' : p.avg < 30 ? '#38bdf8' : '#8b5cf6' })),
+    [...this.people()].sort((a, b) => b.avg - a.avg).map((p) => ({ label: p.name, value: p.avg, display: `${p.avg} h`, color: p.avg > 44 ? 'var(--ka-f97316)' : p.avg < 30 ? 'var(--ka-38bdf8)' : 'var(--ka-8b5cf6)' })),
   );
   protected readonly avg = computed(() => (this.people().reduce((a, p) => a + p.avg, 0) / this.people().length).toFixed(1));
   protected readonly spread = computed(() => Math.round(Math.max(...this.people().map((p) => p.avg)) - Math.min(...this.people().map((p) => p.avg))));

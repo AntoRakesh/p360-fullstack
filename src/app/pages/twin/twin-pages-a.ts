@@ -25,11 +25,11 @@ const typeLabel = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Zones" [value]="zones().length" icon="map-floor" color="#7c3aed" [sub]="floorsUsed() + ' floors · 3 buildings'" />
-      <app-kpi label="Seat Capacity" [value]="fmt(capacity())" icon="users" color="#2563eb" change="4%" sub="vs. last quarter" />
-      <app-kpi label="Occupied Now" [value]="fmt(occupied())" icon="user-check" color="#16a34a" [extra]="pct(occupied(), capacity()) + '%'" sub="live from RTLS + sensors" />
-      <app-kpi label="Restricted Zones" [value]="restricted()" icon="shield" color="#ef4444" sub="geofenced · badge-only" subColor="#dc2626" />
-      <app-kpi label="Under Maintenance" [value]="maint()" icon="twin-wrench" color="#f59e0b" sub="excluded from booking" />
+      <app-kpi label="Total Zones" [value]="zones().length" icon="map-floor" color="var(--ka-7c3aed)" [sub]="floorsUsed() + ' floors · 3 buildings'" />
+      <app-kpi label="Seat Capacity" [value]="fmt(capacity())" icon="users" color="var(--ka-2563eb)" change="4%" sub="vs. last quarter" />
+      <app-kpi label="Occupied Now" [value]="fmt(occupied())" icon="user-check" color="var(--ka-16a34a)" [extra]="pct(occupied(), capacity()) + '%'" sub="live from RTLS + sensors" />
+      <app-kpi label="Restricted Zones" [value]="restricted()" icon="shield" color="var(--ka-ef4444)" sub="geofenced · badge-only" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Under Maintenance" [value]="maint()" icon="twin-wrench" color="var(--ka-f59e0b)" sub="excluded from booking" />
     </section>
 
     <section class="sz">
@@ -48,9 +48,9 @@ const typeLabel = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
             <dt>Access</dt><dd>{{ z.restricted ? 'Restricted · badge + PIN' : 'Open to all staff' }}</dd>
           </dl>
           @if (z.capacity) {
-            <div class="occ"><span>Occupancy</span><b>{{ z.occupancy }} / {{ z.capacity }} ({{ pct(z.occupancy, z.capacity) }}%)</b><i class="bar"><i [style.width.%]="pct(z.occupancy, z.capacity)" [style.background]="z.occupancy / z.capacity > 0.85 ? '#ef4444' : '#2563eb'"></i></i></div>
+            <div class="occ"><span>Occupancy</span><b>{{ z.occupancy }} / {{ z.capacity }} ({{ pct(z.occupancy, z.capacity) }}%)</b><i class="bar"><i [style.width.%]="pct(z.occupancy, z.capacity)" [style.background]="z.occupancy / z.capacity > 0.85 ? 'var(--ka-ef4444)' : 'var(--ka-2563eb)'"></i></i></div>
             <h4>Occupancy today</h4>
-            <app-sparkline [values]="trend(z)" color="#7c3aed" />
+            <app-sparkline [values]="trend(z)" color="var(--ka-7c3aed)" />
           }
           <h4>Sensors in zone</h4>
           <ul class="mini">@for (s of sensorsIn(z); track s.id) {<li><app-icon name="twin-sensor" [size]="14" />{{ s.name }}<b>{{ sv(s) }} {{ s.unit }}</b></li>} @empty {<li class="muted">No sensors mapped</li>}</ul>
@@ -96,14 +96,14 @@ const typeLabel = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
   `,
   styles: `
     .sz { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; margin-bottom: 12px; align-items: start; }
-    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 7px; padding: 6px 11px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .legend { display: flex; gap: 12px; font-size: 12px; color: #4b4f6b; } .legend span { display: inline-flex; gap: 5px; align-items: center; } .legend i { width: 10px; height: 10px; border-radius: 3px; }
+    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; padding: 6px 11px; font-size: 12px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
+    .legend { display: flex; gap: 12px; font-size: 12px; color: var(--kf-4b4f6b); } .legend span { display: inline-flex; gap: 5px; align-items: center; } .legend i { width: 10px; height: 10px; border-radius: 3px; }
     .side { display: flex; flex-direction: column; gap: 10px; } .zh { display: grid; grid-template-columns: 14px 1fr auto; gap: 10px; align-items: center; } .zh .sw { width: 14px; height: 40px; border-radius: 4px; } .zh h3 { font-size: 16px; }
     .facts { display: grid; grid-template-columns: 80px 1fr; gap: 6px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .occ { display: grid; grid-template-columns: 1fr auto; gap: 4px; font-size: 12.5px; } .occ .bar { grid-column: 1 / -1; }
-    .bar { display: block; height: 8px; border-radius: 6px; background: #e8eaf2; overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
+    .bar { display: block; height: 8px; border-radius: 6px; background: var(--kb-e8eaf2); overflow: hidden; } .bar > i { display: block; height: 100%; border-radius: 6px; }
     h4 { margin: 4px 0 0; font-size: 13px; }
-    .mini { list-style: none; margin: 0; padding: 0; } .mini li { display: flex; gap: 8px; align-items: center; padding: 5px 0; font-size: 12.5px; border-bottom: 1px solid #f2f3f7; color: #0ea5e9; } .mini li b { margin-left: auto; color: var(--text); font-weight: 600; }
+    .mini { list-style: none; margin: 0; padding: 0; } .mini li { display: flex; gap: 8px; align-items: center; padding: 5px 0; font-size: 12.5px; border-bottom: 1px solid var(--kl-f2f3f7); color: var(--kf-0ea5e9); } .mini li b { margin-left: auto; color: var(--text); font-weight: 600; }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; } .danger { color: var(--red); }
     .chk { flex-direction: row !important; align-items: center; gap: 8px !important; }
     @media (max-width: 1200px) { .sz { grid-template-columns: 1fr; } }
@@ -212,7 +212,7 @@ export class SpaceZoneManagement {
     const f = this.form()!;
     if (!f.name.trim()) return;
     this.store.upsertZone({ ...f, occupancy: Math.min(f.occupancy, f.capacity) });
-    this.store.log({ icon: 'map-floor', color: '#7c3aed', who: f.name, what: this.isNew() ? `Zone created on ${floorById(f.floor).name}` : 'Zone updated', ref: f.id, floor: f.floor });
+    this.store.log({ icon: 'map-floor', color: 'var(--ka-7c3aed)', who: f.name, what: this.isNew() ? `Zone created on ${floorById(f.floor).name}` : 'Zone updated', ref: f.id, floor: f.floor });
     this.floor.set(f.floor);
     this.selId.set(f.id);
     this.form.set(null);
@@ -258,11 +258,11 @@ export class SpaceZoneManagement {
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Assets Tracked" [value]="fmt(assets().length)" icon="twin-dolly" color="#7c3aed" change="8%" sub="vs. last month" />
-      <app-kpi label="In Use" [value]="fmt(byStatus('In Use'))" icon="activity" color="#2563eb" [extra]="pct(byStatus('In Use')) + '%'" />
-      <app-kpi label="Available" [value]="fmt(byStatus('Available'))" icon="twin-check" color="#16a34a" />
-      <app-kpi label="Maintenance" [value]="byStatus('Maintenance')" icon="twin-wrench" color="#f59e0b" sub="open work orders" />
-      <app-kpi label="Low Battery" [value]="lowBat()" icon="battery" color="#ef4444" sub="below 25%" subColor="#dc2626" />
+      <app-kpi label="Assets Tracked" [value]="fmt(assets().length)" icon="twin-dolly" color="var(--ka-7c3aed)" change="8%" sub="vs. last month" />
+      <app-kpi label="In Use" [value]="fmt(byStatus('In Use'))" icon="activity" color="var(--ka-2563eb)" [extra]="pct(byStatus('In Use')) + '%'" />
+      <app-kpi label="Available" [value]="fmt(byStatus('Available'))" icon="twin-check" color="var(--ka-16a34a)" />
+      <app-kpi label="Maintenance" [value]="byStatus('Maintenance')" icon="twin-wrench" color="var(--ka-f59e0b)" sub="open work orders" />
+      <app-kpi label="Low Battery" [value]="lowBat()" icon="battery" color="var(--ka-ef4444)" sub="below 25%" subColor="var(--ka-dc2626)" />
     </section>
 
     <section class="av">
@@ -280,7 +280,7 @@ export class SpaceZoneManagement {
             <dt>Status</dt><dd><span [class]="statusTag(a.status)">{{ a.status }}</span></dd>
             <dt>Location</dt><dd>{{ floorName(a.floor) }} · {{ a.zone }}</dd>
             <dt>Department</dt><dd>{{ a.dept }}</dd>
-            @if (a.battery !== undefined) {<dt>Battery</dt><dd><i class="bat"><i [style.width.%]="a.battery" [style.background]="a.battery < 25 ? '#ef4444' : '#22c55e'"></i></i> {{ a.battery }}%</dd>}
+            @if (a.battery !== undefined) {<dt>Battery</dt><dd><i class="bat"><i [style.width.%]="a.battery" [style.background]="a.battery < 25 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'"></i></i> {{ a.battery }}%</dd>}
             <dt>Tag</dt><dd>BLE {{ a.id.replace('A-', 'TG') }} · last ping 4 s ago</dd>
             <dt>Next service</dt><dd>{{ a.status === 'Maintenance' ? 'In progress' : '12 Dec 2026' }}</dd>
           </dl>
@@ -307,11 +307,11 @@ export class SpaceZoneManagement {
   `,
   styles: `
     .av { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 12px; margin-bottom: 12px; align-items: start; }
-    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs small { color: var(--muted); } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); } .ftabs button.on small { color: #e9ddff; }
-    .types { display: flex; gap: 4px; } .types button { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--border); background: #fff; color: #94a3b8; display: grid; place-items: center; cursor: pointer; } .types button.on { background: var(--c); color: #fff; border-color: var(--c); }
-    .side { display: flex; flex-direction: column; gap: 10px; } .ah { display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; } .ic { width: 44px; height: 44px; border-radius: 10px; color: #fff; display: grid; place-items: center; }
+    .ftabs { display: flex; gap: 4px; flex-wrap: wrap; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; padding: 6px 10px; font-size: 12px; cursor: pointer; } .ftabs small { color: var(--muted); } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); } .ftabs button.on small { color: var(--kf-e9ddff); }
+    .types { display: flex; gap: 4px; } .types button { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--border); background: var(--kb-ffffff); color: var(--kf-94a3b8); display: grid; place-items: center; cursor: pointer; } .types button.on { background: var(--c); color: var(--kf-ffffff); border-color: var(--c); }
+    .side { display: flex; flex-direction: column; gap: 10px; } .ah { display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; } .ic { width: 44px; height: 44px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; }
     .facts { display: grid; grid-template-columns: 90px 1fr; gap: 7px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; display: flex; align-items: center; gap: 6px; }
-    .bat { display: inline-block; width: 60px; height: 8px; background: #eef0f5; border-radius: 4px; overflow: hidden; } .bat i { display: block; height: 100%; }
+    .bat { display: inline-block; width: 60px; height: 8px; background: var(--kb-eef0f5); border-radius: 4px; overflow: hidden; } .bat i { display: block; height: 100%; }
     h4 { margin: 4px 0 0; font-size: 13px; } .acts { display: flex; gap: 6px; flex-wrap: wrap; }
     @media (max-width: 1200px) { .av { grid-template-columns: 1fr; } }
   `,
@@ -338,11 +338,11 @@ export class AssetVisualization {
       .map((a) => {
         const [x, y] = this.store.pos(a);
         const t = this.typeOf(a);
-        return { id: a.id, x, y, color: a.status === 'Maintenance' || a.status === 'Low Battery' ? '#ef4444' : t.color, icon: t.icon, kind: a.mobile || a.id === this.selId() ? 'pin' : 'chip', title: `${a.name} · ${a.status}` } as IsoMarker;
+        return { id: a.id, x, y, color: a.status === 'Maintenance' || a.status === 'Low Battery' ? 'var(--ka-ef4444)' : t.color, icon: t.icon, kind: a.mobile || a.id === this.selId() ? 'pin' : 'chip', title: `${a.name} · ${a.status}` } as IsoMarker;
       }),
   );
   protected readonly typeSegs = computed(() => ASSET_TYPES.map((t) => ({ label: t.type, value: this.assets().filter((a) => a.type === t.type).length, color: t.color })));
-  protected readonly statusRows = computed(() => ['In Use', 'Available', 'Idle', 'Maintenance', 'Moving', 'Low Battery'].map((s) => ({ label: s, value: this.byStatus(s), display: fmtN(this.byStatus(s)), color: s === 'Maintenance' || s === 'Low Battery' ? '#ef4444' : s === 'Idle' ? '#f59e0b' : s === 'Available' ? '#16a34a' : '#7c3aed' })));
+  protected readonly statusRows = computed(() => ['In Use', 'Available', 'Idle', 'Maintenance', 'Moving', 'Low Battery'].map((s) => ({ label: s, value: this.byStatus(s), display: fmtN(this.byStatus(s)), color: s === 'Maintenance' || s === 'Low Battery' ? 'var(--ka-ef4444)' : s === 'Idle' ? 'var(--ka-f59e0b)' : s === 'Available' ? 'var(--ka-16a34a)' : 'var(--ka-7c3aed)' })));
   protected readonly rows = computed(() => this.assets().map((a) => ({ ...a, floorL: floorById(a.floor).name, bat: a.battery === undefined ? '—' : `${a.battery}%` })));
   protected readonly cols: Col[] = [
     { key: 'name', label: 'Asset' },
@@ -423,7 +423,7 @@ export class AssetVisualization {
   }
   protected setStatus(a: TEntity, status: string) {
     this.store.patchAsset(a.id, { status });
-    this.store.log({ icon: 'twin-wrench', color: '#f59e0b', who: a.name, what: status === 'Maintenance' ? 'Sent to maintenance' : 'Back in service', ref: a.id, floor: a.floor });
+    this.store.log({ icon: 'twin-wrench', color: 'var(--ka-f59e0b)', who: a.name, what: status === 'Maintenance' ? 'Sent to maintenance' : 'Back in service', ref: a.id, floor: a.floor });
     this.toastMsg(`${a.name} → ${status}`);
   }
   protected track(a: TEntity) {
@@ -501,16 +501,16 @@ type Who = 'All' | 'Employees' | 'Visitors' | 'Contractors' | 'Assets';
     .pl { display: grid; grid-template-columns: 280px minmax(0, 1fr) 280px; gap: 12px; align-items: start; }
     .list { display: flex; flex-direction: column; gap: 8px; max-height: calc(100vh - 190px); }
     .search { display: flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; } .search input { border: 0; outline: 0; padding: 9px 0; flex: 1; font: inherit; font-size: 13px; min-width: 0; }
-    .who { display: flex; flex-wrap: wrap; gap: 4px; } .who button { border: 1px solid var(--border); background: #fff; border-radius: 14px; padding: 4px 9px; font-size: 11.5px; cursor: pointer; } .who button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .who { display: flex; flex-wrap: wrap; gap: 4px; } .who button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 14px; padding: 4px 9px; font-size: 11.5px; cursor: pointer; } .who button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
     ul { list-style: none; margin: 0; padding: 0; overflow: auto; flex: 1; } li { display: grid; grid-template-columns: 30px 1fr 8px; gap: 8px; align-items: center; padding: 7px 6px; border-radius: 8px; cursor: pointer; font-size: 12.5px; }
-    li:hover { background: #faf8ff; } li.on { background: #f1ecff; } li div { display: flex; flex-direction: column; min-width: 0; } li small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .av { width: 30px; height: 30px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 600; } .st { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; } .st.mv { background: #f59e0b; }
-    .ftabs { display: flex; gap: 3px; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 5px 8px; font-size: 11.5px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .det { display: flex; flex-direction: column; gap: 10px; } .dh { display: flex; gap: 10px; align-items: center; } .big { width: 46px; height: 46px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-weight: 600; }
+    li:hover { background: var(--kb-faf8ff); } li.on { background: var(--kb-f1ecff); } li div { display: flex; flex-direction: column; min-width: 0; } li small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .av { width: 30px; height: 30px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 11px; font-weight: 600; } .st { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); } .st.mv { background: var(--kb-f59e0b); }
+    .ftabs { display: flex; gap: 3px; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; padding: 5px 8px; font-size: 11.5px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
+    .det { display: flex; flex-direction: column; gap: 10px; } .dh { display: flex; gap: 10px; align-items: center; } .big { width: 46px; height: 46px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-weight: 600; }
     .facts { display: grid; grid-template-columns: 70px 1fr; gap: 6px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     h4 { margin: 4px 0 0; font-size: 13px; }
-    .tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid #e5e7eb; } .tl li { display: flex; gap: 10px; padding: 5px 0; position: relative; cursor: default; font-size: 12px; } .tl li::before { content: ''; position: absolute; left: -20px; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: #c4b5fd; }
-    .tl li.now::before { background: #7c3aed; box-shadow: 0 0 0 3px #ede9fe; } .tl b { width: 62px; font-weight: 600; }
+    .tl { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--kl-e5e7eb); } .tl li { display: flex; gap: 10px; padding: 5px 0; position: relative; cursor: default; font-size: 12px; } .tl li::before { content: ''; position: absolute; left: -20px; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: var(--kb-c4b5fd); }
+    .tl li.now::before { background: var(--kb-7c3aed); box-shadow: 0 0 0 3px var(--kb-ede9fe); } .tl b { width: 62px; font-weight: 600; }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; } .btn-ghost.on { color: var(--primary); border-color: var(--primary); }
     @media (max-width: 1350px) { .pl { grid-template-columns: 260px minmax(0, 1fr); } .det { grid-column: 1 / -1; } }
   `,
@@ -556,7 +556,7 @@ export class PeopleAssetLocation {
     const [x, y] = this.store.pos(e);
     return [{ points: [[176, 470], [300, 395], [Math.round((x + 300) / 2), Math.round((y + 395) / 2)], [x, y]], color: this.col(e), dots: true }];
   });
-  protected readonly floorRows = computed(() => FLOORS.filter((f) => f.id !== 'R').map((f) => ({ label: f.name, value: f.util, display: `${this.store.people().filter((p) => p.floor === f.id).length} ppl`, color: '#7c3aed' })));
+  protected readonly floorRows = computed(() => FLOORS.filter((f) => f.id !== 'R').map((f) => ({ label: f.name, value: f.util, display: `${this.store.people().filter((p) => p.floor === f.id).length} ppl`, color: 'var(--ka-7c3aed)' })));
 
   constructor() {
     const id = this.store.focusId();
@@ -577,7 +577,7 @@ export class PeopleAssetLocation {
     });
   }
   protected col(e: TEntity) {
-    return e.kind === 'asset' ? '#7c3aed' : TYPE_COLOR[e.kind];
+    return e.kind === 'asset' ? 'var(--ka-7c3aed)' : TYPE_COLOR[e.kind];
   }
   protected floorName(f: string) {
     return floorById(f).name;
@@ -629,11 +629,11 @@ const METRIC_LIST: Metric[] = ['Temperature', 'Humidity', 'CO₂', 'Occupancy', 
       <button class="btn-ghost" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export readings</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Sensors Online" [value]="online() + ' / ' + sensors().length" icon="twin-sensor" color="#0ea5e9" [sub]="(sensors().length - online()) + ' offline'" [subColor]="sensors().length - online() ? '#dc2626' : undefined" />
-      <app-kpi label="Avg Temperature" [value]="avg('Temperature') + '°C'" icon="twin-thermo" color="#ef4444" sub="setpoint 23°C" />
-      <app-kpi label="Avg Humidity" [value]="avg('Humidity') + '%'" icon="twin-snow" color="#2563eb" sub="comfort 30–60%" />
-      <app-kpi label="Avg CO₂" [value]="avg('CO₂') + ' ppm'" icon="twin-fan" color="#16a34a" sub="good below 1000" />
-      <app-kpi label="Sensor Alarms" [value]="alarms().length" icon="triangle-alert" color="#f97316" sub="threshold breaches" subColor="#dc2626" />
+      <app-kpi label="Sensors Online" [value]="online() + ' / ' + sensors().length" icon="twin-sensor" color="var(--ka-0ea5e9)" [sub]="(sensors().length - online()) + ' offline'" [subColor]="sensors().length - online() ? 'var(--ka-dc2626)' : undefined" />
+      <app-kpi label="Avg Temperature" [value]="avg('Temperature') + '°C'" icon="twin-thermo" color="var(--ka-ef4444)" sub="setpoint 23°C" />
+      <app-kpi label="Avg Humidity" [value]="avg('Humidity') + '%'" icon="twin-snow" color="var(--ka-2563eb)" sub="comfort 30–60%" />
+      <app-kpi label="Avg CO₂" [value]="avg('CO₂') + ' ppm'" icon="twin-fan" color="var(--ka-16a34a)" sub="good below 1000" />
+      <app-kpi label="Sensor Alarms" [value]="alarms().length" icon="triangle-alert" color="var(--ka-f97316)" sub="threshold breaches" subColor="var(--ka-dc2626)" />
     </section>
     <section class="si">
       <div class="card">
@@ -684,15 +684,15 @@ const METRIC_LIST: Metric[] = ['Temperature', 'Humidity', 'CO₂', 'Occupancy', 
   `,
   styles: `
     .si { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 12px; margin-bottom: 12px; align-items: start; }
-    .mt { display: flex; flex-wrap: wrap; gap: 4px; } .mt button { border: 1px solid var(--border); background: #fff; border-radius: 16px; padding: 5px 11px; font-size: 12px; cursor: pointer; } .mt button.on { background: #0ea5e9; color: #fff; border-color: #0ea5e9; }
-    .ftabs { display: flex; gap: 3px; } .ftabs button { border: 1px solid var(--border); background: #fff; border-radius: 6px; padding: 5px 8px; font-size: 11.5px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .scale { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); margin-top: 8px; } .scale i { width: 160px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #3b82f6, #22c55e, #facc15, #ef4444); } .scale em { margin-left: auto; font-style: normal; }
-    .side { display: flex; flex-direction: column; gap: 10px; } .sh { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; } .ic { width: 40px; height: 40px; border-radius: 10px; color: #fff; display: grid; place-items: center; }
+    .mt { display: flex; flex-wrap: wrap; gap: 4px; } .mt button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 16px; padding: 5px 11px; font-size: 12px; cursor: pointer; } .mt button.on { background: var(--kb-0ea5e9); color: var(--kf-ffffff); border-color: var(--kl-0ea5e9); }
+    .ftabs { display: flex; gap: 3px; } .ftabs button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 6px; padding: 5px 8px; font-size: 11.5px; cursor: pointer; } .ftabs button.on { background: var(--primary); color: var(--kf-ffffff); border-color: var(--primary); }
+    .scale { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--muted); margin-top: 8px; } .scale i { width: 160px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--kb-3b82f6), var(--kb-22c55e), var(--kb-facc15), var(--kb-ef4444)); } .scale em { margin-left: auto; font-style: normal; }
+    .side { display: flex; flex-direction: column; gap: 10px; } .sh { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; } .ic { width: 40px; height: 40px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; }
     .read { display: flex; align-items: baseline; gap: 8px; } .read b { font-size: 32px; } .read .tag { margin-left: auto; }
     .facts { display: grid; grid-template-columns: 80px 1fr; gap: 6px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; }
-    .al { list-style: none; margin: 0 0 8px; padding: 0; } .al li { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f2f3f7; cursor: pointer; font-size: 12.5px; } .al div { display: flex; flex-direction: column; } .al small { color: var(--muted); }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 0 4px #fee2e2; flex-shrink: 0; }
+    .al { list-style: none; margin: 0 0 8px; padding: 0; } .al li { display: flex; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f2f3f7); cursor: pointer; font-size: 12.5px; } .al div { display: flex; flex-direction: column; } .al small { color: var(--muted); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--kb-ef4444); box-shadow: 0 0 0 4px var(--kb-fee2e2); flex-shrink: 0; }
     @media (max-width: 1200px) { .si { grid-template-columns: 1fr; } }
   `,
 })
@@ -720,14 +720,14 @@ export class SensorIoTVisualization {
     this.sensors()
       .filter((s) => s.floor === this.floor() && s.metric === this.metric())
       .map((s) => ({ id: s.id, x: s.x, y: s.y, color: this.stColor(s), icon: 'twin-sensor', kind: 'value', label: `${this.store.sensorValue(s)} ${s.unit}`, title: s.name }) as IsoMarker)
-      .concat(this.sensors().filter((s) => s.floor === this.floor() && s.metric !== this.metric()).map((s) => ({ id: s.id, x: s.x, y: s.y, color: '#94a3b8', icon: 'twin-sensor', kind: 'sensor', title: `${s.name} · ${s.metric}` }) as IsoMarker)),
+      .concat(this.sensors().filter((s) => s.floor === this.floor() && s.metric !== this.metric()).map((s) => ({ id: s.id, x: s.x, y: s.y, color: 'var(--ka-94a3b8)', icon: 'twin-sensor', kind: 'sensor', title: `${s.name} · ${s.metric}` }) as IsoMarker)),
   );
   protected readonly heat = computed(() =>
     this.sensors()
       .filter((s) => s.floor === this.floor() && s.metric === this.metric() && s.status !== 'Offline')
       .map((s) => ({ x: s.x, y: s.y, r: 90, v: Math.min(1, Math.max(0, (this.store.sensorValue(s) - s.min) / (s.max - s.min || 1))) * 0.5 })),
   );
-  protected readonly typeRows = computed(() => METRIC_LIST.map((m) => ({ label: m, value: this.sensors().filter((s) => s.metric === m).length, color: '#0ea5e9' })));
+  protected readonly typeRows = computed(() => METRIC_LIST.map((m) => ({ label: m, value: this.sensors().filter((s) => s.metric === m).length, color: 'var(--ka-0ea5e9)' })));
   protected readonly rows = computed(() => this.sensors().map((s) => ({ ...s, floorL: floorById(s.floor).name, reading: `${this.store.sensorValue(s)} ${s.unit}`, bat: `${s.battery}%` })));
   protected readonly cols: Col[] = [
     { key: 'name', label: 'Sensor' },
@@ -773,17 +773,17 @@ export class SensorIoTVisualization {
     return m === 'Temperature' ? v.toFixed(1) : Math.round(v);
   }
   protected stColor(s: TSensor) {
-    if (s.status === 'Offline') return '#94a3b8';
+    if (s.status === 'Offline') return 'var(--ka-94a3b8)';
     const v = this.store.sensorValue(s);
-    if (s.status === 'Alarm' || v > s.max || v < s.min) return '#ef4444';
-    return (v - s.min) / (s.max - s.min) > 0.75 ? '#f59e0b' : '#16a34a';
+    if (s.status === 'Alarm' || v > s.max || v < s.min) return 'var(--ka-ef4444)';
+    return (v - s.min) / (s.max - s.min) > 0.75 ? 'var(--ka-f59e0b)' : 'var(--ka-16a34a)';
   }
   protected history(s: TSensor) {
     const v = this.store.sensorValue(s);
     const h = s.id.charCodeAt(5);
     const vals = this.hours.map((_, i) => +(v * (0.86 + 0.14 * Math.sin((i + h) / 2) * (i < 9 ? 1 : 0)) + (s.status === 'Alarm' ? (i - 9) * 0.9 : 0)).toFixed(1));
     vals[vals.length - 1] = v;
-    return [{ name: s.name, color: '#0ea5e9', values: vals, area: true }, { name: 'High threshold', color: '#ef4444', values: this.hours.map(() => s.max), dashed: true }];
+    return [{ name: s.name, color: 'var(--ka-0ea5e9)', values: vals, area: true }, { name: 'High threshold', color: 'var(--ka-ef4444)', values: this.hours.map(() => s.max), dashed: true }];
   }
   protected pick(s: TSensor) {
     this.floor.set(s.floor);

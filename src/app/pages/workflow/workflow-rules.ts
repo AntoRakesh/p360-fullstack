@@ -65,12 +65,12 @@ const condText = (c: RuleCond) => `${c.field} ${c.op}${c.op === 'is true' ? '' :
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Automation Rules" [value]="store.rules().length" icon="workflow-bolt" color="#7c3aed" [sub]="enabledN() + ' enabled'" />
-      <app-kpi label="Executions (24 h)" [value]="exec24().length" icon="activity" color="#3b82f6" change="12%" sub="vs. previous day" />
-      <app-kpi label="Success Rate" [value]="successRate() + '%'" icon="shield-check" color="#22c55e" change="0.4%" sub="all runs" />
-      <app-kpi label="Failures (24 h)" [value]="fail24()" icon="triangle-alert" color="#ef4444" [sub]="fail24() ? 'needs review' : 'all clear'" [subColor]="fail24() ? '#dc2626' : '#16a34a'" />
-      <app-kpi label="Hours Saved" [value]="hoursSaved()" icon="workflow-timer" color="#0d9488" change="9%" sub="≈6 min per run" />
-      <app-kpi label="Avg. Execution" [value]="avgMs() + ' ms'" icon="workflow-cloud" color="#f59e0b" sub="trigger → last action" />
+      <app-kpi label="Automation Rules" [value]="store.rules().length" icon="workflow-bolt" color="var(--ka-7c3aed)" [sub]="enabledN() + ' enabled'" />
+      <app-kpi label="Executions (24 h)" [value]="exec24().length" icon="activity" color="var(--ka-3b82f6)" change="12%" sub="vs. previous day" />
+      <app-kpi label="Success Rate" [value]="successRate() + '%'" icon="shield-check" color="var(--ka-22c55e)" change="0.4%" sub="all runs" />
+      <app-kpi label="Failures (24 h)" [value]="fail24()" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="fail24() ? 'needs review' : 'all clear'" [subColor]="fail24() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
+      <app-kpi label="Hours Saved" [value]="hoursSaved()" icon="workflow-timer" color="var(--ka-0d9488)" change="9%" sub="≈6 min per run" />
+      <app-kpi label="Avg. Execution" [value]="avgMs() + ' ms'" icon="workflow-cloud" color="var(--ka-f59e0b)" sub="trigger → last action" />
     </section>
 
     <section class="rl">
@@ -289,72 +289,72 @@ const condText = (c: RuleCond) => `${c.field} ${c.op}${c.op === 'is true' ? '' :
     .rl { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(400px, 1fr); gap: 12px; align-items: start; margin-bottom: 12px; }
     .lt { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; } .lt .tabs { margin: 0; }
     .sb { flex: 1 1 180px; } .lt .select { max-width: 210px; }
-    .count { margin-left: 5px; font-size: 10.5px; padding: 0 6px; border-radius: 9px; background: #e4e6ef; }
+    .count { margin-left: 5px; font-size: 10.5px; padding: 0 6px; border-radius: 9px; background: var(--kb-e4e6ef); }
     .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 720px; overflow: auto; }
-    .rules li { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; background: #fff; }
-    .rules li:hover { border-color: #c9bdf7; } .rules li.on { border-color: var(--primary); box-shadow: 0 0 0 3px #ede9fe; }
+    .rules li { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; background: var(--kb-ffffff); }
+    .rules li:hover { border-color: var(--kl-c9bdf7); } .rules li.on { border-color: var(--primary); box-shadow: 0 0 0 3px var(--kb-ede9fe); }
     .rules li.off .nm b, .rules li.off .chain { opacity: .55; }
     .r1 { display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center; }
     .nm { min-width: 0; display: flex; flex-direction: column; } .nm b { font-size: 13px; } .nm small, .rs small, .lr { font-size: 11px; color: var(--muted); }
     .nm small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rs { text-align: right; display: flex; flex-direction: column; } .rs b { font-size: 14px; }
-    .g { color: #16a34a; } .a { color: #d97706; } .rd { color: #dc2626; }
-    .dots-b { border: 0; background: none; cursor: pointer; padding: 4px; border-radius: 6px; color: #4b4f6b; } .dots-b:hover { background: #f3f3f8; }
+    .g { color: var(--kf-16a34a); } .a { color: var(--kf-d97706); } .rd { color: var(--kf-dc2626); }
+    .dots-b { border: 0; background: none; cursor: pointer; padding: 4px; border-radius: 6px; color: var(--kf-4b4f6b); } .dots-b:hover { background: var(--kb-f3f3f8); }
     .dropdown.right { right: 0; left: auto; min-width: 160px; } .dd-item { display: flex; gap: 8px; align-items: center; } .dd-item.danger { color: var(--red); }
     .chain { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
     .ch { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 8px; border-radius: 6px; border: 1px solid; }
-    .ch.when { background: #f5f3ff; border-color: #ddd6fe; color: #6d28d9; } .ch.if { background: #fffbeb; border-color: #fde68a; color: #92400e; } .ch.then { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
-    .arr { color: #a3a7c2; } .lr { margin-top: -2px; }
+    .ch.when { background: var(--kb-f5f3ff); border-color: var(--kl-ddd6fe); color: var(--kf-6d28d9); } .ch.if { background: var(--kb-fffbeb); border-color: var(--kl-fde68a); color: var(--kf-92400e); } .ch.then { background: var(--kb-ecfdf5); border-color: var(--kl-a7f3d0); color: var(--kf-047857); }
+    .arr { color: var(--kf-a3a7c2); } .lr { margin-top: -2px; }
     .empty { justify-content: center; align-items: center; color: var(--muted); cursor: default !important; padding: 30px !important; }
     .detail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; display: flex; flex-direction: column; gap: 8px; }
     .dh { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; } .dh h3 { font-size: 15.5px; }
-    .logo { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: #f3efff; color: var(--primary); }
+    .logo { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--kb-f3efff); color: var(--primary); }
     .btns { display: flex; flex-wrap: wrap; gap: 6px; }
     .logic { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
     .blk { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: start; padding: 10px; border-radius: 9px; border: 1px solid; font-size: 12.5px; }
-    .blk em { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; padding: 3px 0; border-radius: 5px; text-align: center; color: #fff; }
+    .blk em { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; padding: 3px 0; border-radius: 5px; text-align: center; color: var(--kf-ffffff); }
     .blk small { display: block; color: var(--muted); font-size: 11px; }
-    .blk.when { background: #faf8ff; border-color: #ddd6fe; } .blk.when em { background: #7c3aed; }
-    .blk.if { background: #fffdf5; border-color: #fde68a; } .blk.if em { background: #d97706; }
-    .blk.then { background: #f6fef9; border-color: #a7f3d0; } .blk.then em { background: #059669; }
-    .cond { display: inline-block; padding: 2px 8px; border-radius: 5px; background: #fff; border: 1px solid #fde68a; margin: 2px 0; }
-    .join { display: inline-block; font-size: 10px; font-weight: 700; color: #b45309; margin: 0 6px; }
+    .blk.when { background: var(--kb-faf8ff); border-color: var(--kl-ddd6fe); } .blk.when em { background: var(--kb-7c3aed); }
+    .blk.if { background: var(--kb-fffdf5); border-color: var(--kl-fde68a); } .blk.if em { background: var(--kb-d97706); }
+    .blk.then { background: var(--kb-f6fef9); border-color: var(--kl-a7f3d0); } .blk.then em { background: var(--kb-059669); }
+    .cond { display: inline-block; padding: 2px 8px; border-radius: 5px; background: var(--kb-ffffff); border: 1px solid var(--kl-fde68a); margin: 2px 0; }
+    .join { display: inline-block; font-size: 10px; font-weight: 700; color: var(--kf-b45309); margin: 0 6px; }
     .blk ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 5px; }
-    .blk li { display: flex; align-items: center; gap: 6px; } .blk li app-icon { color: #059669; } .blk li span { color: #4b4f6b; }
+    .blk li { display: flex; align-items: center; gap: 6px; } .blk li app-icon { color: var(--kf-059669); } .blk li span { color: var(--kf-4b4f6b); }
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
     .stats div { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; } .stats b { font-size: 16px; } .stats small { font-size: 11px; color: var(--muted); }
     h4 { margin: 6px 0 2px; font-size: 13px; } h4 .muted { font-weight: 400; }
     .hist { list-style: none; margin: 0; padding: 0; }
-    .hist li { display: grid; grid-template-columns: 10px 1fr auto auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .hist li { display: grid; grid-template-columns: 10px 1fr auto auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .hist li > div { min-width: 0; } .hist b { font-weight: 500; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .hist small { color: var(--muted); font-size: 11px; }
-    .hist i { width: 8px; height: 8px; border-radius: 50%; } .hist i.ok { background: #22c55e; } .hist i.bad { background: #ef4444; } .hist i.skip { background: #a3a7c2; }
+    .hist i { width: 8px; height: 8px; border-radius: 50%; } .hist i.ok { background: var(--kb-22c55e); } .hist i.bad { background: var(--kb-ef4444); } .hist i.skip { background: var(--kb-a3a7c2); }
     .bot { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 12px; align-items: start; }
     .side { display: flex; flex-direction: column; gap: 12px; } .sm { font-size: 12px; }
-    .builder .sec { display: flex; align-items: center; gap: 10px; margin: 16px 0 8px; font-size: 12.5px; color: #3b3f5c; }
-    .sec em { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; padding: 3px 10px; border-radius: 5px; color: #fff; }
-    .sec.when em { background: #7c3aed; } .sec.if em { background: #d97706; } .sec.then em { background: #059669; }
+    .builder .sec { display: flex; align-items: center; gap: 10px; margin: 16px 0 8px; font-size: 12.5px; color: var(--kf-3b3f5c); }
+    .sec em { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; padding: 3px 10px; border-radius: 5px; color: var(--kf-ffffff); }
+    .sec.when em { background: var(--kb-7c3aed); } .sec.if em { background: var(--kb-d97706); } .sec.then em { background: var(--kb-059669); }
     .select.mini { padding: 3px 24px 3px 8px; margin: 0 4px; min-width: 64px; } .wide-sel { width: 100%; }
     .row3 { display: grid; grid-template-columns: 1.2fr 1fr 1.2fr 32px; gap: 8px; margin-bottom: 6px; }
     .row2 { display: grid; grid-template-columns: 22px 1fr 1.4fr 32px; gap: 8px; margin-bottom: 6px; align-items: center; }
-    .row2 .n { width: 22px; height: 22px; border-radius: 50%; background: #d1fae5; color: #047857; font-size: 11px; font-weight: 700; display: grid; place-items: center; }
-    .rm { border: 1px solid var(--border); background: #fff; border-radius: 7px; cursor: pointer; color: #6b7090; display: grid; place-items: center; } .rm:disabled { opacity: .4; cursor: default; }
+    .row2 .n { width: 22px; height: 22px; border-radius: 50%; background: var(--kb-d1fae5); color: var(--kf-047857); font-size: 11px; font-weight: 700; display: grid; place-items: center; }
+    .rm { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 7px; cursor: pointer; color: var(--kf-6b7090); display: grid; place-items: center; } .rm:disabled { opacity: .4; cursor: default; }
     .add { border: 0; background: none; cursor: pointer; padding: 2px 0; font-size: 12.5px; }
-    .preview { display: flex; gap: 8px; align-items: flex-start; margin: 16px 0 12px; padding: 10px 12px; border-radius: 8px; background: #f5f3ff; color: #4c1d95; font-size: 12.5px; }
+    .preview { display: flex; gap: 8px; align-items: flex-start; margin: 16px 0 12px; padding: 10px 12px; border-radius: 8px; background: var(--kb-f5f3ff); color: var(--kf-4c1d95); font-size: 12.5px; }
     .errt { color: var(--red); font-size: 12.5px; } .dangerb { background: var(--red) !important; border-color: var(--red) !important; }
     .tgrid { display: grid; grid-template-columns: 300px 1fr; gap: 18px; }
-    .pl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #3b3f5c; margin-bottom: 8px; }
+    .pl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-3b3f5c); margin-bottom: 8px; }
     .chk { display: flex; gap: 6px; align-items: flex-start; font-size: 12px; margin: 6px 0; }
     .run { margin-top: 6px; width: 100%; justify-content: center; }
     .trace { border-left: 1px solid var(--border); padding-left: 18px; min-height: 260px; }
     .ph { text-align: center; padding-top: 50px; }
     .tr-step { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; padding: 6px 0; font-size: 12.5px; }
-    .tr-step i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 700; background: #eef0f5; color: #6b7090; }
-    .tr-step.ok i { background: #22c55e; color: #fff; } .tr-step.bad i { background: #ef4444; color: #fff; } .tr-step.wait i { background: #3b82f6; color: #fff; animation: pulse 1s infinite; }
+    .tr-step i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 700; background: var(--kb-eef0f5); color: var(--kf-6b7090); }
+    .tr-step.ok i { background: var(--kb-22c55e); color: var(--kf-ffffff); } .tr-step.bad i { background: var(--kb-ef4444); color: var(--kf-ffffff); } .tr-step.wait i { background: var(--kb-3b82f6); color: var(--kf-ffffff); animation: pulse 1s infinite; }
     .tr-step.pend { opacity: .5; } .tr-step small { display: block; color: var(--muted); font-size: 11px; }
-    @keyframes pulse { 50% { box-shadow: 0 0 0 5px #bfdbfe; } }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 5px var(--kb-bfdbfe); } }
     .verdict { margin: 6px 0; padding: 7px 10px; border-radius: 7px; font-size: 12.5px; font-weight: 600; }
-    .verdict.ok { background: #dcfce7; color: #15803d; } .verdict.bad { background: #fee2e2; color: #b91c1c; }
-    .sum { margin-top: 10px; font-size: 12.5px; color: #3b3f5c; }
+    .verdict.ok { background: var(--kb-dcfce7); color: var(--kf-15803d); } .verdict.bad { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
+    .sum { margin-top: 10px; font-size: 12.5px; color: var(--kf-3b3f5c); }
     @media (max-width: 1250px) { .rl, .bot { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
   `,
 })
@@ -438,7 +438,7 @@ export class AutomationRules {
       const k = 7 - Math.floor((now - e.at) / (6 * H));
       if (k >= 0 && k < 8) (e.result === 'Failed' ? bad : ok)[k]++;
     });
-    return [{ name: 'Success', color: '#22c55e', values: ok }, { name: 'Failed', color: '#ef4444', values: bad }];
+    return [{ name: 'Success', color: 'var(--ka-22c55e)', values: ok }, { name: 'Failed', color: 'var(--ka-ef4444)', values: bad }];
   });
   protected readonly hours = computed(() => {
     const now = demoNow();
@@ -449,10 +449,10 @@ export class AutomationRules {
       if (k >= 0 && k < 12 && !e.test) (e.result === 'Failed' ? bad : ok)[k]++;
     });
     const labels = Array.from({ length: 12 }, (_, i) => new Date(now - (11 - i) * H).toLocaleTimeString('en-US', { hour: 'numeric' }).replace(' ', ''));
-    return { labels, series: [{ name: 'Success', color: '#7c3aed', values: ok }, { name: 'Failed', color: '#ef4444', values: bad }] };
+    return { labels, series: [{ name: 'Success', color: 'var(--ka-7c3aed)', values: ok }, { name: 'Failed', color: 'var(--ka-ef4444)', values: bad }] };
   });
   protected readonly top = computed(() =>
-    [...this.store.rules()].sort((a, b) => b.runs - a.runs).slice(0, 6).map((r, i) => ({ label: r.name, value: r.runs, display: r.runs.toLocaleString(), color: i % 2 ? '#3b82f6' : '#7c3aed' })),
+    [...this.store.rules()].sort((a, b) => b.runs - a.runs).slice(0, 6).map((r, i) => ({ label: r.name, value: r.runs, display: r.runs.toLocaleString(), color: i % 2 ? 'var(--ka-3b82f6)' : 'var(--ka-7c3aed)' })),
   );
   protected readonly topMax = computed(() => Math.max(1, ...this.top().map((t) => t.value)));
 

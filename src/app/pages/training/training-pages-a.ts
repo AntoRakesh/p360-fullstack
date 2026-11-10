@@ -39,7 +39,7 @@ const MODES: Mode[] = ['Classroom', 'E-learning', 'Blended', 'On-the-job'];
   styles: `
     .pk-bar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; } .pk-bar .search-box { flex: 1; } .pk-bar input { width: 100%; }
     .pk { list-style: none; margin: 0; padding: 0; max-height: 46vh; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
-    .pk li label { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-bottom: 1px solid #f1f2f6; cursor: pointer; font-size: 12.5px; }
+    .pk li label { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-bottom: 1px solid var(--kl-f1f2f6); cursor: pointer; font-size: 12.5px; }
     .pk li label > span:last-child { display: flex; flex-direction: column; } .pk small { color: var(--muted); font-size: 11px; }
     .pk-due { display: flex; flex-direction: column; gap: 4px; font-size: 12px; margin-top: 10px; max-width: 220px; }
     .form-actions { align-items: center; } .form-actions .muted { margin-right: auto; font-size: 12px; }
@@ -90,11 +90,11 @@ export class TrnPick {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Courses in Catalog" [value]="store.courses().length" icon="training-book" color="#7c3aed" [sub]="mandatory() + ' mandatory'" />
-      <app-kpi label="Active Enrolments" [value]="fmt(active())" icon="users" color="#3b82f6" change="9%" sub="vs. last month" />
-      <app-kpi label="Upcoming Sessions" [value]="store.sessions().length" icon="calendar-days" color="#22c55e" sub="next 30 days" />
-      <app-kpi label="Average Rating" [value]="avgRating()" icon="star" color="#f59e0b" sub="from 3,412 reviews" />
-      <app-kpi label="E-learning Courses" [value]="elearn()" icon="w-laptop" color="#0891b2" [sub]="Math.round((elearn() / store.courses().length) * 100) + '% of catalog'" />
+      <app-kpi label="Courses in Catalog" [value]="store.courses().length" icon="training-book" color="var(--ka-7c3aed)" [sub]="mandatory() + ' mandatory'" />
+      <app-kpi label="Active Enrolments" [value]="fmt(active())" icon="users" color="var(--ka-3b82f6)" change="9%" sub="vs. last month" />
+      <app-kpi label="Upcoming Sessions" [value]="store.sessions().length" icon="calendar-days" color="var(--ka-22c55e)" sub="next 30 days" />
+      <app-kpi label="Average Rating" [value]="avgRating()" icon="star" color="var(--ka-f59e0b)" sub="from 3,412 reviews" />
+      <app-kpi label="E-learning Courses" [value]="elearn()" icon="w-laptop" color="var(--ka-0891b2)" [sub]="Math.round((elearn() / store.courses().length) * 100) + '% of catalog'" />
     </section>
 
     <section class="card">
@@ -117,7 +117,7 @@ export class TrnPick {
         <div class="grid">
           @for (c of list(); track c.id) {
             <article class="course" (click)="openId.set(c.id)">
-              <div class="band" [style.background]="c.color + '18'">
+              <div class="band" [style.background]="'color-mix(in srgb, ' + c.color + ' 9%, transparent)'">
                 <span class="ci" [style.background]="c.color"><app-icon [name]="c.icon" [size]="20" /></span>
                 <div class="tags">@if (c.mandatory) {<span class="tag red">Mandatory</span>}<span class="tag">{{ c.mode }}</span></div>
               </div>
@@ -195,27 +195,27 @@ export class TrnPick {
     .cat-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; } .cat-bar .search-box { flex: 1 1 180px; max-width: 260px; } .cat-bar .search-box input { width: 100%; }
     .mand { display: flex; align-items: center; gap: 6px; font-size: 12.5px; }
     .vt { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-left: auto; }
-    .vt button { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border: 0; background: #fff; font-size: 12.5px; cursor: pointer; } .vt button + button { border-left: 1px solid var(--border); } .vt button.on { background: var(--primary); color: #fff; }
+    .vt button { display: inline-flex; align-items: center; gap: 5px; padding: 7px 11px; border: 0; background: var(--kb-ffffff); font-size: 12.5px; cursor: pointer; } .vt button + button { border-left: 1px solid var(--border); } .vt button.on { background: var(--primary); color: var(--kf-ffffff); }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
-    .course { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; background: #fff; display: flex; flex-direction: column; transition: box-shadow .15s, transform .15s; }
+    .course { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; cursor: pointer; background: var(--kb-ffffff); display: flex; flex-direction: column; transition: box-shadow .15s, transform .15s; }
     .course:hover { box-shadow: 0 8px 22px rgba(20,20,60,.09); transform: translateY(-1px); }
     .band { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px; }
-    .ci { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex-shrink: 0; } .ci.lg { width: 50px; height: 50px; }
+    .ci { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; } .ci.lg { width: 50px; height: 50px; }
     .tags { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
     .cb { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; } .cb small { font-size: 11px; }
-    .cb h4 { margin: 0; font-size: 14px; line-height: 1.3; } .prov { margin: 0; font-size: 12px; color: #4b4f6b; }
-    .meta { display: flex; gap: 12px; font-size: 11.5px; color: #4b4f6b; } .meta span { display: inline-flex; gap: 4px; align-items: center; } .star { color: #d97706; font-weight: 600; }
+    .cb h4 { margin: 0; font-size: 14px; line-height: 1.3; } .prov { margin: 0; font-size: 12px; color: var(--kf-4b4f6b); }
+    .meta { display: flex; gap: 12px; font-size: 11.5px; color: var(--kf-4b4f6b); } .meta span { display: inline-flex; gap: 4px; align-items: center; } .star { color: var(--kf-d97706); font-weight: 600; }
     .enr { display: flex; justify-content: space-between; font-size: 11.5px; margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--border); }
     .cta { display: flex; gap: 8px; } .cta button { flex: 1; justify-content: center; }
     .dh { display: flex; gap: 12px; align-items: center; } .dh h3 { font-size: 17px; }
-    .desc { font-size: 13px; color: #3b3f5c; line-height: 1.5; }
+    .desc { font-size: 13px; color: var(--kf-3b3f5c); line-height: 1.5; }
     .facts { display: grid; grid-template-columns: 130px 1fr; gap: 8px; font-size: 12.5px; margin: 0 0 14px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; } .stats div { border: 1px solid var(--border); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; } .stats b { font-size: 18px; } .stats small { font-size: 11px; color: var(--muted); }
     h4 { margin: 0 0 8px; font-size: 13.5px; }
-    .sess { list-style: none; margin: 0; padding: 0; } .sess li { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .sess { list-style: none; margin: 0; padding: 0; } .sess li { display: grid; grid-template-columns: 46px 1fr auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .sess li > div { display: flex; flex-direction: column; gap: 2px; } .sess small { color: var(--muted); font-size: 11px; }
     .dt { align-items: center; background: var(--primary-soft); color: var(--primary); border-radius: 8px; padding: 4px 0; } .dt b { font-size: 17px; }
-    .seat { display: block; width: 160px; height: 5px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .seat i { display: block; height: 100%; background: #22c55e; }
+    .seat { display: block; width: 160px; height: 5px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .seat i { display: block; height: 100%; background: var(--kb-22c55e); }
     .ck { flex-direction: row !important; align-items: center; gap: 6px; }
   `,
 })
@@ -315,7 +315,7 @@ export class TrainingCatalog extends TrnPage {
   protected readonly err = signal('');
   protected openForm(c?: Course) {
     this.err.set('');
-    this.form.set(c ? { ...c } : { id: '', title: '', category: 'Safety', mode: 'Classroom', hours: 4, provider: 'People360 Academy', skillId: 'fa', mandatory: false, rating: 0, capacity: 20, color: '#7c3aed', icon: 'training-book', level: 'Beginner', cost: 0, desc: '' });
+    this.form.set(c ? { ...c } : { id: '', title: '', category: 'Safety', mode: 'Classroom', hours: 4, provider: 'People360 Academy', skillId: 'fa', mandatory: false, rating: 0, capacity: 20, color: 'var(--ka-7c3aed)', icon: 'training-book', level: 'Beginner', cost: 0, desc: '' });
   }
   protected set<K extends keyof Course>(k: K, v: Course[K]) {
     this.form.update((f) => (f ? { ...f, [k]: v } : f));
@@ -353,11 +353,11 @@ export class TrainingCatalog extends TrnPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Active Enrolments" [value]="fmt(k().active)" icon="users" color="#7c3aed" change="9%" sub="vs. last month" />
-      <app-kpi label="In Progress" [value]="k().prog" icon="activity" color="#3b82f6" [sub]="live() + ' learners online now'" subColor="#2563eb" />
-      <app-kpi label="Completed (YTD)" [value]="fmt(k().done + 2840)" icon="training-check" color="#22c55e" change="14%" sub="vs. last year" />
-      <app-kpi label="Overdue" [value]="k().over" icon="triangle-alert" color="#ef4444" change="6%" [up]="false" sub="vs. last month" />
-      <app-kpi label="On-time Completion" [value]="k().rate + '%'" icon="training-target" color="#f59e0b" sub="last 90 days" />
+      <app-kpi label="Active Enrolments" [value]="fmt(k().active)" icon="users" color="var(--ka-7c3aed)" change="9%" sub="vs. last month" />
+      <app-kpi label="In Progress" [value]="k().prog" icon="activity" color="var(--ka-3b82f6)" [sub]="live() + ' learners online now'" subColor="var(--ka-2563eb)" />
+      <app-kpi label="Completed (YTD)" [value]="fmt(k().done + 2840)" icon="training-check" color="var(--ka-22c55e)" change="14%" sub="vs. last year" />
+      <app-kpi label="Overdue" [value]="k().over" icon="triangle-alert" color="var(--ka-ef4444)" change="6%" [up]="false" sub="vs. last month" />
+      <app-kpi label="On-time Completion" [value]="k().rate + '%'" icon="training-target" color="var(--ka-f59e0b)" sub="last 90 days" />
     </section>
 
     @if (emp(); as p) {
@@ -389,7 +389,7 @@ export class TrainingCatalog extends TrnPage {
           <ul class="ses">
             @for (s of upcoming(); track s.id) {
               <li><div class="dd"><b>{{ s.date.slice(8) }}</b><small>{{ fd(s.date).slice(3, 6) }}</small></div>
-                <div><b>{{ course(s.courseId)?.title }}</b><small>{{ s.time }} · {{ s.location }}</small><span class="seat"><i [style.width.%]="(s.booked / s.seats) * 100" [style.background]="s.booked >= s.seats ? '#ef4444' : '#22c55e'"></i></span></div>
+                <div><b>{{ course(s.courseId)?.title }}</b><small>{{ s.time }} · {{ s.location }}</small><span class="seat"><i [style.width.%]="(s.booked / s.seats) * 100" [style.background]="s.booked >= s.seats ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'"></i></span></div>
                 <button class="btn-ghost sm" (click)="openNew(emp()?.id, s.courseId, s.date)">Enroll</button></li>
             }
           </ul>
@@ -423,15 +423,15 @@ export class TrainingCatalog extends TrnPage {
     .plan { margin-bottom: 12px; } .ph { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; } .ph h3 { font-size: 16px; } .ph-act { margin-left: auto; display: flex; gap: 8px; align-items: center; }
     .dt-av.big { width: 48px; height: 48px; font-size: 16px; }
     .tl { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .tli { border: 1px solid var(--border); border-left: 4px solid #f59e0b; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
-    .tli.Completed { border-left-color: #22c55e; } .tli.InProgress { border-left-color: #3b82f6; } .tli.Overdue { border-left-color: #ef4444; }
+    .tli { border: 1px solid var(--border); border-left: 4px solid var(--kl-f59e0b); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
+    .tli.Completed { border-left-color: var(--kl-22c55e); } .tli.InProgress { border-left-color: var(--kl-3b82f6); } .tli.Overdue { border-left-color: var(--kl-ef4444); }
     .tli i { display: none; } .tli small { color: var(--muted); font-size: 11px; } .tli > span:last-child { align-self: flex-start; }
-    .pgb { height: 5px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .pgb em { display: block; height: 100%; background: var(--primary); }
-    .ses { list-style: none; margin: 0; padding: 0; } .ses li { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .pgb { height: 5px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .pgb em { display: block; height: 100%; background: var(--primary); }
+    .ses { list-style: none; margin: 0; padding: 0; } .ses li { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .ses li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; } .ses small { color: var(--muted); font-size: 10.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ses b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .dd { align-items: center; background: var(--primary-soft); color: var(--primary); border-radius: 8px; padding: 3px 0; } .dd b { font-size: 15px; }
-    .seat { display: block; height: 4px; background: #eef0f6; border-radius: 4px; overflow: hidden; margin-top: 2px; } .seat i { display: block; height: 100%; }
+    .seat { display: block; height: 4px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; margin-top: 2px; } .seat i { display: block; height: 100%; }
     @media (max-width: 1250px) { .lay { grid-template-columns: 1fr; } }
   `,
 })
@@ -496,8 +496,8 @@ export class TrainingPlanEnrollment extends TrnPage {
   });
   protected readonly upcoming = computed(() => this.store.sessions().slice(0, 7));
   protected readonly planSeries = [
-    { name: 'Planned', color: '#c4b5fd', values: [210, 260, 280, 300, 270, 290, 230, 210, 260, 310, 330, 300] },
-    { name: 'Completed', color: '#7c3aed', values: [198, 244, 271, 287, 251, 279, 214, 188, 247, 301, 322, 128] },
+    { name: 'Planned', color: 'var(--ka-c4b5fd)', values: [210, 260, 280, 300, 270, 290, 230, 210, 260, 310, 330, 300] },
+    { name: 'Completed', color: 'var(--ka-7c3aed)', values: [198, 244, 271, 287, 251, 279, 214, 188, 247, 301, 322, 128] },
   ];
 
   protected act(a: string, r: Enrollment) {
@@ -549,11 +549,11 @@ export class TrainingPlanEnrollment extends TrnPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Learning Paths" [value]="store.paths().length" icon="workflow" color="#7c3aed" [sub]="mandCount() + ' mandatory'" />
-      <app-kpi label="Learners Assigned" [value]="totals().learners" icon="users" color="#3b82f6" change="11%" sub="vs. last month" />
-      <app-kpi label="Completed Paths" [value]="totals().done" icon="training-award" color="#22c55e" sub="all steps finished" />
-      <app-kpi label="Avg. Completion" [value]="totals().avg + '%'" icon="training-target" color="#f59e0b" sub="across all paths" />
-      <app-kpi label="Learning Hours" [value]="fmt(totals().hours)" icon="clock" color="#0891b2" sub="planned in active paths" />
+      <app-kpi label="Learning Paths" [value]="store.paths().length" icon="workflow" color="var(--ka-7c3aed)" [sub]="mandCount() + ' mandatory'" />
+      <app-kpi label="Learners Assigned" [value]="totals().learners" icon="users" color="var(--ka-3b82f6)" change="11%" sub="vs. last month" />
+      <app-kpi label="Completed Paths" [value]="totals().done" icon="training-award" color="var(--ka-22c55e)" sub="all steps finished" />
+      <app-kpi label="Avg. Completion" [value]="totals().avg + '%'" icon="training-target" color="var(--ka-f59e0b)" sub="across all paths" />
+      <app-kpi label="Learning Hours" [value]="fmt(totals().hours)" icon="clock" color="var(--ka-0891b2)" sub="planned in active paths" />
     </section>
 
     <section class="lp">
@@ -669,27 +669,27 @@ export class TrainingPlanEnrollment extends TrnPage {
   styles: `
     .lp { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 12px; align-items: start; }
     .plist { display: flex; flex-direction: column; gap: 8px; } .plist .search-box input { width: 100%; }
-    .pc { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: #fff; text-align: left; cursor: pointer; font: inherit; }
+    .pc { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); text-align: left; cursor: pointer; font: inherit; }
     .pc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .pc div { display: flex; flex-direction: column; gap: 3px; min-width: 0; } .pc b { font-size: 12.5px; } .pc small { font-size: 11px; color: var(--muted); } .pc em { font-style: normal; font-weight: 700; font-size: 12.5px; }
-    .bar { height: 5px; background: #eef0f6; border-radius: 4px; overflow: hidden; } .bar i { display: block; height: 100%; }
-    .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; color: #fff; } .pi.lg { width: 50px; height: 50px; }
+    .bar { height: 5px; background: var(--kb-eef0f6); border-radius: 4px; overflow: hidden; } .bar i { display: block; height: 100%; }
+    .pi { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); } .pi.lg { width: 50px; height: 50px; }
     .pdh { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; } .pdh h3 { font-size: 17px; } .pact { margin-left: auto; display: flex; gap: 8px; }
     h4 { margin: 16px 0 10px; font-size: 13.5px; }
     .steps { display: flex; align-items: stretch; gap: 6px; overflow-x: auto; padding: 4px 2px 8px; }
-    .step { position: relative; flex: 0 0 168px; } .num { position: absolute; top: -8px; left: -6px; width: 22px; height: 22px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 700; z-index: 1; }
-    .sc { height: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 10px 8px; display: flex; flex-direction: column; gap: 4px; font-size: 12px; background: #fbfbfe; }
-    .sc b { line-height: 1.25; } .sc small { color: var(--muted); font-size: 11px; } .reach { font-size: 11px; color: #15803d; margin-top: auto; }
-    .sctl { display: flex; gap: 4px; } .sctl button { border: 1px solid var(--border); background: #fff; border-radius: 5px; padding: 3px 5px; cursor: pointer; line-height: 0; } .sctl button:disabled { opacity: .35; cursor: default; }
-    .arrow { align-self: center; color: #a1a5c0; }
-    .add-step { flex: 0 0 190px; border: 1.5px dashed #c4b5fd; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px; justify-content: center; } .add-step .select { width: 100%; }
+    .step { position: relative; flex: 0 0 168px; } .num { position: absolute; top: -8px; left: -6px; width: 22px; height: 22px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 11px; font-weight: 700; z-index: 1; }
+    .sc { height: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 10px 8px; display: flex; flex-direction: column; gap: 4px; font-size: 12px; background: var(--kb-fbfbfe); }
+    .sc b { line-height: 1.25; } .sc small { color: var(--muted); font-size: 11px; } .reach { font-size: 11px; color: var(--kf-15803d); margin-top: auto; }
+    .sctl { display: flex; gap: 4px; } .sctl button { border: 1px solid var(--border); background: var(--kb-ffffff); border-radius: 5px; padding: 3px 5px; cursor: pointer; line-height: 0; } .sctl button:disabled { opacity: .35; cursor: default; }
+    .arrow { align-self: center; color: var(--kf-a1a5c0); }
+    .add-step { flex: 0 0 190px; border: 1.5px dashed var(--kl-c4b5fd); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px; justify-content: center; } .add-step .select { width: 100%; }
     .two { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: 16px; } .two h4 { margin: 0; }
-    .lt { max-height: 360px; overflow: auto; } .cur { font-size: 12px; color: #3b3f5c; display: inline-block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; } .lt .table td { padding-left: 6px; padding-right: 6px; } .ra { white-space: nowrap; text-align: right; }
-    .icon-x { border: 0; background: none; cursor: pointer; color: #9ca3af; padding: 4px; } .icon-x:hover { color: var(--red); }
+    .lt { max-height: 360px; overflow: auto; } .cur { font-size: 12px; color: var(--kf-3b3f5c); display: inline-block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; } .lt .table td { padding-left: 6px; padding-right: 6px; } .ra { white-space: nowrap; text-align: right; }
+    .icon-x { border: 0; background: none; cursor: pointer; color: var(--kf-9ca3af); padding: 4px; } .icon-x:hover { color: var(--red); }
     .select.sm { padding: 4px 26px 4px 8px; font-size: 12px; }
     .mt { margin-top: 14px; } .ck { flex-direction: row !important; align-items: center; gap: 6px; }
     .cpick { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 260px; overflow: auto; }
-    .cpick label { display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 7px; cursor: pointer; } .cpick label.on { border-color: var(--primary); background: #faf7ff; }
-    .cpick em { font-style: normal; background: var(--primary); color: #fff; border-radius: 50%; width: 18px; height: 18px; display: grid; place-items: center; font-size: 10px; flex-shrink: 0; } .cpick small { margin-left: auto; color: var(--muted); }
+    .cpick label { display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 7px; cursor: pointer; } .cpick label.on { border-color: var(--primary); background: var(--kb-faf7ff); }
+    .cpick em { font-style: normal; background: var(--primary); color: var(--kf-ffffff); border-radius: 50%; width: 18px; height: 18px; display: grid; place-items: center; font-size: 10px; flex-shrink: 0; } .cpick small { margin-left: auto; color: var(--muted); }
     @media (max-width: 1200px) { .lp { grid-template-columns: 1fr; } .two { grid-template-columns: 1fr; } }
   `,
 })
@@ -721,7 +721,7 @@ export class LearningPaths extends TrnPage {
     return p.learners.filter((l) => l.done > i).length;
   }
   protected funnel(p: LPath) {
-    return [{ label: 'Assigned', value: p.learners.length, color: '#a78bfa' }, ...p.steps.map((c, i) => ({ label: `${i + 1}. ${this.course(c)?.title ?? c}`, value: this.reached(p, i), color: p.color }))];
+    return [{ label: 'Assigned', value: p.learners.length, color: 'var(--ka-a78bfa)' }, ...p.steps.map((c, i) => ({ label: `${i + 1}. ${this.course(c)?.title ?? c}`, value: this.reached(p, i), color: p.color }))];
   }
   protected learnerRows(p: LPath) {
     const f = this.lf();
@@ -794,7 +794,7 @@ export class LearningPaths extends TrnPage {
     if (!f.name.trim()) return this.err.set('Path name is required.');
     if (!f.steps.length) return this.err.set('Select at least one course.');
     const id = `LP-${String(this.store.paths().length + 1).padStart(2, '0')}`;
-    const colors = ['#7c3aed', '#0891b2', '#db2777', '#16a34a', '#ea580c'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-0891b2)', 'var(--ka-db2777)', 'var(--ka-16a34a)', 'var(--ka-ea580c)'];
     this.store.paths.update((l) => [...l, { id, name: f.name.trim(), audience: f.audience, color: colors[l.length % colors.length], icon: 'workflow', steps: f.steps, learners: [], mandatory: f.mandatory, owner: 'Rex Kumar' }]);
     this.selId.set(id);
     this.cf.set(null);
@@ -816,11 +816,11 @@ export class LearningPaths extends TrnPage {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Certificates on File" [value]="fmt(k().total)" icon="id-card" color="#7c3aed" [sub]="k().holders + ' employees covered'" />
-      <app-kpi label="Valid" [value]="fmt(k().valid)" icon="shield-check" color="#22c55e" [sub]="Math.round((k().valid / k().total) * 100) + '% of register'" subColor="#16a34a" />
-      <app-kpi label="Expiring ≤ 30 days" [value]="k().exp" icon="clock" color="#f59e0b" change="28%" sub="vs. last month" [good]="false" />
-      <app-kpi label="Expired" [value]="k().expired" icon="triangle-alert" color="#ef4444" sub="action required" subColor="#dc2626" />
-      <app-kpi label="Operating Licences" [value]="k().lic" icon="training-forklift" color="#3b82f6" sub="forklift · crane · security" />
+      <app-kpi label="Certificates on File" [value]="fmt(k().total)" icon="id-card" color="var(--ka-7c3aed)" [sub]="k().holders + ' employees covered'" />
+      <app-kpi label="Valid" [value]="fmt(k().valid)" icon="shield-check" color="var(--ka-22c55e)" [sub]="Math.round((k().valid / k().total) * 100) + '% of register'" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Expiring ≤ 30 days" [value]="k().exp" icon="clock" color="var(--ka-f59e0b)" change="28%" sub="vs. last month" [good]="false" />
+      <app-kpi label="Expired" [value]="k().expired" icon="triangle-alert" color="var(--ka-ef4444)" sub="action required" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Operating Licences" [value]="k().lic" icon="training-forklift" color="var(--ka-3b82f6)" sub="forklift · crane · security" />
     </section>
 
     <section class="cl" [class.with]="!!sel()">
@@ -897,19 +897,19 @@ export class LearningPaths extends TrnPage {
     .side { display: flex; flex-direction: column; gap: 12px; } .side h3 { margin-bottom: 10px; }
     .tabs.st { margin-bottom: 12px; }
     .det { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; }
-    .cert { position: relative; border: 2px solid #c4b5fd; outline: 4px double #ede9fe; outline-offset: -9px; border-radius: 10px; padding: 18px 16px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px;
-      background: radial-gradient(circle at 50% 0, #faf7ff, #fff 60%); overflow: hidden; }
-    .cert.bad { border-color: #fca5a5; outline-color: #fee2e2; }
-    .seal { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #fff; display: grid; place-items: center; box-shadow: 0 0 0 4px #fef3c7; margin-bottom: 4px; }
-    .cert small { font-size: 10.5px; color: var(--muted); } .cert h4 { margin: 2px 0 4px; font-size: 15px; color: #4c1d95; }
-    .lbl { font-size: 10.5px; color: #6b7090; } .nm { font-family: Georgia, serif; font-size: 19px; font-style: italic; color: #1e1b4b; }
+    .cert { position: relative; border: 2px solid var(--kl-c4b5fd); outline: 4px double var(--kl-ede9fe); outline-offset: -9px; border-radius: 10px; padding: 18px 16px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      background: radial-gradient(circle at 50% 0, var(--kb-faf7ff), var(--kb-ffffff) 60%); overflow: hidden; }
+    .cert.bad { border-color: var(--kl-fca5a5); outline-color: var(--kl-fee2e2); }
+    .seal { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--kb-f59e0b), var(--kb-fbbf24)); color: var(--kf-ffffff); display: grid; place-items: center; box-shadow: 0 0 0 4px var(--kb-fef3c7); margin-bottom: 4px; }
+    .cert small { font-size: 10.5px; color: var(--muted); } .cert h4 { margin: 2px 0 4px; font-size: 15px; color: var(--kf-4c1d95); }
+    .lbl { font-size: 10.5px; color: var(--kf-6b7090); } .nm { font-family: Georgia, serif; font-size: 19px; font-style: italic; color: var(--kf-1e1b4b); }
     .cd { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; margin-top: 8px; } .cd div { display: flex; flex-direction: column; } .cd b { font-size: 11.5px; }
-    .qr { display: grid; grid-template-columns: repeat(8, 5px); gap: 1px; margin-top: 8px; } .qr i { width: 5px; height: 5px; background: #eef0f6; } .qr i.on { background: #1e1b4b; }
-    .stamp { position: absolute; top: 26px; right: -30px; transform: rotate(35deg); background: #ef4444; color: #fff; font-size: 11px; font-weight: 700; padding: 3px 34px; letter-spacing: 1px; text-transform: uppercase; }
+    .qr { display: grid; grid-template-columns: repeat(8, 5px); gap: 1px; margin-top: 8px; } .qr i { width: 5px; height: 5px; background: var(--kb-eef0f6); } .qr i.on { background: var(--kb-1e1b4b); }
+    .stamp { position: absolute; top: 26px; right: -30px; transform: rotate(35deg); background: var(--kb-ef4444); color: var(--kf-ffffff); font-size: 11px; font-weight: 700; padding: 3px 34px; letter-spacing: 1px; text-transform: uppercase; }
     .meta { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
     .acts { display: flex; gap: 6px; flex-wrap: wrap; } .acts > * { padding: 7px 10px; } .acts label { cursor: pointer; } .danger { color: var(--red) !important; }
     h4 { margin: 16px 0 6px; font-size: 13px; }
-    .oc { list-style: none; margin: 0; padding: 0; } .oc li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; cursor: pointer; } .oc li:hover { color: var(--primary); }
+    .oc { list-style: none; margin: 0; padding: 0; } .oc li { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; cursor: pointer; } .oc li:hover { color: var(--primary); }
     @media (max-width: 1250px) { .cl { grid-template-columns: 1fr; } .det { position: static; max-height: none; } }
   `,
 })
@@ -978,11 +978,11 @@ export class CertificationsLicenses extends TrnPage {
     return this.store.certsOf(c.empId).filter((o) => o.id !== c.id);
   }
   protected readonly donut = computed(() => [
-    { label: 'Valid', value: this.k().valid, color: '#22c55e' },
-    { label: 'Expiring', value: this.k().exp, color: '#f59e0b' },
-    { label: 'Expired', value: this.k().expired, color: '#ef4444' },
+    { label: 'Valid', value: this.k().valid, color: 'var(--ka-22c55e)' },
+    { label: 'Expiring', value: this.k().exp, color: 'var(--ka-f59e0b)' },
+    { label: 'Expired', value: this.k().expired, color: 'var(--ka-ef4444)' },
   ]);
-  protected readonly byType = computed(() => this.store.dueGroups().slice(0, 8).map((g) => ({ label: g.type.name, value: g.count, color: g.window <= 14 ? '#ef4444' : g.window <= 21 ? '#f59e0b' : '#3b82f6' })));
+  protected readonly byType = computed(() => this.store.dueGroups().slice(0, 8).map((g) => ({ label: g.type.name, value: g.count, color: g.window <= 14 ? 'var(--ka-ef4444)' : g.window <= 21 ? 'var(--ka-f59e0b)' : 'var(--ka-3b82f6)' })));
   protected qr(s: string) {
     let h = [...s].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7);
     return Array.from({ length: 64 }, (_, i) => {

@@ -47,7 +47,7 @@ const fmtTick = (v: number) => v.toLocaleString('en-US');
         @for (s of g().lines; track s.name) {
           <path [attr.d]="s.d" fill="none" [attr.stroke]="s.color" stroke-width="2" [attr.stroke-dasharray]="s.dashed ? '6 5' : null" />
           @for (p of s.pts; track $index) {
-            <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="active() === $index ? 5 : 3.6" [attr.fill]="s.color" stroke="#fff" [attr.stroke-width]="active() === $index ? 2 : 1" />
+            <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="active() === $index ? 5 : 3.6" [attr.fill]="s.color" stroke="var(--kl-ffffff)" [attr.stroke-width]="active() === $index ? 2 : 1" />
           }
         }
         @for (x of g().xs; track $index) {
@@ -69,9 +69,9 @@ const fmtTick = (v: number) => v.toLocaleString('en-US');
     :host { display: block; }
     .wrap { position: relative; }
     .ylab { font-size: 11px; }
-    .tip { position: absolute; transform: translate(10px, 0); min-width: 128px; background: #fff; border: 1px solid #ecebf5; border-radius: 8px; box-shadow: 0 8px 24px rgba(30, 20, 80, .14); padding: 9px 11px; font-size: 11px; display: flex; flex-direction: column; gap: 6px; pointer-events: none; z-index: 3; }
-    .tip b { font-weight: 500; color: #3b3f5c; margin-bottom: 1px; }
-    .tip span { display: flex; align-items: center; gap: 7px; color: #3b3f5c; }
+    .tip { position: absolute; transform: translate(10px, 0); min-width: 128px; background: var(--kb-ffffff); border: 1px solid var(--kl-ecebf5); border-radius: 8px; box-shadow: 0 8px 24px rgba(30, 20, 80, .14); padding: 9px 11px; font-size: 11px; display: flex; flex-direction: column; gap: 6px; pointer-events: none; z-index: 3; }
+    .tip b { font-weight: 500; color: var(--kf-3b3f5c); margin-bottom: 1px; }
+    .tip span { display: flex; align-items: center; gap: 7px; color: var(--kf-3b3f5c); }
     .tip i { width: 8px; height: 8px; border-radius: 50%; }
     .tip em { margin-left: auto; padding-left: 16px; font-style: normal; font-weight: 700; color: var(--text); }
   `,
@@ -166,8 +166,8 @@ export class FfLine {
     :host { display: block; } .wrap { position: relative; }
     .band { fill: transparent; cursor: pointer; } .band.on { fill: rgba(124, 58, 237, .06); }
     .col { pointer-events: none; transition: y .4s ease, height .4s ease; }
-    .val { font-size: 10.5px; fill: #12142b; font-weight: 500; pointer-events: none; }
-    .tip { position: absolute; top: 0; transform: translateX(-50%); background: #fff; border: 1px solid #ecebf5; border-radius: 8px; box-shadow: 0 8px 24px rgba(30, 20, 80, .14); padding: 8px 10px; font-size: 11px; display: flex; flex-direction: column; gap: 5px; pointer-events: none; z-index: 3; min-width: 120px; }
+    .val { font-size: 10.5px; fill: var(--ka-12142b); font-weight: 500; pointer-events: none; }
+    .tip { position: absolute; top: 0; transform: translateX(-50%); background: var(--kb-ffffff); border: 1px solid var(--kl-ecebf5); border-radius: 8px; box-shadow: 0 8px 24px rgba(30, 20, 80, .14); padding: 8px 10px; font-size: 11px; display: flex; flex-direction: column; gap: 5px; pointer-events: none; z-index: 3; min-width: 120px; }
     .tip span { display: flex; gap: 7px; align-items: center; } .tip i { width: 8px; height: 8px; border-radius: 50%; } .tip em { margin-left: auto; font-style: normal; font-weight: 700; padding-left: 12px; }
   `,
 })
@@ -204,60 +204,60 @@ export class FfBars {
 
 /* ---------- Illustrated mall CCTV scene with AI detection boxes ---------- */
 interface Walker { x: number; y: number; s: number; c: string; box: string; dx: number; }
-const SHIRTS = ['#1f2937', '#7f1d1d', '#1e3a8a', '#065f46', '#f8fafc', '#78350f', '#4c1d95', '#be185d', '#0f766e', '#334155'];
-const BOXES = ['#22c55e', '#22c55e', '#ef4444', '#3b82f6', '#22c55e', '#eab308', '#22c55e', '#3b82f6'];
+const SHIRTS = ['var(--ka-1f2937)', 'var(--ka-7f1d1d)', 'var(--ka-1e3a8a)', 'var(--ka-065f46)', 'var(--ka-f8fafc)', 'var(--ka-78350f)', 'var(--ka-4c1d95)', 'var(--ka-be185d)', 'var(--ka-0f766e)', 'var(--ka-334155)'];
+const BOXES = ['var(--ka-22c55e)', 'var(--ka-22c55e)', 'var(--ka-ef4444)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-eab308)', 'var(--ka-22c55e)', 'var(--ka-3b82f6)'];
 @Component({
   selector: 'app-mall-cam',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid slice">
       <defs>
-        <linearGradient id="mc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9b3a8" /><stop offset="1" stop-color="#ddd7cc" /></linearGradient>
-        <linearGradient id="mc-ceil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e4da" /><stop offset="1" stop-color="#c9c1b2" /></linearGradient>
-        <linearGradient id="mc-shop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fef3c7" /><stop offset="1" stop-color="#d6b98a" /></linearGradient>
+        <linearGradient id="mc-floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ka-b9b3a8)" /><stop offset="1" stop-color="var(--ka-ddd7cc)" /></linearGradient>
+        <linearGradient id="mc-ceil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ka-e9e4da)" /><stop offset="1" stop-color="var(--ka-c9c1b2)" /></linearGradient>
+        <linearGradient id="mc-shop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ka-fef3c7)" /><stop offset="1" stop-color="var(--ka-d6b98a)" /></linearGradient>
       </defs>
       <rect width="600" height="200" fill="url(#mc-ceil)" />
       <!-- floor -->
       <path d="M0 200 L0 70 L600 70 L600 200 Z" fill="url(#mc-floor)" />
-      <g stroke="#a8a091" stroke-width=".8" opacity=".55">
+      <g stroke="var(--kl-a8a091)" stroke-width=".8" opacity=".55">
         @for (x of floorLines; track $index) {<path [attr.d]="'M300 40 L' + x + ' 200'" />}
         @for (y of [86, 104, 128, 160]; track y) {<path [attr.d]="'M0 ' + y + 'H600'" />}
       </g>
       <!-- left storefronts -->
       <g>
-        <path d="M0 0 L150 0 L150 90 L0 120 Z" fill="#3b2f2a" />
+        <path d="M0 0 L150 0 L150 90 L0 120 Z" fill="var(--ka-3b2f2a)" />
         @for (s of leftShops; track $index) {
-          <path [attr.d]="s.d" fill="url(#mc-shop)" stroke="#2a211d" stroke-width="2" />
+          <path [attr.d]="s.d" fill="url(#mc-shop)" stroke="var(--kl-2a211d)" stroke-width="2" />
           <path [attr.d]="s.sign" [attr.fill]="s.c" />
         }
         @for (m of mannequins; track $index) {<rect [attr.x]="m[0]" [attr.y]="m[1]" width="3" height="12" rx="1.5" [attr.fill]="m[2]" />}
       </g>
       <!-- right storefronts + escalators -->
-      <path d="M470 0 L600 0 L600 120 L470 86 Z" fill="#4b5563" />
-      <g stroke="#9ca3af" stroke-width="5" fill="none"><path d="M480 18 L600 130" /><path d="M500 10 L600 98" /></g>
-      <g stroke="#1f2937" stroke-width="2.2" fill="none"><path d="M474 12 L600 140" /><path d="M492 6 L600 104" /><path d="M512 2 L600 80" /></g>
-      <g fill="#e5e7eb" opacity=".8">@for (k of [0, 1, 2, 3, 4, 5, 6]; track k) {<rect [attr.x]="486 + k * 16" [attr.y]="20 + k * 15" width="10" height="3" />}</g>
+      <path d="M470 0 L600 0 L600 120 L470 86 Z" fill="var(--ka-4b5563)" />
+      <g stroke="var(--kl-9ca3af)" stroke-width="5" fill="none"><path d="M480 18 L600 130" /><path d="M500 10 L600 98" /></g>
+      <g stroke="var(--kl-1f2937)" stroke-width="2.2" fill="none"><path d="M474 12 L600 140" /><path d="M492 6 L600 104" /><path d="M512 2 L600 80" /></g>
+      <g fill="var(--ka-e5e7eb)" opacity=".8">@for (k of [0, 1, 2, 3, 4, 5, 6]; track k) {<rect [attr.x]="486 + k * 16" [attr.y]="20 + k * 15" width="10" height="3" />}</g>
       <!-- back wall + skylight -->
-      <rect x="150" y="10" width="320" height="62" fill="#d8d2c6" />
-      @for (k of [0, 1, 2, 3, 4, 5, 6, 7]; track k) {<rect [attr.x]="160 + k * 39" y="16" width="30" height="40" fill="#f5f1e8" stroke="#bcb3a3" />}
-      <rect x="150" y="0" width="320" height="10" fill="#efeae0" />
+      <rect x="150" y="10" width="320" height="62" fill="var(--ka-d8d2c6)" />
+      @for (k of [0, 1, 2, 3, 4, 5, 6, 7]; track k) {<rect [attr.x]="160 + k * 39" y="16" width="30" height="40" fill="var(--ka-f5f1e8)" stroke="var(--kl-bcb3a3)" />}
+      <rect x="150" y="0" width="320" height="10" fill="var(--ka-efeae0)" />
       <!-- counting zone band -->
-      @if (zone()) {<path d="M40 150 L560 150 L590 172 L10 172 Z" fill="#a78bfa" fill-opacity=".18" stroke="#a78bfa" stroke-width="1.4" stroke-dasharray="6 4" />}
+      @if (zone()) {<path d="M40 150 L560 150 L590 172 L10 172 Z" fill="var(--ka-a78bfa)" fill-opacity=".18" stroke="var(--kl-a78bfa)" stroke-width="1.4" stroke-dasharray="6 4" />}
       <!-- people -->
       @for (p of people(); track $index) {
         <g [attr.transform]="'translate(' + p.x + ' ' + p.y + ')'">
-          <ellipse cx="0" [attr.cy]="p.s * 4.4" [attr.rx]="p.s * 1.4" [attr.ry]="p.s * .4" fill="#000" opacity=".15" />
-          <rect [attr.x]="-p.s * 0.55" [attr.y]="p.s * 2.4" [attr.width]="p.s * 0.5" [attr.height]="p.s * 2" fill="#1f2937" />
-          <rect [attr.x]="p.s * 0.05" [attr.y]="p.s * 2.4" [attr.width]="p.s * 0.5" [attr.height]="p.s * 2" fill="#111827" />
+          <ellipse cx="0" [attr.cy]="p.s * 4.4" [attr.rx]="p.s * 1.4" [attr.ry]="p.s * .4" fill="var(--ka-000000)" opacity=".15" />
+          <rect [attr.x]="-p.s * 0.55" [attr.y]="p.s * 2.4" [attr.width]="p.s * 0.5" [attr.height]="p.s * 2" fill="var(--ka-1f2937)" />
+          <rect [attr.x]="p.s * 0.05" [attr.y]="p.s * 2.4" [attr.width]="p.s * 0.5" [attr.height]="p.s * 2" fill="var(--ka-111827)" />
           <rect [attr.x]="-p.s * 0.75" [attr.y]="p.s * 0.75" [attr.width]="p.s * 1.5" [attr.height]="p.s * 1.9" [attr.rx]="p.s * 0.4" [attr.fill]="p.c" />
-          <circle cx="0" cy="0" [attr.r]="p.s * 0.55" fill="#c58c62" />
-          <path [attr.d]="'M' + -p.s * .55 + ' ' + -p.s * .1 + 'a' + p.s * .55 + ' ' + p.s * .55 + ' 0 0 1 ' + p.s * 1.1 + ' 0'" fill="#2b1d16" />
+          <circle cx="0" cy="0" [attr.r]="p.s * 0.55" fill="var(--ka-c58c62)" />
+          <path [attr.d]="'M' + -p.s * .55 + ' ' + -p.s * .1 + 'a' + p.s * .55 + ' ' + p.s * .55 + ' 0 0 1 ' + p.s * 1.1 + ' 0'" fill="var(--ka-2b1d16)" />
           @if (boxes()) {<rect [attr.x]="-p.s * 1.15" [attr.y]="-p.s * 0.9" [attr.width]="p.s * 2.3" [attr.height]="p.s * 5.5" fill="none" [attr.stroke]="p.box" stroke-width="1.4" />}
         </g>
       }
       @if (offline()) {
-        <rect width="600" height="200" fill="#0f172a" opacity=".82" />
-        <text x="300" y="104" text-anchor="middle" fill="#fff" font-size="16" font-weight="600">Camera offline · reconnecting…</text>
+        <rect width="600" height="200" fill="var(--ka-0f172a)" opacity=".82" />
+        <text x="300" y="104" text-anchor="middle" fill="var(--ka-ffffff)" font-size="16" font-weight="600">Camera offline · reconnecting…</text>
       }
     </svg>
   `,
@@ -272,10 +272,10 @@ export class MallCam {
   readonly seed = input(3);
   protected readonly floorLines = [-600, -300, -100, 60, 200, 300, 400, 540, 700, 900, 1200];
   protected readonly leftShops = [
-    { d: 'M4 30 L60 22 L60 108 L4 118 Z', sign: 'M4 30 L60 22 L60 30 L4 38 Z', c: '#111827' },
-    { d: 'M68 20 L140 10 L140 92 L68 106 Z', sign: 'M68 20 L140 10 L140 18 L68 28 Z', c: '#7f1d1d' },
+    { d: 'M4 30 L60 22 L60 108 L4 118 Z', sign: 'M4 30 L60 22 L60 30 L4 38 Z', c: 'var(--ka-111827)' },
+    { d: 'M68 20 L140 10 L140 92 L68 106 Z', sign: 'M68 20 L140 10 L140 18 L68 28 Z', c: 'var(--ka-7f1d1d)' },
   ];
-  protected readonly mannequins = [[14, 80, '#e11d48'], [26, 78, '#f8fafc'], [40, 76, '#1d4ed8'], [80, 70, '#facc15'], [96, 68, '#f8fafc'], [112, 66, '#16a34a'], [126, 64, '#111827']] as [number, number, string][];
+  protected readonly mannequins = [[14, 80, 'var(--ka-e11d48)'], [26, 78, 'var(--ka-f8fafc)'], [40, 76, 'var(--ka-1d4ed8)'], [80, 70, 'var(--ka-facc15)'], [96, 68, 'var(--ka-f8fafc)'], [112, 66, 'var(--ka-16a34a)'], [126, 64, 'var(--ka-111827)']] as [number, number, string][];
   private readonly base = computed<Walker[]>(() => {
     let s = this.seed() * 9301 + 49297;
     const r = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
@@ -304,26 +304,26 @@ export interface Track { points: [number, number][]; color: string; id?: string;
   template: `
     <svg [attr.viewBox]="vb()" preserveAspectRatio="xMidYMid meet" (mouseleave)="hoverZone.set(null)">
       <defs>
-        <radialGradient [attr.id]="uid + 'hot'"><stop offset="0" stop-color="#ff0000" /><stop offset=".2" stop-color="#ff1a1a" /><stop offset=".36" stop-color="#ff7a00" /><stop offset=".5" stop-color="#ffe600" /><stop offset=".66" stop-color="#2ee05a" stop-opacity=".85" /><stop offset=".85" stop-color="#1e9bff" stop-opacity=".5" /><stop offset="1" stop-color="#1e6bff" stop-opacity="0" /></radialGradient>
-        <radialGradient [attr.id]="uid + 'warm'"><stop offset="0" stop-color="#ffd400" /><stop offset=".4" stop-color="#46e05a" stop-opacity=".9" /><stop offset=".75" stop-color="#1e9bff" stop-opacity=".5" /><stop offset="1" stop-color="#1e6bff" stop-opacity="0" /></radialGradient>
-        <radialGradient [attr.id]="uid + 'cool'"><stop offset="0" stop-color="#22d3ee" stop-opacity=".9" /><stop offset=".6" stop-color="#3b82f6" stop-opacity=".45" /><stop offset="1" stop-color="#3b82f6" stop-opacity="0" /></radialGradient>
+        <radialGradient [attr.id]="uid + 'hot'"><stop offset="0" stop-color="var(--ka-ff0000)" /><stop offset=".2" stop-color="var(--ka-ff1a1a)" /><stop offset=".36" stop-color="var(--ka-ff7a00)" /><stop offset=".5" stop-color="var(--ka-ffe600)" /><stop offset=".66" stop-color="var(--ka-2ee05a)" stop-opacity=".85" /><stop offset=".85" stop-color="var(--ka-1e9bff)" stop-opacity=".5" /><stop offset="1" stop-color="var(--ka-1e6bff)" stop-opacity="0" /></radialGradient>
+        <radialGradient [attr.id]="uid + 'warm'"><stop offset="0" stop-color="var(--ka-ffd400)" /><stop offset=".4" stop-color="var(--ka-46e05a)" stop-opacity=".9" /><stop offset=".75" stop-color="var(--ka-1e9bff)" stop-opacity=".5" /><stop offset="1" stop-color="var(--ka-1e6bff)" stop-opacity="0" /></radialGradient>
+        <radialGradient [attr.id]="uid + 'cool'"><stop offset="0" stop-color="var(--ka-22d3ee)" stop-opacity=".9" /><stop offset=".6" stop-color="var(--ka-3b82f6)" stop-opacity=".45" /><stop offset="1" stop-color="var(--ka-3b82f6)" stop-opacity="0" /></radialGradient>
         <filter [attr.id]="uid + 'blur'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" /></filter>
         <marker [attr.id]="uid + 'arr'" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke" /></marker>
         <clipPath [attr.id]="uid + 'clip'"><rect x="12" y="10" width="976" height="310" /></clipPath>
-        <pattern [attr.id]="uid + 'tile'" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#dfe2e8" stroke-width=".6" /></pattern>
+        <pattern [attr.id]="uid + 'tile'" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="var(--kl-dfe2e8)" stroke-width=".6" /></pattern>
       </defs>
-      <rect x="0" y="0" width="1000" height="330" fill="#eef0f4" />
-      <rect x="10" y="8" width="980" height="314" [attr.fill]="'url(#' + uid + 'tile)'" stroke="#5b6170" stroke-width="4" />
+      <rect x="0" y="0" width="1000" height="330" fill="var(--ka-eef0f4)" />
+      <rect x="10" y="8" width="980" height="314" [attr.fill]="'url(#' + uid + 'tile)'" stroke="var(--kl-5b6170)" stroke-width="4" />
       <!-- concourse -->
-      <rect x="14" y="176" width="972" height="16" fill="#f7f8fa" />
+      <rect x="14" y="176" width="972" height="16" fill="var(--ka-f7f8fa)" />
       <!-- rooms -->
       @for (z of zones(); track z.id) {
-        <rect [attr.x]="z.x" [attr.y]="z.y" [attr.width]="z.w" [attr.height]="z.h" fill="#f8f9fb" fill-opacity=".55" stroke="#7b8190" stroke-width="2" />
+        <rect [attr.x]="z.x" [attr.y]="z.y" [attr.width]="z.w" [attr.height]="z.h" fill="var(--ka-f8f9fb)" fill-opacity=".55" stroke="var(--kl-7b8190)" stroke-width="2" />
       }
-      <g stroke="#a3a9b6" stroke-width="1.2" fill="none">
+      <g stroke="var(--kl-a3a9b6)" stroke-width="1.2" fill="none">
         @for (l of details(); track $index) {<path [attr.d]="l" />}
       </g>
-      <g fill="#c3c8d2">@for (c of columns; track $index) {<rect [attr.x]="c[0] - 4" [attr.y]="c[1] - 4" width="8" height="8" />}</g>
+      <g fill="var(--ka-c3c8d2)">@for (c of columns; track $index) {<rect [attr.x]="c[0] - 4" [attr.y]="c[1] - 4" width="8" height="8" />}</g>
       @if (showHeat()) {
         <g [attr.clip-path]="'url(#' + uid + 'clip)'"><g [attr.filter]="'url(#' + uid + 'blur)'" [attr.opacity]="heatOpacity()" style="mix-blend-mode: multiply">
           @for (b of base; track $index) {<circle [attr.cx]="b[0]" [attr.cy]="b[1]" r="74" [attr.fill]="'url(#' + uid + 'cool)'" opacity=".55" />}
@@ -339,7 +339,7 @@ export interface Track { points: [number, number][]; color: string; id?: string;
       }
       @for (t of tracks(); track $index) {
         <polyline [attr.points]="pts(t.points)" fill="none" [attr.stroke]="t.color" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" [attr.marker-end]="'url(#' + uid + 'arr)'" [attr.opacity]="selTrack() && selTrack() !== t.id ? 0.18 : 0.9" />
-        <circle [attr.cx]="t.points[0][0]" [attr.cy]="t.points[0][1]" r="5" [attr.fill]="t.color" stroke="#fff" stroke-width="2" />
+        <circle [attr.cx]="t.points[0][0]" [attr.cy]="t.points[0][1]" r="5" [attr.fill]="t.color" stroke="var(--kl-ffffff)" stroke-width="2" />
       }
       <!-- zone hit areas -->
       @for (z of zones(); track z.id) {
@@ -349,7 +349,7 @@ export interface Track { points: [number, number][]; color: string; id?: string;
         <g class="mk" [attr.transform]="'translate(' + m.x + ' ' + m.y + ')'" (click)="markerClick.emit(m.id)">
           <title>{{ m.title ?? m.id }}</title>
           @if (m.id === selected()) {<circle r="17" [attr.fill]="m.color" opacity=".25" />}
-          <circle r="10" [attr.fill]="m.color" stroke="#fff" stroke-width="2.5" />
+          <circle r="10" [attr.fill]="m.color" stroke="var(--kl-ffffff)" stroke-width="2.5" />
           @if (m.label) {<text y="24" text-anchor="middle" class="ml">{{ m.label }}</text>}
         </g>
       }
@@ -357,8 +357,8 @@ export interface Track { points: [number, number][]; color: string; id?: string;
         @for (z of labelled(); track z.id) {
           <g class="lbl" [attr.transform]="'translate(' + z.lx + ' ' + z.ly + ')'" (click)="zoneClick.emit(z.id)">
             @let k = labelSize() / 15;
-            @if (z.pin) {<circle [attr.cx]="-16 * k" cy="0" [attr.r]="11 * k" fill="#7c3aed" stroke="#fff" stroke-width="2" /><circle [attr.cx]="-16 * k" [attr.cy]="-1.5 * k" [attr.r]="3.4 * k" fill="#fff" />}
-            <rect x="0" [attr.y]="-13 * k" [attr.width]="(z.name.length * 8.4 + 18) * k" [attr.height]="26 * k" [attr.rx]="5 * k" fill="#fff" [attr.stroke]="selected() === z.id ? '#7c3aed' : '#e5e7eb'" />
+            @if (z.pin) {<circle [attr.cx]="-16 * k" cy="0" [attr.r]="11 * k" fill="var(--ka-7c3aed)" stroke="var(--kl-ffffff)" stroke-width="2" /><circle [attr.cx]="-16 * k" [attr.cy]="-1.5 * k" [attr.r]="3.4 * k" fill="var(--ka-ffffff)" />}
+            <rect x="0" [attr.y]="-13 * k" [attr.width]="(z.name.length * 8.4 + 18) * k" [attr.height]="26 * k" [attr.rx]="5 * k" fill="var(--ka-ffffff)" [attr.stroke]="selected() === z.id ? 'var(--ka-7c3aed)' : 'var(--ka-e5e7eb)'" />
             <text [attr.x]="9 * k" [attr.y]="5 * k" class="lt" [style.font-size.px]="labelSize()">{{ z.name }}</text>
           </g>
         }
@@ -372,9 +372,9 @@ export interface Track { points: [number, number][]; color: string; id?: string;
   `,
   styles: `
     :host { display: block; position: relative; } svg { width: 100%; height: 100%; display: block; }
-    .hit { fill: transparent; cursor: pointer; } .lbl, .mk { cursor: pointer; } .ml { font-size: 10px; font-weight: 600; fill: #12142b; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
-    .lt { font-size: 15px; font-weight: 600; fill: #12142b; }
-    .tip { position: absolute; transform: translate(-50%, -100%); background: #1e1b3a; color: #fff; padding: 6px 9px; border-radius: 7px; font-size: 11px; pointer-events: none; display: flex; flex-direction: column; white-space: nowrap; z-index: 3; }
+    .hit { fill: transparent; cursor: pointer; } .lbl, .mk { cursor: pointer; } .ml { font-size: 10px; font-weight: 600; fill: var(--ka-12142b); paint-order: stroke; stroke: var(--kl-ffffff); stroke-width: 3px; }
+    .lt { font-size: 15px; font-weight: 600; fill: var(--ka-12142b); }
+    .tip { position: absolute; transform: translate(-50%, -100%); background: var(--kb-1e1b3a); color: var(--kf-ffffff); padding: 6px 9px; border-radius: 7px; font-size: 11px; pointer-events: none; display: flex; flex-direction: column; white-space: nowrap; z-index: 3; }
   `,
 })
 export class MallMap {

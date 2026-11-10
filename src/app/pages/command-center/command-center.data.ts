@@ -24,12 +24,12 @@ export const KPI_BASE: Record<KpiKey, number> = {
 };
 
 export const KPIS: KpiMeta[] = [
-  { key: 'people', label: 'Total People on Site', change: '6%', up: true, good: true, icon: 'users', color: '#8b5cf6', link: '/command-center/people-presence-dashboard' },
-  { key: 'attendance', label: 'Attendance Rate', change: '1.2%', up: true, good: true, icon: 'clock', color: '#34d399', link: '/time-attendance' },
-  { key: 'visitors', label: 'Visitors Today', change: '12%', up: true, good: true, icon: 'users', color: '#3b82f6', link: '/visitor-management' },
-  { key: 'contractors', label: 'Contractors on Site', change: '4%', up: true, good: true, icon: 'toolbox', color: '#fb923c', link: '/contractor-vendor' },
-  { key: 'alerts', label: 'Open Alerts', change: '30%', up: false, good: false, icon: 'bell', color: '#ef4444', link: '/command-center/alerts-action-center' },
-  { key: 'access', label: 'Access Events (Today)', change: '8%', up: true, good: true, icon: 'door-open', color: '#a855f7', link: '/physical-access-control' },
+  { key: 'people', label: 'Total People on Site', change: '6%', up: true, good: true, icon: 'users', color: 'var(--ka-8b5cf6)', link: '/command-center/people-presence-dashboard' },
+  { key: 'attendance', label: 'Attendance Rate', change: '1.2%', up: true, good: true, icon: 'clock', color: 'var(--ka-34d399)', link: '/time-attendance' },
+  { key: 'visitors', label: 'Visitors Today', change: '12%', up: true, good: true, icon: 'users', color: 'var(--ka-3b82f6)', link: '/visitor-management' },
+  { key: 'contractors', label: 'Contractors on Site', change: '4%', up: true, good: true, icon: 'toolbox', color: 'var(--ka-fb923c)', link: '/contractor-vendor' },
+  { key: 'alerts', label: 'Open Alerts', change: '30%', up: false, good: false, icon: 'bell', color: 'var(--ka-ef4444)', link: '/command-center/alerts-action-center' },
+  { key: 'access', label: 'Access Events (Today)', change: '8%', up: true, good: true, icon: 'door-open', color: 'var(--ka-a855f7)', link: '/physical-access-control' },
 ];
 
 export interface Segment {
@@ -38,7 +38,7 @@ export interface Segment {
   color: string;
 }
 
-const PALETTE = ['#7c3aed', '#3b82f6', '#22c1a0', '#22c55e', '#c4c9d6'];
+const PALETTE = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c1a0)', 'var(--ka-22c55e)', 'var(--ka-c4c9d6)'];
 const seg = (pairs: [string, number][]): Segment[] => pairs.map(([label, value], i) => ({ label, value, color: PALETTE[i] }));
 
 export const DISTRIBUTION: Record<string, Segment[]> = {
@@ -126,11 +126,11 @@ export function trendSeries(days: number, end: Date, factor: number) {
 export type PersonType = 'Employee' | 'Contractor' | 'Visitor' | 'VIP' | 'Alert';
 
 export const PERSON_COLORS: Record<PersonType, string> = {
-  Employee: '#8b5cf6',
-  Contractor: '#3b82f6',
-  Visitor: '#22c1a0',
-  VIP: '#f59e0b',
-  Alert: '#ef4444',
+  Employee: 'var(--ka-8b5cf6)',
+  Contractor: 'var(--ka-3b82f6)',
+  Visitor: 'var(--ka-22c1a0)',
+  VIP: 'var(--ka-f59e0b)',
+  Alert: 'var(--ka-ef4444)',
 };
 
 export const FLOORS = ['F4', 'F3', 'F2', 'F1', 'G', 'B1'];
@@ -194,32 +194,32 @@ export interface EventItem {
 }
 
 export const EVENTS: EventItem[] = [
-  { id: 1, title: 'Access Granted', person: 'John Mathew', initials: 'JM', avatar: '#a16207', location: 'Main Entrance - Head Office', time: '10:24 AM', category: 'Access', icon: 'fingerprint', color: '#34d399' },
-  { id: 2, title: 'Visitor Check-In', person: 'Ahmed Al Mansoori', initials: 'AM', avatar: '#475569', location: 'Reception - Head Office', time: '10:22 AM', category: 'Visitor', icon: 'user-check', color: '#3b82f6' },
-  { id: 3, title: 'Restricted Zone Alert', person: 'Unidentified Person', initials: '', avatar: '#cbd5e1', location: 'Server Room - Floor 1', time: '10:21 AM', category: 'Safety', icon: 'triangle-alert', color: '#ef4444' },
-  { id: 4, title: 'Contractor Entry', person: 'Ramesh Kumar', initials: 'RK', avatar: '#ca8a04', location: 'Gate 2 - Manufacturing', time: '10:18 AM', category: 'Access', icon: 'hard-hat', color: '#22b8e6' },
-  { id: 5, title: 'Panic Alert (Wearable)', person: 'Ali Hassan', initials: 'AH', avatar: '#9d174d', location: 'Warehouse - Zone B', time: '10:16 AM', category: 'Safety', icon: 'shield', color: '#ef4444' },
-  { id: 6, title: 'Clock-In', person: 'Priya Nair', initials: 'PN', avatar: '#7c3aed', location: 'Biometric Kiosk - Head Office', time: '10:12 AM', category: 'Attendance', icon: 'clock', color: '#8b5cf6' },
-  { id: 7, title: 'Visitor Check-Out', person: 'Sarah Johnson', initials: 'SJ', avatar: '#0e7490', location: 'Reception - Logistics Hub', time: '10:09 AM', category: 'Visitor', icon: 'user-check', color: '#3b82f6' },
-  { id: 8, title: 'Clock-In', person: 'David Chen', initials: 'DC', avatar: '#15803d', location: 'Gate 1 - Warehouse', time: '10:05 AM', category: 'Attendance', icon: 'clock', color: '#8b5cf6' },
-  { id: 9, title: 'Access Denied', person: 'Tom Baker', initials: 'TB', avatar: '#b45309', location: 'Lab Door - Manufacturing', time: '09:58 AM', category: 'Access', icon: 'ban', color: '#f97316' },
-  { id: 10, title: 'Late Arrival', person: 'Emma Wilson', initials: 'EW', avatar: '#be185d', location: 'Turnstile 3 - Head Office', time: '09:46 AM', category: 'Attendance', icon: 'clock', color: '#8b5cf6' },
+  { id: 1, title: 'Access Granted', person: 'John Mathew', initials: 'JM', avatar: 'var(--ka-a16207)', location: 'Main Entrance - Head Office', time: '10:24 AM', category: 'Access', icon: 'fingerprint', color: 'var(--ka-34d399)' },
+  { id: 2, title: 'Visitor Check-In', person: 'Ahmed Al Mansoori', initials: 'AM', avatar: 'var(--ka-475569)', location: 'Reception - Head Office', time: '10:22 AM', category: 'Visitor', icon: 'user-check', color: 'var(--ka-3b82f6)' },
+  { id: 3, title: 'Restricted Zone Alert', person: 'Unidentified Person', initials: '', avatar: 'var(--ka-cbd5e1)', location: 'Server Room - Floor 1', time: '10:21 AM', category: 'Safety', icon: 'triangle-alert', color: 'var(--ka-ef4444)' },
+  { id: 4, title: 'Contractor Entry', person: 'Ramesh Kumar', initials: 'RK', avatar: 'var(--ka-ca8a04)', location: 'Gate 2 - Manufacturing', time: '10:18 AM', category: 'Access', icon: 'hard-hat', color: 'var(--ka-22b8e6)' },
+  { id: 5, title: 'Panic Alert (Wearable)', person: 'Ali Hassan', initials: 'AH', avatar: 'var(--ka-9d174d)', location: 'Warehouse - Zone B', time: '10:16 AM', category: 'Safety', icon: 'shield', color: 'var(--ka-ef4444)' },
+  { id: 6, title: 'Clock-In', person: 'Priya Nair', initials: 'PN', avatar: 'var(--ka-7c3aed)', location: 'Biometric Kiosk - Head Office', time: '10:12 AM', category: 'Attendance', icon: 'clock', color: 'var(--ka-8b5cf6)' },
+  { id: 7, title: 'Visitor Check-Out', person: 'Sarah Johnson', initials: 'SJ', avatar: 'var(--ka-0e7490)', location: 'Reception - Logistics Hub', time: '10:09 AM', category: 'Visitor', icon: 'user-check', color: 'var(--ka-3b82f6)' },
+  { id: 8, title: 'Clock-In', person: 'David Chen', initials: 'DC', avatar: 'var(--ka-15803d)', location: 'Gate 1 - Warehouse', time: '10:05 AM', category: 'Attendance', icon: 'clock', color: 'var(--ka-8b5cf6)' },
+  { id: 9, title: 'Access Denied', person: 'Tom Baker', initials: 'TB', avatar: 'var(--ka-b45309)', location: 'Lab Door - Manufacturing', time: '09:58 AM', category: 'Access', icon: 'ban', color: 'var(--ka-f97316)' },
+  { id: 10, title: 'Late Arrival', person: 'Emma Wilson', initials: 'EW', avatar: 'var(--ka-be185d)', location: 'Turnstile 3 - Head Office', time: '09:46 AM', category: 'Attendance', icon: 'clock', color: 'var(--ka-8b5cf6)' },
 ];
 
 /** Pool used to simulate new live events. */
 export const LIVE_EVENT_POOL: Omit<EventItem, 'id' | 'time'>[] = [
-  { title: 'Access Granted', person: 'Maria Garcia', initials: 'MG', avatar: '#0f766e', location: 'Turnstile 1 - Head Office', category: 'Access', icon: 'fingerprint', color: '#34d399' },
-  { title: 'Clock-In', person: 'Arjun Mehta', initials: 'AM', avatar: '#4338ca', location: 'Biometric Kiosk - Manufacturing', category: 'Attendance', icon: 'clock', color: '#8b5cf6' },
-  { title: 'Visitor Check-In', person: 'Grace Park', initials: 'GP', avatar: '#9333ea', location: 'Reception - Head Office', category: 'Visitor', icon: 'user-check', color: '#3b82f6' },
-  { title: 'Contractor Entry', person: 'Ibrahim Musa', initials: 'IM', avatar: '#a16207', location: 'Gate 2 - Manufacturing', category: 'Access', icon: 'hard-hat', color: '#22b8e6' },
-  { title: 'Tailgating Detected', person: 'Unidentified Person', initials: '', avatar: '#cbd5e1', location: 'Door 4 - Warehouse', category: 'Safety', icon: 'triangle-alert', color: '#ef4444' },
+  { title: 'Access Granted', person: 'Maria Garcia', initials: 'MG', avatar: 'var(--ka-0f766e)', location: 'Turnstile 1 - Head Office', category: 'Access', icon: 'fingerprint', color: 'var(--ka-34d399)' },
+  { title: 'Clock-In', person: 'Arjun Mehta', initials: 'AM', avatar: 'var(--ka-4338ca)', location: 'Biometric Kiosk - Manufacturing', category: 'Attendance', icon: 'clock', color: 'var(--ka-8b5cf6)' },
+  { title: 'Visitor Check-In', person: 'Grace Park', initials: 'GP', avatar: 'var(--ka-9333ea)', location: 'Reception - Head Office', category: 'Visitor', icon: 'user-check', color: 'var(--ka-3b82f6)' },
+  { title: 'Contractor Entry', person: 'Ibrahim Musa', initials: 'IM', avatar: 'var(--ka-a16207)', location: 'Gate 2 - Manufacturing', category: 'Access', icon: 'hard-hat', color: 'var(--ka-22b8e6)' },
+  { title: 'Tailgating Detected', person: 'Unidentified Person', initials: '', avatar: 'var(--ka-cbd5e1)', location: 'Door 4 - Warehouse', category: 'Safety', icon: 'triangle-alert', color: 'var(--ka-ef4444)' },
 ];
 
 export const CAMERAS = [
-  { name: 'Main Entrance - Head Office', tint: '#8fb3c9' },
-  { name: 'Lobby - Manufacturing', tint: '#b8a58a' },
-  { name: 'Gate 2 - Warehouse', tint: '#9aa6b8' },
-  { name: 'Reception - Logistics Hub', tint: '#a9b9a3' },
+  { name: 'Main Entrance - Head Office', tint: 'var(--kb-8fb3c9)' },
+  { name: 'Lobby - Manufacturing', tint: 'var(--kb-b8a58a)' },
+  { name: 'Gate 2 - Warehouse', tint: 'var(--kb-9aa6b8)' },
+  { name: 'Reception - Logistics Hub', tint: 'var(--kb-a9b9a3)' },
 ];
 
 export const SYSTEM_HEALTH = [

@@ -57,11 +57,11 @@ interface Appl {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Leave Types" [value]="types().length" icon="file-text" color="#8b5cf6" sub="Active leave types" />
-      <app-kpi label="Leave Policies" value="12" icon="users" color="#22c55e" sub="Assigned to employee groups" />
-      <app-kpi label="Employees Covered" value="8,920" icon="users" color="#3b82f6" sub="Across all policies" />
-      <app-kpi label="Pending Approvals" value="28" icon="calendar-days" color="#f97316" change="12%" [good]="false" sub="vs. last week" />
-      <app-kpi label="Average Leave Utilization" value="62.4%" icon="trending-up" color="#d946ef" change="5%" [up]="false" sub="vs. last year" />
+      <app-kpi label="Total Leave Types" [value]="types().length" icon="file-text" color="var(--ka-8b5cf6)" sub="Active leave types" />
+      <app-kpi label="Leave Policies" value="12" icon="users" color="var(--ka-22c55e)" sub="Assigned to employee groups" />
+      <app-kpi label="Employees Covered" value="8,920" icon="users" color="var(--ka-3b82f6)" sub="Across all policies" />
+      <app-kpi label="Pending Approvals" value="28" icon="calendar-days" color="var(--ka-f97316)" change="12%" [good]="false" sub="vs. last week" />
+      <app-kpi label="Average Leave Utilization" value="62.4%" icon="trending-up" color="var(--ka-d946ef)" change="5%" [up]="false" sub="vs. last year" />
     </section>
 
     <section class="lt" [class.with-detail]="!!sel()">
@@ -100,7 +100,7 @@ interface Appl {
             @case ('Overview') {
               <div class="ov">
                 <div class="ov-top">
-                  <span class="big-ic" [style.background]="t.color + '1f'" [style.color]="t.color"><app-icon [name]="t.icon" [size]="30" /></span>
+                  <span class="big-ic" [style.background]="'color-mix(in srgb, ' + t.color + ' 12%, transparent)'" [style.color]="t.color"><app-icon [name]="t.icon" [size]="30" /></span>
                   <div><b>{{ t.name }}</b><span>Code: {{ t.code }} <em>Category: {{ t.category }} Leave</em></span></div>
                 </div>
                 <div class="facts">
@@ -211,7 +211,7 @@ interface Appl {
           <label>Encashment<select class="select" [value]="f.encash ? 'yes' : 'no'" (change)="setF('encash', $any($event.target).value === 'yes')"><option value="yes">Yes</option><option value="no">No</option></select></label>
           <label>Paid<select class="select" [value]="f.paid ? 'yes' : 'no'" (change)="setF('paid', $any($event.target).value === 'yes')"><option value="yes">Paid</option><option value="no">Unpaid</option></select></label>
           <label>Icon<select class="select" [value]="f.icon" (change)="setF('icon', $any($event.target).value)">@for (i of icons; track i) {<option>{{ i }}</option>}</select></label>
-          <label>Colour<input class="input" type="color" [value]="f.color" (input)="setF('color', $any($event.target).value)" /></label>
+          <label>Colour<input class="input" type="color" [value]="(f.color.startsWith('#') ? f.color : '#' + f.color.slice(-7, -1))" (input)="setF('color', $any($event.target).value)" /></label>
           <label class="full">Description<input class="input" [value]="f.description" (input)="setF('description', $any($event.target).value)" /></label>
         </div>
         @if (err()) {<p class="bad">{{ err() }}</p>}
@@ -226,36 +226,36 @@ interface Appl {
     .btn-ghost.on { background: var(--primary-soft); color: var(--primary); }
     .detail { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; display: flex; flex-direction: column; gap: 10px; }
     .d-head { display: flex; align-items: center; gap: 10px; } .d-head h2 { margin: 0; font-size: 21px; } .d-head .pill { margin-left: auto; }
-    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 20px; background: #dcfce7; color: #15803d; font-size: 12px; }
-    .pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; } .pill.off { background: #f3f4f6; color: #6b7280; }
+    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 20px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-size: 12px; }
+    .pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; } .pill.off { background: var(--kb-f3f4f6); color: var(--kf-6b7280); }
     .detail p { margin: 0; } .danger { color: var(--red); }
     .d-tabs { display: flex; gap: 16px; border-bottom: 1px solid var(--border); overflow-x: auto; }
-    .d-tabs button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: #4b4f6b; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+    .d-tabs button { border: 0; background: none; padding: 8px 0; font-size: 12.5px; color: var(--kf-4b4f6b); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
     .d-tabs button.on { color: var(--primary); border-color: var(--primary); font-weight: 600; }
     .ov { border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
     .ov-top { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; } .ov-top div { display: flex; flex-direction: column; gap: 4px; } .ov-top b { font-size: 16px; }
-    .ov-top span { font-size: 12.5px; color: #4b4f6b; } .ov-top em { font-style: normal; margin-left: 18px; }
+    .ov-top span { font-size: 12.5px; color: var(--kf-4b4f6b); } .ov-top em { font-style: normal; margin-left: 18px; }
     .big-ic { width: 58px; height: 58px; border-radius: 12px; display: grid; place-items: center; }
     .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
-    .facts div { display: grid; grid-template-columns: 22px 1fr; gap: 0 8px; font-size: 12px; } .facts app-icon { grid-row: span 2; color: #4b4f6b; }
-    .facts span { color: #4b4f6b; } .facts b { font-weight: 600; }
+    .facts div { display: grid; grid-template-columns: 22px 1fr; gap: 0 8px; font-size: 12px; } .facts app-icon { grid-row: span 2; color: var(--kf-4b4f6b); }
+    .facts span { color: var(--kf-4b4f6b); } .facts b { font-weight: 600; }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .mini-card { border: 1px solid var(--border); border-radius: 10px; padding: 12px; } .mini-card h4 { margin: 0 0 8px; font-size: 12.5px; }
     .util { position: relative; display: flex; align-items: center; gap: 10px; } .util ::ng-deep .donut-mid { display: none; }
     .util-mid { position: absolute; left: 0; width: 120px; height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; pointer-events: none; } .util-mid b { font-size: 17px; }
     .util ul { list-style: none; margin: 0; padding: 0; font-size: 11px; } .util li { display: grid; grid-template-columns: 10px 1fr; gap: 0 6px; margin-bottom: 6px; } .util li b { grid-column: 2; }
-    .util i { width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; } .u { background: #7c3aed; } .r { background: #c4b5fd; } .c { background: #e5e7eb; }
+    .util i { width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; } .u { background: var(--kb-7c3aed); } .r { background: var(--kb-c4b5fd); } .c { background: var(--kb-e5e7eb); }
     .rules { display: flex; flex-direction: column; gap: 8px; }
-    .sw-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 13px; }
+    .sw-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 13px; }
     .sw-row input { width: 18px; height: 18px; accent-color: var(--primary); }
     .n { width: 70px; text-align: right; padding: 4px 6px; }
-    .lbl { font-size: 12px; color: #4b4f6b; margin: 12px 0 6px !important; }
+    .lbl { font-size: 12px; color: var(--kf-4b4f6b); margin: 12px 0 6px !important; }
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip-btn { padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: #fff; font-size: 12px; cursor: pointer; } .chip-btn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
-    .flow { list-style: none; margin: 0 0 10px; padding: 0 0 0 16px; border-left: 2px dashed #c4b5fd; display: flex; flex-direction: column; gap: 8px; }
-    .flow li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
-    .flow .start, .flow .end { background: #f5f3ff; color: var(--primary); font-weight: 600; }
-    .flow .n { width: 22px; height: 22px; border-radius: 50%; background: var(--primary); color: #fff; display: grid; place-items: center; font-size: 11px; }
+    .chip-btn { padding: 5px 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--kb-ffffff); font-size: 12px; cursor: pointer; } .chip-btn.on { background: var(--primary); border-color: var(--primary); color: var(--kf-ffffff); }
+    .flow { list-style: none; margin: 0 0 10px; padding: 0 0 0 16px; border-left: 2px dashed var(--kl-c4b5fd); display: flex; flex-direction: column; gap: 8px; }
+    .flow li { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); }
+    .flow .start, .flow .end { background: var(--kb-f5f3ff); color: var(--primary); font-weight: 600; }
+    .flow .n { width: 22px; height: 22px; border-radius: 50%; background: var(--primary); color: var(--kf-ffffff); display: grid; place-items: center; font-size: 11px; }
     .flow label { display: flex; align-items: center; gap: 4px; }
     @media (max-width: 1250px) { .lt.with-detail { grid-template-columns: 1fr; } .detail { position: static; max-height: none; } }
   `,
@@ -347,14 +347,14 @@ export class LeaveTypes {
   }
   protected util(t: LeaveType) {
     return [
-      { label: 'Utilized', value: t.utilization, color: '#7c3aed' },
-      { label: 'Remaining', value: 100 - t.utilization, color: '#ddd6fe' },
+      { label: 'Utilized', value: t.utilization, color: 'var(--ka-7c3aed)' },
+      { label: 'Remaining', value: 100 - t.utilization, color: 'var(--ka-ddd6fe)' },
     ];
   }
   protected trend(t: LeaveType) {
     return [
-      { name: 'Approved', color: '#7c3aed', values: t.used },
-      { name: 'Requested', color: '#ddd6fe', values: t.used.map((v) => Math.round(v * 1.3)) },
+      { name: 'Approved', color: 'var(--ka-7c3aed)', values: t.used },
+      { name: 'Requested', color: 'var(--ka-ddd6fe)', values: t.used.map((v) => Math.round(v * 1.3)) },
     ];
   }
 
@@ -392,7 +392,7 @@ export class LeaveTypes {
   protected openForm(t?: LeaveType) {
     this.err.set('');
     this.dmore.set(false);
-    this.form.set(t ? { ...t } : { ...LEAVE_TYPES[0], id: 0, name: '', code: '', days: 5, per: 'year', carry: false, carryMax: 0, encash: false, category: 'Special', icon: 'sun', color: '#0d9488', description: '', utilization: 0, used: [0, 0, 0, 0, 0, 0] });
+    this.form.set(t ? { ...t } : { ...LEAVE_TYPES[0], id: 0, name: '', code: '', days: 5, per: 'year', carry: false, carryMax: 0, encash: false, category: 'Special', icon: 'sun', color: 'var(--ka-0d9488)', description: '', utilization: 0, used: [0, 0, 0, 0, 0, 0] });
   }
   protected setF<K extends keyof LeaveType>(k: K, v: LeaveType[K]) {
     this.form.update((f) => (f ? { ...f, [k]: v } : f));

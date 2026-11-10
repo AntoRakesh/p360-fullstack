@@ -17,11 +17,11 @@ import { ADMIN_CSS, AdminSwitch, AdminToast } from './admin-ui';
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Total Users" [value]="fmt(store.users().length)" icon="users" color="#7c3aed" [sub]="fmt(store.activeUsers()) + ' active'" />
-      <app-kpi label="Pending Invites" [value]="count('Invited')" icon="admin-mail" color="#2563eb" sub="awaiting first sign-in" />
-      <app-kpi label="Locked / Disabled" [value]="count('Locked') + ' / ' + count('Disabled')" icon="admin-lock" color="#ef4444" sub="needs review" />
-      <app-kpi label="MFA Enrolled" [value]="mfaPct() + '%'" icon="shield-check" color="#10b981" [sub]="fmt(noMfa()) + ' active users without MFA'" />
-      <app-kpi label="User Groups" [value]="store.groups().length" icon="admin-sitemap" color="#f59e0b" [sub]="dynamicCount() + ' dynamic · ' + (store.groups().length - dynamicCount()) + ' static'" />
+      <app-kpi label="Total Users" [value]="fmt(store.users().length)" icon="users" color="var(--ka-7c3aed)" [sub]="fmt(store.activeUsers()) + ' active'" />
+      <app-kpi label="Pending Invites" [value]="count('Invited')" icon="admin-mail" color="var(--ka-2563eb)" sub="awaiting first sign-in" />
+      <app-kpi label="Locked / Disabled" [value]="count('Locked') + ' / ' + count('Disabled')" icon="admin-lock" color="var(--ka-ef4444)" sub="needs review" />
+      <app-kpi label="MFA Enrolled" [value]="mfaPct() + '%'" icon="shield-check" color="var(--ka-10b981)" [sub]="fmt(noMfa()) + ' active users without MFA'" />
+      <app-kpi label="User Groups" [value]="store.groups().length" icon="admin-sitemap" color="var(--ka-f59e0b)" [sub]="dynamicCount() + ' dynamic · ' + (store.groups().length - dynamicCount()) + ' static'" />
     </section>
 
     <div class="seg tabsel"><button [class.on]="tab() === 'users'" (click)="tab.set('users')">Users</button><button [class.on]="tab() === 'groups'" (click)="tab.set('groups')">Groups</button></div>
@@ -61,7 +61,7 @@ import { ADMIN_CSS, AdminSwitch, AdminToast } from './admin-ui';
       <section class="gg">
         @for (g of groupRows(); track g.id) {
           <div class="card grp" [class.on]="gSel() === g.id" (click)="gSel.set(g.id)">
-            <div class="dh"><span class="ri" [style.background]="g.color + '1f'" [style.color]="g.color"><app-icon name="users" [size]="18" /></span><div><b>{{ g.name }}</b><small class="muted">{{ g.type }} · owner {{ g.owner }}</small></div><b class="n">{{ fmt(g.count) }}</b></div>
+            <div class="dh"><span class="ri" [style.background]="'color-mix(in srgb, ' + g.color + ' 12%, transparent)'" [style.color]="g.color"><app-icon name="users" [size]="18" /></span><div><b>{{ g.name }}</b><small class="muted">{{ g.type }} · owner {{ g.owner }}</small></div><b class="n">{{ fmt(g.count) }}</b></div>
             <p class="muted d">{{ g.desc }}</p>
             @if (g.type === 'Dynamic') {<small class="rule"><app-icon name="filter" [size]="12" />{{ g.ruleLabel }}</small>}
             <div class="avs">@for (m of g.preview; track m.id) {<span class="av sm" [style.background]="m.avatar" [title]="m.name">{{ m.initials }}</span>}</div>
@@ -119,7 +119,7 @@ import { ADMIN_CSS, AdminSwitch, AdminToast } from './admin-ui';
     .gg { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
     .grp { cursor: pointer; display: flex; flex-direction: column; gap: 8px; } .grp.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .grp .dh { margin: 0; } .grp .n { font-size: 20px; }
     .d { margin: 0; font-size: 12.5px; } .rule { display: flex; gap: 5px; align-items: center; color: var(--primary); font-size: 11.5px; }
-    .avs { display: flex; } .avs .av { margin-right: -6px; border: 2px solid #fff; }
+    .avs { display: flex; } .avs .av { margin-right: -6px; border: 2px solid var(--kl-ffffff); }
   `],
 })
 export class UserGroupManagement {
@@ -213,7 +213,7 @@ export class UserGroupManagement {
     this.store.toast(`Invitation sent to ${f.email}`);
   }
   protected openGroup(g?: Group) {
-    this.gForm.set(g ? { ...g, members: [...g.members] } : { id: '', name: '', desc: '', type: 'Dynamic', rule: 'ops', members: [], roleIds: [], owner: 'Demo Login', color: '#0891b2', created: new Date().toISOString().slice(0, 10) });
+    this.gForm.set(g ? { ...g, members: [...g.members] } : { id: '', name: '', desc: '', type: 'Dynamic', rule: 'ops', members: [], roleIds: [], owner: 'Demo Login', color: 'var(--ka-0891b2)', created: new Date().toISOString().slice(0, 10) });
   }
   protected previewCount(g: Group) {
     return g.type === 'Dynamic' ? this.store.users().filter(GROUP_RULES[g.rule]?.match ?? (() => false)).length : g.members.length;

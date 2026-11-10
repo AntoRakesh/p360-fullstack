@@ -26,35 +26,35 @@ interface NLink { a: string; b: string; util: number; cap: string; state: 'up' |
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="WAN Availability" value="99.96%" icon="devices-globe" color="#7c3aed" sub="30-day SLA 99.9%" subColor="#16a34a" />
-      <app-kpi label="Links Up" [value]="up() + ' / ' + links().length" icon="devices-link" color="#10b981" [sub]="degraded() + ' degraded · ' + down() + ' down'" [subColor]="down() ? '#dc2626' : '#c2410c'" />
-      <app-kpi label="Avg Latency" [value]="lat() + ' ms'" icon="activity" color="#3b82f6" change="2 ms" [up]="false" sub="vs. yesterday" />
-      <app-kpi label="Wireless Clients" [value]="fmt(clients())" icon="wifi" color="#06b6d4" change="5%" />
-      <app-kpi label="Peak Utilisation" [value]="peak() + '%'" icon="chart-line" color="#f97316" sub="Core ↔ Factory uplink" />
+      <app-kpi label="WAN Availability" value="99.96%" icon="devices-globe" color="var(--ka-7c3aed)" sub="30-day SLA 99.9%" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Links Up" [value]="up() + ' / ' + links().length" icon="devices-link" color="var(--ka-10b981)" [sub]="degraded() + ' degraded · ' + down() + ' down'" [subColor]="down() ? 'var(--ka-dc2626)' : 'var(--ka-c2410c)'" />
+      <app-kpi label="Avg Latency" [value]="lat() + ' ms'" icon="activity" color="var(--ka-3b82f6)" change="2 ms" [up]="false" sub="vs. yesterday" />
+      <app-kpi label="Wireless Clients" [value]="fmt(clients())" icon="wifi" color="var(--ka-06b6d4)" change="5%" />
+      <app-kpi label="Peak Utilisation" [value]="peak() + '%'" icon="chart-line" color="var(--ka-f97316)" sub="Core ↔ Factory uplink" />
     </section>
 
     <section class="topo-row">
       <div class="card topo">
         <div class="card-head"><h3>Network Topology</h3>
-          <div class="toolbar"><span class="lg"><i style="background:#22c55e"></i>&lt; 60%</span><span class="lg"><i style="background:#f59e0b"></i>60–85%</span><span class="lg"><i style="background:#ef4444"></i>&gt; 85% / down</span>
+          <div class="toolbar"><span class="lg"><i style="background:var(--kb-22c55e)"></i>&lt; 60%</span><span class="lg"><i style="background:var(--kb-f59e0b)"></i>60–85%</span><span class="lg"><i style="background:var(--kb-ef4444)"></i>&gt; 85% / down</span>
             <select class="select" [value]="siteF()" (change)="siteF.set($any($event.target).value)"><option value="All">All Sites</option>@for (s of sites; track s) {<option [value]="s">{{ s }}</option>}</select></div>
         </div>
         <svg viewBox="0 0 1000 470" class="tsvg">
           @for (l of links(); track l.a + l.b) {
             @if (vis(l.b)) {
               <line [attr.x1]="n(l.a).x" [attr.y1]="n(l.a).y" [attr.x2]="n(l.b).x" [attr.y2]="n(l.b).y" [attr.stroke]="lc(l)" [attr.stroke-width]="l.state === 'down' ? 2 : 2 + l.util / 30" [attr.stroke-dasharray]="l.state === 'down' ? '6 6' : null" class="ln" (click)="selLink.set(l); selId.set(null)" />
-              @if (l.state !== 'down') {<line [attr.x1]="n(l.a).x" [attr.y1]="n(l.a).y" [attr.x2]="n(l.b).x" [attr.y2]="n(l.b).y" stroke="#fff" stroke-width="1.6" stroke-dasharray="3 14" [attr.stroke-dashoffset]="-tick() * 9" class="flow" />}
+              @if (l.state !== 'down') {<line [attr.x1]="n(l.a).x" [attr.y1]="n(l.a).y" [attr.x2]="n(l.b).x" [attr.y2]="n(l.b).y" stroke="var(--kl-ffffff)" stroke-width="1.6" stroke-dasharray="3 14" [attr.stroke-dashoffset]="-tick() * 9" class="flow" />}
             }
           }
           @for (x of nodes(); track x.id) {
             @if (vis(x.id)) {
               <g class="nd" [class.on]="selId() === x.id" [attr.transform]="'translate(' + x.x + ' ' + x.y + ')'" (click)="selId.set(x.id); selLink.set(null)">
                 @switch (x.kind) {
-                  @case ('cloud') {<ellipse rx="46" ry="22" fill="#eef2ff" stroke="#818cf8" stroke-width="1.5" /><text y="4" text-anchor="middle" class="nl">{{ x.label }}</text>}
-                  @case ('fw') {<rect x="-40" y="-18" width="80" height="36" rx="8" fill="#fff1f2" stroke="#f43f5e" stroke-width="1.5" /><text y="4" text-anchor="middle" class="nl">{{ x.label }}</text>}
-                  @case ('core') {<rect x="-50" y="-20" width="100" height="40" rx="9" fill="#7c3aed" /><text y="5" text-anchor="middle" class="nl w">{{ x.label }}</text>}
-                  @case ('dist') {<rect x="-48" y="-19" width="96" height="38" rx="8" fill="#fff" [attr.stroke]="nodeColor(x)" stroke-width="2" /><text y="-2" text-anchor="middle" class="nl">{{ x.label }}</text><text y="11" text-anchor="middle" class="ns">{{ x.sub }}</text>}
-                  @default {<circle r="17" [attr.fill]="meta(x.leafType!).color + '22'" [attr.stroke]="meta(x.leafType!).color" stroke-width="1.5" /><text y="4" text-anchor="middle" class="nc">{{ x.label }}</text><text y="31" text-anchor="middle" class="ns">{{ x.sub }}</text>}
+                  @case ('cloud') {<ellipse rx="46" ry="22" fill="var(--ka-eef2ff)" stroke="var(--kl-818cf8)" stroke-width="1.5" /><text y="4" text-anchor="middle" class="nl">{{ x.label }}</text>}
+                  @case ('fw') {<rect x="-40" y="-18" width="80" height="36" rx="8" fill="var(--ka-fff1f2)" stroke="var(--kl-f43f5e)" stroke-width="1.5" /><text y="4" text-anchor="middle" class="nl">{{ x.label }}</text>}
+                  @case ('core') {<rect x="-50" y="-20" width="100" height="40" rx="9" fill="var(--ka-7c3aed)" /><text y="5" text-anchor="middle" class="nl w">{{ x.label }}</text>}
+                  @case ('dist') {<rect x="-48" y="-19" width="96" height="38" rx="8" fill="var(--ka-ffffff)" [attr.stroke]="nodeColor(x)" stroke-width="2" /><text y="-2" text-anchor="middle" class="nl">{{ x.label }}</text><text y="11" text-anchor="middle" class="ns">{{ x.sub }}</text>}
+                  @default {<circle r="17" [attr.fill]="'color-mix(in srgb, ' + meta(x.leafType!).color + ' 13%, transparent)'" [attr.stroke]="meta(x.leafType!).color" stroke-width="1.5" /><text y="4" text-anchor="middle" class="nc">{{ x.label }}</text><text y="31" text-anchor="middle" class="ns">{{ x.sub }}</text>}
                 }
               </g>
             }
@@ -90,7 +90,7 @@ interface NLink { a: string; b: string; util: number; cap: string; state: 'up' |
           <tbody>
             @for (w of wan(); track w.name) {
               <tr><td><b>{{ w.name }}</b></td><td>{{ w.isp }}</td><td>{{ w.bw }}</td>
-                <td><span class="mini"><i [style.width.%]="w.util" [style.background]="w.util > 85 ? '#ef4444' : w.util > 60 ? '#f59e0b' : '#22c55e'"></i></span>{{ w.util }}%</td>
+                <td><span class="mini"><i [style.width.%]="w.util" [style.background]="w.util > 85 ? 'var(--ka-ef4444)' : w.util > 60 ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)'"></i></span>{{ w.util }}%</td>
                 <td class="num">{{ w.lat }} ms</td><td><span [class]="w.role === 'Active' ? 'tag blue' : 'tag grey'">{{ w.role }}</span></td><td><span [class]="w.up ? 'tag green' : 'tag red'">{{ w.up ? 'Up' : 'Down' }}</span></td>
                 <td><button class="link" (click)="failover(w.name)">{{ w.role === 'Active' ? 'Test failover' : 'Make active' }}</button></td></tr>
             }
@@ -113,12 +113,12 @@ interface NLink { a: string; b: string; util: number; cap: string; state: 'up' |
     .topo-row { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; margin-bottom: 12px; align-items: start; }
     .tsvg { width: 100%; height: auto; display: block; } .ln { cursor: pointer; } .flow { pointer-events: none; transition: stroke-dashoffset 2.4s linear; opacity: .8; }
     .nd { cursor: pointer; } .nd.on rect, .nd.on circle, .nd.on ellipse { filter: drop-shadow(0 0 6px rgba(124,58,237,.6)); stroke-width: 3; }
-    .nl { font-size: 12px; font-weight: 600; fill: #1e1b4b; } .nl.w { fill: #fff; } .ns { font-size: 9.5px; fill: #64748b; } .nc { font-size: 11px; font-weight: 700; fill: #1e1b4b; }
+    .nl { font-size: 12px; font-weight: 600; fill: var(--ka-1e1b4b); } .nl.w { fill: var(--ka-ffffff); } .ns { font-size: 9.5px; fill: var(--ka-64748b); } .nc { font-size: 11px; font-weight: 700; fill: var(--ka-1e1b4b); }
     .lg { display: inline-flex; gap: 5px; align-items: center; font-size: 11.5px; color: var(--muted); } .lg i { width: 14px; height: 4px; border-radius: 2px; }
     .side dl { display: grid; grid-template-columns: 110px 1fr; gap: 7px 8px; font-size: 12.5px; margin: 12px 0; } .side dt { color: var(--muted); } .side dd { margin: 0; }
-    .con { background: #0f172a; color: #a7f3d0; font-size: 11px; padding: 10px; border-radius: 8px; margin: 10px 0 0; white-space: pre-wrap; }
+    .con { background: var(--kb-0f172a); color: var(--kf-a7f3d0); font-size: 11px; padding: 10px; border-radius: 8px; margin: 10px 0 0; white-space: pre-wrap; }
     .g2 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; margin-bottom: 12px; } .g2 .table td, .g2 .table th { padding: 8px 7px; }
-    .mini { display: inline-block; width: 70px; height: 6px; border-radius: 4px; background: #eef0f5; margin-right: 6px; overflow: hidden; vertical-align: middle; } .mini i { display: block; height: 100%; }
+    .mini { display: inline-block; width: 70px; height: 6px; border-radius: 4px; background: var(--kb-eef0f5); margin-right: 6px; overflow: hidden; vertical-align: middle; } .mini i { display: block; height: 100%; }
     @media (max-width: 1250px) { .topo-row, .g2 { grid-template-columns: 1fr; } }
   `,
 })
@@ -175,13 +175,13 @@ export class NetworkConnectivity {
   ]);
   protected readonly latSeries = computed(() => {
     const t = this.state.tick();
-    return ['HQ', 'Factory', 'Branch'].map((s, k) => ({ name: s, color: ['#7c3aed', '#f97316', '#10b981'][k], values: this.hours.map((_, i) => Math.round(8 + k * 5 + Math.abs(Math.sin((i + k + t * 0.2) / 2)) * (k === 1 ? 14 : 6))) }));
+    return ['HQ', 'Factory', 'Branch'].map((s, k) => ({ name: s, color: ['var(--ka-7c3aed)', 'var(--ka-f97316)', 'var(--ka-10b981)'][k], values: this.hours.map((_, i) => Math.round(8 + k * 5 + Math.abs(Math.sin((i + k + t * 0.2) / 2)) * (k === 1 ? 14 : 6))) }));
   });
   protected readonly ssids = computed(() => [
-    { label: 'Corp-WiFi', value: 4820 + this.state.wobble('s1', 30), display: this.fmt(4820 + this.state.wobble('s1', 30)), color: '#7c3aed' },
-    { label: 'Guest-WiFi', value: 1960, display: '1,960', color: '#3b82f6' },
-    { label: 'IoT-Secure', value: 1240, display: '1,240', color: '#10b981' },
-    { label: 'Ops-Handheld', value: 622, display: '622', color: '#f59e0b' },
+    { label: 'Corp-WiFi', value: 4820 + this.state.wobble('s1', 30), display: this.fmt(4820 + this.state.wobble('s1', 30)), color: 'var(--ka-7c3aed)' },
+    { label: 'Guest-WiFi', value: 1960, display: '1,960', color: 'var(--ka-3b82f6)' },
+    { label: 'IoT-Secure', value: 1240, display: '1,240', color: 'var(--ka-10b981)' },
+    { label: 'Ops-Handheld', value: 622, display: '622', color: 'var(--ka-f59e0b)' },
   ]);
 
   protected n(id: string) {
@@ -196,11 +196,11 @@ export class NetworkConnectivity {
     return f === 'All' || !x?.site || x.site === f;
   }
   protected lc(l: NLink) {
-    return l.state === 'down' ? '#ef4444' : l.state === 'degraded' || (l.util > 60 && l.util <= 85) ? '#f59e0b' : l.util > 85 ? '#ef4444' : '#22c55e';
+    return l.state === 'down' ? 'var(--ka-ef4444)' : l.state === 'degraded' || (l.util > 60 && l.util <= 85) ? 'var(--ka-f59e0b)' : l.util > 85 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)';
   }
   protected nodeColor(x: NNode) {
     const l = this.links().find((y) => y.b === x.id);
-    return l ? this.lc(l) : '#22c55e';
+    return l ? this.lc(l) : 'var(--ka-22c55e)';
   }
   protected kindLabel(x: NNode) {
     return { cloud: 'Upstream providers', fw: 'Perimeter firewall (HA pair)', core: 'Core switch stack', dist: 'Site distribution switch', leaf: 'Edge device group' }[x.kind];
@@ -270,11 +270,11 @@ interface Rule { id: string; name: string; cond: string; sev: string; channels: 
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Open Alerts" [value]="open().length" icon="bell" color="#7c3aed" change="12%" [up]="false" sub="vs. last week" />
-      <app-kpi label="Critical" [value]="store.openCritical()" icon="triangle-alert" color="#ef4444" change="2%" [up]="false" />
-      <app-kpi label="Unassigned" [value]="unassigned()" icon="user" color="#f97316" sub="need an owner" subColor="#c2410c" />
-      <app-kpi label="MTTA" value="6.4 min" icon="clock" color="#3b82f6" change="1.1 min" [up]="false" sub="vs. last week" />
-      <app-kpi label="MTTR" value="42 min" icon="devices-wrench" color="#10b981" change="8 min" [up]="false" sub="vs. last week" />
+      <app-kpi label="Open Alerts" [value]="open().length" icon="bell" color="var(--ka-7c3aed)" change="12%" [up]="false" sub="vs. last week" />
+      <app-kpi label="Critical" [value]="store.openCritical()" icon="triangle-alert" color="var(--ka-ef4444)" change="2%" [up]="false" />
+      <app-kpi label="Unassigned" [value]="unassigned()" icon="user" color="var(--ka-f97316)" sub="need an owner" subColor="var(--ka-c2410c)" />
+      <app-kpi label="MTTA" value="6.4 min" icon="clock" color="var(--ka-3b82f6)" change="1.1 min" [up]="false" sub="vs. last week" />
+      <app-kpi label="MTTR" value="42 min" icon="devices-wrench" color="var(--ka-10b981)" change="8 min" [up]="false" sub="vs. last week" />
     </section>
 
     <nav class="tabs main-tabs">@for (t of tabs; track t) {<button [class.on]="tab() === t" (click)="tab.set(t)">{{ t }}@if (t === 'Alerts') {<span class="count">{{ open().length }}</span>}</button>}</nav>
@@ -376,12 +376,12 @@ interface Rule { id: string; name: string; cond: string; sev: string; channels: 
     .dh { display: flex; gap: 8px; align-items: center; } .dh b { flex: 1; }
     dl { display: grid; grid-template-columns: 80px 1fr; gap: 7px 8px; font-size: 12.5px; margin: 4px 0; } dt { color: var(--muted); } dd { margin: 0; }
     .tl { list-style: none; padding: 0; margin: 0; } .tl li { display: flex; gap: 10px; padding: 6px 0; font-size: 12px; } .tl i { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; } .tl div { display: flex; flex-direction: column; } .tl small { color: var(--muted); }
-    tr.off td { opacity: .5; } code { font-size: 11.5px; background: #f5f3ff; padding: 2px 6px; border-radius: 4px; color: #5b21b6; }
-    .sw { position: relative; display: inline-block; width: 34px; height: 19px; } .sw input { opacity: 0; width: 0; height: 0; } .sw i { position: absolute; inset: 0; background: #d4d7e3; border-radius: 12px; cursor: pointer; transition: .2s; }
-    .sw i::before { content: ''; position: absolute; width: 15px; height: 15px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
+    tr.off td { opacity: .5; } code { font-size: 11.5px; background: var(--kb-f5f3ff); padding: 2px 6px; border-radius: 4px; color: var(--kf-5b21b6); }
+    .sw { position: relative; display: inline-block; width: 34px; height: 19px; } .sw input { opacity: 0; width: 0; height: 0; } .sw i { position: absolute; inset: 0; background: var(--kb-d4d7e3); border-radius: 12px; cursor: pointer; transition: .2s; }
+    .sw i::before { content: ''; position: absolute; width: 15px; height: 15px; left: 2px; top: 2px; background: var(--kb-ffffff); border-radius: 50%; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
     .chs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
     .chh { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; } .chh div { display: flex; flex-direction: column; font-size: 13px; } .chh small { color: var(--muted); font-size: 11.5px; }
-    .ci { width: 38px; height: 38px; border-radius: 9px; color: #fff; display: grid; place-items: center; } .chf { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 12px; }
+    .ci { width: 38px; height: 38px; border-radius: 9px; color: var(--kf-ffffff); display: grid; place-items: center; } .chf { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 12px; }
     .quiet h3 { margin-bottom: 12px; } .cks { display: flex; flex-wrap: wrap; gap: 8px; } .cks label { flex-direction: row !important; align-items: center; gap: 4px !important; }
     @media (max-width: 1250px) { .g2, .al.with { grid-template-columns: 1fr; } .chs { grid-template-columns: 1fr 1fr; } }
   `,
@@ -435,12 +435,12 @@ export class DevAlertsNotifications {
     { id: 'R8', name: 'Packet loss', cond: 'loss > 5% for 10m', sev: 'High', channels: ['Slack'], on: false, fired: 0 },
   ]);
   protected readonly channels = signal([
-    { name: 'Email', target: 'noc@people360.io', icon: 'message', color: '#3b82f6', on: true, sent: 128 },
-    { name: 'SMS', target: '+971 50 *** 4410 (on-call)', icon: 'phone', color: '#10b981', on: true, sent: 14 },
-    { name: 'Teams', target: '#it-network-alerts', icon: 'users', color: '#6366f1', on: true, sent: 76 },
-    { name: 'Slack', target: '#noc', icon: 'message', color: '#e11d48', on: false, sent: 0 },
-    { name: 'Webhook', target: 'https://hooks.servicenow.com/p360', icon: 'devices-link', color: '#64748b', on: true, sent: 52 },
-    { name: 'PagerDuty', target: 'Network On-Call', icon: 'bell', color: '#16a34a', on: true, sent: 6 },
+    { name: 'Email', target: 'noc@people360.io', icon: 'message', color: 'var(--ka-3b82f6)', on: true, sent: 128 },
+    { name: 'SMS', target: '+971 50 *** 4410 (on-call)', icon: 'phone', color: 'var(--ka-10b981)', on: true, sent: 14 },
+    { name: 'Teams', target: '#it-network-alerts', icon: 'users', color: 'var(--ka-6366f1)', on: true, sent: 76 },
+    { name: 'Slack', target: '#noc', icon: 'message', color: 'var(--ka-e11d48)', on: false, sent: 0 },
+    { name: 'Webhook', target: 'https://hooks.servicenow.com/p360', icon: 'devices-link', color: 'var(--ka-64748b)', on: true, sent: 52 },
+    { name: 'PagerDuty', target: 'Network On-Call', icon: 'bell', color: 'var(--ka-16a34a)', on: true, sent: 6 },
   ]);
   protected readonly rf = signal<Rule | null>(null);
 
@@ -459,13 +459,13 @@ export class DevAlertsNotifications {
     const today = this.store.alerts().filter((a) => a.ago < 150);
     base[13] = [today.filter((a) => a.sev === 'Critical').length, today.filter((a) => a.sev === 'High').length, today.filter((a) => a.sev !== 'Critical' && a.sev !== 'High').length];
     return [
-      { name: 'Critical', color: '#ef4444', values: base.map((b) => b[0]) },
-      { name: 'High', color: '#f97316', values: base.map((b) => b[1]) },
-      { name: 'Medium / Low', color: '#fbbf24', values: base.map((b) => b[2]) },
+      { name: 'Critical', color: 'var(--ka-ef4444)', values: base.map((b) => b[0]) },
+      { name: 'High', color: 'var(--ka-f97316)', values: base.map((b) => b[1]) },
+      { name: 'Medium / Low', color: 'var(--ka-fbbf24)', values: base.map((b) => b[2]) },
     ];
   });
   protected readonly cats = computed(() => {
-    const colors: Record<string, string> = { Connectivity: '#7c3aed', Hardware: '#3b82f6', Firmware: '#10b981', Security: '#ef4444', Environment: '#f59e0b', Performance: '#06b6d4' };
+    const colors: Record<string, string> = { Connectivity: 'var(--ka-7c3aed)', Hardware: 'var(--ka-3b82f6)', Firmware: 'var(--ka-10b981)', Security: 'var(--ka-ef4444)', Environment: 'var(--ka-f59e0b)', Performance: 'var(--ka-06b6d4)' };
     return Object.entries(colors).map(([label, color]) => ({ label, color, value: this.open().filter((a) => a.category === label).length }));
   });
 
@@ -482,10 +482,10 @@ export class DevAlertsNotifications {
     this.store.alerts.update((l) => l.map((a) => (a.id === id ? { ...a, ...ch } : a)));
   }
   protected timeline(a: DAlert) {
-    const t = [{ t: `Alert raised by rule "${a.title.split(' (')[0]}"`, at: fmtSeen(a.ago), c: '#ef4444' }, { t: `Notified via Email, Teams`, at: fmtSeen(Math.max(0, a.ago - 1)), c: '#3b82f6' }];
-    if (a.state !== 'Open') t.push({ t: `Acknowledged by ${a.assignee === 'Unassigned' ? 'Rex Kumar' : a.assignee}`, at: fmtSeen(Math.max(0, a.ago - 6)), c: '#f59e0b' });
-    for (const n of this.notes()[a.id] ?? []) t.push({ t: `Note: ${n}`, at: 'just now', c: '#7c3aed' });
-    if (a.state === 'Resolved') t.push({ t: 'Resolved', at: fmtSeen(Math.max(0, a.ago - 40)), c: '#22c55e' });
+    const t = [{ t: `Alert raised by rule "${a.title.split(' (')[0]}"`, at: fmtSeen(a.ago), c: 'var(--ka-ef4444)' }, { t: `Notified via Email, Teams`, at: fmtSeen(Math.max(0, a.ago - 1)), c: 'var(--ka-3b82f6)' }];
+    if (a.state !== 'Open') t.push({ t: `Acknowledged by ${a.assignee === 'Unassigned' ? 'Rex Kumar' : a.assignee}`, at: fmtSeen(Math.max(0, a.ago - 6)), c: 'var(--ka-f59e0b)' });
+    for (const n of this.notes()[a.id] ?? []) t.push({ t: `Note: ${n}`, at: 'just now', c: 'var(--ka-7c3aed)' });
+    if (a.state === 'Resolved') t.push({ t: 'Resolved', at: fmtSeen(Math.max(0, a.ago - 40)), c: 'var(--ka-22c55e)' });
     return t;
   }
   protected addNote(a: DAlert) {
@@ -560,11 +560,11 @@ interface Wiz { step: number; deviceId: string | null; reason: string; notes: st
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Open RMAs" [value]="openRmas()" icon="refresh" color="#7c3aed" [sub]="store.rmas().length + ' total this quarter'" />
-      <app-kpi label="Replacement Candidates" [value]="candidates().length" icon="triangle-alert" color="#ef4444" sub="offline or health < 40" subColor="#dc2626" />
-      <app-kpi label="Avg Turnaround" value="3.2 days" icon="clock" color="#3b82f6" change="0.6 d" [up]="false" sub="vs. last quarter" />
-      <app-kpi label="Spares in Stock" [value]="spareTotal()" icon="box" color="#10b981" [sub]="lowSpares() + ' models low'" />
-      <app-kpi label="Under Warranty" value="86%" icon="shield-check" color="#f97316" sub="of active fleet" />
+      <app-kpi label="Open RMAs" [value]="openRmas()" icon="refresh" color="var(--ka-7c3aed)" [sub]="store.rmas().length + ' total this quarter'" />
+      <app-kpi label="Replacement Candidates" [value]="candidates().length" icon="triangle-alert" color="var(--ka-ef4444)" sub="offline or health < 40" subColor="var(--ka-dc2626)" />
+      <app-kpi label="Avg Turnaround" value="3.2 days" icon="clock" color="var(--ka-3b82f6)" change="0.6 d" [up]="false" sub="vs. last quarter" />
+      <app-kpi label="Spares in Stock" [value]="spareTotal()" icon="box" color="var(--ka-10b981)" [sub]="lowSpares() + ' models low'" />
+      <app-kpi label="Under Warranty" value="86%" icon="shield-check" color="var(--ka-f97316)" sub="of active fleet" />
     </section>
 
     @if (wiz(); as w) {
@@ -657,27 +657,27 @@ interface Wiz { step: number; deviceId: string | null; reason: string; notes: st
   `,
   styles: `
     h3 { margin: 0; font-size: 15px; } .sm { font-size: 12px; }
-    .wiz { margin-bottom: 12px; border-color: #c4b5fd; }
+    .wiz { margin-bottom: 12px; border-color: var(--kl-c4b5fd); }
     .steps { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 0; margin: 0 0 14px; }
-    .steps li { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); padding: 8px 10px; border-radius: 8px; background: #f7f7fb; } .steps li.ok { color: #15803d; cursor: pointer; } .steps li.cur { color: var(--primary); background: var(--primary-soft); font-weight: 600; }
-    .steps i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; background: #fff; border: 1.5px solid currentColor; font-size: 11px; flex-shrink: 0; }
+    .steps li { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); padding: 8px 10px; border-radius: 8px; background: var(--kb-f7f7fb); } .steps li.ok { color: var(--kf-15803d); cursor: pointer; } .steps li.cur { color: var(--primary); background: var(--primary-soft); font-weight: 600; }
+    .steps i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; background: var(--kb-ffffff); border: 1.5px solid currentColor; font-size: 11px; flex-shrink: 0; }
     .body { min-height: 220px; } .search-box { width: 360px; } .search-box input { width: 100%; }
     .pick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; max-height: 300px; overflow: auto; }
-    .pick button { display: grid; grid-template-columns: 30px 1fr auto 28px; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; text-align: left; font: inherit; }
+    .pick button { display: grid; grid-template-columns: 30px 1fr auto 28px; gap: 10px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; text-align: left; font: inherit; }
     .pick button.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); } .pick div { display: flex; flex-direction: column; font-size: 12.5px; min-width: 0; } .pick small { color: var(--muted); font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .pick em { font-style: normal; font-weight: 700; font-size: 12px; text-align: right; }
-    .ti { width: 30px; height: 30px; border-radius: 7px; color: #fff; display: grid; place-items: center; }
+    .ti { width: 30px; height: 30px; border-radius: 7px; color: var(--kf-ffffff); display: grid; place-items: center; }
     .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .one { grid-template-columns: 1fr; }
-    .dg-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; } .dg { list-style: none; padding: 0; margin: 0; } .dg li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
-    .dgs { font-weight: 600; } .dgs.idle { color: var(--muted); font-weight: 400; } .dgs.running { color: #2563eb; } .dgs.pass { color: #16a34a; } .dgs.fail { color: #dc2626; }
-    .src { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; } .src label { display: flex; gap: 10px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; } .src label.on { border-color: var(--primary); background: #faf8ff; }
+    .dg-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; } .dg { list-style: none; padding: 0; margin: 0; } .dg li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
+    .dgs { font-weight: 600; } .dgs.idle { color: var(--muted); font-weight: 400; } .dgs.running { color: var(--kf-2563eb); } .dgs.pass { color: var(--kf-16a34a); } .dgs.fail { color: var(--kf-dc2626); }
+    .src { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; } .src label { display: flex; gap: 10px; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; } .src label.on { border-color: var(--primary); background: var(--kb-faf8ff); }
     .src div { display: flex; flex-direction: column; font-size: 13px; } .src small { color: var(--muted); font-size: 11.5px; }
     .mig { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; } .mig li { display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid var(--border); border-radius: 10px; } .mig div { display: flex; flex-direction: column; font-size: 13px; } .mig small { color: var(--muted); font-size: 11.5px; }
-    .sw { position: relative; display: inline-block; width: 34px; height: 19px; flex-shrink: 0; } .sw input { opacity: 0; width: 0; height: 0; } .sw i { position: absolute; inset: 0; background: #d4d7e3; border-radius: 12px; cursor: pointer; transition: .2s; }
-    .sw i::before { content: ''; position: absolute; width: 15px; height: 15px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
+    .sw { position: relative; display: inline-block; width: 34px; height: 19px; flex-shrink: 0; } .sw input { opacity: 0; width: 0; height: 0; } .sw i { position: absolute; inset: 0; background: var(--kb-d4d7e3); border-radius: 12px; cursor: pointer; transition: .2s; }
+    .sw i::before { content: ''; position: absolute; width: 15px; height: 15px; left: 2px; top: 2px; background: var(--kb-ffffff); border-radius: 50%; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
     .rev { display: grid; grid-template-columns: 180px 40px 180px 1fr; gap: 16px; align-items: center; } .rc { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 12.5px; text-align: center; } .rc small { color: var(--muted); font-size: 11px; }
     .arrow { font-size: 28px; color: var(--primary); text-align: center; } .rev dl { display: grid; grid-template-columns: 100px 1fr; gap: 8px; font-size: 12.5px; margin: 0; } .rev dt { color: var(--muted); } .rev dd { margin: 0; }
     .g2 { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; align-items: start; } .g2 > .card { min-width: 0; overflow-x: auto; } .g2 .table td, .g2 .table th { padding: 8px 7px; }
-    .pipe { display: flex; gap: 3px; margin-bottom: 4px; } .pipe i { width: 16px; height: 4px; border-radius: 2px; background: #e4e6ef; } .pipe i.ok { background: var(--primary); }
+    .pipe { display: flex; gap: 3px; margin-bottom: 4px; } .pipe i { width: 16px; height: 4px; border-radius: 2px; background: var(--kb-e4e6ef); } .pipe i.ok { background: var(--primary); }
     @media (max-width: 1250px) { .g2, .two { grid-template-columns: 1fr; } .pick { grid-template-columns: 1fr; } .rev { grid-template-columns: 1fr; } }
   `,
 })
@@ -910,18 +910,18 @@ interface Integ { name: string; desc: string; icon: string; color: string; on: b
   `,
   styles: `
     h3 { margin: 0 0 12px; font-size: 15px; } .card-head h3 { margin: 0; } .mt { margin-top: 18px; } .danger { color: var(--red) !important; }
-    .main-tabs { margin-bottom: 12px; } .unsaved { align-self: center; font-size: 12px; color: #c2410c; font-weight: 600; }
+    .main-tabs { margin-bottom: 12px; } .unsaved { align-self: center; font-size: 12px; color: var(--kf-c2410c); font-weight: 600; }
     .three { grid-template-columns: repeat(3, 1fr); } .unit { display: flex; align-items: center; gap: 6px; } .unit .input { flex: 1; } .unit span { font-size: 12px; color: var(--muted); min-width: 40px; }
-    .tg { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; } .tg li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f1f6; }
+    .tg { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; } .tg li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .tg div { display: flex; flex-direction: column; font-size: 13px; } .tg small { color: var(--muted); font-size: 11.5px; }
-    .sw { position: relative; display: inline-block; width: 34px; height: 19px; flex-shrink: 0; } .sw input { opacity: 0; width: 0; height: 0; } .sw i { position: absolute; inset: 0; background: #d4d7e3; border-radius: 12px; cursor: pointer; transition: .2s; }
-    .sw i::before { content: ''; position: absolute; width: 15px; height: 15px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
-    .con { background: #0f172a; color: #a7f3d0; font-size: 11.5px; padding: 10px; border-radius: 8px; margin: 12px 0 0; white-space: pre-wrap; }
+    .sw { position: relative; display: inline-block; width: 34px; height: 19px; flex-shrink: 0; } .sw input { opacity: 0; width: 0; height: 0; } .sw i { position: absolute; inset: 0; background: var(--kb-d4d7e3); border-radius: 12px; cursor: pointer; transition: .2s; }
+    .sw i::before { content: ''; position: absolute; width: 15px; height: 15px; left: 2px; top: 2px; background: var(--kb-ffffff); border-radius: 50%; transition: .2s; } .sw input:checked + i { background: var(--primary); } .sw input:checked + i::before { transform: translateX(15px); }
+    .con { background: var(--kb-0f172a); color: var(--kf-a7f3d0); font-size: 11.5px; padding: 10px; border-radius: 8px; margin: 12px 0 0; white-space: pre-wrap; }
     .ifl { margin-bottom: 12px; } .ints { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .ih { display: grid; grid-template-columns: 40px 1fr auto; gap: 10px; align-items: center; } .ih div { display: flex; flex-direction: column; font-size: 13.5px; } .ih small { color: var(--muted); font-size: 11.5px; }
-    .ii { width: 40px; height: 40px; border-radius: 10px; color: #fff; display: grid; place-items: center; } .it p { font-size: 12.5px; color: #4b4f6b; margin: 10px 0; min-height: 34px; } .if { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-    .g2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; } code { font-size: 11.5px; background: #f5f3ff; padding: 2px 6px; border-radius: 4px; color: #5b21b6; }
-    .hooks { list-style: none; padding: 0; margin: 0; } .hooks li { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; } .hooks div { display: flex; flex-direction: column; min-width: 0; } .hooks b { overflow: hidden; text-overflow: ellipsis; } .hooks small { color: var(--muted); font-size: 11px; }
+    .ii { width: 40px; height: 40px; border-radius: 10px; color: var(--kf-ffffff); display: grid; place-items: center; } .it p { font-size: 12.5px; color: var(--kf-4b4f6b); margin: 10px 0; min-height: 34px; } .if { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .g2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; } code { font-size: 11.5px; background: var(--kb-f5f3ff); padding: 2px 6px; border-radius: 4px; color: var(--kf-5b21b6); }
+    .hooks { list-style: none; padding: 0; margin: 0; } .hooks li { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; } .hooks div { display: flex; flex-direction: column; min-width: 0; } .hooks b { overflow: hidden; text-overflow: ellipsis; } .hooks small { color: var(--muted); font-size: 11px; }
     @media (max-width: 1250px) { .ints, .three { grid-template-columns: 1fr 1fr; } .g2, .tg { grid-template-columns: 1fr; } }
   `,
 })
@@ -957,15 +957,15 @@ export class DevSettingsIntegration {
   protected readonly cats = ['All', 'Vendor Controller', 'ITSM', 'SIEM', 'IoT Cloud'];
   protected readonly cat = signal('All');
   protected readonly integrations = signal<Integ[]>([
-    { name: 'ExtremeCloud IQ', desc: 'Import APs & switches, push configs and firmware from the Extreme controller.', icon: 'devices-ap', color: '#7c3aed', on: true, last: '2 min ago', cat: 'Vendor Controller' },
-    { name: 'Milesight DeviceHub', desc: 'Sync cameras, IoT sensors and LoRaWAN gateways.', icon: 'devices-camera', color: '#f97316', on: true, last: '5 min ago', cat: 'Vendor Controller' },
-    { name: 'Cisco Meraki', desc: 'Read-only import of Meraki networks for mixed estates.', icon: 'devices-switch', color: '#10b981', on: false, last: '', cat: 'Vendor Controller' },
-    { name: 'ServiceNow', desc: 'Create incidents & sync CMDB configuration items.', icon: 'devices-ticket', color: '#16a34a', on: true, last: '1 min ago', cat: 'ITSM' },
-    { name: 'Jira Service Management', desc: 'Route device tickets to Jira queues.', icon: 'list-checks', color: '#2563eb', on: false, last: '', cat: 'ITSM' },
-    { name: 'Splunk', desc: 'Stream device events and syslog to Splunk HEC.', icon: 'chart-line', color: '#111827', on: true, last: 'live', cat: 'SIEM' },
-    { name: 'Microsoft Sentinel', desc: 'Forward security alerts (rogue AP, config tamper).', icon: 'shield', color: '#0ea5e9', on: false, last: '', cat: 'SIEM' },
-    { name: 'AWS IoT Core', desc: 'Bridge edge gateway telemetry to AWS IoT.', icon: 'devices-cloud', color: '#f59e0b', on: true, last: '12 s ago', cat: 'IoT Cloud' },
-    { name: 'Azure IoT Hub', desc: 'Device twins and telemetry routing to Azure.', icon: 'devices-cloud', color: '#3b82f6', on: false, last: '', cat: 'IoT Cloud' },
+    { name: 'ExtremeCloud IQ', desc: 'Import APs & switches, push configs and firmware from the Extreme controller.', icon: 'devices-ap', color: 'var(--ka-7c3aed)', on: true, last: '2 min ago', cat: 'Vendor Controller' },
+    { name: 'Milesight DeviceHub', desc: 'Sync cameras, IoT sensors and LoRaWAN gateways.', icon: 'devices-camera', color: 'var(--ka-f97316)', on: true, last: '5 min ago', cat: 'Vendor Controller' },
+    { name: 'Cisco Meraki', desc: 'Read-only import of Meraki networks for mixed estates.', icon: 'devices-switch', color: 'var(--ka-10b981)', on: false, last: '', cat: 'Vendor Controller' },
+    { name: 'ServiceNow', desc: 'Create incidents & sync CMDB configuration items.', icon: 'devices-ticket', color: 'var(--ka-16a34a)', on: true, last: '1 min ago', cat: 'ITSM' },
+    { name: 'Jira Service Management', desc: 'Route device tickets to Jira queues.', icon: 'list-checks', color: 'var(--ka-2563eb)', on: false, last: '', cat: 'ITSM' },
+    { name: 'Splunk', desc: 'Stream device events and syslog to Splunk HEC.', icon: 'chart-line', color: 'var(--ka-111827)', on: true, last: 'live', cat: 'SIEM' },
+    { name: 'Microsoft Sentinel', desc: 'Forward security alerts (rogue AP, config tamper).', icon: 'shield', color: 'var(--ka-0ea5e9)', on: false, last: '', cat: 'SIEM' },
+    { name: 'AWS IoT Core', desc: 'Bridge edge gateway telemetry to AWS IoT.', icon: 'devices-cloud', color: 'var(--ka-f59e0b)', on: true, last: '12 s ago', cat: 'IoT Cloud' },
+    { name: 'Azure IoT Hub', desc: 'Device twins and telemetry routing to Azure.', icon: 'devices-cloud', color: 'var(--ka-3b82f6)', on: false, last: '', cat: 'IoT Cloud' },
   ]);
   protected readonly ints = computed(() => this.integrations().filter((i) => this.cat() === 'All' || i.cat === this.cat()));
   protected readonly cfg = signal<Integ | null>(null);

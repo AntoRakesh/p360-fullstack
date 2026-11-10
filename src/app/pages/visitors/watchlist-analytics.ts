@@ -15,10 +15,10 @@ import { HISTORY_VISITS, PURPOSES, Visit, WatchEntry } from './visitors.data';
       <button class="btn-primary" (click)="form.set(true)"><app-icon name="plus" [size]="16" />Add Entry</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Blacklisted" [value]="cnt('Blacklist')" icon="ban" color="#ef4444" />
-      <app-kpi label="Watchlist" [value]="cnt('Watchlist')" icon="triangle-alert" color="#f59e0b" />
-      <app-kpi label="VIP Alerts" [value]="cnt('VIP alert')" icon="star" color="#a16207" />
-      <app-kpi label="Matches (30 days)" [value]="matches()" icon="shield" color="#8b5cf6" />
+      <app-kpi label="Blacklisted" [value]="cnt('Blacklist')" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Watchlist" [value]="cnt('Watchlist')" icon="triangle-alert" color="var(--ka-f59e0b)" />
+      <app-kpi label="VIP Alerts" [value]="cnt('VIP alert')" icon="star" color="var(--ka-a16207)" />
+      <app-kpi label="Matches (30 days)" [value]="matches()" icon="shield" color="var(--ka-8b5cf6)" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -55,8 +55,8 @@ import { HISTORY_VISITS, PURPOSES, Visit, WatchEntry } from './visitors.data';
   `,
   styles: `
     .full { width: 100%; }
-    .res { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; padding: 12px; border-radius: 10px; font-size: 13px; background: #fef2f2; color: #991b1b; }
-    .res[data-t='Watchlist'] { background: #fffbeb; color: #92400e; } .res[data-t='VIP alert'] { background: #fefce8; color: #854d0e; } .res.ok { background: #f0fdf4; color: #166534; }
+    .res { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; padding: 12px; border-radius: 10px; font-size: 13px; background: var(--kb-fef2f2); color: var(--kf-991b1b); }
+    .res[data-t='Watchlist'] { background: var(--kb-fffbeb); color: var(--kf-92400e); } .res[data-t='VIP alert'] { background: var(--kb-fefce8); color: var(--kf-854d0e); } .res.ok { background: var(--kb-f0fdf4); color: var(--kf-166534); }
     .res b { font-size: 16px; } .res small { opacity: .8; }
   `,
 })
@@ -101,11 +101,11 @@ export class Watchlist {
   template: `
     <app-page-head title="Visitor Analytics &amp; Reports" parent="Visitor Management" parentLink="/visitor-management" subtitle="Visitor volumes, patterns and service levels over time." />
     <section class="kpi-row">
-      <app-kpi label="Visits (30 days)" [value]="last30().length.toLocaleString()" icon="users" color="#8b5cf6" change="8%" />
-      <app-kpi label="Avg. Visit Length" [value]="avgStay()" icon="clock" color="#3b82f6" />
-      <app-kpi label="Pre-registered Share" value="54%" icon="calendar-days" color="#22c55e" change="6%" />
-      <app-kpi label="No-show Rate" [value]="noShow() + '%'" icon="ban" color="#ef4444" />
-      <app-kpi label="Avg. Check-in Time" value="48 s" icon="activity" color="#f97316" sub="kiosk + reception" />
+      <app-kpi label="Visits (30 days)" [value]="last30().length.toLocaleString()" icon="users" color="var(--ka-8b5cf6)" change="8%" />
+      <app-kpi label="Avg. Visit Length" [value]="avgStay()" icon="clock" color="var(--ka-3b82f6)" />
+      <app-kpi label="Pre-registered Share" value="54%" icon="calendar-days" color="var(--ka-22c55e)" change="6%" />
+      <app-kpi label="No-show Rate" [value]="noShow() + '%'" icon="ban" color="var(--ka-ef4444)" />
+      <app-kpi label="Avg. Check-in Time" value="48 s" icon="activity" color="var(--ka-f97316)" sub="kiosk + reception" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -155,7 +155,7 @@ export class VisitorAnalytics {
   protected readonly daily = computed(() => {
     const all = [...HISTORY_VISITS, ...this.store.visits()];
     const groups = ['Business Meeting', 'Delivery', 'Other'];
-    const colors = ['#7c3aed', '#38bdf8', '#c4b5fd'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-38bdf8)', 'var(--ka-c4b5fd)'];
     return groups.map((g, gi) => ({
       name: g,
       color: colors[gi],
@@ -165,7 +165,7 @@ export class VisitorAnalytics {
       }),
     }));
   });
-  protected readonly purposeMix = computed(() => PURPOSES.map((p, i) => ({ label: p, value: this.last30().filter((v) => v.purpose === p).length, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f97316', '#ef4444', '#ec4899', '#0ea5e9', '#9ca3af'][i] })));
+  protected readonly purposeMix = computed(() => PURPOSES.map((p, i) => ({ label: p, value: this.last30().filter((v) => v.purpose === p).length, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f97316)', 'var(--ka-ef4444)', 'var(--ka-ec4899)', 'var(--ka-0ea5e9)', 'var(--ka-9ca3af)'][i] })));
   protected readonly heat = computed(() => {
     const m = this.days.map(() => this.hourCols.map(() => 0));
     for (const v of HISTORY_VISITS) {

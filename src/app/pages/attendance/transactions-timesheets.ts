@@ -61,11 +61,11 @@ const TXNS: Txn[] = (() => {
       <button class="btn-primary" (click)="manual.set(true)"><app-icon name="plus" [size]="16" />Add Manual Punch</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Punches Today" [value]="list().length.toLocaleString()" icon="fingerprint" color="#8b5cf6" change="3%" />
-      <app-kpi label="Face Recognition" [value]="share('Face')" icon="user-check" color="#22c55e" sub="of punches" />
-      <app-kpi label="Manual Entries" [value]="verifyCount('Manual')" icon="sliders" color="#f59e0b" sub="need approval" />
-      <app-kpi label="Rejected" [value]="verifyCount('Rejected')" icon="ban" color="#ef4444" sub="no match / invalid" />
-      <app-kpi label="Devices Online" value="46 / 47" icon="cpu" color="#3b82f6" sub="1 reader offline" />
+      <app-kpi label="Punches Today" [value]="list().length.toLocaleString()" icon="fingerprint" color="var(--ka-8b5cf6)" change="3%" />
+      <app-kpi label="Face Recognition" [value]="share('Face')" icon="user-check" color="var(--ka-22c55e)" sub="of punches" />
+      <app-kpi label="Manual Entries" [value]="verifyCount('Manual')" icon="sliders" color="var(--ka-f59e0b)" sub="need approval" />
+      <app-kpi label="Rejected" [value]="verifyCount('Rejected')" icon="ban" color="var(--ka-ef4444)" sub="no match / invalid" />
+      <app-kpi label="Devices Online" value="46 / 47" icon="cpu" color="var(--ka-3b82f6)" sub="1 reader offline" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -153,12 +153,12 @@ export class AttendanceTransactions {
   protected readonly byHour = computed(() => {
     const count = (dirs: Dir[]) => this.hours.map((h) => this.list().filter((t) => t.time.startsWith(h) && dirs.includes(t.dir)).length);
     return [
-      { name: 'IN', color: '#7c3aed', values: count(['IN']) },
-      { name: 'Breaks', color: '#c4b5fd', values: count(['BREAK OUT', 'BREAK IN']) },
-      { name: 'OUT', color: '#38bdf8', values: count(['OUT']) },
+      { name: 'IN', color: 'var(--ka-7c3aed)', values: count(['IN']) },
+      { name: 'Breaks', color: 'var(--ka-c4b5fd)', values: count(['BREAK OUT', 'BREAK IN']) },
+      { name: 'OUT', color: 'var(--ka-38bdf8)', values: count(['OUT']) },
     ];
   });
-  protected readonly byMethod = computed(() => METHODS.map((m, i) => ({ label: m, value: this.list().filter((t) => t.method === m).length, color: ['#22c55e', '#7c3aed', '#3b82f6', '#f59e0b'][i] })));
+  protected readonly byMethod = computed(() => METHODS.map((m, i) => ({ label: m, value: this.list().filter((t) => t.method === m).length, color: ['var(--ka-22c55e)', 'var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-f59e0b)'][i] })));
 
   protected share(m: string) {
     return `${Math.round((this.list().filter((t) => t.method === m).length / (this.list().length || 1)) * 100)}%`;
@@ -200,8 +200,8 @@ interface DayRow extends AttRecord {
   approval: string;
 }
 type Code = 'P' | 'L' | 'A' | 'LV' | 'WFH' | 'WO' | 'H' | '';
-const CODE_COLOR: Record<string, string> = { P: '#dcfce7', L: '#ffedd5', A: '#fee2e2', LV: '#ede9fe', WFH: '#dbeafe', WO: '#f3f4f6', H: '#fef9c3' };
-const CODE_TEXT: Record<string, string> = { P: '#15803d', L: '#c2410c', A: '#b91c1c', LV: '#6d28d9', WFH: '#1d4ed8', WO: '#9ca3af', H: '#a16207' };
+const CODE_COLOR: Record<string, string> = { P: 'var(--ka-dcfce7)', L: 'var(--ka-ffedd5)', A: 'var(--ka-fee2e2)', LV: 'var(--ka-ede9fe)', WFH: 'var(--ka-dbeafe)', WO: 'var(--ka-f3f4f6)', H: 'var(--ka-fef9c3)' };
+const CODE_TEXT: Record<string, string> = { P: 'var(--ka-15803d)', L: 'var(--ka-c2410c)', A: 'var(--ka-b91c1c)', LV: 'var(--ka-6d28d9)', WFH: 'var(--ka-1d4ed8)', WO: 'var(--ka-9ca3af)', H: 'var(--ka-a16207)' };
 
 @Component({
   selector: 'app-timesheets',
@@ -218,11 +218,11 @@ const CODE_TEXT: Record<string, string> = { P: '#15803d', L: '#c2410c', A: '#b91
 
     @if (mode() === 'daily') {
       <section class="kpi-row">
-        <app-kpi label="Timesheets" [value]="rows().length.toLocaleString()" icon="calendar-days" color="#8b5cf6" sub="for the selected day" />
-        <app-kpi label="Total Hours" [value]="totalHours()" icon="clock" color="#22c55e" />
-        <app-kpi label="Overtime Hours" [value]="otHours()" icon="trending-up" color="#f97316" />
-        <app-kpi label="Pending Approval" [value]="approvalCount('Submitted')" icon="file-check" color="#f59e0b" />
-        <app-kpi label="Approved" [value]="approvalCount('Approved')" icon="shield-check" color="#3b82f6" />
+        <app-kpi label="Timesheets" [value]="rows().length.toLocaleString()" icon="calendar-days" color="var(--ka-8b5cf6)" sub="for the selected day" />
+        <app-kpi label="Total Hours" [value]="totalHours()" icon="clock" color="var(--ka-22c55e)" />
+        <app-kpi label="Overtime Hours" [value]="otHours()" icon="trending-up" color="var(--ka-f97316)" />
+        <app-kpi label="Pending Approval" [value]="approvalCount('Submitted')" icon="file-check" color="var(--ka-f59e0b)" />
+        <app-kpi label="Approved" [value]="approvalCount('Approved')" icon="shield-check" color="var(--ka-3b82f6)" />
       </section>
       <div class="card">
         <app-data-table [rows]="rows()" [columns]="dailyCols" noun="timesheets" [pageSize]="15" [searchKeys]="['name', 'id', 'dept']" searchPlaceholder="Search employee..."
@@ -282,11 +282,11 @@ const CODE_TEXT: Record<string, string> = { P: '#15803d', L: '#c2410c', A: '#b91
     .legend b { display: inline-grid; place-items: center; min-width: 26px; height: 20px; border-radius: 4px; font-size: 10.5px; }
     .grid-wrap { overflow: auto; }
     .msheet { border-collapse: collapse; font-size: 11px; }
-    .msheet th { position: sticky; top: 0; background: #fafafe; padding: 4px 2px; font-weight: 600; color: #4b4f6b; min-width: 28px; }
+    .msheet th { position: sticky; top: 0; background: var(--kb-fafafe); padding: 4px 2px; font-weight: 600; color: var(--kf-4b4f6b); min-width: 28px; }
     .msheet th small { display: block; font-weight: 400; color: var(--muted); font-size: 9.5px; }
-    .msheet th.we { color: #b91c1c; }
-    .msheet td { padding: 2px; border-bottom: 1px solid #f0f1f6; text-align: center; }
-    .msheet .who { position: sticky; left: 0; background: #fff; text-align: left; min-width: 190px; display: flex; align-items: center; gap: 8px; padding: 5px 8px 5px 0; z-index: 1; }
+    .msheet th.we { color: var(--kf-b91c1c); }
+    .msheet td { padding: 2px; border-bottom: 1px solid var(--kl-f0f1f6); text-align: center; }
+    .msheet .who { position: sticky; left: 0; background: var(--kb-ffffff); text-align: left; min-width: 190px; display: flex; align-items: center; gap: 8px; padding: 5px 8px 5px 0; z-index: 1; }
     .msheet .who div { display: flex; flex-direction: column; } .msheet .who small { color: var(--muted); }
     .code { display: inline-grid; place-items: center; width: 26px; height: 22px; border-radius: 4px; font-weight: 600; font-size: 10px; }
     .tot { font-weight: 600; padding: 0 8px !important; }

@@ -27,11 +27,11 @@ const statusCls = (s: string) => (s === 'Healthy' || s === 'Active' || s === 'Su
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Connected Systems" [value]="h().total" icon="plug" color="#7c3aed" sub="across 6 sites" />
-      <app-kpi label="Healthy" [value]="h().healthy" icon="shield-check" color="#22c55e" [sub]="pct(h().healthy) + '% of connections'" subColor="#16a34a" />
-      <app-kpi label="Warnings" [value]="h().warning" icon="triangle-alert" color="#f59e0b" sub="degraded / partial sync" />
-      <app-kpi label="Errors" [value]="h().error" icon="ban" color="#ef4444" sub="needs attention" [subColor]="h().error ? '#dc2626' : undefined" />
-      <app-kpi label="Records Synced Today" [value]="(h().records | number) ?? ''" icon="refresh" color="#3b82f6" change="12%" sub="vs. yesterday" />
+      <app-kpi label="Connected Systems" [value]="h().total" icon="plug" color="var(--ka-7c3aed)" sub="across 6 sites" />
+      <app-kpi label="Healthy" [value]="h().healthy" icon="shield-check" color="var(--ka-22c55e)" [sub]="pct(h().healthy) + '% of connections'" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Warnings" [value]="h().warning" icon="triangle-alert" color="var(--ka-f59e0b)" sub="degraded / partial sync" />
+      <app-kpi label="Errors" [value]="h().error" icon="ban" color="var(--ka-ef4444)" sub="needs attention" [subColor]="h().error ? 'var(--ka-dc2626)' : undefined" />
+      <app-kpi label="Records Synced Today" [value]="(h().records | number) ?? ''" icon="refresh" color="var(--ka-3b82f6)" change="12%" sub="vs. yesterday" />
     </section>
 
     <section class="cs" [class.with-d]="!!sel()">
@@ -76,7 +76,7 @@ const statusCls = (s: string) => (s === 'Healthy' || s === 'Active' || s === 'Su
             <div><small>Records today</small><b>{{ c.records | number }}</b></div>
             <div><small>Last sync</small><b>{{ ago(c.lastSync) }}</b></div>
           </div>
-          <div class="mini"><div class="mh"><h4>Sync volume · last 12 runs</h4></div><app-sparkline [values]="spark(c)" color="#7c3aed" /></div>
+          <div class="mini"><div class="mh"><h4>Sync volume · last 12 runs</h4></div><app-sparkline [values]="spark(c)" color="var(--ka-7c3aed)" /></div>
           <h4>Configuration</h4>
           <dl class="dl">
             <dt>Environment</dt><dd>{{ c.env }}</dd><dt>Authentication</dt><dd>{{ c.auth }}</dd>
@@ -121,26 +121,26 @@ const statusCls = (s: string) => (s === 'Healthy' || s === 'Active' || s === 'Su
   styles: `
     .cs { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start; } .cs.with-d { grid-template-columns: minmax(0, 1fr) 420px; }
     .cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
-    .cc { display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; text-align: left; cursor: pointer; font: inherit; color: inherit; }
-    .cc:hover { border-color: #c4b5fd; } .cc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .cc { display: flex; flex-direction: column; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); text-align: left; cursor: pointer; font: inherit; color: inherit; }
+    .cc:hover { border-color: var(--kl-c4b5fd); } .cc.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .ch { display: grid; grid-template-columns: 36px 1fr auto; gap: 10px; align-items: center; } .ch div { display: flex; flex-direction: column; min-width: 0; } .ch b { font-size: 13px; } .ch small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cm { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .cm span { display: flex; flex-direction: column; font-size: 12.5px; font-weight: 600; } .cm small { font-size: 10.5px; color: var(--muted); font-weight: 400; }
     .cf { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; }
     .pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 20px; font-size: 11px; white-space: nowrap; } .pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    .pill.green { background: #dcfce7; color: #15803d; } .pill.amber { background: #fef3c7; color: #b45309; } .pill.red { background: #fee2e2; color: #b91c1c; } .pill.grey { background: #f3f4f6; color: #6b7280; }
+    .pill.green { background: var(--kb-dcfce7); color: var(--kf-15803d); } .pill.amber { background: var(--kb-fef3c7); color: var(--kf-b45309); } .pill.red { background: var(--kb-fee2e2); color: var(--kf-b91c1c); } .pill.grey { background: var(--kb-f3f4f6); color: var(--kf-6b7280); }
     .det { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow: auto; display: flex; flex-direction: column; gap: 12px; }
     .dh { display: grid; grid-template-columns: 48px 1fr auto auto; gap: 10px; align-items: center; } .dh h2 { margin: 0; font-size: 17px; } .dh div { display: flex; flex-direction: column; }
     .danger { color: var(--red); }
-    .alert { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; padding: 10px; border-radius: 8px; background: #fef2f2; color: #b91c1c; } .alert div { display: flex; flex-direction: column; font-size: 12.5px; } .alert small { color: #7f1d1d; }
+    .alert { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; padding: 10px; border-radius: 8px; background: var(--kb-fef2f2); color: var(--kf-b91c1c); } .alert div { display: flex; flex-direction: column; font-size: 12.5px; } .alert small { color: var(--kf-7f1d1d); }
     .mx { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; } .mx div { display: flex; flex-direction: column; padding: 8px; border: 1px solid var(--border); border-radius: 8px; } .mx small { font-size: 10.5px; color: var(--muted); } .mx b { font-size: 14px; }
     .mini { border: 1px solid var(--border); border-radius: 10px; padding: 10px; } .mh { display: flex; justify-content: space-between; align-items: center; }
     h4 { margin: 0; font-size: 13px; }
     .dl { display: grid; grid-template-columns: 110px 1fr; gap: 6px 10px; margin: 0; font-size: 12px; } .dl dt { color: var(--muted); } .dl dd { margin: 0; }
-    .runs { list-style: none; margin: 0; padding: 0; } .runs li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; }
+    .runs { list-style: none; margin: 0; padding: 0; } .runs li { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; }
     .runs div { display: flex; flex-direction: column; } .runs small { color: var(--muted); font-size: 11px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #9ca3af; } .dot.green { background: #22c55e; } .dot.amber { background: #f59e0b; } .dot.red { background: #ef4444; }
-    .sites { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; } .sites span { width: 100%; font-size: 12px; color: #4b4f6b; } .sites label { flex-direction: row !important; align-items: center; gap: 6px !important; }
-    .g-modal.small { width: min(440px, calc(100vw - 32px)); } .red { background: #ef4444 !important; box-shadow: none !important; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-9ca3af); } .dot.green { background: var(--kb-22c55e); } .dot.amber { background: var(--kb-f59e0b); } .dot.red { background: var(--kb-ef4444); }
+    .sites { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; } .sites span { width: 100%; font-size: 12px; color: var(--kf-4b4f6b); } .sites label { flex-direction: row !important; align-items: center; gap: 6px !important; }
+    .g-modal.small { width: min(440px, calc(100vw - 32px)); } .red { background: var(--kb-ef4444) !important; box-shadow: none !important; }
     @media (max-width: 1250px) { .cs.with-d { grid-template-columns: 1fr; } .det { position: static; max-height: none; } }
   `,
 })
@@ -238,11 +238,11 @@ const TABS_API = ['Overview', 'API Keys', 'Endpoints', 'Try-it Console'] as cons
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="API Calls Today" [value]="(store.apiCallsToday() | number) ?? ''" icon="activity" color="#7c3aed" change="8.4%" sub="vs. yesterday" />
-      <app-kpi label="Avg Latency (p95)" value="142 ms" icon="clock" color="#3b82f6" change="6%" [up]="false" sub="faster vs. last week" />
-      <app-kpi label="Error Rate" value="0.04%" icon="triangle-alert" color="#f59e0b" sub="SLO < 0.5%" subColor="#16a34a" />
-      <app-kpi label="Active API Keys" [value]="activeKeys()" icon="key-round" color="#22c55e" [sub]="expiring() + ' expiring in 30 days'" />
-      <app-kpi label="Throttled Requests" value="312" icon="ban" color="#ef4444" sub="rate limit 600 req/min" />
+      <app-kpi label="API Calls Today" [value]="(store.apiCallsToday() | number) ?? ''" icon="activity" color="var(--ka-7c3aed)" change="8.4%" sub="vs. yesterday" />
+      <app-kpi label="Avg Latency (p95)" value="142 ms" icon="clock" color="var(--ka-3b82f6)" change="6%" [up]="false" sub="faster vs. last week" />
+      <app-kpi label="Error Rate" value="0.04%" icon="triangle-alert" color="var(--ka-f59e0b)" sub="SLO < 0.5%" subColor="var(--ka-16a34a)" />
+      <app-kpi label="Active API Keys" [value]="activeKeys()" icon="key-round" color="var(--ka-22c55e)" [sub]="expiring() + ' expiring in 30 days'" />
+      <app-kpi label="Throttled Requests" value="312" icon="ban" color="var(--ka-ef4444)" sub="rate limit 600 req/min" />
     </section>
 
     <nav class="tabs pt">@for (x of tabs; track x) {<button [class.on]="tab() === x" (click)="tab.set(x)">{{ x }}</button>}</nav>
@@ -360,23 +360,23 @@ x-ratelimit-remaining: {{ r.remaining }}</pre>
   `,
   styles: `
     .pt { margin-bottom: 12px; }
-    .m { display: inline-block; min-width: 54px; text-align: center; font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; color: #fff; }
-    .m.GET { background: #22c55e; } .m.POST { background: #3b82f6; } .m.PUT, .m.PATCH { background: #f59e0b; } .m.DELETE { background: #ef4444; }
+    .m { display: inline-block; min-width: 54px; text-align: center; font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; color: var(--kf-ffffff); }
+    .m.GET { background: var(--kb-22c55e); } .m.POST { background: var(--kb-3b82f6); } .m.PUT, .m.PATCH { background: var(--kb-f59e0b); } .m.DELETE { background: var(--kb-ef4444); }
     code { font-size: 12px; } .wrap { white-space: normal !important; max-width: 220px; } .wrap .chip-s { display: inline-block; margin: 1px; }
     tr.rev td { opacity: .55; } .acts { display: flex; gap: 6px; } .danger { color: var(--red); }
-    .gh { margin: 14px 0 6px; font-size: 13px; color: #4b4f6b; }
+    .gh { margin: 14px 0 6px; font-size: 13px; color: var(--kf-4b4f6b); }
     .ep { display: grid; grid-template-columns: 64px minmax(200px, 260px) 1fr auto auto; gap: 12px; align-items: center; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; font-size: 12.5px; }
-    .ep .muted { font-size: 11.5px; white-space: nowrap; } .ed { color: #3b3f5c; }
+    .ep .muted { font-size: 11.5px; white-space: nowrap; } .ed { color: var(--kf-3b3f5c); }
     .con { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 12px; align-items: start; }
     .req-line { display: flex; gap: 8px; margin-bottom: 12px; } .req-line .select { flex: 1; font-family: ui-monospace, monospace; font-size: 12.5px; }
     .code { font-family: ui-monospace, monospace; font-size: 12px; cursor: text; }
     .sm { font-size: 12px; } h4 { margin: 14px 0 6px; font-size: 13px; }
-    .hist { list-style: none; padding: 0; margin: 0; } .hist li { display: grid; grid-template-columns: 44px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12px; font-family: ui-monospace, monospace; } .hist small { color: var(--muted); }
-    .code-b { display: inline-block; padding: 2px 7px; border-radius: 4px; background: #dcfce7; color: #15803d; font-weight: 700; font-size: 11.5px; } .code-b.bad { background: #fee2e2; color: #b91c1c; }
+    .hist { list-style: none; padding: 0; margin: 0; } .hist li { display: grid; grid-template-columns: 44px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12px; font-family: ui-monospace, monospace; } .hist small { color: var(--muted); }
+    .code-b { display: inline-block; padding: 2px 7px; border-radius: 4px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-weight: 700; font-size: 11.5px; } .code-b.bad { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .rs { display: flex; gap: 10px; align-items: center; font-size: 12px; }
-    pre { margin: 0 0 10px; padding: 12px; border-radius: 8px; font-size: 12px; overflow: auto; } .hdrs { background: #f6f6fb; color: #4b4f6b; } .json { background: #12142b; color: #c4f1be; max-height: 520px; }
-    .keybox { display: flex; gap: 8px; align-items: center; padding: 10px; border: 1px dashed #c4b5fd; border-radius: 8px; background: #faf8ff; } .keybox code { flex: 1; word-break: break-all; }
-    .scopes { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; } .scopes span { width: 100%; font-size: 12px; color: #4b4f6b; } .scopes label { flex-direction: row !important; align-items: center; gap: 6px !important; font-family: ui-monospace, monospace; }
+    pre { margin: 0 0 10px; padding: 12px; border-radius: 8px; font-size: 12px; overflow: auto; } .hdrs { background: var(--kb-f6f6fb); color: var(--kf-4b4f6b); } .json { background: var(--kb-12142b); color: var(--kf-c4f1be); max-height: 520px; }
+    .keybox { display: flex; gap: 8px; align-items: center; padding: 10px; border: 1px dashed var(--kl-c4b5fd); border-radius: 8px; background: var(--kb-faf8ff); } .keybox code { flex: 1; word-break: break-all; }
+    .scopes { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; } .scopes span { width: 100%; font-size: 12px; color: var(--kf-4b4f6b); } .scopes label { flex-direction: row !important; align-items: center; gap: 6px !important; font-family: ui-monospace, monospace; }
     @media (max-width: 1200px) { .con { grid-template-columns: 1fr; } .ep { grid-template-columns: 64px 1fr auto; } .ep .ed, .ep .muted { display: none; } }
   `,
 })
@@ -390,13 +390,13 @@ export class APIManagement {
   protected readonly endpoints = ENDPOINTS;
   protected readonly cls = statusCls;
   protected readonly tab = signal<(typeof TABS_API)[number]>('Overview');
-  protected readonly callSeries = [{ name: 'Calls (K)', color: '#7c3aed', values: API_HOURLY, area: true }];
+  protected readonly callSeries = [{ name: 'Calls (K)', color: 'var(--ka-7c3aed)', values: API_HOURLY, area: true }];
   protected readonly activeKeys = computed(() => this.store.keys().filter((k) => k.status !== 'Revoked').length);
   protected readonly expiring = computed(() => this.store.keys().filter((k) => k.status === 'Expiring').length);
   protected readonly kf = signal('All');
   protected readonly keys = computed(() => this.store.keys().filter((k) => this.kf() === 'All' || k.status === this.kf()));
   protected readonly groupSegs = computed(() => {
-    const colors = ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#14b8a6', '#ec4899'];
+    const colors = ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-14b8a6)', 'var(--ka-ec4899)'];
     const m = new Map<string, number>();
     ENDPOINTS.forEach((e) => m.set(e.group, (m.get(e.group) ?? 0) + e.calls));
     return [...m].map(([label, value], i) => ({ label, value, color: colors[i % colors.length] }));
@@ -526,11 +526,11 @@ const SAMPLE: Record<string, object> = {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Subscriptions" [value]="store.hooks().length" icon="integrations-webhook" color="#7c3aed" [sub]="activeCount() + ' active'" />
-      <app-kpi label="Events Today" [value]="(eventsToday() | number) ?? ''" icon="activity" color="#3b82f6" change="5%" sub="vs. yesterday" />
-      <app-kpi label="Delivery Success" [value]="successRate() + '%'" icon="shield-check" color="#22c55e" sub="last 200 deliveries" />
-      <app-kpi label="Failed Deliveries" [value]="failed()" icon="triangle-alert" color="#ef4444" sub="queued for retry" />
-      <app-kpi label="Avg Delivery Time" [value]="avgMs() + ' ms'" icon="clock" color="#f59e0b" sub="p50, successful" />
+      <app-kpi label="Subscriptions" [value]="store.hooks().length" icon="integrations-webhook" color="var(--ka-7c3aed)" [sub]="activeCount() + ' active'" />
+      <app-kpi label="Events Today" [value]="(eventsToday() | number) ?? ''" icon="activity" color="var(--ka-3b82f6)" change="5%" sub="vs. yesterday" />
+      <app-kpi label="Delivery Success" [value]="successRate() + '%'" icon="shield-check" color="var(--ka-22c55e)" sub="last 200 deliveries" />
+      <app-kpi label="Failed Deliveries" [value]="failed()" icon="triangle-alert" color="var(--ka-ef4444)" sub="queued for retry" />
+      <app-kpi label="Avg Delivery Time" [value]="avgMs() + ' ms'" icon="clock" color="var(--ka-f59e0b)" sub="p50, successful" />
     </section>
 
     <section class="wh">
@@ -622,23 +622,23 @@ const SAMPLE: Record<string, object> = {
     .wh { display: grid; grid-template-columns: 330px minmax(0, 1fr) 300px; gap: 12px; align-items: start; }
     .hooks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
     .hooks li { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; padding: 9px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
-    .hooks li.on { border-color: var(--primary); background: #faf8ff; } .hooks div { display: flex; flex-direction: column; min-width: 0; font-size: 12.5px; } .hooks small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .hi { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: #ede9fe; color: #7c3aed; } .hi.red { background: #fee2e2; color: #dc2626; } .hi.amber { background: #fef3c7; color: #b45309; } .hi.green { background: #dcfce7; color: #16a34a; }
+    .hooks li.on { border-color: var(--primary); background: var(--kb-faf8ff); } .hooks div { display: flex; flex-direction: column; min-width: 0; font-size: 12.5px; } .hooks small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hi { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: var(--kb-ede9fe); color: var(--kf-7c3aed); } .hi.red { background: var(--kb-fee2e2); color: var(--kf-dc2626); } .hi.amber { background: var(--kb-fef3c7); color: var(--kf-b45309); } .hi.green { background: var(--kb-dcfce7); color: var(--kf-16a34a); }
     .dl { display: grid; grid-template-columns: 120px 1fr; gap: 8px 12px; margin: 0 0 12px; font-size: 12.5px; } .dl dt { color: var(--muted); } .dl dd { margin: 0; min-width: 0; overflow-wrap: anywhere; } .dl .chip-s { display: inline-block; margin: 1px; }
     code { font-size: 12px; } h4 { margin: 12px 0 6px; font-size: 13px; } .danger { color: var(--red); }
-    .alert { display: flex; gap: 8px; align-items: center; padding: 9px 10px; border-radius: 8px; background: #fef2f2; color: #b91c1c; font-size: 12.5px; } .alert button { margin-left: auto; }
-    .code-b { display: inline-block; padding: 1px 7px; border-radius: 4px; background: #dcfce7; color: #15803d; font-weight: 700; font-size: 11px; } .code-b.bad { background: #fee2e2; color: #b91c1c; }
+    .alert { display: flex; gap: 8px; align-items: center; padding: 9px 10px; border-radius: 8px; background: var(--kb-fef2f2); color: var(--kf-b91c1c); font-size: 12.5px; } .alert button { margin-left: auto; }
+    .code-b { display: inline-block; padding: 1px 7px; border-radius: 4px; background: var(--kb-dcfce7); color: var(--kf-15803d); font-weight: 700; font-size: 11px; } .code-b.bad { background: var(--kb-fee2e2); color: var(--kf-b91c1c); }
     .stream { max-height: calc(100vh - 92px); overflow: auto; position: sticky; top: 76px; }
-    .lv { display: inline-flex; gap: 5px; align-items: center; font-size: 11px; color: #16a34a; margin-left: 6px; } .lv i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pl 1.4s infinite; }
+    .lv { display: inline-flex; gap: 5px; align-items: center; font-size: 11px; color: var(--kf-16a34a); margin-left: 6px; } .lv i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-22c55e); animation: pl 1.4s infinite; }
     @keyframes pl { 50% { opacity: .3; } }
     .stream .select { font-size: 12px; width: 100%; }
-    .evs { list-style: none; margin: 0; padding: 0; } .evs li { display: grid; grid-template-columns: 8px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f1f6; cursor: pointer; animation: fi .4s; }
-    @keyframes fi { from { background: #f5f3ff; } }
+    .evs { list-style: none; margin: 0; padding: 0; } .evs li { display: grid; grid-template-columns: 8px 1fr auto; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; animation: fi .4s; }
+    @keyframes fi { from { background: var(--kb-f5f3ff); } }
     .evs div { display: flex; flex-direction: column; min-width: 0; } .evs small { color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; } .dot.red { background: #ef4444; }
-    .evp { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; font-size: 12.5px; } .evp span { grid-column: 1 / -1; font-size: 12px; color: #4b4f6b; } .evp label { flex-direction: row !important; align-items: center; gap: 6px !important; font-family: ui-monospace, monospace; }
-    .json { background: #12142b; color: #c4f1be; padding: 12px; border-radius: 8px; font-size: 12px; overflow: auto; }
-    .cat { list-style: none; padding: 0; margin: 0; } .cat li { display: flex; flex-direction: column; padding: 9px 0; border-bottom: 1px solid #f0f1f6; cursor: pointer; } .cat small { color: var(--muted); font-size: 11.5px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--kb-22c55e); } .dot.red { background: var(--kb-ef4444); }
+    .evp { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 14px; font-size: 12.5px; } .evp span { grid-column: 1 / -1; font-size: 12px; color: var(--kf-4b4f6b); } .evp label { flex-direction: row !important; align-items: center; gap: 6px !important; font-family: ui-monospace, monospace; }
+    .json { background: var(--kb-12142b); color: var(--kf-c4f1be); padding: 12px; border-radius: 8px; font-size: 12px; overflow: auto; }
+    .cat { list-style: none; padding: 0; margin: 0; } .cat li { display: flex; flex-direction: column; padding: 9px 0; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; } .cat small { color: var(--muted); font-size: 11.5px; }
     @media (max-width: 1400px) { .wh { grid-template-columns: 300px minmax(0, 1fr); } .stream { grid-column: 1 / -1; position: static; max-height: 360px; } }
   `,
 })
@@ -797,7 +797,7 @@ function applyT(v: string, t: string) {
           <svg class="lines" [attr.viewBox]="'0 0 160 ' + height()" preserveAspectRatio="none">
             @for (r of cur().rules; track r.id) {
               @let y1 = yOf(srcIdx(r.source)); @let y2 = yOf(tgtIdx(r.target));
-              <path [attr.d]="'M0,' + y1 + ' C80,' + y1 + ' 80,' + y2 + ' 160,' + y2" [attr.stroke]="r.transform === 'None' ? '#a78bfa' : '#22c55e'" stroke-width="2" fill="none" class="ln" (click)="removeRule(r)"><title>{{ r.source }} → {{ r.target }} ({{ r.transform }}) — click to remove</title></path>
+              <path [attr.d]="'M0,' + y1 + ' C80,' + y1 + ' 80,' + y2 + ' 160,' + y2" [attr.stroke]="r.transform === 'None' ? 'var(--ka-a78bfa)' : 'var(--ka-22c55e)'" stroke-width="2" fill="none" class="ln" (click)="removeRule(r)"><title>{{ r.source }} → {{ r.target }} ({{ r.transform }}) — click to remove</title></path>
             }
           </svg>
           <div class="fcol">
@@ -807,7 +807,7 @@ function applyT(v: string, t: string) {
             }
           </div>
         </div>
-        <div class="lg"><span><i style="background:#a78bfa"></i>Direct</span><span><i style="background:#22c55e"></i>With transformation</span><span><i style="background:#ef4444"></i>Required, unmapped</span></div>
+        <div class="lg"><span><i style="background:var(--kb-a78bfa)"></i>Direct</span><span><i style="background:var(--kb-22c55e)"></i>With transformation</span><span><i style="background:var(--kb-ef4444)"></i>Required, unmapped</span></div>
 
         <h4>Transformation rules</h4>
         <div class="table-wrap"><table class="table">
@@ -843,26 +843,26 @@ function applyT(v: string, t: string) {
     .dm { display: grid; grid-template-columns: 260px minmax(0, 1fr) 300px; gap: 12px; align-items: start; }
     h3 { margin: 0 0 10px; font-size: 15px; } h4 { margin: 16px 0 6px; font-size: 13px; } .sm { font-size: 12px; } code { font-size: 12px; } .danger { color: var(--red); }
     .prof { display: flex; flex-direction: column; gap: 6px; }
-    .pp { display: grid; grid-template-columns: 30px 1fr; gap: 9px; align-items: center; padding: 9px; border: 1px solid var(--border); border-radius: 8px; background: #fff; text-align: left; cursor: pointer; font: inherit; }
-    .pp.on { border-color: var(--primary); background: #faf8ff; } .pp div { display: flex; flex-direction: column; font-size: 12px; } .pp small { color: var(--muted); font-size: 11px; }
-    .stat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; } .stat div { display: flex; flex-direction: column; align-items: center; padding: 8px 4px; border-radius: 8px; background: #f6f6fb; } .stat b { font-size: 17px; } .stat small { font-size: 10px; color: var(--muted); text-align: center; }
+    .pp { display: grid; grid-template-columns: 30px 1fr; gap: 9px; align-items: center; padding: 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); text-align: left; cursor: pointer; font: inherit; }
+    .pp.on { border-color: var(--primary); background: var(--kb-faf8ff); } .pp div { display: flex; flex-direction: column; font-size: 12px; } .pp small { color: var(--muted); font-size: 11px; }
+    .stat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; } .stat div { display: flex; flex-direction: column; align-items: center; padding: 8px 4px; border-radius: 8px; background: var(--kb-f6f6fb); } .stat b { font-size: 17px; } .stat small { font-size: 10px; color: var(--muted); text-align: center; }
     .cols { display: grid; grid-template-columns: minmax(0, 1fr) 160px minmax(0, 1fr); }
     .fcol { display: flex; flex-direction: column; }
-    .fh { height: 38px; display: flex; align-items: center; font-size: 12px; font-weight: 600; color: #4b4f6b; text-transform: uppercase; letter-spacing: .4px; }
-    .fld { position: relative; height: 32px; margin: 3px 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; border: 1px solid var(--border); border-radius: 7px; background: #fff; font: inherit; font-size: 12px; cursor: pointer; }
-    .fld small { color: var(--muted); font-size: 10.5px; } .fld b { font-weight: 500; font-family: ui-monospace, monospace; font-size: 11.5px; } .fld em { color: #ef4444; font-style: normal; }
-    .fld i { position: absolute; top: 50%; width: 9px; height: 9px; margin-top: -5px; border-radius: 50%; background: #fff; border: 2px solid #c4b5fd; } .src i { right: -6px; } .tgt i { left: -6px; }
-    .fld.used { background: #faf8ff; border-color: #ddd6fe; } .fld.used i { background: #a78bfa; }
+    .fh { height: 38px; display: flex; align-items: center; font-size: 12px; font-weight: 600; color: var(--kf-4b4f6b); text-transform: uppercase; letter-spacing: .4px; }
+    .fld { position: relative; height: 32px; margin: 3px 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; border: 1px solid var(--border); border-radius: 7px; background: var(--kb-ffffff); font: inherit; font-size: 12px; cursor: pointer; }
+    .fld small { color: var(--muted); font-size: 10.5px; } .fld b { font-weight: 500; font-family: ui-monospace, monospace; font-size: 11.5px; } .fld em { color: var(--kf-ef4444); font-style: normal; }
+    .fld i { position: absolute; top: 50%; width: 9px; height: 9px; margin-top: -5px; border-radius: 50%; background: var(--kb-ffffff); border: 2px solid var(--kl-c4b5fd); } .src i { right: -6px; } .tgt i { left: -6px; }
+    .fld.used { background: var(--kb-faf8ff); border-color: var(--kl-ddd6fe); } .fld.used i { background: var(--kb-a78bfa); }
     .fld.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
-    .fld.miss { border-color: #fca5a5; background: #fff5f5; } .fld.miss i { border-color: #ef4444; }
+    .fld.miss { border-color: var(--kl-fca5a5); background: var(--kb-fff5f5); } .fld.miss i { border-color: var(--kl-ef4444); }
     .fld.tgt.ready:hover { border-color: var(--primary); background: var(--primary-soft); }
-    .lines { width: 160px; height: 100%; } .ln { cursor: pointer; } .ln:hover { stroke: #ef4444; stroke-width: 3; }
+    .lines { width: 160px; height: 100%; } .ln { cursor: pointer; } .ln:hover { stroke: var(--kl-ef4444); stroke-width: 3; }
     .lg { display: flex; gap: 14px; font-size: 11.5px; color: var(--muted); margin-top: 8px; } .lg span { display: flex; gap: 5px; align-items: center; } .lg i { width: 14px; height: 3px; border-radius: 2px; }
     .select.sm { padding: 4px 8px; font-size: 12px; }
     .prev { position: sticky; top: 76px; } pre { margin: 4px 0 10px; padding: 10px; border-radius: 8px; font-size: 11.5px; overflow: auto; max-height: 260px; }
-    .prev pre { white-space: pre-wrap; word-break: break-all; } .src-j { background: #f6f6fb; color: #3b3f5c; } .json { background: #12142b; color: #c4f1be; }
-    .iss { list-style: none; padding: 0; margin: 0; } .iss li { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #b45309; padding: 3px 0; }
-    .okm { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: #15803d; margin: 0; }
+    .prev pre { white-space: pre-wrap; word-break: break-all; } .src-j { background: var(--kb-f6f6fb); color: var(--kf-3b3f5c); } .json { background: var(--kb-12142b); color: var(--kf-c4f1be); }
+    .iss { list-style: none; padding: 0; margin: 0; } .iss li { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--kf-b45309); padding: 3px 0; }
+    .okm { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--kf-15803d); margin: 0; }
     @media (max-width: 1400px) { .dm { grid-template-columns: 240px minmax(0, 1fr); } .prev { grid-column: 1 / -1; position: static; } }
   `,
 })

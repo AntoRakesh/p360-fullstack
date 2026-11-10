@@ -76,29 +76,29 @@ export interface DayCol {
   styles: `
     .rg-wrap { overflow: auto; }
     .rg { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 12px; }
-    .rg th { position: sticky; top: 0; z-index: 2; background: #fafafe; padding: 7px 4px; font-weight: 600; color: #4b4f6b; border-bottom: 1px solid var(--border); text-align: center; }
+    .rg th { position: sticky; top: 0; z-index: 2; background: var(--kb-fafafe); padding: 7px 4px; font-weight: 600; color: var(--kf-4b4f6b); border-bottom: 1px solid var(--border); text-align: center; }
     .rg th small { display: block; font-weight: 400; color: var(--muted); }
-    .rg th.we { color: #b91c1c; }
-    .rg td { padding: 3px; border-bottom: 1px solid #f0f1f6; text-align: center; }
-    .rg .emp { position: sticky; left: 0; z-index: 1; background: #fff; text-align: left; min-width: 180px; }
+    .rg th.we { color: var(--kf-b91c1c); }
+    .rg td { padding: 3px; border-bottom: 1px solid var(--kl-f0f1f6); text-align: center; }
+    .rg .emp { position: sticky; left: 0; z-index: 1; background: var(--kb-ffffff); text-align: left; min-width: 180px; }
     .rg td.emp { display: flex; align-items: center; gap: 8px; padding: 5px 8px 5px 0; }
     .rg td.emp div { display: flex; flex-direction: column; line-height: 1.25; } .rg td.emp small { color: var(--muted); font-size: 10.5px; }
-    .av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 10.5px; font-weight: 600; flex-shrink: 0; }
+    .av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); font-size: 10.5px; font-weight: 600; flex-shrink: 0; }
     .cell-td { position: relative; }
-    .cell { width: 100%; min-width: 58px; height: 30px; border: 2px solid transparent; border-radius: 6px; color: #fff; font-size: 10.5px; font-weight: 700; cursor: default; }
-    .cell.edit { cursor: pointer; } .cell.edit:hover { filter: brightness(1.1); box-shadow: 0 0 0 2px #c4b5fd; }
-    .cell.off { background: #f3f4f6; color: #9ca3af; font-weight: 500; }
-    .cell.lv { background: #ede9fe; color: #6d28d9; }
-    .cell.bad { border-color: #ef4444; box-shadow: inset 0 0 0 1px #fff; }
-    .cell.chg { outline: 2px dashed #f59e0b; outline-offset: 1px; }
-    .pick { position: absolute; top: 100%; left: 0; z-index: 20; min-width: 140px; max-height: 260px; overflow: auto; display: flex; flex-direction: column; padding: 4px; background: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 28px rgba(20,20,60,.18); }
+    .cell { width: 100%; min-width: 58px; height: 30px; border: 2px solid transparent; border-radius: 6px; color: var(--kf-ffffff); font-size: 10.5px; font-weight: 700; cursor: default; }
+    .cell.edit { cursor: pointer; } .cell.edit:hover { filter: brightness(1.1); box-shadow: 0 0 0 2px var(--kb-c4b5fd); }
+    .cell.off { background: var(--kb-f3f4f6); color: var(--kf-9ca3af); font-weight: 500; }
+    .cell.lv { background: var(--kb-ede9fe); color: var(--kf-6d28d9); }
+    .cell.bad { border-color: var(--kl-ef4444); box-shadow: inset 0 0 0 1px var(--kb-ffffff); }
+    .cell.chg { outline: 2px dashed var(--kl-f59e0b); outline-offset: 1px; }
+    .pick { position: absolute; top: 100%; left: 0; z-index: 20; min-width: 140px; max-height: 260px; overflow: auto; display: flex; flex-direction: column; padding: 4px; background: var(--kb-ffffff); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 28px rgba(20,20,60,.18); }
     .pick button { text-align: left; padding: 6px 8px; border: 0; border-left: 4px solid; border-radius: 4px; background: none; font-size: 12px; cursor: pointer; }
-    .pick button:hover, .pick button.on { background: #f5f3ff; }
+    .pick button:hover, .pick button.on { background: var(--kb-f5f3ff); }
     .num { font-weight: 600; font-variant-numeric: tabular-nums; } .over { color: var(--red); }
-    tfoot td { background: #fcfcff; }
+    tfoot td { background: var(--kb-fcfcff); }
     .cov-l { font-weight: 600; } .cov-l i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; } .cov-l small { color: var(--muted); font-weight: 400; }
     .cov { display: inline-block; padding: 2px 6px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-    .cov.low { background: #fee2e2; color: #b91c1c; } .cov.ok { background: #dcfce7; color: #15803d; }
+    .cov.low { background: var(--kb-fee2e2); color: var(--kf-b91c1c); } .cov.ok { background: var(--kb-dcfce7); color: var(--kf-15803d); }
   `,
 })
 export class RosterGrid {

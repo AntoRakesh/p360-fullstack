@@ -9,10 +9,10 @@ import { currentStep, fmtDT, Instance, instStatus, ME, statusTagCls, WorkflowSto
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<button type="button" class="sw" [class.on]="on()" role="switch" [attr.aria-checked]="on()" (click)="on.set(!on()); changed.emit(on())"><i></i></button>@if (label()) {<span (click)="on.set(!on()); changed.emit(on())">{{ label() }}</span>}`,
   styles: `
-    :host { display: inline-flex; align-items: center; gap: 9px; font-size: 12.5px; color: #3b3f5c; cursor: pointer; }
-    .sw { position: relative; width: 34px; height: 19px; border-radius: 12px; border: 0; background: #cbd0dd; cursor: pointer; padding: 0; flex-shrink: 0; transition: background .15s; }
-    .sw i { position: absolute; top: 2.5px; left: 2.5px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: left .15s; }
-    .sw.on { background: #22c55e; } .sw.on i { left: 17.5px; }
+    :host { display: inline-flex; align-items: center; gap: 9px; font-size: 12.5px; color: var(--kf-3b3f5c); cursor: pointer; }
+    .sw { position: relative; width: 34px; height: 19px; border-radius: 12px; border: 0; background: var(--kb-cbd0dd); cursor: pointer; padding: 0; flex-shrink: 0; transition: background .15s; }
+    .sw i { position: absolute; top: 2.5px; left: 2.5px; width: 14px; height: 14px; border-radius: 50%; background: var(--kb-ffffff); box-shadow: 0 1px 2px rgba(0,0,0,.2); transition: left .15s; }
+    .sw.on { background: var(--kb-22c55e); } .sw.on i { left: 17.5px; }
   `,
 })
 export class WfToggle {
@@ -78,12 +78,12 @@ export class WfToggle {
     .facts { display: grid; grid-template-columns: 120px 1fr; gap: 7px; font-size: 12.5px; margin: 12px 0 0; } .facts dt { color: var(--muted); } .facts dd { margin: 0; }
     .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
     .steps li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding-bottom: 12px; position: relative; font-size: 12.5px; }
-    .steps li:not(:last-child)::before { content: ''; position: absolute; left: 12px; top: 26px; bottom: 0; width: 2px; background: #e6e7f0; }
-    .steps li.done::before { background: #22c55e; }
-    .b { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: #eef0f5; color: #6b7090; }
-    .done .b { background: #22c55e; color: #fff; } .current .b { background: #3b82f6; color: #fff; box-shadow: 0 0 0 4px #dbeafe; } .rejected .b { background: #ef4444; color: #fff; }
+    .steps li:not(:last-child)::before { content: ''; position: absolute; left: 12px; top: 26px; bottom: 0; width: 2px; background: var(--kb-e6e7f0); }
+    .steps li.done::before { background: var(--kb-22c55e); }
+    .b { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--kb-eef0f5); color: var(--kf-6b7090); }
+    .done .b { background: var(--kb-22c55e); color: var(--kf-ffffff); } .current .b { background: var(--kb-3b82f6); color: var(--kf-ffffff); box-shadow: 0 0 0 4px var(--kb-dbeafe); } .rejected .b { background: var(--kb-ef4444); color: var(--kf-ffffff); }
     .steps small, .log small { color: var(--muted); font-size: 11px; }
-    .log { list-style: none; margin: 0 0 12px; padding: 0; } .log li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; padding: 6px 0; font-size: 12px; border-bottom: 1px solid #f0f1f6; }
+    .log { list-style: none; margin: 0 0 12px; padding: 0; } .log li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; padding: 6px 0; font-size: 12px; border-bottom: 1px solid var(--kl-f0f1f6); }
     .log i { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); margin-top: 5px; }
     textarea { width: 100%; resize: vertical; }
     .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }

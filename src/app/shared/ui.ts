@@ -131,7 +131,7 @@ export class Kpi {
   readonly label = input.required<string>();
   readonly value = input.required<string | number>();
   readonly icon = input('users');
-  readonly color = input('#8b5cf6');
+  readonly color = input('var(--ka-8b5cf6)');
   readonly change = input<string>();
   readonly up = input(true);
   readonly good = input(true);
@@ -183,11 +183,11 @@ export class Kpi {
           @if (g().dots) {
             @for (p of s.pts; track $index) {
               @if (p.ok) {
-                <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="hover() === $index ? 5.5 : 3.8" fill="#fff" [attr.stroke]="s.color" stroke-width="2.2" />
+                <circle [attr.cx]="p.x" [attr.cy]="p.y" [attr.r]="hover() === $index ? 5.5 : 3.8" fill="var(--ka-ffffff)" [attr.stroke]="s.color" stroke-width="2.2" />
               }
             }
           } @else if (hover() !== null && s.pts[hover()!].ok) {
-            <circle [attr.cx]="s.pts[hover()!].x" [attr.cy]="s.pts[hover()!].y" r="5" fill="#fff" [attr.stroke]="s.color" stroke-width="2.2" />
+            <circle [attr.cx]="s.pts[hover()!].x" [attr.cy]="s.pts[hover()!].y" r="5" fill="var(--ka-ffffff)" [attr.stroke]="s.color" stroke-width="2.2" />
           }
         }
         @if (hover() !== null) {
@@ -292,7 +292,7 @@ export class LineChart {
         }
         @for (ln of g().lines; track ln.name) {
           <path [attr.d]="ln.d" fill="none" [attr.stroke]="ln.color" stroke-width="2.2" />
-          @for (p of ln.pts; track $index) {<circle [attr.cx]="p[0]" [attr.cy]="p[1]" r="3.5" fill="#fff" [attr.stroke]="ln.color" stroke-width="2" />}
+          @for (p of ln.pts; track $index) {<circle [attr.cx]="p[0]" [attr.cy]="p[1]" r="3.5" fill="var(--ka-ffffff)" [attr.stroke]="ln.color" stroke-width="2" />}
         }
       </svg>
       @if (hover() !== null) {
@@ -366,7 +366,7 @@ export class ColumnChart {
     <div class="donut-box">
       <div class="donut-svg" [style.width.px]="size()">
         <svg viewBox="0 0 160 160">
-          <circle cx="80" cy="80" r="60" fill="none" stroke="#f1f2f7" stroke-width="24" />
+          <circle cx="80" cy="80" r="60" fill="none" stroke="var(--kl-f1f2f7)" stroke-width="24" />
           @for (s of g().segs; track s.label) {
             <circle
               cx="80" cy="80" r="60" fill="none"
@@ -429,7 +429,7 @@ export class Donut {
       @for (r of rows(); track r.label; let i = $index) {
         <li [title]="r.label + ': ' + (r.display ?? r.value)">
           <span class="bl-label">{{ r.label }}</span>
-          <div class="bl-track"><i [style.width.%]="(r.value / (r.max ?? max())) * 100" [style.background]="r.color ?? (i % 2 ? '#3b82f6' : '#8b5cf6')"></i></div>
+          <div class="bl-track"><i [style.width.%]="(r.value / (r.max ?? max())) * 100" [style.background]="r.color ?? (i % 2 ? 'var(--ka-3b82f6)' : 'var(--ka-8b5cf6)')"></i></div>
           <b>{{ r.display ?? r.value }}</b>
         </li>
       }
@@ -481,7 +481,7 @@ export class Heatmap {
 })
 export class Sparkline {
   readonly values = input.required<number[]>();
-  readonly color = input('#7c3aed');
+  readonly color = input('var(--ka-7c3aed)');
   protected readonly d = computed(() => {
     const v = this.values();
     const min = Math.min(...v);
@@ -496,7 +496,7 @@ export class Sparkline {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 44 44">
-      <circle cx="22" cy="22" r="18" fill="none" stroke="#eef0f6" stroke-width="5" />
+      <circle cx="22" cy="22" r="18" fill="none" stroke="var(--kl-eef0f6)" stroke-width="5" />
       <circle cx="22" cy="22" r="18" fill="none" [attr.stroke]="color()" stroke-width="5" stroke-linecap="round"
         [attr.stroke-dasharray]="(value() / 100) * 113.1 + ' 113.1'" transform="rotate(-90 22 22)" class="ring-arc" />
       <text x="22" y="26" text-anchor="middle" class="ring-text">{{ value() }}%</text>
@@ -505,7 +505,7 @@ export class Sparkline {
 })
 export class Ring {
   readonly value = input.required<number>();
-  readonly color = input('#7c3aed');
+  readonly color = input('var(--ka-7c3aed)');
   readonly size = input(56);
 }
 

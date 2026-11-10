@@ -92,17 +92,17 @@ const LEVEL_SEED: [string, string, string, (d: (typeof DOORS)[number]) => boolea
     .al { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 12px; align-items: start; }
     .ll { display: flex; flex-direction: column; gap: 4px; padding: 8px; }
     .li { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 9px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
-    .li div { display: flex; flex-direction: column; } .li small { color: var(--muted); } .li.on { border-color: var(--primary); background: #f5f3ff; }
+    .li div { display: flex; flex-direction: column; } .li small { color: var(--muted); } .li.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
     .title { font-size: 16px; font-weight: 600; } .chk { display: flex; gap: 6px; align-items: center; font-size: 12.5px; }
     .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .sub-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; } h4 { margin: 0; font-size: 13px; }
     .select.sm { padding: 5px 26px 5px 9px; font-size: 11.5px; }
     .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; max-height: 420px; overflow: auto; }
     .doors label { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; cursor: pointer; }
-    .doors label.on { border-color: #c4b5fd; background: #faf8ff; } .doors small { color: var(--muted); margin-left: auto; }
+    .doors label.on { border-color: var(--kl-c4b5fd); background: var(--kb-faf8ff); } .doors small { color: var(--muted); margin-left: auto; }
     .add { display: flex; gap: 6px; margin-bottom: 8px; } .add .input { flex: 1; }
     .mem { list-style: none; margin: 0; padding: 0; max-height: 380px; overflow: auto; }
-    .mem li { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .mem li { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .mem div { display: flex; flex-direction: column; } .mem small { color: var(--muted); } .danger { color: var(--red); }
     @media (max-width: 1100px) { .al, .cols { grid-template-columns: 1fr; } }
   `,
@@ -168,11 +168,11 @@ interface PrintJob {
   template: `
     <app-page-head title="Credential Management" parent="Physical Access Control" parentLink="/physical-access-control" subtitle="Card stock, badge printing and encoding, card formats and lost-card replacement." />
     <section class="kpi-row">
-      <app-kpi label="Active Credentials" value="11,842" icon="id-card" color="#8b5cf6" sub="cards, mobile, face, PIN" />
-      <app-kpi label="Blank Card Stock" [value]="stock().toLocaleString()" icon="box" [color]="stock() < 500 ? '#ef4444' : '#22c55e'" sub="reorder below 500" />
-      <app-kpi label="Print Queue" [value]="queued()" icon="file-text" color="#f97316" />
-      <app-kpi label="Lost / Stolen (30 d)" value="37" icon="triangle-alert" color="#ef4444" />
-      <app-kpi label="Mobile Credentials" value="4,912" icon="square-user" color="#3b82f6" change="9%" />
+      <app-kpi label="Active Credentials" value="11,842" icon="id-card" color="var(--ka-8b5cf6)" sub="cards, mobile, face, PIN" />
+      <app-kpi label="Blank Card Stock" [value]="stock().toLocaleString()" icon="box" [color]="stock() < 500 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" sub="reorder below 500" />
+      <app-kpi label="Print Queue" [value]="queued()" icon="file-text" color="var(--ka-f97316)" />
+      <app-kpi label="Lost / Stolen (30 d)" value="37" icon="triangle-alert" color="var(--ka-ef4444)" />
+      <app-kpi label="Mobile Credentials" value="4,912" icon="square-user" color="var(--ka-3b82f6)" change="9%" />
     </section>
     <section class="dash">
       <div class="card span-5">
@@ -223,12 +223,12 @@ interface PrintJob {
   `,
   styles: `
     .select.sm { padding: 5px 26px 5px 9px; font-size: 11.5px; }
-    .badge { width: 220px; margin: 0 auto 14px; padding: 14px; border-radius: 14px; background: linear-gradient(160deg, #4c1d95, #7c3aed); color: #fff; display: flex; flex-direction: column; align-items: center; gap: 4px; box-shadow: 0 10px 30px rgba(76,29,149,.35); }
-    .badge[data-t='Contractor'] { background: linear-gradient(160deg, #9a3412, #f97316); } .badge[data-t='Visitor'] { background: linear-gradient(160deg, #1e3a8a, #3b82f6); }
+    .badge { width: 220px; margin: 0 auto 14px; padding: 14px; border-radius: 14px; background: linear-gradient(160deg, var(--kb-4c1d95), var(--kb-7c3aed)); color: var(--kf-ffffff); display: flex; flex-direction: column; align-items: center; gap: 4px; box-shadow: 0 10px 30px rgba(76,29,149,.35); }
+    .badge[data-t='Contractor'] { background: linear-gradient(160deg, var(--kb-9a3412), var(--kb-f97316)); } .badge[data-t='Visitor'] { background: linear-gradient(160deg, var(--kb-1e3a8a), var(--kb-3b82f6)); }
     .b-top { width: 100%; display: flex; justify-content: space-between; font-size: 11px; } .b-top span { padding: 1px 8px; border-radius: 10px; background: rgba(255,255,255,.2); }
-    .b-photo { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; font-size: 26px; font-weight: 700; border: 3px solid #fff; margin: 8px 0; }
+    .b-photo { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; font-size: 26px; font-weight: 700; border: 3px solid var(--kl-ffffff); margin: 8px 0; }
     .b-name { font-size: 16px; } .b-role { font-size: 11.5px; opacity: .85; } .b-id { font-family: monospace; font-size: 12px; }
-    .b-bar { width: 80%; height: 26px; margin: 6px 0 2px; background: repeating-linear-gradient(90deg, #fff 0 2px, transparent 2px 4px, #fff 4px 5px, transparent 5px 8px); border-radius: 2px; }
+    .b-bar { width: 80%; height: 26px; margin: 6px 0 2px; background: repeating-linear-gradient(90deg, var(--kb-ffffff) 0 2px, transparent 2px 4px, var(--kb-ffffff) 4px 5px, transparent 5px 8px); border-radius: 2px; }
     .badge small { font-size: 10px; opacity: .85; }
     .chk { flex-direction: row !important; align-items: center; } .danger { color: var(--red); }
   `,
@@ -310,10 +310,10 @@ interface VisitorPass {
   template: `
     <app-page-head title="Visitor Access Integration" parent="Physical Access Control" parentLink="/physical-access-control" subtitle="Visitor check-in automatically issues and revokes temporary credentials." />
     <section class="kpi-row">
-      <app-kpi label="Active Visitor Passes" [value]="cnt('Active')" icon="user-plus" color="#3b82f6" />
-      <app-kpi label="QR Scans Today" [value]="scans()" icon="grid" color="#8b5cf6" />
-      <app-kpi label="Denied Visitor Scans" value="11" icon="ban" color="#ef4444" sub="outside allowed doors" />
-      <app-kpi label="Auto-revoked" [value]="cnt('Expired') + cnt('Revoked')" icon="clock" color="#64748b" sub="on check-out / expiry" />
+      <app-kpi label="Active Visitor Passes" [value]="cnt('Active')" icon="user-plus" color="var(--ka-3b82f6)" />
+      <app-kpi label="QR Scans Today" [value]="scans()" icon="grid" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Denied Visitor Scans" value="11" icon="ban" color="var(--ka-ef4444)" sub="outside allowed doors" />
+      <app-kpi label="Auto-revoked" [value]="cnt('Expired') + cnt('Revoked')" icon="clock" color="var(--ka-64748b)" sub="on check-out / expiry" />
     </section>
     <section class="dash">
       <div class="card span-8">
@@ -347,7 +347,7 @@ interface VisitorPass {
   `,
   styles: `
     .set { display: flex; flex-direction: column; gap: 4px; }
-    .set label { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f0f1f6; font-size: 12.5px; }
+    .set label { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); font-size: 12.5px; }
     .set input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--primary); }
     .set .row { flex-direction: column; align-items: stretch; } .set .row .input, .set .row .select { width: 100%; }
     .qrm { width: min(360px, calc(100vw - 32px)); text-align: center; } .qr { width: 200px; height: 200px; margin: 6px auto; display: block; } .qrm p { margin: 4px 0; font-size: 13px; }

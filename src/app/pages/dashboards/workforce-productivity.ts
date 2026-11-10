@@ -44,12 +44,12 @@ const TEAMS: Team[] = (() => {
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Workforce Utilization" [value]="k().util + '%'" icon="activity" color="#8b5cf6" change="2.1%" />
-      <app-kpi label="Tasks Completed" [value]="k().tasks" icon="list-checks" color="#22c55e" change="9%" />
-      <app-kpi label="On-time Completion" value="93.4%" icon="clock" color="#3b82f6" change="0.8%" />
-      <app-kpi label="Overtime Hours" [value]="k().ot" icon="coffee" color="#f97316" change="5%" [up]="true" [good]="false" />
-      <app-kpi label="Avg. Task Time" value="38 min" icon="trending-up" color="#06b6d4" change="4%" [up]="false" />
-      <app-kpi label="Idle Time" value="6.1%" icon="calendar-x" color="#ef4444" change="0.6%" [up]="false" />
+      <app-kpi label="Workforce Utilization" [value]="k().util + '%'" icon="activity" color="var(--ka-8b5cf6)" change="2.1%" />
+      <app-kpi label="Tasks Completed" [value]="k().tasks" icon="list-checks" color="var(--ka-22c55e)" change="9%" />
+      <app-kpi label="On-time Completion" value="93.4%" icon="clock" color="var(--ka-3b82f6)" change="0.8%" />
+      <app-kpi label="Overtime Hours" [value]="k().ot" icon="coffee" color="var(--ka-f97316)" change="5%" [up]="true" [good]="false" />
+      <app-kpi label="Avg. Task Time" value="38 min" icon="trending-up" color="var(--ka-06b6d4)" change="4%" [up]="false" />
+      <app-kpi label="Idle Time" value="6.1%" icon="calendar-x" color="var(--ka-ef4444)" change="0.6%" [up]="false" />
     </section>
 
     <section class="dash">
@@ -93,7 +93,7 @@ const TEAMS: Team[] = (() => {
                   <td><b>{{ t.team }}</b><div class="muted">{{ t.dept }}</div></td>
                   <td>{{ t.lead }}</td>
                   <td class="num">{{ t.members }}</td>
-                  <td><span class="mini-progress"><i [style.width.%]="t.util" [style.background]="t.util < 75 ? '#f59e0b' : '#7c3aed'"></i></span>{{ t.util }}%</td>
+                  <td><span class="mini-progress"><i [style.width.%]="t.util" [style.background]="t.util < 75 ? 'var(--ka-f59e0b)' : 'var(--ka-7c3aed)'"></i></span>{{ t.util }}%</td>
                   <td class="num">{{ t.tasks }}</td>
                   <td class="num">{{ t.ontime }}%</td>
                   <td class="num" [class.warn-t]="t.overtime > 140">{{ t.overtime }}</td>
@@ -135,15 +135,15 @@ export class WorkforceProductivity {
     return {
       labels: Array.from({ length: n }, (_, i) => `${unit} ${i + 1}`),
       series: [
-        { name: 'Utilization', color: '#7c3aed', values: series(n, 81, 5, n * 3), area: true },
-        { name: 'On-time %', color: '#22c55e', values: series(n, 93, 3, n * 5) },
+        { name: 'Utilization', color: 'var(--ka-7c3aed)', values: series(n, 81, 5, n * 3), area: true },
+        { name: 'On-time %', color: 'var(--ka-22c55e)', values: series(n, 93, 3, n * 5) },
       ],
     };
   });
   protected readonly deptUtil = computed(() =>
     DEPARTMENTS.map((label, i) => {
       const v = [86, 84, 77, 72, 69, 88, 91, 80][i];
-      return { label, value: v, display: `${v}%`, color: v < 75 ? '#f59e0b' : '#8b5cf6' };
+      return { label, value: v, display: `${v}%`, color: v < 75 ? 'var(--ka-f59e0b)' : 'var(--ka-8b5cf6)' };
     }),
   );
   protected readonly teams = computed(() => {
@@ -153,13 +153,13 @@ export class WorkforceProductivity {
       .sort((a, b) => (a[key] > b[key] ? dir : a[key] < b[key] ? -dir : 0));
   });
   protected readonly taskStatus = computed(() => [
-    { label: 'Completed', value: this.state.scale(4812), color: '#22c55e' },
-    { label: 'In progress', value: this.state.scale(1240), color: '#3b82f6' },
-    { label: 'Overdue', value: this.state.scale(214), color: '#ef4444' },
-    { label: 'Not started', value: this.state.scale(690), color: '#c4c9d6' },
+    { label: 'Completed', value: this.state.scale(4812), color: 'var(--ka-22c55e)' },
+    { label: 'In progress', value: this.state.scale(1240), color: 'var(--ka-3b82f6)' },
+    { label: 'Overdue', value: this.state.scale(214), color: 'var(--ka-ef4444)' },
+    { label: 'Not started', value: this.state.scale(690), color: 'var(--ka-c4c9d6)' },
   ]);
   protected readonly overtime = computed(() => [
-    { name: 'Overtime hours', color: '#f97316', values: [412, 268, 96, 54, 22, 133, 221, 58].map((v) => Math.round(this.state.scale(v) * this.mult())) },
+    { name: 'Overtime hours', color: 'var(--ka-f97316)', values: [412, 268, 96, 54, 22, 133, 221, 58].map((v) => Math.round(this.state.scale(v) * this.mult())) },
   ]);
 
   protected sortBy(key: keyof Team) {

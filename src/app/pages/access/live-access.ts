@@ -55,11 +55,11 @@ const credTag = (c: string) => ({ Employee: 'tag', Visitor: 'tag', Contractor: '
     }
 
     <section class="kpi-row">
-      <app-kpi label="Total Access Events Today" [value]="fmt(k().total)" icon="door-open" color="#8b5cf6" change="12%" />
-      <app-kpi label="Access Granted" [value]="fmt(k().granted)" [extra]="pct(k().granted)" icon="shield-check" color="#22c55e" change="15%" />
-      <app-kpi label="Access Denied" [value]="fmt(k().denied)" [extra]="pct(k().denied)" icon="ban" color="#ef4444" change="5%" [good]="false" />
-      <app-kpi label="Door Alarms" [value]="k().alarms" icon="calendar-days" color="#f97316" change="33%" [good]="false" />
-      <app-kpi label="Doors Online" [value]="k().online + ' / ' + doors().length" [extra]="(k().online / doors().length * 100).toFixed(1) + '%'" icon="building" color="#a855f7" change="2%" />
+      <app-kpi label="Total Access Events Today" [value]="fmt(k().total)" icon="door-open" color="var(--ka-8b5cf6)" change="12%" />
+      <app-kpi label="Access Granted" [value]="fmt(k().granted)" [extra]="pct(k().granted)" icon="shield-check" color="var(--ka-22c55e)" change="15%" />
+      <app-kpi label="Access Denied" [value]="fmt(k().denied)" [extra]="pct(k().denied)" icon="ban" color="var(--ka-ef4444)" change="5%" [good]="false" />
+      <app-kpi label="Door Alarms" [value]="k().alarms" icon="calendar-days" color="var(--ka-f97316)" change="33%" [good]="false" />
+      <app-kpi label="Doors Online" [value]="k().online + ' / ' + doors().length" [extra]="(k().online / doors().length * 100).toFixed(1) + '%'" icon="building" color="var(--ka-a855f7)" change="2%" />
     </section>
 
     <section class="la">
@@ -115,12 +115,12 @@ const credTag = (c: string) => ({ Employee: 'tag', Visitor: 'tag', Contractor: '
             </div>
             <div class="map" (click)="mapSel.set(null)">
               <svg viewBox="0 0 400 200">
-                <rect width="400" height="200" fill="#f1f2f6" />
-                <g fill="none" stroke="#b4b9c6" stroke-width="2"><rect x="5" y="5" width="390" height="190" /><path d="M5 90h390M120 5v85M240 5v85M300 90v105M160 90v105" /></g>
+                <rect width="400" height="200" fill="var(--ka-f1f2f6)" />
+                <g fill="none" stroke="var(--kl-b4b9c6)" stroke-width="2"><rect x="5" y="5" width="390" height="190" /><path d="M5 90h390M120 5v85M240 5v85M300 90v105M160 90v105" /></g>
                 @for (d of mapDoors(); track d.id) {
                   <g class="dm" (click)="$event.stopPropagation(); mapSel.set(d)">
-                    <rect [attr.x]="d.x - 9" [attr.y]="d.y - 9" width="18" height="18" rx="4" [attr.fill]="color(d.status)" [attr.stroke]="mapSel()?.id === d.id ? '#7c3aed' : '#fff'" stroke-width="2.5" />
-                    <path [attr.d]="'M' + (d.x - 3) + ' ' + (d.y + 5) + 'v-9h6v9'" stroke="#fff" stroke-width="1.5" fill="none" />
+                    <rect [attr.x]="d.x - 9" [attr.y]="d.y - 9" width="18" height="18" rx="4" [attr.fill]="color(d.status)" [attr.stroke]="mapSel()?.id === d.id ? 'var(--ka-7c3aed)' : 'var(--ka-ffffff)'" stroke-width="2.5" />
+                    <path [attr.d]="'M' + (d.x - 3) + ' ' + (d.y + 5) + 'v-9h6v9'" stroke="var(--kl-ffffff)" stroke-width="1.5" fill="none" />
                   </g>
                 }
               </svg>
@@ -130,7 +130,7 @@ const credTag = (c: string) => ({ Employee: 'tag', Visitor: 'tag', Contractor: '
                 </div>
               }
             </div>
-            <div class="legend"><span><i style="background:#22c55e"></i>Online</span><span><i style="background:#ef4444"></i>Offline</span><span><i style="background:#f59e0b"></i>Alarm</span><span><i style="background:#7c3aed"></i>Selected</span></div>
+            <div class="legend"><span><i style="background:var(--kb-22c55e)"></i>Online</span><span><i style="background:var(--kb-ef4444)"></i>Offline</span><span><i style="background:var(--kb-f59e0b)"></i>Alarm</span><span><i style="background:var(--kb-7c3aed)"></i>Selected</span></div>
           </div>
         </div>
       </div>
@@ -230,7 +230,7 @@ const credTag = (c: string) => ({ Employee: 'tag', Visitor: 'tag', Contractor: '
     @if (toast()) {<div class="g-toast">{{ toast() }}</div>}
   `,
   styles: `
-    .banner { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; background: #fef2f2; border-color: #fecaca; color: #991b1b; font-size: 13px; }
+    .banner { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; background: var(--kb-fef2f2); border-color: var(--kl-fecaca); color: var(--kf-991b1b); font-size: 13px; }
     .danger { color: var(--red) !important; }
     .la { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 12px; align-items: start; }
     .col-l, .col-r { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
@@ -238,39 +238,39 @@ const credTag = (c: string) => ({ Employee: 'tag', Visitor: 'tag', Contractor: '
     .select.sm { padding: 5px 26px 5px 9px; font-size: 11.5px; }
     .ds { display: flex; gap: 14px; margin-bottom: 10px; font-size: 11px; flex-wrap: wrap; }
     .ds span { display: grid; grid-template-columns: auto auto; gap: 0 6px; align-items: center; } .ds b { font-size: 15px; } .ds span:not(:has(b)) { display: none; }
-    .ds app-icon { grid-row: span 2; width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: #fff; }
-    .ds .g app-icon { background: #22c55e; } .ds .r app-icon { background: #ef4444; } .ds .o app-icon { background: #f97316; } .ds .b app-icon { background: #3b82f6; }
+    .ds app-icon { grid-row: span 2; width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .ds .g app-icon { background: var(--kb-22c55e); } .ds .r app-icon { background: var(--kb-ef4444); } .ds .o app-icon { background: var(--kb-f97316); } .ds .b app-icon { background: var(--kb-3b82f6); }
     .doors { font-size: 12px; } .doors th, .doors td { padding: 7px 6px; }
     .map { position: relative; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; aspect-ratio: 2 / 1; }
     .map svg { width: 100%; height: 100%; display: block; } .dm { cursor: pointer; }
-    .tip { position: absolute; transform: translate(14px, -50%); display: flex; flex-direction: column; padding: 8px 10px; background: #fff; border-radius: 8px; box-shadow: 0 6px 18px rgba(20,20,60,.18); font-size: 11.5px; white-space: nowrap; }
+    .tip { position: absolute; transform: translate(14px, -50%); display: flex; flex-direction: column; padding: 8px 10px; background: var(--kb-ffffff); border-radius: 8px; box-shadow: 0 6px 18px rgba(20,20,60,.18); font-size: 11.5px; white-space: nowrap; }
     .tip small { color: var(--muted); }
     .legend { display: flex; gap: 14px; margin-top: 8px; font-size: 11.5px; } .legend span { display: flex; gap: 5px; align-items: center; } .legend i { width: 10px; height: 10px; border-radius: 50%; }
     .lay { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-    .lay button { width: 28px; height: 26px; border: 0; background: #fff; display: grid; place-items: center; cursor: pointer; } .lay button.on { background: var(--primary); color: #fff; }
+    .lay button { width: 28px; height: 26px; border: 0; background: var(--kb-ffffff); display: grid; place-items: center; cursor: pointer; } .lay button.on { background: var(--primary); color: var(--kf-ffffff); }
     .vid { display: grid; grid-template-columns: 1fr 140px; gap: 8px; }
     .main-feed { position: relative; min-height: 330px; border-radius: 8px; overflow: hidden; } .main-feed app-cam-scene { position: absolute; inset: 0; }
-    .live { position: absolute; top: 10px; right: 10px; display: flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 12px; background: rgba(0,0,0,.55); color: #4ade80; font-size: 11px; font-weight: 700; }
-    .live i { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; }
-    .recog { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 10px; padding: 8px 12px; border-radius: 8px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.25); font-size: 11.5px; min-width: 200px; animation: rin .4s; }
-    .recog div { display: flex; flex-direction: column; } .recog small { color: var(--muted); } .recog em { font-style: normal; color: #16a34a; font-weight: 600; } .recog em.bad { color: var(--red); }
+    .live { position: absolute; top: 10px; right: 10px; display: flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 12px; background: rgba(0,0,0,.55); color: var(--kf-4ade80); font-size: 11px; font-weight: 700; }
+    .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--kb-4ade80); }
+    .recog { position: absolute; left: 10px; bottom: 10px; display: flex; gap: 10px; padding: 8px 12px; border-radius: 8px; background: var(--kb-ffffff); box-shadow: 0 6px 18px rgba(0,0,0,.25); font-size: 11.5px; min-width: 200px; animation: rin .4s; }
+    .recog div { display: flex; flex-direction: column; } .recog small { color: var(--muted); } .recog em { font-style: normal; color: var(--kf-16a34a); font-weight: 600; } .recog em.bad { color: var(--red); }
     @keyframes rin { from { opacity: 0; transform: translateY(6px); } }
     .thumbs { display: flex; flex-direction: column; gap: 6px; }
     .th { position: relative; height: 62px; border: 2px solid transparent; border-radius: 6px; overflow: hidden; padding: 0; cursor: pointer; }
     .th app-cam-scene { position: absolute; inset: 0; } .th.on { border-color: var(--primary); }
-    .th span, .g4 span, .wcell span { position: absolute; left: 4px; bottom: 4px; padding: 1px 6px; border-radius: 4px; background: rgba(0,0,0,.6); color: #fff; font-size: 10px; }
+    .th span, .g4 span, .wcell span { position: absolute; left: 4px; bottom: 4px; padding: 1px 6px; border-radius: 4px; background: rgba(0,0,0,.6); color: var(--kf-ffffff); font-size: 10px; }
     .grid4 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .g4 { position: relative; height: 160px; border: 2px solid transparent; border-radius: 6px; overflow: hidden; padding: 0; cursor: pointer; } .g4 app-cam-scene { position: absolute; inset: 0; } .g4.on { border-color: var(--primary); }
     .top { list-style: none; margin: 0; padding: 0; } .top li { display: grid; grid-template-columns: 1fr 60px 50px 140px; gap: 10px; align-items: center; padding: 6px 0; font-size: 12.5px; }
     .top b { text-align: right; } .top em { font-style: normal; color: var(--muted); text-align: right; }
-    .bar { height: 10px; background: #eef0f6; border-radius: 2px; overflow: hidden; } .bar i { display: block; height: 100%; background: #7c3aed; }
+    .bar { height: 10px; background: var(--kb-eef0f6); border-radius: 2px; overflow: hidden; } .bar i { display: block; height: 100%; background: var(--kb-7c3aed); }
     .snap { height: 220px; border-radius: 8px; margin-bottom: 12px; }
     .kv { display: grid; grid-template-columns: 90px 1fr; gap: 8px; font-size: 13px; } .kv dt { color: var(--muted); } .kv dd { margin: 0; }
-    .wall { position: fixed; inset: 0; z-index: 80; background: #0f0d1f; padding: 16px; display: flex; flex-direction: column; gap: 12px; color: #fff; }
+    .wall { position: fixed; inset: 0; z-index: 80; background: var(--kb-0f0d1f); padding: 16px; display: flex; flex-direction: column; gap: 12px; color: var(--kf-ffffff); }
     .wall-head { display: flex; justify-content: space-between; align-items: center; }
     .wall-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 8px; }
     .wcell { position: relative; border-radius: 8px; overflow: hidden; } .wcell app-cam-scene { position: absolute; inset: 0; }
-    .wcell.list { padding: 12px; background: #1e1b3a; font-size: 12px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; } .wcell.list .bad { color: #f87171; }
+    .wcell.list { padding: 12px; background: var(--kb-1e1b3a); font-size: 12px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; } .wcell.list .bad { color: var(--kf-f87171); }
     .bad { color: var(--red); }
     @media (max-width: 1350px) { .la { grid-template-columns: 1fr; } }
     @media (max-width: 900px) { .two { grid-template-columns: 1fr; } .vid { grid-template-columns: 1fr; } .thumbs { flex-direction: row; overflow-x: auto; } .th { min-width: 110px; } }
@@ -374,9 +374,9 @@ export class LiveAccess {
     return {
       labels,
       series: [
-        { name: 'Total', color: '#8b5cf6', values: g.map((v, i) => v + d[i]), area: true },
-        { name: 'Granted', color: '#22c55e', values: g },
-        { name: 'Denied', color: '#ef4444', values: d },
+        { name: 'Total', color: 'var(--ka-8b5cf6)', values: g.map((v, i) => v + d[i]), area: true },
+        { name: 'Granted', color: 'var(--ka-22c55e)', values: g },
+        { name: 'Denied', color: 'var(--ka-ef4444)', values: d },
       ],
     };
   });
@@ -395,7 +395,7 @@ export class LiveAccess {
     return `${((n / (this.k().total || 1)) * 100).toFixed(1)}%`;
   }
   protected color(s: string) {
-    return s === 'Online' ? '#22c55e' : s === 'Offline' ? '#ef4444' : '#f59e0b';
+    return s === 'Online' ? 'var(--ka-22c55e)' : s === 'Offline' ? 'var(--ka-ef4444)' : 'var(--ka-f59e0b)';
   }
   protected statusCls(s: string) {
     return /Online|Granted/.test(s) ? 'dt-status green' : /Alarm|Info/.test(s) ? (s === 'Info' ? 'dt-status blue' : 'dt-status amber') : 'dt-status red';

@@ -16,10 +16,10 @@ import { codeColor, codeHours, isNight, LEAVE, OFF, restViolation, rosterFor, Ro
       <button class="btn-primary" (click)="newTemplate()"><app-icon name="plus" [size]="16" />New Template</button>
     </app-page-head>
     <section class="kpi-row">
-      <app-kpi label="Templates" [value]="list().length" icon="refresh" color="#8b5cf6" sub="rotation patterns" />
-      <app-kpi label="Teams Using Templates" [value]="teamsTotal()" icon="users" color="#3b82f6" />
-      <app-kpi label="People on Rotations" [value]="peopleTotal()" icon="user-check" color="#22c55e" />
-      <app-kpi label="Longest Cycle" [value]="maxCycle() + ' days'" icon="calendar-days" color="#f97316" />
+      <app-kpi label="Templates" [value]="list().length" icon="refresh" color="var(--ka-8b5cf6)" sub="rotation patterns" />
+      <app-kpi label="Teams Using Templates" [value]="teamsTotal()" icon="users" color="var(--ka-3b82f6)" />
+      <app-kpi label="People on Rotations" [value]="peopleTotal()" icon="user-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Longest Cycle" [value]="maxCycle() + ' days'" icon="calendar-days" color="var(--ka-f97316)" />
     </section>
     <section class="tpl">
       <aside class="card tlist">
@@ -45,7 +45,7 @@ import { codeColor, codeHours, isNight, LEAVE, OFF, restViolation, rosterFor, Ro
             @for (c of t.cycle; track $index; let i = $index) {
               <div class="cday">
                 <small>D{{ i + 1 }}</small>
-                <button class="chip" [style.background]="c === off ? '#f3f4f6' : color(c)" [class.offc]="c === off" (click)="pick.set(pick() === i ? null : i)">{{ c === off ? 'Off' : c }}</button>
+                <button class="chip" [style.background]="c === off ? 'var(--ka-f3f4f6)' : color(c)" [class.offc]="c === off" (click)="pick.set(pick() === i ? null : i)">{{ c === off ? 'Off' : c }}</button>
                 @if (pick() === i) {
                   <div class="pk">@for (o of options; track o) {<button [style.border-left-color]="color(o)" (click)="setDay(i, o)">{{ o === off ? 'Day off' : o }}</button>}</div>
                 }
@@ -64,7 +64,7 @@ import { codeColor, codeHours, isNight, LEAVE, OFF, restViolation, rosterFor, Ro
               <div class="pw"><span>Week {{ w + 1 }}</span>
                 @for (d of [0, 1, 2, 3, 4, 5, 6]; track d) {
                   @let c = t.cycle[(w * 7 + d) % t.cycle.length];
-                  <i [style.background]="c === off ? '#f3f4f6' : color(c)" [title]="c">{{ c === off ? '' : c.split('-')[1] ?? c }}</i>
+                  <i [style.background]="c === off ? 'var(--ka-f3f4f6)' : color(c)" [title]="c">{{ c === off ? '' : c.split('-')[1] ?? c }}</i>
                 }
               </div>
             }
@@ -91,20 +91,20 @@ import { codeColor, codeHours, isNight, LEAVE, OFF, restViolation, rosterFor, Ro
     .tpl { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 12px; align-items: start; }
     .tlist { display: flex; flex-direction: column; gap: 6px; padding: 10px; max-height: 720px; overflow: auto; }
     .ti { display: flex; flex-direction: column; gap: 4px; padding: 10px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
-    .ti small { color: var(--muted); } .ti:hover { background: #faf8ff; } .ti.on { border-color: var(--primary); background: #f5f3ff; }
+    .ti small { color: var(--muted); } .ti:hover { background: var(--kb-faf8ff); } .ti.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
     .mini { display: flex; gap: 2px; } .mini i { width: 12px; height: 8px; border-radius: 2px; }
-    .lbl { font-size: 12px; color: #4b4f6b; margin: 12px 0 6px; }
+    .lbl { font-size: 12px; color: var(--kf-4b4f6b); margin: 12px 0 6px; }
     .cycle { display: flex; flex-wrap: wrap; gap: 6px; }
     .cday { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; } .cday small { font-size: 10px; color: var(--muted); }
-    .chip { width: 58px; height: 34px; border: 0; border-radius: 6px; color: #fff; font-size: 10.5px; font-weight: 700; cursor: pointer; }
-    .chip.offc { color: #9ca3af; }
-    .pk { position: absolute; top: 100%; z-index: 10; display: flex; flex-direction: column; min-width: 120px; max-height: 240px; overflow: auto; padding: 4px; background: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 28px rgba(20,20,60,.18); }
-    .pk button { text-align: left; padding: 5px 8px; border: 0; border-left: 4px solid; background: none; font-size: 12px; cursor: pointer; } .pk button:hover { background: #f5f3ff; }
+    .chip { width: 58px; height: 34px; border: 0; border-radius: 6px; color: var(--kf-ffffff); font-size: 10.5px; font-weight: 700; cursor: pointer; }
+    .chip.offc { color: var(--kf-9ca3af); }
+    .pk { position: absolute; top: 100%; z-index: 10; display: flex; flex-direction: column; min-width: 120px; max-height: 240px; overflow: auto; padding: 4px; background: var(--kb-ffffff); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 28px rgba(20,20,60,.18); }
+    .pk button { text-align: left; padding: 5px 8px; border: 0; border-left: 4px solid; background: none; font-size: 12px; cursor: pointer; } .pk button:hover { background: var(--kb-f5f3ff); }
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
     .stats div { display: flex; flex-direction: column; padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 12px; } .stats b { font-size: 20px; }
     .preview { display: flex; flex-direction: column-reverse; gap: 4px; }
     .pw { display: grid; grid-template-columns: 60px repeat(7, 1fr); gap: 4px; font-size: 11px; align-items: center; }
-    .pw i { height: 26px; border-radius: 5px; display: grid; place-items: center; color: #fff; font-style: normal; font-weight: 600; font-size: 10px; }
+    .pw i { height: 26px; border-radius: 5px; display: grid; place-items: center; color: var(--kf-ffffff); font-style: normal; font-weight: 600; font-size: 10px; }
     .pw.head i { height: auto; color: var(--muted); }
     .bad { color: var(--red); }
     @media (max-width: 1000px) { .tpl { grid-template-columns: 1fr; } .stats { grid-template-columns: 1fr 1fr; } }
@@ -192,11 +192,11 @@ export class ShiftTemplates {
     </section>
 
     <section class="kpi-row">
-      <app-kpi label="People in Team" [value]="rows().length" icon="users" color="#8b5cf6" />
-      <app-kpi label="Scheduled Hours" [value]="totalHours()" icon="clock" color="#22c55e" />
-      <app-kpi label="Coverage Gaps" [value]="gaps()" icon="triangle-alert" [color]="gaps() ? '#ef4444' : '#22c55e'" sub="shift-days under minimum" />
-      <app-kpi label="Rest-rule Breaks" [value]="restBreaks()" icon="ban" [color]="restBreaks() ? '#ef4444' : '#22c55e'" sub="< 11 h between shifts" />
-      <app-kpi label="Over 48 h" [value]="overtime()" icon="activity" color="#f97316" sub="employees" />
+      <app-kpi label="People in Team" [value]="rows().length" icon="users" color="var(--ka-8b5cf6)" />
+      <app-kpi label="Scheduled Hours" [value]="totalHours()" icon="clock" color="var(--ka-22c55e)" />
+      <app-kpi label="Coverage Gaps" [value]="gaps()" icon="triangle-alert" [color]="gaps() ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" sub="shift-days under minimum" />
+      <app-kpi label="Rest-rule Breaks" [value]="restBreaks()" icon="ban" [color]="restBreaks() ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'" sub="< 11 h between shifts" />
+      <app-kpi label="Over 48 h" [value]="overtime()" icon="activity" color="var(--ka-f97316)" sub="employees" />
     </section>
 
     <div class="card">
@@ -322,10 +322,10 @@ interface Submission {
   template: `
     <app-page-head title="Schedule Approvals" parent="Shift &amp; Workforce Scheduling" parentLink="/shift-workforce" subtitle="Review rosters submitted by team leads before they are published." />
     <section class="kpi-row">
-      <app-kpi label="Awaiting Approval" [value]="count('Pending')" icon="clock" color="#f59e0b" />
-      <app-kpi label="Approved This Month" [value]="count('Approved') + 31" icon="shield-check" color="#22c55e" />
-      <app-kpi label="Sent Back" [value]="count('Changes requested') + count('Rejected')" icon="refresh" color="#ef4444" />
-      <app-kpi label="Avg. Turnaround" value="6.4 h" icon="activity" color="#3b82f6" />
+      <app-kpi label="Awaiting Approval" [value]="count('Pending')" icon="clock" color="var(--ka-f59e0b)" />
+      <app-kpi label="Approved This Month" [value]="count('Approved') + 31" icon="shield-check" color="var(--ka-22c55e)" />
+      <app-kpi label="Sent Back" [value]="count('Changes requested') + count('Rejected')" icon="refresh" color="var(--ka-ef4444)" />
+      <app-kpi label="Avg. Turnaround" value="6.4 h" icon="activity" color="var(--ka-3b82f6)" />
     </section>
     <section class="ap">
       <div class="card subs">
@@ -369,7 +369,7 @@ interface Submission {
     .subs { display: flex; flex-direction: column; gap: 6px; padding: 10px; }
     .sub { display: grid; grid-template-columns: 1fr auto; gap: 4px; padding: 10px; border: 1px solid transparent; border-radius: 8px; background: none; text-align: left; cursor: pointer; font-size: 12.5px; }
     .sub div { display: flex; flex-direction: column; } .sub small { color: var(--muted); } .sub .meta { grid-column: 1 / -1; }
-    .sub:hover { background: #faf8ff; } .sub.on { border-color: var(--primary); background: #f5f3ff; }
+    .sub:hover { background: var(--kb-faf8ff); } .sub.on { border-color: var(--primary); background: var(--kb-f5f3ff); }
     .checks { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
     .note { width: 100%; margin-top: 12px; } .danger { color: var(--red); }
     @media (max-width: 1000px) { .ap { grid-template-columns: 1fr; } }

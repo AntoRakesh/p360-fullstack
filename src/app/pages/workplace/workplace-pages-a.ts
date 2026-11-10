@@ -28,11 +28,11 @@ const toast = () => {
       <button class="btn-ghost hb" (click)="exportDay()"><app-icon name="download" [size]="16" />Export Day</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Total Rooms" [value]="rooms().length" icon="w-room" color="#2563eb" [sub]="'Across ' + sitesCount() + ' site' + (sitesCount() === 1 ? '' : 's')" />
-      <app-wkpi label="Available Now" [value]="freeNow().length" icon="w-check-circle" color="#16c26b" [strong]="pctOf(freeNow().length, rooms().length)" sub="free right now" />
-      <app-wkpi label="Bookings Today" [value]="dayBookings().length" icon="w-calendar" color="#7c3aed" [sub]="hoursBooked() + ' hrs booked'" />
-      <app-wkpi label="Pending Approvals" [value]="pending()" icon="file-check" color="#f5a524" sub="board & training" [clickable]="true" (click)="go('approvals-sla')" />
-      <app-wkpi label="Room Occupancy" value="68%" icon="w-bars" color="#ef3b4f" strong="5%" arrow="up" sub="vs. last week" />
+      <app-wkpi label="Total Rooms" [value]="rooms().length" icon="w-room" color="var(--ka-2563eb)" [sub]="'Across ' + sitesCount() + ' site' + (sitesCount() === 1 ? '' : 's')" />
+      <app-wkpi label="Available Now" [value]="freeNow().length" icon="w-check-circle" color="var(--ka-16c26b)" [strong]="pctOf(freeNow().length, rooms().length)" sub="free right now" />
+      <app-wkpi label="Bookings Today" [value]="dayBookings().length" icon="w-calendar" color="var(--ka-7c3aed)" [sub]="hoursBooked() + ' hrs booked'" />
+      <app-wkpi label="Pending Approvals" [value]="pending()" icon="file-check" color="var(--ka-f5a524)" sub="board & training" [clickable]="true" (click)="go('approvals-sla')" />
+      <app-wkpi label="Room Occupancy" value="68%" icon="w-bars" color="var(--ka-ef3b4f)" strong="5%" arrow="up" sub="vs. last week" />
     </section>
 
     <section class="wl">
@@ -135,23 +135,23 @@ const toast = () => {
     .dlabel { font-size: 13px; min-width: 150px; text-align: center; }
     .tl { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     .tl-h, .tl-r { display: grid; grid-template-columns: 190px minmax(0, 1fr); }
-    .tl-h { background: #f8f8fc; border-bottom: 1px solid var(--border); font-size: 11px; color: #52525b; }
-    .tl-hours { display: grid; grid-template-columns: repeat(10, 1fr); } .tl-hours span { padding: 7px 4px; border-left: 1px solid #eceef3; }
-    .tl-r { border-bottom: 1px solid #f0f1f6; min-height: 48px; } .tl-r:last-child { border-bottom: 0; } .tl-r.on { background: #faf8ff; }
+    .tl-h { background: var(--kb-f8f8fc); border-bottom: 1px solid var(--border); font-size: 11px; color: var(--kf-52525b); }
+    .tl-hours { display: grid; grid-template-columns: repeat(10, 1fr); } .tl-hours span { padding: 7px 4px; border-left: 1px solid var(--kl-eceef3); }
+    .tl-r { border-bottom: 1px solid var(--kl-f0f1f6); min-height: 48px; } .tl-r:last-child { border-bottom: 0; } .tl-r.on { background: var(--kb-faf8ff); }
     .tl-n { display: flex; gap: 9px; align-items: center; padding: 6px 10px; border: 0; background: none; text-align: left; cursor: pointer; border-right: 1px solid var(--border); }
     .tl-n i { width: 8px; height: 30px; border-radius: 3px; flex-shrink: 0; } .tl-n span { display: flex; flex-direction: column; min-width: 0; } .tl-n b { font-size: 12.5px; } .tl-n small { font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tl-t { position: relative; display: grid; grid-template-columns: repeat(10, 1fr); cursor: copy; } .tl-g { border-left: 1px solid #f0f1f6; } .tl-t:hover { background: #fcfbff; }
+    .tl-t { position: relative; display: grid; grid-template-columns: repeat(10, 1fr); cursor: copy; } .tl-g { border-left: 1px solid var(--kl-f0f1f6); } .tl-t:hover { background: var(--kb-fcfbff); }
     .blk { position: absolute; top: 6px; bottom: 6px; border: 0; border-left: 3px solid var(--c); background: color-mix(in srgb, var(--c) 14%, white); border-radius: 4px; padding: 2px 6px; text-align: left; cursor: pointer; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
-    .blk.short small { display: none; } .blk.short { padding: 2px 4px; } .blk b { font-size: 10.5px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .blk small { font-size: 10px; color: #52525b; }
-    .blk.mine { --c: #7c3aed !important; background: #7c3aed; color: #fff; } .blk.mine small { color: #e9e3ff; }
-    .blk.pend { background: repeating-linear-gradient(45deg, #fef3c7, #fef3c7 6px, #fde68a 6px, #fde68a 12px); border-left-color: #f59e0b; }
-    .blk.sel { outline: 2px solid #1e1b3a; outline-offset: 1px; }
-    .now { position: absolute; top: 0; bottom: 0; width: 2px; background: #ef4444; pointer-events: none; } .now::before { content: ''; position: absolute; top: -1px; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; }
+    .blk.short small { display: none; } .blk.short { padding: 2px 4px; } .blk b { font-size: 10.5px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .blk small { font-size: 10px; color: var(--kf-52525b); }
+    .blk.mine { --c: var(--ka-7c3aed) !important; background: var(--kb-7c3aed); color: var(--kf-ffffff); } .blk.mine small { color: var(--kf-e9e3ff); }
+    .blk.pend { background: repeating-linear-gradient(45deg, var(--kb-fef3c7), var(--kb-fef3c7) 6px, var(--kb-fde68a) 6px, var(--kb-fde68a) 12px); border-left-color: var(--kl-f59e0b); }
+    .blk.sel { outline: 2px solid var(--kl-1e1b3a); outline-offset: 1px; }
+    .now { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--kb-ef4444); pointer-events: none; } .now::before { content: ''; position: absolute; top: -1px; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--kb-ef4444); }
     .tl-lg { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 11.5px; align-items: center; } .tl-lg span { display: inline-flex; gap: 6px; align-items: center; } .tl-lg i { width: 14px; height: 10px; border-radius: 2px; }
-    .lg1 { background: #fde2e2; border-left: 3px solid #ef4444; } .lg2 { background: #7c3aed; } .lg3 { background: #fde68a; } .lg4 { background: #ef4444; width: 3px !important; }
+    .lg1 { background: var(--kb-fde2e2); border-left: 3px solid var(--kl-ef4444); } .lg2 { background: var(--kb-7c3aed); } .lg3 { background: var(--kb-fde68a); } .lg4 { background: var(--kb-ef4444); width: 3px !important; }
     .rh { display: flex; gap: 10px; align-items: center; } .rh h3 { margin: 0; }
     .eq { display: flex; flex-wrap: wrap; gap: 4px; }
-    .ag { width: 100%; border: 0; border-bottom: 1px solid #f0f1f6; background: none; text-align: left; cursor: pointer; font: inherit; } .ag:hover { background: #faf8ff; }
+    .ag { width: 100%; border: 0; border-bottom: 1px solid var(--kl-f0f1f6); background: none; text-align: left; cursor: pointer; font: inherit; } .ag:hover { background: var(--kb-faf8ff); }
   `],
 })
 export class RoomBooking {
@@ -270,11 +270,11 @@ export class RoomBooking {
       <button class="btn-ghost hb" (click)="go('service-catalog')"><app-icon name="w-car" [size]="17" />Visitor Parking Pass</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Total Bays" [value]="all().length" icon="w-car" color="#2563eb" sub="Across 3 sites" />
-      <app-wkpi label="Available Now" [value]="cnt().available" icon="w-check-circle" color="#16c26b" [strong]="pct(cnt().available)" sub="availability" />
-      <app-wkpi label="Occupied" [value]="cnt().occupied" icon="w-car" color="#7c3aed" [strong]="pct(cnt().occupied)" strongColor="#7c3aed" />
-      <app-wkpi label="EV Chargers in Use" [value]="ev().used + ' / ' + ev().total" icon="w-zap" color="#f5a524" [sub]="ev().kwh + ' kWh today'" />
-      <app-wkpi label="My Parking Today" [value]="myBay()?.id ? 'Bay ' + myBay()!.level + '-' + myBay()!.row + myBay()!.n : '—'" icon="map-pin" color="#ef3b4f" [sub]="myBay() ? myBay()!.site + ' · Dubai A 48213' : 'No bay reserved'" />
+      <app-wkpi label="Total Bays" [value]="all().length" icon="w-car" color="var(--ka-2563eb)" sub="Across 3 sites" />
+      <app-wkpi label="Available Now" [value]="cnt().available" icon="w-check-circle" color="var(--ka-16c26b)" [strong]="pct(cnt().available)" sub="availability" />
+      <app-wkpi label="Occupied" [value]="cnt().occupied" icon="w-car" color="var(--ka-7c3aed)" [strong]="pct(cnt().occupied)" strongColor="var(--ka-7c3aed)" />
+      <app-wkpi label="EV Chargers in Use" [value]="ev().used + ' / ' + ev().total" icon="w-zap" color="var(--ka-f5a524)" [sub]="ev().kwh + ' kWh today'" />
+      <app-wkpi label="My Parking Today" [value]="myBay()?.id ? 'Bay ' + myBay()!.level + '-' + myBay()!.row + myBay()!.n : '—'" icon="map-pin" color="var(--ka-ef3b4f)" [sub]="myBay() ? myBay()!.site + ' · Dubai A 48213' : 'No bay reserved'" />
     </section>
 
     <section class="wl">
@@ -288,22 +288,22 @@ export class RoomBooking {
           </div>
         </div>
         <svg viewBox="0 0 620 360" class="pk">
-          <rect x="2" y="2" width="616" height="356" rx="6" fill="#f4f4f6" stroke="#3f3f46" stroke-width="3" />
-          <rect x="20" y="78" width="586" height="44" fill="#e4e4e7" /><rect x="20" y="238" width="586" height="44" fill="#e4e4e7" /><rect x="2" y="78" width="18" height="204" fill="#e4e4e7" />
-          @for (x of [90, 220, 350, 480]; track x) {<path [attr.d]="'M' + x + ' 100h18m-5 -4 5 4 -5 4'" stroke="#a1a1aa" stroke-width="2" fill="none" /><path [attr.d]="'M' + (x + 18) + ' 260h-18m5 -4 -5 4 5 4'" stroke="#a1a1aa" stroke-width="2" fill="none" />}
+          <rect x="2" y="2" width="616" height="356" rx="6" fill="var(--ka-f4f4f6)" stroke="var(--kl-3f3f46)" stroke-width="3" />
+          <rect x="20" y="78" width="586" height="44" fill="var(--ka-e4e4e7)" /><rect x="20" y="238" width="586" height="44" fill="var(--ka-e4e4e7)" /><rect x="2" y="78" width="18" height="204" fill="var(--ka-e4e4e7)" />
+          @for (x of [90, 220, 350, 480]; track x) {<path [attr.d]="'M' + x + ' 100h18m-5 -4 5 4 -5 4'" stroke="var(--kl-a1a1aa)" stroke-width="2" fill="none" /><path [attr.d]="'M' + (x + 18) + ' 260h-18m5 -4 -5 4 5 4'" stroke="var(--kl-a1a1aa)" stroke-width="2" fill="none" />}
           <text x="6" y="104" class="gate">IN</text><text x="6" y="264" class="gate out">OUT</text>
           <text x="600" y="104" text-anchor="end" class="core">LIFTS ▸</text>
           @for (b of levelBays(); track b.id) {
             <g class="bay" [attr.transform]="'translate(' + b.px + ',' + b.py + ')'" [attr.opacity]="typeF() !== 'all' && b.type !== typeF() ? 0.25 : 1" (click)="sel.set(b.id)">
-              <rect width="34" height="54" rx="2" [attr.fill]="fill(b)" [attr.stroke]="sel() === b.id ? '#7c3aed' : '#a1a1aa'" [attr.stroke-width]="sel() === b.id ? 2.5 : 1" />
-              @if (b.status !== 'available') {<rect x="7" [attr.y]="b.up ? 8 : 14" width="20" height="32" rx="6" [attr.fill]="b.mine ? '#7c3aed' : b.status === 'occupied' ? '#ef4444' : '#9ca3af'" /><rect x="10" [attr.y]="b.up ? 13 : 33" width="14" height="5" rx="1.5" fill="#fff" opacity=".7" />}
+              <rect width="34" height="54" rx="2" [attr.fill]="fill(b)" [attr.stroke]="sel() === b.id ? 'var(--ka-7c3aed)' : 'var(--ka-a1a1aa)'" [attr.stroke-width]="sel() === b.id ? 2.5 : 1" />
+              @if (b.status !== 'available') {<rect x="7" [attr.y]="b.up ? 8 : 14" width="20" height="32" rx="6" [attr.fill]="b.mine ? 'var(--ka-7c3aed)' : b.status === 'occupied' ? 'var(--ka-ef4444)' : 'var(--ka-9ca3af)'" /><rect x="10" [attr.y]="b.up ? 13 : 33" width="14" height="5" rx="1.5" fill="var(--ka-ffffff)" opacity=".7" />}
               <text x="17" [attr.y]="b.up ? 50 : 10" text-anchor="middle" class="bn">{{ b.row }}{{ b.n }}</text>
               @if (b.type !== 'Standard') {<text x="17" [attr.y]="b.status === 'available' ? 32 : (b.up ? 4 : 52)" text-anchor="middle" class="bt" [class.big]="b.status === 'available'">{{ typeMark[b.type] }}</text>}
               <title>Bay {{ b.row }}{{ b.n }} · {{ b.type }} · {{ b.status }}</title>
             </g>
           }
         </svg>
-        <div class="tl-lg"><span><i style="background:#dcfce7;border:1px solid #22c55e"></i>Available</span><span><i style="background:#ef4444"></i>Occupied</span><span><i style="background:#9ca3af"></i>Reserved</span><span><i style="background:#7c3aed"></i>My bay</span><span>⚡ EV</span><span>♿ Accessible</span><span>V Visitor</span><span>M Motorcycle</span></div>
+        <div class="tl-lg"><span><i style="background:var(--kb-dcfce7);border:1px solid var(--kl-22c55e)"></i>Available</span><span><i style="background:var(--kb-ef4444)"></i>Occupied</span><span><i style="background:var(--kb-9ca3af)"></i>Reserved</span><span><i style="background:var(--kb-7c3aed)"></i>My bay</span><span>⚡ EV</span><span>♿ Accessible</span><span>V Visitor</span><span>M Motorcycle</span></div>
         <h4 class="bt-h">Availability by Bay Type · {{ site() }}</h4>
         <div class="btypes">
           @for (t of byType(); track t.type) {
@@ -335,7 +335,7 @@ export class RoomBooking {
           <div class="ch"><h3>My Parking Bookings</h3></div>
           <div class="rows">
             @for (b of mine(); track b.id) {
-              <div class="row"><span class="ic" style="background:#db2777"><app-icon name="w-car" [size]="17" /></span><span class="nm"><b>{{ b.resource }}</b><small>{{ b.location }} · {{ fmtD(b.date) }} · {{ b.from }} - {{ b.to }}</small></span><button class="btn-ghost sm danger" (click)="store.cancel(b.id); msg(b.resource + ' released')">Cancel</button></div>
+              <div class="row"><span class="ic" style="background:var(--kb-db2777)"><app-icon name="w-car" [size]="17" /></span><span class="nm"><b>{{ b.resource }}</b><small>{{ b.location }} · {{ fmtD(b.date) }} · {{ b.from }} - {{ b.to }}</small></span><button class="btn-ghost sm danger" (click)="store.cancel(b.id); msg(b.resource + ' released')">Cancel</button></div>
             } @empty {<p class="empty">No parking reserved.</p>}
           </div>
         </div>
@@ -343,7 +343,7 @@ export class RoomBooking {
           <div class="ch"><h3>EV Charging Sessions</h3><span class="chip live"><i></i>Live</span></div>
           <div class="rows">
             @for (b of evSessions(); track b.id) {
-              <div class="row ev"><span class="ic" style="background:#f59e0b"><app-icon name="w-zap" [size]="16" /></span><span class="nm"><b>{{ b.plate }} · Bay {{ b.level }}-{{ b.row }}{{ b.n }}</b><span class="bar"><i [style.width.%]="liveCharge(b)" [style.background]="liveCharge(b) > 80 ? '#22c55e' : '#f59e0b'"></i></span></span><b>{{ liveCharge(b) }}%</b></div>
+              <div class="row ev"><span class="ic" style="background:var(--kb-f59e0b)"><app-icon name="w-zap" [size]="16" /></span><span class="nm"><b>{{ b.plate }} · Bay {{ b.level }}-{{ b.row }}{{ b.n }}</b><span class="bar"><i [style.width.%]="liveCharge(b)" [style.background]="liveCharge(b) > 80 ? 'var(--ka-22c55e)' : 'var(--ka-f59e0b)'"></i></span></span><b>{{ liveCharge(b) }}%</b></div>
             } @empty {<p class="empty">No active sessions on this site.</p>}
           </div>
         </div>
@@ -356,15 +356,15 @@ export class RoomBooking {
     @if (ts.t()) {<div class="g-toast">{{ ts.t() }}</div>}
   `,
   styles: [WP_CSS, `
-    .pk { width: 100%; display: block; } .bay { cursor: pointer; } .bay:hover rect:first-child { stroke: #7c3aed; }
-    .bn { font-size: 7px; fill: #52525b; font-weight: 600; } .bt { font-size: 8px; fill: #27272a; font-weight: 700; } .bt.big { font-size: 14px; fill: #16a34a; }
-    .gate { font-size: 8px; font-weight: 700; fill: #16a34a; } .gate.out { fill: #ef4444; } .core { font-size: 8px; fill: #52525b; font-weight: 600; }
+    .pk { width: 100%; display: block; } .bay { cursor: pointer; } .bay:hover rect:first-child { stroke: var(--kl-7c3aed); }
+    .bn { font-size: 7px; fill: var(--ka-52525b); font-weight: 600; } .bt { font-size: 8px; fill: var(--ka-27272a); font-weight: 700; } .bt.big { font-size: 14px; fill: var(--ka-16a34a); }
+    .gate { font-size: 8px; font-weight: 700; fill: var(--ka-16a34a); } .gate.out { fill: var(--ka-ef4444); } .core { font-size: 8px; fill: var(--ka-52525b); font-weight: 600; }
     .tl-lg { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 11.5px; } .tl-lg span { display: inline-flex; gap: 6px; align-items: center; } .tl-lg i { width: 12px; height: 12px; border-radius: 3px; }
     .block { width: 100%; justify-content: center; margin-top: 12px; padding: 10px; }
     .ev .nm { gap: 5px; }
     .bt-h { margin: 16px 0 8px; } .btypes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-    .btc { display: grid; grid-template-columns: 26px 1fr; grid-template-rows: auto auto; gap: 0 8px; align-items: center; text-align: left; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: #fff; cursor: pointer; font: inherit; color: inherit; }
-    .btc.on { border-color: var(--primary); background: #faf8ff; } .btc span { grid-row: span 2; font-size: 18px; text-align: center; color: #16a34a; font-weight: 700; } .btc b { font-size: 16px; } .btc small { font-size: 11px; color: var(--muted); font-weight: 400; } .btc em { font-style: normal; font-size: 11px; color: #52525b; }
+    .btc { display: grid; grid-template-columns: 26px 1fr; grid-template-rows: auto auto; gap: 0 8px; align-items: center; text-align: left; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--kb-ffffff); cursor: pointer; font: inherit; color: inherit; }
+    .btc.on { border-color: var(--primary); background: var(--kb-faf8ff); } .btc span { grid-row: span 2; font-size: 18px; text-align: center; color: var(--kf-16a34a); font-weight: 700; } .btc b { font-size: 16px; } .btc small { font-size: 11px; color: var(--muted); font-weight: 400; } .btc em { font-style: normal; font-size: 11px; color: var(--kf-52525b); }
   `],
 })
 export class ParkingBooking {
@@ -422,7 +422,7 @@ export class ParkingBooking {
     return ((n / this.all().length) * 100).toFixed(1) + '%';
   }
   protected fill(b: Bay) {
-    return b.status === 'available' ? '#dcfce7' : '#fff';
+    return b.status === 'available' ? 'var(--ka-dcfce7)' : 'var(--ka-ffffff)';
   }
   protected liveCharge(b: Bay) {
     return Math.min(100, (b.charge ?? 0) + Math.floor(this.app.tick() / 3));
@@ -469,11 +469,11 @@ export class ParkingBooking {
       <button class="btn-ghost hb" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Open Requests" [value]="open().length" icon="message" color="#2563eb" [sub]="list().length + ' total this month'" />
-      <app-wkpi label="Critical / High" [value]="hot()" icon="triangle-alert" color="#ef3b4f" sub="need attention" />
-      <app-wkpi label="SLA Breached" [value]="breached()" icon="w-timer" color="#f5a524" [strong]="breachPct()" strongColor="#ef4444" sub="of open requests" />
-      <app-wkpi label="Avg Resolution Time" value="5.2 hrs" icon="clock" color="#7c3aed" strong="12%" arrow="down" sub="faster vs. last month" />
-      <app-wkpi label="Satisfaction (CSAT)" value="4.6 / 5" icon="star" color="#16c26b" sub="from 312 ratings" />
+      <app-wkpi label="Open Requests" [value]="open().length" icon="message" color="var(--ka-2563eb)" [sub]="list().length + ' total this month'" />
+      <app-wkpi label="Critical / High" [value]="hot()" icon="triangle-alert" color="var(--ka-ef3b4f)" sub="need attention" />
+      <app-wkpi label="SLA Breached" [value]="breached()" icon="w-timer" color="var(--ka-f5a524)" [strong]="breachPct()" strongColor="var(--ka-ef4444)" sub="of open requests" />
+      <app-wkpi label="Avg Resolution Time" value="5.2 hrs" icon="clock" color="var(--ka-7c3aed)" strong="12%" arrow="down" sub="faster vs. last month" />
+      <app-wkpi label="Satisfaction (CSAT)" value="4.6 / 5" icon="star" color="var(--ka-16c26b)" sub="from 312 ratings" />
     </section>
     <section class="wl three">
       <div class="card">
@@ -487,7 +487,7 @@ export class ParkingBooking {
       <div class="card">
         <div class="ch"><h3>Team Workload</h3></div>
         <div class="rows">
-          @for (t of workload(); track t.team) {<div class="row wlr"><span class="ic soft" style="--c:#7c3aed"><app-icon name="users" [size]="15" /></span><span class="nm"><b>{{ t.team }}</b><span class="bar"><i [style.width.%]="(t.n / maxLoad()) * 100" style="background:#7c3aed"></i></span></span><b>{{ t.n }}</b></div>}
+          @for (t of workload(); track t.team) {<div class="row wlr"><span class="ic soft" style="--c:var(--ka-7c3aed)"><app-icon name="users" [size]="15" /></span><span class="nm"><b>{{ t.team }}</b><span class="bar"><i [style.width.%]="(t.n / maxLoad()) * 100" style="background:var(--kb-7c3aed)"></i></span></span><b>{{ t.n }}</b></div>}
         </div>
       </div>
     </section>
@@ -505,7 +505,7 @@ export class ParkingBooking {
               <dt>Location</dt><dd>{{ q.location }}</dd><dt>Requester</dt><dd>{{ q.requester }}</dd><dt>Assigned to</dt><dd>{{ q.assignee }}</dd>
               <dt>Raised</dt><dd>{{ ago(q.createdH) }}</dd><dt>SLA target</dt><dd>{{ q.slaH }} hrs ({{ q.priority }})</dd>@if (q.cost) {<dt>Est. cost</dt><dd>AED {{ q.cost.toLocaleString() }}</dd>}
             </dl>
-            @if (q.status !== 'Resolved' && q.status !== 'Closed') {<div class="slab"><span>SLA used</span><div class="bar"><i [style.width.%]="min(100, (q.createdH / q.slaH) * 100)" [style.background]="sla(q) === 'Breached' ? '#ef4444' : sla(q) === 'At Risk' ? '#f59e0b' : '#22c55e'"></i></div><b>{{ min(999, round((q.createdH / q.slaH) * 100)) }}%</b></div>}
+            @if (q.status !== 'Resolved' && q.status !== 'Closed') {<div class="slab"><span>SLA used</span><div class="bar"><i [style.width.%]="min(100, (q.createdH / q.slaH) * 100)" [style.background]="sla(q) === 'Breached' ? 'var(--ka-ef4444)' : sla(q) === 'At Risk' ? 'var(--ka-f59e0b)' : 'var(--ka-22c55e)'"></i></div><b>{{ min(999, round((q.createdH / q.slaH) * 100)) }}%</b></div>}
             <div class="form-grid" style="margin-top:12px">
               <label>Assign to<select class="select" [value]="q.assignee" (change)="assign(q, $any($event.target).value)"><option>Unassigned</option>@for (t of teams; track t) {<option>{{ t }}</option>}</select></label>
               <label>Status<select class="select" [value]="q.status" (change)="setStatus(q, $any($event.target).value)">@for (s of statuses; track s) {<option>{{ s }}</option>}</select></label>
@@ -563,22 +563,22 @@ export class FacilityRequests {
   protected readonly form = signal<{ title: string; category: string; priority: Priority; site: string; area: string } | null>(null);
 
   protected readonly list = computed(() => this.store.requests().filter((q) => q.kind !== 'Maintenance'));
-  protected readonly rows = computed(() => this.list().map((q) => ({ ...q, sla: slaState(q), age: this.ago(q.createdH), color: '#7c3aed', icon: 'message' })));
+  protected readonly rows = computed(() => this.list().map((q) => ({ ...q, sla: slaState(q), age: this.ago(q.createdH), color: 'var(--ka-7c3aed)', icon: 'message' })));
   protected readonly open = computed(() => this.list().filter((q) => q.status !== 'Resolved' && q.status !== 'Closed'));
   protected readonly hot = computed(() => this.open().filter((q) => q.priority === 'Critical' || q.priority === 'High').length);
   protected readonly breached = computed(() => this.open().filter((q) => slaState(q) === 'Breached').length);
   protected readonly breachPct = computed(() => Math.round((this.breached() / (this.open().length || 1)) * 100) + '%');
   protected readonly sel = computed(() => this.list().find((q) => q.id === this.selId()) ?? null);
-  protected readonly byCat = computed(() => CATEGORIES.map((c, i) => ({ label: c, value: this.open().filter((q) => q.category === c).length, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444'][i % 5] })).filter((r) => r.value).sort((a, b) => b.value - a.value));
+  protected readonly byCat = computed(() => CATEGORIES.map((c, i) => ({ label: c, value: this.open().filter((q) => q.category === c).length, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)'][i % 5] })).filter((r) => r.value).sort((a, b) => b.value - a.value));
   protected readonly workload = computed(() => ['Unassigned', ...TEAMS].map((team) => ({ team, n: this.open().filter((q) => q.assignee === team).length })).filter((t) => t.n).sort((a, b) => b.n - a.n).slice(0, 5));
   protected readonly maxLoad = computed(() => Math.max(1, ...this.workload().map((t) => t.n)));
   protected readonly maxCat = computed(() => Math.max(1, ...this.byCat().map((r) => r.value)));
   protected readonly slaSegs = computed(() => {
     const o = this.open();
     return [
-      { label: 'On Track', value: o.filter((q) => slaState(q) === 'On Track').length, color: '#22c55e' },
-      { label: 'At Risk', value: o.filter((q) => slaState(q) === 'At Risk').length, color: '#f59e0b' },
-      { label: 'Breached', value: o.filter((q) => slaState(q) === 'Breached').length, color: '#ef4444' },
+      { label: 'On Track', value: o.filter((q) => slaState(q) === 'On Track').length, color: 'var(--ka-22c55e)' },
+      { label: 'At Risk', value: o.filter((q) => slaState(q) === 'At Risk').length, color: 'var(--ka-f59e0b)' },
+      { label: 'Breached', value: o.filter((q) => slaState(q) === 'Breached').length, color: 'var(--ka-ef4444)' },
     ];
   });
   protected readonly cols: Col[] = [
@@ -673,11 +673,11 @@ export class FacilityRequests {
       <button class="btn-ghost hb" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export Inventory</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Total Assets" [value]="tot().total" icon="w-package" color="#2563eb" [sub]="store.assets().length + ' asset types'" />
-      <app-wkpi label="Available" [value]="tot().avail" icon="w-check-circle" color="#16c26b" [strong]="pct(tot().avail)" sub="ready to borrow" />
-      <app-wkpi label="Checked Out" [value]="tot().out" icon="w-laptop" color="#7c3aed" [strong]="pct(tot().out)" strongColor="#7c3aed" />
-      <app-wkpi label="Reserved Today" [value]="tot().res" icon="w-calendar" color="#f5a524" sub="pickup at store" />
-      <app-wkpi label="Needs Service" [value]="tot().svc" icon="w-wrench" color="#ef3b4f" sub="sent to maintenance" />
+      <app-wkpi label="Total Assets" [value]="tot().total" icon="w-package" color="var(--ka-2563eb)" [sub]="store.assets().length + ' asset types'" />
+      <app-wkpi label="Available" [value]="tot().avail" icon="w-check-circle" color="var(--ka-16c26b)" [strong]="pct(tot().avail)" sub="ready to borrow" />
+      <app-wkpi label="Checked Out" [value]="tot().out" icon="w-laptop" color="var(--ka-7c3aed)" [strong]="pct(tot().out)" strongColor="var(--ka-7c3aed)" />
+      <app-wkpi label="Reserved Today" [value]="tot().res" icon="w-calendar" color="var(--ka-f5a524)" sub="pickup at store" />
+      <app-wkpi label="Needs Service" [value]="tot().svc" icon="w-wrench" color="var(--ka-ef3b4f)" sub="sent to maintenance" />
     </section>
     <section class="wl">
       <div class="card">
@@ -688,9 +688,9 @@ export class FacilityRequests {
         <div class="grid">
           @for (a of filtered(); track a.id) {
             <button class="ac" [class.on]="selId() === a.id" (click)="selId.set(a.id)">
-              <div class="ac-h"><span class="ic soft" style="--c:#7c3aed"><app-icon [name]="a.icon" [size]="20" /></span><span [class]="a.condition === 'Good' ? 'tag green' : a.condition === 'Fair' ? 'tag amber' : 'tag red'">{{ a.condition }}</span></div>
+              <div class="ac-h"><span class="ic soft" style="--c:var(--ka-7c3aed)"><app-icon [name]="a.icon" [size]="20" /></span><span [class]="a.condition === 'Good' ? 'tag green' : a.condition === 'Fair' ? 'tag amber' : 'tag red'">{{ a.condition }}</span></div>
               <b>{{ a.name }}</b><small>{{ a.category }} · {{ a.site }}</small>
-              <div class="bar"><i [style.width.%]="(free(a) / a.total) * 100" [style.background]="free(a) ? '#22c55e' : '#ef4444'"></i></div>
+              <div class="bar"><i [style.width.%]="(free(a) / a.total) * 100" [style.background]="free(a) ? 'var(--ka-22c55e)' : 'var(--ka-ef4444)'"></i></div>
               <small><b>{{ free(a) }}</b> of {{ a.total }} available @if (a.deposit) { · approval}</small>
             </button>
           } @empty {<p class="empty">No equipment matches.</p>}
@@ -716,7 +716,7 @@ export class FacilityRequests {
           <div class="ch"><h3>My Equipment</h3></div>
           <div class="rows">
             @for (b of mine(); track b.id) {
-              <div class="row"><span class="ic" style="background:#0891b2"><app-icon name="w-laptop" [size]="16" /></span><span class="nm"><b>{{ b.resource }}</b><small>{{ fmtD(b.date) }} · return {{ b.to }} · {{ b.status }}</small></span>
+              <div class="row"><span class="ic" style="background:var(--kb-0891b2)"><app-icon name="w-laptop" [size]="16" /></span><span class="nm"><b>{{ b.resource }}</b><small>{{ fmtD(b.date) }} · return {{ b.to }} · {{ b.status }}</small></span>
                 <span class="acts">@if (b.status === 'Checked In') {<button class="btn-ghost sm" (click)="returnIt(b)">Return</button>} @else {<button class="btn-ghost sm" (click)="pickup(b)">Pick up</button><button class="btn-ghost sm danger" (click)="store.cancel(b.id)">Cancel</button>}</span></div>
             } @empty {<p class="empty">Nothing borrowed right now.</p>}
           </div>
@@ -735,8 +735,8 @@ export class FacilityRequests {
   `,
   styles: [WP_CSS, `
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
-    .ac { display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: #fff; cursor: pointer; font: inherit; color: inherit; }
-    .ac:hover { border-color: #c4b5fd; } .ac.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+    .ac { display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--kb-ffffff); cursor: pointer; font: inherit; color: inherit; }
+    .ac:hover { border-color: var(--kl-c4b5fd); } .ac.on { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
     .ac-h { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; } .ac b { font-size: 13px; } .ac small { font-size: 11.5px; color: var(--muted); }
     .block { width: 100%; justify-content: center; margin-top: 12px; padding: 10px; }
     .search-box input { width: 200px; }
@@ -815,11 +815,11 @@ export class AssetBooking {
       <button class="btn-ghost hb" (click)="exportCsv()"><app-icon name="download" [size]="16" />Export</button>
     </app-page-head>
     <section class="kpis">
-      <app-wkpi label="Avg Utilization" value="76%" icon="w-bars" color="#7c3aed" strong="8%" arrow="up" sub="vs. last period" />
-      <app-wkpi label="Live Occupancy" [value]="live() + '%'" icon="activity" color="#2563eb" [sub]="busy() + ' of ' + store.deskCounts().total + ' desks'" />
-      <app-wkpi label="Peak Occupancy" value="92%" icon="trending-up" color="#ef3b4f" sub="Open Workspace" />
-      <app-wkpi label="No-show Rate" value="8.4%" icon="calendar-x" color="#f5a524" strong="1.2%" arrow="down" sub="vs. last period" />
-      <app-wkpi label="Underutilized Spaces" [value]="under().length" icon="w-room" color="#16c26b" sub="below 60% use" />
+      <app-wkpi label="Avg Utilization" value="76%" icon="w-bars" color="var(--ka-7c3aed)" strong="8%" arrow="up" sub="vs. last period" />
+      <app-wkpi label="Live Occupancy" [value]="live() + '%'" icon="activity" color="var(--ka-2563eb)" [sub]="busy() + ' of ' + store.deskCounts().total + ' desks'" />
+      <app-wkpi label="Peak Occupancy" value="92%" icon="trending-up" color="var(--ka-ef3b4f)" sub="Open Workspace" />
+      <app-wkpi label="No-show Rate" value="8.4%" icon="calendar-x" color="var(--ka-f5a524)" strong="1.2%" arrow="down" sub="vs. last period" />
+      <app-wkpi label="Underutilized Spaces" [value]="under().length" icon="w-room" color="var(--ka-16c26b)" sub="below 60% use" />
     </section>
     <section class="wl">
       <div class="card">
@@ -829,7 +829,7 @@ export class AssetBooking {
       <div class="card">
         <div class="ch"><h3>Utilization by Zone</h3></div>
         @for (z of zones; track z.label) {<div class="zr"><span>{{ z.label }}</span><div class="bar"><i [style.width.%]="z.value" [style.background]="zc(z.value)"></i></div><b>{{ z.value }}%</b></div>}
-        <div class="zl"><span><i style="background:#ef4444"></i>Over 85%</span><span><i style="background:#f59e0b"></i>60–85%</span><span><i style="background:#3b82f6"></i>40–60%</span><span><i style="background:#22c55e"></i>Under 40%</span></div>
+        <div class="zl"><span><i style="background:var(--kb-ef4444)"></i>Over 85%</span><span><i style="background:var(--kb-f59e0b)"></i>60–85%</span><span><i style="background:var(--kb-3b82f6)"></i>40–60%</span><span><i style="background:var(--kb-22c55e)"></i>Under 40%</span></div>
       </div>
     </section>
     <section class="wl even">
@@ -871,7 +871,7 @@ export class AssetBooking {
   `,
   styles: [WP_CSS, `
     .zr { display: grid; grid-template-columns: 140px 1fr 40px; gap: 10px; align-items: center; padding: 7px 0; font-size: 12.5px; } .zr .bar { height: 12px; border-radius: 3px; } .zr b { text-align: right; font-weight: 500; }
-    .zl { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11px; margin-top: 10px; color: #52525b; } .zl span { display: inline-flex; gap: 5px; align-items: center; } .zl i { width: 10px; height: 10px; border-radius: 2px; }
+    .zl { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11px; margin-top: 10px; color: var(--kf-52525b); } .zl span { display: inline-flex; gap: 5px; align-items: center; } .zl i { width: 10px; height: 10px; border-radius: 2px; }
     .rec .wrap { white-space: normal !important; }
   `],
 })
@@ -899,7 +899,7 @@ export class SpaceUtilization {
     const n = this.range() === 'Last 4 Weeks' ? 4 : 12;
     const all = [61, 63, 66, 64, 68, 70, 69, 72, 71, 74, 70, 76];
     const labels = Array.from({ length: n }, (_, i) => `W${41 - n + i + 1}`);
-    return { labels, series: [{ name: 'Utilization', color: '#7c3aed', values: all.slice(12 - n), area: true }, { name: 'Target', color: '#ef4444', values: labels.map(() => 80), dashed: true }] };
+    return { labels, series: [{ name: 'Utilization', color: 'var(--ka-7c3aed)', values: all.slice(12 - n), area: true }, { name: 'Target', color: 'var(--ka-ef4444)', values: labels.map(() => 80), dashed: true }] };
   });
   protected readonly byFloor = computed(() => FLOORS[this.site()].filter((f) => f.desks).map((f) => {
     const d = this.store.desks().filter((x) => x.site === this.site() && x.floor === f.name);
@@ -916,10 +916,10 @@ export class SpaceUtilization {
   ];
   protected readonly under = computed(() => this.spaces.filter((s) => s.avg < 60));
   protected readonly recs = signal([
-    { id: 1, icon: 'w-desk', color: '#7c3aed', title: 'Convert 12 Quiet Zone desks to hot desks', text: 'Quiet Zone averages 46% while Open Workspace peaks at 100% on Tue–Thu.', done: false },
-    { id: 2, icon: 'calendar-x', color: '#f59e0b', title: 'Auto-release no-show bookings after 30 min', text: '8.4% of desk bookings are never checked in; reclaiming them frees ~35 desks a day.', done: false },
-    { id: 3, icon: 'w-room', color: '#3b82f6', title: 'Open Executive Area for team bookings on Fridays', text: 'Executive Area is under 35% on Fridays; offer it to project teams.', done: false },
-    { id: 4, icon: 'sun', color: '#16a34a', title: 'Reduce HVAC on Floor 8 after 4 PM', text: 'Floor 8 drops below 25% after 4 PM — estimated 6% energy saving.', done: false },
+    { id: 1, icon: 'w-desk', color: 'var(--ka-7c3aed)', title: 'Convert 12 Quiet Zone desks to hot desks', text: 'Quiet Zone averages 46% while Open Workspace peaks at 100% on Tue–Thu.', done: false },
+    { id: 2, icon: 'calendar-x', color: 'var(--ka-f59e0b)', title: 'Auto-release no-show bookings after 30 min', text: '8.4% of desk bookings are never checked in; reclaiming them frees ~35 desks a day.', done: false },
+    { id: 3, icon: 'w-room', color: 'var(--ka-3b82f6)', title: 'Open Executive Area for team bookings on Fridays', text: 'Executive Area is under 35% on Fridays; offer it to project teams.', done: false },
+    { id: 4, icon: 'sun', color: 'var(--ka-16a34a)', title: 'Reduce HVAC on Floor 8 after 4 PM', text: 'Floor 8 drops below 25% after 4 PM — estimated 6% energy saving.', done: false },
   ]);
   protected apply(id: number) {
     this.recs.update((l) => l.map((r) => (r.id === id ? { ...r, done: true } : r)));

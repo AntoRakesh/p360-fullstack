@@ -22,11 +22,11 @@ const SPAN = 17 * 60;
     </app-page-head>
 
     <section class="kpis">
-      <app-tkpi label="Scheduled Today" [value]="store.tasks().length" icon="calendar-days" color="#7c3aed" change="6%" sub="vs. last Wed" />
-      <app-tkpi label="Unassigned Tasks" [value]="unassigned().length" icon="tasks-clipboard" color="#f59e0b" [sub]="unassigned().length ? 'need an owner' : 'all tasks assigned'" />
-      <app-tkpi label="Workers On Duty" [value]="onDuty().length + ' / ' + workers.length" icon="users" color="#22c55e" [pct]="breaks() + ' on break'" pctColor="#d97706" sub="" />
-      <app-tkpi label="Avg Load per Worker" [value]="avgLoad()" icon="tasks-gauge" color="#2563eb" sub="open tasks right now" />
-      <app-tkpi label="Recurring Schedules" [value]="recurring().length" icon="refresh" color="#06b6d4" [pct]="activeRecurring() + ''" pctColor="#16a34a" sub="running" />
+      <app-tkpi label="Scheduled Today" [value]="store.tasks().length" icon="calendar-days" color="var(--ka-7c3aed)" change="6%" sub="vs. last Wed" />
+      <app-tkpi label="Unassigned Tasks" [value]="unassigned().length" icon="tasks-clipboard" color="var(--ka-f59e0b)" [sub]="unassigned().length ? 'need an owner' : 'all tasks assigned'" />
+      <app-tkpi label="Workers On Duty" [value]="onDuty().length + ' / ' + workers.length" icon="users" color="var(--ka-22c55e)" [pct]="breaks() + ' on break'" pctColor="var(--ka-d97706)" sub="" />
+      <app-tkpi label="Avg Load per Worker" [value]="avgLoad()" icon="tasks-gauge" color="var(--ka-2563eb)" sub="open tasks right now" />
+      <app-tkpi label="Recurring Schedules" [value]="recurring().length" icon="refresh" color="var(--ka-06b6d4)" [pct]="activeRecurring() + ''" pctColor="var(--ka-16a34a)" sub="running" />
     </section>
 
     <section class="grid">
@@ -153,37 +153,37 @@ const SPAN = 17 * 60;
     .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
     .grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 12px; margin-bottom: 12px; align-items: start; }
     .toolbar .search-box input { width: 130px; } .toolbar .select { font-size: 12px; }
-    .ck { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #3b3f5c; } .ck input { accent-color: var(--primary); }
-    .legend { display: flex; gap: 14px; font-size: 11.5px; color: #4b4f6b; margin: -4px 0 8px; } .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+    .ck { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--kf-3b3f5c); } .ck input { accent-color: var(--primary); }
+    .legend { display: flex; gap: 14px; font-size: 11.5px; color: var(--kf-4b4f6b); margin: -4px 0 8px; } .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
     .tl-scroll { max-height: 560px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
     .tl-grid { position: relative; min-width: 900px; }
     .hrow, .wrow { display: grid; grid-template-columns: 190px 1fr; }
-    .hrow { position: sticky; top: 0; background: #fafafe; z-index: 3; border-bottom: 1px solid var(--border); }
-    .hours { display: grid; grid-template-columns: repeat(17, 1fr); font-size: 10.5px; color: var(--muted); } .hours span { padding: 7px 0 7px 4px; border-left: 1px solid #eef0f5; }
-    .wrow { border-bottom: 1px solid #f1f2f7; min-height: 44px; } .wrow.sel { background: #faf8ff; }
-    .wcol { display: grid; grid-template-columns: 28px 1fr 8px; gap: 8px; align-items: center; padding: 6px 10px; border: 0; background: none; text-align: left; cursor: pointer; border-right: 1px solid var(--border); position: sticky; left: 0; background: #fff; z-index: 2; }
-    .wrow.sel .wcol { background: #f5f3ff; }
-    .av { width: 28px; height: 28px; border-radius: 50%; color: #fff; display: grid; place-items: center; font-size: 10.5px; font-weight: 600; }
+    .hrow { position: sticky; top: 0; background: var(--kb-fafafe); z-index: 3; border-bottom: 1px solid var(--border); }
+    .hours { display: grid; grid-template-columns: repeat(17, 1fr); font-size: 10.5px; color: var(--muted); } .hours span { padding: 7px 0 7px 4px; border-left: 1px solid var(--kl-eef0f5); }
+    .wrow { border-bottom: 1px solid var(--kl-f1f2f7); min-height: 44px; } .wrow.sel { background: var(--kb-faf8ff); }
+    .wcol { display: grid; grid-template-columns: 28px 1fr 8px; gap: 8px; align-items: center; padding: 6px 10px; border: 0; background: none; text-align: left; cursor: pointer; border-right: 1px solid var(--border); position: sticky; left: 0; background: var(--kb-ffffff); z-index: 2; }
+    .wrow.sel .wcol { background: var(--kb-f5f3ff); }
+    .av { width: 28px; height: 28px; border-radius: 50%; color: var(--kf-ffffff); display: grid; place-items: center; font-size: 10.5px; font-weight: 600; }
     .wn { display: flex; flex-direction: column; min-width: 0; } .wn b { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .wn small { font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; } .dot.on { background: #22c55e; } .dot.brk { background: #f59e0b; } .dot.offd { background: #cbd5e1; }
-    .lane { position: relative; background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / 17 - 1px), #f1f2f7 calc(100% / 17 - 1px), #f1f2f7 calc(100% / 17)); }
-    .off { position: absolute; inset: 6px 4px; border-radius: 6px; background: repeating-linear-gradient(135deg, #f4f5f9 0 6px, #eceef4 6px 12px); font-size: 11px; color: var(--muted); display: flex; align-items: center; padding-left: 10px; }
-    .blk { position: absolute; top: 8px; height: 28px; border: 0; border-radius: 6px; color: #fff; font-size: 10.5px; font-weight: 500; padding: 0 6px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: grab; text-align: left; min-width: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
-    .blk.sel { outline: 2px solid #1e1b3a; outline-offset: 1px; z-index: 1; }
-    .now { position: absolute; top: 0; bottom: 0; width: 2px; background: #ef4444; z-index: 2; pointer-events: none; } .now em { position: absolute; top: 4px; left: 4px; font-style: normal; font-size: 10px; color: #fff; background: #ef4444; padding: 1px 5px; border-radius: 4px; white-space: nowrap; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; } .dot.on { background: var(--kb-22c55e); } .dot.brk { background: var(--kb-f59e0b); } .dot.offd { background: var(--kb-cbd5e1); }
+    .lane { position: relative; background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / 17 - 1px), var(--kb-f1f2f7) calc(100% / 17 - 1px), var(--kb-f1f2f7) calc(100% / 17)); }
+    .off { position: absolute; inset: 6px 4px; border-radius: 6px; background: repeating-linear-gradient(135deg, var(--kb-f4f5f9) 0 6px, var(--kb-eceef4) 6px 12px); font-size: 11px; color: var(--muted); display: flex; align-items: center; padding-left: 10px; }
+    .blk { position: absolute; top: 8px; height: 28px; border: 0; border-radius: 6px; color: var(--kf-ffffff); font-size: 10.5px; font-weight: 500; padding: 0 6px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: grab; text-align: left; min-width: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+    .blk.sel { outline: 2px solid var(--kl-1e1b3a); outline-offset: 1px; z-index: 1; }
+    .now { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--kb-ef4444); z-index: 2; pointer-events: none; } .now em { position: absolute; top: 4px; left: 4px; font-style: normal; font-size: 10px; color: var(--kf-ffffff); background: var(--kb-ef4444); padding: 1px 5px; border-radius: 4px; white-space: nowrap; }
     .hint { margin: 8px 0 0; font-size: 11.5px; color: var(--muted); }
     .side { display: flex; flex-direction: column; gap: 12px; }
-    .count { font-size: 11px; padding: 1px 8px; border-radius: 10px; background: #fef3c7; color: #b45309; margin-left: 6px; }
+    .count { font-size: 11px; padding: 1px 8px; border-radius: 10px; background: var(--kb-fef3c7); color: var(--kf-b45309); margin-left: 6px; }
     .uq ul { list-style: none; margin: 0; padding: 0; max-height: 330px; overflow: auto; }
-    .uq li { display: grid; grid-template-columns: 28px 1fr auto; gap: 4px 8px; align-items: center; padding: 8px 4px; border-bottom: 1px solid #f1f2f7; } .uq li.sel { background: #faf8ff; }
+    .uq li { display: grid; grid-template-columns: 28px 1fr auto; gap: 4px 8px; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--kl-f1f2f7); } .uq li.sel { background: var(--kb-faf8ff); }
     .uq li .select { grid-column: 2 / -1; } .ut { cursor: pointer; min-width: 0; display: flex; flex-direction: column; } .ut b { font-size: 12.5px; } .ut small { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .xs { padding: 4px 24px 4px 8px; font-size: 11.5px; }
-    .empty { display: flex !important; gap: 8px; color: #16a34a; font-size: 12.5px; justify-content: center; padding: 20px !important; }
-    .ci { width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; color: #fff; vertical-align: middle; }
+    .empty { display: flex !important; gap: 8px; color: var(--kf-16a34a); font-size: 12.5px; justify-content: center; padding: 20px !important; }
+    .ci { width: 24px; height: 24px; border-radius: 6px; display: inline-grid; place-items: center; color: var(--kf-ffffff); vertical-align: middle; }
     td .ci { width: 22px; height: 22px; margin-right: 4px; }
     .det { display: flex; flex-direction: column; gap: 10px; } .det h3 { font-size: 15px; }
     .facts { display: grid; grid-template-columns: 90px 1fr; gap: 7px; font-size: 12px; } .facts span { color: var(--muted); } .facts b { font-weight: 500; }
-    .fl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; }
+    .fl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); }
     .row { display: flex; gap: 6px; flex-wrap: wrap; }
     .pager button { margin: 0 4px; }
     @media (max-width: 1300px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid { grid-template-columns: 1fr; } }
@@ -198,7 +198,7 @@ export class TaskAssignmentScheduling {
   protected readonly hours = HOURS;
   protected readonly workers = WORKERS;
   protected readonly teams = [...new Set(WORKERS.map((w) => w.team))].sort();
-  protected readonly legend = [['Pending', '#a78bfa'], ['In Progress', '#3b82f6'], ['Completed', '#22c55e'], ['Overdue', '#ef4444']];
+  protected readonly legend = [['Pending', 'var(--ka-a78bfa)'], ['In Progress', 'var(--ka-3b82f6)'], ['Completed', 'var(--ka-22c55e)'], ['Overdue', 'var(--ka-ef4444)']];
   protected readonly q = signal('');
   protected readonly team = signal('All');
   protected readonly site = signal('All');
@@ -237,7 +237,7 @@ export class TaskAssignmentScheduling {
     [...new Set(WORKERS.map((w) => w.team))].map((team, i) => {
       const ids = WORKERS.filter((w) => w.team === team).map((w) => w.id);
       const v = ids.reduce((a, id) => a + (this.load().get(id) ?? 0), 0);
-      return { label: team, value: v, display: `${v} open`, color: ['#7c3aed', '#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899', '#64748b', '#0d9488', '#a855f7'][i % 10] };
+      return { label: team, value: v, display: `${v} open`, color: ['var(--ka-7c3aed)', 'var(--ka-3b82f6)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-06b6d4)', 'var(--ka-ec4899)', 'var(--ka-64748b)', 'var(--ka-0d9488)', 'var(--ka-a855f7)'][i % 10] };
     }).sort((a, b) => b.value - a.value),
   );
   protected readonly teamMax = computed(() => Math.max(...this.teamLoad().map((r) => r.value), 1));
@@ -266,8 +266,8 @@ export class TaskAssignmentScheduling {
     return Math.max(1.2, Math.min(100 - this.pos(t.start), (Math.max(d, 18) / SPAN) * 100));
   }
   protected color(t: TaskItem) {
-    if (isOpen(t) && t.due < this.store.now()) return '#ef4444';
-    return t.status === 'In Progress' ? '#3b82f6' : t.status === 'Pending' ? '#a78bfa' : t.status === 'Rejected' ? '#f97316' : '#22c55e';
+    if (isOpen(t) && t.due < this.store.now()) return 'var(--ka-ef4444)';
+    return t.status === 'In Progress' ? 'var(--ka-3b82f6)' : t.status === 'Pending' ? 'var(--ka-a78bfa)' : t.status === 'Rejected' ? 'var(--ka-f97316)' : 'var(--ka-22c55e)';
   }
   protected suggest(t: TaskItem, n = 5) {
     const role = this.tplMap().get(t.templateId)?.applicableTo;
@@ -299,7 +299,7 @@ export class TaskAssignmentScheduling {
   }
   protected cancelTask(t: TaskItem) {
     this.store.tasks.update((l) => l.filter((x) => x.id !== t.id));
-    this.store.log(`${t.title} cancelled`, 'Rex Kumar', 'tasks-x', '#64748b');
+    this.store.log(`${t.title} cancelled`, 'Rex Kumar', 'tasks-x', 'var(--ka-64748b)');
     this.selId.set(null);
     this.say(`${t.id} cancelled`);
   }

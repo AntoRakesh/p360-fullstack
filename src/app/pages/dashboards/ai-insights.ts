@@ -16,10 +16,10 @@ interface Insight {
 }
 
 const KIND_STYLE: Record<Kind, { icon: string; color: string }> = {
-  Anomaly: { icon: 'activity', color: '#ef4444' },
-  Prediction: { icon: 'trending-up', color: '#3b82f6' },
-  Risk: { icon: 'triangle-alert', color: '#f97316' },
-  Opportunity: { icon: 'lightbulb', color: '#22c55e' },
+  Anomaly: { icon: 'activity', color: 'var(--ka-ef4444)' },
+  Prediction: { icon: 'trending-up', color: 'var(--ka-3b82f6)' },
+  Risk: { icon: 'triangle-alert', color: 'var(--ka-f97316)' },
+  Opportunity: { icon: 'lightbulb', color: 'var(--ka-22c55e)' },
 };
 
 const INSIGHTS: Insight[] = [
@@ -49,10 +49,10 @@ const ANSWERS: [RegExp, string][] = [
     <app-page-head title="AI Insights &amp; Recommendations" />
 
     <section class="kpi-row">
-      <app-kpi label="New Insights" [value]="count('New')" icon="sparkles" color="#8b5cf6" sub="last 24 hours" />
-      <app-kpi label="Accepted Actions" [value]="count('Accepted')" icon="shield-check" color="#22c55e" sub="this session" />
-      <app-kpi label="Avg. Confidence" value="87%" icon="activity" color="#3b82f6" sub="model score" />
-      <app-kpi label="Est. Monthly Saving" value="$42.6K" icon="trending-up" color="#f97316" sub="if all accepted" />
+      <app-kpi label="New Insights" [value]="count('New')" icon="sparkles" color="var(--ka-8b5cf6)" sub="last 24 hours" />
+      <app-kpi label="Accepted Actions" [value]="count('Accepted')" icon="shield-check" color="var(--ka-22c55e)" sub="this session" />
+      <app-kpi label="Avg. Confidence" value="87%" icon="activity" color="var(--ka-3b82f6)" sub="model score" />
+      <app-kpi label="Est. Monthly Saving" value="$42.6K" icon="trending-up" color="var(--ka-f97316)" sub="if all accepted" />
     </section>
 
     <section class="dash">
@@ -71,7 +71,7 @@ const ANSWERS: [RegExp, string][] = [
               <span class="ins-icon" [style.background]="style[i.kind].color"><app-icon [name]="style[i.kind].icon" [size]="18" /></span>
               <div class="ins-body">
                 <div class="ins-top">
-                  <span class="tag" [style.background]="style[i.kind].color + '1f'" [style.color]="style[i.kind].color">{{ i.kind }}</span>
+                  <span class="tag" [style.background]="'color-mix(in srgb, ' + style[i.kind].color + ' 12%, transparent)'" [style.color]="style[i.kind].color">{{ i.kind }}</span>
                   <span class="muted">Confidence {{ i.confidence }}% · Impact {{ i.impact }}</span>
                 </div>
                 <b>{{ i.title }}</b>
@@ -124,15 +124,15 @@ const ANSWERS: [RegExp, string][] = [
     .insights { display: flex; flex-direction: column; gap: 10px; max-height: 760px; overflow: auto; }
     .insight { display: flex; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; transition: opacity 0.2s; }
     .insight.done { opacity: 0.6; }
-    .ins-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; color: #fff; }
+    .ins-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 9px; display: grid; place-items: center; color: var(--kf-ffffff); }
     .ins-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 13px; }
     .ins-top { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
-    .ins-body p { margin: 0; color: #4b4f6b; font-size: 12.5px; }
-    .rec { display: flex; gap: 6px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; background: #f5f3ff; color: #5b21b6; font-size: 12.5px; }
+    .ins-body p { margin: 0; color: var(--kf-4b4f6b); font-size: 12.5px; }
+    .rec { display: flex; gap: 6px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; background: var(--kb-f5f3ff); color: var(--kf-5b21b6); font-size: 12.5px; }
     .copilot h3 { display: flex; align-items: center; gap: 8px; }
     .chat { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow: auto; margin-bottom: 10px; }
-    .msg { max-width: 88%; padding: 8px 12px; border-radius: 12px; background: #f3f3f8; font-size: 12.5px; align-self: flex-start; }
-    .msg.me { align-self: flex-end; background: var(--primary); color: #fff; }
+    .msg { max-width: 88%; padding: 8px 12px; border-radius: 12px; background: var(--kb-f3f3f8); font-size: 12.5px; align-self: flex-start; }
+    .msg.me { align-self: flex-end; background: var(--primary); color: var(--kf-ffffff); }
     .suggest { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
     .ask { display: flex; gap: 8px; } .ask .input { flex: 1; min-width: 0; }
   `,
@@ -154,8 +154,8 @@ export class AiInsights {
     return {
       labels,
       series: [
-        { name: 'Actual', color: '#7c3aed', values: [...actual, ...Array(5).fill(NaN)], area: true },
-        { name: 'Forecast', color: '#f97316', values: fc, dashed: true },
+        { name: 'Actual', color: 'var(--ka-7c3aed)', values: [...actual, ...Array(5).fill(NaN)], area: true },
+        { name: 'Forecast', color: 'var(--ka-f97316)', values: fc, dashed: true },
       ],
     };
   });

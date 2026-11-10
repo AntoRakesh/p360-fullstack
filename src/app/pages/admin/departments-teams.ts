@@ -16,11 +16,11 @@ import { ADMIN_CSS, AdminEntityModal, AdminToast, EntityReq } from './admin-ui';
     </app-page-head>
 
     <section class="kpi-row">
-      <app-kpi label="Departments" [value]="store.depts().length" icon="users" color="#10b981" [sub]="'across ' + store.sites().length + ' sites'" />
-      <app-kpi label="Teams" [value]="teamCount()" icon="admin-sitemap" color="#7c3aed" [sub]="'avg ' + avgTeam() + ' people per team'" />
-      <app-kpi label="People Assigned" [value]="fmt(store.users().length)" icon="user-check" color="#2563eb" sub="100% have a department" />
-      <app-kpi label="Largest Department" [value]="largest().name" icon="trending-up" color="#f59e0b" [sub]="largest().users + ' people'" />
-      <app-kpi label="Teams without Lead" [value]="noLead()" icon="triangle-alert" color="#ef4444" [sub]="noLead() ? 'assign a lead' : 'all teams covered'" [subColor]="noLead() ? '#dc2626' : '#16a34a'" />
+      <app-kpi label="Departments" [value]="store.depts().length" icon="users" color="var(--ka-10b981)" [sub]="'across ' + store.sites().length + ' sites'" />
+      <app-kpi label="Teams" [value]="teamCount()" icon="admin-sitemap" color="var(--ka-7c3aed)" [sub]="'avg ' + avgTeam() + ' people per team'" />
+      <app-kpi label="People Assigned" [value]="fmt(store.users().length)" icon="user-check" color="var(--ka-2563eb)" sub="100% have a department" />
+      <app-kpi label="Largest Department" [value]="largest().name" icon="trending-up" color="var(--ka-f59e0b)" [sub]="largest().users + ' people'" />
+      <app-kpi label="Teams without Lead" [value]="noLead()" icon="triangle-alert" color="var(--ka-ef4444)" [sub]="noLead() ? 'assign a lead' : 'all teams covered'" [subColor]="noLead() ? 'var(--ka-dc2626)' : 'var(--ka-16a34a)'" />
     </section>
 
     <section class="split left">
@@ -43,7 +43,7 @@ import { ADMIN_CSS, AdminEntityModal, AdminToast, EntityReq } from './admin-ui';
         <div class="right">
           <div class="card">
             <div class="dh">
-              <span class="ri" style="background:#dcfce7;color:#16a34a"><app-icon name="users" [size]="20" /></span>
+              <span class="ri" style="background:var(--kb-dcfce7);color:var(--kf-16a34a)"><app-icon name="users" [size]="20" /></span>
               <div><h3>{{ d.name }}</h3><small class="muted">{{ store.site(d.siteId)?.name }} · {{ store.bu(store.site(d.siteId)?.buId ?? '')?.name }} · {{ d.costCenter }}</small></div>
               <div class="toolbar">
                 <button class="btn-ghost" (click)="modal.set({ kind: 'dept', id: d.id })"><app-icon name="admin-edit" [size]="15" />Edit</button>
@@ -192,19 +192,19 @@ export class DepartmentsTeams {
   protected readonly roleMix = computed(() => {
     const m = new Map<string, number>();
     this.members().forEach((u) => m.set(u.roleId, (m.get(u.roleId) ?? 0) + 1));
-    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([id, v]) => ({ label: this.store.role(id)?.name ?? id, value: v, color: this.store.role(id)?.color ?? '#999' }));
+    return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([id, v]) => ({ label: this.store.role(id)?.name ?? id, value: v, color: this.store.role(id)?.color ?? 'var(--ka-999999)' }));
   });
   protected readonly topDepts = computed(() => {
     const m = this.store.usersByDept();
-    return [...this.store.depts()].sort((a, b) => (m.get(b.id) ?? 0) - (m.get(a.id) ?? 0)).slice(0, 10).map((d, i) => ({ label: d.name, value: m.get(d.id) ?? 0, color: i % 2 ? '#3b82f6' : '#10b981' }));
+    return [...this.store.depts()].sort((a, b) => (m.get(b.id) ?? 0) - (m.get(a.id) ?? 0)).slice(0, 10).map((d, i) => ({ label: d.name, value: m.get(d.id) ?? 0, color: i % 2 ? 'var(--ka-3b82f6)' : 'var(--ka-10b981)' }));
   });
   protected readonly topMax = computed(() => Math.max(...this.topDepts().map((r) => r.value), 1));
   protected readonly buLabels = computed(() => this.store.bus().map((b) => b.code.slice(3)));
   protected readonly buSeries = computed(() => {
     const per = this.store.bus().map((b) => this.store.depts().filter((d) => this.store.site(d.siteId)?.buId === b.id));
     return [
-      { name: 'Departments', color: '#10b981', values: per.map((l) => l.length) },
-      { name: 'Teams', color: '#7c3aed', values: per.map((l) => l.reduce((a, d) => a + d.teams.length, 0)) },
+      { name: 'Departments', color: 'var(--ka-10b981)', values: per.map((l) => l.length) },
+      { name: 'Teams', color: 'var(--ka-7c3aed)', values: per.map((l) => l.reduce((a, d) => a + d.teams.length, 0)) },
     ];
   });
 
@@ -212,7 +212,7 @@ export class DepartmentsTeams {
     return n.split(' ').map((w) => w[0]).slice(0, 2).join('');
   }
   protected color(n: string) {
-    return ['#7c3aed', '#2563eb', '#0891b2', '#16a34a', '#ea580c'][n.length % 5];
+    return ['var(--ka-7c3aed)', 'var(--ka-2563eb)', 'var(--ka-0891b2)', 'var(--ka-16a34a)', 'var(--ka-ea580c)'][n.length % 5];
   }
   protected changeHead(d: Department, name: string) {
     if (!name) return;

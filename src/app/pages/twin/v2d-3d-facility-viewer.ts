@@ -32,23 +32,23 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
 
     <section class="kpis">
       <button class="card k" (click)="go('people-asset-location')">
-        <span class="ki" style="background:#2563eb"><app-icon name="users" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-2563eb)"><app-icon name="users" [size]="30" [stroke]="1.8" /></span>
         <div><small>People in Building</small><b>{{ fmt(c().people) }}</b><em class="up"><app-icon name="arrow-up" [size]="13" [stroke]="2.6" />12%<span>vs. last hour</span></em></div>
       </button>
       <button class="card k" (click)="soloLayer('visitor')">
-        <span class="ki" style="background:#10b981"><app-icon name="user-check" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-10b981)"><app-icon name="user-check" [size]="30" [stroke]="1.8" /></span>
         <div><small>Active Visitors</small><b>{{ c().visitors }}</b><em class="up"><app-icon name="arrow-up" [size]="13" [stroke]="2.6" />33%</em></div>
       </button>
       <button class="card k" (click)="go('asset-visualization')">
-        <span class="ki" style="background:#ef4444"><app-icon name="twin-dolly" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-ef4444)"><app-icon name="twin-dolly" [size]="30" [stroke]="1.8" /></span>
         <div><small>Assets Tracked</small><b>{{ fmt(c().assets) }}</b><em class="up"><app-icon name="arrow-up" [size]="13" [stroke]="2.6" />8%</em></div>
       </button>
       <button class="card k" (click)="go('heatmaps-analytics')">
-        <span class="ki" style="background:#2563eb"><app-icon name="twin-board" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-2563eb)"><app-icon name="twin-board" [size]="30" [stroke]="1.8" /></span>
         <div class="grow"><small>Utilization (Current)</small><b>{{ util() }}%</b><i class="bar"><i [style.width.%]="util()"></i></i></div>
       </button>
       <button class="card k" (click)="detail.set({ kind: 'alerts' })">
-        <span class="ki" style="background:#ef4444"><app-icon name="triangle-alert" [size]="30" [stroke]="1.8" /></span>
+        <span class="ki" style="background:var(--kb-ef4444)"><app-icon name="triangle-alert" [size]="30" [stroke]="1.8" /></span>
         <div><small>Active Alerts</small><b>{{ store.activeAlerts().length }}</b><em class="bad-t"><app-icon name="arrow-up" [size]="13" [stroke]="2.6" />{{ store.newAlerts() }} new</em></div>
       </button>
     </section>
@@ -75,8 +75,8 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
                   @case ('path') {<span class="lg-path" [class.off]="!showPath()"><i></i><i></i></span>}
                   @case ('fence') {<span class="lg-fence"></span>}
                   @case ('zone') {<span class="lg-zone"></span>}
-                  @case ('alert') {<span class="lg-ic" style="background:#ef4444"><app-icon name="triangle-alert" [size]="10" [stroke]="2.6" /></span>}
-                  @case ('asset') {<span class="lg-ic" style="background:#7c3aed"><app-icon name="twin-cube" [size]="10" [stroke]="2.6" /></span>}
+                  @case ('alert') {<span class="lg-ic" style="background:var(--kb-ef4444)"><app-icon name="triangle-alert" [size]="10" [stroke]="2.6" /></span>}
+                  @case ('asset') {<span class="lg-ic" style="background:var(--kb-7c3aed)"><app-icon name="twin-cube" [size]="10" [stroke]="2.6" /></span>}
                   @default {<span class="lg-ic" [style.background]="l.color"><app-icon name="user" [size]="10" [stroke]="2.6" /></span>}
                 }
                 {{ l.label }}
@@ -99,19 +99,19 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
             }
             @case ('Assets') {
               @for (a of assetRows(); track a.type) {
-                <li><button class="sw" [class.on]="!hiddenAssets().has(a.type)" style="--c:#7c3aed" (click)="flip(hiddenAssets, a.type)"><i></i></button><span>{{ a.type }}</span><b>{{ fmt(a.count) }}</b></li>
+                <li><button class="sw" [class.on]="!hiddenAssets().has(a.type)" style="--c:var(--ka-7c3aed)" (click)="flip(hiddenAssets, a.type)"><i></i></button><span>{{ a.type }}</span><b>{{ fmt(a.count) }}</b></li>
               }
             }
             @case ('Sensors') {
               @for (m of sensorRows(); track m.metric) {
-                <li><button class="sw" [class.on]="!hiddenMetrics().has(m.metric)" style="--c:#2563eb" (click)="flip(hiddenMetrics, m.metric)"><i></i></button><span>{{ m.metric }}</span><b>{{ m.count }}</b></li>
+                <li><button class="sw" [class.on]="!hiddenMetrics().has(m.metric)" style="--c:var(--ka-2563eb)" (click)="flip(hiddenMetrics, m.metric)"><i></i></button><span>{{ m.metric }}</span><b>{{ m.count }}</b></li>
               }
             }
             @case ('Zones') {
               @for (g of zoneRows(); track g.group) {
                 <li><button class="sw" [class.on]="!hiddenGroups().has(g.group)" [style.--c]="g.color" (click)="flip(hiddenGroups, g.group)"><i></i></button><span>{{ g.group }}</span><b>{{ g.count }}</b></li>
               }
-              <li><button class="sw" [class.on]="layers().zones" style="--c:#ef4444" (click)="toggle('zones')"><i></i></button><span>Geofences</span><b>2</b></li>
+              <li><button class="sw" [class.on]="layers().zones" style="--c:var(--ka-ef4444)" (click)="toggle('zones')"><i></i></button><span>Geofences</span><b>2</b></li>
             }
           }
         </ul>
@@ -164,7 +164,7 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
               <dt>Location</dt><dd>{{ floorShort(e.floor) }} · {{ e.zone }}</dd>
               <dt>Coordinates</dt><dd>{{ (pos(e)[0] * 0.08).toFixed(1) }} m, {{ (pos(e)[1] * 0.08).toFixed(1) }} m</dd>
               @if (e.kind === 'sensor') {<dt>Reading</dt><dd><b>{{ sv(e) }}</b> {{ $any(e).unit }} (range {{ $any(e).min }}–{{ $any(e).max }})</dd>}
-              @if (e.battery !== undefined) {<dt>Battery</dt><dd><i class="bat"><i [style.width.%]="e.battery" [style.background]="e.battery < 25 ? '#ef4444' : '#22c55e'"></i></i>{{ e.battery }}%</dd>}
+              @if (e.battery !== undefined) {<dt>Battery</dt><dd><i class="bat"><i [style.width.%]="e.battery" [style.background]="e.battery < 25 ? 'var(--ka-ef4444)' : 'var(--ka-22c55e)'"></i></i>{{ e.battery }}%</dd>}
               <dt>Last seen</dt><dd>{{ e.status === 'Offline' ? '42 min ago' : 'Just now (live)' }}</dd>
             </dl>
             <div class="acts">
@@ -178,10 +178,10 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
           @case ('alert') {
             @let a = $any(d).a;
             <div class="modal-head"><h3>{{ a.title }}</h3><button class="close-btn" (click)="detail.set(null)">×</button></div>
-            <div class="dh"><span class="big" style="background:#ef4444"><app-icon [name]="a.icon" [size]="26" /></span><div><b style="color:#dc2626">{{ a.detail }}</b><small>{{ floorShort(a.floor) }} · {{ a.zone }} · {{ a.time }}</small><span [class]="a.ack ? 'tag green' : 'tag red'">{{ a.ack ? 'Acknowledged' : a.severity }}</span></div></div>
+            <div class="dh"><span class="big" style="background:var(--kb-ef4444)"><app-icon [name]="a.icon" [size]="26" /></span><div><b style="color:var(--kf-dc2626)">{{ a.detail }}</b><small>{{ floorShort(a.floor) }} · {{ a.zone }} · {{ a.time }}</small><span [class]="a.ack ? 'tag green' : 'tag red'">{{ a.ack ? 'Acknowledged' : a.severity }}</span></div></div>
             @if (a.id === 'AL-501') {
               <h4>Temperature – last 60 min</h4>
-              <app-line-chart [labels]="['09:20', '09:30', '09:40', '09:50', '10:00', '10:10', '10:20']" [series]="[{ name: 'Server Room', color: '#ef4444', values: [24.1, 24.6, 25.8, 27.2, 29.4, 31.6, 32], area: true }, { name: 'Threshold', color: '#94a3b8', values: [28, 28, 28, 28, 28, 28, 28], dashed: true }]" [height]="170" suffix="°C" [min]="20" />
+              <app-line-chart [labels]="['09:20', '09:30', '09:40', '09:50', '10:00', '10:10', '10:20']" [series]="[{ name: 'Server Room', color: 'var(--ka-ef4444)', values: [24.1, 24.6, 25.8, 27.2, 29.4, 31.6, 32], area: true }, { name: 'Threshold', color: 'var(--ka-94a3b8)', values: [28, 28, 28, 28, 28, 28, 28], dashed: true }]" [height]="170" suffix="°C" [min]="20" />
               <p class="muted">CRAC unit 2 reports compressor fault. Rack R3 inlet temperature rising 1.2°C / 10 min.</p>
             }
             <div class="acts">
@@ -196,7 +196,7 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
             <div class="modal-head"><h3>{{ z.name }}</h3><button class="close-btn" (click)="detail.set(null)">×</button></div>
             <div class="dh"><span class="big" [style.background]="groupColor(z)"><app-icon name="map-floor" [size]="26" /></span><div><b>{{ z.name }}</b><small>{{ floorShort(z.floor) }} · {{ group(z) }} · {{ zoneArea(z) }} m²</small><span [class]="z.status === 'Active' ? 'tag green' : 'tag amber'">{{ z.status }}</span></div></div>
             @if (z.capacity) {
-              <div class="occ"><span>Occupancy</span><b>{{ z.occupancy }} / {{ z.capacity }}</b><i class="bar"><i [style.width.%]="(z.occupancy / z.capacity) * 100" [style.background]="z.occupancy / z.capacity > 0.85 ? '#ef4444' : '#2563eb'"></i></i></div>
+              <div class="occ"><span>Occupancy</span><b>{{ z.occupancy }} / {{ z.capacity }}</b><i class="bar"><i [style.width.%]="(z.occupancy / z.capacity) * 100" [style.background]="z.occupancy / z.capacity > 0.85 ? 'var(--ka-ef4444)' : 'var(--ka-2563eb)'"></i></i></div>
             }
             <h4>Live in this zone</h4>
             <ul class="mini">
@@ -221,7 +221,7 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
             <ul class="alist">
               @for (a of store.alerts(); track a.id) {
                 <li [class.done]="a.ack" (click)="detail.set({ kind: 'alert', a })">
-                  <span class="ai" [style.background]="a.ack ? '#94a3b8' : '#ef4444'"><app-icon [name]="a.icon" [size]="15" /></span>
+                  <span class="ai" [style.background]="a.ack ? 'var(--ka-94a3b8)' : 'var(--ka-ef4444)'"><app-icon [name]="a.icon" [size]="15" /></span>
                   <div><b>{{ a.title }}</b><small>{{ a.detail }} · {{ floorShort(a.floor) }} {{ a.zone }}</small></div>
                   <span class="tm">{{ a.time }}@if (a.isNew && !a.ack) {<em class="tag red">new</em>}</span>
                 </li>
@@ -236,65 +236,65 @@ const GROUPS: ZoneGroup[] = ['Workspaces', 'Common Areas', 'Restricted', 'Servic
   styles: `
     .ph { margin-bottom: 16px; } .ph .crumbs { margin: 0 0 4px; }
     .ph-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .ph h1 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.4px; } .ph p { margin: 2px 0 0; font-size: 15px; color: #3b3f5c; }
-    .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
-    .seg button { border: 0; background: #fff; padding: 9px 18px; font-size: 13px; cursor: pointer; color: #3b3f5c; } .seg button + button { border-left: 1px solid var(--border); }
-    .seg button.on { background: var(--primary); color: #fff; } .seg.light button.on { background: #ede9fe; color: var(--primary); font-weight: 600; }
+    .ph h1 { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.4px; } .ph p { margin: 2px 0 0; font-size: 15px; color: var(--kf-3b3f5c); }
+    .seg { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--kb-ffffff); }
+    .seg button { border: 0; background: var(--kb-ffffff); padding: 9px 18px; font-size: 13px; cursor: pointer; color: var(--kf-3b3f5c); } .seg button + button { border-left: 1px solid var(--border); }
+    .seg button.on { background: var(--primary); color: var(--kf-ffffff); } .seg.light button.on { background: var(--kb-ede9fe); color: var(--primary); font-weight: 600; }
     .site { min-width: 200px; }
     .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-bottom: 14px; }
     .k { display: flex; gap: 16px; align-items: center; text-align: left; cursor: pointer; padding: 14px 16px; font: inherit; color: inherit; }
-    .k:hover { border-color: #c4b5fd; }
-    .ki { width: 60px; height: 58px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .k:hover { border-color: var(--kl-c4b5fd); }
+    .ki { width: 60px; height: 58px; border-radius: 10px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
     .k div { display: flex; flex-direction: column; gap: 3px; min-width: 0; } .k .grow { flex: 1; }
-    .k small { font-size: 13px; color: #3b3f5c; } .k b { font-size: 23px; font-weight: 700; }
+    .k small { font-size: 13px; color: var(--kf-3b3f5c); } .k b { font-size: 23px; font-weight: 700; }
     .k em { font-style: normal; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 3px; } .k em { white-space: nowrap; } .k em span { color: var(--muted); font-weight: 400; margin-left: 8px; }
-    .up { color: #16a34a; } .bad-t { color: #dc2626; }
-    .bar { display: block; height: 8px; border-radius: 6px; background: #e8eaf2; overflow: hidden; margin-top: 6px; } .bar > i { display: block; height: 100%; background: #2563eb; border-radius: 6px; }
+    .up { color: var(--kf-16a34a); } .bad-t { color: var(--kf-dc2626); }
+    .bar { display: block; height: 8px; border-radius: 6px; background: var(--kb-e8eaf2); overflow: hidden; margin-top: 6px; } .bar > i { display: block; height: 100%; background: var(--kb-2563eb); border-radius: 6px; }
     .main { display: grid; grid-template-columns: minmax(0, 1fr) 256px; gap: 12px; margin-bottom: 14px; align-items: start; }
     .map-card { padding: 0; overflow: hidden; }
     .bsel { position: absolute; top: 12px; left: 12px; z-index: 7; }
-    .bbtn { display: flex; align-items: center; gap: 8px; background: #fff; border: 0; border-radius: 8px; padding: 9px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+    .bbtn { display: flex; align-items: center; gap: 8px; background: var(--kb-ffffff); border: 0; border-radius: 8px; padding: 9px 12px; font-size: 12.5px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
     .bsel .dropdown { left: 0; right: auto; min-width: 240px; }
-    .floors { position: absolute; top: 56px; left: 12px; z-index: 6; background: #fff; border-radius: 8px; padding: 6px; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); width: 92px; }
-    .floors button { border: 0; background: none; text-align: left; padding: 8px 10px; font-size: 12px; cursor: pointer; border-left: 3px solid transparent; border-radius: 3px; color: #1f2433; }
-    .floors button + button { border-top: 1px solid #f0f1f6; } .floors button.on { background: #f1ecff; color: var(--primary); border-left-color: var(--primary); font-weight: 600; } .floors button:hover:not(.on) { background: #f8f7fc; }
-    .legend { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 6; background: #fff; border-radius: 8px; display: flex; justify-content: space-around; flex-wrap: wrap; padding: 8px 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
-    .legend button { border: 0; background: none; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; padding: 2px 6px; border-radius: 6px; color: #1f2433; } .legend button:hover { background: #f5f3ff; }
+    .floors { position: absolute; top: 56px; left: 12px; z-index: 6; background: var(--kb-ffffff); border-radius: 8px; padding: 6px; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); width: 92px; }
+    .floors button { border: 0; background: none; text-align: left; padding: 8px 10px; font-size: 12px; cursor: pointer; border-left: 3px solid transparent; border-radius: 3px; color: var(--kf-1f2433); }
+    .floors button + button { border-top: 1px solid var(--kl-f0f1f6); } .floors button.on { background: var(--kb-f1ecff); color: var(--primary); border-left-color: var(--primary); font-weight: 600; } .floors button:hover:not(.on) { background: var(--kb-f8f7fc); }
+    .legend { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 6; background: var(--kb-ffffff); border-radius: 8px; display: flex; justify-content: space-around; flex-wrap: wrap; padding: 8px 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+    .legend button { border: 0; background: none; display: inline-flex; align-items: center; gap: 7px; font-size: 12px; cursor: pointer; padding: 2px 6px; border-radius: 6px; color: var(--kf-1f2433); } .legend button:hover { background: var(--kb-f5f3ff); }
     .legend button.off { opacity: 0.4; text-decoration: line-through; }
-    .lg-ic { width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; color: #fff; }
-    .lg-path { display: inline-flex; align-items: center; gap: 2px; width: 24px; } .lg-path i { width: 6px; height: 6px; border-radius: 50%; border: 2px solid #2563eb; } .lg-path::before { content: ''; } .lg-path.off { opacity: .4; }
-    .lg-path { background: linear-gradient(#2563eb, #2563eb) center / 100% 2px no-repeat; justify-content: space-between; }
-    .lg-fence { width: 18px; height: 18px; border-radius: 50%; border: 2px dashed #ef4444; }
-    .lg-zone { width: 20px; height: 16px; border-radius: 3px; background: #dbeafe; border: 1px solid #bfdbfe; }
+    .lg-ic { width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .lg-path { display: inline-flex; align-items: center; gap: 2px; width: 24px; } .lg-path i { width: 6px; height: 6px; border-radius: 50%; border: 2px solid var(--kl-2563eb); } .lg-path::before { content: ''; } .lg-path.off { opacity: .4; }
+    .lg-path { background: linear-gradient(var(--kb-2563eb), var(--kb-2563eb)) center / 100% 2px no-repeat; justify-content: space-between; }
+    .lg-fence { width: 18px; height: 18px; border-radius: 50%; border: 2px dashed var(--kl-ef4444); }
+    .lg-zone { width: 20px; height: 16px; border-radius: 3px; background: var(--kb-dbeafe); border: 1px solid var(--kl-bfdbfe); }
     .layers { display: flex; flex-direction: column; gap: 6px; } .layers h3 { margin: 0 0 6px; font-size: 15px; }
-    .ltabs { display: flex; gap: 4px; background: #f6f5fb; padding: 3px; border-radius: 8px; }
-    .ltabs button { flex: 1; border: 0; background: none; padding: 7px 0; font-size: 11.5px; border-radius: 6px; cursor: pointer; color: #3b3f5c; } .ltabs button.on { background: var(--primary); color: #fff; }
+    .ltabs { display: flex; gap: 4px; background: var(--kb-f6f5fb); padding: 3px; border-radius: 8px; }
+    .ltabs button { flex: 1; border: 0; background: none; padding: 7px 0; font-size: 11.5px; border-radius: 6px; cursor: pointer; color: var(--kf-3b3f5c); } .ltabs button.on { background: var(--primary); color: var(--kf-ffffff); }
     h4 { margin: 10px 0 2px; font-size: 13px; } .vo { margin-top: 14px; }
     .tg { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; } .tg li { display: grid; grid-template-columns: 40px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; font-size: 12.5px; }
     .tg b { font-weight: 500; font-variant-numeric: tabular-nums; }
-    .sw { width: 36px; height: 20px; border-radius: 12px; border: 0; background: #d5d8e2; position: relative; cursor: pointer; padding: 0; transition: background 0.15s; }
-    .sw i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left 0.15s; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+    .sw { width: 36px; height: 20px; border-radius: 12px; border: 0; background: var(--kb-d5d8e2); position: relative; cursor: pointer; padding: 0; transition: background 0.15s; }
+    .sw i { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--kb-ffffff); transition: left 0.15s; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
     .sw.on { background: var(--c); } .sw.on i { left: 18px; }
-    .layers label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #4b4f6b; margin-top: 6px; } .layers .select { width: 100%; }
+    .layers label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--kf-4b4f6b); margin-top: 6px; } .layers .select { width: 100%; }
     .dept { display: flex; flex-wrap: wrap; gap: 4px 8px; font-size: 10.5px; color: var(--muted); } .dept span { display: inline-flex; align-items: center; gap: 3px; } .dept i { width: 8px; height: 8px; border-radius: 2px; }
     .bottom { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 14px; }
     .bottom h3 { margin: 0 0 10px; font-size: 15px; } .ch { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; } .ch h3 { margin: 0; }
     .select.sm { padding: 5px 26px 5px 10px; font-size: 11.5px; }
     .act { list-style: none; margin: 0; padding: 0; } .act li { display: grid; grid-template-columns: 26px 1fr 1.25fr auto; gap: 10px; align-items: center; padding: 5px 0; font-size: 12px; cursor: pointer; border-radius: 6px; }
-    .act li:hover { background: #faf8ff; }
-    .ai { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; color: #fff; }
-    .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .what { text-decoration: underline; color: #2d3150; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .tm { color: #3b3f5c; white-space: nowrap; display: flex; gap: 4px; align-items: center; }
-    .act.full li { padding: 8px 0; border-bottom: 1px solid #f0f1f6; }
+    .act li:hover { background: var(--kb-faf8ff); }
+    .ai { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; color: var(--kf-ffffff); }
+    .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .what { text-decoration: underline; color: var(--kf-2d3150); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .tm { color: var(--kf-3b3f5c); white-space: nowrap; display: flex; gap: 4px; align-items: center; }
+    .act.full li { padding: 8px 0; border-bottom: 1px solid var(--kl-f0f1f6); }
     .dr { width: min(440px, 100vw); display: flex; flex-direction: column; gap: 12px; }
     .dh { display: flex; gap: 12px; align-items: center; } .dh > div { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; } .dh small { color: var(--muted); font-size: 12px; }
-    .big { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .big { width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center; color: var(--kf-ffffff); flex-shrink: 0; }
     .facts { display: grid; grid-template-columns: 110px 1fr; gap: 8px; margin: 0; font-size: 12.5px; } .facts dt { color: var(--muted); } .facts dd { margin: 0; display: flex; align-items: center; gap: 8px; }
-    .bat { display: inline-block; width: 60px; height: 8px; background: #eef0f5; border-radius: 4px; overflow: hidden; } .bat i { display: block; height: 100%; }
+    .bat { display: inline-block; width: 60px; height: 8px; background: var(--kb-eef0f5); border-radius: 4px; overflow: hidden; } .bat i { display: block; height: 100%; }
     .acts { display: flex; flex-wrap: wrap; gap: 8px; }
     .occ { display: grid; grid-template-columns: 1fr auto; gap: 4px; font-size: 12.5px; } .occ .bar { grid-column: 1 / -1; }
-    .mini { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; } .mini li { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid #f3f4f8; cursor: pointer; } .mini small { margin-left: auto; color: var(--muted); }
+    .mini { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; } .mini li { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12.5px; border-bottom: 1px solid var(--kl-f3f4f8); cursor: pointer; } .mini small { margin-left: auto; color: var(--muted); }
     .dot { width: 9px; height: 9px; border-radius: 50%; }
-    .alist { list-style: none; margin: 0; padding: 0; } .alist li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f1f6; cursor: pointer; font-size: 12.5px; }
+    .alist { list-style: none; margin: 0; padding: 0; } .alist li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--kl-f0f1f6); cursor: pointer; font-size: 12.5px; }
     .alist li div { display: flex; flex-direction: column; } .alist small { color: var(--muted); } .alist li.done { opacity: 0.55; }
     @media (max-width: 1350px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } .bottom { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 1100px) { .main { grid-template-columns: 1fr; } .bottom { grid-template-columns: 1fr; } }
@@ -311,9 +311,9 @@ export class Facility2D3DFacilityViewer {
   protected readonly deptColor = DEPT_COLOR;
   protected readonly ltabs = ['People', 'Assets', 'Sensors', 'Zones'] as const;
   protected readonly legend: { id: string; label: string; color?: string; layer?: Layer }[] = [
-    { id: 'emp', label: 'Employee', color: '#2563eb', layer: 'employee' },
-    { id: 'vis', label: 'Visitor', color: '#f59e0b', layer: 'visitor' },
-    { id: 'con', label: 'Contractor', color: '#16a34a', layer: 'contractor' },
+    { id: 'emp', label: 'Employee', color: 'var(--ka-2563eb)', layer: 'employee' },
+    { id: 'vis', label: 'Visitor', color: 'var(--ka-f59e0b)', layer: 'visitor' },
+    { id: 'con', label: 'Contractor', color: 'var(--ka-16a34a)', layer: 'contractor' },
     { id: 'asset', label: 'Asset/Equipment', layer: 'asset' },
     { id: 'alert', label: 'Alert' },
     { id: 'path', label: 'Path/Movement' },
@@ -381,15 +381,15 @@ export class Facility2D3DFacilityViewer {
     const by = this.peopleBy();
     if (by === 'Department') {
       const s = [...DEPTS.map((d) => DEPT_COLOR[d])];
-      if (L.visitor) s.push('#f59e0b');
-      if (L.contractor) s.push('#16a34a', '#16a34a');
+      if (L.visitor) s.push('var(--ka-f59e0b)');
+      if (L.contractor) s.push('var(--ka-16a34a)', 'var(--ka-16a34a)');
       return L.employee ? s : s.slice(DEPTS.length);
     }
-    if (by === 'Status') return ['#22c55e', '#22c55e', '#22c55e', '#f59e0b'];
+    if (by === 'Status') return ['var(--ka-22c55e)', 'var(--ka-22c55e)', 'var(--ka-22c55e)', 'var(--ka-f59e0b)'];
     const s: string[] = [];
-    if (L.employee) s.push('#2563eb', '#2563eb', '#2563eb', '#2563eb', '#2563eb', '#2563eb');
-    if (L.visitor) s.push('#f59e0b');
-    if (L.contractor) s.push('#16a34a', '#16a34a');
+    if (L.employee) s.push('var(--ka-2563eb)', 'var(--ka-2563eb)', 'var(--ka-2563eb)', 'var(--ka-2563eb)', 'var(--ka-2563eb)', 'var(--ka-2563eb)');
+    if (L.visitor) s.push('var(--ka-f59e0b)');
+    if (L.contractor) s.push('var(--ka-16a34a)', 'var(--ka-16a34a)');
     return s;
   });
 
@@ -411,10 +411,10 @@ export class Facility2D3DFacilityViewer {
     if (L.sensor)
       for (const s of this.onFloor(this.store.sensors())) {
         if (this.hiddenMetrics().has(s.metric) || s.id === this.alertSensorId()) continue;
-        out.push({ id: s.id, x: s.x, y: s.y, color: s.status === 'Offline' ? '#94a3b8' : s.status === 'Alarm' ? '#ef4444' : '#0ea5e9', icon: 'twin-sensor', kind: 'sensor', title: `${s.name} · ${this.store.sensorValue(s)} ${s.unit}` });
+        out.push({ id: s.id, x: s.x, y: s.y, color: s.status === 'Offline' ? 'var(--ka-94a3b8)' : s.status === 'Alarm' ? 'var(--ka-ef4444)' : 'var(--ka-0ea5e9)', icon: 'twin-sensor', kind: 'sensor', title: `${s.name} · ${this.store.sensorValue(s)} ${s.unit}` });
       }
     if (this.showAlerts())
-      for (const a of this.onFloor(this.store.activeAlerts())) out.push({ id: a.id, x: a.x, y: a.y, color: '#ef4444', icon: 'triangle-alert', kind: 'alert', title: a.title });
+      for (const a of this.onFloor(this.store.activeAlerts())) out.push({ id: a.id, x: a.x, y: a.y, color: 'var(--ka-ef4444)', icon: 'triangle-alert', kind: 'alert', title: a.title });
     return out;
   });
   private readonly alertSensorId = computed(() => this.store.sensors().find((s) => s.name === 'TEMP-SR4')?.id);
@@ -425,14 +425,14 @@ export class Facility2D3DFacilityViewer {
     for (const id of this.pinned()) {
       const al = this.store.activeAlerts().find((a) => a.id === id && a.floor === this.store.floor());
       if (al && this.showAlerts()) {
-        out.push({ id, x: al.x, y: al.y, title: al.title, lines: [al.detail, al.zone], icon: al.icon, color: '#ef4444', accent: '#dc2626', tone: '#dc2626', pos: 'above' });
+        out.push({ id, x: al.x, y: al.y, title: al.title, lines: [al.detail, al.zone], icon: al.icon, color: 'var(--ka-ef4444)', accent: 'var(--ka-dc2626)', tone: 'var(--ka-dc2626)', pos: 'above' });
         continue;
       }
       const e = this.store.find(id);
       if (!e || e.floor !== this.store.floor() || !visible.has(e.id)) continue;
       const [x, y] = this.store.pos(e);
-      if (e.kind === 'asset') out.push({ id: e.id, x, y, title: e.name, lines: [e.status, `Battery ${e.battery ?? '—'}%`, `${floorById(e.floor).short} - ${e.zone}`], icon: 'twin-forklift', color: '#f59e0b', tone: e.status === 'Moving' ? '#16a34a' : undefined, pos: 'below' });
-      else if (e.kind === 'sensor') out.push({ id: e.id, x, y, title: e.name, lines: [`${this.store.sensorValue(e as TSensor)} ${(e as TSensor).unit}`, e.zone], icon: 'twin-sensor', color: '#0ea5e9' });
+      if (e.kind === 'asset') out.push({ id: e.id, x, y, title: e.name, lines: [e.status, `Battery ${e.battery ?? '—'}%`, `${floorById(e.floor).short} - ${e.zone}`], icon: 'twin-forklift', color: 'var(--ka-f59e0b)', tone: e.status === 'Moving' ? 'var(--ka-16a34a)' : undefined, pos: 'below' });
+      else if (e.kind === 'sensor') out.push({ id: e.id, x, y, title: e.name, lines: [`${this.store.sensorValue(e as TSensor)} ${(e as TSensor).unit}`, e.zone], icon: 'twin-sensor', color: 'var(--ka-0ea5e9)' });
       else out.push({ id: e.id, x, y, title: e.name, lines: [this.kindLabel(e), e.sub, floorById(e.floor).short], icon: 'user', color: TYPE_COLOR[e.kind], dy: 6 });
     }
     return out;
@@ -443,9 +443,9 @@ export class Facility2D3DFacilityViewer {
     const e = this.store.find(this.pathFor()!);
     if (!e || e.floor !== this.store.floor()) return [];
     const pts: [number, number][] = e.id === 'P-1001' ? JOHN_PATH : [[176, 470], [300, 395], [this.store.pos(e)[0] - 40, (this.store.pos(e)[1] + 395) / 2], this.store.pos(e)];
-    return [{ points: pts, color: '#2563eb', dashed: false, dots: true }];
+    return [{ points: pts, color: 'var(--ka-2563eb)', dashed: false, dots: true }];
   });
-  protected readonly glows = computed(() => (this.showAlerts() ? this.onFloor(this.store.activeAlerts()).filter((a) => a.severity === 'Critical').map((a) => ({ x: a.x, y: a.y, r: 78, color: '#ef4444' })) : []));
+  protected readonly glows = computed(() => (this.showAlerts() ? this.onFloor(this.store.activeAlerts()).filter((a) => a.severity === 'Critical').map((a) => ({ x: a.x, y: a.y, r: 78, color: 'var(--ka-ef4444)' })) : []));
   protected readonly fences = computed(() => (this.layers().zones && !this.hiddenGroups().has('Restricted') ? this.zones().filter((z) => z.restricted).map((z) => ({ x: z.x + z.w / 2, y: z.y + z.h / 2, r: Math.max(z.w, z.h) * 0.62 })) : []));
   protected readonly labelIds = computed(() => {
     if (!this.layers().zones || this.showZones() === 'None') return [];
@@ -464,26 +464,26 @@ export class Facility2D3DFacilityViewer {
   });
 
   protected readonly mainRows = computed(() => [
-    { layer: 'employee' as Layer, label: 'Employees', count: this.c().employees, color: '#22c55e' },
-    { layer: 'visitor' as Layer, label: 'Visitors', count: this.c().visitors, color: '#f59e0b' },
-    { layer: 'contractor' as Layer, label: 'Contractors', count: this.c().contractors, color: '#22c55e' },
-    { layer: 'asset' as Layer, label: 'Assets', count: this.c().assets, color: '#7c3aed' },
-    { layer: 'sensor' as Layer, label: 'Sensors (IoT)', count: this.c().sensors, color: '#2563eb' },
-    { layer: 'zones' as Layer, label: 'Zones & Geofences', count: this.zones().filter((z) => z.type !== 'core').length + 2, color: '#ef4444' },
+    { layer: 'employee' as Layer, label: 'Employees', count: this.c().employees, color: 'var(--ka-22c55e)' },
+    { layer: 'visitor' as Layer, label: 'Visitors', count: this.c().visitors, color: 'var(--ka-f59e0b)' },
+    { layer: 'contractor' as Layer, label: 'Contractors', count: this.c().contractors, color: 'var(--ka-22c55e)' },
+    { layer: 'asset' as Layer, label: 'Assets', count: this.c().assets, color: 'var(--ka-7c3aed)' },
+    { layer: 'sensor' as Layer, label: 'Sensors (IoT)', count: this.c().sensors, color: 'var(--ka-2563eb)' },
+    { layer: 'zones' as Layer, label: 'Zones & Geofences', count: this.zones().filter((z) => z.type !== 'core').length + 2, color: 'var(--ka-ef4444)' },
   ]);
   protected readonly assetRows = computed(() => ASSET_TYPES.map((t) => ({ type: t.type, count: this.store.assets().filter((a) => a.type === t.type).length })));
   protected readonly sensorRows = computed(() => METRICS.map((m) => ({ metric: m, count: this.store.sensors().filter((s) => s.metric === m).length })));
-  protected readonly zoneRows = computed(() => GROUPS.map((g) => ({ group: g, color: g === 'Restricted' ? '#ef4444' : g === 'Service' ? '#64748b' : g === 'Common Areas' ? '#22c55e' : '#2563eb', count: this.zones().filter((z) => ZONE_GROUP[z.type] === g).length })));
+  protected readonly zoneRows = computed(() => GROUPS.map((g) => ({ group: g, color: g === 'Restricted' ? 'var(--ka-ef4444)' : g === 'Service' ? 'var(--ka-64748b)' : g === 'Common Areas' ? 'var(--ka-22c55e)' : 'var(--ka-2563eb)', count: this.zones().filter((z) => ZONE_GROUP[z.type] === g).length })));
 
   protected readonly utilRows = computed(() => {
     const zs = this.zones();
     if (this.store.floor() === '4')
       return [
-        { label: 'Workstations', pct: 68, color: '#2563eb', weight: 104 },
-        { label: 'Meeting Rooms', pct: 72, color: '#10b981', weight: 40 },
-        { label: 'Collaboration', pct: 55, color: '#f59e0b', weight: 36 },
-        { label: 'Cafeteria', pct: 80, color: '#ef4444', weight: 44 },
-        { label: 'Other Spaces', pct: 46, color: '#9ca3af', weight: 22 },
+        { label: 'Workstations', pct: 68, color: 'var(--ka-2563eb)', weight: 104 },
+        { label: 'Meeting Rooms', pct: 72, color: 'var(--ka-10b981)', weight: 40 },
+        { label: 'Collaboration', pct: 55, color: 'var(--ka-f59e0b)', weight: 36 },
+        { label: 'Cafeteria', pct: 80, color: 'var(--ka-ef4444)', weight: 44 },
+        { label: 'Other Spaces', pct: 46, color: 'var(--ka-9ca3af)', weight: 22 },
       ];
     const grp = (types: string[]) => {
       const l = zs.filter((z) => types.includes(z.type) && z.capacity);
@@ -492,11 +492,11 @@ export class Facility2D3DFacilityViewer {
       return { pct: cap ? Math.round((occ / cap) * 100) : 0, weight: occ };
     };
     return [
-      { label: 'Workstations', color: '#2563eb', ...grp(['workstations', 'pods']) },
-      { label: 'Meeting Rooms', color: '#10b981', ...grp(['meeting']) },
-      { label: 'Collaboration', color: '#f59e0b', ...grp(['collab', 'lobby', 'wellness']) },
-      { label: 'Cafeteria', color: '#ef4444', ...grp(['cafeteria']) },
-      { label: 'Other Spaces', color: '#9ca3af', ...grp(['reception', 'storage', 'security', 'server', 'hvac', 'solar']) },
+      { label: 'Workstations', color: 'var(--ka-2563eb)', ...grp(['workstations', 'pods']) },
+      { label: 'Meeting Rooms', color: 'var(--ka-10b981)', ...grp(['meeting']) },
+      { label: 'Collaboration', color: 'var(--ka-f59e0b)', ...grp(['collab', 'lobby', 'wellness']) },
+      { label: 'Cafeteria', color: 'var(--ka-ef4444)', ...grp(['cafeteria']) },
+      { label: 'Other Spaces', color: 'var(--ka-9ca3af)', ...grp(['reception', 'storage', 'security', 'server', 'hvac', 'solar']) },
     ];
   });
 
@@ -513,16 +513,16 @@ export class Facility2D3DFacilityViewer {
 
   /* ---------- helpers ---------- */
   protected color(e: TEntity) {
-    return e.kind === 'asset' ? this.assetColor(e) : e.kind === 'sensor' ? '#0ea5e9' : TYPE_COLOR[e.kind];
+    return e.kind === 'asset' ? this.assetColor(e) : e.kind === 'sensor' ? 'var(--ka-0ea5e9)' : TYPE_COLOR[e.kind];
   }
   protected icon(e: TEntity) {
     return e.kind === 'asset' ? ASSET_TYPES.find((t) => t.type === e.type)?.icon ?? 'twin-cube' : e.kind === 'sensor' ? 'twin-sensor' : e.kind === 'contractor' ? 'hard-hat' : 'user';
   }
   private assetColor(a: TEntity) {
     const by = this.assetBy();
-    if (by === 'Status') return a.status === 'Maintenance' || a.status === 'Low Battery' ? '#ef4444' : a.status === 'Idle' ? '#f59e0b' : '#16a34a';
-    if (by === 'Battery Level') return a.battery === undefined ? '#94a3b8' : a.battery < 25 ? '#ef4444' : a.battery < 50 ? '#f59e0b' : '#16a34a';
-    return '#7c3aed';
+    if (by === 'Status') return a.status === 'Maintenance' || a.status === 'Low Battery' ? 'var(--ka-ef4444)' : a.status === 'Idle' ? 'var(--ka-f59e0b)' : 'var(--ka-16a34a)';
+    if (by === 'Battery Level') return a.battery === undefined ? 'var(--ka-94a3b8)' : a.battery < 25 ? 'var(--ka-ef4444)' : a.battery < 50 ? 'var(--ka-f59e0b)' : 'var(--ka-16a34a)';
+    return 'var(--ka-7c3aed)';
   }
   protected kindLabel(e: TEntity) {
     return e.kind === 'employee' ? 'Employee' : e.kind === 'visitor' ? 'Visitor' : e.kind === 'contractor' ? 'Contractor' : e.kind === 'asset' ? e.type : `${e.type} Sensor`;
@@ -537,7 +537,7 @@ export class Facility2D3DFacilityViewer {
     return ZONE_GROUP[z.type];
   }
   protected groupColor(z: TZone) {
-    return z.restricted ? '#ef4444' : ZONE_GROUP[z.type] === 'Common Areas' ? '#10b981' : '#2563eb';
+    return z.restricted ? 'var(--ka-ef4444)' : ZONE_GROUP[z.type] === 'Common Areas' ? 'var(--ka-10b981)' : 'var(--ka-2563eb)';
   }
   protected zoneArea(z: TZone) {
     return Math.round(z.w * z.h * 0.0064);
@@ -652,7 +652,7 @@ export class Facility2D3DFacilityViewer {
   }
   protected maint(e: TEntity) {
     this.store.patchAsset(e.id, { status: 'Maintenance' });
-    this.store.log({ icon: 'twin-wrench', color: '#f59e0b', who: e.name, what: 'Sent to maintenance', ref: e.id, floor: e.floor });
+    this.store.log({ icon: 'twin-wrench', color: 'var(--ka-f59e0b)', who: e.name, what: 'Sent to maintenance', ref: e.id, floor: e.floor });
     this.detail.set(null);
     this.toastMsg(`${e.name} flagged for maintenance · work order WO-${4810 + this.store.activity().length}`);
   }
@@ -663,7 +663,7 @@ export class Facility2D3DFacilityViewer {
     this.toastMsg(`${a.title} acknowledged`);
   }
   protected workOrder(a: TAlert) {
-    this.store.log({ icon: 'twin-wrench', color: '#2563eb', who: 'Work order', what: `Raised for ${a.title} · ${a.zone}`, floor: a.floor, ref: a.id });
+    this.store.log({ icon: 'twin-wrench', color: 'var(--ka-2563eb)', who: 'Work order', what: `Raised for ${a.title} · ${a.zone}`, floor: a.floor, ref: a.id });
     this.toastMsg(`Work order WO-${4800 + this.store.activity().length} created and assigned to Facilities`);
   }
   protected go(slug: string) {

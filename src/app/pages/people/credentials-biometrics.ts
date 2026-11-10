@@ -64,7 +64,7 @@ const CREDS: Cred[] = (() => {
       @for (t of types; track t) {
         <app-kpi [label]="t + 's'" [value]="byType(t)" [icon]="icons[t]" [color]="colors[t]" sub="issued" />
       }
-      <app-kpi label="Suspended / Lost" [value]="flagged()" icon="ban" color="#ef4444" sub="need action" />
+      <app-kpi label="Suspended / Lost" [value]="flagged()" icon="ban" color="var(--ka-ef4444)" sub="need action" />
     </section>
     <section class="dash">
       <div class="card span-4">
@@ -112,7 +112,7 @@ export class Credentials {
   protected readonly types = CRED_TYPES;
   protected readonly formats = FORMATS;
   protected readonly icons: Record<string, string> = { 'Access Card': 'id-card', 'Mobile Credential': 'square-user', 'QR Code': 'grid', PIN: 'key-round' };
-  protected readonly colors: Record<string, string> = { 'Access Card': '#8b5cf6', 'Mobile Credential': '#3b82f6', 'QR Code': '#22c1a0', PIN: '#f59e0b' };
+  protected readonly colors: Record<string, string> = { 'Access Card': 'var(--ka-8b5cf6)', 'Mobile Credential': 'var(--ka-3b82f6)', 'QR Code': 'var(--ka-22c1a0)', PIN: 'var(--ka-f59e0b)' };
   protected readonly list = signal<Cred[]>(CREDS);
   protected readonly issueOpen = signal(false);
   protected readonly ctype = signal('Access Card');
@@ -145,10 +145,10 @@ export class Credentials {
   protected readonly statusRows = computed(() =>
     ['Active', 'Suspended', 'Lost', 'Expired', 'Revoked'].map((s, i) => {
       const v = this.list().filter((c) => c.status === s).length;
-      return { label: s, value: v, display: v.toLocaleString(), color: ['#22c55e', '#f59e0b', '#ef4444', '#9ca3af', '#64748b'][i] };
+      return { label: s, value: v, display: v.toLocaleString(), color: ['var(--ka-22c55e)', 'var(--ka-f59e0b)', 'var(--ka-ef4444)', 'var(--ka-9ca3af)', 'var(--ka-64748b)'][i] };
     }),
   );
-  protected readonly expiring = computed(() => [{ name: 'Expiring', color: '#f59e0b', values: [0, 1, 2, 3, 4, 5].map((m) => this.list().filter((c) => c.expiry >= iso(m * 30) && c.expiry < iso((m + 1) * 30)).length) }]);
+  protected readonly expiring = computed(() => [{ name: 'Expiring', color: 'var(--ka-f59e0b)', values: [0, 1, 2, 3, 4, 5].map((m) => this.list().filter((c) => c.expiry >= iso(m * 30) && c.expiry < iso((m + 1) * 30)).length) }]);
   protected readonly flagged = computed(() => String(this.list().filter((c) => c.status === 'Suspended' || c.status === 'Lost').length));
 
   protected byType(t: string) {
@@ -210,11 +210,11 @@ const STEPS = ['Position face in frame', 'Liveness check', 'Capturing fingerprin
   template: `
     <app-page-head title="Biometric Enrollment" parent="People &amp; Identity Management" parentLink="/people-identity" subtitle="Face and fingerprint enrollment status, template quality and pending captures." />
     <section class="kpi-row">
-      <app-kpi label="Face Enrolled" [value]="pct('face') + '%'" icon="user-check" color="#8b5cf6" change="3%" sub="vs. last month" />
-      <app-kpi label="Fingerprint Enrolled" [value]="pct('finger') + '%'" icon="fingerprint" color="#3b82f6" change="2%" sub="vs. last month" />
-      <app-kpi label="Pending Enrollment" [value]="pending()" icon="clock" color="#f59e0b" sub="face or finger" />
-      <app-kpi label="Avg. Face Quality" [value]="avgQ() + '/100'" icon="activity" color="#22c55e" />
-      <app-kpi label="Low Quality (< 70)" [value]="lowQ()" icon="triangle-alert" color="#ef4444" sub="re-enroll suggested" />
+      <app-kpi label="Face Enrolled" [value]="pct('face') + '%'" icon="user-check" color="var(--ka-8b5cf6)" change="3%" sub="vs. last month" />
+      <app-kpi label="Fingerprint Enrolled" [value]="pct('finger') + '%'" icon="fingerprint" color="var(--ka-3b82f6)" change="2%" sub="vs. last month" />
+      <app-kpi label="Pending Enrollment" [value]="pending()" icon="clock" color="var(--ka-f59e0b)" sub="face or finger" />
+      <app-kpi label="Avg. Face Quality" [value]="avgQ() + '/100'" icon="activity" color="var(--ka-22c55e)" />
+      <app-kpi label="Low Quality (< 70)" [value]="lowQ()" icon="triangle-alert" color="var(--ka-ef4444)" sub="re-enroll suggested" />
     </section>
     <section class="dash">
       <div class="card span-6">
@@ -251,12 +251,12 @@ const STEPS = ['Position face in frame', 'Liveness check', 'Capturing fingerprin
   `,
   styles: `
     .enroll { width: min(440px, calc(100vw - 32px)); text-align: center; }
-    .cam { position: relative; margin: 6px auto 14px; width: 180px; height: 180px; border-radius: 16px; background: #1e1b3a; color: #a78bfa; display: grid; place-items: center; overflow: hidden; }
-    .cam.done { color: #4ade80; }
-    .scan { position: absolute; left: 0; right: 0; height: 3px; background: #a78bfa; box-shadow: 0 0 12px #a78bfa; animation: scan 1.4s linear infinite; }
+    .cam { position: relative; margin: 6px auto 14px; width: 180px; height: 180px; border-radius: 16px; background: var(--kb-1e1b3a); color: var(--kf-a78bfa); display: grid; place-items: center; overflow: hidden; }
+    .cam.done { color: var(--kf-4ade80); }
+    .scan { position: absolute; left: 0; right: 0; height: 3px; background: var(--kb-a78bfa); box-shadow: 0 0 12px var(--kb-a78bfa); animation: scan 1.4s linear infinite; }
     @keyframes scan { from { top: 0; } to { top: 100%; } }
     .steps { list-style: none; padding: 0; margin: 0; text-align: left; font-size: 13px; }
-    .steps li { padding: 5px 0; color: var(--muted); } .steps .done { color: #16a34a; } .steps .cur { color: var(--primary); font-weight: 600; }
+    .steps li { padding: 5px 0; color: var(--muted); } .steps .done { color: var(--kf-16a34a); } .steps .cur { color: var(--primary); font-weight: 600; }
   `,
 })
 export class Biometrics {
@@ -297,11 +297,11 @@ export class Biometrics {
     SITES.map((s) => {
       const at = this.list().filter((b) => b.site === s);
       const v = at.length ? Math.round((at.filter((b) => b.face === 'Enrolled').length / at.length) * 100) : 0;
-      return { label: s, value: v, display: `${v}%`, color: v < 85 ? '#f59e0b' : '#8b5cf6' };
+      return { label: s, value: v, display: `${v}%`, color: v < 85 ? 'var(--ka-f59e0b)' : 'var(--ka-8b5cf6)' };
     }),
   );
   protected readonly qualitySeries = computed(() => [
-    { name: 'People', color: '#8b5cf6', values: [60, 70, 80, 90].map((lo) => this.list().filter((b) => b.quality >= lo && b.quality < lo + 10 + (lo === 90 ? 1 : 0)).length) },
+    { name: 'People', color: 'var(--ka-8b5cf6)', values: [60, 70, 80, 90].map((lo) => this.list().filter((b) => b.quality >= lo && b.quality < lo + 10 + (lo === 90 ? 1 : 0)).length) },
   ]);
 
   protected pct(k: 'face' | 'finger') {
