@@ -155,9 +155,9 @@ const merge = (...xs: Record<string, Action[]>[]) => xs.reduce((a, x) => ({ ...a
 const FULL: Action[] = [...ACTIONS];
 const MANAGE: Action[] = ['View', 'Create', 'Edit', 'Approve', 'Export'];
 const VIEW: Action[] = ['View'];
-const SELF = ['command-center', 'employee-self-service', 'leave-absence', 'time-attendance', 'training-skills-compliance', 'meal-canteen-management', 'workplace-facility-services'];
+const SELF = ['command-center', 'leave-absence', 'time-attendance', 'training-skills-compliance', 'meal-canteen-management', 'workplace-facility-services'];
 const SECURITY = ['physical-access-control', 'visitor-management', 'contractor-vendor', 'real-time-location', 'emergency-mustering', 'safety-wellbeing', 'patrol-guard-management', 'device-edge-management'];
-const PEOPLE = ['people-identity', 'time-attendance', 'shift-workforce', 'leave-absence', 'employee-self-service', 'manager-self-service', 'training-skills-compliance', 'ai-people-intelligence'];
+const PEOPLE = ['people-identity', 'time-attendance', 'shift-workforce', 'leave-absence', 'training-skills-compliance', 'ai-people-intelligence'];
 
 export const ROLES: Role[] = [
   { id: 'r-super', name: 'Super Admin', desc: 'Unrestricted platform access including tenant, billing and security configuration.', type: 'System', color: 'var(--ka-7c3aed)', scope: 'Tenant', perms: lvl(ALL, FULL) },

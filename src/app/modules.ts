@@ -101,8 +101,6 @@ const LIST: Entry[] = [
     'Asset & Equipment Booking|box', 'Space Utilization|chart-line', 'Housekeeping & Cleaning|sparkles',
     'Maintenance Requests|settings', 'Service Catalog|list-checks', 'Approvals & SLA|file-check', 'Reports & Analytics|file-chart',
   ]],
-  ['employee-self-service', 'Employee Self-Service (ESS)', 'square-user'],
-  ['manager-self-service', 'Manager Self-Service (MSS)', 'briefcase'],
   ['tasks-workforce-operations', 'Tasks & Workforce Operations', 'list-checks', [
     'Task Master & Templates|file-text', 'Task Assignment & Scheduling|calendar-days', 'Daily Task Execution|list-checks',
     'Mobile Task App|square-user', 'Checkpoint & Location Tasks|map-pin', 'SLA & Escalations|bell',

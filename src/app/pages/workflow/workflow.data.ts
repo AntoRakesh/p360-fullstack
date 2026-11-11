@@ -115,7 +115,7 @@ export function makeNode(id: string, type: NodeType, title: string, sub: string,
 /** The graph from the reference image (canvas units). */
 function leaveGraph(): { nodes: WfNode[]; edges: WfEdge[] } {
   const nodes: WfNode[] = [
-    makeNode('n1', 'start', 'Start', 'Leave Request Submitted', 41, 53, {}, { description: 'Triggered when an employee submits a leave request in ESS or mobile.' }),
+    makeNode('n1', 'start', 'Start', 'Leave Request Submitted', 41, 53, {}, { description: 'Triggered when an employee submits a leave request on the web portal or mobile app.' }),
     makeNode('n2', 'form', 'Employee Submission', 'Fill Leave Request Form', 138, 53, {}, { description: 'Employee fills leave type, dates, reason and optional attachment.' }),
     makeNode('n3', 'condition', 'Leave Type?', 'Annual / Sick / Other', 328, 46, { name: 'Leave Type Check' }, { conditions: 'Annual / Sick / Other', assignee: 'Leave Type', description: 'Route by leave type: Annual and Sick go to the manager, everything else to HR first.' }),
     makeNode('n4', 'approval', 'Manager Approval', 'Direct Manager', 474, 54, { w: 136 }, { description: 'Manager to review and approve the leave request.' }),
@@ -203,7 +203,7 @@ export interface Workflow {
   edges: WfEdge[];
 }
 
-export const MODULES = ['Leave & Absence Management', 'Time & Attendance', 'People & Identity Management', 'Contractor & Vendor Workforce', 'Training, Skills & Compliance', 'Shift & Workforce Scheduling', 'Employee Self-Service (ESS)', 'Visitor Management', 'Physical Access Control', 'Workplace & Facility Services', 'Emergency & Mustering'];
+export const MODULES = ['Leave & Absence Management', 'Time & Attendance', 'People & Identity Management', 'Contractor & Vendor Workforce', 'Training, Skills & Compliance', 'Shift & Workforce Scheduling', 'Visitor Management', 'Physical Access Control', 'Workplace & Facility Services', 'Emergency & Mustering'];
 export const CATEGORIES = ['Leave Request', 'Approval', 'Onboarding', 'Offboarding', 'Finance', 'Access', 'Scheduling', 'Compliance', 'Facility', 'Incident'];
 
 type Seed = [string, string, string, string, WfStatus, string, string, string, string, [NodeType, string, string][]];
@@ -220,7 +220,7 @@ const DEF_SEEDS: Seed[] = [
     [['form', 'Overtime Claim', 'Hours & Reason'], ['condition', 'Hours > 4?', 'Policy Rule'], ['approval', 'Manager Approval', 'Direct Manager'], ['update', 'Update Timesheet', 'T&A Records'], ['integration', 'Push to Payroll', 'ADP Payroll']]],
   ['Shift Swap Request', 'Shift & Workforce Scheduling', 'Scheduling', 'Peer-to-peer shift swap with supervisor approval and rest-rule check.', 'Active', 'v1.2', 'Tom Baker', 'refresh', 'var(--ka-7c3aed)',
     [['form', 'Swap Request', 'Requester'], ['approval', 'Peer Acceptance', 'Swap Partner'], ['condition', 'Rest Rule OK?', '11h Rest'], ['approval', 'Supervisor Approval', 'Shift Supervisor'], ['update', 'Update Roster', 'Scheduling'], ['notification', 'Notify Both', 'Push + Email']]],
-  ['Expense Claim', 'Employee Self-Service (ESS)', 'Finance', 'Submit receipts, manager approval, finance audit and reimbursement.', 'Active', 'v2.0', 'Fatima Ali', 'file-text', 'var(--ka-16a34a)',
+  ['Expense Claim', 'People & Identity Management', 'Finance', 'Submit receipts, manager approval, finance audit and reimbursement.', 'Active', 'v2.0', 'Fatima Ali', 'file-text', 'var(--ka-16a34a)',
     [['form', 'Expense Claim', 'Receipts'], ['approval', 'Manager Approval', 'Direct Manager'], ['condition', 'Amount > 5,000?', 'Finance Rule'], ['approval', 'Finance Audit', 'Finance Team'], ['integration', 'Reimburse', 'ADP Payroll'], ['notification', 'Notify Employee', 'Email']]],
   ['Visitor Pre-Approval', 'Visitor Management', 'Access', 'Host invites a visitor; security screens and issues a QR pass.', 'Active', 'v1.3', 'Omar Khalid', 'users', 'var(--ka-db2777)',
     [['form', 'Visitor Invite', 'Host Form'], ['condition', 'Watchlist Clear?', 'Security Screening'], ['approval', 'Security Approval', 'Security Desk'], ['integration', 'Issue QR Pass', 'Access Control'], ['notification', 'Send Invite', 'Email + SMS']]],
@@ -234,7 +234,7 @@ const DEF_SEEDS: Seed[] = [
     [['form', 'Incident Report', 'Reporter'], ['condition', 'Severity High?', 'Severity'], ['notification', 'Alert HSE', 'SMS + Push'], ['task', 'Investigate', 'HSE Officer'], ['approval', 'Close-out Approval', 'HSE Manager']]],
   ['Document Verification', 'People & Identity Management', 'Compliance', 'Verify identity and right-to-work documents.', 'Draft', 'v0.3', 'Hannah Lee', 'file-check', 'var(--ka-8b5cf6)',
     [['form', 'Upload Documents', 'Employee'], ['integration', 'OCR & Validate', 'ID Verification API'], ['approval', 'HR Review', 'HR Department'], ['update', 'Update Profile', 'People Records']]],
-  ['Remote Work Request', 'Employee Self-Service (ESS)', 'Approval', 'Ad-hoc and recurring work-from-home requests.', 'Archived', 'v1.0', 'Sara Khan', 'home', 'var(--ka-94a3b8)',
+  ['Remote Work Request', 'Time & Attendance', 'Approval', 'Ad-hoc and recurring work-from-home requests.', 'Archived', 'v1.0', 'Sara Khan', 'home', 'var(--ka-94a3b8)',
     [['form', 'WFH Request', 'Dates'], ['approval', 'Manager Approval', 'Direct Manager'], ['notification', 'Notify Team', 'Teams']]],
 ];
 
@@ -429,7 +429,7 @@ export const RULES_SEED: Rule[] = [
   { id: 'R-106', name: 'Document expiry reminders (30 days)', enabled: true, module: 'People & Identity Management', trigger: 'Document expiring', match: 'All', conds: [{ field: 'Days to expiry', op: 'less than', value: '30' }], actions: [{ type: 'Send email', target: 'Employee' }, { type: 'Create task', target: 'HR Ops queue' }], runs: 96, success: 100, lastRun: '06:00 AM', owner: 'Hannah Lee' },
   { id: 'R-107', name: 'New joiner onboarding kickoff', enabled: true, module: 'People & Identity Management', trigger: 'Employee joined', match: 'All', conds: [{ field: 'Employment type', op: 'is any of', value: 'Full-time, Contract' }], actions: [{ type: 'Start workflow', target: 'Employee Onboarding' }, { type: 'Post to Teams channel', target: '#new-joiners' }], runs: 58, success: 100, lastRun: 'Yesterday', owner: 'Hannah Lee' },
   { id: 'R-108', name: 'High-severity incident broadcast', enabled: true, module: 'Emergency & Mustering', trigger: 'Incident reported', match: 'All', conds: [{ field: 'Severity', op: 'equals', value: 'High' }], actions: [{ type: 'Start workflow', target: 'Incident Escalation' }, { type: 'Send notification', target: 'HSE + Site Managers' }, { type: 'Call webhook', target: 'ServiceNow incident' }], runs: 12, success: 91.7, lastRun: '12 Oct', owner: 'Aisha Bello' },
-  { id: 'R-109', name: 'Large expense needs Finance audit', enabled: false, module: 'Employee Self-Service (ESS)', trigger: 'Leave request submitted', match: 'All', conds: [{ field: 'Amount', op: 'greater than', value: '5000' }], actions: [{ type: 'Route to approver', target: 'Finance Team' }], runs: 0, success: 0, lastRun: 'Never', owner: 'Fatima Ali' },
+  { id: 'R-109', name: 'Large expense needs Finance audit', enabled: false, module: 'People & Identity Management', trigger: 'Leave request submitted', match: 'All', conds: [{ field: 'Amount', op: 'greater than', value: '5000' }], actions: [{ type: 'Route to approver', target: 'Finance Team' }], runs: 0, success: 0, lastRun: 'Never', owner: 'Fatima Ali' },
   { id: 'R-110', name: 'Contract ending in 45 days', enabled: true, module: 'Contractor & Vendor Workforce', trigger: 'Contract ending', match: 'All', conds: [{ field: 'Days to expiry', op: 'less than', value: '45' }], actions: [{ type: 'Start workflow', target: 'Contract Extension' }, { type: 'Send email', target: 'Contract owner' }], runs: 34, success: 97.1, lastRun: '13 Oct', owner: 'Grace Park' },
 ];
 

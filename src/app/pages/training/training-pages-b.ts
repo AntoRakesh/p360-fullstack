@@ -454,7 +454,7 @@ export class RenewalsExpiryAlerts extends TrnPage {
     { k: '90 days before expiry', d: 'Notify employee', on: true }, { k: '60 days before expiry', d: 'Notify employee + auto-enroll in renewal course', on: true },
     { k: '30 days before expiry', d: 'Notify employee and line manager', on: true }, { k: '7 days before expiry', d: 'Escalate to HSE manager', on: true }, { k: 'On expiry', d: 'Suspend site access permit for licence-dependent roles', on: false },
   ]);
-  protected readonly channels = signal([{ k: 'Email', on: true }, { k: 'SMS', on: false }, { k: 'Push (ESS app)', on: true }, { k: 'Teams', on: true }]);
+  protected readonly channels = signal([{ k: 'Email', on: true }, { k: 'SMS', on: false }, { k: 'Push (mobile app)', on: true }, { k: 'Teams', on: true }]);
   private readonly live = computed(() => this.store.certs().filter((c) => !c.revoked).map((c) => ({ c, d: daysUntil(c.expiry) })));
   protected readonly b = computed(() => {
     const l = this.live();
