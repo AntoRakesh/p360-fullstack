@@ -260,7 +260,8 @@ const PAGES: Record<string, () => Promise<any>> = {
 };
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'command-center/enterprise-overview-dashboard' },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'login', title: 'Sign in · People360', loadComponent: () => import('./pages/auth/login').then((m) => m.Login) },
   ...MODULES.flatMap((m): Routes =>
     m.children?.length
       ? [

@@ -1,3 +1,6 @@
+@if (isAuthPage()) {
+  <router-outlet />
+} @else {
 <div class="shell" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
   <aside class="sidebar">
     <div class="brand">
@@ -219,7 +222,7 @@
               <a class="dd-item" routerLink="/administration-configuration/system-settings" (click)="menu.set(null)">
                 <app-icon name="settings" [size]="16" />Settings
               </a>
-              <button class="dd-item" (click)="menu.set(null)"><app-icon name="door-open" [size]="16" />Sign out</button>
+              <button class="dd-item" (click)="signOut()"><app-icon name="door-open" [size]="16" />Sign out</button>
             </div>
           }
         </div>
@@ -231,3 +234,15 @@
     </main>
   </div>
 </div>
+}
+
+@if (guard.toast(); as t) {
+  @for (k of [t.id]; track k) {
+    <div class="denied-toast" role="alert" aria-live="assertive">
+      <span class="dt-ic"><app-icon name="lg-lock" [size]="20" [stroke]="2.2" /></span>
+      <span class="dt-tx"><b>{{ denied.title }}</b><small>{{ denied.text }}</small></span>
+      <button class="dt-x" (click)="guard.dismiss()" aria-label="Dismiss" data-allow>&times;</button>
+      <i class="dt-bar"></i>
+    </div>
+  }
+}

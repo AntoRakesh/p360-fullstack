@@ -1,4 +1,5 @@
 """Usage: python3 tools/themify.py src   (idempotent; run after adding pages with raw hex colors)
+Files containing the text 'themify: off' are skipped.
 
 Convert hard-coded hex colors in src/ into role-aware theme variables and
 generate src/theme-palette.scss with light + dark values.
@@ -140,6 +141,8 @@ files.append(os.path.join(SRC, 'styles.scss'))
 
 for p in files:
     t = open(p).read()
+    if 'themify: off' in t:  # file opts out: fixed brand/illustration colors
+        continue
     if p.endswith('styles.scss'):
         # keep the :root token block hand-written
         i = t.index('}') + 1
