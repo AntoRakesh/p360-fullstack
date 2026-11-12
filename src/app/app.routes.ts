@@ -261,19 +261,18 @@ const PAGES: Record<string, () => Promise<any>> = {
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', title: 'Sign in · People360', loadComponent: () => import('./pages/auth/login').then((m) => m.Login) },
+  { path: 'login', loadComponent: () => import('./pages/auth/login').then((m) => m.Login) },
   ...MODULES.flatMap((m): Routes =>
     m.children?.length
       ? [
           { path: m.path, pathMatch: 'full', redirectTo: `${m.path}/${m.children[0].path}` },
           ...m.children.map((c) => ({
             path: `${m.path}/${c.path}`,
-            title: `${c.title} · People360`,
             data: { module: m, sub: c },
             loadComponent: PAGES[`${m.path}/${c.path}`] ?? modulePage,
           })),
         ]
-      : [{ path: m.path, title: `${m.title} · People360`, data: { module: m }, loadComponent: modulePage }],
+      : [{ path: m.path, data: { module: m }, loadComponent: modulePage }],
   ),
   { path: '**', redirectTo: 'command-center/enterprise-overview-dashboard' },
 ];
