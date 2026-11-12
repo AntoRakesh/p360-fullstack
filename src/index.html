@@ -5,7 +5,8 @@
   <title>People360</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="purpleiq-logo.png">
+  <link rel="apple-touch-icon" href="purpleiq-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,8 +18,20 @@
       document.documentElement.dataset.mode = m;
     } catch (e) {}
   </script>
+  <style>
+    .p360-splash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #ffffff; z-index: 9999; }
+    html[data-mode="dark"] .p360-splash { background: #0f0f17; }
+    .p360-splash img { width: 96px; height: 96px; animation: p360-pulse 1.4s ease-in-out infinite; }
+    html[data-mode="dark"] .p360-splash img { filter: brightness(0) invert(1); opacity: .9; }
+    @keyframes p360-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.9); opacity: .6; } }
+    @media (prefers-reduced-motion: reduce) { .p360-splash img { animation: none; } }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="p360-splash" role="status" aria-label="Loading People360">
+      <img src="purpleiq-logo.png" alt="">
+    </div>
+  </app-root>
 </body>
 </html>
