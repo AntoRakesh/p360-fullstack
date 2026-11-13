@@ -46,20 +46,6 @@
   }
 }
 
-.product {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 22px 10px 20px;
-  font-size: 25px;
-  font-weight: 600;
-  color: var(--kf-ffffff);
-  white-space: nowrap;
-  b {
-    color: var(--kf-b9a4ff);
-  }
-}
-
 .menu-search {
   margin: 0 16px 12px;
   display: flex;
@@ -190,7 +176,6 @@ button.nav-item {
     padding: 14px 8px 6px;
   }
   .brand-logo,
-  .product,
   .menu-search,
   .nav-no,
   .nav-label,
@@ -411,7 +396,6 @@ button.nav-item {
   }
   .collapsed {
     .brand-logo,
-    .product,
     .menu-search,
     .nav-no,
     .nav-label,
