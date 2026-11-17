@@ -222,14 +222,3 @@
   </div>
 </div>
 }
-
-@if (guard.toast(); as t) {
-  @for (k of [t.id]; track k) {
-    <div class="denied-toast" role="alert" aria-live="assertive">
-      <span class="dt-ic"><app-icon name="lg-lock" [size]="20" [stroke]="2.2" /></span>
-      <span class="dt-tx"><b>{{ denied.title }}</b><small>{{ denied.text }}</small></span>
-      <button class="dt-x" (click)="guard.dismiss()" aria-label="Dismiss" data-allow>&times;</button>
-      <i class="dt-bar"></i>
-    </div>
-  }
-}

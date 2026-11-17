@@ -7,7 +7,6 @@ import { AppModule, MODULES } from './modules';
 import { AppState } from './shared/app-state';
 import { Icon } from './shared/icon';
 import { ACCENTS, ThemeService } from './shared/theme';
-import { ACCESS_DENIED, AccessGuard } from './shared/access-guard';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, DatePipe],
@@ -19,8 +18,6 @@ export class App {
   private readonly router = inject(Router);
   protected readonly state = inject(AppState);
   protected readonly theme = inject(ThemeService);
-  protected readonly guard = inject(AccessGuard);
-  protected readonly denied = ACCESS_DENIED;
   protected readonly accents = ACCENTS;
   protected readonly modes = [
     { id: 'light', name: 'Light', icon: 'th-sun' },
@@ -71,7 +68,6 @@ export class App {
   });
 
   constructor() {
-    this.guard.start();
     this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
       this.mobileOpen.set(false);
       // Auto-expand the parent of the active submodule.
