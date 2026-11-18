@@ -1,0 +1,38 @@
+<div class="shell" [class.mobile-open]="mobileOpen()">
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="purpleiq-mark-light.png" width="36" height="36" alt="" />
+      <div>
+        <div class="brand-name">Purple <b>IQ</b></div>
+        <div class="brand-sub">License Management</div>
+      </div>
+    </div>
+    <nav class="nav">
+      @for (n of nav; track n.path) {
+        <a class="nav-item" [routerLink]="n.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+           (click)="mobileOpen.set(false)">
+          <app-icon [name]="n.icon" />
+          <span>{{ n.label }}</span>
+        </a>
+      }
+    </nav>
+    <div class="side-foot">
+      <div class="who">
+        <span class="avatar">{{ (auth.user()?.username ?? '?').charAt(0).toUpperCase() }}</span>
+        <div>
+          <div class="who-name">{{ auth.user()?.username }}</div>
+          <div class="who-role">{{ auth.user()?.roles?.join(', ') }}</div>
+        </div>
+      </div>
+      <button type="button" class="nav-item" (click)="auth.logout()"><app-icon name="logout" /><span>Sign out</span></button>
+    </div>
+  </aside>
+  <div class="scrim" (click)="mobileOpen.set(false)"></div>
+  <main class="main">
+    <header class="topbar">
+      <button type="button" class="icon-btn mobile-only" (click)="mobileOpen.set(true)" aria-label="Open menu"><app-icon name="menu" /></button>
+      <span class="topbar-title">License Management</span>
+    </header>
+    <div class="content"><router-outlet /></div>
+  </main>
+</div>

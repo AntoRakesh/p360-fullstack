@@ -1,0 +1,56 @@
+<div class="login-page">
+  <div class="login-card card">
+    <div class="login-brand">
+      <img src="purpleiq-mark.png" width="44" height="44" alt="" />
+      <div>
+        <h1>License Management</h1>
+        <p>PurpleIQ vendor console</p>
+      </div>
+    </div>
+
+    @if (error()) {
+      <div class="alert error" role="alert">{{ error() }}</div>
+    }
+
+    @if (step() === 'password') {
+      <form [formGroup]="creds" (ngSubmit)="submitPassword()" class="login-form">
+        <label class="field">
+          <span>Username</span>
+          <input formControlName="username" autocomplete="username" autofocus />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input formControlName="password" type="password" autocomplete="current-password" />
+        </label>
+        <button class="btn primary" type="submit" [disabled]="busy()">{{ busy() ? 'Signing in…' : 'Continue' }}</button>
+      </form>
+    } @else {
+      <form [formGroup]="mfa" (ngSubmit)="submitCode()" class="login-form">
+        @if (challenge()?.enrollRequired) {
+          <div class="enroll">
+            <p><strong>Set up two-factor authentication.</strong> Scan this code with an authenticator app (Google Authenticator, Microsoft Authenticator, 1Password…), then enter the 6-digit code.</p>
+            @if (qr()) {
+              <img class="qr" [src]="qr()" width="200" height="200" alt="TOTP QR code" />
+            }
+            @if (challenge()?.secret) {
+              <div class="field">
+                <span>Or enter this key manually</span>
+                <code class="secret">{{ challenge()?.secret }}</code>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="sub">Enter the 6-digit code from your authenticator app.</p>
+        }
+        <label class="field">
+          <span>Authentication code</span>
+          <input formControlName="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456" autofocus />
+        </label>
+        <div class="row">
+          <button class="btn" type="button" (click)="back()">Back</button>
+          <button class="btn primary" type="submit" [disabled]="busy()">{{ busy() ? 'Verifying…' : 'Verify' }}</button>
+        </div>
+      </form>
+    }
+  </div>
+</div>

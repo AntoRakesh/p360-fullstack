@@ -1,0 +1,67 @@
+<div class="page-head">
+  <div>
+    <h1>Entitlements</h1>
+    <p>Current revision of every customer license.</p>
+  </div>
+  <a class="btn primary" routerLink="/entitlements/new">New license</a>
+</div>
+
+<div class="card">
+  <form class="toolbar" [formGroup]="filters">
+    <input type="search" formControlName="search" placeholder="Search customer, email or subscriber code" aria-label="Search" />
+    <select formControlName="state" aria-label="State">
+      <option value="">All states</option>
+      @for (s of states; track s) { <option [value]="s">{{ s }}</option> }
+    </select>
+    <select formControlName="tier" aria-label="Tier">
+      <option value="">All tiers</option>
+      @for (t of tiers; track t) { <option [value]="t">{{ t }}</option> }
+    </select>
+    <select formControlName="hostingMode" aria-label="Hosting mode">
+      <option value="">All hosting</option>
+      @for (m of modes; track m) { <option [value]="m">{{ m }}</option> }
+    </select>
+  </form>
+
+  @if (error()) {
+    <div class="alert error">{{ error() }}</div>
+  }
+
+  <div class="table-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Customer</th><th>Subscriber</th><th>Tier</th><th>State</th><th>Hosting</th>
+          <th>Rev</th><th>Valid until</th><th>Left</th><th>Seats</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of data()?.items ?? []; track e.id) {
+          <tr class="clickable" (click)="router.navigate(['/entitlements', e.id])">
+            <td>{{ e.customerName }}<div class="sub">{{ e.contactEmail }}</div></td>
+            <td class="mono">{{ e.subscriberCode }}</td>
+            <td><app-badge kind="tier" [value]="e.tier" /></td>
+            <td><app-badge [value]="e.state" /></td>
+            <td>{{ e.hostingMode }}</td>
+            <td>r{{ e.revision }}</td>
+            <td>{{ e.validUntil | date: 'mediumDate' }}</td>
+            <td><app-days-left [until]="e.validUntil" /></td>
+            <td>{{ e.seatLimit }}</td>
+          </tr>
+        } @empty {
+          <tr><td colspan="9" class="empty">{{ data() ? 'No licenses match these filters.' : 'Loading…' }}</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (data(); as d) {
+    <div class="pager">
+      <span>{{ d.total }} licenses · page {{ d.page }} of {{ pages(d) }}</span>
+      <div class="actions">
+        <button class="btn sm" type="button" [disabled]="page() <= 1" (click)="go(-1)">Previous</button>
+        <button class="btn sm" type="button" [disabled]="page() >= pages(d)" (click)="go(1)">Next</button>
+      </div>
+    </div>
+  }
+</div>

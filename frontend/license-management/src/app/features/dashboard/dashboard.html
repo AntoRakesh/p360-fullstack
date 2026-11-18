@@ -1,0 +1,111 @@
+<div class="page-head">
+  <div>
+    <h1>Dashboard</h1>
+    <p>License status across all customers.</p>
+  </div>
+  <div class="actions">
+    <button class="btn" type="button" (click)="load()">Refresh</button>
+    <a class="btn primary" routerLink="/entitlements/new">New license</a>
+  </div>
+</div>
+
+@if (error()) {
+  <div class="alert error">{{ error() }}</div>
+}
+
+@if (data(); as d) {
+  <div class="grid grid-4">
+    <div class="card stat">
+      <span class="stat-label">Current licenses</span>
+      <span class="stat-value">{{ total(d.byTier) }}</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label">Live</span>
+      <span class="stat-value" style="color: var(--green)">{{ d.byState.Live ?? 0 }}</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label">Expiring in 30 days</span>
+      <span class="stat-value" style="color: var(--orange)">{{ d.expiringSoon.length }}</span>
+    </div>
+    <div class="card stat">
+      <span class="stat-label">Expired / revoked</span>
+      <span class="stat-value" style="color: var(--red)">{{ (d.byState.Expired ?? 0) + (d.byState.Revoked ?? 0) }}</span>
+    </div>
+  </div>
+
+  <div class="grid grid-2" style="margin-top: 16px">
+    <div class="card">
+      <div class="card-title">By state</div>
+      <table class="tbl">
+        <tbody>
+          @for (s of states; track s) {
+            <tr class="clickable" (click)="router.navigate(['/entitlements'], { queryParams: { state: s } })">
+              <td><app-badge [value]="s" /></td>
+              <td style="text-align: right; font-weight: 600">{{ d.byState[s] ?? 0 }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">By tier</div>
+      <table class="tbl">
+        <tbody>
+          @for (t of tiers; track t) {
+            <tr class="clickable" (click)="router.navigate(['/entitlements'], { queryParams: { tier: t } })">
+              <td><app-badge kind="tier" [value]="t" /></td>
+              <td style="text-align: right; font-weight: 600">{{ d.byTier[t] ?? 0 }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 16px">
+    <div class="card-title">Expiring in the next 30 days</div>
+    <div class="table-wrap">
+      <table class="tbl">
+        <thead>
+          <tr><th>Customer</th><th>Subscriber</th><th>Tier</th><th>Valid until</th><th>Left</th></tr>
+        </thead>
+        <tbody>
+          @for (e of d.expiringSoon; track e.id) {
+            <tr class="clickable" (click)="router.navigate(['/entitlements', e.id])">
+              <td>{{ e.customerName }}<div class="sub">{{ e.contactEmail }}</div></td>
+              <td class="mono">{{ e.subscriberCode }}</td>
+              <td><app-badge kind="tier" [value]="e.tier" /></td>
+              <td>{{ e.validUntil | date: 'mediumDate' }}</td>
+              <td><app-days-left [until]="e.validUntil" /></td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="empty">Nothing expires in the next 30 days.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Recent activity <a routerLink="/audit" class="sub">View all</a></div>
+    <div class="table-wrap">
+      <table class="tbl">
+        <thead><tr><th>When</th><th>Who</th><th>Action</th><th>Subscriber</th></tr></thead>
+        <tbody>
+          @for (a of d.recentAudit; track a.id) {
+            <tr>
+              <td>{{ a.at | date: 'medium' }}</td>
+              <td>{{ a.who }}</td>
+              <td>{{ a.action }}</td>
+              <td class="mono">{{ a.subscriberCode ?? '—' }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="4" class="empty">No activity yet.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+} @else if (!error()) {
+  <div class="spinner">Loading…</div>
+}

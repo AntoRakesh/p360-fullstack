@@ -1,0 +1,7 @@
+# Shared ignores for all frontend apps (each app also has its own .gitignore)
+node_modules/
+dist/
+.angular/
+*.log
+.DS_Store
+Thumbs.db

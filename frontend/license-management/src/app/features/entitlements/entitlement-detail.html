@@ -1,0 +1,197 @@
+@if (error()) {
+  <div class="alert error" role="alert">{{ error() }}</div>
+}
+@if (notice()) {
+  <div class="alert ok" role="status">{{ notice() }}</div>
+}
+
+@if (ent(); as e) {
+  <div class="page-head">
+    <div>
+      <div class="sub"><a routerLink="/entitlements">Entitlements</a> / <span class="mono">{{ e.subscriberCode }}</span></div>
+      <h1>{{ e.customerName }}</h1>
+      <p>
+        <app-badge [value]="e.state" /> <app-badge kind="tier" [value]="e.tier" />
+        Revision {{ e.revision }} · valid until {{ e.validUntil | date: 'mediumDate' }} (<app-days-left [until]="e.validUntil" />)
+      </p>
+    </div>
+    <div class="actions">
+      <button class="btn" type="button" (click)="download()"><app-icon name="download" [size]="16" /> Download .entl</button>
+      @if (isCurrent()) {
+        <button class="btn" type="button" (click)="generateKey()" [disabled]="busy() || e.state === 'Revoked'">
+          {{ e.installKeyPrefix ? 'Rotate install key' : 'Generate install key' }}
+        </button>
+        @if (e.state === 'Live') {
+          <button class="btn" type="button" (click)="openState('suspend')">Suspend</button>
+        }
+        @if (e.state === 'Suspended') {
+          <button class="btn" type="button" (click)="openState('resume')">Resume</button>
+        }
+        @if (e.state === 'Live' || e.state === 'Suspended') {
+          <button class="btn danger" type="button" (click)="openState('revoke')">Revoke</button>
+        }
+        @if (canRenew()) {
+          <button class="btn primary" type="button" (click)="openRenew()"><app-icon name="refresh" [size]="16" /> Renew</button>
+        }
+      }
+    </div>
+  </div>
+
+  @if (!isCurrent() && current(); as c) {
+    <div class="alert warn">
+      This is an old revision ({{ e.state }}). Current is <a [routerLink]="['/entitlements', c.id]">revision {{ c.revision }}</a>.
+    </div>
+  }
+  @if (e.stateReason) {
+    <div class="alert warn">Reason: {{ e.stateReason }}</div>
+  }
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-title">License</div>
+      <dl class="kv">
+        <dt>Subscriber code</dt><dd class="mono">{{ e.subscriberCode }}</dd>
+        <dt>Contact email</dt><dd>{{ e.contactEmail }}</dd>
+        <dt>Valid from</dt><dd>{{ e.validFrom | date: 'mediumDate' }}</dd>
+        <dt>Valid until</dt><dd>{{ e.validUntil | date: 'mediumDate' }}</dd>
+        <dt>Seat limit</dt><dd>{{ e.seatLimit }}</dd>
+        <dt>Device limit</dt><dd>{{ e.deviceLimit ?? 'Unlimited' }}</dd>
+        <dt>Issued</dt><dd>{{ e.issuedAt | date: 'medium' }} by {{ e.issuedBy }}</dd>
+        @if (e.notes) { <dt>Notes</dt><dd>{{ e.notes }}</dd> }
+      </dl>
+    </div>
+    <div class="card">
+      <div class="card-title">Deployment</div>
+      <dl class="kv">
+        <dt>Hosting mode</dt><dd>{{ e.hostingMode }}</dd>
+        <dt>Host fingerprint</dt><dd class="mono">{{ e.hostFingerprint ?? 'Not machine-bound' }}</dd>
+        <dt>Build range</dt><dd>{{ e.minBuild ?? 'any' }} – {{ e.maxBuild ?? 'any' }}</dd>
+        <dt>Install key</dt><dd class="mono">{{ e.installKeyPrefix ? e.installKeyPrefix + '…' : 'None' }}</dd>
+        <dt>Last ping</dt><dd>{{ e.lastPingAt ? (e.lastPingAt | date: 'medium') : 'Never' }}</dd>
+        <dt>Last check-in</dt><dd>{{ e.lastCheckinAt ? (e.lastCheckinAt | date: 'medium') : 'Never' }}</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Features</div>
+    <dl class="kv">
+      <dt>Analytics</dt><dd>{{ e.features.analyticsLevel }}</dd>
+      <dt>API access</dt><dd>{{ e.features.apiAccess }}{{ e.features.apiReadOnly ? ' (read-only)' : '' }}</dd>
+      <dt>API calls / day</dt><dd>{{ e.features.apiDailyCallLimit ?? 'Unlimited' }}</dd>
+      <dt>Max sites</dt><dd>{{ e.features.maxSites ?? 'Unlimited' }}</dd>
+    </dl>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Modules <span class="sub">{{ e.modules.length }} enabled</span></div>
+    @if (catalog(); as c) {
+      <app-module-picker [catalog]="c" [tier]="e.tier" [selected]="moduleKeys()" [readonly]="true" />
+    }
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      Revision history
+      <a class="sub" routerLink="/audit" [queryParams]="{ subscriberCode: e.subscriberCode }">Audit log</a>
+    </div>
+    <ul class="timeline">
+      @for (h of history(); track h.id) {
+        <li [class.current]="h.id === e.id">
+          <a [routerLink]="['/entitlements', h.id]"><strong>Revision {{ h.revision }}</strong></a>
+          <app-badge [value]="h.state" /> <app-badge kind="tier" [value]="h.tier" />
+          <div class="sub">
+            {{ h.validFrom | date: 'mediumDate' }} – {{ h.validUntil | date: 'mediumDate' }} · issued {{ h.issuedAt | date: 'medium' }} by {{ h.issuedBy }}
+          </div>
+        </li>
+      } @empty {
+        <li class="sub">Loading…</li>
+      }
+    </ul>
+  </div>
+
+  <!-- ===== Dialogs ===== -->
+  @if (stateDialog(); as a) {
+    <app-dialog [title]="(a === 'resume' ? 'Resume' : a === 'suspend' ? 'Suspend' : 'Revoke') + ' license'" (closed)="stateDialog.set(null)">
+      @switch (a) {
+        @case ('suspend') { <p>The customer's product will be blocked at its next check-in until you resume it.</p> }
+        @case ('resume') { <p>The license becomes Live again.</p> }
+        @case ('revoke') { <p><strong>Revoking is permanent.</strong> The customer will need a new license. Offline installs only learn about this at their next online check-in.</p> }
+      }
+      <label class="field">
+        <span>Reason (recorded in the audit log) *</span>
+        <textarea [formControl]="reason" rows="3"></textarea>
+        @if (reason.touched && reason.invalid) { <span class="err">Enter a reason.</span> }
+      </label>
+      <ng-container dlg-actions>
+        <button class="btn" type="button" (click)="stateDialog.set(null)">Cancel</button>
+        <button class="btn" type="button" [class.primary]="a !== 'revoke'" [class.danger-solid]="a === 'revoke'" [disabled]="busy()" (click)="confirmState()">
+          {{ a === 'resume' ? 'Resume' : a === 'suspend' ? 'Suspend' : 'Revoke' }}
+        </button>
+      </ng-container>
+    </app-dialog>
+  }
+
+  @if (renewOpen()) {
+    <app-dialog title="Renew license" [wide]="true" (closed)="renewOpen.set(false)">
+      <p class="sub" style="margin: 0">
+        Creates revision {{ e.revision + 1 }}. Revision {{ e.revision }} becomes Superseded and is never edited. The new signed file is emailed to {{ e.contactEmail }}.
+      </p>
+      <form [formGroup]="renewForm" class="grid grid-3">
+        <label class="field">
+          <span>New valid until *</span>
+          <input type="date" formControlName="validUntil" />
+        </label>
+        <label class="field">
+          <span>Seat limit</span>
+          <input type="number" min="1" formControlName="seatLimit" />
+        </label>
+        <label class="field">
+          <span>Notes</span>
+          <input formControlName="notes" />
+        </label>
+      </form>
+      <label class="check">
+        <input type="checkbox" [checked]="renewChangePlan()" (change)="renewChangePlan.set($any($event.target).checked)" />
+        Change tier, modules or features
+      </label>
+      @if (renewChangePlan()) {
+        <div class="tier-pick">
+          @for (t of tiers; track t) {
+            <button type="button" class="tier-card" [class.selected]="renewForm.controls.tier.value === t" (click)="renewTier(t)">
+              <strong>{{ t }}</strong>
+            </button>
+          }
+        </div>
+        <label class="check sub">
+          <input type="checkbox" [checked]="renewOverride()" (change)="renewOverride.set($any($event.target).checked)" />
+          Override tier (allow any module)
+        </label>
+        @if (catalog(); as c) {
+          <app-module-picker [catalog]="c" [tier]="renewForm.controls.tier.value" [override]="renewOverride()" [(selected)]="renewModules" />
+        }
+        <app-features-fields [group]="renewForm.controls.features" />
+      }
+      <ng-container dlg-actions>
+        <button class="btn" type="button" (click)="renewOpen.set(false)">Cancel</button>
+        <button class="btn primary" type="button" [disabled]="busy()" (click)="confirmRenew()">{{ busy() ? 'Renewing…' : 'Renew & email' }}</button>
+      </ng-container>
+    </app-dialog>
+  }
+
+  @if (installKey(); as k) {
+    <app-dialog title="Install key" (closed)="installKey.set(null)">
+      <div class="alert warn" style="margin: 0">Copy this key now. It is shown only once; the server stores only its hash.</div>
+      <div class="secret-box">
+        <code>{{ k.apiKey }}</code>
+        <button class="btn sm" type="button" (click)="copyKey()"><app-icon name="copy" [size]="14" /> {{ copied() ? 'Copied' : 'Copy' }}</button>
+      </div>
+      <p class="sub" style="margin: 0">Put it in the customer install's config as the check-in key (header <code>X-Install-Key</code>). Any previous key stops working.</p>
+      <ng-container dlg-actions>
+        <button class="btn primary" type="button" (click)="installKey.set(null)">Done</button>
+      </ng-container>
+    </app-dialog>
+  }
+} @else if (!error()) {
+  <div class="spinner">Loading…</div>
+}

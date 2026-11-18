@@ -1,0 +1,65 @@
+<div class="page-head">
+  <div>
+    <h1>Audit log</h1>
+    <p>Every change is recorded here. Entries cannot be edited or deleted.</p>
+  </div>
+</div>
+
+<div class="card">
+  <form class="toolbar" [formGroup]="filters">
+    <input type="search" formControlName="subscriberCode" placeholder="Subscriber code" aria-label="Subscriber code" />
+    <input type="search" formControlName="action" placeholder="Action (e.g. Renew, Revoke, Login)" aria-label="Action" />
+  </form>
+
+  @if (error()) {
+    <div class="alert error">{{ error() }}</div>
+  }
+
+  <div class="table-wrap">
+    <table class="tbl">
+      <thead>
+        <tr><th>When</th><th>Who</th><th>Action</th><th>Subscriber</th><th>IP</th><th></th></tr>
+      </thead>
+      <tbody>
+        @for (a of data()?.items ?? []; track a.id) {
+          <tr class="clickable" (click)="toggle(a.id)">
+            <td>{{ a.at | date: 'medium' }}</td>
+            <td>{{ a.who }}</td>
+            <td><strong>{{ a.action }}</strong></td>
+            <td class="mono">
+              @if (a.entitlementId) {
+                <a [routerLink]="['/entitlements', a.entitlementId]" (click)="$event.stopPropagation()">{{ a.subscriberCode ?? a.entitlementId }}</a>
+              } @else {
+                {{ a.subscriberCode ?? '—' }}
+              }
+            </td>
+            <td class="mono">{{ a.ip ?? '—' }}</td>
+            <td style="text-align: right">{{ open() === a.id ? '▾' : '▸' }}</td>
+          </tr>
+          @if (open() === a.id) {
+            <tr>
+              <td colspan="6">
+                <div class="grid grid-2">
+                  <div><div class="field-label">Before</div><pre class="json">{{ a.before ?? null | json }}</pre></div>
+                  <div><div class="field-label">After</div><pre class="json">{{ a.after ?? null | json }}</pre></div>
+                </div>
+              </td>
+            </tr>
+          }
+        } @empty {
+          <tr><td colspan="6" class="empty">{{ data() ? 'No audit events match.' : 'Loading…' }}</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (data(); as d) {
+    <div class="pager">
+      <span>{{ d.total }} events · page {{ d.page }} of {{ pages(d) }}</span>
+      <div class="actions">
+        <button class="btn sm" type="button" [disabled]="page() <= 1" (click)="go(-1)">Previous</button>
+        <button class="btn sm" type="button" [disabled]="page() >= pages(d)" (click)="go(1)">Next</button>
+      </div>
+    </div>
+  }
+</div>

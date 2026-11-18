@@ -1,0 +1,127 @@
+<div class="page-head">
+  <div>
+    <h1>New license</h1>
+    <p>Issues revision 1 and signs the license file.</p>
+  </div>
+  <a class="btn" routerLink="/entitlements">Cancel</a>
+</div>
+
+@if (error()) {
+  <div class="alert error" role="alert">{{ error() }}</div>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="card">
+    <div class="card-title">
+      Customer
+      <label class="btn sm">
+        Import .actreq
+        <input type="file" accept=".actreq" hidden (change)="onActreq($event)" />
+      </label>
+    </div>
+    @if (activation(); as a) {
+      <div class="alert ok">
+        Activation request read: host <strong>{{ a.hostname }}</strong>, build {{ a.productBuild }}. Fingerprint filled in and hosting set to OnPrem.
+      </div>
+    }
+    <div class="grid grid-3">
+      <label class="field">
+        <span>Customer name *</span>
+        <input formControlName="customerName" />
+      </label>
+      <label class="field">
+        <span>Contact email *</span>
+        <input type="email" formControlName="contactEmail" />
+        <small>Renewed license files are emailed here.</small>
+      </label>
+      <label class="field">
+        <span>Subscriber code</span>
+        <input formControlName="subscriberCode" placeholder="Generated if blank" class="mono" />
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tier</div>
+    <div class="tier-pick">
+      @for (t of tiers; track t) {
+        <button type="button" class="tier-card" [class.selected]="form.controls.tier.value === t" (click)="pickTier(t)">
+          <strong>People360 {{ t }}</strong>
+          <span>{{ blurb[t] }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      Modules
+      <label class="check sub">
+        <input type="checkbox" [checked]="override()" (change)="onOverride($any($event.target).checked)" />
+        Override tier (allow any module)
+      </label>
+    </div>
+    @if (catalog(); as c) {
+      <app-module-picker [catalog]="c" [tier]="form.controls.tier.value" [override]="override()" [(selected)]="modules" />
+    } @else {
+      <div class="spinner">Loading catalog…</div>
+    }
+  </div>
+
+  <div class="card">
+    <div class="card-title">Features & limits</div>
+    <app-features-fields [group]="form.controls.features" />
+    <div class="grid grid-3" style="margin-top: 16px">
+      <label class="field">
+        <span>Seat limit (people) *</span>
+        <input type="number" min="1" formControlName="seatLimit" />
+      </label>
+      <label class="field">
+        <span>Device limit</span>
+        <input type="number" min="1" formControlName="deviceLimit" placeholder="Unlimited" />
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Validity & deployment</div>
+    <div class="grid grid-3">
+      <label class="field">
+        <span>Valid from *</span>
+        <input type="date" formControlName="validFrom" />
+      </label>
+      <label class="field">
+        <span>Valid until *</span>
+        <input type="date" formControlName="validUntil" />
+      </label>
+      <label class="field">
+        <span>Hosting mode</span>
+        <select formControlName="hostingMode">
+          @for (m of modes; track m) { <option [value]="m">{{ m }}</option> }
+        </select>
+        <small>Split = license DB on vendor side, business data on customer side.</small>
+      </label>
+      <label class="field">
+        <span>Min product build</span>
+        <input formControlName="minBuild" placeholder="e.g. 1.0.0" />
+      </label>
+      <label class="field">
+        <span>Max product build</span>
+        <input formControlName="maxBuild" placeholder="e.g. 1.99.99" />
+      </label>
+      <label class="field">
+        <span>Host fingerprint</span>
+        <input formControlName="hostFingerprint" class="mono" placeholder="Blank = not machine-bound" />
+      </label>
+    </div>
+    <label class="field" style="margin-top: 16px">
+      <span>Notes</span>
+      <textarea formControlName="notes" rows="3"></textarea>
+    </label>
+  </div>
+
+  <div class="actions" style="justify-content: flex-end; margin-top: 16px">
+    <a class="btn" routerLink="/entitlements">Cancel</a>
+    <button class="btn primary" type="submit" [disabled]="busy() || !catalog()">{{ busy() ? 'Issuing…' : 'Issue license' }}</button>
+  </div>
+</form>
