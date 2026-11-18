@@ -28,6 +28,9 @@ cd ../../frontend/license-management && npm start   # http://localhost:4201
 First login shows a QR code. Scan it with an authenticator app. Then remove the seed password:
 `dotnet user-secrets --project src/Issuer.Api remove Issuer:AdminSeed:Password`
 
+Forgot the password or lost the authenticator? Set a new seed password (`./scripts/dev-setup.sh`), then
+`dotnet run --project src/Issuer.Api -- reset-admin`. It resets the password and TOTP; the API can keep running.
+
 Tests: `dotnet test LicenseManagement.slnx` and `./scripts/e2e-smoke.sh`.
 
 ## Tiers

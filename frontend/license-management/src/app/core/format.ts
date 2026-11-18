@@ -29,7 +29,9 @@ export function addYears(d: Date, years: number): Date {
 /** Best human-readable message from an API error (RFC 7807 problem JSON or plain text). */
 export function errorMessage(err: unknown): string {
   if (err instanceof HttpErrorResponse) {
-    if (err.status === 0) return 'Cannot reach the License API. Is it running?';
+    // 0 = no connection; 502/503/504 = dev proxy could not reach the API on :5080.
+    if (err.status === 0 || err.status === 502 || err.status === 503 || err.status === 504)
+      return 'Cannot reach the License API. Start it with: dotnet run --project src/Issuer.Api';
     const body = err.error;
     if (body && typeof body === 'object') {
       const b = body as { detail?: string; title?: string; errors?: Record<string, string[]> };

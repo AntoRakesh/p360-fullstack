@@ -22,12 +22,13 @@ if (args.Length > 0 && args[0] == "keygen")
     return;
 }
 
-var builder = WebApplication.CreateBuilder(args);
+var resetAdmin = args.Length > 0 && args[0] == "reset-admin";
+var builder = WebApplication.CreateBuilder(resetAdmin ? args[1..] : args);
 var cfg = builder.Configuration;
 
 builder.Services.AddOptions<IssuerOptions>().Bind(cfg.GetSection(IssuerOptions.Section))
-    .Validate(o => !string.IsNullOrWhiteSpace(o.SigningKey), "Issuer:SigningKey is required (env Issuer__SigningKey).")
-    .Validate(o => o.Jwt.Key.Length >= 32, "Issuer:Jwt:Key must be at least 32 characters (env Issuer__Jwt__Key).")
+    .Validate(o => !string.IsNullOrWhiteSpace(o.SigningKey), "Issuer:SigningKey is missing. Dev: run ./scripts/dev-setup.sh once. Prod: set env Issuer__SigningKey.")
+    .Validate(o => o.Jwt.Key.Length >= 32, "Issuer:Jwt:Key is missing or shorter than 32 characters. Dev: run ./scripts/dev-setup.sh once. Prod: set env Issuer__Jwt__Key.")
     .ValidateOnStart();
 var opts = cfg.GetSection(IssuerOptions.Section).Get<IssuerOptions>() ?? new IssuerOptions();
 
@@ -35,6 +36,15 @@ var opts = cfg.GetSection(IssuerOptions.Section).Get<IssuerOptions>() ?? new Iss
 var mongoUrl = MongoUrl.Create(cfg.GetConnectionString("IssuerDb") ?? "mongodb://localhost:27017/p360_license_issuer");
 builder.Services.AddSingleton<IMongoClient>(new MongoClient(mongoUrl));
 builder.Services.AddSingleton(sp => new MongoContext(sp.GetRequiredService<IMongoClient>().GetDatabase(mongoUrl.DatabaseName ?? "p360_license_issuer")));
+
+// `dotnet run -- reset-admin` sets the admin password from Issuer:AdminSeed, clears TOTP and lockout, then exits.
+// Does not start the web server, so it works while the API is running.
+if (resetAdmin)
+{
+    var db = new MongoContext(new MongoClient(mongoUrl).GetDatabase(mongoUrl.DatabaseName ?? "p360_license_issuer"));
+    Environment.ExitCode = await AdminReset.RunAsync(db, opts.AdminSeed);
+    return;
+}
 
 // ---- services
 builder.Services.AddSingleton(TimeProvider.System);
