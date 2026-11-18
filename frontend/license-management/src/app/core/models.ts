@@ -4,8 +4,6 @@ export type EntitlementState = 'Live' | 'Suspended' | 'Revoked' | 'Expired' | 'S
 export type Tier = 'Essential' | 'Professional' | 'Enterprise';
 export type HostingMode = 'Cloud' | 'OnPrem' | 'Split';
 export type Inclusion = 'Included' | 'AddOn' | 'None';
-export type AnalyticsLevel = 'Basic' | 'Full';
-export type ApiAccess = 'Limited' | 'Full';
 
 export const STATES: EntitlementState[] = ['Live', 'Suspended', 'Revoked', 'Expired', 'Superseded'];
 export const TIERS: Tier[] = ['Essential', 'Professional', 'Enterprise'];
@@ -13,17 +11,25 @@ export const HOSTING_MODES: HostingMode[] = ['Cloud', 'OnPrem', 'Split'];
 
 export interface ModuleGrant {
   moduleKey: string;
-  seatLimit?: number | null;
   moduleValidUntil?: string | null;
   deviceKinds?: string[] | null;
 }
 
-export interface Features {
-  analyticsLevel: AnalyticsLevel;
-  apiAccess: ApiAccess;
-  apiDailyCallLimit?: number | null;
-  apiReadOnly: boolean;
-  maxSites?: number | null;
+/** Quantity null = unlimited. */
+export interface CapacityGrant {
+  quantity: number | null;
+}
+
+/** Registered / Connected capacity. A missing grant = not purchased. */
+export interface Capacity {
+  registered?: CapacityGrant | null;
+  connected?: CapacityGrant | null;
+}
+
+export interface CapacityOptions {
+  registered: (number | null)[];
+  connected: number[];
+  autoRegistered: number;
 }
 
 export interface Entitlement {
@@ -35,9 +41,7 @@ export interface Entitlement {
   state: EntitlementState;
   tier: Tier;
   modules: ModuleGrant[];
-  features: Features;
-  seatLimit: number;
-  deviceLimit?: number | null;
+  capacity: Capacity;
   validFrom: string;
   validUntil: string;
   minBuild?: string | null;
@@ -51,6 +55,8 @@ export interface Entitlement {
   installKeyPrefix?: string | null;
   notes?: string | null;
   stateReason?: string | null;
+  /** Masked (password hidden). Full value via ApiService.revealClientDb. */
+  clientDbConnection?: string | null;
 }
 
 export interface EntitlementInput {
@@ -59,9 +65,7 @@ export interface EntitlementInput {
   contactEmail: string;
   tier: Tier;
   modules: ModuleGrant[];
-  features: Features;
-  seatLimit: number;
-  deviceLimit?: number | null;
+  capacity: Capacity;
   validFrom: string;
   validUntil: string;
   minBuild?: string | null;
@@ -69,15 +73,14 @@ export interface EntitlementInput {
   hostingMode: HostingMode;
   hostFingerprint?: string | null;
   notes?: string | null;
+  clientDbConnectionString?: string | null;
 }
 
 export interface RenewInput {
   validUntil: string;
   tier?: Tier;
   modules?: ModuleGrant[];
-  features?: Features;
-  seatLimit?: number;
-  deviceLimit?: number | null;
+  capacity?: Capacity;
   hostFingerprint?: string | null;
   notes?: string | null;
 }
@@ -112,12 +115,12 @@ export interface TierDef {
   tier: Tier;
   title: string;
   inclusion: Record<string, Inclusion>;
-  features: Features;
 }
 
 export interface Catalog {
   modules: CatalogModule[];
   tiers: TierDef[];
+  capacity: CapacityOptions;
 }
 
 export interface Dashboard {

@@ -15,27 +15,11 @@ public enum HostingMode { Cloud, OnPrem, Split }
 [JsonConverter(typeof(JsonStringEnumConverter<Inclusion>))]
 public enum Inclusion { Included, AddOn, None }
 
-[JsonConverter(typeof(JsonStringEnumConverter<AnalyticsLevel>))]
-public enum AnalyticsLevel { Basic, Full }
-
-[JsonConverter(typeof(JsonStringEnumConverter<ApiAccess>))]
-public enum ApiAccess { Limited, Full }
-
 public sealed record ModuleGrant
 {
     public required string ModuleKey { get; init; }
-    public int? SeatLimit { get; init; }
     public DateTime? ModuleValidUntil { get; init; }
     public List<string>? DeviceKinds { get; init; }
-}
-
-public sealed record Features
-{
-    public AnalyticsLevel AnalyticsLevel { get; init; } = AnalyticsLevel.Full;
-    public ApiAccess ApiAccess { get; init; } = ApiAccess.Full;
-    public int? ApiDailyCallLimit { get; init; }
-    public bool ApiReadOnly { get; init; }
-    public int? MaxSites { get; init; }
 }
 
 /// <summary>
@@ -52,9 +36,8 @@ public sealed record EntitlementPayload
     public required EntitlementState State { get; init; }
     public required Tier Tier { get; init; }
     public required List<ModuleGrant> Modules { get; init; }
-    public required Features Features { get; init; }
-    public required int SeatLimit { get; init; }
-    public int? DeviceLimit { get; init; }
+    /// <summary>Registered / Connected capacity. Files issued before this field existed read as empty.</summary>
+    public Capacity Capacity { get; init; } = new();
     public required DateTime ValidFrom { get; init; }
     public required DateTime ValidUntil { get; init; }
     public string? MinBuild { get; init; }

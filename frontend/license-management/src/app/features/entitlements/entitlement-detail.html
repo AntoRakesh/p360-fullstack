@@ -54,8 +54,6 @@
         <dt>Contact email</dt><dd>{{ e.contactEmail }}</dd>
         <dt>Valid from</dt><dd>{{ e.validFrom | date: 'mediumDate' }}</dd>
         <dt>Valid until</dt><dd>{{ e.validUntil | date: 'mediumDate' }}</dd>
-        <dt>Seat limit</dt><dd>{{ e.seatLimit }}</dd>
-        <dt>Device limit</dt><dd>{{ e.deviceLimit ?? 'Unlimited' }}</dd>
         <dt>Issued</dt><dd>{{ e.issuedAt | date: 'medium' }} by {{ e.issuedBy }}</dd>
         @if (e.notes) { <dt>Notes</dt><dd>{{ e.notes }}</dd> }
       </dl>
@@ -64,8 +62,19 @@
       <div class="card-title">Deployment</div>
       <dl class="kv">
         <dt>Hosting mode</dt><dd>{{ e.hostingMode }}</dd>
-        <dt>Host fingerprint</dt><dd class="mono">{{ e.hostFingerprint ?? 'Not machine-bound' }}</dd>
+        @if (e.hostingMode === 'OnPrem') {
+          <dt>Host fingerprint</dt><dd class="mono">{{ e.hostFingerprint ?? 'Not machine-bound' }}</dd>
+        }
         <dt>Build range</dt><dd>{{ e.minBuild ?? 'any' }} – {{ e.maxBuild ?? 'any' }}</dd>
+        <dt>Client database</dt>
+        <dd class="mono">
+          @if (e.clientDbConnection) {
+            {{ clientDb() ?? e.clientDbConnection }}
+            <button class="btn sm" type="button" style="margin-left: 8px" (click)="toggleClientDb()">{{ clientDb() ? 'Hide' : 'Show' }}</button>
+          } @else {
+            Not set
+          }
+        </dd>
         <dt>Install key</dt><dd class="mono">{{ e.installKeyPrefix ? e.installKeyPrefix + '…' : 'None' }}</dd>
         <dt>Last ping</dt><dd>{{ e.lastPingAt ? (e.lastPingAt | date: 'medium') : 'Never' }}</dd>
         <dt>Last check-in</dt><dd>{{ e.lastCheckinAt ? (e.lastCheckinAt | date: 'medium') : 'Never' }}</dd>
@@ -74,19 +83,10 @@
   </div>
 
   <div class="card">
-    <div class="card-title">Features</div>
-    <dl class="kv">
-      <dt>Analytics</dt><dd>{{ e.features.analyticsLevel }}</dd>
-      <dt>API access</dt><dd>{{ e.features.apiAccess }}{{ e.features.apiReadOnly ? ' (read-only)' : '' }}</dd>
-      <dt>API calls / day</dt><dd>{{ e.features.apiDailyCallLimit ?? 'Unlimited' }}</dd>
-      <dt>Max sites</dt><dd>{{ e.features.maxSites ?? 'Unlimited' }}</dd>
-    </dl>
-  </div>
-
-  <div class="card">
     <div class="card-title">Modules <span class="sub">{{ e.modules.length }} enabled</span></div>
     @if (catalog(); as c) {
       <app-module-picker [catalog]="c" [tier]="e.tier" [selected]="moduleKeys()" [readonly]="true" />
+      <app-capacity-picker [options]="c.capacity" [value]="e.capacity ?? {}" [readonly]="true" />
     }
   </div>
 
@@ -137,14 +137,10 @@
       <p class="sub" style="margin: 0">
         Creates revision {{ e.revision + 1 }}. Revision {{ e.revision }} becomes Superseded and is never edited. The new signed file is emailed to {{ e.contactEmail }}.
       </p>
-      <form [formGroup]="renewForm" class="grid grid-3">
+      <form [formGroup]="renewForm" class="grid grid-2">
         <label class="field">
           <span>New valid until *</span>
           <input type="date" formControlName="validUntil" />
-        </label>
-        <label class="field">
-          <span>Seat limit</span>
-          <input type="number" min="1" formControlName="seatLimit" />
         </label>
         <label class="field">
           <span>Notes</span>
@@ -153,7 +149,7 @@
       </form>
       <label class="check">
         <input type="checkbox" [checked]="renewChangePlan()" (change)="renewChangePlan.set($any($event.target).checked)" />
-        Change tier, modules or features
+        Change tier, modules or Registered & Connected
       </label>
       @if (renewChangePlan()) {
         <div class="tier-pick">
@@ -169,8 +165,8 @@
         </label>
         @if (catalog(); as c) {
           <app-module-picker [catalog]="c" [tier]="renewForm.controls.tier.value" [override]="renewOverride()" [(selected)]="renewModules" />
+          <app-capacity-picker [options]="c.capacity" [(value)]="renewCapacity" />
         }
-        <app-features-fields [group]="renewForm.controls.features" />
       }
       <ng-container dlg-actions>
         <button class="btn" type="button" (click)="renewOpen.set(false)">Cancel</button>

@@ -132,7 +132,7 @@ public sealed class LicenseEngine
             _host.GetFingerprint());
     }
 
-    /// <summary>Feature flags of the verified license, or null when the gate would block.</summary>
+    /// <summary>The verified license, or null when the gate would block.</summary>
     public async Task<EntitlementPayload?> GetVerifiedAsync(CancellationToken ct = default)
     {
         var d = await EvaluateAsync(null, ct);

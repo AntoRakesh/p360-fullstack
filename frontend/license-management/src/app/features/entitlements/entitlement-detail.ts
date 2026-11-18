@@ -4,18 +4,18 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { addYears, errorMessage, fromDateInput, saveBlob, toDateInput } from '../../core/format';
-import { Catalog, Entitlement, InstallKey, RenewInput, TIERS, Tier } from '../../core/models';
+import { Capacity, Catalog, Entitlement, InstallKey, RenewInput, TIERS, Tier } from '../../core/models';
 import { Dialog } from '../../shared/dialog';
 import { Icon } from '../../shared/icon';
 import { Badge, DaysLeft } from '../../shared/state-badge';
-import { FeaturesFields, featuresForm, featuresValue } from './features-form';
+import { CapacityPicker } from './capacity-picker';
 import { ModulePicker, defaultModules } from './module-picker';
 
 type StateAction = 'suspend' | 'resume' | 'revoke';
 
 @Component({
   selector: 'app-entitlement-detail',
-  imports: [ReactiveFormsModule, RouterLink, DatePipe, Badge, DaysLeft, Dialog, Icon, ModulePicker, FeaturesFields],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe, Badge, DaysLeft, Dialog, Icon, ModulePicker, CapacityPicker],
   templateUrl: './entitlement-detail.html',
 })
 export class EntitlementDetail {
@@ -50,15 +50,16 @@ export class EntitlementDetail {
   protected readonly renewChangePlan = signal(false);
   protected readonly renewOverride = signal(false);
   protected readonly renewModules = signal<string[]>([]);
+  protected readonly renewCapacity = signal<Capacity>({});
   protected readonly renewForm = new FormGroup({
     validUntil: new FormControl('', { nonNullable: true, validators: Validators.required }),
     tier: new FormControl<Tier>('Professional', { nonNullable: true }),
-    seatLimit: new FormControl<number | null>(null, Validators.min(1)),
     notes: new FormControl<string | null>(null),
-    features: featuresForm(),
   });
 
   protected readonly installKey = signal<InstallKey | null>(null);
+  /** Full client DB connection string after "Show"; cleared when the page changes. */
+  protected readonly clientDb = signal<string | null>(null);
   protected readonly copied = signal(false);
 
   constructor() {
@@ -72,6 +73,7 @@ export class EntitlementDetail {
   private load(id: string): void {
     this.error.set(null);
     this.ent.set(null);
+    this.clientDb.set(null);
     if (this.created()) this.notice.set('License issued and signed.');
     this.api.get(id).subscribe({
       next: (e) => {
@@ -117,11 +119,10 @@ export class EntitlementDetail {
     this.renewForm.reset({
       validUntil: toDateInput(addYears(base, 1)),
       tier: e.tier,
-      seatLimit: e.seatLimit,
       notes: e.notes ?? null,
     });
-    this.renewForm.controls.features.reset(e.features);
     this.renewModules.set(this.moduleKeys());
+    this.renewCapacity.set(e.capacity ?? {});
     this.renewChangePlan.set(false);
     this.renewOverride.set(false);
     this.renewOpen.set(true);
@@ -132,8 +133,6 @@ export class EntitlementDetail {
     const c = this.catalog();
     if (!c) return;
     this.renewModules.set(defaultModules(c, t, this.renewModules()));
-    const def = c.tiers.find((x) => x.tier === t)?.features;
-    if (def) this.renewForm.controls.features.reset(def);
   }
 
   protected confirmRenew(): void {
@@ -141,11 +140,14 @@ export class EntitlementDetail {
     if (!e || this.renewForm.invalid) return this.renewForm.markAllAsTouched();
     const v = this.renewForm.getRawValue();
     const body: RenewInput = { validUntil: fromDateInput(v.validUntil, true), notes: v.notes?.trim() || null };
-    if (v.seatLimit) body.seatLimit = Number(v.seatLimit);
     if (this.renewChangePlan()) {
+      if (this.renewModules().length === 0) {
+        this.error.set('Select at least one module.');
+        return;
+      }
       body.tier = v.tier;
-      body.features = featuresValue(this.renewForm.controls.features);
-      // keep per-module data (seat limits etc.) for modules that stay
+      body.capacity = this.renewCapacity();
+      // keep per-module data (e.g. module end dates) for modules that stay
       const prev = new Map(e.modules.map((m) => [m.moduleKey, m]));
       body.modules = this.renewModules().map((k) => prev.get(k) ?? { moduleKey: k });
     }
@@ -170,6 +172,16 @@ export class EntitlementDetail {
     if (!e) return;
     this.api.downloadFile(e.id).subscribe({
       next: (b) => saveBlob(b, `${e.subscriberCode}-r${e.revision}.entl`),
+      error: (err) => this.error.set(errorMessage(err)),
+    });
+  }
+
+  protected toggleClientDb(): void {
+    const e = this.ent();
+    if (!e) return;
+    if (this.clientDb()) return this.clientDb.set(null);
+    this.api.revealClientDb(e.id).subscribe({
+      next: (r) => this.clientDb.set(r.connectionString),
       error: (err) => this.error.set(errorMessage(err)),
     });
   }

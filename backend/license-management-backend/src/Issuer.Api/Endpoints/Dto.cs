@@ -7,16 +7,18 @@ namespace Issuer.Api.Dto;
 
 public sealed record EntitlementDto(
     string Id, string SubscriberCode, string CustomerName, string ContactEmail, int Revision,
-    EntitlementState State, Tier Tier, List<ModuleGrant> Modules, Features Features,
-    int SeatLimit, int? DeviceLimit, DateTime ValidFrom, DateTime ValidUntil,
+    EntitlementState State, Tier Tier, List<ModuleGrant> Modules, Capacity Capacity,
+    DateTime ValidFrom, DateTime ValidUntil,
     string? MinBuild, string? MaxBuild, HostingMode HostingMode, string? HostFingerprint,
     DateTime IssuedAt, string IssuedBy, DateTime? LastPingAt, DateTime? LastCheckinAt,
-    string? InstallKeyPrefix, string? Notes, string? StateReason)
+    string? InstallKeyPrefix, string? Notes, string? StateReason, string? ClientDbConnection = null)
 {
-    public static EntitlementDto From(EntitlementDoc d, string? keyPrefix) => new(
-        d.Id, d.SubscriberCode, d.CustomerName, d.ContactEmail, d.Revision, d.State, d.Tier, d.Modules, d.Features,
-        d.SeatLimit, d.DeviceLimit, d.ValidFrom, d.ValidUntil, d.MinBuild, d.MaxBuild, d.HostingMode, d.HostFingerprint,
-        d.IssuedAt, d.IssuedBy, d.LastPingAt, d.LastCheckinAt, keyPrefix, d.Notes, d.StateReason);
+    /// <param name="clientDbMasked">Masked connection string (password hidden), or null.</param>
+    public static EntitlementDto From(EntitlementDoc d, string? keyPrefix, string? clientDbMasked = null) => new(
+        d.Id, d.SubscriberCode, d.CustomerName, d.ContactEmail, d.Revision, d.State, d.Tier, d.Modules, d.Capacity ?? new Capacity(),
+        d.ValidFrom, d.ValidUntil, d.MinBuild, d.MaxBuild, d.HostingMode, d.HostFingerprint,
+        d.IssuedAt, d.IssuedBy, d.LastPingAt, d.LastCheckinAt, keyPrefix, d.Notes, d.StateReason,
+        d.ClientDbConnectionProtected is null ? null : clientDbMasked ?? "(set)");
 }
 
 public sealed record EntitlementInput
@@ -26,9 +28,7 @@ public sealed record EntitlementInput
     public string ContactEmail { get; init; } = "";
     public Tier Tier { get; init; }
     public List<ModuleGrant> Modules { get; init; } = [];
-    public Features? Features { get; init; }
-    public int SeatLimit { get; init; }
-    public int? DeviceLimit { get; init; }
+    public Capacity? Capacity { get; init; }
     public DateTime ValidFrom { get; init; }
     public DateTime ValidUntil { get; init; }
     public string? MinBuild { get; init; }
@@ -36,6 +36,8 @@ public sealed record EntitlementInput
     public HostingMode HostingMode { get; init; }
     public string? HostFingerprint { get; init; }
     public string? Notes { get; init; }
+    /// <summary>Optional. Stored encrypted, shown masked.</summary>
+    public string? ClientDbConnectionString { get; init; }
 }
 
 public sealed record RenewInput
@@ -43,9 +45,7 @@ public sealed record RenewInput
     public DateTime ValidUntil { get; init; }
     public Tier? Tier { get; init; }
     public List<ModuleGrant>? Modules { get; init; }
-    public Features? Features { get; init; }
-    public int? SeatLimit { get; init; }
-    public int? DeviceLimit { get; init; }
+    public Capacity? Capacity { get; init; }
     public string? HostFingerprint { get; init; }
     public string? Notes { get; init; }
 }
@@ -82,17 +82,18 @@ public static partial class Validation
         if (!IsEmail(i.ContactEmail)) Add("contactEmail", "A valid contact email is required.");
         if (!Enum.IsDefined(i.Tier)) Add("tier", "Unknown tier.");
         if (!Enum.IsDefined(i.HostingMode)) Add("hostingMode", "Unknown hosting mode.");
-        if (i.SeatLimit <= 0) Add("seatLimit", "Seat limit must be greater than 0.");
-        if (i.DeviceLimit is < 0) Add("deviceLimit", "Device limit cannot be negative.");
         if (i.ValidUntil <= i.ValidFrom) Add("validUntil", "Valid until must be after valid from.");
         if (i.ValidUntil <= now) Add("validUntil", "Valid until must be in the future.");
         CheckModules(i.Modules, e);
-        CheckFeatures(i.Features, e);
+        if (i.Modules.Count == 0) e["modules"] = ["Select at least one module."];
+        if (CapacityRules.Validate(i.Capacity) is { } ce) e["capacity"] = [ce];
         CheckBuilds(i.MinBuild, i.MaxBuild, e);
         if (i.HostFingerprint is { Length: > 0 } fp && !FingerprintRx().IsMatch(fp)) Add("hostFingerprint", "Host fingerprint format is not valid. Upload the customer's .actreq file.");
         if (i.HostingMode == HostingMode.OnPrem && string.IsNullOrWhiteSpace(i.HostFingerprint))
             Add("hostFingerprint", "On-premise licenses must be bound to a machine. Upload the customer's .actreq file.");
         if (i.Notes is { Length: > 2000 }) Add("notes", "Notes max 2000 characters.");
+        if (i.ClientDbConnectionString is { Length: > 0 } cdb && (cdb.Length > 2000 || cdb.Contains('\n') || cdb.Contains('\r')))
+            Add("clientDbConnectionString", "Connection string must be one line, max 2000 characters.");
         return e;
     }
 
@@ -101,8 +102,8 @@ public static partial class Validation
         var e = new Dictionary<string, string[]>();
         if (r.ValidUntil <= now) e["validUntil"] = ["Valid until must be in the future."];
         if (r.Modules is not null) CheckModules(r.Modules, e);
-        if (r.Features is not null) CheckFeatures(r.Features, e);
-        if (r.SeatLimit is <= 0) e["seatLimit"] = ["Seat limit must be greater than 0."];
+        if (r.Modules is { Count: 0 }) e["modules"] = ["Select at least one module."];
+        if (CapacityRules.Validate(r.Capacity) is { } ce) e["capacity"] = [ce];
         if (r.HostFingerprint is { Length: > 0 } fp && !FingerprintRx().IsMatch(fp)) e["hostFingerprint"] = ["Host fingerprint format is not valid."];
         if (r.Notes is { Length: > 2000 }) e["notes"] = ["Notes max 2000 characters."];
         return e;
@@ -113,14 +114,6 @@ public static partial class Validation
         var unknown = modules.Where(m => !ProductCatalog.IsKnownModule(m.ModuleKey)).Select(m => m.ModuleKey).ToList();
         if (unknown.Count > 0) e["modules"] = [$"Unknown modules: {string.Join(", ", unknown)}"];
         else if (modules.GroupBy(m => m.ModuleKey).Any(g => g.Count() > 1)) e["modules"] = ["Duplicate modules."];
-        else if (modules.Any(m => m.SeatLimit is <= 0)) e["modules"] = ["Module seat limit must be greater than 0."];
-    }
-
-    private static void CheckFeatures(Features? f, Dictionary<string, string[]> e)
-    {
-        if (f is null) return;
-        if (f.ApiDailyCallLimit is <= 0) e["features.apiDailyCallLimit"] = ["Daily call limit must be greater than 0, or empty for unlimited."];
-        if (f.MaxSites is <= 0) e["features.maxSites"] = ["Max sites must be greater than 0, or empty for unlimited."];
     }
 
     private static void CheckBuilds(string? min, string? max, Dictionary<string, string[]> e)

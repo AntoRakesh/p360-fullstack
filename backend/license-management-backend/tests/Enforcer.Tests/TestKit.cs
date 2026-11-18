@@ -98,8 +98,6 @@ public sealed class Rig : IDisposable
             State = b.State,
             Tier = Tier.Professional,
             Modules = b.Modules,
-            Features = ProductCatalog.FullFeatures,
-            SeatLimit = 100,
             ValidFrom = b.ValidFrom,
             ValidUntil = b.ValidUntil,
             MinBuild = b.MinBuild,

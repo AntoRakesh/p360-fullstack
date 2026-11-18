@@ -32,7 +32,7 @@
       <thead>
         <tr>
           <th>Customer</th><th>Subscriber</th><th>Tier</th><th>State</th><th>Hosting</th>
-          <th>Rev</th><th>Valid until</th><th>Left</th><th>Seats</th>
+          <th>Rev</th><th>Valid until</th><th>Left</th>
         </tr>
       </thead>
       <tbody>
@@ -46,10 +46,9 @@
             <td>r{{ e.revision }}</td>
             <td>{{ e.validUntil | date: 'mediumDate' }}</td>
             <td><app-days-left [until]="e.validUntil" /></td>
-            <td>{{ e.seatLimit }}</td>
           </tr>
         } @empty {
-          <tr><td colspan="9" class="empty">{{ data() ? 'No licenses match these filters.' : 'Loading…' }}</td></tr>
+          <tr><td colspan="8" class="empty">{{ data() ? 'No licenses match these filters.' : 'Loading…' }}</td></tr>
         }
       </tbody>
     </table>

@@ -36,8 +36,7 @@ Tests: `dotnet test LicenseManagement.slnx` and `./scripts/e2e-smoke.sh`.
 ## Tiers
 
 `ProductCatalog` in `Licensing.Contracts/Catalog.cs`. Essential / Professional / Enterprise from the tier sheet.
-"Optional" = add-on. Essential "Basic"/"Limited" are `features` in the license: analytics Basic,
-API 1000 calls/day read-only, 1 site. Admin can change these per customer. The signed file carries
+"Optional" = add-on. The license grants modules only (no seat, device or feature limits). The signed file carries
 the final module list, so editing the catalog never changes licenses already issued.
 
 ## License lifecycle

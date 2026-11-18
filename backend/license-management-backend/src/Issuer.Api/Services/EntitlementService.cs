@@ -2,6 +2,7 @@ using Issuer.Api.Data;
 using Issuer.Api.Dto;
 using Issuer.Api.Security;
 using Licensing.Contracts;
+using Microsoft.AspNetCore.DataProtection;
 using MongoDB.Driver;
 
 namespace Issuer.Api.Services;
@@ -16,6 +17,7 @@ public sealed class EntitlementService(
     EntitlementSigner signer,
     AuditService audit,
     IEmailSender email,
+    IDataProtectionProvider dataProtection,
     TimeProvider time,
     ILogger<EntitlementService> log)
 {
@@ -57,18 +59,17 @@ public sealed class EntitlementService(
             State = EntitlementState.Live,
             Tier = input.Tier,
             Modules = NormalizeModules(input.Modules),
-            Features = input.Features ?? ProductCatalog.GetTier(input.Tier).Features,
-            SeatLimit = input.SeatLimit,
-            DeviceLimit = input.DeviceLimit,
+            Capacity = CapacityRules.Normalize(input.Capacity),
             ValidFrom = Truncate(input.ValidFrom.ToUniversalTime()),
             ValidUntil = Truncate(input.ValidUntil.ToUniversalTime()),
             MinBuild = Blank(input.MinBuild),
             MaxBuild = Blank(input.MaxBuild),
             HostingMode = input.HostingMode,
-            HostFingerprint = Blank(input.HostFingerprint),
+            HostFingerprint = input.HostingMode == HostingMode.OnPrem ? Blank(input.HostFingerprint) : null, // machine binding is OnPrem only
             IssuedAt = now,
             IssuedBy = who,
             Notes = Blank(input.Notes),
+            ClientDbConnectionProtected = Blank(input.ClientDbConnectionString) is { } cdb ? ClientDb.Protect(cdb) : null,
             SignedFile = "",
         });
 
@@ -101,18 +102,18 @@ public sealed class EntitlementService(
             State = EntitlementState.Live,
             Tier = tier,
             Modules = input.Modules is null ? prev.Modules : NormalizeModules(input.Modules),
-            Features = input.Features ?? (input.Tier is not null && input.Tier != prev.Tier ? ProductCatalog.GetTier(tier).Features : prev.Features),
-            SeatLimit = input.SeatLimit ?? prev.SeatLimit,
-            DeviceLimit = input.DeviceLimit ?? prev.DeviceLimit,
+            Capacity = input.Capacity is null ? CapacityRules.Normalize(prev.Capacity) : CapacityRules.Normalize(input.Capacity),
             ValidFrom = prev.ValidFrom,
             ValidUntil = Truncate(input.ValidUntil.ToUniversalTime()),
             MinBuild = prev.MinBuild,
             MaxBuild = prev.MaxBuild,
             HostingMode = prev.HostingMode,
-            HostFingerprint = input.HostFingerprint is null ? prev.HostFingerprint : Blank(input.HostFingerprint),
+            HostFingerprint = prev.HostingMode != HostingMode.OnPrem ? null
+                : input.HostFingerprint is null ? prev.HostFingerprint : Blank(input.HostFingerprint),
             IssuedAt = Now,
             IssuedBy = who,
             Notes = input.Notes ?? prev.Notes,
+            ClientDbConnectionProtected = prev.ClientDbConnectionProtected,
             SignedFile = "",
         });
 
@@ -261,9 +262,7 @@ public sealed class EntitlementService(
             State = EntitlementState.Live,
             Tier = d.Tier,
             Modules = d.Modules,
-            Features = d.Features,
-            SeatLimit = d.SeatLimit,
-            DeviceLimit = d.DeviceLimit,
+            Capacity = d.Capacity,
             ValidFrom = d.ValidFrom,
             ValidUntil = d.ValidUntil,
             MinBuild = d.MinBuild,
@@ -277,12 +276,10 @@ public sealed class EntitlementService(
         return d;
     }
 
-    /// <summary>Core modules are always added. Order follows the catalog.</summary>
+    /// <summary>Only the modules the admin selected (core modules can be left out). Order follows the catalog.</summary>
     private static List<ModuleGrant> NormalizeModules(List<ModuleGrant> input)
     {
         var byKey = input.ToDictionary(m => m.ModuleKey);
-        foreach (var core in ProductCatalog.Modules.Where(m => m.Core))
-            byKey.TryAdd(core.Key, new ModuleGrant { ModuleKey = core.Key });
         return ProductCatalog.Modules.Where(m => byKey.ContainsKey(m.Key))
             .Select(m => byKey[m.Key] with { ModuleValidUntil = byKey[m.Key].ModuleValidUntil is { } v ? Truncate(v.ToUniversalTime()) : null })
             .ToList();
@@ -312,6 +309,19 @@ public sealed class EntitlementService(
             // License is issued even if mail fails; admin can download and send it manually.
             log.LogError(ex, "Could not email license {Subscriber} r{Revision}", d.SubscriberCode, d.Revision);
         }
+    }
+
+    private IDataProtector ClientDb => dataProtection.CreateProtector("client-db-connection");
+
+    /// <summary>Full connection string (decrypted), or null when none is stored.</summary>
+    public string? RevealClientDb(EntitlementDoc d) =>
+        d.ClientDbConnectionProtected is null ? null : ClientDb.Unprotect(d.ClientDbConnectionProtected);
+
+    /// <summary>Masked connection string for display, or null when none is stored.</summary>
+    public string? MaskedClientDb(EntitlementDoc d)
+    {
+        try { return ConnectionStringMasker.Mask(RevealClientDb(d)); }
+        catch (System.Security.Cryptography.CryptographicException) { return "(stored, cannot decrypt — data protection keys changed)"; }
     }
 
     private static string? Blank(string? s) => string.IsNullOrWhiteSpace(s) ? null : s.Trim();

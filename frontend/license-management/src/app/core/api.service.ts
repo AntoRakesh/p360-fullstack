@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ActivationInfo,
   AuditEvent,
@@ -27,10 +27,10 @@ function params(q: object): HttpParams {
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly http = inject(HttpClient);
-  private catalog$?: Observable<Catalog>;
 
   catalog(): Observable<Catalog> {
-    return (this.catalog$ ??= this.http.get<Catalog>('/api/catalog').pipe(shareReplay(1)));
+    // Not cached: small, and must reflect the API that is running now (e.g. after a restart).
+    return this.http.get<Catalog>('/api/catalog');
   }
 
   dashboard(): Observable<Dashboard> {
@@ -63,6 +63,11 @@ export class ApiService {
 
   downloadFile(id: string): Observable<Blob> {
     return this.http.get(`/api/entitlements/${encodeURIComponent(id)}/file`, { responseType: 'blob' });
+  }
+
+  /** Full client DB connection string. The view is recorded in the audit log. */
+  revealClientDb(id: string): Observable<{ connectionString: string }> {
+    return this.http.get<{ connectionString: string }>(`/api/entitlements/${encodeURIComponent(id)}/client-db`);
   }
 
   installKey(id: string): Observable<InstallKey> {

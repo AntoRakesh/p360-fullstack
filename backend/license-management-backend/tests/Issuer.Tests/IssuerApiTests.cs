@@ -95,8 +95,8 @@ public class IssuerApiTests(IssuerFactory f) : IClassFixture<IssuerFactory>
         Assert.Equal(1, created.Revision);
         Assert.Equal(EntitlementState.Live, created.State);
         Assert.Equal(IssuerFactory.AdminUser, created.IssuedBy);
-        // Core modules are always added
-        Assert.Contains(created.Modules, m => m.ModuleKey == "people-identity");
+        // Only selected modules: core modules are not forced in
+        Assert.DoesNotContain(created.Modules, m => m.ModuleKey == "people-identity");
 
         var renewRes = await admin.PostAsJsonAsync($"/api/entitlements/{created.Id}/renew", new { validUntil = DateTime.UtcNow.AddYears(2) });
         Assert.Equal(HttpStatusCode.Created, renewRes.StatusCode);
@@ -210,6 +210,102 @@ public class IssuerApiTests(IssuerFactory f) : IClassFixture<IssuerFactory>
     }
 
     [Fact]
+    public async Task Connected_only_gets_registered_50_automatically_and_is_signed()
+    {
+        var admin = await f.AdminClientAsync();
+        var created = await Create(admin, new { connected = new { quantity = 500 } });
+        Assert.Equal(500, created.Capacity.Connected!.Quantity);
+        Assert.Equal(50, created.Capacity.Registered!.Quantity);
+
+        var bytes = await admin.GetByteArrayAsync($"/api/entitlements/{created.Id}/file");
+        var payload = new SignatureVerifier([f.PublicKey]).Verify<EntitlementPayload>(bytes)!.Value;
+        Assert.Equal(50, payload.Capacity.Registered!.Quantity);
+        Assert.Equal(500, payload.Capacity.Connected!.Quantity);
+    }
+
+    [Fact]
+    public async Task Unlimited_registered_is_stored_as_null_quantity()
+    {
+        var admin = await f.AdminClientAsync();
+        var created = await Create(admin, new { registered = new { quantity = (long?)null } });
+        Assert.NotNull(created.Capacity.Registered);
+        Assert.Null(created.Capacity.Registered!.Quantity);
+        Assert.Null(created.Capacity.Connected);
+    }
+
+    [Theory]
+    [InlineData("{\"registered\":{\"quantity\":123}}")]
+    [InlineData("{\"connected\":{\"quantity\":7}}")]
+    [InlineData("{\"connected\":{\"quantity\":null}}")]
+    [InlineData("{\"registered\":{\"quantity\":50}}")]
+    public async Task Quantity_outside_allowed_options_is_rejected(string capacityJson)
+    {
+        var admin = await f.AdminClientAsync();
+        var body = JsonSerializer.SerializeToNode(Input())!.AsObject();
+        body["capacity"] = System.Text.Json.Nodes.JsonNode.Parse(capacityJson);
+        var res = await admin.PostAsJsonAsync("/api/entitlements", body);
+        Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
+    }
+
+    [Fact]
+    public async Task Client_db_connection_is_encrypted_masked_and_not_in_signed_file()
+    {
+        const string cs = "mongodb://appuser:S3cret-Pass@db.customer.example:27017/p360";
+        var admin = await f.AdminClientAsync();
+        var body = JsonSerializer.SerializeToNode(Input())!.AsObject();
+        body["clientDbConnectionString"] = cs;
+        var res = await admin.PostAsJsonAsync("/api/entitlements", body);
+        Assert.Equal(HttpStatusCode.Created, res.StatusCode);
+        var created = await res.Content.ReadFromJsonAsync<JsonElement>();
+        var id = created.GetProperty("id").GetString();
+        Assert.Equal("mongodb://appuser:****@db.customer.example:27017/p360", created.GetProperty("clientDbConnection").GetString());
+
+        // Not in plain text anywhere: detail, audit, database row, signed file
+        var detail = await admin.GetStringAsync($"/api/entitlements/{id}");
+        Assert.DoesNotContain("S3cret-Pass", detail);
+        var audit = await admin.GetStringAsync($"/api/audit?subscriberCode={created.GetProperty("subscriberCode").GetString()}");
+        Assert.DoesNotContain("S3cret-Pass", audit);
+        using (var scope = f.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<Issuer.Api.Data.MongoContext>();
+            var raw = await MongoDB.Driver.IFindFluentExtensions.FirstAsync(MongoDB.Driver.IMongoCollectionExtensions.Find(db.Database.GetCollection<MongoDB.Bson.BsonDocument>("entitlements"),
+                MongoDB.Driver.Builders<MongoDB.Bson.BsonDocument>.Filter.Eq("_id", MongoDB.Bson.ObjectId.Parse(id))));
+            Assert.DoesNotContain("S3cret-Pass", MongoDB.Bson.BsonExtensionMethods.ToJson(raw));
+        }
+        var file = System.Text.Encoding.UTF8.GetString(await admin.GetByteArrayAsync($"/api/entitlements/{id}/file"));
+        var payloadJson = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(JsonDocument.Parse(file).RootElement.GetProperty("payload").GetString()!));
+        Assert.DoesNotContain("db.customer.example", payloadJson);
+
+        // Reveal returns the full value
+        var reveal = await admin.GetFromJsonAsync<JsonElement>($"/api/entitlements/{id}/client-db");
+        Assert.Equal(cs, reveal.GetProperty("connectionString").GetString());
+
+        // Renew carries it forward
+        var renewed = await (await admin.PostAsJsonAsync($"/api/entitlements/{id}/renew", new { validUntil = DateTime.UtcNow.AddYears(2) })).Content.ReadFromJsonAsync<JsonElement>();
+        var reveal2 = await admin.GetFromJsonAsync<JsonElement>($"/api/entitlements/{renewed.GetProperty("id").GetString()}/client-db");
+        Assert.Equal(cs, reveal2.GetProperty("connectionString").GetString());
+    }
+
+    [Theory]
+    [InlineData("mongodb://u:p@h/db", "mongodb://u:****@h/db")]
+    [InlineData("Server=x;User Id=sa;Password=abc;Database=y", "Server=x;User Id=sa;Password=****;Database=y")]
+    [InlineData("mongodb://host:27017/db", "mongodb://host:27017/db")]
+    public void Connection_string_masking(string input, string expected) =>
+        Assert.Equal(expected, Issuer.Api.Security.ConnectionStringMasker.Mask(input));
+
+    [Fact]
+    public async Task Host_fingerprint_is_dropped_for_cloud_licenses()
+    {
+        var admin = await f.AdminClientAsync();
+        var body = JsonSerializer.SerializeToNode(Input())!.AsObject();
+        body["hostingMode"] = "Cloud";
+        var res = await admin.PostAsJsonAsync("/api/entitlements", body);
+        Assert.Equal(HttpStatusCode.Created, res.StatusCode);
+        var e = await res.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.Equal(JsonValueKind.Null, e.GetProperty("hostFingerprint").ValueKind);
+    }
+
+    [Fact]
     public async Task Catalog_matches_tier_sheet()
     {
         var admin = await f.AdminClientAsync();
@@ -224,27 +320,26 @@ public class IssuerApiTests(IssuerFactory f) : IClassFixture<IssuerFactory>
 
     // ------------------------------------------------------------------
 
-    private static object Input(string? fingerprint = Fingerprint) => new
+    private static object Input(string? fingerprint = Fingerprint, object? capacity = null) => new
     {
+        capacity,
         customerName = "Acme Corp",
         contactEmail = "it@acme.example",
         tier = "Professional",
         modules = new[] { new { moduleKey = "time-attendance" }, new { moduleKey = "visitor-management" } },
-        features = ProductCatalog.FullFeatures,
-        seatLimit = 250,
         validFrom = DateTime.UtcNow.Date,
         validUntil = DateTime.UtcNow.Date.AddYears(1),
         hostingMode = "OnPrem",
         hostFingerprint = fingerprint,
     };
 
-    private static async Task<Ent> Create(HttpClient admin)
+    private static async Task<Ent> Create(HttpClient admin, object? capacity = null)
     {
-        var res = await admin.PostAsJsonAsync("/api/entitlements", Input());
+        var res = await admin.PostAsJsonAsync("/api/entitlements", Input(capacity: capacity));
         Assert.True(res.StatusCode == HttpStatusCode.Created, await res.Content.ReadAsStringAsync());
         return (await res.Content.ReadFromJsonAsync<Ent>(LicensingJson.Options))!;
     }
 
     public sealed record Ent(string Id, string SubscriberCode, int Revision, EntitlementState State, string IssuedBy,
-        DateTime ValidUntil, List<ModuleGrant> Modules);
+        DateTime ValidUntil, List<ModuleGrant> Modules, Capacity Capacity);
 }

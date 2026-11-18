@@ -18,8 +18,8 @@ interface Row {
 
 /**
  * Module checklist grouped like the tier sheet.
- * Core = always on. Included = on and locked. AddOn = optional. None = unavailable.
- * With `override` on, the admin may toggle anything except core modules.
+ * Core and Included start ticked but can be unticked. AddOn = optional. None = unavailable.
+ * With `override` on, None modules can be ticked too.
  */
 @Component({
   selector: 'app-module-picker',
@@ -59,9 +59,9 @@ export class ModulePicker {
     const map = new Map<string, Row[]>();
     for (const m of cat.modules) {
       const inclusion: Row['inclusion'] = m.core ? 'Core' : (inc[m.key] ?? 'None');
-      const locked = m.core || (!ov && (inclusion === 'Included' || inclusion === 'None'));
+      const locked = !ov && inclusion === 'None';
       const rows = map.get(m.group) ?? [];
-      rows.push({ m, inclusion, on: m.core || sel.has(m.key), locked });
+      rows.push({ m, inclusion, on: sel.has(m.key), locked });
       map.set(m.group, rows);
     }
     return [...map].map(([name, rows]) => ({ name, rows }));

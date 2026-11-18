@@ -13,9 +13,9 @@ const catalog: Catalog = {
       tier: 'Professional',
       title: 'Professional',
       inclusion: { 'time-attendance': 'Included', 'real-time-location': 'AddOn', 'workflow-automation': 'None' },
-      features: { analyticsLevel: 'Full', apiAccess: 'Full', apiReadOnly: false },
     },
   ],
+  capacity: { registered: [50000, 200000, null], connected: [100, 500, 2500, 10000, 50000], autoRegistered: 50 },
 };
 
 describe('defaultModules', () => {

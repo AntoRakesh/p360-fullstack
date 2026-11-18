@@ -20,9 +20,7 @@ public sealed class EntitlementDoc
     public required EntitlementState State { get; set; }
     public required Tier Tier { get; set; }
     public required List<ModuleGrant> Modules { get; set; }
-    public required Features Features { get; set; }
-    public required int SeatLimit { get; set; }
-    public int? DeviceLimit { get; set; }
+    public Capacity Capacity { get; set; } = new();
     public required DateTime ValidFrom { get; set; }
     public required DateTime ValidUntil { get; set; }
     public string? MinBuild { get; set; }
@@ -34,6 +32,8 @@ public sealed class EntitlementDoc
     public DateTime? LastPingAt { get; set; }
     public DateTime? LastCheckinAt { get; set; }
     public string? Notes { get; set; }
+    /// <summary>Optional customer database connection string, encrypted with ASP.NET Data Protection. Never in the signed file.</summary>
+    public string? ClientDbConnectionProtected { get; set; }
     public string? StateReason { get; set; }
     /// <summary>The .entl file bytes, base64. Generated once at issue time.</summary>
     public required string SignedFile { get; set; }

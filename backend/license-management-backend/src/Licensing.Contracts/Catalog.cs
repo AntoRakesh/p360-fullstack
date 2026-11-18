@@ -2,7 +2,7 @@ namespace Licensing.Contracts;
 
 public sealed record CatalogModule(string Key, string Title, string Group, bool Core);
 
-public sealed record TierDef(Tier Tier, string Title, IReadOnlyDictionary<string, Inclusion> Inclusion, Features Features);
+public sealed record TierDef(Tier Tier, string Title, IReadOnlyDictionary<string, Inclusion> Inclusion);
 
 /// <summary>
 /// Product catalog. Module keys are the People360 module paths
@@ -61,36 +61,18 @@ public static class ProductCatalog
         ("real-time-location",           N, A, I),
         ("digital-twin",                 N, A, I),
         ("customer-visitor-analytics",   N, A, I),
-        ("command-center",               I, I, I), // Essential: Basic (see Features.AnalyticsLevel)
-        ("reports-analytics",            I, I, I), // Essential: Basic
+        ("command-center",               I, I, I),
+        ("reports-analytics",            I, I, I),
         ("ai-people-intelligence",       N, I, I), // AI insights are not part of Basic analytics
-        ("integrations-api-hub",         I, I, I), // Essential: Limited (see Features.ApiAccess)
+        ("integrations-api-hub",         I, I, I),
         ("workflow-automation",          N, N, I),
     ];
 
-    public static readonly Features EssentialFeatures = new()
-    {
-        AnalyticsLevel = AnalyticsLevel.Basic,
-        ApiAccess = ApiAccess.Limited,
-        ApiDailyCallLimit = 1000,
-        ApiReadOnly = true,
-        MaxSites = 1,
-    };
-
-    public static readonly Features FullFeatures = new()
-    {
-        AnalyticsLevel = AnalyticsLevel.Full,
-        ApiAccess = ApiAccess.Full,
-        ApiDailyCallLimit = null,
-        ApiReadOnly = false,
-        MaxSites = null,
-    };
-
     public static readonly IReadOnlyList<TierDef> Tiers =
     [
-        Build(Tier.Essential, "People360 Essential", m => m.E, EssentialFeatures),
-        Build(Tier.Professional, "People360 Professional", m => m.P, FullFeatures),
-        Build(Tier.Enterprise, "People360 Enterprise", m => m.X, FullFeatures),
+        Build(Tier.Essential, "People360 Essential", m => m.E),
+        Build(Tier.Professional, "People360 Professional", m => m.P),
+        Build(Tier.Enterprise, "People360 Enterprise", m => m.X),
     ];
 
     public static TierDef GetTier(Tier tier) => Tiers.First(t => t.Tier == tier);
@@ -99,11 +81,11 @@ public static class ProductCatalog
 
     public static bool IsCore(string key) => Modules.Any(m => m.Key == key && m.Core);
 
-    private static TierDef Build(Tier tier, string title, Func<(string Key, Inclusion E, Inclusion P, Inclusion X), Inclusion> pick, Features features)
+    private static TierDef Build(Tier tier, string title, Func<(string Key, Inclusion E, Inclusion P, Inclusion X), Inclusion> pick)
     {
         var map = new Dictionary<string, Inclusion>();
         foreach (var m in Modules.Where(m => m.Core)) map[m.Key] = Inclusion.Included;
         foreach (var row in Matrix) map[row.Key] = pick(row);
-        return new TierDef(tier, title, map, features);
+        return new TierDef(tier, title, map);
     }
 }

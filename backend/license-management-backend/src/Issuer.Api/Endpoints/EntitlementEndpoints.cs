@@ -15,7 +15,17 @@ public static class EntitlementEndpoints
     {
         var api = app.MapGroup("/api").RequireRateLimiting("admin");
 
-        api.MapGet("/catalog", () => Results.Ok(new { modules = ProductCatalog.Modules, tiers = ProductCatalog.Tiers }));
+        api.MapGet("/catalog", () => Results.Ok(new
+        {
+            modules = ProductCatalog.Modules,
+            tiers = ProductCatalog.Tiers,
+            capacity = new
+            {
+                registered = CapacityRules.RegisteredOptions,
+                connected = CapacityRules.ConnectedOptions,
+                autoRegistered = CapacityRules.AutoRegisteredQuantity,
+            },
+        }));
 
         api.MapGet("/dashboard", Dashboard);
         api.MapGet("/entitlements", List);
@@ -27,7 +37,7 @@ public static class EntitlementEndpoints
             return Results.Ok(rows.Select(r => EntitlementDto.From(r, prefix)));
         });
         api.MapGet("/entitlements/{id}", async (string id, EntitlementService svc, CancellationToken ct) =>
-            await svc.GetAsync(id, ct) is { } d ? Results.Ok(EntitlementDto.From(d, await svc.KeyPrefixAsync(d.SubscriberCode, ct))) : Results.NotFound());
+            await svc.GetAsync(id, ct) is { } d ? Results.Ok(EntitlementDto.From(d, await svc.KeyPrefixAsync(d.SubscriberCode, ct), svc.MaskedClientDb(d))) : Results.NotFound());
 
         api.MapPost("/entitlements", async (EntitlementInput input, EntitlementService svc, TimeProvider time, HttpContext ctx, CancellationToken ct) =>
         {
@@ -36,7 +46,7 @@ public static class EntitlementEndpoints
             return await Run(async () =>
             {
                 var d = await svc.CreateAsync(input, Who(ctx), Ip(ctx), ct);
-                return Results.Created($"/api/entitlements/{d.Id}", EntitlementDto.From(d, null));
+                return Results.Created($"/api/entitlements/{d.Id}", EntitlementDto.From(d, null, svc.MaskedClientDb(d)));
             });
         });
 
@@ -47,7 +57,7 @@ public static class EntitlementEndpoints
                 var errors = Validation.Check(input, prev, time.GetUtcNow().UtcDateTime);
                 if (errors.Count > 0) return Results.ValidationProblem(errors);
                 var d = await svc.RenewAsync(id, input, Who(ctx), Ip(ctx), ct);
-                return Results.Created($"/api/entitlements/{d.Id}", EntitlementDto.From(d, await svc.KeyPrefixAsync(d.SubscriberCode, ct)));
+                return Results.Created($"/api/entitlements/{d.Id}", EntitlementDto.From(d, await svc.KeyPrefixAsync(d.SubscriberCode, ct), svc.MaskedClientDb(d)));
             }));
 
         api.MapPost("/entitlements/{id}/suspend", (string id, ReasonInput r, EntitlementService svc, HttpContext ctx, CancellationToken ct) =>
@@ -56,6 +66,17 @@ public static class EntitlementEndpoints
             Run(async () => Results.Ok(EntitlementDto.From(await svc.ResumeAsync(id, r.Reason ?? "", Who(ctx), Ip(ctx), ct), null))));
         api.MapPost("/entitlements/{id}/revoke", (string id, ReasonInput r, EntitlementService svc, HttpContext ctx, CancellationToken ct) =>
             Run(async () => Results.Ok(EntitlementDto.From(await svc.RevokeAsync(id, r.Reason ?? "", Who(ctx), Ip(ctx), ct), null))));
+
+        // Full client DB connection string. Every view is audited.
+        api.MapGet("/entitlements/{id}/client-db", async (string id, EntitlementService svc, AuditService audit, HttpContext ctx, CancellationToken ct) =>
+        {
+            var d = await svc.GetAsync(id, ct);
+            if (d is null) return Results.NotFound();
+            var cs = svc.RevealClientDb(d);
+            if (cs is null) return Results.NotFound();
+            await audit.WriteRawAsync(Who(ctx), "entitlement.client_db_view", d.SubscriberCode, new { d.Id, d.Revision }, Ip(ctx), ct);
+            return Results.Ok(new { connectionString = cs });
+        });
 
         api.MapGet("/entitlements/{id}/file", async (string id, EntitlementService svc, AuditService audit, HttpContext ctx, CancellationToken ct) =>
         {

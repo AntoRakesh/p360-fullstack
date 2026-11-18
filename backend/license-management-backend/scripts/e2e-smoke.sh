@@ -59,17 +59,17 @@ echo "Issue license bound to this machine"
 curl -s localhost:5090/api/license/activation-request -o "$W/req.actreq"
 FP=$(curl -s localhost:5080/api/activation/parse -H "$A" -F "file=@$W/req.actreq" | j "d['hostFingerprint']")
 check "activation request parsed" "${FP:0:4}" hf1_
-E=$(curl -s localhost:5080/api/entitlements -H "$A" -H 'content-type: application/json' -d "{\"subscriberCode\":\"E2E-0001\",\"customerName\":\"E2E Corp\",\"contactEmail\":\"it@e2e.example\",\"tier\":\"Essential\",\"modules\":[{\"moduleKey\":\"time-attendance\"}],\"seatLimit\":50,\"validFrom\":\"2026-01-01T00:00:00Z\",\"validUntil\":\"2030-01-01T00:00:00Z\",\"hostingMode\":\"OnPrem\",\"hostFingerprint\":\"$FP\"}")
+E=$(curl -s localhost:5080/api/entitlements -H "$A" -H 'content-type: application/json' -d "{\"subscriberCode\":\"E2E-0001\",\"customerName\":\"E2E Corp\",\"contactEmail\":\"it@e2e.example\",\"tier\":\"Essential\",\"modules\":[{\"moduleKey\":\"time-attendance\"}],\"capacity\":{\"connected\":{\"quantity\":100}},\"validFrom\":\"2026-01-01T00:00:00Z\",\"validUntil\":\"2030-01-01T00:00:00Z\",\"hostingMode\":\"OnPrem\",\"hostFingerprint\":\"$FP\"}")
 ID=$(echo "$E" | j "d['id']")
 check "created revision 1" "$(echo "$E" | j "d['revision']")" 1
-check "essential defaults: maxSites" "$(echo "$E" | j "d['features']['maxSites']")" 1
+check "connected only -> registered 50" "$(echo "$E" | j "d['capacity']['registered']['quantity']")" 50
 curl -s "localhost:5080/api/entitlements/$ID/file" -H "$A" -o "$W/r1.entl"
 
 echo "Enforcer"
 check "gate blocks with no license" "$(curl -s -o /dev/null -w '%{http_code}' localhost:5090/api/modules/time-attendance/ping)" 403
 check "import r1" "$(curl -s -o /dev/null -w '%{http_code}' localhost:5090/api/license/import -H "$LA" -F "file=@$W/r1.entl")" 200
 check "licensed module allowed" "$(curl -s -o /dev/null -w '%{http_code}' localhost:5090/api/modules/time-attendance/ping)" 200
-check "core module allowed" "$(curl -s -o /dev/null -w '%{http_code}' localhost:5090/api/modules/people-identity/ping)" 200
+check "unticked core module blocked" "$(curl -s -o /dev/null -w '%{http_code}' localhost:5090/api/modules/people-identity/ping)" 403
 check "unlicensed module blocked" "$(curl -s -o /dev/null -w '%{http_code}' localhost:5090/api/modules/digital-twin/ping)" 403
 python3 - "$W" <<'EOF'
 import json,base64,sys

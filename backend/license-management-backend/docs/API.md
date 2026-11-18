@@ -16,8 +16,6 @@ EntitlementState = "Live" | "Suspended" | "Revoked" | "Expired" | "Superseded"
 Tier            = "Essential" | "Professional" | "Enterprise"
 HostingMode     = "Cloud" | "OnPrem" | "Split"
 Inclusion       = "Included" | "AddOn" | "None"
-AnalyticsLevel  = "Basic" | "Full"
-ApiAccess       = "Limited" | "Full"
 ```
 
 ## Types
@@ -25,17 +23,8 @@ ApiAccess       = "Limited" | "Full"
 ```ts
 interface ModuleGrant {
   moduleKey: string;            // p360 module path, e.g. "time-attendance"
-  seatLimit?: number | null;    // null = no per-module limit
   moduleValidUntil?: string | null;
   deviceKinds?: string[] | null;
-}
-
-interface Features {
-  analyticsLevel: AnalyticsLevel;   // Basic = standard dashboards only (no custom builder, no AI insights)
-  apiAccess: ApiAccess;             // Limited = read-only + daily call cap
-  apiDailyCallLimit?: number | null;// Limited default 1000, null = unlimited
-  apiReadOnly: boolean;
-  maxSites?: number | null;         // Essential default 1, null = unlimited
 }
 
 interface Entitlement {
@@ -47,9 +36,6 @@ interface Entitlement {
   state: EntitlementState;
   tier: Tier;
   modules: ModuleGrant[];       // final list, tier pre-fill + add-ons
-  features: Features;
-  seatLimit: number;            // total people
-  deviceLimit?: number | null;
   validFrom: string;
   validUntil: string;
   minBuild?: string | null;
@@ -63,6 +49,7 @@ interface Entitlement {
   installKeyPrefix?: string | null;
   notes?: string | null;
   stateReason?: string | null;
+  clientDbConnection?: string | null;  // masked, password shown as ****
 }
 
 interface EntitlementInput {   // create
@@ -71,9 +58,6 @@ interface EntitlementInput {   // create
   contactEmail: string;
   tier: Tier;
   modules: ModuleGrant[];
-  features: Features;
-  seatLimit: number;
-  deviceLimit?: number | null;
   validFrom: string;
   validUntil: string;
   minBuild?: string | null;
@@ -81,12 +65,12 @@ interface EntitlementInput {   // create
   hostingMode: HostingMode;
   hostFingerprint?: string | null;
   notes?: string | null;
+  clientDbConnectionString?: string | null; // optional, stored encrypted, never in the .entl
 }
 
 interface RenewInput {          // every field optional except validUntil; omitted = copy previous
   validUntil: string;
-  tier?: Tier; modules?: ModuleGrant[]; features?: Features;
-  seatLimit?: number; deviceLimit?: number | null;
+  tier?: Tier; modules?: ModuleGrant[];
   hostFingerprint?: string | null; notes?: string | null;
 }
 
@@ -116,7 +100,7 @@ The first valid code confirms enrollment. `mfaToken` lives 5 minutes. Access tok
 
 ```ts
 interface CatalogModule { key: string; title: string; group: string; core: boolean; }
-interface TierDef { tier: Tier; title: string; inclusion: Record<string, Inclusion>; features: Features; }
+interface TierDef { tier: Tier; title: string; inclusion: Record<string, Inclusion>; }
 ```
 
 ## Entitlements
@@ -132,6 +116,7 @@ interface TierDef { tier: Tier; title: string; inclusion: Record<string, Inclusi
 | POST | `/api/entitlements/{id}/suspend` | `{ reason }` | `Entitlement` |
 | POST | `/api/entitlements/{id}/resume` | `{ reason }` | `Entitlement` |
 | POST | `/api/entitlements/{id}/revoke` | `{ reason }` | `Entitlement` |
+| GET | `/api/entitlements/{id}/client-db` | – | `{ connectionString }` full value; each view audited (`entitlement.client_db_view`) |
 | GET | `/api/entitlements/{id}/file` | – | `application/octet-stream`, `<subscriberCode>-r<revision>.entl` |
 | POST | `/api/entitlements/{id}/install-key` | – | `{ apiKey, keyPrefix }` raw key shown once, only hash stored |
 | POST | `/api/activation/parse` | multipart `file` (.actreq) | `{ subscriberCode?, hostFingerprint, productBuild, hostname, requestedAt }` |

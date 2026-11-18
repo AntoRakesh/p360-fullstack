@@ -63,24 +63,10 @@
     </div>
     @if (catalog(); as c) {
       <app-module-picker [catalog]="c" [tier]="form.controls.tier.value" [override]="override()" [(selected)]="modules" />
+      <app-capacity-picker [options]="c.capacity" [(value)]="capacity" />
     } @else {
       <div class="spinner">Loading catalog…</div>
     }
-  </div>
-
-  <div class="card">
-    <div class="card-title">Features & limits</div>
-    <app-features-fields [group]="form.controls.features" />
-    <div class="grid grid-3" style="margin-top: 16px">
-      <label class="field">
-        <span>Seat limit (people) *</span>
-        <input type="number" min="1" formControlName="seatLimit" />
-      </label>
-      <label class="field">
-        <span>Device limit</span>
-        <input type="number" min="1" formControlName="deviceLimit" placeholder="Unlimited" />
-      </label>
-    </div>
   </div>
 
   <div class="card">
@@ -109,11 +95,25 @@
         <span>Max product build</span>
         <input formControlName="maxBuild" placeholder="e.g. 1.99.99" />
       </label>
-      <label class="field">
-        <span>Host fingerprint</span>
-        <input formControlName="hostFingerprint" class="mono" placeholder="Blank = not machine-bound" />
-      </label>
+      @if (form.controls.hostingMode.value === 'OnPrem') {
+        <label class="field">
+          <span>Host fingerprint *</span>
+          <input formControlName="hostFingerprint" class="mono" placeholder="hf1_… (use Import .actreq)" />
+          <small>Binds the license to the customer's machine. Required for OnPrem.</small>
+        </label>
+      }
     </div>
+    <label class="field" style="margin-top: 16px">
+      <span>Client Database Connection String (optional)</span>
+      <input
+        formControlName="clientDbConnectionString"
+        class="mono"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="e.g. mongodb://user:password@db.customer.com:27017/p360"
+      />
+      <small>Stored encrypted. Shown with the password hidden; never included in the license file.</small>
+    </label>
     <label class="field" style="margin-top: 16px">
       <span>Notes</span>
       <textarea formControlName="notes" rows="3"></textarea>
@@ -122,6 +122,54 @@
 
   <div class="actions" style="justify-content: flex-end; margin-top: 16px">
     <a class="btn" routerLink="/entitlements">Cancel</a>
-    <button class="btn primary" type="submit" [disabled]="busy() || !catalog()">{{ busy() ? 'Issuing…' : 'Issue license' }}</button>
+    <button class="btn primary" type="submit" [disabled]="busy() || !catalog()">Issue license</button>
   </div>
 </form>
+
+@if (pending(); as p) {
+  <app-dialog title="Confirm new license" [wide]="true" (closed)="busy() || pending.set(null)">
+    <p class="sub" style="margin: 0">Check the details. On confirm, revision 1 is signed and the license file is emailed to {{ p.contactEmail }}.</p>
+
+    <div class="sum-section">
+      <div class="sum-title">Customer</div>
+      <dl class="kv">
+        <dt>Customer name</dt><dd>{{ p.customerName }}</dd>
+        <dt>Contact email</dt><dd>{{ p.contactEmail }}</dd>
+        <dt>Subscriber code</dt><dd class="mono">{{ p.subscriberCode ?? 'Generated on issue' }}</dd>
+      </dl>
+    </div>
+
+    <div class="sum-section">
+      <div class="sum-title">Plan</div>
+      <dl class="kv">
+        <dt>Tier</dt><dd>People360 {{ p.tier }}</dd>
+        <dt>Modules</dt><dd>{{ p.modules.length }} selected</dd>
+      </dl>
+      @for (g of pendingGroups(); track g.name) {
+        <div class="sum-group">
+          <span class="sum-group-name">{{ g.name }}</span>
+          <span>{{ g.titles.join(', ') }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="sum-section">
+      <div class="sum-title">Registered &amp; Connected</div>
+      <dl class="kv">
+        <dt>Registered</dt>
+        <dd>
+          {{ p.capacity?.registered ? fmtQty(p.capacity?.registered?.quantity) : 'Not purchased' }}
+          @if (p.capacity?.connected && p.capacity?.registered?.quantity === catalog()?.capacity?.autoRegistered) {
+            <span class="sub">(included with Connected)</span>
+          }
+        </dd>
+        <dt>Connected</dt><dd>{{ p.capacity?.connected ? fmtQty(p.capacity?.connected?.quantity) : 'Not purchased' }}</dd>
+      </dl>
+    </div>
+
+    <ng-container dlg-actions>
+      <button class="btn" type="button" [disabled]="busy()" (click)="pending.set(null)">Back to edit</button>
+      <button class="btn primary" type="button" [disabled]="busy()" (click)="confirmIssue()">{{ busy() ? 'Issuing…' : 'Confirm & issue' }}</button>
+    </ng-container>
+  </app-dialog>
+}
