@@ -6,7 +6,7 @@ using Licensing.Contracts;
 namespace Issuer.Api.Dto;
 
 public sealed record EntitlementDto(
-    string Id, string SubscriberCode, string CustomerName, string ContactEmail, int Revision,
+    string Id, Product Product, string SubscriberCode, string CustomerName, string ContactEmail, int Revision,
     EntitlementState State, Tier Tier, List<ModuleGrant> Modules, Capacity Capacity,
     DateTime ValidFrom, DateTime ValidUntil,
     string? MinBuild, string? MaxBuild, HostingMode HostingMode, string? HostFingerprint,
@@ -15,7 +15,7 @@ public sealed record EntitlementDto(
 {
     /// <param name="clientDbMasked">Masked connection string (password hidden), or null.</param>
     public static EntitlementDto From(EntitlementDoc d, string? keyPrefix, string? clientDbMasked = null) => new(
-        d.Id, d.SubscriberCode, d.CustomerName, d.ContactEmail, d.Revision, d.State, d.Tier, d.Modules, d.Capacity ?? new Capacity(),
+        d.Id, d.Product, d.SubscriberCode, d.CustomerName, d.ContactEmail, d.Revision, d.State, d.Tier, d.Modules, d.Capacity ?? new Capacity(),
         d.ValidFrom, d.ValidUntil, d.MinBuild, d.MaxBuild, d.HostingMode, d.HostFingerprint,
         d.IssuedAt, d.IssuedBy, d.LastPingAt, d.LastCheckinAt, keyPrefix, d.Notes, d.StateReason,
         d.ClientDbConnectionProtected is null ? null : clientDbMasked ?? "(set)");
@@ -23,6 +23,7 @@ public sealed record EntitlementDto(
 
 public sealed record EntitlementInput
 {
+    public Product Product { get; init; } = Product.People360;
     public string? SubscriberCode { get; init; }
     public string CustomerName { get; init; } = "";
     public string ContactEmail { get; init; } = "";
@@ -84,9 +85,11 @@ public static partial class Validation
         if (!Enum.IsDefined(i.HostingMode)) Add("hostingMode", "Unknown hosting mode.");
         if (i.ValidUntil <= i.ValidFrom) Add("validUntil", "Valid until must be after valid from.");
         if (i.ValidUntil <= now) Add("validUntil", "Valid until must be in the future.");
-        CheckModules(i.Modules, e);
+        if (!Enum.IsDefined(i.Product)) { Add("product", "Unknown product."); return e; }
+        var product = Products.Get(i.Product);
+        CheckModules(i.Modules, product, e);
         if (i.Modules.Count == 0) e["modules"] = ["Select at least one module."];
-        if (CapacityRules.Validate(i.Capacity) is { } ce) e["capacity"] = [ce];
+        if (CapacityRules.Validate(i.Capacity, product) is { } ce) e["capacity"] = [ce];
         CheckBuilds(i.MinBuild, i.MaxBuild, e);
         if (i.HostFingerprint is { Length: > 0 } fp && !FingerprintRx().IsMatch(fp)) Add("hostFingerprint", "Host fingerprint format is not valid. Upload the customer's .actreq file.");
         if (i.HostingMode == HostingMode.OnPrem && string.IsNullOrWhiteSpace(i.HostFingerprint))
@@ -101,18 +104,19 @@ public static partial class Validation
     {
         var e = new Dictionary<string, string[]>();
         if (r.ValidUntil <= now) e["validUntil"] = ["Valid until must be in the future."];
-        if (r.Modules is not null) CheckModules(r.Modules, e);
+        var product = Products.Get(prev.Product);
+        if (r.Modules is not null) CheckModules(r.Modules, product, e);
         if (r.Modules is { Count: 0 }) e["modules"] = ["Select at least one module."];
-        if (CapacityRules.Validate(r.Capacity) is { } ce) e["capacity"] = [ce];
+        if (CapacityRules.Validate(r.Capacity, product) is { } ce) e["capacity"] = [ce];
         if (r.HostFingerprint is { Length: > 0 } fp && !FingerprintRx().IsMatch(fp)) e["hostFingerprint"] = ["Host fingerprint format is not valid."];
         if (r.Notes is { Length: > 2000 }) e["notes"] = ["Notes max 2000 characters."];
         return e;
     }
 
-    private static void CheckModules(List<ModuleGrant> modules, Dictionary<string, string[]> e)
+    private static void CheckModules(List<ModuleGrant> modules, ProductDef product, Dictionary<string, string[]> e)
     {
-        var unknown = modules.Where(m => !ProductCatalog.IsKnownModule(m.ModuleKey)).Select(m => m.ModuleKey).ToList();
-        if (unknown.Count > 0) e["modules"] = [$"Unknown modules: {string.Join(", ", unknown)}"];
+        var unknown = modules.Where(m => !product.IsKnownModule(m.ModuleKey)).Select(m => m.ModuleKey).ToList();
+        if (unknown.Count > 0) e["modules"] = [$"Not {product.Title} modules: {string.Join(", ", unknown)}"];
         else if (modules.GroupBy(m => m.ModuleKey).Any(g => g.Count() > 1)) e["modules"] = ["Duplicate modules."];
     }
 

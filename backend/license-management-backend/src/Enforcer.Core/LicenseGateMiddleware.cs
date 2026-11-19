@@ -55,7 +55,7 @@ public class ModuleKeyResolver
     {
         if (ctx.GetRouteValue("moduleKey") is string rk) return rk;
         var segs = (ctx.Request.Path.Value ?? "").Split('/', StringSplitOptions.RemoveEmptyEntries);
-        if (segs.Length >= 2 && segs[0] == "api" && Licensing.Contracts.ProductCatalog.IsKnownModule(segs[1])) return segs[1];
+        if (segs.Length >= 2 && segs[0] == "api" && Licensing.Contracts.Products.IsKnownModule(segs[1])) return segs[1];
         if (segs.Length >= 3 && segs[0] == "api" && segs[1] == "modules") return segs[2];
         return null;
     }

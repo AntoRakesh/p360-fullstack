@@ -1,15 +1,15 @@
 import { Component, computed, input } from '@angular/core';
 import { daysLeft } from '../core/format';
 
-/** Colored pill for an entitlement state (or a tier when kind="tier"). */
+/** Colored pill for an entitlement state (or a tier / product via kind). */
 @Component({
   selector: 'app-badge',
   template: `<span class="badge" [class]="'badge b-' + cls()">{{ value() }}</span>`,
 })
 export class Badge {
   readonly value = input.required<string>();
-  readonly kind = input<'state' | 'tier'>('state');
-  protected readonly cls = computed(() => (this.kind() === 'tier' ? 'tier-' : '') + this.value().toLowerCase());
+  readonly kind = input<'state' | 'tier' | 'product'>('state');
+  protected readonly cls = computed(() => (this.kind() === 'state' ? '' : this.kind() + '-') + this.value().toLowerCase());
 }
 
 /** "42 d" / "Expired 3 d ago" with warning colors. */

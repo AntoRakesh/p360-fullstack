@@ -12,6 +12,18 @@
 
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div class="card">
+    <div class="card-title">Product</div>
+    <div class="tier-pick">
+      @for (pr of products; track pr) {
+        <button type="button" class="tier-card" [class.selected]="product() === pr" (click)="pickProduct(pr)">
+          <strong>{{ pr }}</strong>
+          <span>{{ productBlurb[pr] }}</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="card">
     <div class="card-title">
       Customer
       <label class="btn sm">
@@ -46,8 +58,8 @@
     <div class="tier-pick">
       @for (t of tiers; track t) {
         <button type="button" class="tier-card" [class.selected]="form.controls.tier.value === t" (click)="pickTier(t)">
-          <strong>People360 {{ t }}</strong>
-          <span>{{ blurb[t] }}</span>
+          <strong>{{ product() }} {{ t }}</strong>
+          <span>{{ blurb[product()][t] }}</span>
         </button>
       }
     </div>
@@ -127,7 +139,7 @@
 </form>
 
 @if (pending(); as p) {
-  <app-dialog title="Confirm new license" [wide]="true" (closed)="busy() || pending.set(null)">
+  <app-dialog [title]="'Confirm new ' + p.product + ' license'" [wide]="true" (closed)="busy() || pending.set(null)">
     <p class="sub" style="margin: 0">Check the details. On confirm, revision 1 is signed and the license file is emailed to {{ p.contactEmail }}.</p>
 
     <div class="sum-section">
@@ -142,7 +154,8 @@
     <div class="sum-section">
       <div class="sum-title">Plan</div>
       <dl class="kv">
-        <dt>Tier</dt><dd>People360 {{ p.tier }}</dd>
+        <dt>Product</dt><dd>{{ p.product }}</dd>
+        <dt>Tier</dt><dd>{{ p.product }} {{ p.tier }}</dd>
         <dt>Modules</dt><dd>{{ p.modules.length }} selected</dd>
       </dl>
       @for (g of pendingGroups(); track g.name) {
@@ -154,15 +167,17 @@
     </div>
 
     <div class="sum-section">
-      <div class="sum-title">Registered &amp; Connected</div>
+      <div class="sum-title">{{ catalog()?.capacity?.registered ? 'Registered &amp; Connected' : 'Connected' }}</div>
       <dl class="kv">
-        <dt>Registered</dt>
-        <dd>
-          {{ p.capacity?.registered ? fmtQty(p.capacity?.registered?.quantity) : 'Not purchased' }}
-          @if (p.capacity?.connected && p.capacity?.registered?.quantity === catalog()?.capacity?.autoRegistered) {
-            <span class="sub">(included with Connected)</span>
-          }
-        </dd>
+        @if (catalog()?.capacity?.registered) {
+          <dt>Registered</dt>
+          <dd>
+            {{ p.capacity?.registered ? fmtQty(p.capacity?.registered?.quantity) : 'Not purchased' }}
+            @if (p.capacity?.connected && p.capacity?.registered?.quantity === catalog()?.capacity?.autoRegistered) {
+              <span class="sub">(included with Connected)</span>
+            }
+          </dd>
+        }
         <dt>Connected</dt><dd>{{ p.capacity?.connected ? fmtQty(p.capacity?.connected?.quantity) : 'Not purchased' }}</dd>
       </dl>
     </div>

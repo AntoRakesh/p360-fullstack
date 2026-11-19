@@ -33,11 +33,21 @@ Forgot the password or lost the authenticator? Set a new seed password (`./scrip
 
 Tests: `dotnet test LicenseManagement.slnx` and `./scripts/e2e-smoke.sh`.
 
-## Tiers
+## Products and tiers
 
-`ProductCatalog` in `Licensing.Contracts/Catalog.cs`. Essential / Professional / Enterprise from the tier sheet.
-"Optional" = add-on. The license grants modules only (no seat, device or feature limits). The signed file carries
-the final module list, so editing the catalog never changes licenses already issued.
+One license panel for three applications. Each license is for exactly one product; the product is in the
+signed file, and a customer install (`Enforcer:Product`) rejects a license for another product.
+
+| Product | Code prefix | Modules (catalog) | Capacity |
+|---|---|---|---|
+| People360 | `P360-` | People360 module paths (`frontend/p360/src/app/modules.ts`) | Registered 50,000 / 200,000 / Unlimited + Connected 100–50,000; Connected alone adds Registered 50 |
+| Asset360 | `A360-` | Asset360 sheet | Same as People360 |
+| Environment360 | `E360-` | Environment360 sheet | Connected only (100–50,000), no Registered |
+
+Catalogs live in `Licensing.Contracts/Catalog.cs` (`People360Catalog`, `Asset360Catalog`, `Environment360Catalog`).
+Sheet values: ✓ = Included, "Optional" = add-on, "Limited" = Included, — = not in tier. Modules a tier includes
+start ticked and can be unticked. The signed file carries the final module list, so editing a catalog never
+changes licenses already issued. Licenses created before products existed count as People360.
 
 ## License lifecycle
 

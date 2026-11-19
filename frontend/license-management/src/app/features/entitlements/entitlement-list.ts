@@ -5,7 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { ApiService } from '../../core/api.service';
 import { errorMessage } from '../../core/format';
-import { Entitlement, EntitlementState, HOSTING_MODES, HostingMode, Paged, STATES, TIERS, Tier } from '../../core/models';
+import { Entitlement, EntitlementState, HOSTING_MODES, HostingMode, PRODUCTS, Paged, Product, STATES, TIERS, Tier } from '../../core/models';
 import { Badge, DaysLeft } from '../../shared/state-badge';
 
 @Component({
@@ -20,7 +20,9 @@ export class EntitlementList implements OnInit {
   // Query-param prefill (dashboard links) via withComponentInputBinding.
   readonly state = input<string>();
   readonly tier = input<string>();
+  readonly product = input<string>();
 
+  protected readonly products = PRODUCTS;
   protected readonly states = STATES;
   protected readonly tiers = TIERS;
   protected readonly modes = HOSTING_MODES;
@@ -31,6 +33,7 @@ export class EntitlementList implements OnInit {
 
   protected readonly filters = inject(FormBuilder).nonNullable.group({
     search: '',
+    product: '' as Product | '',
     state: '' as EntitlementState | '',
     tier: '' as Tier | '',
     hostingMode: '' as HostingMode | '',
@@ -45,7 +48,11 @@ export class EntitlementList implements OnInit {
 
   ngOnInit(): void {
     this.filters.patchValue(
-      { state: (this.state() ?? '') as EntitlementState | '', tier: (this.tier() ?? '') as Tier | '' },
+      {
+        product: (this.product() ?? '') as Product | '',
+        state: (this.state() ?? '') as EntitlementState | '',
+        tier: (this.tier() ?? '') as Tier | '',
+      },
       { emitEvent: false },
     );
     this.load();

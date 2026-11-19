@@ -306,17 +306,93 @@ public class IssuerApiTests(IssuerFactory f) : IClassFixture<IssuerFactory>
     }
 
     [Fact]
-    public async Task Catalog_matches_tier_sheet()
+    public async Task Catalog_matches_tier_sheets_for_all_products()
     {
         var admin = await f.AdminClientAsync();
         var cat = await admin.GetFromJsonAsync<JsonElement>("/api/catalog");
-        var tiers = cat.GetProperty("tiers").EnumerateArray().ToDictionary(t => t.GetProperty("tier").GetString()!, t => t.GetProperty("inclusion"));
-        Assert.Equal("None", tiers["Essential"].GetProperty("patrol-guard-management").GetString());
-        Assert.Equal("AddOn", tiers["Professional"].GetProperty("real-time-location").GetString());
-        Assert.Equal("None", tiers["Professional"].GetProperty("workflow-automation").GetString());
-        Assert.Equal("Included", tiers["Enterprise"].GetProperty("workflow-automation").GetString());
-        Assert.Equal("Included", tiers["Essential"].GetProperty("contractor-vendor").GetString());
+        var products = cat.GetProperty("products").EnumerateArray().ToDictionary(p => p.GetProperty("product").GetString()!);
+        Assert.Equal(["People360", "Asset360", "Environment360"], products.Keys.ToArray());
+
+        string Inc(string product, string tier, string module) =>
+            products[product].GetProperty("tiers").EnumerateArray().First(t => t.GetProperty("tier").GetString() == tier)
+                .GetProperty("inclusion").GetProperty(module).GetString()!;
+
+        // People360
+        Assert.Equal("None", Inc("People360", "Essential", "patrol-guard-management"));
+        Assert.Equal("AddOn", Inc("People360", "Professional", "real-time-location"));
+        Assert.Equal("Included", Inc("People360", "Enterprise", "workflow-automation"));
+        // Asset360
+        Assert.Equal("Included", Inc("Asset360", "Essential", "asset-identification"));
+        Assert.Equal("None", Inc("Asset360", "Essential", "asset-tracking"));
+        Assert.Equal("AddOn", Inc("Asset360", "Professional", "condition-monitoring"));
+        Assert.Equal("None", Inc("Asset360", "Professional", "custom-workflow"));
+        Assert.Equal("Included", Inc("Asset360", "Essential", "api-enterprise-integration")); // "Limited"
+        // Environment360
+        Assert.Equal("Included", Inc("Environment360", "Essential", "threshold-alerts"));
+        Assert.Equal("None", Inc("Environment360", "Essential", "advanced-alert-rules"));
+        Assert.Equal("AddOn", Inc("Environment360", "Professional", "digital-twin"));
+        Assert.Equal("None", Inc("Environment360", "Professional", "predictive-analytics-ai"));
+        Assert.Equal("Included", Inc("Environment360", "Enterprise", "enterprise-command-center"));
+
+        Assert.Equal(JsonValueKind.Null, products["Environment360"].GetProperty("capacity").GetProperty("registered").ValueKind);
+        Assert.Equal(50, products["Asset360"].GetProperty("capacity").GetProperty("autoRegistered").GetInt32());
     }
+
+    [Fact]
+    public async Task Asset360_license_gets_A360_code_and_product_in_signed_file()
+    {
+        var admin = await f.AdminClientAsync();
+        var res = await admin.PostAsJsonAsync("/api/entitlements", ProductInput("Asset360", ["asset-registry", "asset-audit-verification"], new { connected = new { quantity = 100 } }));
+        Assert.Equal(HttpStatusCode.Created, res.StatusCode);
+        var e = await res.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.StartsWith("A360-", e.GetProperty("subscriberCode").GetString());
+        Assert.Equal("Asset360", e.GetProperty("product").GetString());
+        Assert.Equal(50, e.GetProperty("capacity").GetProperty("registered").GetProperty("quantity").GetInt32());
+
+        var bytes = await admin.GetByteArrayAsync($"/api/entitlements/{e.GetProperty("id").GetString()}/file");
+        var payload = new SignatureVerifier([f.PublicKey]).Verify<EntitlementPayload>(bytes)!.Value;
+        Assert.Equal(Product.Asset360, payload.Product);
+
+        var list = await admin.GetFromJsonAsync<JsonElement>("/api/entitlements?product=Asset360&pageSize=200");
+        Assert.All(list.GetProperty("items").EnumerateArray(), x => Assert.Equal("Asset360", x.GetProperty("product").GetString()));
+    }
+
+    [Fact]
+    public async Task Environment360_is_connected_only()
+    {
+        var admin = await f.AdminClientAsync();
+        var ok = await admin.PostAsJsonAsync("/api/entitlements", ProductInput("Environment360", ["threshold-alerts"], new { connected = new { quantity = 2500 } }));
+        Assert.Equal(HttpStatusCode.Created, ok.StatusCode);
+        var e = await ok.Content.ReadFromJsonAsync<JsonElement>();
+        Assert.StartsWith("E360-", e.GetProperty("subscriberCode").GetString());
+        var cap = e.GetProperty("capacity");
+        Assert.Equal(2500, cap.GetProperty("connected").GetProperty("quantity").GetInt32());
+        Assert.True(cap.GetProperty("registered").ValueKind == JsonValueKind.Null); // no auto Registered
+
+        var withRegistered = await admin.PostAsJsonAsync("/api/entitlements", ProductInput("Environment360", ["threshold-alerts"], new { registered = new { quantity = 50000 } }));
+        Assert.Equal(HttpStatusCode.BadRequest, withRegistered.StatusCode);
+    }
+
+    [Fact]
+    public async Task Module_of_another_product_is_rejected()
+    {
+        var admin = await f.AdminClientAsync();
+        var res = await admin.PostAsJsonAsync("/api/entitlements", ProductInput("Environment360", ["time-attendance"], null));
+        Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
+    }
+
+    private static object ProductInput(string product, string[] modules, object? capacity) => new
+    {
+        product,
+        customerName = "Multi Corp",
+        contactEmail = "it@multi.example",
+        tier = "Enterprise",
+        modules = modules.Select(m => new { moduleKey = m }),
+        capacity,
+        validFrom = DateTime.UtcNow.Date,
+        validUntil = DateTime.UtcNow.Date.AddYears(1),
+        hostingMode = "Cloud",
+    };
 
     // ------------------------------------------------------------------
 

@@ -33,7 +33,20 @@
     </div>
   </div>
 
-  <div class="grid grid-2" style="margin-top: 16px">
+  <div class="grid grid-3" style="margin-top: 16px">
+    <div class="card">
+      <div class="card-title">By product</div>
+      <table class="tbl">
+        <tbody>
+          @for (p of products; track p) {
+            <tr class="clickable" (click)="router.navigate(['/entitlements'], { queryParams: { product: p } })">
+              <td><app-badge kind="product" [value]="p" /></td>
+              <td style="text-align: right; font-weight: 600">{{ d.byProduct?.[p] ?? 0 }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
     <div class="card">
       <div class="card-title">By state</div>
       <table class="tbl">

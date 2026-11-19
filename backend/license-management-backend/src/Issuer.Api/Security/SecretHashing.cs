@@ -16,10 +16,10 @@ public static class SecretHashing
 
     private const string SubscriberAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    public static string NewSubscriberCode()
+    public static string NewSubscriberCode(string prefix = "P360")
     {
         Span<char> chars = stackalloc char[8];
         for (var i = 0; i < chars.Length; i++) chars[i] = SubscriberAlphabet[RandomNumberGenerator.GetInt32(SubscriberAlphabet.Length)];
-        return "P360-" + new string(chars);
+        return prefix + "-" + new string(chars);
     }
 }

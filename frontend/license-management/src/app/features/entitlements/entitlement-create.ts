@@ -4,15 +4,33 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { addYears, errorMessage, fromDateInput, toDateInput } from '../../core/format';
-import { ActivationInfo, Capacity, Catalog, EntitlementInput, HOSTING_MODES, HostingMode, TIERS, Tier } from '../../core/models';
+import { ActivationInfo, Capacity, Catalog, EntitlementInput, HOSTING_MODES, HostingMode, PRODUCTS, Product, TIERS, Tier } from '../../core/models';
 import { Dialog } from '../../shared/dialog';
 import { CapacityPicker, formatQuantity } from './capacity-picker';
 import { ModulePicker, defaultModules } from './module-picker';
 
-const TIER_BLURB: Record<Tier, string> = {
-  Essential: 'Attendance, access control, visitors, dashboards and reports.',
-  Professional: 'Adds patrol, meals, workforce, emergency. RTLS, twin and customer analytics as add-ons.',
-  Enterprise: 'Every module, including custom workflows.',
+const PRODUCT_BLURB: Record<Product, string> = {
+  People360: 'Workforce, attendance, access control and visitors.',
+  Asset360: 'Asset registry, tracking, maintenance and inspections.',
+  Environment360: 'Environmental sensors, monitoring, alerts and analytics.',
+};
+
+const TIER_BLURB: Record<Product, Record<Tier, string>> = {
+  People360: {
+    Essential: 'Attendance, access control, visitors, dashboards and reports.',
+    Professional: 'Adds patrol, meals, workforce, emergency. RTLS, twin and customer analytics as add-ons.',
+    Enterprise: 'Every module, including custom workflows.',
+  },
+  Asset360: {
+    Essential: 'Asset registry, barcode / QR / NFC / RFID, assignment and audit.',
+    Professional: 'Adds tracking, maintenance and inspections. Condition monitoring and WIP as add-ons.',
+    Enterprise: 'Every module, including advanced analytics and custom workflow.',
+  },
+  Environment360: {
+    Essential: 'Real-time monitoring, sensors, threshold alerts, history and standard reports.',
+    Professional: 'Adds advanced alerts, escalation, scheduled reports, multi-site and analytics. Digital twin as add-on.',
+    Enterprise: 'Every capability, including predictive AI and the central command center.',
+  },
 };
 
 @Component({
@@ -26,9 +44,14 @@ export class EntitlementCreate {
   private readonly fb = inject(FormBuilder);
 
   protected readonly tiers = TIERS;
+  protected readonly products = PRODUCTS;
+  protected readonly productBlurb = PRODUCT_BLURB;
   protected readonly blurb = TIER_BLURB;
   protected readonly modes = HOSTING_MODES;
-  protected readonly catalog = signal<Catalog | null>(null);
+  /** Catalogs of all products; `catalog` is the selected product's one. */
+  protected readonly catalogs = signal<Catalog[] | null>(null);
+  protected readonly product = signal<Product>('People360');
+  protected readonly catalog = computed(() => this.catalogs()?.find((c) => c.product === this.product()) ?? null);
   protected readonly modules = signal<string[]>([]);
   protected readonly capacity = signal<Capacity>({});
   protected readonly override = signal(false);
@@ -75,12 +98,22 @@ export class EntitlementCreate {
       if (m !== 'OnPrem') this.form.controls.hostFingerprint.setValue(null);
     });
     this.api.catalog().subscribe({
-      next: (c) => {
-        this.catalog.set(c);
+      next: (r) => {
+        this.catalogs.set(r.products ?? []);
         this.applyTier(this.form.controls.tier.value);
       },
       error: (e) => this.error.set(errorMessage(e)),
     });
+  }
+
+  /** Product change: new module list and capacity options. Customer fields stay. */
+  protected pickProduct(p: Product): void {
+    if (p === this.product()) return;
+    this.product.set(p);
+    this.modules.set([]);
+    this.capacity.set({});
+    this.override.set(false);
+    this.applyTier(this.form.controls.tier.value);
   }
 
   protected pickTier(t: Tier): void {
@@ -107,6 +140,7 @@ export class EntitlementCreate {
     this.api.parseActivation(file).subscribe({
       next: (a) => {
         this.activation.set(a);
+        if (a.product && a.product !== this.product()) this.pickProduct(a.product);
         this.form.patchValue({ hostFingerprint: a.hostFingerprint, hostingMode: 'OnPrem' });
         if (a.subscriberCode) this.form.patchValue({ subscriberCode: a.subscriberCode });
       },
@@ -137,6 +171,7 @@ export class EntitlementCreate {
     }
     const blank = (s: string | null) => (s && s.trim() ? s.trim() : null);
     const input: EntitlementInput = {
+      product: this.product(),
       subscriberCode: blank(v.subscriberCode),
       customerName: v.customerName.trim(),
       contactEmail: v.contactEmail.trim(),

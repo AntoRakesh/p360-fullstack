@@ -7,6 +7,9 @@ public sealed class EnforcerOptions
     /// <summary>Subscriber code this install belongs to. A license for any other code is rejected.</summary>
     public string SubscriberCode { get; set; } = "";
 
+    /// <summary>Which application this install is. A license for another product is rejected.</summary>
+    public Licensing.Contracts.Product Product { get; set; } = Licensing.Contracts.Product.People360;
+
     /// <summary>Running product build, e.g. "3.2.0". Checked against minBuild/maxBuild.</summary>
     public string ProductBuild { get; set; } = "1.0.0";
 

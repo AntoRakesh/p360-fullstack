@@ -30,6 +30,8 @@ public sealed record EntitlementPayload
 {
     public int Format { get; init; } = 1;
     public required string EntitlementId { get; init; }
+    /// <summary>Which application this license is for. Files issued before products existed read as People360.</summary>
+    public Product Product { get; init; } = Product.People360;
     public required string SubscriberCode { get; init; }
     public required string CustomerName { get; init; }
     public required int Revision { get; init; }
@@ -64,6 +66,7 @@ public sealed record CheckinReceipt
 public sealed record ActivationRequest
 {
     public int Format { get; init; } = 1;
+    public Product? Product { get; init; }
     public string? SubscriberCode { get; init; }
     public required string HostFingerprint { get; init; }
     public required string ProductBuild { get; init; }

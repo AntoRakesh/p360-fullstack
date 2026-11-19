@@ -41,4 +41,15 @@ describe('CapacityPicker DOM', () => {
     await f.whenStable();
     expect(el.querySelectorAll('select.qty').length).toBe(1);
   });
+
+  it('Connected-only product: no Registered row, Connected alone adds nothing', async () => {
+    const f = await render({ registered: null, connected: [100, 500, 2500, 10000, 50000], autoRegistered: null });
+    const el = f.nativeElement as HTMLElement;
+    expect(el.querySelectorAll('input[type=checkbox]').length).toBe(1);
+    expect(el.textContent).not.toContain('Registered');
+    click(el, 0);
+    await f.whenStable();
+    expect(el.querySelectorAll('select.qty').length).toBe(1);
+    expect(f.componentInstance.value()).toEqual({ connected: { quantity: 100 } });
+  });
 });

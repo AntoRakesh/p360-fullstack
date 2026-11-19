@@ -15,16 +15,22 @@ public static class EntitlementEndpoints
     {
         var api = app.MapGroup("/api").RequireRateLimiting("admin");
 
+        // All products with their modules, tiers and Registered / Connected options.
         api.MapGet("/catalog", () => Results.Ok(new
         {
-            modules = ProductCatalog.Modules,
-            tiers = ProductCatalog.Tiers,
-            capacity = new
+            products = Products.All.Select(p => new
             {
-                registered = CapacityRules.RegisteredOptions,
-                connected = CapacityRules.ConnectedOptions,
-                autoRegistered = CapacityRules.AutoRegisteredQuantity,
-            },
+                product = p.Product,
+                title = p.Title,
+                modules = p.Modules,
+                tiers = p.Tiers,
+                capacity = new
+                {
+                    registered = p.Capacity.Registered,
+                    connected = p.Capacity.Connected,
+                    autoRegistered = p.Capacity.AutoRegistered,
+                },
+            }),
         }));
 
         api.MapGet("/dashboard", Dashboard);
@@ -100,7 +106,7 @@ public static class EntitlementEndpoints
             var req = EnvelopeCodec.TryReadActivationRequest(await reader.ReadToEndAsync(ct));
             if (req is null || !Validation.FingerprintRx().IsMatch(req.HostFingerprint ?? ""))
                 return Results.Problem("This is not a valid activation request (.actreq) file.", statusCode: 400);
-            return Results.Ok(new { req.SubscriberCode, req.HostFingerprint, req.ProductBuild, req.Hostname, req.RequestedAt });
+            return Results.Ok(new { req.Product, req.SubscriberCode, req.HostFingerprint, req.ProductBuild, req.Hostname, req.RequestedAt });
         }).DisableAntiforgery();
 
         api.MapGet("/audit", async (string? subscriberCode, string? action, int? page, int? pageSize, MongoContext db, CancellationToken ct) =>
@@ -119,7 +125,7 @@ public static class EntitlementEndpoints
     {
         var now = time.GetUtcNow().UtcDateTime;
         var current = Builders<EntitlementDoc>.Filter.Ne(x => x.State, EntitlementState.Superseded);
-        var rows = await db.Entitlements.Find(current).Project(x => new { x.State, x.Tier }).ToListAsync(ct);
+        var rows = await db.Entitlements.Find(current).Project(x => new { x.State, x.Tier, x.Product }).ToListAsync(ct);
         var expiring = await db.Entitlements
             .Find(x => x.State == EntitlementState.Live && x.ValidUntil >= now && x.ValidUntil <= now.AddDays(30))
             .SortBy(x => x.ValidUntil).Limit(50).ToListAsync(ct);
@@ -129,18 +135,21 @@ public static class EntitlementEndpoints
         {
             byState = Enum.GetValues<EntitlementState>().ToDictionary(s => s.ToString(), s => rows.Count(r => r.State == s)),
             byTier = Enum.GetValues<Tier>().ToDictionary(t => t.ToString(), t => rows.Count(r => r.Tier == t)),
+            byProduct = Enum.GetValues<Product>().ToDictionary(p => p.ToString(), p => rows.Count(r => r.Product == p)),
             expiringSoon = expiring.Select(d => EntitlementDto.From(d, null)),
             recentAudit = recent.Select(AuditDto.From),
         });
     }
 
-    private static async Task<IResult> List(string? search, EntitlementState? state, Tier? tier, HostingMode? hostingMode,
+    private static async Task<IResult> List(string? search, Product? product, EntitlementState? state, Tier? tier, HostingMode? hostingMode,
         int? page, int? pageSize, MongoContext db, CancellationToken ct)
     {
         var (p, size) = Paging(page, pageSize, 20);
         var b = Builders<EntitlementDoc>.Filter;
         var f = state is { } s ? b.Eq(x => x.State, s) : b.Ne(x => x.State, EntitlementState.Superseded);
         if (tier is { } t) f &= b.Eq(x => x.Tier, t);
+        // Rows created before products existed have no product field and count as People360.
+        if (product is { } pr) f &= pr == Product.People360 ? b.Or(b.Eq(x => x.Product, pr), b.Exists(x => x.Product, false)) : b.Eq(x => x.Product, pr);
         if (hostingMode is { } h) f &= b.Eq(x => x.HostingMode, h);
         if (!string.IsNullOrWhiteSpace(search))
         {

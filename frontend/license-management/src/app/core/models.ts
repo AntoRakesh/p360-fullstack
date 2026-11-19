@@ -1,10 +1,12 @@
 // Mirrors backend/license-management-backend/docs/API.md — keep in sync.
 
+export type Product = 'People360' | 'Asset360' | 'Environment360';
 export type EntitlementState = 'Live' | 'Suspended' | 'Revoked' | 'Expired' | 'Superseded';
 export type Tier = 'Essential' | 'Professional' | 'Enterprise';
 export type HostingMode = 'Cloud' | 'OnPrem' | 'Split';
 export type Inclusion = 'Included' | 'AddOn' | 'None';
 
+export const PRODUCTS: Product[] = ['People360', 'Asset360', 'Environment360'];
 export const STATES: EntitlementState[] = ['Live', 'Suspended', 'Revoked', 'Expired', 'Superseded'];
 export const TIERS: Tier[] = ['Essential', 'Professional', 'Enterprise'];
 export const HOSTING_MODES: HostingMode[] = ['Cloud', 'OnPrem', 'Split'];
@@ -27,13 +29,17 @@ export interface Capacity {
 }
 
 export interface CapacityOptions {
-  registered: (number | null)[];
+  /** null = product has no Registered capacity (Environment360). A null item = Unlimited. */
+  registered: (number | null)[] | null;
   connected: number[];
-  autoRegistered: number;
+  /** Connected alone adds Registered at this quantity; null = never. */
+  autoRegistered: number | null;
 }
 
 export interface Entitlement {
   id: string;
+  /** Old rows without a product are People360. */
+  product: Product;
   subscriberCode: string;
   customerName: string;
   contactEmail: string;
@@ -60,6 +66,7 @@ export interface Entitlement {
 }
 
 export interface EntitlementInput {
+  product: Product;
   subscriberCode?: string | null;
   customerName: string;
   contactEmail: string;
@@ -117,15 +124,23 @@ export interface TierDef {
   inclusion: Record<string, Inclusion>;
 }
 
+/** One product's modules, tiers and Registered / Connected options. */
 export interface Catalog {
+  product: Product;
+  title: string;
   modules: CatalogModule[];
   tiers: TierDef[];
   capacity: CapacityOptions;
 }
 
+export interface CatalogResponse {
+  products: Catalog[];
+}
+
 export interface Dashboard {
   byState: Partial<Record<EntitlementState, number>>;
   byTier: Partial<Record<Tier, number>>;
+  byProduct?: Partial<Record<Product, number>>;
   expiringSoon: Entitlement[];
   recentAudit: AuditEvent[];
 }
@@ -149,6 +164,7 @@ export interface MfaResponse {
 }
 
 export interface ActivationInfo {
+  product?: Product | null;
   subscriberCode?: string | null;
   hostFingerprint: string;
   productBuild: string;
@@ -163,6 +179,7 @@ export interface InstallKey {
 
 export interface EntitlementQuery {
   search?: string;
+  product?: Product | '';
   state?: EntitlementState | '';
   tier?: Tier | '';
   hostingMode?: HostingMode | '';

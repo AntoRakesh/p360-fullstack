@@ -11,7 +11,7 @@
       <div class="sub"><a routerLink="/entitlements">Entitlements</a> / <span class="mono">{{ e.subscriberCode }}</span></div>
       <h1>{{ e.customerName }}</h1>
       <p>
-        <app-badge [value]="e.state" /> <app-badge kind="tier" [value]="e.tier" />
+        <app-badge [value]="e.state" /> <app-badge kind="product" [value]="e.product ?? 'People360'" /> <app-badge kind="tier" [value]="e.tier" />
         Revision {{ e.revision }} · valid until {{ e.validUntil | date: 'mediumDate' }} (<app-days-left [until]="e.validUntil" />)
       </p>
     </div>
@@ -133,7 +133,7 @@
   }
 
   @if (renewOpen()) {
-    <app-dialog title="Renew license" [wide]="true" (closed)="renewOpen.set(false)">
+    <app-dialog [title]="'Renew ' + (e.product ?? 'People360') + ' license'" [wide]="true" (closed)="renewOpen.set(false)">
       <p class="sub" style="margin: 0">
         Creates revision {{ e.revision + 1 }}. Revision {{ e.revision }} becomes Superseded and is never edited. The new signed file is emailed to {{ e.contactEmail }}.
       </p>
@@ -155,7 +155,7 @@
         <div class="tier-pick">
           @for (t of tiers; track t) {
             <button type="button" class="tier-card" [class.selected]="renewForm.controls.tier.value === t" (click)="renewTier(t)">
-              <strong>{{ t }}</strong>
+              <strong>{{ e.product ?? 'People360' }} {{ t }}</strong>
             </button>
           }
         </div>

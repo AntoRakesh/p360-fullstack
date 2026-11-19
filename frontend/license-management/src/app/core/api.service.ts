@@ -5,7 +5,7 @@ import {
   ActivationInfo,
   AuditEvent,
   AuditQuery,
-  Catalog,
+  CatalogResponse,
   Dashboard,
   Entitlement,
   EntitlementInput,
@@ -28,9 +28,9 @@ function params(q: object): HttpParams {
 export class ApiService {
   private readonly http = inject(HttpClient);
 
-  catalog(): Observable<Catalog> {
+  catalog(): Observable<CatalogResponse> {
     // Not cached: small, and must reflect the API that is running now (e.g. after a restart).
-    return this.http.get<Catalog>('/api/catalog');
+    return this.http.get<CatalogResponse>('/api/catalog');
   }
 
   dashboard(): Observable<Dashboard> {

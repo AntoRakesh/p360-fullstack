@@ -83,6 +83,27 @@ public class ImportTests
     }
 
     [Fact]
+    public async Task License_for_another_product_is_rejected()
+    {
+        using var rig = new Rig(o => o.Product = Product.Asset360);
+        var r = await rig.Engine.ImportAsync(rig.File()); // payload defaults to People360
+        Assert.Equal(LicenseCode.WrongProduct, r.Code);
+    }
+
+    [Fact]
+    public async Task Old_license_file_without_product_reads_as_People360()
+    {
+        using var rig = new Rig();
+        var env = EnvelopeCodec.TryRead(rig.File())!;
+        var node = System.Text.Json.Nodes.JsonNode.Parse(Convert.FromBase64String(env.Payload))!.AsObject();
+        Assert.True(node.Remove("product"));
+        var bytes = Encoding.UTF8.GetBytes(node.ToJsonString());
+        var verified = new SignatureVerifier([rig.Issuer.PublicKeyB64]).Verify<EntitlementPayload>(
+            EnvelopeCodec.TryRead(rig.Issuer.SignRaw(bytes))!);
+        Assert.Equal(Product.People360, verified!.Value.Product);
+    }
+
+    [Fact]
     public async Task OnPrem_license_without_host_binding_is_rejected()
     {
         using var rig = new Rig();

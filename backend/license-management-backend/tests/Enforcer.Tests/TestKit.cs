@@ -37,6 +37,13 @@ public sealed class FakeIssuer : IDisposable
         return EnvelopeCodec.Write(new SignedEnvelope { Kid = Kid, Payload = Convert.ToBase64String(bytes), Sig = Convert.ToBase64String(sig) });
     }
 
+    /// <summary>Signs raw payload bytes (for simulating files from older formats).</summary>
+    public byte[] SignRaw(byte[] bytes)
+    {
+        var sig = SignatureAlgorithm.Ed25519.Sign(_key, bytes);
+        return EnvelopeCodec.Write(new SignedEnvelope { Kid = Kid, Payload = Convert.ToBase64String(bytes), Sig = Convert.ToBase64String(sig) });
+    }
+
     public void Dispose() => _key.Dispose();
 }
 

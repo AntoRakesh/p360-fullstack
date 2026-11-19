@@ -9,6 +9,10 @@
 <div class="card">
   <form class="toolbar" [formGroup]="filters">
     <input type="search" formControlName="search" placeholder="Search customer, email or subscriber code" aria-label="Search" />
+    <select formControlName="product" aria-label="Product">
+      <option value="">All products</option>
+      @for (p of products; track p) { <option [value]="p">{{ p }}</option> }
+    </select>
     <select formControlName="state" aria-label="State">
       <option value="">All states</option>
       @for (s of states; track s) { <option [value]="s">{{ s }}</option> }
@@ -31,7 +35,7 @@
     <table class="tbl">
       <thead>
         <tr>
-          <th>Customer</th><th>Subscriber</th><th>Tier</th><th>State</th><th>Hosting</th>
+          <th>Customer</th><th>Subscriber</th><th>Product</th><th>Tier</th><th>State</th><th>Hosting</th>
           <th>Rev</th><th>Valid until</th><th>Left</th>
         </tr>
       </thead>
@@ -40,6 +44,7 @@
           <tr class="clickable" (click)="router.navigate(['/entitlements', e.id])">
             <td>{{ e.customerName }}<div class="sub">{{ e.contactEmail }}</div></td>
             <td class="mono">{{ e.subscriberCode }}</td>
+            <td><app-badge kind="product" [value]="e.product ?? 'People360'" /></td>
             <td><app-badge kind="tier" [value]="e.tier" /></td>
             <td><app-badge [value]="e.state" /></td>
             <td>{{ e.hostingMode }}</td>
@@ -48,7 +53,7 @@
             <td><app-days-left [until]="e.validUntil" /></td>
           </tr>
         } @empty {
-          <tr><td colspan="8" class="empty">{{ data() ? 'No licenses match these filters.' : 'Loading…' }}</td></tr>
+          <tr><td colspan="9" class="empty">{{ data() ? 'No licenses match these filters.' : 'Loading…' }}</td></tr>
         }
       </tbody>
     </table>

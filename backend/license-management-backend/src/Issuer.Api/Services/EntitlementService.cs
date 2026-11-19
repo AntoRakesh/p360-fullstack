@@ -45,21 +45,23 @@ public sealed class EntitlementService(
 
     public async Task<EntitlementDoc> CreateAsync(EntitlementInput input, string who, string? ip, CancellationToken ct)
     {
-        var code = string.IsNullOrWhiteSpace(input.SubscriberCode) ? await UniqueCodeAsync(ct) : input.SubscriberCode.Trim();
+        var product = Products.Get(input.Product);
+        var code = string.IsNullOrWhiteSpace(input.SubscriberCode) ? await UniqueCodeAsync(product.CodePrefix, ct) : input.SubscriberCode.Trim();
         if (await db.Entitlements.Find(x => x.SubscriberCode == code).AnyAsync(ct))
             throw new DomainException(409, $"Subscriber code '{code}' already exists. Use Renew for existing customers.");
 
         var now = Now;
         var doc = Sign(new EntitlementDoc
         {
+            Product = input.Product,
             SubscriberCode = code,
             CustomerName = input.CustomerName.Trim(),
             ContactEmail = input.ContactEmail.Trim(),
             Revision = 1,
             State = EntitlementState.Live,
             Tier = input.Tier,
-            Modules = NormalizeModules(input.Modules),
-            Capacity = CapacityRules.Normalize(input.Capacity),
+            Modules = NormalizeModules(input.Modules, product),
+            Capacity = CapacityRules.Normalize(input.Capacity, product),
             ValidFrom = Truncate(input.ValidFrom.ToUniversalTime()),
             ValidUntil = Truncate(input.ValidUntil.ToUniversalTime()),
             MinBuild = Blank(input.MinBuild),
@@ -78,7 +80,7 @@ public sealed class EntitlementService(
         { throw new DomainException(409, $"Subscriber code '{code}' already exists."); }
 
         await audit.WriteAsync(who, "entitlement.create", null, doc, ip, ct);
-        await MailFileAsync(doc, "Your People360 license", ct);
+        await MailFileAsync(doc, $"Your {product.Title} license", ct);
         return doc;
     }
 
@@ -93,16 +95,18 @@ public sealed class EntitlementService(
         if (prev.State == EntitlementState.Revoked) throw new DomainException(409, "A revoked license cannot be renewed. Create a new one.");
 
         var tier = input.Tier ?? prev.Tier;
+        var product = Products.Get(prev.Product);
         var next = Sign(new EntitlementDoc
         {
+            Product = prev.Product,
             SubscriberCode = prev.SubscriberCode,
             CustomerName = prev.CustomerName,
             ContactEmail = prev.ContactEmail,
             Revision = prev.Revision + 1,
             State = EntitlementState.Live,
             Tier = tier,
-            Modules = input.Modules is null ? prev.Modules : NormalizeModules(input.Modules),
-            Capacity = input.Capacity is null ? CapacityRules.Normalize(prev.Capacity) : CapacityRules.Normalize(input.Capacity),
+            Modules = input.Modules is null ? prev.Modules : NormalizeModules(input.Modules, product),
+            Capacity = CapacityRules.Normalize(input.Capacity ?? prev.Capacity, product),
             ValidFrom = prev.ValidFrom,
             ValidUntil = Truncate(input.ValidUntil.ToUniversalTime()),
             MinBuild = prev.MinBuild,
@@ -128,7 +132,7 @@ public sealed class EntitlementService(
 
         await audit.WriteAsync(who, "entitlement.renew", prev, next, ip, ct);
         await audit.WriteAsync(who, "entitlement.supersede", prev, superseded, ip, ct);
-        await MailFileAsync(next, $"Your People360 license was renewed (revision {next.Revision})", ct);
+        await MailFileAsync(next, $"Your {product.Title} license was renewed (revision {next.Revision})", ct);
         return next;
     }
 
@@ -256,6 +260,7 @@ public sealed class EntitlementService(
         var env = signer.Sign(new EntitlementPayload
         {
             EntitlementId = d.Id,
+            Product = d.Product,
             SubscriberCode = d.SubscriberCode,
             CustomerName = d.CustomerName,
             Revision = d.Revision,
@@ -277,19 +282,19 @@ public sealed class EntitlementService(
     }
 
     /// <summary>Only the modules the admin selected (core modules can be left out). Order follows the catalog.</summary>
-    private static List<ModuleGrant> NormalizeModules(List<ModuleGrant> input)
+    private static List<ModuleGrant> NormalizeModules(List<ModuleGrant> input, ProductDef product)
     {
         var byKey = input.ToDictionary(m => m.ModuleKey);
-        return ProductCatalog.Modules.Where(m => byKey.ContainsKey(m.Key))
+        return product.Modules.Where(m => byKey.ContainsKey(m.Key))
             .Select(m => byKey[m.Key] with { ModuleValidUntil = byKey[m.Key].ModuleValidUntil is { } v ? Truncate(v.ToUniversalTime()) : null })
             .ToList();
     }
 
-    private async Task<string> UniqueCodeAsync(CancellationToken ct)
+    private async Task<string> UniqueCodeAsync(string prefix, CancellationToken ct)
     {
         for (var i = 0; i < 10; i++)
         {
-            var c = SecretHashing.NewSubscriberCode();
+            var c = SecretHashing.NewSubscriberCode(prefix);
             if (!await db.Entitlements.Find(x => x.SubscriberCode == c).AnyAsync(ct)) return c;
         }
         throw new DomainException(500, "Could not generate a unique subscriber code.");
@@ -300,8 +305,8 @@ public sealed class EntitlementService(
         try
         {
             await email.SendAsync(d.ContactEmail, subject,
-                $"Hello {d.CustomerName},\n\nAttached is your People360 {d.Tier} license (revision {d.Revision}), valid until {d.ValidUntil:yyyy-MM-dd}.\n" +
-                "Import it in People360 under Administration → License.\n\nThis file is signed. Editing it makes it invalid.\n",
+                $"Hello {d.CustomerName},\n\nAttached is your {Products.Get(d.Product).Title} {d.Tier} license (revision {d.Revision}), valid until {d.ValidUntil:yyyy-MM-dd}.\n" +
+                $"Import it in {Products.Get(d.Product).Title} under Administration → License.\n\nThis file is signed. Editing it makes it invalid.\n",
                 FileName(d), FileBytes(d), ct);
         }
         catch (Exception ex)

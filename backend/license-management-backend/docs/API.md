@@ -12,6 +12,7 @@ Shared contract between `frontend/license-management` (Angular admin panel) and
 ## Enums
 
 ```
+Product         = "People360" | "Asset360" | "Environment360"
 EntitlementState = "Live" | "Suspended" | "Revoked" | "Expired" | "Superseded"
 Tier            = "Essential" | "Professional" | "Enterprise"
 HostingMode     = "Cloud" | "OnPrem" | "Split"
@@ -29,6 +30,7 @@ interface ModuleGrant {
 
 interface Entitlement {
   id: string;
+  product: Product;             // old rows without it = People360
   subscriberCode: string;       // stable customer/install code, e.g. "ACME-7F3K2Q"
   customerName: string;
   contactEmail: string;
@@ -53,6 +55,7 @@ interface Entitlement {
 }
 
 interface EntitlementInput {   // create
+  product: Product;             // fixed for the license's lifetime; renew keeps it
   subscriberCode?: string | null; // blank = generated
   customerName: string;
   contactEmail: string;
@@ -95,20 +98,28 @@ The first valid code confirms enrollment. `mfaToken` lives 5 minutes. Access tok
 
 ## Catalog
 
-| GET | `/api/catalog` | → `{ modules: CatalogModule[], tiers: TierDef[] }` |
+| GET | `/api/catalog` | → `{ products: ProductCatalog[] }` |
 |---|---|---|
 
 ```ts
 interface CatalogModule { key: string; title: string; group: string; core: boolean; }
 interface TierDef { tier: Tier; title: string; inclusion: Record<string, Inclusion>; }
+interface CapacityOptions {
+  registered: (number | null)[] | null;  // null = product has no Registered (Environment360). null item = Unlimited
+  connected: number[];
+  autoRegistered: number | null;          // Connected alone adds Registered at this quantity (People360/Asset360: 50)
+}
+interface ProductCatalog { product: Product; title: string; modules: CatalogModule[]; tiers: TierDef[]; capacity: CapacityOptions; }
 ```
+
+Module keys are per product. Subscriber codes are generated as `P360-…`, `A360-…`, `E360-…`.
 
 ## Entitlements
 
 | Method | Path | Body | Response |
 |---|---|---|---|
-| GET | `/api/dashboard` | – | `{ byState: Record<state,number>, byTier: Record<tier,number>, expiringSoon: Entitlement[], recentAudit: AuditEvent[] }` |
-| GET | `/api/entitlements?search=&state=&tier=&hostingMode=&page=1&pageSize=20` | – | `Paged<Entitlement>` (current revision per subscriber) |
+| GET | `/api/dashboard` | – | `{ byState: Record<state,number>, byTier: Record<tier,number>, byProduct: Record<product,number>, expiringSoon: Entitlement[], recentAudit: AuditEvent[] }` |
+| GET | `/api/entitlements?search=&product=&state=&tier=&hostingMode=&page=1&pageSize=20` | – | `Paged<Entitlement>` (current revision per subscriber) |
 | GET | `/api/entitlements/{id}` | – | `Entitlement` |
 | GET | `/api/entitlements/history/{subscriberCode}` | – | `Entitlement[]` newest first |
 | POST | `/api/entitlements` | `EntitlementInput` | `Entitlement` (201) |
@@ -119,7 +130,7 @@ interface TierDef { tier: Tier; title: string; inclusion: Record<string, Inclusi
 | GET | `/api/entitlements/{id}/client-db` | – | `{ connectionString }` full value; each view audited (`entitlement.client_db_view`) |
 | GET | `/api/entitlements/{id}/file` | – | `application/octet-stream`, `<subscriberCode>-r<revision>.entl` |
 | POST | `/api/entitlements/{id}/install-key` | – | `{ apiKey, keyPrefix }` raw key shown once, only hash stored |
-| POST | `/api/activation/parse` | multipart `file` (.actreq) | `{ subscriberCode?, hostFingerprint, productBuild, hostname, requestedAt }` |
+| POST | `/api/activation/parse` | multipart `file` (.actreq) | `{ product?, subscriberCode?, hostFingerprint, productBuild, hostname, requestedAt }` |
 | GET | `/api/audit?subscriberCode=&action=&page=1&pageSize=50` | – | `Paged<AuditEvent>` |
 
 ## Customer endpoints

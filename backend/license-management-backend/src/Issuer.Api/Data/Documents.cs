@@ -13,6 +13,7 @@ public sealed class EntitlementDoc
 {
     [BsonId, BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+    public Product Product { get; set; } = Product.People360;
     public required string SubscriberCode { get; set; }
     public required string CustomerName { get; set; }
     public required string ContactEmail { get; set; }

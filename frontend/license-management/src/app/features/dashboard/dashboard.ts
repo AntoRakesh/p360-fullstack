@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../core/api.service';
 import { errorMessage } from '../../core/format';
-import { Dashboard, STATES, TIERS } from '../../core/models';
+import { Dashboard, PRODUCTS, STATES, TIERS } from '../../core/models';
 import { Badge, DaysLeft } from '../../shared/state-badge';
 
 @Component({
@@ -14,6 +14,7 @@ import { Badge, DaysLeft } from '../../shared/state-badge';
 export class DashboardPage {
   private readonly api = inject(ApiService);
   protected readonly router = inject(Router);
+  protected readonly products = PRODUCTS;
   protected readonly states = STATES;
   protected readonly tiers = TIERS;
   protected readonly data = signal<Dashboard | null>(null);

@@ -32,3 +32,17 @@ describe('capacity rules', () => {
     expect(formatQuantity(null)).toBe('Unlimited');
   });
 });
+
+const connectedOnly: CapacityOptions = { registered: null, connected: [100, 500, 2500, 10000, 50000], autoRegistered: null };
+
+describe('capacity rules, Connected-only product (Environment360)', () => {
+  it('Connected alone does not add Registered', () => {
+    const r = applyConnected({}, true, connectedOnly, false);
+    expect(r.capacity).toEqual({ connected: { quantity: 100 } });
+    expect(r.autoAdded).toBe(false);
+  });
+
+  it('unticking Connected leaves nothing', () => {
+    expect(applyConnected({ connected: { quantity: 500 } }, false, connectedOnly, false).capacity).toEqual({ connected: null });
+  });
+});

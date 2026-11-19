@@ -12,6 +12,7 @@ public enum LicenseCode
     StateTampered,
     InvalidSignature,
     WrongSubscriber,
+    WrongProduct,
     HostMismatch,
     HostBindingRequired,
     BuildOutOfRange,
@@ -222,6 +223,7 @@ public sealed class LicenseEngine
 
     public string CreateActivationRequest() => EnvelopeCodec.WriteActivationRequest(new ActivationRequest
     {
+        Product = _o.Product,
         SubscriberCode = string.IsNullOrWhiteSpace(_o.SubscriberCode) ? null : _o.SubscriberCode,
         HostFingerprint = _host.GetFingerprint(),
         ProductBuild = _o.ProductBuild,
@@ -295,6 +297,8 @@ public sealed class LicenseEngine
 
     private GateDecision? CheckBinding(EntitlementPayload p)
     {
+        if (p.Product != _o.Product)
+            return Deny(LicenseCode.WrongProduct, $"License is for {p.Product}, this install is {_o.Product}.");
         if (!string.Equals(p.SubscriberCode, _o.SubscriberCode, StringComparison.Ordinal))
             return Deny(LicenseCode.WrongSubscriber, $"License is for subscriber '{p.SubscriberCode}', this install is '{_o.SubscriberCode}'.");
         if (!BuildInRange(_o.ProductBuild, p.MinBuild, p.MaxBuild))

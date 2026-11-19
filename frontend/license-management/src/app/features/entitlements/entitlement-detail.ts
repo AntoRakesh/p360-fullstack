@@ -29,7 +29,12 @@ export class EntitlementDetail {
   protected readonly tiers = TIERS;
   protected readonly ent = signal<Entitlement | null>(null);
   protected readonly history = signal<Entitlement[]>([]);
-  protected readonly catalog = signal<Catalog | null>(null);
+  protected readonly catalogs = signal<Catalog[] | null>(null);
+  /** Catalog of this license's product (old rows without product = People360). */
+  protected readonly catalog = computed(() => {
+    const p = this.ent()?.product ?? 'People360';
+    return this.catalogs()?.find((c) => c.product === p) ?? null;
+  });
   protected readonly error = signal<string | null>(null);
   protected readonly notice = signal<string | null>(null);
   protected readonly busy = signal(false);
@@ -63,7 +68,7 @@ export class EntitlementDetail {
   protected readonly copied = signal(false);
 
   constructor() {
-    this.api.catalog().subscribe({ next: (c) => this.catalog.set(c), error: () => {} });
+    this.api.catalog().subscribe({ next: (r) => this.catalogs.set(r.products ?? []), error: () => {} });
     effect(() => {
       const id = this.id();
       untracked(() => this.load(id));

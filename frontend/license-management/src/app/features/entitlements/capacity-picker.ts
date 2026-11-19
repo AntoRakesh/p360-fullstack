@@ -3,7 +3,7 @@ import { Capacity, CapacityOptions } from '../../core/models';
 
 const UNLIMITED = 'unlimited';
 
-/** Same values as CapacityRules on the backend. Used if the catalog has none (e.g. an older API). */
+/** People360-style options (same as the backend). Used if the catalog has none (e.g. an older API). */
 export const DEFAULT_CAPACITY_OPTIONS: CapacityOptions = {
   registered: [50000, 200000, null],
   connected: [100, 500, 2500, 10000, 50000],
@@ -16,17 +16,19 @@ export function formatQuantity(q: number | null | undefined): string {
 }
 
 /**
- * Connected without Registered gets Registered at the auto quantity (50).
+ * Connected without Registered gets Registered at the auto quantity (50), for products that have Registered.
  * That quantity is only valid together with Connected, so unticking Connected removes it again.
+ * Products without Registered (Environment360) never get one.
  */
 export function applyConnected(c: Capacity, on: boolean, opts: CapacityOptions, autoAdded: boolean): { capacity: Capacity; autoAdded: boolean } {
   if (on) {
     const next: Capacity = { ...c, connected: { quantity: opts.connected[0] } };
-    if (!c.registered) return { capacity: { ...next, registered: { quantity: opts.autoRegistered } }, autoAdded: true };
+    if (!c.registered && opts.registered && opts.autoRegistered !== null)
+      return { capacity: { ...next, registered: { quantity: opts.autoRegistered } }, autoAdded: true };
     return { capacity: next, autoAdded };
   }
   const next: Capacity = { ...c, connected: null };
-  if (c.registered?.quantity === opts.autoRegistered) next.registered = null;
+  if (opts.autoRegistered !== null && c.registered?.quantity === opts.autoRegistered) next.registered = null;
   return { capacity: next, autoAdded: false };
 }
 
@@ -35,8 +37,9 @@ export function applyConnected(c: Capacity, on: boolean, opts: CapacityOptions, 
   selector: 'app-capacity-picker',
   template: `
     <div class="mod-group">
-      <div class="mod-group-title">Registered &amp; Connected</div>
+      <div class="mod-group-title">{{ hasRegistered() ? 'Registered &amp; Connected' : 'Connected' }}</div>
       <div class="mod-grid">
+        @if (hasRegistered()) {
         <label class="mod" [class.on]="!!value().registered">
           <input
             type="checkbox"
@@ -60,6 +63,7 @@ export function applyConnected(c: Capacity, on: boolean, opts: CapacityOptions, 
             }
           }
         </label>
+        }
 
         <label class="mod" [class.on]="!!value().connected">
           <input
@@ -90,20 +94,29 @@ export function applyConnected(c: Capacity, on: boolean, opts: CapacityOptions, 
 })
 export class CapacityPicker {
   readonly options = input(DEFAULT_CAPACITY_OPTIONS, {
-    transform: (o: CapacityOptions | null | undefined) => (o?.registered && o?.connected ? o : DEFAULT_CAPACITY_OPTIONS),
+    transform: (o: CapacityOptions | null | undefined) => (o?.connected?.length ? o : DEFAULT_CAPACITY_OPTIONS),
   });
   readonly readonly = input(false);
   readonly value = model<Capacity>({});
 
   private readonly autoAdded = signal(false);
+  /** false for Connected-only products (Environment360). */
+  protected readonly hasRegistered = computed(() => !!this.options().registered);
+
   /** The auto quantity (50) is offered only while Connected is ticked. */
   protected readonly registeredChoices = computed(() => {
     const o = this.options();
-    return this.value().connected && !o.registered.includes(o.autoRegistered) ? [o.autoRegistered, ...o.registered] : o.registered;
+    const list = o.registered ?? [];
+    const auto = o.autoRegistered;
+    return this.value().connected && auto !== null && !list.includes(auto) ? [auto, ...list] : list;
   });
 
   protected readonly autoNote = computed(
-    () => !this.readonly() && !!this.value().connected && this.value().registered?.quantity === this.options().autoRegistered,
+    () =>
+      !this.readonly() &&
+      this.options().autoRegistered !== null &&
+      !!this.value().connected &&
+      this.value().registered?.quantity === this.options().autoRegistered,
   );
 
   protected fmt = formatQuantity;
@@ -111,7 +124,7 @@ export class CapacityPicker {
 
   protected toggleRegistered(on: boolean): void {
     this.autoAdded.set(false);
-    this.value.update((c) => ({ ...c, registered: on ? { quantity: this.options().registered[0] } : null }));
+    this.value.update((c) => ({ ...c, registered: on ? { quantity: this.options().registered?.[0] ?? null } : null }));
   }
 
   protected toggleConnected(on: boolean): void {
