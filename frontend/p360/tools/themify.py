@@ -1,8 +1,8 @@
-"""Usage: python3 tools/themify.py src   (idempotent; run after adding pages with raw hex colors)
+"""Usage: python3 tools/themify.py projects   (idempotent; run after adding pages with raw hex colors)
 Files containing the text 'themify: off' are skipped.
 
-Convert hard-coded hex colors in src/ into role-aware theme variables and
-generate src/theme-palette.scss with light + dark values.
+Convert hard-coded hex colors in projects/ into role-aware theme variables and
+generate projects/shell/src/theme-palette.scss with light + dark values.
 
 Roles: b = background/surface, f = foreground/text, l = line/border, a = auto (data/svg).
 Accent family (violet hues) becomes oklch(... var(--ah)) so accent themes re-hue it.
@@ -10,7 +10,7 @@ Accent family (violet hues) becomes oklch(... var(--ah)) so accent themes re-hue
 import math, os, re, sys
 
 SRC = sys.argv[1]
-OUT = os.path.join(SRC, 'theme-palette.scss')
+OUT = os.path.join(SRC, 'shell', 'src', 'theme-palette.scss')
 
 # ---------- color math ----------
 def hex_rgb(h):
@@ -133,11 +133,11 @@ def convert(text, path):
     return res
 
 files = []
-for root, _, names in os.walk(os.path.join(SRC, 'app')):
+for root, _, names in os.walk(SRC):
     for n in names:
-        if n.endswith(('.ts', '.scss', '.html', '.css')) and not n.endswith('.spec.ts'):
+        if n.endswith(('.ts', '.scss', '.html', '.css')) and not n.endswith('.spec.ts') and n not in ('styles.scss', 'theme-palette.scss'):
             files.append(os.path.join(root, n))
-files.append(os.path.join(SRC, 'styles.scss'))
+files.append(os.path.join(SRC, 'shell', 'src', 'styles.scss'))
 
 for p in files:
     t = open(p).read()

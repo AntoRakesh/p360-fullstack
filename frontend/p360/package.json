@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node tools/check-boundaries.mjs && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "check:boundaries": "node tools/check-boundaries.mjs"
   },
   "private": true,
   "packageManager": "npm@11.12.1",

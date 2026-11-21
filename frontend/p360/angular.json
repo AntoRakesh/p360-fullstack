@@ -7,21 +7,22 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "people360-demo": {
+    "shell": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/shell",
+      "sourceRoot": "projects/shell/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
+            "outputPath": "dist/people360",
+            "browser": "projects/shell/src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -31,7 +32,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "projects/shell/src/styles.scss"
             ]
           },
           "configurations": {
@@ -62,10 +63,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "people360-demo:build:production"
+              "buildTarget": "shell:build:production"
             },
             "development": {
-              "buildTarget": "people360-demo:build:development"
+              "buildTarget": "shell:build:development"
             }
           },
           "defaultConfiguration": "development"

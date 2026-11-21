@@ -1,0 +1,226 @@
+@if (isAuthPage()) {
+  <router-outlet />
+} @else {
+<div class="shell" [class.collapsed]="collapsed()" [class.mobile-open]="mobileOpen()">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="purpleiq-mark-light.png" width="40" height="40" alt="" aria-hidden="true" />
+        <span class="brand-name">Purple <b>IQ</b></span>
+      </div>
+      <button class="icon-btn ghost" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        <app-icon name="panel-close" [size]="20" />
+      </button>
+    </div>
+
+    <label class="menu-search">
+      <app-icon name="search" [size]="16" />
+      <input
+        type="text"
+        placeholder="Search menu..."
+        [value]="menuQuery()"
+        (input)="menuQuery.set($any($event.target).value)"
+      />
+    </label>
+
+    <nav class="nav">
+      @for (m of modules(); track m.path) {
+        @if (m.children?.length) {
+          @let locked = !license.licensed(m.path);
+          <button
+            class="nav-item"
+            [class.parent-active]="isActive(m)"
+            [class.expanded]="isOpen(m) && !locked"
+            [class.locked]="locked"
+            [title]="locked ? m.title + ' (not in subscription)' : m.title"
+            [attr.aria-expanded]="locked ? null : isOpen(m)"
+            (click)="locked ? openLocked(m) : toggle(m)"
+          >
+            <span class="nav-no">{{ pad(m.no) }}</span>
+            <app-icon [name]="m.icon" [size]="19" />
+            <span class="nav-label">{{ m.title }}</span>
+            <app-icon class="nav-chev" [name]="locked ? 'lg-lock' : 'chevron-right'" [size]="15" />
+          </button>
+          @if (isOpen(m) && !locked) {
+            <div class="sub-nav">
+              @for (c of m.children; track c.path) {
+                <a class="sub-item" [routerLink]="'/' + m.path + '/' + c.path" routerLinkActive="active" [title]="c.title">
+                  <app-icon [name]="c.icon" [size]="16" />
+                  <span>{{ c.title }}</span>
+                </a>
+              }
+            </div>
+          }
+        } @else {
+          <a class="nav-item" [class.locked]="!license.licensed(m.path)" [routerLink]="'/' + m.path" routerLinkActive="active" [title]="m.title">
+            <span class="nav-no">{{ pad(m.no) }}</span>
+            <app-icon [name]="m.icon" [size]="19" />
+            <span class="nav-label">{{ m.title }}</span>
+            <app-icon class="nav-chev" [name]="license.licensed(m.path) ? 'chevron-right' : 'lg-lock'" [size]="15" />
+          </a>
+        }
+      } @empty {
+        <p class="nav-empty">No module found</p>
+      }
+    </nav>
+  </aside>
+
+  <div class="backdrop" (click)="mobileOpen.set(false)"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn mobile-only" (click)="toggleSidebar()" aria-label="Open menu">
+        <app-icon name="menu" [size]="20" />
+      </button>
+      <a class="top-logo" routerLink="/command-center">
+        <img src="purpleiq-mark-navbar.png" width="38" height="38" alt="" aria-hidden="true" />
+        <span>People<b>360</b></span>
+      </a>
+
+      <label class="global-search">
+        <app-icon name="search" [size]="18" />
+        <input id="global-search" type="text" placeholder="Search people, visitor, access events, zones, devices..." />
+        <kbd>Ctrl + K</kbd>
+      </label>
+
+      <div class="top-actions" (click)="$event.stopPropagation()">
+        <div class="menu-wrap">
+          <button class="site-select" (click)="toggleMenu('site')">
+            <app-icon name="building" [size]="18" />
+            <span>{{ state.site().name }}</span>
+            <app-icon name="chevron-down" [size]="16" />
+          </button>
+          @if (menu() === 'site') {
+            <div class="dropdown">
+              @for (s of state.sites; track s.name) {
+                <button class="dd-item" [class.on]="state.site() === s" (click)="state.site.set(s); menu.set(null)">
+                  <app-icon [name]="s.factor === 1 ? 'grid' : 'building'" [size]="16" />{{ s.name }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+
+        <button class="site-select date-btn" (click)="openDatePicker(dateInput)">
+          <app-icon name="calendar-days" [size]="17" />
+          <span>{{ state.date() | date: 'EEE, d MMM y' }}</span>
+          <app-icon name="chevron-down" [size]="16" />
+          <input
+            #dateInput
+            type="date"
+            class="date-input"
+            [value]="state.date() | date: 'yyyy-MM-dd'"
+            (change)="state.setDate($any($event.target).value)"
+          />
+        </button>
+
+        <button
+          class="live-pill"
+          [class.off]="!state.live()"
+          (click)="toggleLive()"
+          [title]="state.isToday() ? 'Pause / resume live updates' : 'Back to today (live)'"
+        >
+          <i></i>{{ state.live() ? 'Live' : state.isToday() ? 'Paused' : 'History' }}
+        </button>
+
+        <button class="icon-btn" [attr.aria-label]="theme.dark() ? 'Switch to light mode' : 'Switch to dark mode'" [title]="theme.dark() ? 'Light mode' : 'Dark mode'" (click)="theme.toggleDark()">
+          <app-icon [name]="theme.dark() ? 'th-sun' : 'th-moon'" [size]="20" />
+        </button>
+
+        <div class="menu-wrap">
+          <button class="icon-btn" aria-label="Theme" title="Theme" (click)="toggleMenu('theme')">
+            <app-icon name="th-palette" [size]="21" />
+          </button>
+          @if (menu() === 'theme') {
+            <div class="dropdown theme-dd">
+              <div class="dd-head"><b>Appearance</b></div>
+              <div class="th-modes">
+                @for (m of modes; track m.id) {
+                  <button [class.on]="theme.mode() === m.id" (click)="theme.mode.set(m.id)">
+                    <app-icon [name]="m.icon" [size]="16" />{{ m.name }}
+                  </button>
+                }
+              </div>
+              <div class="th-label">Accent color</div>
+              <div class="th-swatches">
+                @for (a of accents; track a.id) {
+                  <button class="th-sw" [class.on]="theme.accent() === a.id" (click)="theme.accent.set(a.id)" [title]="a.name">
+                    <i [style.background]="a.swatch">@if (theme.accent() === a.id) {<app-icon name="th-check" [size]="15" [stroke]="3" />}</i>
+                    <span>{{ a.name }}</span>
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="menu-wrap">
+          <button class="icon-btn" aria-label="Notifications" (click)="toggleMenu('notif')">
+            <app-icon name="bell" [size]="21" />
+            @if (state.unread()) {
+              <span class="badge">{{ state.unread() }}</span>
+            }
+          </button>
+          @if (menu() === 'notif') {
+            <div class="dropdown notif">
+              <div class="dd-head">
+                <b>Notifications</b>
+                <button class="dd-link" (click)="state.markAllRead()">Mark all read</button>
+              </div>
+              @for (n of state.notifications(); track n.id) {
+                <div class="notif-item" [class.unread]="!n.read">
+                  <span class="notif-icon" [style.background]="n.color"><app-icon [name]="n.icon" [size]="15" /></span>
+                  <div>
+                    <b>{{ n.title }}</b>
+                    <span>{{ n.text }}</span>
+                  </div>
+                  <time>{{ n.time }}</time>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="menu-wrap">
+          <button class="icon-btn" aria-label="Apps" (click)="toggleMenu('apps')">
+            <app-icon name="grid" [size]="21" [stroke]="2.6" />
+          </button>
+          @if (menu() === 'apps') {
+            <div class="dropdown apps">
+              @for (a of quickApps; track a.path) {
+                <a class="app-tile" [routerLink]="a.path" (click)="menu.set(null)">
+                  <app-icon [name]="a.icon" [size]="20" /><span>{{ a.title }}</span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="menu-wrap">
+          <button class="profile" (click)="toggleMenu('profile')">
+            <span class="avatar">DL</span>
+            <span class="profile-text">
+              <b>Demo login</b>
+              <small>Administrator</small>
+            </span>
+            <app-icon name="chevron-down" [size]="16" />
+          </button>
+          @if (menu() === 'profile') {
+            <div class="dropdown">
+              <button class="dd-item" (click)="menu.set(null)"><app-icon name="user" [size]="16" />My Profile</button>
+              <a class="dd-item" routerLink="/administration-configuration/system-settings" (click)="menu.set(null)">
+                <app-icon name="settings" [size]="16" />Settings
+              </a>
+              <button class="dd-item" (click)="signOut()"><app-icon name="door-open" [size]="16" />Sign out</button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+}
